@@ -44,14 +44,14 @@ class AbstractUser(AbstractBaseUser):
 
     objects = UserManager()
 
+    class Meta:
+        abstract = True
+
     def get_full_name(self):
         return self.full_name
 
     def get_short_name(self):
         return self.short_name
-
-    class Meta:
-        abstract = True
 
 
 class DefaultUser(AbstractUser):
