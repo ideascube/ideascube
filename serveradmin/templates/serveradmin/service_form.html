@@ -1,0 +1,15 @@
+<form name="services" action="." method="POST">
+    {% csrf_token %}
+		<input type="hidden" name="title" value="{{ name }}">
+		<label>{{ name }}</label>
+		{% if status == 'on' %}
+		<img src='img/green.png' alt='on'>
+		<input type="submit" name="restart" value="Restart">
+		<input type="submit" name="stop" value="Stop">
+		{% elif status == 'off' %}
+		<img src='img/red.png' alt='off'>
+		<input type="submit" name="start" value="Start">
+		{% else %}
+		<span>{{ status }}</span>
+		{% endif %}
+</form>
