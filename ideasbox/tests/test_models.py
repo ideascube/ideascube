@@ -7,18 +7,6 @@ from .factories import UserFactory
 pytestmark = pytest.mark.django_db
 
 
-def test_it_should_create_a_default_user_from_factory():
-    user = UserFactory()
-    assert user.pk is not None
-
-
-def test_it_should_override_fields_passed_to_factory():
-    user = UserFactory()
-    assert user.short_name == "Sankara"
-    another = UserFactory(short_name="Che")
-    assert another.short_name == "Che"
-
-
 def test_get_short_name_should_return_short_name():
     user = UserFactory()
     assert user.get_short_name() == "Sankara"
