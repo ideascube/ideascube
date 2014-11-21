@@ -166,7 +166,9 @@ class RefugeeMixin(object):
         blank=True)
     is_sent_to_school = models.BooleanField(_('Sent to school (if under 18)'))
     camp_activities = models.CommaSeparatedIntegerField(
-        choices=CAMP_ACTIVITY_CHOICES)
+        _('Activities in the camp'),
+        choices=CAMP_ACTIVITY_CHOICES,
+        blank=True)
 
 
 class SwahiliLangMixin(object):
