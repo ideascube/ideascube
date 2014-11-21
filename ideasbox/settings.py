@@ -56,6 +56,7 @@ WSGI_APPLICATION = 'ideasbox.wsgi.application'
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
 )
+LOGIN_REDIRECT_URL = 'index'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
