@@ -23,6 +23,9 @@ class UserManager(BaseUserManager):
 
 
 class AbstractUser(AbstractBaseUser):
+    """
+    Minimum definition of a user. Inherit at least from this model.
+    """
     USERNAME_FIELD = 'serial'
 
     LANG_KNOWLEDGE_CHOICES = (
@@ -59,6 +62,10 @@ class AbstractUser(AbstractBaseUser):
 
 
 class DefaultUser(AbstractUser):
+    """
+    Just a non abstrct version of the AbstractUser model. To be used mainly for
+    dev and tests.
+    """
     pass
 
 
