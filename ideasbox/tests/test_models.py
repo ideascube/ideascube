@@ -8,12 +8,12 @@ pytestmark = pytest.mark.django_db
 
 
 def test_get_short_name_should_return_short_name():
-    user = UserFactory()
+    user = UserFactory.build()
     assert user.get_short_name() == "Sankara"
 
 
 def test_get_full_name_should_return_full_name():
-    user = UserFactory()
+    user = UserFactory.build()
     assert user.get_full_name() == "Thomas Sankara"
 
 
