@@ -95,7 +95,8 @@ class ProfileMixin(object):
     )
 
     # Do we want a fixed choice list instead of a text field?
-    nationaliy = models.CharField(_('Nationality'), max_length=100, blank=True)
+    nationality = models.CharField(_('Nationality'), max_length=100,
+                                   blank=True)
     city = models.CharField(_('City of origin'), max_length=100, blank=True)
     id_card_number = models.CharField(_('ID card number'), max_length=50,
                                       blank=True)
