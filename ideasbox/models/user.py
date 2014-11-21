@@ -9,9 +9,7 @@ class UserManager(BaseUserManager):
         if not serial:
             raise ValueError('Users must have a serial')
 
-        user = self.model(
-            serial=serial
-        )
+        user = self.model(serial=serial)
 
         user.set_password(password)
         user.save(using=self._db)
