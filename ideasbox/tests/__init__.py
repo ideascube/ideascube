@@ -7,6 +7,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     serial = FuzzyText(length=12)
     short_name = "Sankara"
     full_name = "Thomas Sankara"
+    password = factory.PostGenerationMethodCall('set_password', 'password')
 
     class Meta:
         model = get_user_model()

@@ -42,3 +42,7 @@ def test_create_superuser():
     assert user.pk is not None
     assert user.serial == '123456'
     assert user.is_admin
+
+
+def test_client_login(client, user):
+    assert client.login(serial=user.serial, password='password')
