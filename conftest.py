@@ -1,7 +1,7 @@
 import pytest
 
 
-from ideasbox.tests import UserFactory
+from ideasbox.tests.factories import UserFactory
 
 
 @pytest.fixture()
