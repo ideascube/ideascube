@@ -89,6 +89,10 @@ try:
     STORAGE_ROOT = os.environ['DATASTORAGE']
 except:
     if DEBUG:
+        try:
+            os.makedirs('storage/main')
+        except OSError:
+            pass
         STORAGE_ROOT = os.path.join(BASE_DIR, 'storage')
     else:
         raise
