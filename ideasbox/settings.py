@@ -87,7 +87,7 @@ except KeyError:
         raise
 try:
     STORAGE_ROOT = os.environ['DATASTORAGE']
-except:
+except KeyError:
     if DEBUG:
         try:
             os.makedirs('storage/main')
