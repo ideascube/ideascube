@@ -1,14 +1,14 @@
 import pytest
 
 
-from ideasbox.tests import UserFactory
+from ideasbox.tests.factories import UserFactory
 
 
-@pytest.fixture(scope="function")
-def user(request):
+@pytest.fixture()
+def user():
     return UserFactory(short_name="Hello", password='password')
 
 
-@pytest.fixture(scope="function")
-def staffuser(request):
+@pytest.fixture()
+def staffuser():
     return UserFactory(short_name="Hello", password='password', is_staff=True)

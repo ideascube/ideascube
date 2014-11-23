@@ -9,9 +9,7 @@ class UserManager(BaseUserManager):
         if not serial:
             raise ValueError('Users must have a serial')
 
-        user = self.model(
-            serial=serial
-        )
+        user = self.model(serial=serial)
 
         user.set_password(password)
         user.save(using=self._db)
@@ -25,6 +23,9 @@ class UserManager(BaseUserManager):
 
 
 class AbstractUser(AbstractBaseUser):
+    """
+    Minimum definition of a user. Inherit at least from this model.
+    """
     USERNAME_FIELD = 'serial'
 
     LANG_KNOWLEDGE_CHOICES = (
@@ -61,6 +62,10 @@ class AbstractUser(AbstractBaseUser):
 
 
 class DefaultUser(AbstractUser):
+    """
+    Just a non abstrct version of the AbstractUser model. To be used mainly for
+    dev and tests.
+    """
     pass
 
 
@@ -90,7 +95,8 @@ class ProfileMixin(object):
     )
 
     # Do we want a fixed choice list instead of a text field?
-    nationaliy = models.CharField(_('Nationality'), max_length=100, blank=True)
+    nationality = models.CharField(_('Nationality'), max_length=100,
+                                   blank=True)
     city = models.CharField(_('City of origin'), max_length=100, blank=True)
     id_card_number = models.CharField(_('ID card number'), max_length=50,
                                       blank=True)
@@ -160,7 +166,9 @@ class RefugeeMixin(object):
         blank=True)
     is_sent_to_school = models.BooleanField(_('Sent to school (if under 18)'))
     camp_activities = models.CommaSeparatedIntegerField(
-        choices=CAMP_ACTIVITY_CHOICES)
+        _('Activities in the camp'),
+        choices=CAMP_ACTIVITY_CHOICES,
+        blank=True)
 
 
 class SwahiliLangMixin(object):
