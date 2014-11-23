@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ideas-box/ideasbox.lan.svg?branch=master)](https://travis-ci.org/ideas-box/ideasbox.lan)
+
 # ideasbox.lan
 
 This Django repository is the main application of the Ideas Box server.
