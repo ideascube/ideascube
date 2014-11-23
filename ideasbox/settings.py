@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ideasbox',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -88,10 +89,15 @@ try:
     STORAGE_ROOT = os.environ['DATASTORAGE']
 except:
     if DEBUG:
+        try:
+            os.makedirs('storage/main')
+        except OSError:
+            pass
         STORAGE_ROOT = os.path.join(BASE_DIR, 'storage')
     else:
         raise
 MEDIA_ROOT = os.path.join(STORAGE_ROOT, 'main')
+AUTH_USER_MODEL = os.environ.get('AUTH_USER_MODEL', 'ideasbox.DefaultUser')
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
