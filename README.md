@@ -1,3 +1,5 @@
+[![Requirements Status](https://requires.io/github/ideas-box/ideasbox.lan/requirements.svg?branch=custom-user)](https://requires.io/github/ideas-box/ideasbox.lan/requirements/?branch=custom-user)
+
 # ideasbox.lan
 
 This Django repository is the main application of the Ideas Box server.
