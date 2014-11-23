@@ -1,4 +1,3 @@
 *.pyc
 *.sqlite
 docs/_build/*
-.coverage
