@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'serveradmin',
+    'ideasbox',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,6 +61,7 @@ WSGI_APPLICATION = 'ideasbox.wsgi.application'
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
 )
+LOGIN_REDIRECT_URL = 'index'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -91,12 +93,17 @@ except KeyError:
         raise
 try:
     STORAGE_ROOT = os.environ['DATASTORAGE']
-except:
+except KeyError:
     if DEBUG:
+        try:
+            os.makedirs('storage/main')
+        except OSError:
+            pass
         STORAGE_ROOT = os.path.join(BASE_DIR, 'storage')
     else:
         raise
 MEDIA_ROOT = os.path.join(STORAGE_ROOT, 'main')
+AUTH_USER_MODEL = os.environ.get('AUTH_USER_MODEL', 'ideasbox.DefaultUser')
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

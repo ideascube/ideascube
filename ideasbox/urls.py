@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -9,6 +10,9 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url(r'^$', views.index, name='index'),
     url(r'^server/', include('serveradmin.urls')),
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, kwargs={"next_page": "/"},
+        name='logout'),
 
     url(r'^admin/', include(admin.site.urls)),
 )
