@@ -1,3 +1,4 @@
+-r requirements.txt
 pytest==2.6.4
 pytest-django==2.7.0
 factory-boy==2.4.1
