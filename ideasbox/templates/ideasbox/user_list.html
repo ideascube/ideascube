@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    {% for user in user_list  %}
+        <a href="{% url 'user_detail' pk=user.pk %}">{{ user }}</a>
+    {% endfor %}
+    <a href="{% url 'user_create' %}">{% trans "Add user" %}</a>
+{% endblock content %}
