@@ -29,7 +29,7 @@ def test_create_superuser():
     user = model.objects.create_superuser('123456', 'passw0rd')
     assert user.pk is not None
     assert user.serial == '123456'
-    assert user.is_admin
+    assert user.is_staff
 
 
 def test_client_login(client, user):

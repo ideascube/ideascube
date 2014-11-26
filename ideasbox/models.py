@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.urlresolvers import reverse
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -17,7 +18,7 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, serial, password):
         user = self.create_user(serial=serial, password=password)
-        user.is_admin = True
+        user.is_staff = True
         user.save(using=self._db)
         return user
 
@@ -48,8 +49,14 @@ class AbstractUser(AbstractBaseUser):
     class Meta:
         abstract = True
 
+    def __unicode__(self):
+        return self.get_full_name() or self.serial
+
+    def get_absolute_url(self):
+        return reverse('user_detail', kwargs={'pk': self.pk})
+
     def get_full_name(self):
-        return self.full_name
+        return self.full_name or self.get_short_name()
 
     def get_short_name(self):
         return self.short_name
