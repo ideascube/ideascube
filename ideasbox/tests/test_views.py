@@ -91,7 +91,7 @@ def test_should_create_user_with_serial_only(staffclient):
     }, follow=True)
     assert response.status_code == 200
     assert len(user_model.objects.all()) == 2
-    assert len(user_model.objects.filter(serial=serial)) == 1
+    assert user_model.objects.filter(serial=serial)
 
 
 def test_should_not_create_user_without_serial(staffclient):
@@ -116,7 +116,7 @@ def test_staff_should_access_user_update_page(staffclient, user):
     assert response.status_code == 200
 
 
-def test_should_be_able_to_update_user(staffclient, user):
+def test_staff_should_be_able_to_update_user(staffclient, user):
     assert len(user_model.objects.all()) == 2
     url = reverse('user_update', kwargs={'pk': user.pk})
     short_name = 'Denis'
