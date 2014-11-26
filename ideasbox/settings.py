@@ -8,8 +8,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+from django.utils.translation import ugettext_lazy as _
+
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = os.path.join(BASE_DIR, 'ideasbox')
 
@@ -103,3 +107,12 @@ DATABASES = {
         'NAME': os.path.join(MEDIA_ROOT, 'default.sqlite'),
     }
 }
+
+SERVICES = [
+    {'name': 'apache2', 'sum': _('Daemon which provide web content')},
+    {'name': 'bind9', 'sum': _('Daemon which provide local DNS')},
+    {'name': 'kalite', 'sum': _('Daemon which provide KhanAcademy on lan')},
+    {'name': 'kiwix', 'sum': _('Daemon which provide Wikipedia on lan')},
+    {'name': 'ntp', 'sum': _('Net time protocol')},
+    {'name': 'ssh', 'sum': _('Daemon used for distant connexion to server')},
+]

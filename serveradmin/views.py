@@ -1,15 +1,11 @@
+from django.conf import settings
 from django.shortcuts import render
 
 from .utils import service_exec
 
 
 def services(request):
-    services = [
-        {'name': 'ssh'},
-        {'name': 'rsync'},
-        {'name': 'pulseaudio'},
-        {'name': 'apache2'},
-    ]
+    services = settings.SERVICES
     if request.POST:
         print(request.POST)
         service_name = request.POST['title']
