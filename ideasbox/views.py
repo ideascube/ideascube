@@ -23,7 +23,7 @@ user_list = UserList.as_view()
 class UserDetail(DetailView):
     model = user_model
     template_name = 'ideasbox/user_detail.html'
-    context_object_name = 'obj'
+    context_object_name = 'user_obj'
 user_detail = UserDetail.as_view()
 
 
@@ -37,20 +37,20 @@ class UserFormMixin(object):
 class UserUpdate(UserFormMixin, UpdateView):
     model = user_model
     template_name = 'ideasbox/user_form.html'
-    context_object_name = 'obj'
+    context_object_name = 'user_obj'
 user_update = staff_member_required(UserUpdate.as_view())
 
 
 class UserCreate(UserFormMixin, CreateView):
     model = user_model
     template_name = 'ideasbox/user_form.html'
-    context_object_name = 'obj'
+    context_object_name = 'user_obj'
 user_create = staff_member_required(UserCreate.as_view())
 
 
 class UserDelete(DeleteView):
     model = user_model
     template_name = 'ideasbox/user_confirm_delete.html'
-    context_object_name = 'obj'
+    context_object_name = 'user_obj'
     success_url = reverse_lazy('user_list')
 user_delete = staff_member_required(UserDelete.as_view())

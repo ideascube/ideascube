@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-    <h2>{% blocktrans %}Are you sure you want to delete user "{{ obj }}"?{% endblocktrans %}</h2>
+    <h2>{% blocktrans %}Are you sure you want to delete user "{{ user_obj }}"?{% endblocktrans %}</h2>
     <form method="POST" action=".">
         {% csrf_token %}
         {{ form.as_p }}

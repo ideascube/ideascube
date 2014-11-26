@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{ obj }}
+    {{ user_obj }}
     {% if user.is_staff %}
-        <a href="{% url 'user_update' pk=obj.pk %}">Edit</a>
-        <a href="{% url 'user_delete' pk=obj.pk %}">Delete</a>
+        <a href="{% url 'user_update' pk=user_obj.pk %}">Edit</a>
+        <a href="{% url 'user_delete' pk=user_obj.pk %}">Delete</a>
     {% endif %}
 {% endblock content %}

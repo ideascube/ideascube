@@ -2,8 +2,8 @@
 {% load i18n %}
 
 {% block content %}
-    {% if obj %}
-        <h2>{% trans "Edit user" %} {{ obj }}</h2>
+    {% if user_obj %}
+        <h2>{% trans "Edit user" %} {{ user_obj }}</h2>
     {% else %}
         <h2>{% trans "New User" %}</h2>
     {% endif %}
