@@ -7,7 +7,6 @@ from .utils import service_exec
 def services(request):
     services = settings.SERVICES
     if request.POST:
-        print(request.POST)
         service_name = request.POST['title']
         for service in services:
             if service_name in service.values():
