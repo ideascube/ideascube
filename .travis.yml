@@ -1,0 +1,12 @@
+language: python
+python:
+  - "2.7"
+install:
+    - make devinstall
+script: make test
+notifications:
+    irc:
+        channels:
+            - "irc.freenode.net#ideasbox"
+        on_success: change
+        on_failure: always
