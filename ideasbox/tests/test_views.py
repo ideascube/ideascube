@@ -156,18 +156,24 @@ def test_staff_user_should_access_confirm_delete_page(staffclient, user):
 
 
 def test_non_staff_user_cannot_delete_user(client, user):
+    assert len(user_model.objects.all()) == 1
     url = reverse('user_delete', kwargs={'pk': user.pk})
     response = client.post(url, {'confirm': 'yes'})
     assert response.status_code == 302
+    assert len(user_model.objects.all()) == 1
 
 
 def test_anonymous_cannot_delete_user(loggedclient, user):
+    assert len(user_model.objects.all()) == 1
     url = reverse('user_delete', kwargs={'pk': user.pk})
     response = loggedclient.post(url, {'confirm': 'yes'})
     assert response.status_code == 302
+    assert len(user_model.objects.all()) == 1
 
 
 def test_staff_user_can_delete_user(staffclient, user):
+    assert len(user_model.objects.all()) == 2  # staff user and normal user
     url = reverse('user_delete', kwargs={'pk': user.pk})
     response = staffclient.post(url, {'confirm': 'yes'}, follow=True)
     assert response.status_code == 200
+    assert len(user_model.objects.all()) == 1
