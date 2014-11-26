@@ -59,13 +59,13 @@ def test_login_page_should_not_log_in_user_with_incorrect_POST(client, user):
 def test_user_list_page_should_be_accessible(client, user):
     response = client.get(reverse('user_list'))
     assert response.status_code == 200
-    assert unicode(user) and unicode(user) in response.content
+    assert unicode(user) in response.content
 
 
 def test_user_detail_page_should_be_accessible(client, user):
     response = client.get(reverse('user_detail', kwargs={'pk': user.pk}))
     assert response.status_code == 200
-    assert unicode(user) and unicode(user) in response.content
+    assert unicode(user) in response.content
 
 
 def test_user_create_page_should_not_be_accessible_to_anonymous(client):
