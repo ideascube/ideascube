@@ -1,20 +1,18 @@
-import subprocess
-
+from subprocess import Popen, PIPE
 from re import match
 
 
-def service_exec(service):
+def call_service(service):
     args = ['sudo', 'service', service['name'], service['action']]
-    try:
-        ret = subprocess.check_output(args)
-    except subprocess.CalledProcessError as ret_error:
-        ret = ret_error.output
-
-    if match('.*(is running|start/running).*', ret):
-        return 'on'
-    elif match('.*(not running|stop/waiting).*', ret):
-        return 'off'
+    process = Popen(args, stdout=PIPE, stderr=PIPE)
+    stdout, stderr = process.communicate()
+    if stdout:
+        if match('.*(is running|start/running).*', stdout):
+            to_return = {'status': True, 'error': False}
+        elif match('.*(not running|stop/waiting).*', stdout):
+            to_return = {'status': False, 'error': False}
+    elif stderr:
+        to_return = {'error': stderr}
     else:
-        if ret:
-            return ret
-        return 'Something odd happen here..'
+        to_return = {'error': service['name']+': unknown error'}
+    return to_return
