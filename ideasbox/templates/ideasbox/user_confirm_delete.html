@@ -6,6 +6,6 @@
     <form method="POST" action=".">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="{% trans 'yes' %}" />
+        <input type="submit" name="confirm" value="{% trans 'yes' %}" />
     </form>
 {% endblock content %}

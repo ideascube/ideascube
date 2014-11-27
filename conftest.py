@@ -1,5 +1,7 @@
 import pytest
+import django_webtest
 
+from django.core.urlresolvers import reverse
 
 from ideasbox.tests.factories import UserFactory
 
@@ -15,12 +17,30 @@ def staffuser():
 
 
 @pytest.fixture()
-def staffclient(client, staffuser):
-    client.login(serial=staffuser.serial, password='password')
-    return client
+def app(request):
+    wtm = django_webtest.WebTestMixin()
+    wtm._patch_settings()
+    request.addfinalizer(wtm._unpatch_settings)
+    return django_webtest.DjangoTestApp()
 
 
 @pytest.fixture()
-def loggedclient(client, user):
-    client.login(serial=user.serial, password='password')
-    return client
+def loggedapp(app, user):
+    """Return an app with an already logged in user."""
+    form = app.get(reverse('login')).forms['login']
+    form['username'] = user.serial
+    form['password'] = 'password'
+    form.submit().follow()
+    setattr(app, 'user', user)  # for later use, if needed
+    return app
+
+
+@pytest.fixture()
+def staffapp(app, staffuser):
+    """Return an app with an already logged in staff user."""
+    form = app.get(reverse('login')).forms['login']
+    form['username'] = staffuser.serial
+    form['password'] = 'password'
+    form.submit().follow()
+    setattr(app, 'user', user)  # for later use, if needed
+    return app

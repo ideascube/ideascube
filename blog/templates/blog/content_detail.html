@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ content }}
+    {{ content.text }}
+    {% if user.is_staff %}
+        <a href="{% url 'blog:content_update' pk=content.pk %}">Edit</a>
+        {# <a href="{% url 'blog:content_delete' pk=content.pk %}">Delete</a> #}
+    {% endif %}
+{% endblock content %}
