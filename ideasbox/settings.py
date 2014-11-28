@@ -61,7 +61,7 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
 )
 LOGIN_REDIRECT_URL = 'index'
-LOGIN_URL = 'loginpouet'
+LOGIN_URL = 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
