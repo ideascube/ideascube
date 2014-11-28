@@ -22,11 +22,11 @@ def test_normal_user_should_not_access_admin(loggedapp, user):
 
 
 def test_staff_user_should_access_admin(staffapp):
-    assert staffapp.get('/admin/')
+    assert staffapp.get('/admin/', status=200)
 
 
 def test_login_page_should_return_form_in_GET_mode(app):
-    assert app.get(reverse('login'))
+    assert app.get(reverse('login'), status=200)
 
 
 def test_login_page_should_log_in_user_if_POST_data_is_correct(client, user):
@@ -68,7 +68,7 @@ def test_non_staff_should_not_access_user_create_page(loggedapp, user):
 
 
 def test_user_create_page_should_be_accessible_to_staff(staffapp):
-    assert staffapp.get(reverse('user_create'))
+    assert staffapp.get(reverse('user_create'), status=200)
 
 
 def test_should_create_user_with_serial_only(staffapp):
@@ -98,7 +98,8 @@ def test_non_staff_should_not_access_user_update_page(loggedapp, user):
 
 
 def test_staff_should_access_user_update_page(staffapp, user):
-    assert staffapp.get(reverse('user_update', kwargs={'pk': user.pk}))
+    assert staffapp.get(reverse('user_update', kwargs={'pk': user.pk}),
+                        status=200)
 
 
 def test_staff_should_be_able_to_update_user(staffapp, user):
@@ -124,18 +125,17 @@ def test_should_not_update_user_without_serial(app, staffapp, user):
 
 
 def test_delete_page_should_not_be_reachable_to_anonymous(app, user):
-    response = app.get(reverse('user_delete', kwargs={'pk': user.pk}))
-    assert response.status_code == 302
+    assert app.get(reverse('user_delete', kwargs={'pk': user.pk}), status=302)
 
 
 def test_delete_page_should_not_be_reachable_to_non_staff(loggedapp, user):
-    response = loggedapp.get(reverse('user_delete', kwargs={'pk': user.pk}))
-    assert response.status_code == 302
+    assert loggedapp.get(reverse('user_delete', kwargs={'pk': user.pk}),
+                         status=302)
 
 
 def test_staff_user_should_access_confirm_delete_page(staffapp, user):
-    response = staffapp.get(reverse('user_delete', kwargs={'pk': user.pk}))
-    assert response.status_code == 200
+    assert staffapp.get(reverse('user_delete', kwargs={'pk': user.pk}),
+                        status=200)
 
 
 def test_anonymous_cannot_delete_user(app, user):
