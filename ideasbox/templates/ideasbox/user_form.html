@@ -7,7 +7,7 @@
     {% else %}
         <h2>{% trans "New User" %}</h2>
     {% endif %}
-    <form method="POST" action=".">
+    <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="submit" />
