@@ -26,13 +26,13 @@ def test_index_page_is_paginated(app, monkeypatch):
     for i in xrange(4):
         ContentFactory(status=Content.PUBLISHED)
     response = app.get(reverse('blog:index'))
-    assert len(response.pyquery.find('.pagination'))
-    assert len(response.pyquery.find('.next'))
-    assert not len(response.pyquery.find('.previous'))
+    assert response.pyquery.find('.pagination')
+    assert response.pyquery.find('.next')
+    assert not response.pyquery.find('.previous')
     response = app.get(reverse('blog:index') + '?page=2')
-    assert len(response.pyquery.find('.pagination'))
-    assert not len(response.pyquery.find('.next'))
-    assert len(response.pyquery.find('.previous'))
+    assert response.pyquery.find('.pagination')
+    assert not response.pyquery.find('.next')
+    assert response.pyquery.find('.previous')
     response = app.get(reverse('blog:index') + '?page=3', status=404)
 
 
