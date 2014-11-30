@@ -16,12 +16,12 @@ def staffuser():
     return UserFactory(short_name="Hello", password='password', is_staff=True)
 
 
-@pytest.fixture()
+@pytest.yield_fixture()
 def app(request):
     wtm = django_webtest.WebTestMixin()
     wtm._patch_settings()
-    request.addfinalizer(wtm._unpatch_settings)
-    return django_webtest.DjangoTestApp()
+    yield django_webtest.DjangoTestApp()
+    wtm._unpatch_settings()
 
 
 @pytest.fixture()
