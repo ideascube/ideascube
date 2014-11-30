@@ -16,12 +16,10 @@ Create a virtualenv (we name it `ideasbox` here but the name is up to you)::
 
 Install python dependencies::
 
-    pip install -r requirements.txt
+    make install  # for production
+    # or
+    make devinstall  # for hacking on the code
 
-
-If you need to hack on the code, install dev dependencies::
-
-    pip install -r requirements-dev.txt
 
 
 Project setup

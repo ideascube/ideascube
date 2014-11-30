@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    {% if content %}
+        <h2>{% trans "Edit post" %} "{{ content }}"</h2>
+    {% else %}
+        <h2>{% trans "New post" %}</h2>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="submit" />
+    </form>
+{% endblock content %}
