@@ -7,7 +7,8 @@ from . import views
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'ideasbox.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^blog/', include('blog.urls', namespace="blog")),
     url(r'^$', views.index, name='index'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, kwargs={"next_page": "/"},
@@ -19,5 +20,4 @@ urlpatterns = patterns('',
     url(r'^user/(?P<pk>[\d]+)/delete/$',
         views.user_delete, name='user_delete'),
 
-    url(r'^admin/', include(admin.site.urls)),
 )

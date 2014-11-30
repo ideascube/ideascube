@@ -8,8 +8,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+from django.utils.translation import ugettext_lazy as _
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = os.path.join(BASE_DIR, 'ideasbox')
 
@@ -37,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ideasbox',
+    'blog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,13 +61,14 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
 )
 LOGIN_REDIRECT_URL = 'index'
+LOGIN_URL = 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.environ.get('TIME_ZONE', 'UTC')
 
 USE_I18N = True
 
@@ -71,6 +76,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+AVAILABLE_LANGUAGES = (
+    ('en', _('English')),
+    ('fr', _('French')),
+)
+
+SUPPORTED_LANGUAGES = os.environ.get('SUPPORTED_LANGUAGES', 'fr en').split()
+LANGUAGES = []
+for code, label in AVAILABLE_LANGUAGES:
+    if code in SUPPORTED_LANGUAGES:
+        LANGUAGES.append((code, label))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
