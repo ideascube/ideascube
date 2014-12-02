@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <ul>
+    {% for content in content_list  %}
+        <li>
+            <a href="{% url 'blog:content_detail' pk=content.pk %}">
+                <h3>{{ content }}</h3>
+                <p>{{ content.summary }}</p>
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+    {% include "ideasbox/pagination.html" %}
+    <a href="{% url 'blog:content_create' %}">{% trans "Add content" %}</a>
+{% endblock content %}
