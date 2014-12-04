@@ -6,8 +6,9 @@ from .utils import call_service
 
 def services(request):
     services = settings.SERVICES
+    service_action = 'status'
     if request.POST:
-        service_name = request.POST['name']
+        active_service = request.POST['name']
         if 'start' in request.POST:
             service_action = 'start'
         elif 'stop' in request.POST:
@@ -15,10 +16,10 @@ def services(request):
         elif 'restart' in request.POST:
             service_action = 'restart'
     else:
-        service_name = False
+        active_service = None
 
     for service in services:
-        if service_name == service['name']:
+        if active_service == service['name']:
             service['action'] = service_action
         else:
             service['action'] = 'status'
