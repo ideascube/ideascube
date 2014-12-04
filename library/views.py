@@ -5,7 +5,7 @@ from django.views.generic import (ListView, DetailView, UpdateView, CreateView,
                                   DeleteView)
 
 from .models import Book, BookSpecimen
-from .forms import BookSpecimenForm
+from .forms import BookSpecimenForm, BookForm
 
 
 class Index(ListView):
@@ -23,11 +23,13 @@ book_detail = BookDetail.as_view()
 
 class BookUpdate(UpdateView):
     model = Book
+    form_class = BookForm
 book_update = staff_member_required(BookUpdate.as_view())
 
 
 class BookCreate(CreateView):
     model = Book
+    form_class = BookForm
 book_create = staff_member_required(BookCreate.as_view())
 
 

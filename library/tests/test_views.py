@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 
 from ..models import Book, BookSpecimen
 from ..views import Index
-from .factories import BookSpecimenFactory
+from .factories import BookSpecimenFactory, BookFactory
 
 pytestmark = pytest.mark.django_db
 
@@ -143,3 +143,36 @@ def test_staff_user_can_delete_specimen(staffapp, specimen):
     form.submit()
     assert len(Book.objects.all()) == 1
     assert not BookSpecimen.objects.all()
+
+
+def test_it_should_be_possible_to_create_several_books_without_isbn(staffapp):
+    assert not Book.objects.all()
+    url = reverse('library:book_create')
+    form = staffapp.get(url).form
+    form['title'] = 'My book title'
+    form['summary'] = 'My book summary'
+    form['section'] = '1'
+    form['isbn'] = ''
+    form.submit().follow()
+    form = staffapp.get(url).form
+    form['title'] = 'My book title 2'
+    form['summary'] = 'My book summary 2'
+    form['section'] = '2'
+    form['isbn'] = ''
+    form.submit().follow()
+    assert len(Book.objects.all()) == 2
+
+
+def test_it_should_be_possible_to_remove_isbn_from_books(staffapp):
+    book1 = BookFactory(isbn='123456')
+    book2 = BookFactory(isbn='321564987')
+    assert not Book.objects.filter(isbn__isnull=True)
+    form = staffapp.get(reverse('library:book_update',
+                        kwargs={'pk': book1.pk})).form
+    form['isbn'] = ''
+    form.submit().follow()
+    form = staffapp.get(reverse('library:book_update',
+                        kwargs={'pk': book2.pk})).form
+    form['isbn'] = ''
+    form.submit().follow()
+    assert len(Book.objects.filter(isbn__isnull=True)) == 2
