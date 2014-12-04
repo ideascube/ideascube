@@ -88,12 +88,12 @@ def test_staff_should_access_book_update_page(staffapp, book):
 
 def test_staff_can_create_book(staffapp):
     form = staffapp.get(reverse('library:book_create')).form
-    assert not Book.objects.all()
+    assert not Book.objects.count()
     form['title'] = 'My book title'
     form['summary'] = 'My book summary'
     form['section'] = '1'
     form.submit().follow()
-    assert Book.objects.all()
+    assert Book.objects.count()
 
 
 def test_staff_can_edit_book(staffapp, book):
@@ -107,22 +107,22 @@ def test_staff_can_edit_book(staffapp, book):
 
 
 def test_staff_user_can_delete_book(staffapp, book):
-    assert len(Book.objects.all()) == 1
+    assert Book.objects.count() == 1
     url = reverse('library:book_delete', kwargs={'pk': book.pk})
     form = staffapp.get(url).form
     form.submit()
-    assert len(Book.objects.all()) == 0
+    assert not Book.objects.count()
 
 
 def test_staff_can_create_specimen(staffapp, book):
     url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
     form = staffapp.get(url).form
-    assert not BookSpecimen.objects.all()
-    assert not book.specimen.all()
+    assert not BookSpecimen.objects.count()
+    assert not book.specimen.count()
     form['serial'] = '23135321'
     form.submit().follow()
-    assert BookSpecimen.objects.all()
-    assert book.specimen.all()
+    assert BookSpecimen.objects.count()
+    assert book.specimen.count()
 
 
 def test_staff_can_edit_specimen(staffapp, specimen):
@@ -136,17 +136,17 @@ def test_staff_can_edit_specimen(staffapp, specimen):
 
 
 def test_staff_user_can_delete_specimen(staffapp, specimen):
-    assert len(BookSpecimen.objects.all()) == 1
-    assert len(Book.objects.all()) == 1
+    assert BookSpecimen.objects.count() == 1
+    assert Book.objects.count() == 1
     url = reverse('library:specimen_delete', kwargs={'pk': specimen.pk})
     form = staffapp.get(url).form
     form.submit()
-    assert len(Book.objects.all()) == 1
-    assert not BookSpecimen.objects.all()
+    assert Book.objects.count() == 1
+    assert not BookSpecimen.objects.count()
 
 
 def test_it_should_be_possible_to_create_several_books_without_isbn(staffapp):
-    assert not Book.objects.all()
+    assert not Book.objects.count()
     url = reverse('library:book_create')
     form = staffapp.get(url).form
     form['title'] = 'My book title'
@@ -160,7 +160,7 @@ def test_it_should_be_possible_to_create_several_books_without_isbn(staffapp):
     form['section'] = '2'
     form['isbn'] = ''
     form.submit().follow()
-    assert len(Book.objects.all()) == 2
+    assert Book.objects.count() == 2
 
 
 def test_it_should_be_possible_to_remove_isbn_from_books(staffapp):

@@ -9,19 +9,19 @@ pytestmark = pytest.mark.django_db
 
 
 def test_deleting_book_sould_delete_specimen_too(specimen):
-    assert BookSpecimen.objects.all()
-    assert Book.objects.all()
+    assert BookSpecimen.objects.count()
+    assert Book.objects.count()
     specimen.book.delete()
-    assert not BookSpecimen.objects.all()
-    assert not Book.objects.all()
+    assert not BookSpecimen.objects.count()
+    assert not Book.objects.count()
 
 
 def test_deleting_specimen_sould_not_delete_book(specimen):
-    assert BookSpecimen.objects.all()
-    assert Book.objects.all()
+    assert BookSpecimen.objects.count()
+    assert Book.objects.count()
     specimen.delete()
-    assert not BookSpecimen.objects.all()
-    assert Book.objects.all()
+    assert not BookSpecimen.objects.count()
+    assert Book.objects.count()
 
 
 def test_it_should_be_possible_to_have_more_than_one_isbn_null_value():
