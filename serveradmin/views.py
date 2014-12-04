@@ -23,7 +23,6 @@ def services(request):
         else:
             service['action'] = 'status'
         service_return = call_service(service)
-        service['error'] = service_return['error']
-        if not service['error']:
-            service['status'] = service_return['status']
+        service['error'] = service_return.get('error')
+        service['status'] = service_return.get('status')
     return render(request, 'serveradmin/services.html', {'services': services})
