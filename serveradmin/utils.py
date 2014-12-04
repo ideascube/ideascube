@@ -1,3 +1,4 @@
+from jango.utils.translation import ugettext as _
 from subprocess import Popen, PIPE
 from re import match
 
@@ -14,5 +15,5 @@ def call_service(service):
     elif stderr:
         to_return = {'error': stderr}
     else:
-        to_return = {'error': service['name']+': unknown error'}
+        to_return = {'error': service['name']+': '+_('unknown error')}
     return to_return
