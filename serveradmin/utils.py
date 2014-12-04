@@ -1,4 +1,4 @@
-from jango.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _
 from subprocess import Popen, PIPE
 from re import match
 
