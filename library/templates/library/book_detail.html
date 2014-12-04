@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{{ book }}</h1>
+    {% if book.cover %}<img src="{{ book.cover.url }}" />{% endif %}
+    <p>{{ book.summary }}</p>
+    {% if user.is_staff %}
+        <a href="{% url 'library:book_update' pk=book.pk %}">Edit</a>
+    {% endif %}
+    <ul>
+        {% for specimen in book.specimen.all %}
+            <li>{{ specimen }} <a href="{% url 'library:specimen_update' pk=specimen.pk %}">{% trans "Edit specimen" %}</a>
+        {% empty %}
+            {% trans "No specimen for this book." %}
+        {% endfor %}
+    </ul>
+    <a href="{% url 'library:specimen_create' book_pk=book.pk %}">{% trans "Add a specimen" %}</a>
+    <a href="{% url 'library:book_delete' pk=book.pk %}">{% trans "Delete this book" %}</a>
+{% endblock content %}

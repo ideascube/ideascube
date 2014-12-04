@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    {% if specimen %}
+        <h2>{% trans "Edit book specimen" %} "{{ specimen }}"</h2>
+    {% else %}
+        <h2>{% trans "New book specimen" %}</h2>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="{% trans 'submit' %}" />
+    </form>
+    {% if specimen %}
+        <a href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</li></a>
+    {% endif %}
+{% endblock content %}
