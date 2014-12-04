@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <form name="services" action="." method="POST">
     {% csrf_token %}
     <input type="hidden" name="name" value="{{ service.name }}">
@@ -5,10 +7,10 @@
     {% if service.error %}
         <strong>{{ service.error }}</strong>
     {% elif service.status %}
-        <input type="submit" name="restart" value="Restart">
-        <input type="submit" name="stop" value="Stop">
+        <input type="submit" name="restart" value="{% trans 'Restart' %}">
+        <input type="submit" name="stop" value="{% trans 'Stop' %}">
     {% else %}
-        <input type="submit" name="start" value="Start">
+        <input type="submit" name="start" value="{% trabs 'Start' %}">
     {% endif %}
     <span>{{ service.sum }}</span>
 </form>

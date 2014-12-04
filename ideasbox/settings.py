@@ -127,10 +127,13 @@ DATABASES = {
 }
 
 SERVICES = [
-    {'name': 'apache2', 'sum': _('Daemon which provide web content')},
-    {'name': 'bind9', 'sum': _('Daemon which provide local DNS')},
-    {'name': 'kalite', 'sum': _('Daemon which provide KhanAcademy on lan')},
-    {'name': 'kiwix', 'sum': _('Daemon which provide Wikipedia on lan')},
-    {'name': 'ntp', 'sum': _('Net time protocol')},
-    {'name': 'ssh', 'sum': _('Daemon used for distant connexion to server')},
+    {'name': 'apache2', 'description': _('Daemon which provide web content')},
+    {'name': 'bind9', 'description': _('Daemon which provide local DNS')},
+    {'name': 'kalite',
+        'description': _('Daemon which provide KhanAcademy on lan')},
+    {'name': 'kiwix',
+        'description': _('Daemon which provide Wikipedia on lan')},
+    {'name': 'ntp', 'description': _('Net time protocol')},
+    {'name': 'ssh',
+        'description': _('Daemon used for distant connexion to server')},
 ]
