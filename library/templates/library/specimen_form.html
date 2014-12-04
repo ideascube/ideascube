@@ -13,6 +13,6 @@
         <input type="submit" value="{% trans 'submit' %}" />
     </form>
     {% if specimen %}
-        <a href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</li></a>
+        <a href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</a>
     {% endif %}
 {% endblock content %}
