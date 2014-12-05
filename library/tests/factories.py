@@ -1,3 +1,5 @@
+from django.conf import settings
+
 import factory
 from factory.fuzzy import FuzzyText
 
@@ -8,6 +10,7 @@ class BookFactory(factory.django.DjangoModelFactory):
     title = factory.Sequence(lambda n: "Test book %03d" % n)
     summary = "This is a test summary"
     section = 1
+    lang = settings.LANGUAGE_CODE
 
     class Meta:
         model = Book

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
@@ -30,6 +31,10 @@ book_update = staff_member_required(BookUpdate.as_view())
 class BookCreate(CreateView):
     model = Book
     form_class = BookForm
+    initial = {
+        'lang': settings.LANGUAGE_CODE,
+        'location': settings.IDEASBOX_ID
+    }
 book_create = staff_member_required(BookCreate.as_view())
 
 

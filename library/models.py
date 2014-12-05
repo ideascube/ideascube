@@ -35,11 +35,9 @@ class Book(TimeStampedModel):
     summary = models.TextField(_('summary'), blank=True)
     section = models.PositiveSmallIntegerField(_('section'),
                                                choices=SECTION_CHOICES)
-    location = models.CharField(_('location'), max_length=300, blank=True,
-                                default=settings.IDEASBOX_ID)
+    location = models.CharField(_('location'), max_length=300, blank=True)
     lang = models.CharField(_('Language'), max_length=10,
-                            choices=settings.LANGUAGES,
-                            default=settings.LANGUAGE_CODE)
+                            choices=settings.LANGUAGES)
     cover = models.ImageField(_('cover'), upload_to='library/cover',
                               blank=True)
 
