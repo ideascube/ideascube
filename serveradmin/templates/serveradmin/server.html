@@ -4,7 +4,9 @@
 {% block content %}
 <form name="server" action="." method="POST">
     {% csrf_token %}
-    <input type="submit" name="stop" value="{% trans 'Stop' %}">
+    <label>{% trans 'Stop the server' %}</label>
+    <input type="submit" name="stop" value="{% trans 'Stop' %}"><br>
+    <label>{% trans 'Restart the server' %}</label>
     <input type="submit" name="restart" value="{% trans 'Restart' %}">
 </form>
 {% endblock content %}
