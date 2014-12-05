@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Welcome to Services<br>
+{% for service in services %}
+    {% include "serveradmin/service_form.html" %}
+{% endfor %}
+{% endblock content %}
