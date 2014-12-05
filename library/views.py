@@ -10,7 +10,7 @@ from .forms import BookSpecimenForm, BookForm
 
 class Index(ListView):
     model = Book
-    queryset = Book.available.all()
+    queryset = Book.objects.available()
     template_name = 'library/index.html'
     paginate_by = 10
 index = Index.as_view()

@@ -6,10 +6,9 @@ from django.utils.translation import ugettext_lazy as _
 from ideasbox.models import TimeStampedModel
 
 
-class AvailableManager(models.Manager):
-    def get_queryset(self):
-        return super(AvailableManager, self).get_queryset().filter(
-            specimen__isnull=False).distinct()
+class BookQuerySet(models.QuerySet):
+    def available(self):
+        return self.filter(specimen__isnull=False).distinct()
 
 
 # Create your models here.
@@ -44,8 +43,7 @@ class Book(TimeStampedModel):
     cover = models.ImageField(_('cover'), upload_to='library/cover',
                               blank=True)
 
-    objects = models.Manager()
-    available = AvailableManager()
+    objects = BookQuerySet.as_manager()
 
     class Meta:
         ordering = ('title', )
