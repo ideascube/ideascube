@@ -36,6 +36,6 @@ def server(request):
         if 'stop' in request.POST:
             call(["sudo", "poweroff"])
         elif 'restart' in request.POST:
-            call(["sudo", "restart"])
+            call(["sudo", "reboot"])
 
     return render(request, 'serveradmin/server.html')
