@@ -13,7 +13,7 @@ class BookSpecimenForm(forms.ModelForm):
 class BookForm(forms.ModelForm):
 
     def clean_isbn(self):
-        # Make sure empty values are mapped to None, not empty string
+        # Make sure empty values are mapped to None, not empty string.
         return self.cleaned_data['isbn'] or None
 
     class Meta:
