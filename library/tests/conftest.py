@@ -1,6 +1,6 @@
 import pytest
 
-from .tests.factories import BookFactory, BookSpecimenFactory
+from .factories import BookFactory, BookSpecimenFactory
 
 
 @pytest.fixture()
