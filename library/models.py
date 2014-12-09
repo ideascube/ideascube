@@ -44,7 +44,7 @@ class Book(TimeStampedModel):
     objects = BookQuerySet.as_manager()
 
     class Meta:
-        ordering = ('title', )
+        ordering = ['title']
 
     def __unicode__(self):
         return self.title
