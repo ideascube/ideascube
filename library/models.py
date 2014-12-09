@@ -60,7 +60,7 @@ class BookSpecimen(TimeStampedModel):
     remarks = models.TextField(_('remarks'), blank=True)
 
     def __unicode__(self):
-        return u'Specimen %s of "%s"' % (self.serial, self.book)
+        return u'Specimen {0} of "{1}"'.format(self.serial, self.book)
 
     def get_absolute_url(self):
         return reverse('library:book_detail', kwargs={'pk': self.book.pk})
