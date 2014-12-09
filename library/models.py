@@ -56,7 +56,7 @@ class Book(TimeStampedModel):
 class BookSpecimen(TimeStampedModel):
 
     book = models.ForeignKey(Book, related_name='specimen')
-    serial = models.CharField(max_length=40, unique=True)
+    serial = models.CharField(_('serial'), max_length=40, unique=True)
     remarks = models.TextField(_('remarks'), blank=True)
 
     def __unicode__(self):
