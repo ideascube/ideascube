@@ -21,8 +21,7 @@ def test_only_books_with_specimen_should_be_in_index(app, book, specimen):
 
 def test_index_page_is_paginated(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
-    for i in xrange(4):
-        BookSpecimenFactory()
+    BookSpecimenFactory.create_batch(size=4)
     response = app.get(reverse('library:index'))
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
