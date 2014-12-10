@@ -1,0 +1,9 @@
+{% extends 'third-two-third.html' %}
+
+{% load i18n %}
+
+{% block third %}
+    <ul class="card tinted admin">
+        <li><a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
+    </ul>
+{% endblock third %}

@@ -1,0 +1,487 @@
+/* ************************************************* */
+/* *********************** FONT ******************** */
+/* ************************************************* */
+@font-face {
+    font-family: 'fira_sansbold';
+    src: url('./font/FiraSans-Bold.eot');
+    src: url('./font/FiraSans-Bold.eot?#iefix') format('embedded-opentype'),
+         url('./font/FiraSans-Bold.woff') format('woff'),
+         url('./font/FiraSans-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'fira_sansmedium';
+    src: url('./font/FiraSans-Medium.eot');
+    src: url('./font/FiraSans-Medium.eot?#iefix') format('embedded-opentype'),
+         url('./font/FiraSans-Medium.woff') format('woff'),
+         url('./font/FiraSans-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'fira_sansregular';
+    src: url('./font/FiraSans-Regular.eot');
+    src: url('./font/FiraSans-Regular.eot?#iefix') format('embedded-opentype'),
+         url('./font/FiraSans-Regular.woff') format('woff'),
+         url('./font/FiraSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'fira_sansbook';
+    src: url('./font/FiraSans-Book.eot');
+    src: url('./font/FiraSans-Book.eot?#iefix') format('embedded-opentype'),
+         url('./font/FiraSans-Book.woff') format('woff'),
+         url('./font/FiraSans-Book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'fira_sanslight';
+    src: url('./font/FiraSans-Light.eot');
+    src: url('./font/FiraSans-Light.eot?#iefix') format('embedded-opentype'),
+         url('./font/FiraSans-Light.woff') format('woff'),
+         url('./font/FiraSans-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/* ************************************************* */
+/* ******************** GENERIC RULES ************** */
+/* ************************************************* */
+body {
+    margin: 0;
+    padding: 0;
+}
+body,
+input,
+textarea {
+  color:#404040;
+  color:rgba(0,0,0,0.75);
+  font:15px/20px 'fira_sansregular', sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+div, ul, li, a, section, nav,
+h1, h2, h3, h4, h5, h6,
+hr, input, textarea, footer, header {
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+ol, ul {
+    list-style: none;
+}
+h2, h3 {
+    margin-bottom: 15px;
+    line-height: 1.2em;
+}
+h4, h5 {
+    margin-bottom: 5px;
+}
+h1 {
+    line-height: 1em;
+}
+h1, h2, h3, h4, h5 {
+    font-family: 'fira_sansbold';
+    font-weight: normal;
+}
+strong {
+    font-family: "fira_sansbold";
+    font-weight: normal;
+}
+a {
+    color: #333;
+}
+img {
+    max-width: 100%;
+}
+
+/* ************************************************* */
+/* *********************** GRID ******************** */
+/* ************************************************* */
+.row {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+}
+.row + .row {
+    margin-top: 40px;
+}
+.col {
+    flex: 0 1 auto;
+}
+.col + .col {
+    padding-left: 40px;
+}
+html[dir='rtl'] .col + .col {
+    padding-left: 0;
+    padding-right: 40px;
+}
+.half {
+    width: 50%;
+}
+.third {
+    width: 33.33%;
+}
+.two-third {
+    width: 66.66%
+}
+.quarter {
+    width: 25%;
+}
+.wide {
+    width: 100%;
+    padding-right: inherit;
+}
+.mshow, .tshow {
+    display: none;
+}
+.flow {
+    display: flex;
+}
+.flow * + * {
+    margin-left: 5px;
+}
+html[dir='rtl'] .flow * + * {
+    margin-right: 5px;
+}
+
+
+/* ************************************************* */
+/* ********************** FORMS ******************** */
+/* ************************************************* */
+input[type="text"], input[type="password"], input[type="date"],
+input[type="datetime"], input[type="email"], input[type="number"],
+input[type="search"], input[type="tel"], input[type="time"],
+input[type="url"], textarea {
+    background-color: white;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px 2px 2px 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+    color: rgba(0, 0, 0, 0.75);
+    display: block;
+    font-family: inherit;
+    font-size: 14px;
+    height: 50px;
+    margin: 0 0 14px;
+    padding: 7px;
+    width: 100%;
+}
+input[type="submit"],
+.button {
+    border: none;
+    border-radius: 2px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.1em;
+    background-color: #6C7A89;
+    display: inline-block;
+    margin-top: 10px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+.button.action {
+    background-color: #C75C5C;
+}
+.button.neutral {
+    background-color: #E0E0D1;
+    color: #666;
+}
+input[type="submit"]:hover,
+.button:hover {
+    background-color: #95A5A6;
+    color: #fff;
+}
+textarea {
+    height: 200px;
+}
+select {
+    width: 100%;
+    background-color: #fff;
+    height: 28px;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.75);
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+select[multiple="multiple"] {
+    height: auto;
+}
+
+
+/* ************************************************* */
+/* *************** HEADER & FOOTER ***************** */
+/* ************************************************* */
+header {
+    display: flex;
+    flex-direction: row;
+    min-height: 100px;
+    padding: 0 20px;
+    background-color: #fefefe;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 40px;
+}
+header section {
+    align-self: center;
+    display: flex;
+}
+header h1 {
+    line-height: 100px;
+    margin-left: 40px;
+    padding-left: 90px;
+    font-size: 40px;
+    font-weight: normal;
+    font-family: 'fira_sanslight';
+    background-image: url('./img/logo.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 80px;
+}
+html[dir='rtl'] header h1 {
+    background-position: right center;
+    padding-right: 90px;
+}
+header .menu {
+    margin-right: 60px;
+    justify-content: flex-end;
+    flex-grow: 3;
+}
+header .menu a {
+    color: #333;
+    line-height: 100px;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-family: 'fira_sansbold';
+    font-weight: normal;
+}
+header .menu a:hover {
+    text-decoration: underline;
+}
+header .menu a + a {
+    margin-left: 20px;
+}
+html[dir='rtl'] header .menu a + a {
+    margin-left: 0;
+    margin-right: 20px;
+}
+footer {
+    border-top: 1px solid #222;
+    padding: 50px;
+    color: #fefefe;
+    background-color: #333;
+    margin-top: 100px;
+}
+footer a,
+header a {
+    text-decoration: none;
+    color: #fefefe;
+    font-family: 'fira_sanslight';
+}
+header h1 a {
+    color: #333;
+}
+.boxid {
+    font-family: 'fira_sansbold';
+    font-weight: normal;
+    color: #F89406;
+    font-size: 15px;
+    padding: 3px 5px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    top: 25px;
+    left: -31px;
+    float: right;
+}
+html[dir='rtl'] .boxid {
+    float: left;
+    right: -31px;
+}
+
+
+/* ************************************************* */
+/* ******************** TOOLS ********************** */
+/* ************************************************* */
+.card {
+    float: none;
+    clear: both;
+}
+.card + .card {
+    margin-top: 20px;
+}
+.card h4 {
+    text-transform: uppercase;
+}
+.card h4 a {
+    text-decoration: none;
+}
+.card.khanacademy {
+    background-image: url('./img/khanacademy.png')
+}
+.card.wikipedia {
+    background-image: url('./img/wikipedia.png')
+}
+.card img {
+    max-width: 150px;
+    float: left;
+    margin-right: 10px;
+}
+html[dir='rtl'] .card img {
+    float: right;
+    margin-left: 10px;
+    margin-right: 0;
+}
+.tinted {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 2px;
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+html[dir='rtl'] .tinted {
+    background-position: center left;
+}
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+.grid .card {
+    clear: none;
+    margin-right: 10px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.card.book img {
+    float: right;
+    max-height: 100px;
+    margin-left: 10px;
+}
+html[dir='rtl'] .card.book img {
+    float: left;
+    margin-left: 0;
+    margin-right: 10px;
+}
+.card.book {
+    overflow: hidden;
+}
+.card h3 em {
+    font-family: 'fira_sanslight';
+    font-style: normal;
+}
+.card p {
+    margin: 5px 0;
+}
+.card h3, .card h4 {
+    margin-bottom: 10px;
+}
+.theme {
+    font-family: 'fira_sansbook';
+    text-transform: uppercase;
+}
+.learn {
+    color: #19B5FE;
+}
+.read {
+    color: #87D37C;
+}
+.create {
+    color: #D2527F;
+}
+div.error,
+span.error {
+    background-color: #C0392B;
+    color: #eee;
+    padding: 5px;
+}
+
+
+/* ************************************************* */
+/* ******************** HOME *********************** */
+/* ************************************************* */
+
+
+/* ************************************************* */
+/* ******************** BLOG *********************** */
+/* ************************************************* */
+
+
+/* ************************************************* */
+/* ******************* LIBRARY ********************* */
+/* ************************************************* */
+img.cover {
+    box-shadow: 0 0 2px black;
+    max-height: 300px;
+    max-width: 200px;
+}
+.book-list .card {
+    border: 1px solid #efefef;
+    padding: 5px;
+    width: 250px;
+    height: 300px;
+    text-align: center;
+}
+.book-list .card h3 {
+    height: 2em;
+}
+.book-list .card img {
+    max-height: 200px;
+    float: none;
+}
+.book-detail h2, h3, h4, h5 {
+    margin-bottom: 10px;
+}
+.book-detail h4 {
+    text-transform: uppercase;
+}
+.book-detail h5 {
+    font-family: 'fira_sanslight';
+    font-size: 1.3em;
+}
+.book-detail h3 {
+    font-family: 'fira_sansmedium';
+    font-size: 1em;
+}
+
+/* ************************************************* */
+/* **************** SERVER ADMIN ******************* */
+/* ************************************************* */
+.services .service {
+    padding-bottom: 20px;
+}
+.services .service h3 {
+    text-transform: uppercase;
+}
+.services .service + .service {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+.services .status-error h3 span,
+.services .status-off h3 span,
+.services .status-on h3 span {
+    font-family: 'fira_sansbook';
+}
+.services .status-on h3 span {
+    color: #26A65B;
+}
+.services .status-error h3 span,
+.services .status-off h3 span {
+    color: #C0392B;
+}

@@ -6,11 +6,23 @@ from django.shortcuts import render
 from django.views.generic import (ListView, DetailView, UpdateView, CreateView,
                                   DeleteView)
 
+from blog.models import Content
+from library.models import Book
+
 user_model = get_user_model()
 
 
 def index(request):
-    return render(request, 'index.html', {})
+    contents = Content.published.all()[:3]
+    try:
+        random_book = Book.objects.available().order_by('?')[0]
+    except IndexError:
+        random_book = None
+    context = {
+        'blog_contents': contents,
+        'random_book': random_book,
+    }
+    return render(request, 'index.html', context)
 
 
 class UserList(ListView):

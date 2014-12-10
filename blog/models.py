@@ -60,3 +60,6 @@ class Content(TimeStampedModel, models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:content_detail', kwargs={'pk': self.pk})
+
+    def get_author_display(self):
+        return self.author_text or unicode(self.author)

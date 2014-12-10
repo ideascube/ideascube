@@ -1,17 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'two-third-third.html' %}
 {% load i18n %}
 
-{% block content %}
-    <ul>
+{% block twothird %}
     {% for content in content_list  %}
-        <li>
-            <a href="{% url 'blog:content_detail' pk=content.pk %}">
-                <h3>{{ content }}</h3>
-                <p>{{ content.summary }}</p>
-            </a>
-        </li>
+        {% include 'blog/content_card.html' %}
     {% endfor %}
-    </ul>
     {% include "ideasbox/pagination.html" %}
-    <a href="{% url 'blog:content_create' %}">{% trans "Add content" %}</a>
-{% endblock content %}
+{% endblock twothird %}
+{% block third %}
+    {% if user.is_staff %}
+        <div class="card tinted admin">
+            <a href="{% url 'blog:content_create' %}">{% trans "Add content" %}</a>
+        </div>
+    {% endif %}
+{% endblock third %}

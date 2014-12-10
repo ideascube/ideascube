@@ -3,9 +3,11 @@
 
 
 {% block content %}
-    <form action="." method="POST" id="login">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="{% trans 'Log in' %}" />
-    </form>
+    <div class="row">
+        <form action="." method="POST" id="login">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="{% trans 'Log in' %}" />
+        </form>
+    </div>
 {% endblock content %}

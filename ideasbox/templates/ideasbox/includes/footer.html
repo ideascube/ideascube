@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<footer>
+    <div class="row">
+        <ul class="col third">Ideas Box
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Library</a></li>
+            <li><a href="#">Contents</a></li>
+        </ul>
+        <ul class="col third">Site Administration
+            <li><a href="{% url 'user_list' %}">Manage members</a></li>
+            <li><a href="#">Manage blog</a></li>
+            <li><a href="#">Manage library</a></li>
+        </ul>
+        <ul class="col third">Server Administration
+            <li><a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
+            <li><a href="#">Restart server</a></li>
+            <li><a href="#">Backup / restore</a></li>
+        </ul>
+    </div>
+</footer>

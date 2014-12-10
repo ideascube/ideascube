@@ -1,0 +1,7 @@
+<div class="card">
+    <a href="{% url 'blog:content_detail' pk=content.pk %}">
+        <h3>{{ content }}</h3>
+    </a>
+    <h5>{{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.get_author_display }}</h5>
+    <p>{% if content.image %}<img src="{{ content.image.url }}">{% endif %}{{ content.summary }}</p>
+</div>

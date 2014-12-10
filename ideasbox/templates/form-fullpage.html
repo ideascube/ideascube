@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+                <div class="col two-third">
+                    {% block title %}{% endblock title %}
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+                <div class="col third">
+                    {% block col %}{% endblock col %}
+                </div>
+        </div>
+    </form>
+{% endblock content %}

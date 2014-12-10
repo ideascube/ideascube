@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block content %}
-    <h1>Welcome to Babylon</h1>
-    <p><a href="{% url 'blog:index' %}">Wanna see the blog?</a></p>
-    <p><a href="{% url 'library:index' %}">Wanna see the books?</a></p>
-    <p><a href="{% url 'user_list' %}">Wanna see the members?</a></p>
+    <div class="row">
+        <div class="col half">
+            <h2 class="flow"><span class="theme create">blog</span><span>{% trans "LAST POSTS" %}</span></h2>
+            {% for content in blog_contents %}
+                {% include 'blog/content_card.html' %}
+            {% endfor %}
+        </div>
+        <div class="col half">
+            {% include 'ideasbox/includes/wikipedia_card.html' %}
+            {% include 'ideasbox/includes/khan-academy_card.html' %}
+            {% if random_book %}
+                {% include 'ideasbox/includes/book_card.html' with book=random_book %}
+            {% endif %}
+        </div>
+    </div>
 {% endblock content %}
