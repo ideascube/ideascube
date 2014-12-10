@@ -31,7 +31,7 @@ def test_it_should_be_possible_to_have_more_than_one_isbn_null_value():
     assert len(Book.objects.filter(isbn__isnull=True)) == 2
 
 
-def test_it_should__not_be_possible_to_have_twice_the_same_isbn():
+def test_it_should_not_be_possible_to_have_twice_the_same_isbn():
     assert len(Book.objects.filter(isbn__isnull=True)) == 0
     BookFactory(isbn='123456')
     with pytest.raises(IntegrityError):
