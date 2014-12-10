@@ -7,7 +7,7 @@ from ..models import Book, BookSpecimen
 
 
 class BookFactory(factory.django.DjangoModelFactory):
-    title = factory.Sequence(lambda n: "Test book %03d" % n)
+    title = factory.Sequence(lambda n: "Test book {0}".format(n))
     summary = "This is a test summary"
     section = 1
     lang = settings.LANGUAGE_CODE
