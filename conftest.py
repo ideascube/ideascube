@@ -42,5 +42,5 @@ def staffapp(app, staffuser):
     form['username'] = staffuser.serial
     form['password'] = 'password'
     form.submit().follow()
-    setattr(app, 'user', user)  # for later use, if needed
+    setattr(app, 'user', staffuser)  # for later use, if needed
     return app
