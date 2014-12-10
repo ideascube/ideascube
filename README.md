@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ideas-box/ideasbox.lan.svg?branch=master)](https://travis-ci.org/ideas-box/ideasbox.lan)
+[![Requirements Status](https://requires.io/github/ideas-box/ideasbox.lan/requirements.svg?branch=master)](https://requires.io/github/ideas-box/ideasbox.lan/requirements/?branch=master) [![Build Status](https://travis-ci.org/ideas-box/ideasbox.lan.svg?branch=master)](https://travis-ci.org/ideas-box/ideasbox.lan)
 
 # ideasbox.lan
 

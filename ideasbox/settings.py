@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'serveradmin',
     'ideasbox',
     'blog',
     'library',
@@ -126,3 +127,15 @@ DATABASES = {
         'NAME': os.path.join(MEDIA_ROOT, 'default.sqlite'),
     }
 }
+
+SERVICES = [
+    {'name': 'apache2', 'description': _('Daemon which provide web content')},
+    {'name': 'bind9', 'description': _('Daemon which provide local DNS')},
+    {'name': 'kalite',
+        'description': _('Daemon which provide KhanAcademy on lan')},
+    {'name': 'kiwix',
+        'description': _('Daemon which provide Wikipedia on lan')},
+    {'name': 'ntp', 'description': _('Net time protocol')},
+    {'name': 'ssh',
+        'description': _('Daemon used for distant connexion to server')},
+]
