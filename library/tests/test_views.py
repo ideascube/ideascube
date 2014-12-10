@@ -22,15 +22,16 @@ def test_only_books_with_specimen_should_be_in_index(app, book, specimen):
 def test_index_page_is_paginated(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
     BookSpecimenFactory.create_batch(size=4)
-    response = app.get(reverse('library:index'))
+    url = reverse('library:index')
+    response = app.get(url)
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(reverse('library:index') + '?page=2')
+    response = app.get('{url}?page=2'.format(url=url))
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    response = app.get(reverse('library:index') + '?page=3', status=404)
+    response = app.get('{url}?page=3'.format(url=url), status=404)
 
 
 def test_everyone_should_access_book_detail_page(app, book):
