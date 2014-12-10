@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{% blocktrans with name=specimen %}Are you sure you want to delete "{{ name }}"?{% endblocktrans %}</h2>
+    <p>{% blocktrans with name=specimen.book %}This will not delete book "{{ name }}"{% endblocktrans %}</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="confirm" value="{% trans 'yes' %}" />
+    </form>
+{% endblock content %}

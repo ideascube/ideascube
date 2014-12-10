@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'serveradmin',
     'ideasbox',
     'blog',
+    'library',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -92,6 +93,7 @@ for code, label in AVAILABLE_LANGUAGES:
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 
 # Ideas Box specifics
