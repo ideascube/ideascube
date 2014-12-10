@@ -27,6 +27,7 @@ class Book(TimeStampedModel):
         (10, _('other')),
     )
 
+    # We allow ISBN to be null, but when it is set it needs to be unique.
     isbn = models.CharField(max_length=40, unique=True, null=True, blank=True)
     authors = models.CharField(_('authors'), max_length=300, blank=True)
     serie = models.CharField(_('serie'), max_length=300, blank=True)
