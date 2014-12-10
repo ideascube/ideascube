@@ -36,5 +36,3 @@ def test_it_should_not_be_possible_to_have_twice_the_same_isbn():
     BookFactory(isbn='123456')
     with pytest.raises(IntegrityError):
         BookFactory(isbn='123456')
-    # FIXME Raises TransactionManagementError if do the following assert
-    # assert len(Book.objects.filter(isbn__isnull=True)) == 1
