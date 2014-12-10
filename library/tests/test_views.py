@@ -117,10 +117,10 @@ def test_staff_user_can_delete_book(staffapp, book):
 def test_staff_can_create_specimen(staffapp, book):
     url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
     form = staffapp.get(url).form
-    assert not book.specimen.count()
+    assert not book.specimens.count()
     form['serial'] = '23135321'
     form.submit().follow()
-    assert book.specimen.count()
+    assert book.specimens.count()
 
 
 def test_staff_can_edit_specimen(staffapp, specimen):

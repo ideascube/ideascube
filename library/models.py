@@ -8,7 +8,7 @@ from ideasbox.models import TimeStampedModel
 
 class BookQuerySet(models.QuerySet):
     def available(self):
-        return self.filter(specimen__isnull=False).distinct()
+        return self.filter(specimens__isnull=False).distinct()
 
 
 # Create your models here.
@@ -55,7 +55,7 @@ class Book(TimeStampedModel):
 
 class BookSpecimen(TimeStampedModel):
 
-    book = models.ForeignKey(Book, related_name='specimen')
+    book = models.ForeignKey(Book, related_name='specimens')
     serial = models.CharField(_('serial'), max_length=40, unique=True)
     remarks = models.TextField(_('remarks'), blank=True)
 
