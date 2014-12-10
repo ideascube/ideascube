@@ -123,3 +123,15 @@ def test_staff_can_edit_delete_content(staffapp, deleted):
     form['title'] = title
     form.submit().follow()
     assert Content.objects.get(pk=deleted.pk).title == title
+
+
+def test_can_create_content_without_image(staffapp):
+    assert not Content.objects.count()
+    form = staffapp.get(reverse('blog:content_create')).form
+    form['title'] = 'my content title'
+    form['summary'] = 'my content summary'
+    form['text'] = 'my content text'
+    form['author'] = staffapp.user.pk
+    form['published_at'] = '2014-12-10'
+    form.submit().follow()
+    assert Content.objects.count()
