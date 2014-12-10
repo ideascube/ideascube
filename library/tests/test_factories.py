@@ -21,6 +21,7 @@ def test_it_should_override_book_fields_passed_to_factory():
 def test_it_should_create_a_default_book_specimen_from_factory():
     specimen = BookSpecimenFactory()
     assert specimen.pk is not None
+    assert specimen.book.pk is not None
     assert unicode(specimen)
 
 
