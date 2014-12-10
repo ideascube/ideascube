@@ -32,6 +32,10 @@ Run the initial database migration::
 
     python manage.py migrate
 
+To populate the database with some initial dummy data, you can run the command::
+
+    python manage.py dummydata
+
 
 Production setup
 ~~~~~~~~~~~~~~~~
