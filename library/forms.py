@@ -8,6 +8,7 @@ class BookSpecimenForm(forms.ModelForm):
     class Meta:
         model = BookSpecimen
         widgets = {'book': forms.HiddenInput}
+        fields = '__all__'
 
 
 class BookForm(forms.ModelForm):
@@ -18,3 +19,4 @@ class BookForm(forms.ModelForm):
 
     class Meta:
         model = Book
+        fields = '__all__'
