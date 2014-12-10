@@ -2,11 +2,11 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
-from django.views.generic import (ListView, DetailView, UpdateView, CreateView,
-                                  DeleteView)
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
 
+from .forms import BookForm, BookSpecimenForm
 from .models import Book, BookSpecimen
-from .forms import BookSpecimenForm, BookForm
 
 
 class Index(ListView):
