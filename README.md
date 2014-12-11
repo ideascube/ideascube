@@ -4,14 +4,16 @@
 
 This Django repository is the main application of the Ideas Box server.
 
+More about the Ideas Box concept: http://www.ideas-box.org/
+
 More details about the server of the [overview](https://github.com/ideas-box/ideasbox.lan/wiki/Server-Overview)
 
-## Custom user model
-When setting up an Ideas Box server, if you need custom properties on the user
-model, you should create a new model that inherits from
-`ideasbox.models.DefaultUser`, and to have Django use it, you need to
-set the environment variable `AUTH_USER_MODEL` **before running the initial
-Django migration**.
+## How can I give a hand?
+
+* Join the brainstorming: read and comment issues and wiki; join the #ideasbox chan on Freenode
+* Review [pull requests](https://github.com/ideas-box/ideasbox.lan/pulls)
+* Take an [issue](https://github.com/ideas-box/ideasbox.lan/issues) an code :)
+* What about a sprint ?
 
 ## IRC
 
