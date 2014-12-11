@@ -7,7 +7,7 @@
         {% for book in book_list  %}
             {% include 'library/book_card.html' %}
         {% empty %}
-            {% trans "No book yet." %}
+            {% trans "No books yet." %}
         {% endfor %}
     </div>
     {% include "ideasbox/pagination.html" %}
