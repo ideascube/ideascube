@@ -13,6 +13,7 @@ Contents:
 
    install
    user_model
+   i18n
 
 
 Indices and tables

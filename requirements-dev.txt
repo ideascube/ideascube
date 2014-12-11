@@ -5,4 +5,5 @@ pyquery==1.2.9
 pytest==2.6.4
 pytest-django==2.7.0
 Sphinx==1.2.3
+transifex-client==0.10
 WebTest==2.0.16
