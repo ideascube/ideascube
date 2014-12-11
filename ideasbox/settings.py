@@ -130,6 +130,8 @@ except KeyError:
     else:
         raise
 MEDIA_ROOT = os.path.join(STORAGE_ROOT, 'main')
+STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')  # TODO move out of backuped
+                                                    # storage
 AUTH_USER_MODEL = os.environ.get('AUTH_USER_MODEL', 'ideasbox.DefaultUser')
 IDEASBOX_NAME = os.environ.get('IDEASBOX_NAME', IDEASBOX_ID)
 

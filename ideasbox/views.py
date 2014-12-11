@@ -14,10 +14,7 @@ user_model = get_user_model()
 
 def index(request):
     contents = Content.published.all()[:3]
-    try:
-        random_book = Book.objects.available().order_by('?')[0]
-    except IndexError:
-        random_book = None
+    random_book = Book.objects.available().order_by('?').first()
     context = {
         'blog_contents': contents,
         'random_book': random_book,
