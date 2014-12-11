@@ -4,7 +4,7 @@ Translation
 Ideas Box translation is managed through `Transifex <https://www.transifex.com/organization/ideasbox/dashboard/ideasboxlan>`_.
 
 
-Once added new strings to translate in the code source, you need to run the
+Once you added new strings to translate in the code source, you need to run the
 following command::
 
     make collect_translations
@@ -24,4 +24,4 @@ And then, to have the translations ready to use for Django::
 
 Remember to commit the new translations and compiled files!
 
-More about how Django manages translations on `the Django documentation <https://docs.djangoproject.com/en/1.7/topics/i18n/>`_.
+More about how Django manages translations in `the Django documentation <https://docs.djangoproject.com/en/1.7/topics/i18n/>`_.
