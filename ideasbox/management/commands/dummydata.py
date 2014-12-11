@@ -48,25 +48,36 @@ class Command(BaseCommand):
                        image__from_path='ideasbox/tests/data/plane.jpg')
         ContentFactory(title='This is a draft content', text=text,
                        status=Content.DRAFT, author=staff, image=None)
-        ContentFactory(title='This is a draft content', text=text,
+        ContentFactory(title='This is a deleted content', text=text,
                        status=Content.DELETED, author=staff, image=None)
 
         # Create some books.
-        summary = (u"Le Petit Prince est une œuvre de langue française, la "
-                   u"plus connue d'Antoine de Saint-Exupéry. Publié en 1943 à "
-                   u"New York simultanément en anglais et en français, c'est "
-                   u"un conte poétique et philosophique sous l'apparence "
-                   u"d'un conte pour enfants. Le langage, simple et dépouillé "
-                   u"parce qu'il est destiné à être compris par des enfants, "
-                   u"est en réalité pour le narrateur le véhicule privilégié "
-                   u"d'une conception symbolique de la vie. Chaque chapitre "
-                   u"relate une rencontre du petit prince qui laisse celui-ci "
-                   u"perplexe quant au comportement absurde des « grandes "
-                   u"personnes ». Chacune de ces rencontres peut être lue "
-                   u"comme une allégorie.")
-        path = 'ideasbox/tests/data/lepetitprince.jpg'
-        book = BookFactory(title='Le Petit Prince', summary=summary,
-                           authors=u'Antoine de Saint-Exupéry', lang='fr',
+        summary = ("If one chanced to examine the catalogues of Kingsbridge "
+                   "College for the past hundred years it would be found that "
+                   "in most of them is recorded the name of some dead and "
+                   "gone Deering—a name famous in the annals of the South—who "
+                   "came up from Louisiana, “marched through the four long "
+                   "happy years of college,” as the old song has it, with an "
+                   "arts degree to his credit; or, perchance, marched out at "
+                   "the end of one or two of them with nothing to his credit "
+                   "at all. Kingsbridge was a tradition in the Deering "
+                   "family, southern though it was—a tradition that was "
+                   "hardly broken, even when in 1861 Victor Deering and a "
+                   "hundred other chivalrous youths threw their text-books "
+                   "out of the windows and enlisted in the armies of the "
+                   "Confederacy. Victor’s father, Basil, too, was in the "
+                   "war, and laid down his arms at Appomattox as a "
+                   "brigadier-general—brevetted for gallantry on the field of "
+                   "action. For a while it seemed that no Deerings would go "
+                   "to Kingsbridge, but time at length healed the old "
+                   "antagonisms, and when it became a question where young "
+                   "Anthony, Victor’s boy, should go to[2] college, there was "
+                   "no longer any question that Kingsbridge should be the "
+                   "place.")
+        path = 'ideasbox/tests/data/deering-of-deal.jpg'
+        book = BookFactory(title='Deering of Deal', summary=summary,
+                           subtitle='The Spirit of the School',
+                           authors=u'Latta Griswold', lang='en',
                            cover__from_path=path)
         BookSpecimenFactory(book=book, serial="1234567")
         summary = (u"Le roman raconte les aventures d'un Gascon impécunieux "
