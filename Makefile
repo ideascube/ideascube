@@ -6,3 +6,5 @@ devinstall:
 	pip install -r requirements-dev.txt
 doc:
 	cd docs && make html
+dummydata:
+	python manage.py dummydata

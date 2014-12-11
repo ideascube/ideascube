@@ -11,6 +11,7 @@ class BookFactory(factory.django.DjangoModelFactory):
     summary = "This is a test summary"
     section = 1
     lang = settings.LANGUAGE_CODE
+    cover = factory.django.ImageField()
 
     class Meta:
         model = Book
