@@ -1,0 +1,562 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: ideasbox.lan\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-11 13:51+0000\n"
+"PO-Revision-Date: 2014-12-11 11:46+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/ideasboxlan/"
+"language/ar/)\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: blog/models.py:34
+msgid "draft"
+msgstr ""
+
+#: blog/models.py:35
+msgid "published"
+msgstr ""
+
+#: blog/models.py:36
+msgid "deleted"
+msgstr ""
+
+#: blog/models.py:39 library/models.py:34
+msgid "title"
+msgstr ""
+
+#: blog/models.py:41
+msgid "author text"
+msgstr ""
+
+#: blog/models.py:43 library/models.py:36
+msgid "summary"
+msgstr ""
+
+#: blog/models.py:44
+msgid "image"
+msgstr ""
+
+#: blog/models.py:45
+msgid "text"
+msgstr ""
+
+#: blog/models.py:46
+msgid "publication date"
+msgstr ""
+
+#: blog/models.py:47
+msgid "Status"
+msgstr ""
+
+#: blog/models.py:49 library/models.py:41
+#: library/templates/library/book_detail.html:16
+msgid "Language"
+msgstr ""
+
+#: blog/templates/blog/content_form.html:6
+msgid "Edit post"
+msgstr ""
+
+#: blog/templates/blog/content_form.html:8
+msgid "New post"
+msgstr ""
+
+#: blog/templates/blog/content_form.html:12
+#: library/templates/library/book_form.html:12
+#: library/templates/library/specimen_form.html:12
+msgid "submit"
+msgstr ""
+
+#: blog/templates/blog/index.html:13
+msgid "Add content"
+msgstr ""
+
+#: ideasbox/models.py:53
+msgid "usual name"
+msgstr ""
+
+#: ideasbox/models.py:54
+msgid "full name"
+msgstr ""
+
+#: ideasbox/models.py:55
+msgid "staff status"
+msgstr ""
+
+#: ideasbox/models.py:56
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: ideasbox/models.py:97
+msgid "Seen the Box"
+msgstr ""
+
+#: ideasbox/models.py:98
+msgid "Has been informed by partner organization"
+msgstr ""
+
+#: ideasbox/models.py:99
+msgid "Word of mouth"
+msgstr ""
+
+#: ideasbox/models.py:100
+msgid "Poster campaign"
+msgstr ""
+
+#: ideasbox/models.py:101 ideasbox/models.py:153
+msgid "Other"
+msgstr ""
+
+#: ideasbox/models.py:105
+msgid "Primary"
+msgstr ""
+
+#: ideasbox/models.py:106
+msgid "Secondary"
+msgstr ""
+
+#: ideasbox/models.py:107
+msgid "Professional"
+msgstr ""
+
+#: ideasbox/models.py:108
+msgid "College"
+msgstr ""
+
+#: ideasbox/models.py:112
+msgid "Couple"
+msgstr ""
+
+#: ideasbox/models.py:113
+msgid "Single"
+msgstr ""
+
+#: ideasbox/models.py:114
+msgid "Widowed"
+msgstr ""
+
+#: ideasbox/models.py:118
+msgid "Nationality"
+msgstr ""
+
+#: ideasbox/models.py:120
+msgid "City of origin"
+msgstr ""
+
+#: ideasbox/models.py:121
+msgid "ID card number"
+msgstr ""
+
+#: ideasbox/models.py:124
+msgid "Number of children under 12"
+msgstr ""
+
+#: ideasbox/models.py:127
+msgid "Number of children under 18"
+msgstr ""
+
+#: ideasbox/models.py:130
+msgid "Number of children above 18"
+msgstr ""
+
+#: ideasbox/models.py:133
+msgid "School level"
+msgstr ""
+
+#: ideasbox/models.py:137 ideasbox/models.py:184
+msgid "Family status"
+msgstr ""
+
+#: ideasbox/models.py:141
+msgid "Ideas Box awareness"
+msgstr ""
+
+#: ideasbox/models.py:149
+msgid "Student"
+msgstr ""
+
+#: ideasbox/models.py:150
+msgid "Teacher"
+msgstr ""
+
+#: ideasbox/models.py:151
+msgid "Without profession"
+msgstr ""
+
+#: ideasbox/models.py:152
+msgid "Profit profession"
+msgstr ""
+
+#: ideasbox/models.py:157
+msgid "Lives with family in the camp"
+msgstr ""
+
+#: ideasbox/models.py:158
+msgid "Lives without family in the camp"
+msgstr ""
+
+#: ideasbox/models.py:159
+msgid "Has family in the camp but lives without"
+msgstr ""
+
+#: ideasbox/models.py:173
+msgid "Refugee ID"
+msgstr ""
+
+#: ideasbox/models.py:174
+msgid "Camp entry date"
+msgstr ""
+
+#: ideasbox/models.py:176
+msgid "Current occupation"
+msgstr ""
+
+#: ideasbox/models.py:180
+msgid "Occupation in the country of origin"
+msgstr ""
+
+#: ideasbox/models.py:187
+msgid "Sent to school (if under 18)"
+msgstr ""
+
+#: ideasbox/models.py:189
+msgid "Activities in the camp"
+msgstr ""
+
+#: ideasbox/models.py:196
+msgid "Swahili knowledge"
+msgstr ""
+
+#: ideasbox/models.py:203
+msgid "French knowledge"
+msgstr ""
+
+#: ideasbox/models.py:210
+msgid "Kirundi knowledge"
+msgstr ""
+
+#: ideasbox/settings.py:93
+msgid "English"
+msgstr ""
+
+#: ideasbox/settings.py:94
+msgid "French"
+msgstr ""
+
+#: ideasbox/settings.py:95
+msgid "Arabic"
+msgstr ""
+
+#: ideasbox/settings.py:149
+msgid "Daemon which provide web content"
+msgstr ""
+
+#: ideasbox/settings.py:150
+msgid "Daemon which provide local DNS"
+msgstr ""
+
+#: ideasbox/settings.py:152
+msgid "Daemon which provide KhanAcademy on lan"
+msgstr ""
+
+#: ideasbox/settings.py:154
+msgid "Daemon which provide Wikipedia on lan"
+msgstr ""
+
+#: ideasbox/settings.py:155
+msgid "Net time protocol"
+msgstr ""
+
+#: ideasbox/settings.py:157
+msgid "Daemon used for distant connexion to server"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/book_card.html:4
+msgid "one book at random"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/book_card.html:5
+msgid "by"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/footer.html:16
+#: serveradmin/templates/serveradmin/index.html:7
+#: serveradmin/templates/serveradmin/services.html:6
+msgid "Manage services"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/header.html:3
+msgid "ideas box"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/header.html:5
+msgid "blog"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/header.html:6
+msgid "library"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/header.html:9
+msgid "log in"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/khan-academy_card.html:3
+msgid "Khan Academy"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/khan-academy_card.html:4
+msgid "blah blah blah xxxx."
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/wikipedia_card.html:3
+msgid "wikipedia"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/wikipedia_card.html:4
+msgid "Consultez l'encyclopédie libre et gratuite."
+msgstr ""
+
+#: ideasbox/templates/ideasbox/pagination.html:5
+msgid "previous"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/pagination.html:8
+#, python-format
+msgid "Page %(current)s of %(total)s."
+msgstr ""
+
+#: ideasbox/templates/ideasbox/pagination.html:11
+msgid "next"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/user_confirm_delete.html:5
+#, python-format
+msgid "Are you sure you want to delete user \"%(user_obj)s\"?"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/user_confirm_delete.html:9
+#: library/templates/library/book_confirm_delete.html:9
+#: library/templates/library/specimen_confirm_delete.html:10
+msgid "yes"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/user_form.html:6
+msgid "Edit user"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/user_form.html:8
+msgid "New User"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/user_list.html:5
+msgid "users"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/user_list.html:12
+msgid "Add user"
+msgstr ""
+
+#: ideasbox/templates/index.html:8
+msgid "LAST POSTS"
+msgstr ""
+
+#: ideasbox/templates/registration/login.html:10
+msgid "Log in"
+msgstr ""
+
+#: library/models.py:18
+msgid "digital"
+msgstr ""
+
+#: library/models.py:19
+msgid "children - cartoons"
+msgstr ""
+
+#: library/models.py:20
+msgid "children - novels"
+msgstr ""
+
+#: library/models.py:21
+msgid "children - documentary"
+msgstr ""
+
+#: library/models.py:22
+msgid "children - comics"
+msgstr ""
+
+#: library/models.py:23
+msgid "adults - novels"
+msgstr ""
+
+#: library/models.py:24
+msgid "adults - documentary"
+msgstr ""
+
+#: library/models.py:25
+msgid "adults - comics"
+msgstr ""
+
+#: library/models.py:26
+msgid "game"
+msgstr ""
+
+#: library/models.py:27
+msgid "other"
+msgstr ""
+
+#: library/models.py:32
+msgid "authors"
+msgstr ""
+
+#: library/models.py:33
+msgid "serie"
+msgstr ""
+
+#: library/models.py:35
+msgid "subtitle"
+msgstr ""
+
+#: library/models.py:37
+msgid "publisher"
+msgstr ""
+
+#: library/models.py:38
+msgid "section"
+msgstr ""
+
+#: library/models.py:40
+msgid "location"
+msgstr ""
+
+#: library/models.py:43
+msgid "cover"
+msgstr ""
+
+#: library/models.py:61
+msgid "serial"
+msgstr ""
+
+#: library/models.py:62
+msgid "remarks"
+msgstr ""
+
+#: library/templates/library/book_confirm_delete.html:5
+#, python-format
+msgid ""
+"Are you sure you want to delete book \"%(book)s\" and all its specimens?"
+msgstr ""
+
+#: library/templates/library/book_detail.html:9
+#: library/templates/library/index.html:5
+msgid "read"
+msgstr ""
+
+#: library/templates/library/book_detail.html:14
+msgid "Author"
+msgstr ""
+
+#: library/templates/library/book_detail.html:15
+msgid "Publisher"
+msgstr ""
+
+#: library/templates/library/book_detail.html:17
+msgid "ISBN"
+msgstr ""
+
+#: library/templates/library/book_detail.html:24
+msgid "Add a specimen"
+msgstr ""
+
+#: library/templates/library/book_detail.html:25
+msgid "Delete this book"
+msgstr ""
+
+#: library/templates/library/book_detail.html:26
+msgid "Edit this book"
+msgstr ""
+
+#: library/templates/library/book_detail.html:29
+msgid "Specimens"
+msgstr ""
+
+#: library/templates/library/book_detail.html:31
+msgid "Edit specimen"
+msgstr ""
+
+#: library/templates/library/book_detail.html:33
+msgid "No specimen for this book."
+msgstr ""
+
+#: library/templates/library/book_form.html:6
+msgid "Edit book"
+msgstr ""
+
+#: library/templates/library/book_form.html:8
+msgid "New book"
+msgstr ""
+
+#: library/templates/library/book_form.html:14
+msgid "cancel"
+msgstr ""
+
+#: library/templates/library/index.html:5
+msgid "Library"
+msgstr ""
+
+#: library/templates/library/index.html:10
+msgid "No books yet."
+msgstr ""
+
+#: library/templates/library/index.html:17
+msgid "Add a book"
+msgstr ""
+
+#: library/templates/library/specimen_confirm_delete.html:5
+#, python-format
+msgid "Are you sure you want to delete \"%(name)s\"?"
+msgstr ""
+
+#: library/templates/library/specimen_confirm_delete.html:6
+#, python-format
+msgid "This will not delete book \"%(name)s\""
+msgstr ""
+
+#: library/templates/library/specimen_form.html:6
+msgid "Edit book specimen"
+msgstr ""
+
+#: library/templates/library/specimen_form.html:8
+msgid "New book specimen"
+msgstr ""
+
+#: library/templates/library/specimen_form.html:14
+msgid "Delete specimen"
+msgstr ""
+
+#: serveradmin/templates/serveradmin/service_form.html:12
+msgid "Restart"
+msgstr ""
+
+#: serveradmin/templates/serveradmin/service_form.html:13
+msgid "Stop"
+msgstr ""
+
+#: serveradmin/templates/serveradmin/service_form.html:15
+msgid "Start"
+msgstr ""
+
+#: serveradmin/utils.py:13
+msgid "unknown error"
+msgstr ""

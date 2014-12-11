@@ -1,7 +1,6 @@
 {% load staticfiles i18n %}
-{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html{% if LANGUAGE_CODE in RTL_LANGUAGES %} dir="rtl"{% endif %}>
+<html{% if LANGUAGE_CODE|language_bidi %} dir="rtl"{% endif %}>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />

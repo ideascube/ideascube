@@ -12,17 +12,17 @@ def test_home_page(app):
 
 
 def test_anonymous_user_should_not_access_admin(app):
-    response = app.get('/admin/', status=302)
+    response = app.get(reverse('admin:index'), status=302)
     assert 'login' in response['Location']
 
 
 def test_normal_user_should_not_access_admin(loggedapp, user):
-    response = loggedapp.get('/admin/', status=302)
+    response = loggedapp.get(reverse('admin:index'), status=302)
     assert 'login' in response['Location']
 
 
 def test_staff_user_should_access_admin(staffapp):
-    assert staffapp.get('/admin/', status=200)
+    assert staffapp.get(reverse('admin:index'), status=200)
 
 
 def test_login_page_should_return_form_in_GET_mode(app):
