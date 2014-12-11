@@ -1,20 +1,37 @@
-{% extends 'base.html' %}
+{% extends 'two-third-third.html' %}
 {% load i18n %}
-
-{% block content %}
-    <h1>{{ book }}</h1>
-    {% if book.cover %}<img src="{{ book.cover.url }}" />{% endif %}
-    <p>{{ book.summary }}</p>
+{% block twothird %}
+    <div class="row">
+        <div class="col third">
+            {% if book.cover %}<img src="{{ book.cover.url }}" class="cover" />{% endif %}
+        </div>
+        <div class="col two-third book-detail">
+            <h4 class="flow"><span class="theme read">{% trans "read" %}</span><span>{{ book.get_section_display }}</span></h4>
+            {% if book.serie %}<h5>{{ book.serie }}</h5>{% endif %}
+            <h2>{{ book }}</h2>
+            {% if book.subtitle %}<h3>{{ book.subtitle }}</h3>{% endif %}
+            <p>{{ book.summary }}</p>
+            <p class="flow"><strong>{% trans "Author" %}</strong><span>{{ book.authors }}</span></p>
+            <p class="flow"><strong>{% trans "Publisher" %}</strong> <span>{{ book.publisher|default:'—' }}</span></p>
+            <p><strong>{% trans "Language" %}</strong> {{ book.get_lang_display }}</p>
+            <p><strong>{% trans "ISBN" %}</strong> {{ book.isbn|default:'—' }}</p>
+        </div>
+    </div>
+{% endblock twothird %}
+{% block third %}
     {% if user.is_staff %}
-        <a href="{% url 'library:book_update' pk=book.pk %}">Edit</a>
-    {% endif %}
-    <ul>
-        {% for specimen in book.specimen.all %}
-            <li>{{ specimen }} <a href="{% url 'library:specimen_update' pk=specimen.pk %}">{% trans "Edit specimen" %}</a>
+    <ul class="card tinted admin">
+        <li><a href="{% url 'library:specimen_create' book_pk=book.pk %}">{% trans "Add a specimen" %}</a></li>
+        <li><a href="{% url 'library:book_delete' pk=book.pk %}">{% trans "Delete this book" %}</a></li>
+        <li><a href="{% url 'library:book_update' pk=book.pk %}">{% trans "Edit this book" %}</a></li>
+    </ul>
+    <ul class="card tinted">
+        <h4>{% trans "Specimens" %}</h4>
+        {% for specimen in book.specimens.all %}
+            <li>{{ specimen.serial }} <a href="{% url 'library:specimen_update' pk=specimen.pk %}">{% trans "Edit specimen" %}</a></li>
         {% empty %}
             {% trans "No specimen for this book." %}
         {% endfor %}
     </ul>
-    <a href="{% url 'library:specimen_create' book_pk=book.pk %}">{% trans "Add a specimen" %}</a>
-    <a href="{% url 'library:book_delete' pk=book.pk %}">{% trans "Delete this book" %}</a>
-{% endblock content %}
+    {% endif %}
+{% endblock third %}

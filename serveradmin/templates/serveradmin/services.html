@@ -1,8 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'serveradmin/index.html' %}
 
-{% block content %}
-Welcome to Services<br>
-{% for service in services %}
-    {% include "serveradmin/service_form.html" %}
-{% endfor %}
-{% endblock content %}
+{% load i18n %}
+
+{% block twothird %}
+    <h2>{% trans "Manage services" %}</h2>
+    <ul class="services">
+        {% for service in services %}
+            <li class="service">{% include "serveradmin/service_form.html" %}</li>
+        {% endfor %}
+    </ul>
+{% endblock twothird %}

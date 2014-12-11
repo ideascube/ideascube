@@ -34,6 +34,7 @@ class Book(TimeStampedModel):
     title = models.CharField(_('title'), max_length=300)
     subtitle = models.CharField(_('subtitle'), max_length=300, blank=True)
     summary = models.TextField(_('summary'), blank=True)
+    publisher = models.CharField(_('publisher'), max_length=100, blank=True)
     section = models.PositiveSmallIntegerField(_('section'),
                                                choices=SECTION_CHOICES)
     location = models.CharField(_('location'), max_length=300, blank=True)

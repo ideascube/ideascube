@@ -1,10 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'two-third-third.html' %}
 
-{% block content %}
-    {{ content }}
-    {{ content.text }}
+{% block twothird %}
+    <h2>{{ content }}</h2>
+    <h5>{{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.get_author_display }}</h5>
+    {% if content.image %}<div><img src="{{ content.image.url }}"></div>{% endif %}
+    <div class="text">{{ content.text }}</div>
+{% endblock twothird %}
+{% block third %}
     {% if user.is_staff %}
-        <a href="{% url 'blog:content_update' pk=content.pk %}">Edit</a>
-        {# <a href="{% url 'blog:content_delete' pk=content.pk %}">Delete</a> #}
+        <div class="card tinted admin">
+            <a href="{% url 'blog:content_update' pk=content.pk %}">Edit</a>
+        </div>
     {% endif %}
-{% endblock content %}
+{% endblock third %}

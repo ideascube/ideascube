@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'one-row.html' %}
 {% load i18n %}
 
-{% block content %}
+{% block row %}
     <h2>{% blocktrans with name=specimen %}Are you sure you want to delete "{{ name }}"?{% endblocktrans %}</h2>
     <p>{% blocktrans with name=specimen.book %}This will not delete book "{{ name }}"{% endblocktrans %}</p>
     <form method="POST">
@@ -9,4 +9,4 @@
         {{ form.as_p }}
         <input type="submit" name="confirm" value="{% trans 'yes' %}" />
     </form>
-{% endblock content %}
+{% endblock row %}

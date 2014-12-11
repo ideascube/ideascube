@@ -1,16 +1,19 @@
 {% load i18n %}
 
-<form name="services" action="." method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="name" value="{{ service.name }}">
-    <label class="{% if service.error %}error{% else %}{% if service.status %}on{% else %}off{% endif %}{% endif %}">{{ service.name }}</label>
-    {% if service.error %}
-        <strong>{{ service.error }}</strong>
-    {% elif service.status %}
-        <input type="submit" name="restart" value="{% trans 'Restart' %}">
-        <input type="submit" name="stop" value="{% trans 'Stop' %}">
-    {% else %}
-        <input type="submit" name="start" value="{% trans 'Start' %}">
-    {% endif %}
-    <span>{{ service.sum }}</span>
-</form>
+<div class="status-{% if service.error %}error{% else %}{% if service.status %}on{% else %}off{% endif %}{% endif %}">
+    <form name="services" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="name" value="{{ service.name }}">
+        <h3>{{ service.name }} <span>{% if service.status %}running{% else %}not running{% endif %}</span></h2>
+        <p>{{ service.description }}</p>
+        {% if service.error %}
+            <div class="error">{{ service.error }}</div>
+        {% elif service.status %}
+            <input type="submit" name="restart" value="{% trans 'Restart' %}">
+            <input type="submit" name="stop" value="{% trans 'Stop' %}">
+        {% else %}
+            <input type="submit" name="start" value="{% trans 'Start' %}">
+        {% endif %}
+        <span>{{ service.sum }}</span>
+    </form>
+</div>

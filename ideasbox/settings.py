@@ -55,6 +55,17 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "ideasbox.context_processors.settings"
+)
+
 ROOT_URLCONF = 'ideasbox.urls'
 
 WSGI_APPLICATION = 'ideasbox.wsgi.application'
@@ -81,13 +92,16 @@ USE_TZ = True
 AVAILABLE_LANGUAGES = (
     ('en', _('English')),
     ('fr', _('French')),
+    ('ar', _('Arabic')),
 )
 
-SUPPORTED_LANGUAGES = os.environ.get('SUPPORTED_LANGUAGES', 'fr en').split()
+SUPPORTED_LANGUAGES = os.environ.get('SUPPORTED_LANGUAGES', 'fr en ar').split()
 LANGUAGES = []
 for code, label in AVAILABLE_LANGUAGES:
     if code in SUPPORTED_LANGUAGES:
         LANGUAGES.append((code, label))
+
+RTL_LANGUAGES = ['ar', 'zh', 'fa', 'he', 'ja', 'ur', 'yi']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -116,7 +130,10 @@ except KeyError:
     else:
         raise
 MEDIA_ROOT = os.path.join(STORAGE_ROOT, 'main')
+STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')  # TODO move out of backuped
+                                                    # storage
 AUTH_USER_MODEL = os.environ.get('AUTH_USER_MODEL', 'ideasbox.DefaultUser')
+IDEASBOX_NAME = os.environ.get('IDEASBOX_NAME', IDEASBOX_ID)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

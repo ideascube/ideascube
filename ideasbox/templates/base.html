@@ -1,9 +1,21 @@
-<html>
+{% load staticfiles i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html{% if LANGUAGE_CODE in RTL_LANGUAGES %} dir="rtl"{% endif %}>
     <head>
-       <title>{% block title %}{% endblock %}</title> 
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>{% block title %}Ideasbox{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{% static "ideasbox/main.css" %}">
     </head>
-    <body>
+    <body class="{% block body_class %}{% endblock %}">
+        {% block header %}
+            {% include 'ideasbox/includes/header.html' %}
+        {% endblock header %}
         {% block content %}
         {% endblock content %}
+        {% block footer %}
+            {% include 'ideasbox/includes/footer.html' %}
+        {% endblock footer %}
     </body>
 </html>

@@ -1,0 +1,7 @@
+{% load i18n %}
+<div class="card tinted book">
+    {% if book.cover %}<img src="{{ book.cover.url }}" class="cover" />{% endif %}
+    <h4 class="flow"><span class="theme read">read</span> <span>{% trans "one book at random" %}</span></h4>
+    <h3 class="flow"><a href="{% url 'library:book_detail' pk=book.pk %}">{{ book }}</a><em>{% trans "by" %}</em><em>{{ book.authors|truncatewords:5 }}</em></h3>
+    <p>{{ book.summary|truncatewords:20 }}</p>
+</div>

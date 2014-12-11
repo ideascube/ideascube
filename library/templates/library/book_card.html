@@ -1,0 +1,7 @@
+<div class="card">
+    <a href="{% url 'library:book_detail' pk=book.pk %}">
+        <h3>{{ book }}</h3>
+    </a>
+    <p>{{ book.authors }}</p>
+    {% if book.cover %}<img src="{{ book.cover.url }}" class="cover" />{% endif %}
+</div>
