@@ -9,7 +9,7 @@ pytestmark = pytest.mark.django_db
 
 @pytest.mark.parametrize("page", [
     ('services'),
-    ('server'),
+    ('power'),
 ])
 def test_anonymous_user_should_not_access_server(app, page):
     response = app.get(reverse('server:' + page), status=302)
@@ -18,7 +18,7 @@ def test_anonymous_user_should_not_access_server(app, page):
 
 @pytest.mark.parametrize("page", [
     ('services'),
-    ('server'),
+    ('power'),
 ])
 def test_normals_user_should_not_access_server(loggedapp, page):
     response = loggedapp.get(reverse('server:' + page), status=302)
@@ -27,7 +27,7 @@ def test_normals_user_should_not_access_server(loggedapp, page):
 
 @pytest.mark.parametrize("page", [
     ('services'),
-    ('server'),
+    ('power'),
 ])
 def test_staff_user_should_access_server(staffapp, page):
     assert staffapp.get(reverse('server:' + page), status=200)

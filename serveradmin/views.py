@@ -34,7 +34,7 @@ def services(request):
 
 
 @staff_member_required
-def server(request):
+def power(request):
     if request.POST:
         if 'stop' in request.POST:
             call(["sudo", "poweroff"])
