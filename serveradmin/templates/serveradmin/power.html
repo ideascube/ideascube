@@ -1,12 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'serveradmin/index.html' %}
 {% load i18n %}
 
-{% block content %}
+{% block twothird %}
+<h2>{% trans "Stop or restart the server" %}</h2>
 <form name="server" action="." method="POST">
     {% csrf_token %}
-    <label>{% trans 'Stop the server' %}</label>
-    <input type="submit" name="stop" value="{% trans 'Stop' %}"><br>
-    <label>{% trans 'Restart the server' %}</label>
+    <input type="submit" name="stop" value="{% trans 'Stop' %}">
     <input type="submit" name="restart" value="{% trans 'Restart' %}">
 </form>
-{% endblock content %}
+{% endblock twothird %}

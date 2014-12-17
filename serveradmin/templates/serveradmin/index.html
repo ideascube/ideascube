@@ -5,5 +5,6 @@
 {% block third %}
     <ul class="card tinted admin">
         <li><a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
+        <li><a href="{% url 'server:power' %}">{% trans "Restart server" %}</a></li>
     </ul>
 {% endblock third %}
