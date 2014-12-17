@@ -25,12 +25,20 @@ def test_normals_user_should_not_access_server(loggedapp, page):
     assert 'login' in response['Location']
 
 
-@pytest.mark.parametrize("page", [
-    ('services'),
-    ('power'),
-])
-def test_staff_user_should_access_server(staffapp, page):
-    assert staffapp.get(reverse('server:' + page), status=200)
+def test_staff_user_should_access_services(monkeypatch, staffapp):
+    class Mock(object):
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def communicate(self):
+            return "", ""
+
+    monkeypatch.setattr("subprocess.Popen", Mock)
+    assert staffapp.get(reverse('server:services'), status=200)
+
+
+def test_staff_user_should_access_power_admin(staffapp):
+    assert staffapp.get(reverse('server:power'), status=200)
 
 
 @pytest.mark.parametrize("name,action,stdout,stderr,error,status", [
