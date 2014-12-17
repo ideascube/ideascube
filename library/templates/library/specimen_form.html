@@ -1,13 +1,13 @@
 {% extends 'form-fullpage.html' %}
 {% load i18n %}
 
-{% block title %}
+{% block heading %}
     {% if specimen %}
         <h2>{% trans "Edit book specimen" %} "{{ specimen }}"</h2>
     {% else %}
         <h2>{% trans "New book specimen" %}</h2>
     {% endif %}
-{% endblock title %}
+{% endblock heading %}
 {% block col %}
     <input type="submit" value="{% trans 'submit' %}" />
     {% if specimen %}

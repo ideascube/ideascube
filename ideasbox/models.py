@@ -80,6 +80,23 @@ class AbstractUser(TimeStampedModel, AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+    @property
+    def public_fields(self):
+        """Return user public fields labels and values."""
+        exclude = ['last_login', 'password', 'id', 'is_staff']
+        fields = [f for f in self._meta.fields if f.name not in exclude]
+
+        def val(name):
+            try:
+                val = getattr(self, 'get_{0}_display'.format(name))()
+            except AttributeError:
+                val = getattr(self, name)
+
+            return val
+
+        return {f.name: {'label': f.verbose_name, 'value': val(f.name)}
+                for f in fields}
+
 
 class DefaultUser(AbstractUser):
     """
@@ -89,7 +106,7 @@ class DefaultUser(AbstractUser):
     pass
 
 
-class ProfileMixin(object):
+class ProfileMixin(models.Model):
 
     # Should we use numeric indexes? Maybe using string make the data in the db
     # more robust for backup/restore between different code versions.
@@ -142,8 +159,11 @@ class ProfileMixin(object):
         choices=BOX_AWARENESS_CHOICES,
         blank=True)
 
+    class Meta:
+        abstract = True
 
-class RefugeeMixin(object):
+
+class RefugeeMixin(models.Model):
 
     OCCUPATION_CHOICES = (
         (1, _('Student')),
@@ -184,11 +204,17 @@ class RefugeeMixin(object):
         _('Family status'),
         choices=FAMILY_STATUS_CHOICES,
         blank=True)
-    is_sent_to_school = models.BooleanField(_('Sent to school (if under 18)'))
+    is_sent_to_school = models.BooleanField(
+        _('Sent to school (if under 18)'),
+        default=False)
     camp_activities = models.CommaSeparatedIntegerField(
         _('Activities in the camp'),
+        max_length=512,
         choices=CAMP_ACTIVITY_CHOICES,
         blank=True)
+
+    class Meta:
+        abstract = True
 
 
 class SwahiliLangMixin(object):
@@ -197,6 +223,9 @@ class SwahiliLangMixin(object):
         choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
         blank=True)
 
+    class Meta:
+        abstract = True
+
 
 class FrenchLangMixin(object):
     fr_level = models.PositiveSmallIntegerField(
@@ -204,12 +233,18 @@ class FrenchLangMixin(object):
         choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
         blank=True)
 
+    class Meta:
+        abstract = True
 
-class KirundiLangMixin(object):
+
+class KirundiLangMixin(models.Model):
     rn_level = models.PositiveSmallIntegerField(
         _('Kirundi knowledge'),
         choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
         blank=True)
+
+    class Meta:
+        abstract = True
 
 
 class BurundiRefugeeUser(AbstractUser, ProfileMixin, RefugeeMixin,
