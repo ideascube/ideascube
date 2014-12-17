@@ -1,9 +1,8 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from . import views
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^book/(?P<pk>[\d]+)/$', views.book_detail, name='book_detail'),
     url(r'^book/(?P<pk>[\d]+)/edit/$', views.book_update, name='book_update'),
@@ -16,4 +15,4 @@ urlpatterns = patterns(
         name='specimen_update'),
     url(r'^specimen/(?P<pk>[\d]+)/delete/$', views.specimen_delete,
         name='specimen_delete'),
-)
+]
