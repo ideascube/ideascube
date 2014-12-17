@@ -10,3 +10,4 @@ notifications:
             - "irc.freenode.net#ideasbox"
         on_success: change
         on_failure: always
+    email: false
