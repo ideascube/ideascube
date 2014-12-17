@@ -41,4 +41,4 @@ def power(request):
         elif 'restart' in request.POST:
             call(["sudo", "reboot"])
 
-    return render(request, 'serveradmin/server.html')
+    return render(request, 'serveradmin/power.html')
