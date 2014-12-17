@@ -1,0 +1,19 @@
+{% extends 'two-third-third.html' %}
+{% load i18n %}
+
+{% block twothird %}
+    <h2><span class="theme read">{% trans "read" %}</span> {% trans "Library" %}</h2>
+    <div class="grid book-list">
+        {% for book in book_list  %}
+            {% include 'library/book_card.html' %}
+        {% empty %}
+            {% trans "No books yet." %}
+        {% endfor %}
+    </div>
+    {% include "ideasbox/pagination.html" %}
+{% endblock twothird %}
+{% block third %}
+    <div class="card tinted admin">
+        <a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a>
+    </div>
+{% endblock third %}

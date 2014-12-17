@@ -42,16 +42,29 @@ INSTALLED_APPS = (
     'serveradmin',
     'ideasbox',
     'blog',
+    'library',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "ideasbox.context_processors.settings"
 )
 
 ROOT_URLCONF = 'ideasbox.urls'
@@ -80,18 +93,24 @@ USE_TZ = True
 AVAILABLE_LANGUAGES = (
     ('en', _('English')),
     ('fr', _('French')),
+    ('ar', _('Arabic')),
 )
 
-SUPPORTED_LANGUAGES = os.environ.get('SUPPORTED_LANGUAGES', 'fr en').split()
+SUPPORTED_LANGUAGES = os.environ.get('SUPPORTED_LANGUAGES', 'fr en ar').split()
 LANGUAGES = []
 for code, label in AVAILABLE_LANGUAGES:
     if code in SUPPORTED_LANGUAGES:
         LANGUAGES.append((code, label))
 
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 
 # Ideas Box specifics
@@ -114,7 +133,10 @@ except KeyError:
     else:
         raise
 MEDIA_ROOT = os.path.join(STORAGE_ROOT, 'main')
+STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')  # TODO move out of backuped
+                                                    # storage
 AUTH_USER_MODEL = os.environ.get('AUTH_USER_MODEL', 'ideasbox.DefaultUser')
+IDEASBOX_NAME = os.environ.get('IDEASBOX_NAME', IDEASBOX_ID)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

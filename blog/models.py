@@ -41,6 +41,7 @@ class Content(TimeStampedModel, models.Model):
     author_text = models.CharField(_('author text'), max_length=300,
                                    blank=True)
     summary = models.CharField(_('summary'), max_length=300)
+    image = models.ImageField(_('image'), upload_to='blog/image', blank=True)
     text = models.TextField(_('text'))
     published_at = models.DateTimeField(_('publication date'))
     status = models.PositiveSmallIntegerField(_('Status'), choices=STATUSES,
@@ -59,3 +60,6 @@ class Content(TimeStampedModel, models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:content_detail', kwargs={'pk': self.pk})
+
+    def get_author_display(self):
+        return self.author_text or unicode(self.author)

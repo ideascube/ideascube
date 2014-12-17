@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col third">
+            {% block third %}
+            {% endblock third %}
+        </div>
+        <div class="col two-third">
+            {% block twothird %}
+            {% endblock twothird %}
+        </div>
+    </div>
+{% endblock content %}

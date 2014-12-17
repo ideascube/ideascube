@@ -1,7 +1,7 @@
 import pytest
 
-from .models import Content
-from .tests.factories import ContentFactory
+from ..models import Content
+from .factories import ContentFactory
 
 
 @pytest.fixture()

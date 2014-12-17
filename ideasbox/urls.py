@@ -1,14 +1,16 @@
+from django.conf import settings
+from django.conf.urls import include, url
+from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.conf.urls import patterns, include, url
 
 from . import views
 
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'ideasbox.views.home', name='home'),
+urlpatterns = i18n_patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('blog.urls', namespace="blog")),
+    url(r'^library/', include('library.urls', namespace="library")),
     url(r'^$', views.index, name='index'),
     url(r'^server/', include('serveradmin.urls', namespace="server")),
     url(r'^login/$', auth_views.login, name='login'),
@@ -21,4 +23,4 @@ urlpatterns = patterns('',
     url(r'^user/(?P<pk>[\d]+)/delete/$',
         views.user_delete, name='user_delete'),
 
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
