@@ -7,8 +7,30 @@ from serveradmin.utils import call_service
 pytestmark = pytest.mark.django_db
 
 
-def test_services_page_in_GET_mode(app):
-    assert app.get(reverse('server:services'), status=200)
+@pytest.mark.parametrize("page", [
+    ('services'),
+    ('power'),
+])
+def test_anonymous_user_should_not_access_server(app, page):
+    response = app.get(reverse('server:' + page), status=302)
+    assert 'login' in response['Location']
+
+
+@pytest.mark.parametrize("page", [
+    ('services'),
+    ('power'),
+])
+def test_normals_user_should_not_access_server(loggedapp, page):
+    response = loggedapp.get(reverse('server:' + page), status=302)
+    assert 'login' in response['Location']
+
+
+@pytest.mark.parametrize("page", [
+    ('services'),
+    ('power'),
+])
+def test_staff_user_should_access_server(staffapp, page):
+    assert staffapp.get(reverse('server:' + page), status=200)
 
 
 @pytest.mark.parametrize("name,action,stdout,stderr,error,status", [

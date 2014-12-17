@@ -1,9 +1,13 @@
+from subprocess import call
+
 from django.conf import settings
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 
 from .utils import call_service
 
 
+@staff_member_required
 def services(request):
     services = settings.SERVICES
     service_action = 'status'
@@ -27,3 +31,14 @@ def services(request):
         service['error'] = service_return.get('error')
         service['status'] = service_return.get('status')
     return render(request, 'serveradmin/services.html', {'services': services})
+
+
+@staff_member_required
+def power(request):
+    if request.POST:
+        if 'stop' in request.POST:
+            call(["sudo", "poweroff"])
+        elif 'restart' in request.POST:
+            call(["sudo", "reboot"])
+
+    return render(request, 'serveradmin/power.html')

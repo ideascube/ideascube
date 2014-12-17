@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<form name="server" action="." method="POST">
+    {% csrf_token %}
+    <label>{% trans 'Stop the server' %}</label>
+    <input type="submit" name="stop" value="{% trans 'Stop' %}"><br>
+    <label>{% trans 'Restart the server' %}</label>
+    <input type="submit" name="restart" value="{% trans 'Restart' %}">
+</form>
+{% endblock content %}
