@@ -13,7 +13,7 @@ user_model = get_user_model()
 
 
 def index(request):
-    contents = Content.published.all()[:3]
+    contents = Content.objects.published()[:3]
     random_book = Book.objects.available().order_by('?').first()
     context = {
         'blog_contents': contents,

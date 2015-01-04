@@ -4,15 +4,16 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from ideasbox.models import TimeStampedModel
+from search.models import SearchMixin, SearchableQuerySet
 
 
-class BookQuerySet(models.QuerySet):
+class BookQuerySet(SearchableQuerySet, models.QuerySet):
     def available(self):
         return self.filter(specimens__isnull=False).distinct()
 
 
 # Create your models here.
-class Book(TimeStampedModel):
+class Book(SearchMixin, TimeStampedModel):
 
     SECTION_CHOICES = (
         (1, _('digital')),
@@ -53,6 +54,11 @@ class Book(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('library:book_detail', kwargs={'pk': self.pk})
+
+    @property
+    def index_strings(self):
+        return [self.title, self.isbn, self.authors, self.subtitle,
+                self.summary, self.serie]
 
 
 class BookSpecimen(TimeStampedModel):

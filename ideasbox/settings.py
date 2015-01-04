@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'ideasbox',
     'blog',
     'library',
+    'search',
 )
 
 MIDDLEWARE_CLASSES = (

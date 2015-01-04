@@ -4,28 +4,22 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
+from search.models import SearchMixin, SearchableQuerySet
 from ideasbox.models import TimeStampedModel
 
 
-class PublishedManager(models.Manager):
-    def get_queryset(self):
-        return super(PublishedManager, self).get_queryset().filter(
-            status=Content.PUBLISHED)
+class ContentQuerySet(SearchableQuerySet, models.QuerySet):
+    def published(self):
+        return self.filter(status=Content.PUBLISHED)
+
+    def draft(self):
+        return self.filter(status=Content.DRAFT)
+
+    def deleted(self):
+        return self.filter(status=Content.DELETED)
 
 
-class DraftManager(models.Manager):
-    def get_queryset(self):
-        return super(DraftManager, self).get_queryset().filter(
-            status=Content.DRAFT)
-
-
-class DeletedManager(models.Manager):
-    def get_queryset(self):
-        return super(DeletedManager, self).get_queryset().filter(
-            status=Content.DELETED)
-
-
-class Content(TimeStampedModel, models.Model):
+class Content(SearchMixin, TimeStampedModel, models.Model):
 
     DRAFT = 1
     PUBLISHED = 2
@@ -50,10 +44,7 @@ class Content(TimeStampedModel, models.Model):
                             choices=settings.LANGUAGES,
                             default=settings.LANGUAGE_CODE)
 
-    objects = models.Manager()
-    published = PublishedManager()
-    draft = DraftManager()
-    deleted = DeletedManager()
+    objects = ContentQuerySet.as_manager()
 
     def __unicode__(self):
         return self.title
@@ -63,3 +54,11 @@ class Content(TimeStampedModel, models.Model):
 
     def get_author_display(self):
         return self.author_text or unicode(self.author)
+
+    @property
+    def index_strings(self):
+        return [self.title, self.text, self.author_text, unicode(self.author)]
+
+    @property
+    def index_public(self):
+        return self.status == self.PUBLISHED

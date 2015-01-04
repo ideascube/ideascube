@@ -16,6 +16,7 @@
             {% if random_book %}
                 {% include 'ideasbox/includes/book_card.html' with book=random_book %}
             {% endif %}
+            {% include 'search/box.html' %}
         </div>
     </div>
 {% endblock content %}
