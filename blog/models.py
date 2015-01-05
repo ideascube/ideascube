@@ -57,7 +57,7 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
 
     @property
     def index_strings(self):
-        return [self.title, self.text, self.author_text, unicode(self.author)]
+        return (self.title, self.text, self.author_text, unicode(self.author))
 
     @property
     def index_public(self):
