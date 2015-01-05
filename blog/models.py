@@ -4,8 +4,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
-from search.models import SearchableQuerySet, SearchMixin
 from ideasbox.models import TimeStampedModel
+from search.models import SearchableQuerySet, SearchMixin
 
 
 class ContentQuerySet(SearchableQuerySet, models.QuerySet):
