@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.backends.signals import connection_created
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import class_prepared, post_save, pre_delete
 from django.dispatch import receiver
 from django.utils.module_loading import import_string
 
@@ -52,11 +52,7 @@ class Search(models.Model):
     def search(cls, **kwargs):
         qs = Search.objects.filter(**kwargs).order_by_relevancy()
         for row in qs:
-            key = '.'.join([row.module, row.model])
-            if not key in _SEARCHABLE:
-                _SEARCHABLE[key] = import_string(key)
-            yield _SEARCHABLE[key].objects.get(pk=row.model_id)
-_SEARCHABLE = {}
+            yield _SEARCHABLE[row.model].objects.get(pk=row.model_id)
 
 
 class SearchMixin(models.Model):
@@ -118,3 +114,10 @@ def deindex(sender, instance, **kwargs):
 @receiver(connection_created)
 def add_rank_function(sender, connection, **kwargs):
     connection.connection.create_function("rank", 1, rank)
+
+
+@receiver(class_prepared)
+def register_searchable_model(sender, **kwargs):
+    if SearchMixin in sender.__mro__:
+        _SEARCHABLE[sender.__name__] = sender
+_SEARCHABLE = {}
