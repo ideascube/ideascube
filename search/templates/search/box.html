@@ -1,8 +1,10 @@
 {% load i18n %}
 
+{% spaceless %}
 <div class="card tinted search">
     <form action="{% url "search:search" %}">
-        <input name="q" type="text" placeholder="{% trans 'search' %}" value="{{ q }}" /><!--
-        --><input type="submit" value="{% trans 'search' %}" />
+        <input name="q" type="text" placeholder="{% trans 'search' %}" value="{{ q }}" />
+        <input type="submit" value="{% trans 'search' %}" />
     </form>
 </div>
+{% endspaceless %}
