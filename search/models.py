@@ -31,7 +31,6 @@ class SearchQuerySet(models.QuerySet):
 class Search(models.Model):
     """Model that handle the search."""
     rowid = models.IntegerField(primary_key=True)
-    module = models.CharField(max_length=64)
     model = models.CharField(max_length=64)
     model_id = models.IntegerField()
     public = models.BooleanField(default=True)
@@ -78,7 +77,6 @@ class SearchMixin(models.Model):
         text = u" ".join([s for s in self.index_strings if s])
         defaults = dict(text=text, public=self.index_public)
         Search.objects.update_or_create(
-            module=self.__class__.__module__,
             model=self.__class__.__name__,
             model_id=self.pk,
             defaults=defaults
@@ -86,7 +84,6 @@ class SearchMixin(models.Model):
 
     def deindex(self):
         Search.objects.filter(
-            module=self.__class__.__module__,
             model=self.__class__.__name__,
             model_id=self.pk).delete()
 

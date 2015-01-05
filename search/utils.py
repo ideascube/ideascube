@@ -7,7 +7,7 @@ def create_index_table():
     cursor = connection.cursor()
     cursor.execute("DROP TABLE IF EXISTS idx")
     cursor.execute("CREATE VIRTUAL TABLE idx using "
-                   "FTS4(id, module, model, model_id, public, text)")
+                   "FTS4(id, model, model_id, public, text)")
 
 
 def rank(match_info):
