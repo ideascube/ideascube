@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
-from search.models import SearchMixin, SearchableQuerySet
+from search.models import SearchableQuerySet, SearchMixin
 from ideasbox.models import TimeStampedModel
 
 
