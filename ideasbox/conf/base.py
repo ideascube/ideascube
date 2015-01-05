@@ -1,5 +1,5 @@
-"""
-Django settings for ideasbox project.
+# -*- coding: utf-8 -*-
+"""Django settings for ideasbox project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -91,9 +91,9 @@ USE_L10N = True
 USE_TZ = True
 
 AVAILABLE_LANGUAGES = (
-    ('en', _('English')),
-    ('fr', _('French')),
-    ('ar', _('Arabic')),
+    ('en', 'English'),
+    ('fr', u'Français'),
+    ('ar', u'العربية'),
 )
 
 SUPPORTED_LANGUAGES = os.environ.get('SUPPORTED_LANGUAGES', 'fr en ar').split()
@@ -127,7 +127,7 @@ except KeyError:
         raise
 MEDIA_ROOT = os.path.join(STORAGE_ROOT, 'main')
 STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')  # TODO move out of backuped
-                                                    # storage
+                                                    # storage, cf #65.
 AUTH_USER_MODEL = 'ideasbox.DefaultUser'
 IDEASBOX_NAME = 'debugbox'
 
@@ -142,12 +142,12 @@ DATABASES = {
 }
 
 SERVICES = [
-    {'name': 'apache2', 'description': _('Daemon which provide web content')},
-    {'name': 'bind9', 'description': _('Daemon which provide local DNS')},
+    {'name': 'apache2', 'description': _('Daemon which provides web content')},
+    {'name': 'bind9', 'description': _('Daemon which provides local DNS')},
     {'name': 'kalite',
-        'description': _('Daemon which provide KhanAcademy on lan')},
+        'description': _('Daemon which provides KhanAcademy on lan')},
     {'name': 'kiwix',
-        'description': _('Daemon which provide Wikipedia on lan')},
+        'description': _('Daemon which provides Wikipedia on lan')},
     {'name': 'ntp', 'description': _('Net time protocol')},
     {'name': 'ssh',
         'description': _('Daemon used for distant connexion to server')},

@@ -16,8 +16,8 @@ try:
 except ImportError:
     from .conf import base as sub
 finally:
-    SETTINGS_MODULE = sub.__name__  # Make if available as a settings, to
-                                    # be able to display it in the admin
+    SETTINGS_MODULE = sub.__name__  # Make it available as a settings, to
+                                    # be able to display it in the admin.
     sys.stdout.write('Importing settings from %s\n' % SETTINGS_MODULE)
     ldict = locals()
     for k in sub.__dict__:

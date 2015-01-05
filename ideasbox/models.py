@@ -88,11 +88,9 @@ class AbstractUser(TimeStampedModel, AbstractBaseUser):
 
         def val(name):
             try:
-                val = getattr(self, 'get_{0}_display'.format(name))()
+                return getattr(self, 'get_{0}_display'.format(name))()
             except AttributeError:
-                val = getattr(self, name)
-
-            return val
+                return getattr(self, name)
 
         return {f.name: {'label': f.verbose_name, 'value': val(f.name)}
                 for f in fields}
