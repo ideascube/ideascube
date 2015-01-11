@@ -9,7 +9,7 @@ from search.utils import create_index_table
 class Command(BaseCommand):
     help = 'Reindex all the searchable objects'
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **kwargs):
         create_index_table()
         models = [Content, Book]
         for model in models:
