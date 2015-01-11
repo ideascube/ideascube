@@ -50,7 +50,7 @@ def test_we_can_search_arabic_content(published):
     assert Content.objects.search(u"خمسين").count() == 1
 
 
-def test_we_can_search_with_jocker(published):
+def test_we_can_search_with_joker(published):
     published.title = "Ikinyugunyugu"
     published.save()
     assert Content.objects.search("Ikinyug*").count() == 1
