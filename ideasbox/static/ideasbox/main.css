@@ -485,3 +485,38 @@ img.cover {
 .services .status-off h3 span {
     color: #C0392B;
 }
+
+
+/* ************************************************* */
+/* ******************* SEARCH ********************** */
+/* ************************************************* */
+div.search input[name='q'] {
+    display: inline;
+    width: calc(100% - 100px);
+    margin: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    vertical-align: top;
+}
+div.search input[type='submit'] {
+    display: inline;
+    width: 100px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    margin: 0;
+    vertical-align: top;
+}
+html[dir='rtl'] .search input[name='q'] {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+html[dir='rtl'] .search input[type='submit'] {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+.search .results {
+    margin-top: 40px;
+}
+.search .main {
+    justify-content: center;
+}

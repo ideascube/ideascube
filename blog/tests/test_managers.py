@@ -6,21 +6,21 @@ pytestmark = pytest.mark.django_db
 
 
 def test_published_should_return_only_published(published, draft, deleted):
-    contents = Content.published.all()
+    contents = Content.objects.published()
     assert published in contents
     assert draft not in contents
     assert deleted not in contents
 
 
 def test_draft_should_return_only_draft(published, draft, deleted):
-    contents = Content.draft.all()
+    contents = Content.objects.draft()
     assert draft in contents
     assert published not in contents
     assert deleted not in contents
 
 
 def test_deleted_should_return_only_deleted(published, draft, deleted):
-    contents = Content.deleted.all()
+    contents = Content.objects.deleted()
     assert deleted in contents
     assert published not in contents
     assert draft not in contents

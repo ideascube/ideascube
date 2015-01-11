@@ -6,7 +6,7 @@ from .models import Content
 
 class Index(ListView):
     model = Content
-    queryset = Content.published.all()
+    queryset = Content.objects.published()
     template_name = 'blog/index.html'
     paginate_by = 10
 index = Index.as_view()
@@ -19,7 +19,7 @@ class ContentDetail(DetailView):
         if self.request.user.is_authenticated() and self.request.user.is_staff:
             return Content.objects.all()
         else:
-            return Content.published.all()
+            return Content.objects.published()
 
 content_detail = ContentDetail.as_view()
 
