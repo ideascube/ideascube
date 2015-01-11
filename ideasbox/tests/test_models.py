@@ -2,6 +2,7 @@ import pytest
 
 from django.contrib.auth import get_user_model
 
+from ..models import BurundiRefugeeUser
 from .factories import UserFactory
 
 pytestmark = pytest.mark.django_db
@@ -34,3 +35,16 @@ def test_create_superuser():
 
 def test_client_login(client, user):
     assert client.login(serial=user.serial, password='password')
+
+
+def test_user_public_fields_should_return_labels_and_values():
+    user = BurundiRefugeeUser(
+        short_name='my name',
+        school_level=1
+    )
+    fields = user.public_fields
+    assert 'is_staff' not in fields
+    assert fields['short_name']['value'] == 'my name'
+    assert fields['short_name']['label'] == 'usual name'
+    assert fields['school_level']['value'] == 'Primary'
+    assert fields['school_level']['label'] == 'School level'

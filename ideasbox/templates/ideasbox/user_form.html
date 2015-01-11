@@ -1,13 +1,13 @@
 {% extends 'form-fullpage.html' %}
 {% load i18n %}
 
-{% block title %}
+{% block heading %}
     {% if user_obj %}
         <h2>{% trans "Edit user" %} {{ user_obj }}</h2>
     {% else %}
         <h2>{% trans "New User" %}</h2>
     {% endif %}
-{% endblock title %}
+{% endblock heading %}
 {% block col %}
         <input type="submit" value="submit" />
 {% endblock col %}

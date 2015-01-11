@@ -13,10 +13,9 @@ class Command(BaseCommand):
     help = 'Populate database with dummy data'
 
     def handle(self, *args, **options):
-        if settings.IDEASBOX_ID != 'debugbox':
+        if not settings.DEBUG:
             msg = ('This does not seem to be a dev project. Aborting. You need'
-                   ' to be in DEBUG=True mode plus not having set any custom '
-                   'IDEASBOX_ID value.')
+                   ' to be in DEBUG=True')
             raise CommandError(msg)
 
         # Create some users.
