@@ -2,7 +2,6 @@ from django.db import models
 from django.db.backends.signals import connection_created
 from django.db.models.signals import class_prepared, post_save, pre_delete
 from django.dispatch import receiver
-from django.utils.module_loading import import_string
 
 from .utils import rank
 
@@ -14,7 +13,7 @@ class Match(models.Lookup):
         lhs, lhs_params = self.process_lhs(qn, connection)
         rhs, rhs_params = self.process_rhs(qn, connection)
         params = lhs_params + rhs_params
-        return '%s MATCH %s' % (lhs, rhs), params
+        return '{0} MATCH {1}'.format(lhs, rhs), params
 
 
 class SearchField(models.Field):
