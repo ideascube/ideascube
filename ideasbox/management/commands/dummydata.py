@@ -27,7 +27,7 @@ class Command(BaseCommand):
         # Create some blog content.
         text = ('The last voice transmission received on Howland Island from '
                 'Earhart indicated she and Noonan were flying along a line of '
-                'position (taken from a "sun line" running on 157–337 degrees)'
+                'position (taken from a "sun line" running on 157-337 degrees)'
                 ' which Noonan would have calculated and drawn on a chart as '
                 'passing through Howland. After all contact was lost with '
                 'Howland Island, attempts were made to reach the flyers with '
@@ -54,23 +54,23 @@ class Command(BaseCommand):
         summary = ("If one chanced to examine the catalogues of Kingsbridge "
                    "College for the past hundred years it would be found that "
                    "in most of them is recorded the name of some dead and "
-                   "gone Deering—a name famous in the annals of the South—who "
-                   "came up from Louisiana, “marched through the four long "
-                   "happy years of college,” as the old song has it, with an "
+                   "gone Deering-a name famous in the annals of the South-who "
+                   "came up from Louisiana, 'marched through the four long "
+                   "happy years of college,' as the old song has it, with an "
                    "arts degree to his credit; or, perchance, marched out at "
                    "the end of one or two of them with nothing to his credit "
                    "at all. Kingsbridge was a tradition in the Deering "
-                   "family, southern though it was—a tradition that was "
+                   "family, southern though it was-a tradition that was "
                    "hardly broken, even when in 1861 Victor Deering and a "
                    "hundred other chivalrous youths threw their text-books "
                    "out of the windows and enlisted in the armies of the "
-                   "Confederacy. Victor’s father, Basil, too, was in the "
+                   "Confederacy. Victor's father, Basil, too, was in the "
                    "war, and laid down his arms at Appomattox as a "
-                   "brigadier-general—brevetted for gallantry on the field of "
+                   "brigadier-general-brevetted for gallantry on the field of "
                    "action. For a while it seemed that no Deerings would go "
                    "to Kingsbridge, but time at length healed the old "
                    "antagonisms, and when it became a question where young "
-                   "Anthony, Victor’s boy, should go to[2] college, there was "
+                   "Anthony, Victor's boy, should go to[2] college, there was "
                    "no longer any question that Kingsbridge should be the "
                    "place.")
         path = 'ideasbox/tests/data/deering-of-deal.jpg'
@@ -95,14 +95,14 @@ class Command(BaseCommand):
         BookSpecimenFactory(book=book, serial="98765479")
         summary = ("With the title of Sense and Sensibility is connected one "
                    "of those minor problems which delight the cummin-splitters"
-                   " of criticism. In the Cecilia of Madame D'Arblay—the "
-                   "forerunner, if not the model, of Miss Austen—is a "
+                   " of criticism. In the Cecilia of Madame D'Arblay-the "
+                   "forerunner, if not the model, of Miss Austen-is a "
                    "sentence which at first sight suggests some relationship "
                    "to the name of the book which, in the present series, "
                    "inaugurated Miss Austen's novels. 'The whole of this "
-                   "unfortunate business'—says a certain didactic Dr. Lyster, "
+                   "unfortunate business'-says a certain didactic Dr. Lyster, "
                    "talking in capitals, towards the end of volume three of "
-                   "Cecilia—'has been the result of Pride and Prejudice,' and "
+                   "Cecilia-'has been the result of Pride and Prejudice,' and "
                    "looking to the admitted familiarity of Miss Austen with "
                    "Madame D'Arblay's work, it has been concluded that Miss "
                    "Austen borrowed from Cecilia, the title of her second "
@@ -124,7 +124,7 @@ class Command(BaseCommand):
                    u"وفي كتاب النبي يعبر جبران عن آرائه في الحياة عن طريق "
                    u"معالجته للعلاقات الإنسانية التي تربط الإنسان بالإنسان.")
         path = 'ideasbox/tests/data/the-prophet.jpg'
-        book = BookFactory(title='النبي (كتاب)', summary=summary,
+        book = BookFactory(title=u'النبي (كتاب)', summary=summary,
                            authors=u'جبران خليل جبران', lang='ar',
                            cover__from_path=path)
         BookSpecimenFactory(book=book, serial="3213542")
