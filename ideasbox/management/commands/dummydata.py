@@ -7,6 +7,7 @@ from ideasbox.tests.factories import UserFactory
 from blog.models import Content
 from blog.tests.factories import ContentFactory
 from library.tests.factories import BookSpecimenFactory, BookFactory
+from mediacenter.tests.factories import DocumentFactory
 
 
 class Command(BaseCommand):
@@ -128,5 +129,27 @@ class Command(BaseCommand):
                            authors=u'جبران خليل جبران', lang='ar',
                            cover__from_path=path)
         BookSpecimenFactory(book=book, serial="3213542")
-
+        title = (u"Déclaration des droits de l'homme et du citoyen "
+                 u"du 26 août 1789")
+        summary = (u"Les Représentants du Peuple Français, constitués en "
+                   u"Assemblée Nationale, considérant que l'ignorance, "
+                   u"l'oubli ou le mépris des droits de l'Homme sont les "
+                   u"seules causes des malheurs publics et de la corruption "
+                   u"des Gouvernements, ont résolu d'exposer, dans une "
+                   u"Déclaration solennelle, les droits naturels, "
+                   u"inaliénables et sacrés de l'Homme, afin que cette "
+                   u"Déclaration, constamment présente à tous les Membres du "
+                   u"corps social, leur rappelle sans cesse leurs droits et "
+                   u"leurs devoirs ; afin que leurs actes du pouvoir "
+                   u"législatif, et ceux du pouvoir exécutif, pouvant être à "
+                   u"chaque instant comparés avec le but de toute institution "
+                   u"politique, en soient plus respectés ; afin que les "
+                   u"réclamations des citoyens, fondées désormais sur des "
+                   u"principes simples et incontestables, tournent toujours "
+                   u"au maintien de la Constitution et au bonheur de tous.")
+        path = 'ideasbox/tests/data/declaration-1789.pdf'
+        DocumentFactory(title=title, original__from_path=path, summary=summary)
+        path = 'ideasbox/tests/data/amelia-earhart.jpg'
+        DocumentFactory(title="Picture of Amelia Earhart",
+                        original__from_path=path)
         self.stdout.write('Done.')

@@ -11,12 +11,15 @@
             {% endfor %}
         </div>
         <div class="col half">
+            {% include 'search/box.html' %}
             {% include 'ideasbox/includes/wikipedia_card.html' %}
             {% include 'ideasbox/includes/khan-academy_card.html' %}
             {% if random_book %}
                 {% include 'ideasbox/includes/book_card.html' with book=random_book %}
             {% endif %}
-            {% include 'search/box.html' %}
+            {% if random_doc %}
+                {% include 'ideasbox/includes/document_card.html' with document=random_doc %}
+            {% endif %}
         </div>
     </div>
 {% endblock content %}

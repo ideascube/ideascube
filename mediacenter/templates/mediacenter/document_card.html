@@ -1,0 +1,8 @@
+{% load static ideasbox_tags mediacenter_tags %}
+
+<div class="card">
+    <a href="{% url 'mediacenter:document_detail' pk=document.pk %}">
+        <h3><span class="theme read">{{ document.get_type_display }}</span> {{ document }}</h3>
+    </a>
+    <img src="{{ document|preview_url }}" />
+</div>

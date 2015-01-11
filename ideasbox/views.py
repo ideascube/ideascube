@@ -8,6 +8,7 @@ from django.views.generic import (ListView, DetailView, UpdateView, CreateView,
 
 from blog.models import Content
 from library.models import Book
+from mediacenter.models import Document
 
 user_model = get_user_model()
 
@@ -15,9 +16,11 @@ user_model = get_user_model()
 def index(request):
     contents = Content.objects.published()[:3]
     random_book = Book.objects.available().order_by('?').first()
+    random_doc = Document.objects.order_by('?').first()
     context = {
         'blog_contents': contents,
         'random_book': random_book,
+        'random_doc': random_doc,
     }
     return render(request, 'index.html', context)
 
