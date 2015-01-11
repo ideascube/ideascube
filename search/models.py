@@ -114,6 +114,6 @@ def add_rank_function(sender, connection, **kwargs):
 
 @receiver(class_prepared)
 def register_searchable_model(sender, **kwargs):
-    if SearchMixin in sender.__mro__:
+    if issubclass(sender, SearchMixin):
         _SEARCHABLE[sender.__name__] = sender
 _SEARCHABLE = {}
