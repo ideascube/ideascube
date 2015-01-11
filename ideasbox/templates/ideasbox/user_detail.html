@@ -1,9 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'two-third-third.html' %}
 
-{% block content %}
-    {{ user_obj }}
+{% block twothird %}
+    <h2>{{ user_obj }}</h2>
+    {% for field in user_obj.public_fields.values %}
+        <p><strong>{{ field.label }}</strong> {{ field.value }}</p>
+    {% endfor %}
+{% endblock twothird %}
+{% block third %}
     {% if user.is_staff %}
-        <a href="{% url 'user_update' pk=user_obj.pk %}">Edit</a>
-        <a href="{% url 'user_delete' pk=user_obj.pk %}">Delete</a>
+    <ul class="card tinted admin">
+        <li><a href="{% url 'user_update' pk=user_obj.pk %}">Edit</a></li>
+        <li><a href="{% url 'user_delete' pk=user_obj.pk %}">Delete</a></li>
+    </ul>
     {% endif %}
-{% endblock content %}
+{% endblock third %}
