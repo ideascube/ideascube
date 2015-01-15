@@ -1,6 +1,6 @@
 import pytest
 
-from ..utils import guess_type
+from ..utils import guess_kind
 
 
 @pytest.mark.parametrize('input,expected', [
@@ -14,5 +14,5 @@ from ..utils import guess_type
     ['pouet.pdf', 'pdf'],
     ['pouet', None],
 ])
-def test_guess_type(input, expected):
-    assert guess_type(input) == expected
+def test_guess_kind(input, expected):
+    assert guess_kind(input) == expected

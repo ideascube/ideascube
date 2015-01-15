@@ -3,10 +3,10 @@
 {% load i18n static %}
 
 {% block twothird %}
-    <h2><span class="theme read">{{ document.get_type_display }}</span> {{ document }}</h2>
-    {% if document.type == document.IMAGE %}
+    <h2><span class="theme read">{{ document.get_kind_display }}</span> {{ document }}</h2>
+    {% if document.kind == document.IMAGE %}
         <img src="{{ document.original.url }}" />
-    {% elif document.type == document.VIDEO %}
+    {% elif document.kind == document.VIDEO %}
         <video controls width="100%">
             <source src="{{ document.original.url }}">
         </video>

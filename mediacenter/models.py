@@ -5,27 +5,27 @@ from django.utils.translation import ugettext_lazy as _
 
 from ideasbox.models import TimeStampedModel
 from search.models import SearchableQuerySet, SearchMixin
-from .utils import guess_type
+from .utils import guess_kind
 
 
 class DocumentQuerySet(SearchableQuerySet, models.QuerySet):
     def image(self):
-        return self.filter(type=Document.IMAGE)
+        return self.filter(kind=Document.IMAGE)
 
     def video(self):
-        return self.filter(type=Document.VIDEO)
+        return self.filter(kind=Document.VIDEO)
 
     def pdf(self):
-        return self.filter(type=Document.PDF)
+        return self.filter(kind=Document.PDF)
 
     def text(self):
-        return self.filter(type=Document.TEXT)
+        return self.filter(kind=Document.TEXT)
 
     def audio(self):
-        return self.filter(type=Document.AUDIO)
+        return self.filter(kind=Document.AUDIO)
 
 
-class Document(SearchMixin, TimeStampedModel, models.Model):
+class Document(SearchMixin, TimeStampedModel):
 
     IMAGE = 'image'
     VIDEO = 'video'
@@ -52,7 +52,7 @@ class Document(SearchMixin, TimeStampedModel, models.Model):
     preview = models.ImageField(_('preview'), upload_to='mediacenter/preview',
                                 blank=True)
     credits = models.CharField(_('credit'), max_length=300)
-    type = models.CharField(_('type'), max_length=5, choices=TYPE_CHOICES,
+    kind = models.CharField(_('type'), max_length=5, choices=TYPE_CHOICES,
                             default=OTHER)
 
     objects = DocumentQuerySet.as_manager()
@@ -64,14 +64,16 @@ class Document(SearchMixin, TimeStampedModel, models.Model):
         return reverse('mediacenter:document_detail', kwargs={'pk': self.pk})
 
     def save(self, *args, **kwargs):
-        self.set_type()
+        self.set_kind()
         super(Document, self).save(*args, **kwargs)
 
-    def set_type(self):
-        if self.original and (not self.type or self.type == self.OTHER):
-            _type = guess_type(self.original.name)
-            if _type:
-                self.type = _type
+    def set_kind(self):
+        """Set Document kind guessing from the file name. If kind is already
+        set, does nothing."""
+        if self.original and (not self.kind or self.kind == self.OTHER):
+            kind = guess_kind(self.original.name)
+            if kind:
+                self.kind = kind
 
     @property
     def index_strings(self):

@@ -92,7 +92,7 @@ def test_can_create_document(staffapp):
     form['credits'] = 'my document credits'
     form['original'] = Upload('image.jpg', 'xxxxxx')
     form.submit().follow()
-    assert Document.objects.count()
+    assert Document.objects.count() == 1
 
 
 def test_can_create_document_without_lang(staffapp):
@@ -104,4 +104,4 @@ def test_can_create_document_without_lang(staffapp):
     form['original'] = Upload('image.jpg', 'xxxxxx')
     form['lang'] = ''
     form.submit().follow()
-    assert Document.objects.count()
+    assert Document.objects.count() == 1

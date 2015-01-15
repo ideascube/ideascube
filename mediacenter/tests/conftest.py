@@ -6,29 +6,29 @@ from .factories import DocumentFactory
 
 @pytest.fixture()
 def image():
-    return DocumentFactory(type=Document.IMAGE)
+    return DocumentFactory(kind=Document.IMAGE)
 
 
 @pytest.fixture()
 def video():
-    return DocumentFactory(type=Document.VIDEO)
+    return DocumentFactory(kind=Document.VIDEO)
 
 
 @pytest.fixture()
 def pdf():
-    return DocumentFactory(type=Document.PDF)
+    return DocumentFactory(kind=Document.PDF)
 
 
 @pytest.fixture()
 def audio():
-    return DocumentFactory(type=Document.AUDIO)
+    return DocumentFactory(kind=Document.AUDIO)
 
 
 @pytest.fixture()
 def text():
-    return DocumentFactory(type=Document.TEXT)
+    return DocumentFactory(kind=Document.TEXT)
 
 
 @pytest.fixture()
 def other():
-    return DocumentFactory(type=Document.OTHER)
+    return DocumentFactory(kind=Document.OTHER)
