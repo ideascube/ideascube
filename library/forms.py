@@ -1,6 +1,9 @@
+import re
+
 from django import forms
 
 from .models import BookSpecimen, Book
+from .utils import load_from_moccam_csv, fetch_from_openlibrary
 
 
 class BookSpecimenForm(forms.ModelForm):
@@ -14,9 +17,52 @@ class BookSpecimenForm(forms.ModelForm):
 class BookForm(forms.ModelForm):
 
     def clean_isbn(self):
-        # Make sure empty values are mapped to None, not empty string.
-        return self.cleaned_data['isbn'] or None
+        # Keep only integers, and make sure empty values are mapped to None,
+        # not empty string (we need NULL values in db, not empty strings, for
+        # uniqueness constraints).
+        return re.sub(r'\D', '', self.cleaned_data['isbn']) or None
 
     class Meta:
         model = Book
         fields = '__all__'
+
+
+class ImportForm(forms.Form):
+
+    MOCCAM_CSV = 'moccam_csv'
+    FORMATS = (
+        (MOCCAM_CSV, 'CSV from "Mocam-en-ligne"'),
+    )
+
+    from_files = forms.FileField(required=False)
+    files_format = forms.ChoiceField(choices=FORMATS)
+    from_isbn = forms.CharField(widget=forms.Textarea, required=False)
+
+    def save_from_files(self):
+        """Save book from given files."""
+        files = self.cleaned_data['from_files']
+        format_ = self.cleaned_data['files_format']
+        if format_ == self.MOCCAM_CSV:
+            handler = load_from_moccam_csv
+        books = []
+        for f in files:
+            for notice in handler(f):
+                notice['section'] = Book.OTHER
+                book, _ = Book.objects.update_or_create(isbn=notice['isbn'],
+                                                        defaults=notice)
+                books.append(book)
+        return books
+
+    def save_from_isbn(self):
+        """Retrieve books notices from isbn, and create them."""
+        isbns = self.cleaned_data['from_isbn'].splitlines()
+        books = []
+        for isbn in isbns:
+            notice = fetch_from_openlibrary(isbn)
+            if not notice:
+                continue
+            notice['section'] = Book.OTHER
+            book, _ = Book.objects.update_or_create(isbn=notice['isbn'],
+                                                    defaults=notice)
+            books.append(book)
+        return books

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row">
+        <h2 class="row wide">{% trans 'Import books notices' %}</h2>
+        {% if form.errors %}
+            <div class="error">{{ form.errors }}</div>
+        {% endif %}
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+           <div class="col half">
+                <h4>{% trans 'From files' %}</h4>
+                <p>{{ form.from_files }}</p>
+                <p>{{ form.files_format }}</p>
+                <input type="submit" value="{% trans 'Load notices from files' %}" />
+            </div>
+            <div class="col half">
+                <h4>{% trans 'From ISBN' %}</h4>
+                <p class="note">{% trans "An Internet connection is needed." %}</p>
+                {{ form.from_isbn }}
+                <input type="submit" value="{% trans "Load notices from ISBN" %}" />
+            </div>
+        </div>
+    </form>
+{% endblock content %}
