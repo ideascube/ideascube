@@ -39,7 +39,7 @@ class ImportForm(forms.Form):
     from_isbn = forms.CharField(widget=forms.Textarea, required=False)
 
     def save_from_files(self):
-        """Save book from given files."""
+        """Create or update books from given metadata files."""
         files = self.cleaned_data['from_files']
         format_ = self.cleaned_data['files_format']
         if format_ == self.MOCCAM_CSV:
@@ -54,7 +54,7 @@ class ImportForm(forms.Form):
         return books
 
     def save_from_isbn(self):
-        """Retrieve books notices from isbn, and create them."""
+        """Create or update books from given ISBN, using OpenLibrary API."""
         isbns = self.cleaned_data['from_isbn'].splitlines()
         books = []
         for isbn in isbns:

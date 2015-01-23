@@ -1,6 +1,7 @@
 import csv
 import json
 import os
+import urllib
 import urllib2
 
 from django.core.files.base import ContentFile
@@ -30,8 +31,8 @@ def fetch_from_openlibrary(isbn):
     }
     key = 'ISBN:{isbn}'.format(isbn=isbn)
     args['bibkeys'] = key
-    args = '&'.join('{0}={1}'.format(k, v) for k, v in args.iteritems())
-    url = '{base}{args}'.format(base=OPENLIBRARY_API_URL, args=args)
+    query = urllib.urlencode(args)
+    url = '{base}{query}'.format(base=OPENLIBRARY_API_URL, query=query)
     content = read_url(url)
     try:
         data = json.loads(content).get(key)
@@ -47,6 +48,8 @@ def fetch_from_openlibrary(isbn):
     publishers = data.get('publishers', [])
     if publishers:
         publisher = publishers[0]['name']
+    else:
+        publisher = None
     notice = {
         'isbn': isbn,
         'title': data.get('title'),
@@ -82,10 +85,9 @@ def load_from_moccam_csv(content):
         'summary', 'small_cover', 'cover'
     ]
     content = content.split('\n')
-    if not content or content[0].count('	') != 9:
-        raise ValueError(_('Unable to parse file'))
-    rows = csv.DictReader(content, fieldnames=FIELDS,
-                          delimiter='	')
+    rows = csv.DictReader(content, fieldnames=FIELDS, delimiter='\t')
+    if rows.restkey or rows.restval:
+        raise ValueError(_('Badly formatted file'))
     for row in rows:
         if row['cover']:
             cover = load_cover_from_url(row['cover'])
@@ -94,7 +96,7 @@ def load_from_moccam_csv(content):
         authors = row.get('authors', '')
         if ',' in authors:
             authors = authors.split(', ')
-            authors.reverse()
+            authors.reverse()  # They are in the form "Gary, Romain".
             authors = ' '.join(authors)
         yield {
             'isbn': row['isbn'],
