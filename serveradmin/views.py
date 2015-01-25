@@ -1,10 +1,14 @@
 from subprocess import call
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import StreamingHttpResponse
 from django.shortcuts import render
+from django.utils.translation import ugettext as _
 
 from .utils import call_service
+from .backup import Backup
 
 
 @staff_member_required
@@ -42,3 +46,54 @@ def power(request):
             call(["sudo", "reboot"])
 
     return render(request, 'serveradmin/power.html')
+
+
+@staff_member_required
+def backup(request):
+    if request.POST:
+        if 'do_backup' in request.POST:
+            backup = Backup.create()
+            msg = _('Succesfully created backup {filename}').format(
+                filename=backup.name
+            )
+            messages.add_message(request, messages.SUCCESS, msg)
+        elif 'do_upload' in request.POST:
+            if 'upload' in request.FILES:
+                file_ = request.FILES['upload']
+                try:
+                    backup = Backup.load(file_)
+                except:
+                    messages.add_message(request, messages.ERROR,
+                                         _('Unable to load file.'))
+                else:
+                    msg = _('File {name} has been loaded.').format(
+                        name=backup.name)
+                    messages.add_message(request, messages.SUCCESS, msg)
+            else:
+                messages.add_message(request, messages.ERROR,
+                                     _('No file found to upload.'))
+        elif 'backup' in request.POST:
+            backup = Backup(request.POST['backup'])
+            msg = None
+            if 'do_delete' in request.POST:
+                backup.delete()
+                msg = _('Succesfully deleted backup {filename}').format(
+                    filename=backup.name
+                )
+            elif 'do_restore' in request.POST:
+                Backup.create()  # Security backup.
+                backup.restore()
+                msg = _('Succesfully restored backup {filename}').format(
+                    filename=backup.name
+                )
+            elif 'do_download' in request.POST:
+                response = StreamingHttpResponse(open(backup.path, 'rb'))
+                cd = 'attachment; filename="{name}"'.format(name=backup.name)
+                response['Content-Disposition'] = cd
+                return response
+            if msg:
+                messages.add_message(request, messages.SUCCESS, msg)
+    context = {
+        'backups': Backup.list()
+    }
+    return render(request, 'serveradmin/backup.html', context)
