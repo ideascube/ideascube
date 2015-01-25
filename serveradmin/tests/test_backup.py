@@ -36,7 +36,7 @@ def test_list(monkeypatch, settings):
     os.rmdir(BACKUPS_ROOT)
 
 
-def test_create(monkeypatch):
+def test_create(monkeypatch, settings):
     filename = 'edoardo_0.0.0_201501231405.zip'
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
@@ -46,12 +46,15 @@ def test_create(monkeypatch):
         pass
     monkeypatch.setattr('serveradmin.backup.Backup.ROOT', BACKUPS_ROOT)
     monkeypatch.setattr('serveradmin.backup.make_name', lambda: filename)
+    proof_file = os.path.join(settings.BACKUPED_ROOT, 'backup.me')
+    open(proof_file, mode='w')
     Backup.create()
     assert os.path.exists(filepath)
     assert zipfile.is_zipfile(filepath)
     archive = zipfile.ZipFile(filepath)
-    assert 'default.sqlite' in archive.namelist()
+    assert 'backup.me' in archive.namelist()
     os.remove(filepath)
+    os.remove(proof_file)
 
 
 def test_restore(monkeypatch, settings):

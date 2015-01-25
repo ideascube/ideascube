@@ -73,7 +73,11 @@ class Backup(object):
 
     @classmethod
     def list(cls):
-        files = os.listdir(cls.ROOT)
+        try:
+            files = os.listdir(cls.ROOT)
+        except OSError:
+            # Directory does not exist yet.
+            return
         files.sort()
         for name in files:
             try:

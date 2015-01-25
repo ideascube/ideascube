@@ -71,13 +71,16 @@ def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
         pass
     monkeypatch.setattr('serveradmin.backup.Backup.ROOT', BACKUPS_ROOT)
     monkeypatch.setattr('serveradmin.backup.make_name', lambda: filename)
+    proof_file = os.path.join(settings.BACKUPED_ROOT, 'backup.me')
+    open(proof_file, mode='w')
     form = staffapp.get(reverse('server:backup')).form
     form.submit('do_backup')
     assert os.path.exists(filepath)
     assert zipfile.is_zipfile(filepath)
     archive = zipfile.ZipFile(filepath)
-    assert 'default.sqlite' in archive.namelist()
+    assert 'backup.me' in archive.namelist()
     os.remove(filepath)
+    os.remove(proof_file)
 
 
 def test_restore_button_should_backup_and_restore(staffapp, monkeypatch,
