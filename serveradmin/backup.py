@@ -5,6 +5,7 @@ import zipfile
 from datetime import datetime
 
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
 
 from ideasbox import __version__
@@ -27,7 +28,7 @@ class Backup(object):
 
     def __init__(self, name):
         if not name.endswith('.zip'):
-            raise ValueError
+            raise ValueError(_('backup name must end with .zip'))
         self.name = name
         self.parse_name()
 

@@ -3,7 +3,7 @@
 
 {% block twothird %}
 <h2>{% trans "Manage server backups" %}</h2>
-<form name="backups" method="POST" enctype="multipart/form-data">
+<form name="backups" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <h3>{% trans 'Backup' %}</h3>
     <input type="submit" name="do_backup" value="{% trans 'Backup now' %}">
