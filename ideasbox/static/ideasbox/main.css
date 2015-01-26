@@ -313,7 +313,33 @@ html[dir='rtl'] .boxid {
     float: left;
     right: -31px;
 }
-
+div.i18n_switch select {
+    display: inline;
+    width: calc(100% - 100px);
+    margin: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    vertical-align: top;
+    height: 40px;
+}
+div.i18n_switch input[type='submit'] {
+    display: inline;
+    width: 100px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    margin: 0;
+    vertical-align: top;
+    height: 40px;
+    line-height: 40px;
+}
+html[dir='rtl'] .i18n_switch select {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+html[dir='rtl'] .i18n_switch input[type='submit'] {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
 
 /* ************************************************* */
 /* ******************** TOOLS ********************** */

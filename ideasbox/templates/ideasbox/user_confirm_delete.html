@@ -1,11 +1,4 @@
-{% extends 'one-row.html' %}
+{% extends 'ideasbox/form_confirm_delete.html' %}
 {% load i18n %}
 
-{% block row %}
-    <h2>{% blocktrans %}Are you sure you want to delete user "{{ user_obj }}"?{% endblocktrans %}</h2>
-    <form method="POST" action=".">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" name="confirm" value="{% trans 'yes' %}" />
-    </form>
-{% endblock row %}
+{% block confirm_message %}{% blocktrans %}Are you sure you want to delete user "{{ user_obj }}"?{% endblocktrans %}{% endblock %}
