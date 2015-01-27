@@ -93,6 +93,12 @@ def test_delete(monkeypatch):
     assert not os.path.exists(backup_path)
 
 
+def test_delete_should_not_fail_if_file_is_missing(monkeypatch):
+    monkeypatch.setattr('serveradmin.backup.Backup.ROOT', BACKUPS_ROOT)
+    backup = Backup('doesnotexist_0.1.0_201501241620.zip')
+    backup.delete()
+
+
 def test_load_should_raise_if_file_is_not_a_zip():
     with pytest.raises(AssertionError):
         Backup.load(ContentFile('xxx', name='musasa_0.1.0_201501241620.zip'))

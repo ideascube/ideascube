@@ -63,7 +63,10 @@ class Backup(object):
             z.extractall(settings.BACKUPED_ROOT)
 
     def delete(self):
-        return os.remove(self.path)
+        try:
+            return os.remove(self.path)
+        except OSError:
+            pass
 
     @classmethod
     def create(cls):
