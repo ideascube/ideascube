@@ -12,7 +12,7 @@ More details about the server of the [overview](https://github.com/ideas-box/ide
 
 * Join the brainstorming: read and comment issues and wiki; join the #ideasbox chan on Freenode
 * Review [pull requests](https://github.com/ideas-box/ideasbox.lan/pulls)
-* Take an [issue](https://github.com/ideas-box/ideasbox.lan/issues) an code :)
+* Take an [issue](https://github.com/ideas-box/ideasbox.lan/issues) and code :)
 * What about a sprint ?
 
 ## IRC
