@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'blog',
     'library',
     'search',
+    'mediacenter',
 )
 
 MIDDLEWARE_CLASSES = (
