@@ -13,6 +13,7 @@ from ..utils import guess_kind
     ['pouet.ogg', 'audio'],
     ['pouet.pdf', 'pdf'],
     ['pouet', None],
+    ['pouet.xxx', None],
 ])
 def test_guess_kind(input, expected):
     assert guess_kind(input) == expected
