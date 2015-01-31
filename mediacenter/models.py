@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from ideasbox.models import TimeStampedModel
 from search.models import SearchableQuerySet, SearchMixin
-from .utils import guess_kind
+from .utils import guess_kind_from_filename
 
 
 class DocumentQuerySet(SearchableQuerySet, models.QuerySet):
@@ -71,7 +71,7 @@ class Document(SearchMixin, TimeStampedModel):
         """Set Document kind guessing from the file name. If kind is already
         set, does nothing."""
         if self.original and (not self.kind or self.kind == self.OTHER):
-            kind = guess_kind(self.original.name)
+            kind = guess_kind_from_filename(self.original.name)
             if kind:
                 self.kind = kind
 

@@ -5,6 +5,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
 from .models import Document
+from .forms import DocumentForm
 
 
 class Index(ListView):
@@ -21,11 +22,13 @@ document_detail = DocumentDetail.as_view()
 
 class DocumentUpdate(UpdateView):
     model = Document
+    form_class = DocumentForm
 document_update = staff_member_required(DocumentUpdate.as_view())
 
 
 class DocumentCreate(CreateView):
     model = Document
+    form_class = DocumentForm
     initial = {
         'lang': settings.LANGUAGE_CODE,
     }

@@ -90,7 +90,7 @@ def test_can_create_document(staffapp):
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
-    form['original'] = Upload('image.jpg', 'xxxxxx')
+    form['original'] = Upload('image.jpg', 'xxxxxx', 'image/jpeg')
     form.submit().follow()
     assert Document.objects.count() == 1
 
@@ -101,7 +101,29 @@ def test_can_create_document_without_lang(staffapp):
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
-    form['original'] = Upload('image.jpg', 'xxxxxx')
+    form['original'] = Upload('image.jpg', 'xxxxxx', 'image/jpeg')
     form['lang'] = ''
+    form.submit().follow()
+    assert Document.objects.count() == 1
+
+
+def test_content_type_should_have_priority_over_extension(staffapp):
+    assert not Document.objects.count()
+    form = staffapp.get(reverse('mediacenter:document_create')).form
+    form['title'] = 'my document title'
+    form['summary'] = 'my document summary'
+    form['credits'] = 'my document credits'
+    form['original'] = Upload('audio.mp3', 'xxxxxx', 'image/jpeg')
+    form.submit().follow()
+    assert Document.objects.first().kind == Document.IMAGE
+
+
+def test_uploading_without_content_type_should_be_ok(staffapp):
+    assert not Document.objects.count()
+    form = staffapp.get(reverse('mediacenter:document_create')).form
+    form['title'] = 'my document title'
+    form['summary'] = 'my document summary'
+    form['credits'] = 'my document credits'
+    form['original'] = Upload('audio.mp3', 'xxxxxx')
     form.submit().follow()
     assert Document.objects.count() == 1
