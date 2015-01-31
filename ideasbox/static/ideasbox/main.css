@@ -313,7 +313,7 @@ html[dir='rtl'] .boxid {
     float: left;
     right: -31px;
 }
-div.i18n_switch select {
+.i18n_switch select {
     display: inline;
     width: calc(100% - 100px);
     margin: 0;
@@ -322,7 +322,7 @@ div.i18n_switch select {
     vertical-align: top;
     height: 40px;
 }
-div.i18n_switch input[type='submit'] {
+.i18n_switch input[type='submit'] {
     display: inline;
     width: 100px;
     border-bottom-left-radius: 0;
