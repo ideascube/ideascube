@@ -16,3 +16,5 @@ pull_translations:
 	tx pull
 compile_translations:
 	python manage.py compilemessages
+build:
+	dpkg-buildpackage -us -uc

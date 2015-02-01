@@ -1,0 +1,5 @@
+recursive-include */static *
+recursive-include */templates *
+recursive-include ideasbox/locale *
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]

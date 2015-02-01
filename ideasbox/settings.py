@@ -14,10 +14,10 @@ IDEASBOX_ID = os.environ.get('IDEASBOX_ID', socket.gethostname())
 try:
     sub = importlib.import_module(".conf." + IDEASBOX_ID, package="ideasbox")
 except ImportError:
-    from .conf import base as sub
+    from .conf import dev as sub
 finally:
-    SETTINGS_MODULE = sub.__name__  # Make it available as a settings, to
-                                    # be able to display it in the admin.
+    # Make it available as a settings, to be able to display it in the admin.
+    SETTINGS_MODULE = sub.__name__
     sys.stdout.write('Importing settings from %s\n' % SETTINGS_MODULE)
     ldict = locals()
     for k in sub.__dict__:

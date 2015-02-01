@@ -1,0 +1,8 @@
+DJANGO_SETTINGS_MODULE=ideasbox.settings
+# Make possible to bypass proxy, in case of debug needs.
+HOST=0.0.0.0
+PORT=8001
+STORAGE_ROOT=/var/ideasbox
+# Cast to False in python
+DEBUG=
+
