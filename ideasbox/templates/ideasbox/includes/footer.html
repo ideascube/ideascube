@@ -16,7 +16,7 @@
         <ul class="col quarter">Server Administration
             <li><a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
             <li><a href="{% url 'server:power' %}">{% trans "Restart server" %}</a></li>
-            <li><a href="#">Backup / restore</a></li>
+            <li><a href="{% url 'server:backup' %}">{% trans "Backup / restore" %}</a></li>
         </ul>
         <div class="col quarter i18n_switch">
             <form action="{% url 'set_language' %}" method="post">

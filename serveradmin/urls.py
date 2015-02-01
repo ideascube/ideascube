@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     url(r'^power/$', views.power, name='power'),
     url(r'^services/$', views.services, name='services'),
+    url(r'^backup/$', views.backup, name='backup'),
 ]

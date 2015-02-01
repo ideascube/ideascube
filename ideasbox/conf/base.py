@@ -117,20 +117,20 @@ MEDIA_URL = '/media/'
 
 
 # Ideas Box specifics
+if DEBUG:
+    STORAGE_ROOT = os.path.join(BASE_DIR, 'storage')
+else:
+    STORAGE_ROOT = '/var/ideasbox'
+
+BACKUPED_ROOT = os.path.join(STORAGE_ROOT, 'main')
 try:
-    STORAGE_ROOT = os.environ['DATASTORAGE']
-except KeyError:
-    if DEBUG:
-        try:
-            os.makedirs('storage/main')
-        except OSError:
-            pass
-        STORAGE_ROOT = os.path.join(BASE_DIR, 'storage')
-    else:
-        raise
-MEDIA_ROOT = os.path.join(STORAGE_ROOT, 'main')
-STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')  # TODO move out of backuped
-                                                    # storage, cf #65.
+    os.makedirs(BACKUPED_ROOT)
+except OSError:
+    pass
+
+MEDIA_ROOT = os.path.join(BACKUPED_ROOT, 'media')
+STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')
+
 AUTH_USER_MODEL = 'ideasbox.DefaultUser'
 IDEASBOX_NAME = 'debugbox'
 
@@ -140,7 +140,7 @@ IDEASBOX_NAME = 'debugbox'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(MEDIA_ROOT, 'default.sqlite'),
+        'NAME': os.path.join(BACKUPED_ROOT, 'default.sqlite'),
     }
 }
 
