@@ -51,7 +51,7 @@ def power(request):
 @staff_member_required
 def backup(request):
     if request.POST:
-        if 'do_backup' in request.POST:
+        if 'do_create' in request.POST:
             backup = Backup.create()
             msg = _('Succesfully created backup {filename}').format(
                 filename=backup.name

@@ -74,7 +74,7 @@ def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
     proof_file = os.path.join(settings.BACKUPED_ROOT, 'backup.me')
     open(proof_file, mode='w')
     form = staffapp.get(reverse('server:backup')).form
-    form.submit('do_backup')
+    form.submit('do_create')
     assert os.path.exists(filepath)
     assert zipfile.is_zipfile(filepath)
     archive = zipfile.ZipFile(filepath)

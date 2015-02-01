@@ -6,7 +6,7 @@
 <form name="backups" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <h3>{% trans 'Backup' %}</h3>
-    <input type="submit" name="do_backup" value="{% trans 'Backup now' %}">
+    <input type="submit" name="do_create" value="{% trans 'Backup now' %}">
     <hr>
     <h3 id="restore">{% trans 'Restore' %}</h3>
     <table>
