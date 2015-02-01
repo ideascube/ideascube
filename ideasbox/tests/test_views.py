@@ -51,12 +51,12 @@ def test_login_page_should_not_log_in_user_with_incorrect_POST(client, user):
 
 def test_user_list_page_should_be_accessible(app, user):
     response = app.get(reverse('user_list'))
-    assert unicode(user) in response.content
+    response.mustcontain(unicode(user))
 
 
 def test_user_detail_page_should_be_accessible(app, user):
     response = app.get(reverse('user_detail', kwargs={'pk': user.pk}))
-    assert unicode(user) in response.content
+    response.mustcontain(unicode(user))
 
 
 def test_user_create_page_should_not_be_accessible_to_anonymous(app):
@@ -74,7 +74,7 @@ def test_user_create_page_should_be_accessible_to_staff(staffapp):
 def test_should_create_user_with_serial_only(staffapp):
     assert len(user_model.objects.all()) == 1
     serial = '12345xz22'
-    form = staffapp.get(reverse('user_create')).form
+    form = staffapp.get(reverse('user_create')).forms['model_form']
     form['serial'] = serial
     form.submit()
     assert len(user_model.objects.all()) == 2
@@ -83,7 +83,7 @@ def test_should_create_user_with_serial_only(staffapp):
 
 def test_should_not_create_user_without_serial(staffapp):
     assert len(user_model.objects.all()) == 1
-    form = staffapp.get(reverse('user_create')).form
+    form = staffapp.get(reverse('user_create')).forms['model_form']
     form.submit()
     assert len(user_model.objects.all()) == 1
 
@@ -106,7 +106,7 @@ def test_staff_should_be_able_to_update_user(staffapp, user):
     assert len(user_model.objects.all()) == 2
     url = reverse('user_update', kwargs={'pk': user.pk})
     short_name = 'Denis'
-    form = staffapp.get(url).form
+    form = staffapp.get(url).forms['model_form']
     form['serial'] = user.serial
     form['short_name'] = short_name
     form.submit().follow()
@@ -116,7 +116,7 @@ def test_staff_should_be_able_to_update_user(staffapp, user):
 
 def test_should_not_update_user_without_serial(app, staffapp, user):
     url = reverse('user_update', kwargs={'pk': user.pk})
-    form = staffapp.get(url).form
+    form = staffapp.get(url).forms['model_form']
     form['serial'] = ''
     form['short_name'] = 'ABCDEF'
     assert form.submit()
@@ -156,6 +156,6 @@ def test_non_staff_cannot_delete_user(loggedapp, user):
 def test_staff_user_can_delete_user(staffapp, user):
     assert len(user_model.objects.all()) == 2  # staff user and normal user
     url = reverse('user_delete', kwargs={'pk': user.pk})
-    form = staffapp.get(url).form
+    form = staffapp.get(url).forms['delete_form']
     form.submit()
     assert len(user_model.objects.all()) == 1

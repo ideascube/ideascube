@@ -1,0 +1,12 @@
+{% extends 'one-row.html' %}
+{% load i18n %}
+
+{% block row %}
+    <h2>{% block confirm_message %}{% endblock %}</h2>
+    <p>{% block confirm_warning %}{% endblock %}</p>
+    <form method="POST" action="." id="delete_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" name="confirm" value="{% trans 'yes' %}" /></p>
+    </form>
+{% endblock row %}

@@ -1,12 +1,5 @@
-{% extends 'one-row.html' %}
+{% extends 'ideasbox/form_confirm_delete.html' %}
 {% load i18n %}
 
-{% block row %}
-    <h2>{% blocktrans with name=specimen %}Are you sure you want to delete "{{ name }}"?{% endblocktrans %}</h2>
-    <p>{% blocktrans with name=specimen.book %}This will not delete book "{{ name }}"{% endblocktrans %}</p>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" name="confirm" value="{% trans 'yes' %}" />
-    </form>
-{% endblock row %}
+{% block confirm_message %}{% blocktrans with name=specimen %}Are you sure you want to delete "{{ name }}"?{% endblocktrans %}{% endblock %}
+{% block confirm_warning %}{% blocktrans with name=specimen.book %}This will not delete book "{{ name }}"{% endblocktrans %}{% endblock %}

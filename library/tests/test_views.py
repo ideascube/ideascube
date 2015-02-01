@@ -88,7 +88,7 @@ def test_staff_should_access_book_update_page(staffapp, book):
 
 
 def test_staff_can_create_book(staffapp):
-    form = staffapp.get(reverse('library:book_create')).form
+    form = staffapp.get(reverse('library:book_create')).forms['model_form']
     assert not Book.objects.count()
     form['title'] = 'My book title'
     form['summary'] = 'My book summary'
@@ -99,7 +99,7 @@ def test_staff_can_create_book(staffapp):
 
 def test_staff_can_edit_book(staffapp, book):
     form = staffapp.get(reverse('library:book_update',
-                                kwargs={'pk': book.pk})).form
+                                kwargs={'pk': book.pk})).forms['model_form']
     title = "New title"
     assert Book.objects.get(pk=book.pk).title != title
     form['title'] = title
@@ -110,14 +110,14 @@ def test_staff_can_edit_book(staffapp, book):
 def test_staff_user_can_delete_book(staffapp, book):
     assert Book.objects.count() == 1
     url = reverse('library:book_delete', kwargs={'pk': book.pk})
-    form = staffapp.get(url).form
+    form = staffapp.get(url).forms['delete_form']
     form.submit()
     assert not Book.objects.count()
 
 
 def test_staff_can_create_specimen(staffapp, book):
     url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
-    form = staffapp.get(url).form
+    form = staffapp.get(url).forms['model_form']
     assert not book.specimens.count()
     form['serial'] = '23135321'
     form.submit().follow()
@@ -125,8 +125,8 @@ def test_staff_can_create_specimen(staffapp, book):
 
 
 def test_staff_can_edit_specimen(staffapp, specimen):
-    form = staffapp.get(reverse('library:specimen_update',
-                                kwargs={'pk': specimen.pk})).form
+    url = reverse('library:specimen_update', kwargs={'pk': specimen.pk})
+    form = staffapp.get(url).forms['model_form']
     remarks = "This is a new remark"
     assert BookSpecimen.objects.get(pk=specimen.pk).remarks != remarks
     form['remarks'] = remarks
@@ -138,7 +138,7 @@ def test_staff_user_can_delete_specimen(staffapp, specimen):
     assert BookSpecimen.objects.count() == 1
     assert Book.objects.count() == 1
     url = reverse('library:specimen_delete', kwargs={'pk': specimen.pk})
-    form = staffapp.get(url).form
+    form = staffapp.get(url).forms['delete_form']
     form.submit()
     assert Book.objects.count() == 1
     assert not BookSpecimen.objects.count()
@@ -147,13 +147,13 @@ def test_staff_user_can_delete_specimen(staffapp, specimen):
 def test_it_should_be_possible_to_create_several_books_without_isbn(staffapp):
     assert not Book.objects.count()
     url = reverse('library:book_create')
-    form = staffapp.get(url).form
+    form = staffapp.get(url).forms['model_form']
     form['title'] = 'My book title'
     form['summary'] = 'My book summary'
     form['section'] = '1'
     form['isbn'] = ''
     form.submit().follow()
-    form = staffapp.get(url).form
+    form = staffapp.get(url).forms['model_form']
     form['title'] = 'My book title 2'
     form['summary'] = 'My book summary 2'
     form['section'] = '2'
@@ -167,11 +167,11 @@ def test_it_should_be_possible_to_remove_isbn_from_books(staffapp):
     book2 = BookFactory(isbn='321564987')
     assert not Book.objects.filter(isbn__isnull=True)
     form = staffapp.get(reverse('library:book_update',
-                        kwargs={'pk': book1.pk})).form
+                        kwargs={'pk': book1.pk})).forms['model_form']
     form['isbn'] = ''
     form.submit().follow()
     form = staffapp.get(reverse('library:book_update',
-                        kwargs={'pk': book2.pk})).form
+                        kwargs={'pk': book2.pk})).forms['model_form']
     form['isbn'] = ''
     form.submit().follow()
     assert len(Book.objects.filter(isbn__isnull=True)) == 2

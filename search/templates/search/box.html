@@ -2,7 +2,7 @@
 
 {% spaceless %}
 <div class="card tinted search">
-    <form action="{% url "search:search" %}">
+    <form action="{% url "search:search" %}" id="search">
         <input name="q" type="text" placeholder="{% trans 'search' %}" value="{{ q }}" />
         <input type="submit" value="{% trans 'search' %}" />
     </form>

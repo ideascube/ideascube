@@ -96,8 +96,8 @@ def test_staff_should_access_deleted_edit_page(staffapp, deleted):
 
 
 def test_staff_can_edit_published_content(staffapp, published):
-    form = staffapp.get(reverse('blog:content_update',
-                                kwargs={'pk': published.pk})).form
+    url = reverse('blog:content_update', kwargs={'pk': published.pk})
+    form = staffapp.get(url).forms['model_form']
     title = "New title"
     assert Content.objects.get(pk=published.pk).title != title
     form['title'] = title
@@ -106,8 +106,8 @@ def test_staff_can_edit_published_content(staffapp, published):
 
 
 def test_staff_can_edit_draft_content(staffapp, draft):
-    form = staffapp.get(reverse('blog:content_update',
-                                kwargs={'pk': draft.pk})).form
+    url = reverse('blog:content_update', kwargs={'pk': draft.pk})
+    form = staffapp.get(url).forms['model_form']
     title = "New title"
     assert Content.objects.get(pk=draft.pk).title != title
     form['title'] = title
@@ -116,8 +116,8 @@ def test_staff_can_edit_draft_content(staffapp, draft):
 
 
 def test_staff_can_edit_delete_content(staffapp, deleted):
-    form = staffapp.get(reverse('blog:content_update',
-                                kwargs={'pk': deleted.pk})).form
+    url = reverse('blog:content_update', kwargs={'pk': deleted.pk})
+    form = staffapp.get(url).forms['model_form']
     title = "New title"
     assert Content.objects.get(pk=deleted.pk).title != title
     form['title'] = title
@@ -127,7 +127,7 @@ def test_staff_can_edit_delete_content(staffapp, deleted):
 
 def test_can_create_content_without_image(staffapp):
     assert not Content.objects.count()
-    form = staffapp.get(reverse('blog:content_create')).form
+    form = staffapp.get(reverse('blog:content_create')).forms['model_form']
     form['title'] = 'my content title'
     form['summary'] = 'my content summary'
     form['text'] = 'my content text'
