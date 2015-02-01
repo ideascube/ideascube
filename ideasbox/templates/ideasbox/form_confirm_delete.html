@@ -7,6 +7,6 @@
     <form method="POST" action="." id="delete_form">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" name="confirm" value="{% trans 'yes' %}" />
+        <p><input type="submit" name="confirm" value="{% trans 'yes' %}" /></p>
     </form>
 {% endblock row %}
