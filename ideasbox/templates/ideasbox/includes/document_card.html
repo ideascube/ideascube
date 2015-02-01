@@ -1,0 +1,7 @@
+{% load i18n mediacenter_tags %}
+<div class="card tinted document">
+    <img src="{{ document|preview_url }}" title="{{ document.title }}" />
+    <h4 class="flow"><span class="theme read">read</span> <span>{% trans "medias center" %}</span></h4>
+    <h3 class="flow"><a href="{{ document.get_absolute_url }}">{{ document }}</a></h3>
+    <p>{{ document.summary|truncatewords:20 }}</p>
+</div>
