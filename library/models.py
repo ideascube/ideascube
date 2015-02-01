@@ -15,6 +15,8 @@ class BookQuerySet(SearchableQuerySet, models.QuerySet):
 # Create your models here.
 class Book(SearchMixin, TimeStampedModel):
 
+    OTHER = 99
+
     SECTION_CHOICES = (
         (1, _('digital')),
         (2, _('children - cartoons')),
@@ -25,7 +27,7 @@ class Book(SearchMixin, TimeStampedModel):
         (7, _('adults - documentary')),
         (8, _('adults - comics')),
         (9, _('game')),
-        (10, _('other')),
+        (OTHER, _('other')),
     )
 
     # We allow ISBN to be null, but when it is set it needs to be unique.

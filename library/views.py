@@ -1,11 +1,13 @@
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
-                                  UpdateView)
+                                  UpdateView, FormView)
 
-from .forms import BookForm, BookSpecimenForm
+from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
 
 
@@ -42,6 +44,36 @@ class BookDelete(DeleteView):
     model = Book
     success_url = reverse_lazy('library:index')
 book_delete = staff_member_required(BookDelete.as_view())
+
+
+class BookImport(FormView):
+    form_class = ImportForm
+    template_name = 'library/import.html'
+    success_url = reverse_lazy('library:book_import')
+
+    def form_valid(self, form):
+        if form.cleaned_data['from_files']:
+            handler = form.save_from_files
+        elif form.cleaned_data['from_isbn']:
+            handler = form.save_from_isbn
+        try:
+            notices = handler()
+        except ValueError:
+            msg = _('Unable to process notices.')
+            messages.add_message(self.request, messages.ERROR, msg)
+        else:
+            if notices:
+                msg = _('Successfully processed {count} notices.')
+                msg = msg.format(count=len(notices))
+                messages.add_message(self.request, messages.SUCCESS, msg)
+                if len(notices) == 1:
+                    self.success_url = notices[0].get_absolute_url()
+            else:
+                msg = _('No notice processed')
+                messages.add_message(self.request, messages.INFO, msg)
+        return super(BookImport, self).form_valid(form)
+
+book_import = staff_member_required(BookImport.as_view())
 
 
 class SpecimenCreate(CreateView):

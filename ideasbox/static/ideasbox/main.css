@@ -411,6 +411,40 @@ span.error {
     color: #eee;
     padding: 5px;
 }
+.messages li {
+    margin-bottom: 40px;
+    margin-top: -40px;
+    padding: 20px;
+    text-align: center;
+    font-family: 'fira_sansbook';
+}
+.messages li.success {
+    background-color: #66cc99;
+}
+.messages li.success:before {
+    content: '⍟ ';
+}
+.messages li.success:after {
+    content: ' ⍟';
+}
+.messages li.error {
+    background-color: #CF000F;
+}
+.messages li.error:before {
+    content: '⚠ ';
+}
+.messages li.error:after {
+    content: ' ⚠';
+}
+.messages li.info {
+    background-color: #F5AB35;
+}
+.messages li.info:before {
+    content: '♬ ';
+}
+.messages li.info:after {
+    content: ' ♬';
+}
 
 
 /* ************************************************* */

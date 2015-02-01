@@ -13,7 +13,8 @@
     {% include "ideasbox/pagination.html" %}
 {% endblock twothird %}
 {% block third %}
-    <div class="card tinted admin">
-        <a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a>
-    </div>
+    <ul class="card tinted admin">
+        <li><a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a></li>
+        <li><a href="{% url 'library:book_import' %}">{% trans "Import notices" %}</a></li>
+    </ul>
 {% endblock third %}

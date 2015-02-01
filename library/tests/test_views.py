@@ -1,6 +1,7 @@
 import pytest
 
 from django.core.urlresolvers import reverse
+from webtest import Upload
 
 from ..models import Book, BookSpecimen
 from ..views import Index
@@ -174,3 +175,67 @@ def test_it_should_be_possible_to_remove_isbn_from_books(staffapp):
     form['isbn'] = ''
     form.submit().follow()
     assert len(Book.objects.filter(isbn__isnull=True)) == 2
+
+
+def test_should_keep_only_numbers_in_isbn(staffapp):
+    form = staffapp.get(reverse('library:book_create')).form
+    assert not Book.objects.count()
+    form['title'] = 'My book title'
+    form['summary'] = 'My book summary'
+    form['section'] = '1'
+    form['isbn'] = '2-7071-2402-8'
+    form.submit().follow()
+    assert Book.objects.get(isbn='2707124028')
+
+
+def test_import_from_isbn(staffapp, monkeypatch):
+    doc = """{"ISBN:2070379043": {"publishers": [{"name": "Gallimard"}], "identifiers": {"isbn_13": ["9782070379040"], "openlibrary": ["OL8838456M"], "isbn_10": ["2070379043"], "goodreads": ["118988"], "librarything": ["1655982"]}, "weight": "7 ounces", "title": "Les Enchanteurs", "url": "https://openlibrary.org/books/OL8838456M/Les_enchanteurs", "number_of_pages": 373, "cover": {"small": "https://covers.openlibrary.org/b/id/967767-S.jpg", "large": "https://covers.openlibrary.org/b/id/967767-L.jpg", "medium": "https://covers.openlibrary.org/b/id/967767-M.jpg"}, "publish_date": "January 22, 1988", "key": "/books/OL8838456M", "authors": [{"url": "https://openlibrary.org/authors/OL123692A/Romain_Gary", "name": "Romain Gary"}]}}"""  # noqa
+    monkeypatch.setattr('library.utils.load_cover_from_url', lambda x: 'xxx')
+    monkeypatch.setattr('library.utils.read_url', lambda x: doc)
+    form = staffapp.get(reverse('library:book_import')).form
+    form['from_isbn'] = '2070379043'
+    response = form.submit()
+    response.follow()
+    assert Book.objects.count() == 1
+    book = Book.objects.last()
+    # Only one notice processed, we should have been redirected to its page.
+    assert response.location.endswith(book.get_absolute_url())
+
+
+def test_import_from_files(staffapp, monkeypatch):
+    monkeypatch.setattr('library.utils.read_url', lambda x: None)
+    form = staffapp.get(reverse('library:book_import')).form
+    form['from_files'] = Upload('library/tests/data/moccam.csv')
+    response = form.submit()
+    response.follow()
+    assert Book.objects.count() == 2
+
+
+def test_import_from_files_does_not_duplicate(staffapp, monkeypatch):
+    monkeypatch.setattr('library.utils.read_url', lambda x: None)
+    path = 'library/tests/data/moccam.csv'
+    with open(path) as f:
+        isbn = f.read().split('\t')[0]
+    # Create a book with same isbn as first entry of CSV.
+    BookFactory(isbn=isbn)
+    form = staffapp.get(reverse('library:book_import')).form
+    form['from_files'] = Upload(path)
+    response = form.submit()
+    response.follow()
+    assert Book.objects.count() == 2
+
+
+def test_import_from_files_load_cover_if_exists(staffapp, monkeypatch):
+    assert Book.objects.count() == 0
+    image = 'ideasbox/tests/data/the-prophet.jpg'
+    monkeypatch.setattr(
+        'library.utils.read_url',
+        lambda x: open(image).read()
+    )
+    form = staffapp.get(reverse('library:book_import')).form
+    form['from_files'] = Upload('library/tests/data/moccam.csv')
+    response = form.submit()
+    response.follow()
+    assert Book.objects.count() == 2
+    assert Book.objects.last().cover
+    assert open(Book.objects.last().cover.path).read() == open(image).read()
