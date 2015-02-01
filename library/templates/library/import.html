@@ -8,7 +8,7 @@
             <div class="error">{{ form.errors }}</div>
         {% endif %}
     </div>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" id="import">
         {% csrf_token %}
         <div class="row">
            <div class="col half">

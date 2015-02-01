@@ -76,7 +76,7 @@ def test_staff_should_access_edit_page(staffapp, video):
 
 def test_staff_can_edit_document(staffapp, video):
     form = staffapp.get(reverse('mediacenter:document_update',
-                                kwargs={'pk': video.pk})).form
+                                kwargs={'pk': video.pk})).forms['model_form']
     title = "New title"
     assert Document.objects.get(pk=video.pk).title != title
     form['title'] = title
@@ -86,7 +86,8 @@ def test_staff_can_edit_document(staffapp, video):
 
 def test_can_create_document(staffapp):
     assert not Document.objects.count()
-    form = staffapp.get(reverse('mediacenter:document_create')).form
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
@@ -97,7 +98,8 @@ def test_can_create_document(staffapp):
 
 def test_can_create_document_without_lang(staffapp):
     assert not Document.objects.count()
-    form = staffapp.get(reverse('mediacenter:document_create')).form
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
@@ -109,7 +111,8 @@ def test_can_create_document_without_lang(staffapp):
 
 def test_content_type_should_have_priority_over_extension(staffapp):
     assert not Document.objects.count()
-    form = staffapp.get(reverse('mediacenter:document_create')).form
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
@@ -120,7 +123,8 @@ def test_content_type_should_have_priority_over_extension(staffapp):
 
 def test_uploading_without_content_type_should_be_ok(staffapp):
     assert not Document.objects.count()
-    form = staffapp.get(reverse('mediacenter:document_create')).form
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
