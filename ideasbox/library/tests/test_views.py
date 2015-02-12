@@ -1,11 +1,10 @@
 import pytest
-
 from django.core.urlresolvers import reverse
 from webtest import Upload
 
 from ..models import Book, BookSpecimen
 from ..views import Index
-from .factories import BookSpecimenFactory, BookFactory
+from .factories import BookFactory, BookSpecimenFactory
 
 pytestmark = pytest.mark.django_db
 
