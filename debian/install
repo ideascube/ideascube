@@ -1,1 +1,2 @@
 debian/nginx/ideasbox /etc/nginx/sites-available
+debian/bin/ideasbox /usr/bin

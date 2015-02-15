@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.7/howto/deployment/wsgi/
 
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ideasbox.settings")
+os.environ.setdefault("STORAGE_ROOT", "/var/ideasbox")
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()

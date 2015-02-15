@@ -1,16 +1,11 @@
 #!/bin/bash
 NAME=ideasbox
-[ -r /etc/default/$NAME ] && . /etc/default/$NAME
 case "$1" in
     configure)
-        export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
-        export DEBUG=$DEBUG
-        export STORAGE_ROOT=$STORAGE_ROOT
-        cd /usr/share/python/$DPKG_MAINTSCRIPT_PACKAGE
         echo "Running migration"
-        ./bin/django-admin migrate --noinput -v 1
+        /usr/bin/ideasbox migrate --noinput -v 1
         echo "Running collectstatic"
-        ./bin/django-admin collectstatic --noinput -v 1
+        /usr/bin/ideasbox collectstatic --noinput -v 1
         # Nginx
         echo "Installing Nginx VHost"
         ln -fs /etc/nginx/sites-available/$NAME /etc/nginx/sites-enabled/$NAME

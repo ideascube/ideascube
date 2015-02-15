@@ -1,0 +1,5 @@
+#!/bin/bash
+export DJANGO_SETTINGS_MODULE="ideasbox.settings"
+export DEBUG=
+export STORAGE_ROOT="/var/ideasbox"
+/usr/share/python/ideasbox/bin/django-admin "$@"
