@@ -17,7 +17,7 @@ case "$1" in
         echo "Restarting Nginx"
         service nginx restart
         echo "Make daemon autostart"
-        update-rc.d ideasbox defaults
+        update-rc.d $NAME defaults
         ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
