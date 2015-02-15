@@ -7,7 +7,7 @@ server {
         expires 30d;
     }
     location /media/ {
-        alias /var/ideasbox/media/;
+        alias /var/ideasbox/main/media/;
         expires 30d;
     }
     location / {
