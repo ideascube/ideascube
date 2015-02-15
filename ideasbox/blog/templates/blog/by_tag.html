@@ -1,0 +1,8 @@
+{% extends 'blog/index.html' %}
+
+{% load i18n %}
+
+{% block twothird %}
+    <h2><span class="theme create">{% trans "blog" %}</span> {% blocktrans with theme=tag %}Browse theme "{{ theme }}"{% endblocktrans %}</h2>
+    {{ block.super }}
+{% endblock twothird %}

@@ -4,6 +4,8 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
+from ideasbox.mixins import ByTagListView
+
 from .models import Document
 from .forms import DocumentForm
 
@@ -13,6 +15,13 @@ class Index(ListView):
     template_name = 'mediacenter/index.html'
     paginate_by = 10
 index = Index.as_view()
+
+
+class ByTag(ByTagListView):
+    model = Document
+    template_name = 'mediacenter/by_tag.html'
+    paginate_by = 10
+by_tag = ByTag.as_view()
 
 
 class DocumentDetail(DetailView):

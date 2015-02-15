@@ -2,7 +2,7 @@ import pytest
 
 from django.core.urlresolvers import reverse
 
-from ..views import Index
+from ..views import Index, ByTag
 from ..models import Content
 from .factories import ContentFactory
 
@@ -22,8 +22,7 @@ def test_only_published_should_be_in_index(app, published, draft, deleted):
 
 def test_index_page_is_paginated(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
-    for i in xrange(4):
-        ContentFactory(status=Content.PUBLISHED)
+    ContentFactory.create_batch(size=4, status=Content.PUBLISHED)
     response = app.get(reverse('blog:index'))
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
@@ -135,3 +134,27 @@ def test_can_create_content_without_image(staffapp):
     form['published_at'] = '2014-12-10'
     form.submit().follow()
     assert Content.objects.count()
+
+
+def test_by_tag_page_should_be_filtered_by_tag(app):
+    plane = ContentFactory(status=Content.PUBLISHED, tags=['plane'])
+    boat = ContentFactory(status=Content.PUBLISHED, tags=['boat'])
+    response = app.get(reverse('blog:by_tag', kwargs={'tag': 'plane'}))
+    assert plane.title in response.content
+    assert boat.title not in response.content
+
+
+def test_by_tag_page_is_paginated(app, monkeypatch):
+    monkeypatch.setattr(ByTag, 'paginate_by', 2)
+    ContentFactory.create_batch(size=4, status=Content.PUBLISHED,
+                                tags=['plane'])
+    url = reverse('blog:by_tag', kwargs={'tag': 'plane'})
+    response = app.get(url)
+    assert response.pyquery.find('.pagination')
+    assert response.pyquery.find('.next')
+    assert not response.pyquery.find('.previous')
+    response = app.get(url + '?page=2')
+    assert response.pyquery.find('.pagination')
+    assert not response.pyquery.find('.next')
+    assert response.pyquery.find('.previous')
+    response = app.get(url + '?page=3', status=404)

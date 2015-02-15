@@ -15,6 +15,7 @@
             <p class="flow"><strong>{% trans "Publisher" %}</strong> <span>{{ book.publisher|default:'—' }}</span></p>
             <p><strong>{% trans "Language" %}</strong> {{ book.get_lang_display }}</p>
             <p><strong>{% trans "ISBN" %}</strong> {{ book.isbn|default:'—' }}</p>
+            <p><strong>{% trans "Themes" %}</strong> {% include 'ideasbox/includes/tag_list.html' with tags=book.tags.all url='library:by_tag' %}</p>
         </div>
     </div>
 {% endblock twothird %}

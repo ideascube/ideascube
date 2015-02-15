@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^tag/(?P<tag>[\w\-_]+)/$', views.by_tag, name='by_tag'),
     url(r'^book/(?P<pk>[\d]+)/$', views.book_detail, name='book_detail'),
     url(r'^book/(?P<pk>[\d]+)/edit/$', views.book_update, name='book_update'),
     url(r'^book/(?P<pk>[\d]+)/delete/$', views.book_delete,

@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'ideasbox.library',
     'ideasbox.search',
     'ideasbox.mediacenter',
+    'taggit',
 )
 
 MIDDLEWARE_CLASSES = (

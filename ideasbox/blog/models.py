@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from taggit.managers import TaggableManager
 
 
 from ideasbox.models import TimeStampedModel
@@ -45,6 +46,7 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
                             default=settings.LANGUAGE_CODE)
 
     objects = ContentQuerySet.as_manager()
+    tags = TaggableManager(blank=True)
 
     def __unicode__(self):
         return self.title

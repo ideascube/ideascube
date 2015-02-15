@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from webtest import Upload
 
 from ..models import Book, BookSpecimen
-from ..views import Index
+from ..views import Index, ByTag
 from .factories import BookSpecimenFactory, BookFactory
 
 pytestmark = pytest.mark.django_db
@@ -240,3 +240,26 @@ def test_import_from_files_load_cover_if_exists(staffapp, monkeypatch):
     assert Book.objects.count() == 2
     assert Book.objects.last().cover
     assert open(Book.objects.last().cover.path).read() == open(image).read()
+
+
+def test_by_tag_page_should_be_filtered_by_tag(app):
+    plane = BookSpecimenFactory(book__tags=['plane'])
+    boat = BookSpecimenFactory(book__tags=['boat'])
+    response = app.get(reverse('library:by_tag', kwargs={'tag': 'plane'}))
+    assert plane.book.title in response.content
+    assert boat.book.title not in response.content
+
+
+def test_by_tag_page_is_paginated(app, monkeypatch):
+    monkeypatch.setattr(ByTag, 'paginate_by', 2)
+    BookSpecimenFactory.create_batch(size=4, book__tags=['plane'])
+    url = reverse('library:by_tag', kwargs={'tag': 'plane'})
+    response = app.get(url)
+    assert response.pyquery.find('.pagination')
+    assert response.pyquery.find('.next')
+    assert not response.pyquery.find('.previous')
+    response = app.get(url + '?page=2')
+    assert response.pyquery.find('.pagination')
+    assert not response.pyquery.find('.next')
+    assert response.pyquery.find('.previous')
+    response = app.get(url + '?page=3', status=404)
