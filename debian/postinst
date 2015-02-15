@@ -16,6 +16,8 @@ case "$1" in
         ln -fs /etc/nginx/sites-available/$NAME /etc/nginx/sites-enabled/$NAME
         echo "Restarting Nginx"
         service nginx restart
+        echo "Make daemon autostart"
+        update-rc.d ideasbox defaults
         ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
