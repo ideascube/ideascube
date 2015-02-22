@@ -2,3 +2,11 @@
 *.sqlite
 docs/_build/*
 storage/
+debian/ideasbox
+debian/files
+debian/ideasbox.debhelper.log
+debian/ideasbox.postinst.debhelper
+debian/ideasbox.postrm.debhelper
+debian/ideasbox.prerm.debhelper
+debian/ideasbox.substvars
+debian/ideasbox.triggers

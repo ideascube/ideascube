@@ -1,0 +1,25 @@
+server {
+    listen   80;
+    server_name ideasbox.lan www.ideasbox.lan ideasbox.local www.ideasbox.local;
+    root /usr/share/python/ideasbox/local/lib/python2.7/site-packages/ideasbox/;
+    location /static/ {
+        alias /var/ideasbox/static/;
+        expires 30d;
+    }
+    location /media/ {
+        alias /var/ideasbox/main/media/;
+        expires 30d;
+    }
+    location / {
+        proxy_pass_header Server;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_connect_timeout 10;
+        proxy_read_timeout 10;
+        proxy_pass http://localhost:8001/;
+    }
+    error_page 500 502 503 504 /media/500.html;
+}
+

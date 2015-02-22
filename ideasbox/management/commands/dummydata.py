@@ -4,10 +4,10 @@ from django.core.management.base import BaseCommand, CommandError
 
 
 from ideasbox.tests.factories import UserFactory
-from blog.models import Content
-from blog.tests.factories import ContentFactory
-from library.tests.factories import BookSpecimenFactory, BookFactory
-from mediacenter.tests.factories import DocumentFactory
+from ideasbox.blog.models import Content
+from ideasbox.blog.tests.factories import ContentFactory
+from ideasbox.library.tests.factories import BookSpecimenFactory, BookFactory
+from ideasbox.mediacenter.tests.factories import DocumentFactory
 
 
 class Command(BaseCommand):

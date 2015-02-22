@@ -6,9 +6,9 @@ from django.shortcuts import render
 from django.views.generic import (ListView, DetailView, UpdateView, CreateView,
                                   DeleteView)
 
-from blog.models import Content
-from library.models import Book
-from mediacenter.models import Document
+from ideasbox.blog.models import Content
+from ideasbox.library.models import Book
+from ideasbox.mediacenter.models import Document
 
 user_model = get_user_model()
 

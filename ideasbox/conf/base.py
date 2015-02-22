@@ -23,11 +23,11 @@ PROJECT_DIR = os.path.join(BASE_DIR, 'ideasbox')
 SECRET_KEY = '16exrv_@=2(za=oj$tj+l_^v#sbt83!=t#wz$s+1udfa04#vz!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DEBUG', True))
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.ideasbox.lan.', 'localhost']
 
 
 # Application definition
@@ -39,12 +39,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'serveradmin',
     'ideasbox',
-    'blog',
-    'library',
-    'search',
-    'mediacenter',
+    'ideasbox.serveradmin',
+    'ideasbox.blog',
+    'ideasbox.library',
+    'ideasbox.search',
+    'ideasbox.mediacenter',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,16 +117,10 @@ MEDIA_URL = '/media/'
 
 
 # Ideas Box specifics
-if DEBUG:
-    STORAGE_ROOT = os.path.join(BASE_DIR, 'storage')
-else:
-    STORAGE_ROOT = '/var/ideasbox'
+STORAGE_ROOT = os.environ.get('STORAGE_ROOT',
+                              os.path.join(BASE_DIR, 'storage'))
 
 BACKUPED_ROOT = os.path.join(STORAGE_ROOT, 'main')
-try:
-    os.makedirs(BACKUPED_ROOT)
-except OSError:
-    pass
 
 MEDIA_ROOT = os.path.join(BACKUPED_ROOT, 'media')
 STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')
@@ -145,8 +139,9 @@ DATABASES = {
 }
 
 SERVICES = [
-    {'name': 'apache2', 'description': _('Daemon which provides web content')},
-    {'name': 'bind9', 'description': _('Daemon which provides local DNS')},
+    {'name': 'ideasbox', 'description': _('Ideasbox web server')},
+    {'name': 'nginx', 'description': _('Global proxy')},
+    {'name': 'bind9', 'description': _('Local DNS')},
     {'name': 'kalite',
         'description': _('Daemon which provides KhanAcademy on lan')},
     {'name': 'kiwix',

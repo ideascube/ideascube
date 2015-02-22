@@ -1,7 +1,7 @@
 import pytest
 
-from blog.tests.factories import ContentFactory
-from library.tests.factories import BookFactory
+from ideasbox.blog.tests.factories import ContentFactory
+from ideasbox.library.tests.factories import BookFactory
 
 from ..templatetags.ideasbox_tags import theme_slug, remove_i18n
 

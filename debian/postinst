@@ -1,0 +1,29 @@
+#!/bin/bash
+NAME=ideasbox
+case "$1" in
+    configure)
+        echo "Running migration"
+        /usr/bin/ideasbox migrate --noinput -v 1
+        echo "Running collectstatic"
+        /usr/bin/ideasbox collectstatic --noinput -v 1
+        # Nginx
+        echo "Installing Nginx VHost"
+        ln -fs /etc/nginx/sites-available/$NAME /etc/nginx/sites-enabled/$NAME
+        echo "Restarting Nginx"
+        service nginx restart
+        echo "Make daemon autostart"
+        update-rc.d $NAME defaults
+        ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+        # Do nothing
+        ;;
+    *)
+
+        echo "Unrecognized postinst argument '$1'"
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0
