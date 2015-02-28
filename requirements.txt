@@ -1,3 +1,4 @@
 Django==1.7.4
 Pillow==2.7.0
 gunicorn==19.2.0
+pymarc==3.0.3
