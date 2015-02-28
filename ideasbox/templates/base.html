@@ -1,11 +1,14 @@
-{% load staticfiles i18n %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html{% if LANGUAGE_CODE|language_bidi %} dir="rtl"{% endif %}>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>{% block title %}Ideasbox{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'ideasbox/vendor/minislate/minislate.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'ideasbox/vendor/font-awesome/css/font-awesome.min.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static "ideasbox/main.css" %}">
+        {% block extra_head %}{% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}">
         {% block header %}
@@ -16,5 +19,6 @@
         {% block footer %}
             {% include 'ideasbox/includes/footer.html' %}
         {% endblock footer %}
+        {% block extra_foot %}{% endblock %}
     </body>
 </html>

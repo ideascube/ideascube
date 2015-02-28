@@ -14,7 +14,7 @@
 {% endblock twothird %}
 {% block third %}
     <div class="card tinted admin">
-        <a href="{% url 'mediacenter:document_create' %}">{% trans "Add a document" %}</a>
+        {% fa 'plus' 'fa-fw' %} <a href="{% url 'mediacenter:document_create' %}">{% trans "Add a document" %}</a>
     </div>
     {% tag_cloud url='mediacenter:by_tag' model=view.model %}
 {% endblock third %}

@@ -1,5 +1,5 @@
 {% extends 'two-third-third.html' %}
-{% load i18n %}
+{% load i18n ideasbox_tags %}
 {% block twothird %}
     <div class="row">
         <div class="col third">
@@ -22,14 +22,14 @@
 {% block third %}
     {% if user.is_staff %}
     <ul class="card tinted admin">
-        <li><a href="{% url 'library:specimen_create' book_pk=book.pk %}">{% trans "Add a specimen" %}</a></li>
-        <li><a href="{% url 'library:book_delete' pk=book.pk %}">{% trans "Delete this book" %}</a></li>
-        <li><a href="{% url 'library:book_update' pk=book.pk %}">{% trans "Edit this book" %}</a></li>
+        <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_create' book_pk=book.pk %}">{% trans "Add a specimen" %}</a></li>
+        <li>{% fa 'trash' 'fa-fw' %} <a href="{% url 'library:book_delete' pk=book.pk %}">{% trans "Delete this book" %}</a></li>
+        <li>{% fa 'pencil' 'fa-fw' %} <a href="{% url 'library:book_update' pk=book.pk %}">{% trans "Edit this book" %}</a></li>
     </ul>
     <ul class="card tinted">
         <h4>{% trans "Specimens" %}</h4>
         {% for specimen in book.specimens.all %}
-            <li>{{ specimen.serial }} <a href="{% url 'library:specimen_update' pk=specimen.pk %}">{% trans "Edit specimen" %}</a></li>
+            <li>{{ specimen.serial }} {% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_update' pk=specimen.pk %}">{% trans "Edit specimen" %}</a></li>
         {% empty %}
             {% trans "No specimen for this book." %}
         {% endfor %}

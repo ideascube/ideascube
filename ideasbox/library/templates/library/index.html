@@ -14,8 +14,8 @@
 {% endblock twothird %}
 {% block third %}
     <ul class="card tinted admin">
-        <li><a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a></li>
-        <li><a href="{% url 'library:book_import' %}">{% trans "Import notices" %}</a></li>
+        <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a></li>
+        <li>{% fa 'upload' 'fa-fw' %} <a href="{% url 'library:book_import' %}">{% trans "Import notices" %}</a></li>
     </ul>
     {% tag_cloud url="library:by_tag" model=view.model %}
 {% endblock third %}

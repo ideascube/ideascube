@@ -1,16 +1,18 @@
 {% extends 'two-third-third.html' %}
 
+{% load ideasbox_tags %}
+
 {% block twothird %}
     <h2>{{ content }}</h2>
     <h5>{{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.get_author_display }}</h5>
     <h6>{% include 'ideasbox/includes/tag_list.html' with tags=content.tags.all url='blog:by_tag' %}</h6>
     {% if content.image %}<div><img src="{{ content.image.url }}"></div>{% endif %}
-    <div class="text">{{ content.text }}</div>
+    <div class="text">{{ content.text|safe }}</div>
 {% endblock twothird %}
 {% block third %}
     {% if user.is_staff %}
         <div class="card tinted admin">
-            <a href="{% url 'blog:content_update' pk=content.pk %}">Edit</a>
+            {% fa 'pencil' 'fa-fw' %}<a href="{% url 'blog:content_update' pk=content.pk %}">Edit</a>
         </div>
     {% endif %}
 {% endblock third %}
