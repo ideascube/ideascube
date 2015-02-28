@@ -37,7 +37,8 @@ class Command(BaseCommand):
                 'the downed Electra but these were unintelligible or weak')
         ContentFactory(title='1937 world flight', text=text, summary=text,
                        status=Content.PUBLISHED, author=staff,
-                       image__from_path='ideasbox/tests/data/amelia-earhart.jpg')
+                       tags=['plane', 'aviation'],
+                       image__from_path='ideasbox/tests/data/amelia-earhart.jpg')  # noqa
         ContentFactory(title='This is another article with a longer title',
                        text=text, summary=text, status=Content.PUBLISHED,
                        author=staff, image=None)
@@ -45,6 +46,7 @@ class Command(BaseCommand):
                  'of Space Flight')
         ContentFactory(title=title, text=text, summary=text,
                        status=Content.PUBLISHED, author=staff,
+                       tags=['plane', 'aviation', 'record'],
                        image__from_path='ideasbox/tests/data/plane.jpg')
         ContentFactory(title='This is a draft content', text=text,
                        status=Content.DRAFT, author=staff, image=None)
@@ -78,7 +80,7 @@ class Command(BaseCommand):
         book = BookFactory(title='Deering of Deal', summary=summary,
                            subtitle='The Spirit of the School',
                            authors=u'Latta Griswold', lang='en',
-                           cover__from_path=path)
+                           cover__from_path=path, tags=['plane', 'aviation'])
         BookSpecimenFactory(book=book, serial="1234567")
         summary = (u"Le roman raconte les aventures d'un Gascon impécunieux "
                    u"de 18 ans, d'Artagnan, venu à Paris pour faire carrière "
@@ -92,7 +94,7 @@ class Command(BaseCommand):
         path = 'ideasbox/tests/data/les-trois-mousquetaires.jpg'
         book = BookFactory(title='Les Trois Mousquetaires', summary=summary,
                            authors=u'Alexandre Dumas', lang='fr',
-                           cover__from_path=path)
+                           cover__from_path=path, tags=['roman', 'aventure'])
         BookSpecimenFactory(book=book, serial="98765479")
         summary = ("With the title of Sense and Sensibility is connected one "
                    "of those minor problems which delight the cummin-splitters"
@@ -111,7 +113,7 @@ class Command(BaseCommand):
         path = 'ideasbox/tests/data/sense-and-sensibility.jpg'
         book = BookFactory(title='Sense and Sensibility', summary=summary,
                            authors=u'Jane Austen', lang='en',
-                           cover__from_path=path)
+                           cover__from_path=path, tags=['19th-century'])
         BookSpecimenFactory(book=book, serial="32657324")
         summary = (u"النبي (1923) أشهر كتب جبران كتبه بالإنجليزية وترجم إلى "
                    u"أكثر من خمسين لغة، وهو يعتبر بحق رائعة جبران العالمية، "
@@ -148,8 +150,9 @@ class Command(BaseCommand):
                    u"principes simples et incontestables, tournent toujours "
                    u"au maintien de la Constitution et au bonheur de tous.")
         path = 'ideasbox/tests/data/declaration-1789.pdf'
-        DocumentFactory(title=title, original__from_path=path, summary=summary)
+        DocumentFactory(title=title, original__from_path=path, summary=summary,
+                        tags=['history', 'France'])
         path = 'ideasbox/tests/data/amelia-earhart.jpg'
         DocumentFactory(title="Picture of Amelia Earhart",
-                        original__from_path=path)
+                        original__from_path=path, tags=['plane', 'aviation'])
         self.stdout.write('Done.')

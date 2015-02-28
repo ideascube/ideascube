@@ -2,8 +2,8 @@ import re
 
 from django import forms
 
-from .models import BookSpecimen, Book
-from .utils import load_from_moccam_csv, fetch_from_openlibrary
+from .models import Book, BookSpecimen
+from .utils import fetch_from_openlibrary, load_from_moccam_csv, load_unimarc
 
 
 class BookSpecimenForm(forms.ModelForm):
@@ -30,8 +30,10 @@ class BookForm(forms.ModelForm):
 class ImportForm(forms.Form):
 
     MOCCAM_CSV = 'moccam_csv'
+    UNIMARC = 'unimarc'
     FORMATS = (
         (MOCCAM_CSV, 'CSV from "Mocam-en-ligne"'),
+        (UNIMARC, 'UNIMARC'),
     )
 
     from_files = forms.FileField(required=False)
@@ -44,6 +46,8 @@ class ImportForm(forms.Form):
         format_ = self.cleaned_data['files_format']
         if format_ == self.MOCCAM_CSV:
             handler = load_from_moccam_csv
+        elif format_ == self.UNIMARC:
+            handler = load_unimarc
         books = []
         for f in files:
             for notice in handler(f):

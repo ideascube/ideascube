@@ -13,6 +13,11 @@ class BookFactory(factory.django.DjangoModelFactory):
     lang = settings.LANGUAGE_CODE
     cover = factory.django.ImageField()
 
+    @factory.post_generation
+    def tags(self, create, extracted, **kwargs):
+        if extracted:
+            self.tags.add(*extracted)
+
     class Meta:
         model = Book
 

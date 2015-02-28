@@ -6,6 +6,12 @@ from django.test import RequestFactory
 
 from ideasbox.views import validate_url
 
+from ideasbox.blog.tests.factories import ContentFactory
+from ideasbox.blog.models import Content
+from ideasbox.library.tests.factories import BookSpecimenFactory
+
+from ..views import ByTag
+
 pytestmark = pytest.mark.django_db
 user_model = get_user_model()
 
@@ -223,3 +229,32 @@ def test_valid_proxy_request(app):
     assert response.status_code == 200
     assert 'Example Domain' in response.content
     assert "Vary" not in response.headers
+
+
+def test_by_tag_page_should_be_filtered_by_tag(app):
+    plane = ContentFactory(status=Content.PUBLISHED, tags=['plane'])
+    boat = ContentFactory(status=Content.PUBLISHED, tags=['boat'])
+    plane2 = BookSpecimenFactory(book__tags=['plane'])
+    boat2 = BookSpecimenFactory(book__tags=['boat'])
+    response = app.get(reverse('by_tag', kwargs={'tag': 'plane'}))
+    assert plane.title in response.content
+    assert plane2.book.title in response.content
+    assert boat.title not in response.content
+    assert boat2.book.title not in response.content
+
+
+def test_by_tag_page_is_paginated(app, monkeypatch):
+    monkeypatch.setattr(ByTag, 'paginate_by', 2)
+    ContentFactory.create_batch(size=2, status=Content.PUBLISHED,
+                                tags=['plane'])
+    BookSpecimenFactory.create_batch(size=2, book__tags=['plane'])
+    url = reverse('by_tag', kwargs={'tag': 'plane'})
+    response = app.get(url)
+    assert response.pyquery.find('.pagination')
+    assert response.pyquery.find('.next')
+    assert not response.pyquery.find('.previous')
+    response = app.get(url + '?page=2')
+    assert response.pyquery.find('.pagination')
+    assert not response.pyquery.find('.next')
+    assert response.pyquery.find('.previous')
+    response = app.get(url + '?page=3', status=404)

@@ -6,6 +6,7 @@ import urllib2
 
 from django.core.files.base import ContentFile
 from django.utils.translation import ugettext as _
+from pymarc import MARCReader
 
 OPENLIBRARY_API_URL = 'https://openlibrary.org/api/books?'
 
@@ -106,4 +107,21 @@ def load_from_moccam_csv(content):
             'publisher': to_unicode(row['publisher']),
             'summary': to_unicode(row['summary']),
             'cover': cover
+        }
+
+
+def load_unimarc(content):
+    """Handle UNIMARC import.
+    http://marc-must-die.info/index.php/Main_Page"""
+    reader = MARCReader(content, to_unicode=True)
+    for row in reader:
+        if not row.title():
+            continue
+        yield {
+            'isbn': row.isbn(),
+            'title': row.title(),
+            'authors': row.author() or '',
+            'publisher': row.publisher() or '',
+            'summary': '\n'.join([unicode(d)
+                                  for d in row.physicaldescription()]),
         }

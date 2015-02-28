@@ -12,5 +12,10 @@ class DocumentFactory(factory.django.DjangoModelFactory):
     original = factory.django.FileField()
     credits = "Document credits"
 
+    @factory.post_generation
+    def tags(self, create, extracted, **kwargs):
+        if extracted:
+            self.tags.add(*extracted)
+
     class Meta:
         model = Document

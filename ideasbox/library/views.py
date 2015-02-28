@@ -4,8 +4,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
-from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
-                                  UpdateView, FormView)
+from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
+                                  ListView, UpdateView)
+
+from ideasbox.mixins import ByTagListView
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
@@ -17,6 +19,15 @@ class Index(ListView):
     template_name = 'library/index.html'
     paginate_by = 10
 index = Index.as_view()
+
+
+class ByTag(ByTagListView):
+    model = Book
+    queryset = Book.objects.available()
+    template_name = 'library/by_tag.html'
+    paginate_by = 10
+
+by_tag = ByTag.as_view()
 
 
 class BookDetail(DetailView):

@@ -15,6 +15,8 @@ from django.shortcuts import render
 from django.views.generic import (ListView, DetailView, UpdateView, CreateView,
                                   DeleteView, View)
 
+from taggit.models import TaggedItem
+
 from ideasbox.blog.models import Content
 from ideasbox.library.models import Book
 from ideasbox.mediacenter.models import Document
@@ -32,6 +34,16 @@ def index(request):
         'random_doc': random_doc,
     }
     return render(request, 'index.html', context)
+
+
+class ByTag(ListView):
+    template_name = 'ideasbox/by_tag.html'
+    paginate_by = 20
+
+    def get_queryset(self):
+        return TaggedItem.objects.filter(tag__slug=self.kwargs['tag'])
+
+by_tag = ByTag.as_view()
 
 
 class UserList(ListView):

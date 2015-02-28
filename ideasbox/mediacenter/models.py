@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from taggit.managers import TaggableManager
+
 from ideasbox.models import TimeStampedModel
 from ideasbox.search.models import SearchableQuerySet, SearchMixin
 from .utils import guess_kind_from_filename
@@ -56,6 +58,7 @@ class Document(SearchMixin, TimeStampedModel):
                             default=OTHER)
 
     objects = DocumentQuerySet.as_manager()
+    tags = TaggableManager(blank=True)
 
     def __unicode__(self):
         return self.title

@@ -2,8 +2,10 @@ import pytest
 
 from ideasbox.blog.tests.factories import ContentFactory
 from ideasbox.library.tests.factories import BookFactory
+from ideasbox.blog.models import Content
+from ideasbox.library.models import Book
 
-from ..templatetags.ideasbox_tags import theme_slug, remove_i18n, fa
+from ..templatetags.ideasbox_tags import theme_slug, remove_i18n, tag_cloud, fa
 
 pytestmark = pytest.mark.django_db
 
@@ -37,3 +39,22 @@ def test_fa_without_extra():
 
 def test_fa_with_extra():
     assert fa('pencil', 'fa-fw') == '<span class="fa fa-pencil fa-fw"></span>'
+
+
+def test_tag_cloud_should_return_most_common_tags():
+    ContentFactory(tags=['plane', 'boat'])
+    ContentFactory(tags=['plane', 'bike'])
+    ContentFactory(tags=['plane', 'boat'])
+    context = tag_cloud('xxxx', limit=2)
+    tags = [t.name for t in context['tags']]
+    assert tags[0] == 'plane'
+    assert tags[1] == 'boat'
+
+
+def test_tag_cloud_should_be_filtered_by_model_if_given():
+    ContentFactory(tags=['plane', 'boat'])
+    BookFactory(tags=['bike', 'boat'])
+    context = tag_cloud('xxxx', limit=2, model=Content)
+    assert [t.name for t in context['tags']] == ['boat', 'plane']
+    context = tag_cloud('xxxx', limit=2, model=Book)
+    assert [t.name for t in context['tags']] == ['bike', 'boat']
