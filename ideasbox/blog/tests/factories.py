@@ -14,5 +14,10 @@ class ContentFactory(factory.django.DjangoModelFactory):
     published_at = factory.LazyAttribute(lambda o: datetime.datetime.utcnow())
     image = factory.django.ImageField()
 
+    @factory.post_generation
+    def tags(self, create, extracted, **kwargs):
+        if extracted:
+            self.tags.add(*extracted)
+
     class Meta:
         model = Content

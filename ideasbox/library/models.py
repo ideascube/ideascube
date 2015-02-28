@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from taggit.managers import TaggableManager
+
 from ideasbox.models import TimeStampedModel
 from ideasbox.search.models import SearchableQuerySet, SearchMixin
 
@@ -47,6 +49,7 @@ class Book(SearchMixin, TimeStampedModel):
                               blank=True)
 
     objects = BookQuerySet.as_manager()
+    tags = TaggableManager(blank=True)
 
     class Meta:
         ordering = ['title']

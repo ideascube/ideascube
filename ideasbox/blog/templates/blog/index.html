@@ -1,5 +1,5 @@
 {% extends 'two-third-third.html' %}
-{% load i18n %}
+{% load i18n ideasbox_tags %}
 
 {% block twothird %}
     {% for content in content_list  %}
@@ -13,4 +13,5 @@
             <a href="{% url 'blog:content_create' %}">{% trans "Add content" %}</a>
         </div>
     {% endif %}
+    {% tag_cloud url="blog:by_tag" model=view.model %}
 {% endblock third %}

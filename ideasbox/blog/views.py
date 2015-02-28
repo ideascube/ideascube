@@ -1,6 +1,8 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import (ListView, DetailView, UpdateView, CreateView)
 
+from ideasbox.mixins import ByTagListView
+
 from .models import Content
 
 
@@ -9,7 +11,17 @@ class Index(ListView):
     queryset = Content.objects.published()
     template_name = 'blog/index.html'
     paginate_by = 10
+
 index = Index.as_view()
+
+
+class ByTag(ByTagListView):
+    model = Content
+    queryset = Content.objects.published()
+    template_name = 'blog/by_tag.html'
+    paginate_by = 10
+
+by_tag = ByTag.as_view()
 
 
 class ContentDetail(DetailView):

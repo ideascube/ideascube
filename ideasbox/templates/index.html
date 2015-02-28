@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
+{% load i18n ideasbox_tags %}
 
 {% block content %}
     <div class="row">
@@ -20,6 +20,7 @@
             {% if random_doc %}
                 {% include 'ideasbox/includes/document_card.html' with document=random_doc %}
             {% endif %}
+            {% tag_cloud url="by_tag" %}
         </div>
     </div>
 {% endblock content %}
