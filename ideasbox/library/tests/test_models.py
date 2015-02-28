@@ -1,5 +1,4 @@
 import pytest
-
 from django.db import IntegrityError
 
 from ..models import Book, BookSpecimen

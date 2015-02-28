@@ -2,7 +2,7 @@
 import pytest
 
 from ..utils import (fetch_from_openlibrary, load_from_moccam_csv,
-                     to_unicode)
+                     load_unimarc, to_unicode)
 
 
 def test_load_from_moccam_csv(monkeypatch):
@@ -16,6 +16,15 @@ def test_load_from_moccam_csv(monkeypatch):
         assert notices[0]['cover'] == 'xxx'
         assert notices[0]['publisher'] == 'Gallimard'
         assert notices[0]['summary'].startswith('Le narrateur')
+
+
+def test_load_unimarc(monkeypatch):
+    with open('ideasbox/library/tests/data/marc.dat') as f:
+        notices = list(load_unimarc(f.read()))
+        assert len(notices) == 20
+        assert notices[0]['title'] == 'The pragmatic programmer : from journeyman to master /'  # noqa
+        assert notices[0]['authors'] == 'Hunt, Andrew, 1964-'
+        assert notices[0]['publisher'] == 'Addison-Wesley,'
 
 
 def test_fetch_from_openlibrary(monkeypatch):

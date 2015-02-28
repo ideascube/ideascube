@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from taggit.managers import TaggableManager
 
 from ideasbox.models import TimeStampedModel
-from ideasbox.search.models import SearchMixin, SearchableQuerySet
+from ideasbox.search.models import SearchableQuerySet, SearchMixin
 
 
 class BookQuerySet(SearchableQuerySet, models.QuerySet):
