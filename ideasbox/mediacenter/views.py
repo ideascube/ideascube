@@ -1,6 +1,13 @@
+import json
+
+from urlparse import urlparse
+
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, resolve, Resolver404
+from django.http import Http404, HttpResponse
+from django.template import RequestContext
+from django.template.loader import render_to_string
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
@@ -39,3 +46,35 @@ class DocumentDelete(DeleteView):
     model = Document
     success_url = reverse_lazy('mediacenter:index')
 document_delete = staff_member_required(DocumentDelete.as_view())
+
+
+class OEmbed(DetailView):
+    model = Document
+    content_type = 'application/json'
+    template_name = 'mediacenter/oembed.html'
+
+    def get_object(self, queryset=None):
+        if not queryset:
+            queryset = self.get_queryset()
+        url = self.request.GET.get('url')
+        if not url:
+            raise Http404()
+        parsed = urlparse(url)
+        try:
+            match = resolve(parsed.path)
+        except Resolver404:
+            raise Http404()
+        if 'pk' not in match.kwargs:
+            raise Http404()
+        return queryset.get(pk=match.kwargs['pk'])
+
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs.setdefault('content_type', self.content_type)
+        html = render_to_string(self.get_template_names(), response_kwargs,
+                                RequestContext(self.request, context))
+        return HttpResponse(json.dumps({
+            "html": html,
+            "type": "rich"
+        }))
+
+oembed = OEmbed.as_view()

@@ -2,6 +2,9 @@ import pytest
 
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
+from django.test import RequestFactory
+
+from ideasbox.views import validate_url
 
 pytestmark = pytest.mark.django_db
 user_model = get_user_model()
@@ -159,3 +162,64 @@ def test_staff_user_can_delete_user(staffapp, user):
     form = staffapp.get(url).forms['delete_form']
     form.submit()
     assert len(user_model.objects.all()) == 1
+
+
+def build_request(target="http://example.org", verb="get", **kwargs):
+    defaults = {
+        'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest',
+        'HTTP_REFERER': 'http://testserver/path/'
+    }
+    defaults.update(kwargs)
+    func = getattr(RequestFactory(**defaults), verb)
+    return func('/', {'url': target})
+
+
+def test_good_request_passes():
+    target = "http://osm.org/georss.xml"
+    request = build_request(target)
+    url = validate_url(request)
+    assert url == target
+
+
+def test_no_url_raises():
+    with pytest.raises(AssertionError):
+        validate_url(build_request(""))
+
+
+def test_relative_url_raises():
+    with pytest.raises(AssertionError):
+        validate_url(build_request("/just/a/path/"))
+
+
+def test_file_uri_raises():
+    with pytest.raises(AssertionError):
+        validate_url(build_request("file:///etc/passwd"))
+
+
+def test_localhost_raises():
+    with pytest.raises(AssertionError):
+        validate_url(build_request("http://localhost/path/"))
+
+
+def test_POST_raises():
+    with pytest.raises(AssertionError):
+        validate_url(build_request(verb="post"))
+
+
+def test_unkown_domain_raises():
+    with pytest.raises(AssertionError):
+        validate_url(build_request("http://xlkjdkjsdlkjfd.com"))
+
+
+def test_valid_proxy_request(app):
+    url = reverse('ajax-proxy')
+    params = {'url': 'http://example.org'}
+    headers = {
+        'X_REQUESTED_WITH': 'XMLHttpRequest',
+        'REFERER': 'http://testserver'
+    }
+    environ = {'SERVER_NAME': 'testserver'}
+    response = app.get(url, params, headers, environ)
+    assert response.status_code == 200
+    assert 'Example Domain' in response.content
+    assert "Vary" not in response.headers

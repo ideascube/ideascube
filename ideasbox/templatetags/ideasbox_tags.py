@@ -33,3 +33,18 @@ i18n_pattern = re.compile(language_code_prefix_re)
 def remove_i18n(url):
     """Remove i18n prefix from an URL."""
     return i18n_pattern.sub("/", url)
+
+
+@register.inclusion_tag('ideasbox/includes/field.html')
+def form_field(field):
+    return {
+        'field': field,
+    }
+
+
+@register.simple_tag
+def fa(fa_id, extra_class=''):
+    tpl = '<span class="fa fa-{id}{extra}"></span>'
+    if extra_class:
+        extra_class = ' ' + extra_class
+    return tpl.format(id=fa_id, extra=extra_class)

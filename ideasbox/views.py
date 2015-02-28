@@ -1,10 +1,19 @@
+import urllib2
+import mimetypes
+import socket
+
+from urlparse import urlparse
+
+from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
+from django.core.validators import URLValidator, ValidationError
 from django.forms.models import modelform_factory
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.generic import (ListView, DetailView, UpdateView, CreateView,
-                                  DeleteView)
+                                  DeleteView, View)
 
 from ideasbox.blog.models import Content
 from ideasbox.library.models import Book
@@ -66,3 +75,61 @@ class UserDelete(DeleteView):
     context_object_name = 'user_obj'
     success_url = reverse_lazy('user_list')
 user_delete = staff_member_required(UserDelete.as_view())
+
+
+def validate_url(request):
+    assert request.method == "GET"
+    assert request.is_ajax()
+    url = request.GET.get('url')
+    assert url
+    try:
+        URLValidator(url)
+    except ValidationError:
+        raise AssertionError()
+    assert 'HTTP_REFERER' in request.META
+    toproxy = urlparse(url)
+    assert toproxy.hostname
+    if settings.DEBUG:
+        return url
+    referer = urlparse(request.META.get('HTTP_REFERER'))
+    assert referer.hostname == request.META.get('SERVER_NAME')
+    assert toproxy.hostname != "localhost"
+    try:
+        # clean this when in python 3.4
+        ipaddress = socket.gethostbyname(toproxy.hostname)
+    except:
+        raise AssertionError()
+    assert not ipaddress.startswith('127.')
+    assert not ipaddress.startswith('192.168.')
+    return url
+
+
+class AjaxProxy(View):
+
+    def get(self, *args, **kwargs):
+        # You should not use this in production (use Nginx or so)
+        try:
+            url = validate_url(self.request)
+        except AssertionError as e:
+            return HttpResponseBadRequest()
+        headers = {
+            'User-Agent': 'IdeasBox +http://ideas-box.org'
+        }
+        request = urllib2.Request(url, headers=headers)
+        opener = urllib2.build_opener()
+        print(url)
+        try:
+            proxied_request = opener.open(request)
+        except urllib2.HTTPError as e:
+            return HttpResponse(e.msg, status=e.code,
+                                content_type='text/plain')
+        else:
+            status_code = proxied_request.code
+            mimetype = (proxied_request.headers.typeheader
+                        or mimetypes.guess_type(url))
+            content = proxied_request.read()
+            # Quick hack to prevent Django from adding a Vary: Cookie header
+            self.request.session.accessed = False
+            return HttpResponse(content, status=status_code,
+                                content_type=mimetype)
+ajax_proxy = AjaxProxy.as_view()

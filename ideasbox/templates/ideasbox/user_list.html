@@ -1,14 +1,14 @@
 {% extends 'two-third-third.html' %}
-{% load i18n %}
+{% load i18n ideasbox_tags %}
 
 {% block twothird %}
     <h2>{% trans "users" %}</h2>
     {% for user in user_list  %}
-        <a href="{% url 'user_detail' pk=user.pk %}">{{ user }}</a>
+        <p><a href="{% url 'user_detail' pk=user.pk %}">{{ user }}</a></p>
     {% endfor %}
 {% endblock twothird %}
 {% block third %}
     <div class="card tinted admin">
-        <a href="{% url 'user_create' %}">{% trans "Add user" %}</a>
+        {% fa 'user-plus' 'fa-fw' %} <a href="{% url 'user_create' %}">{% trans "Add user" %}</a>
     </div>
 {% endblock third %}

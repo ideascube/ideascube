@@ -4,6 +4,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.views.decorators.cache import cache_page
 
 from . import views
 
@@ -25,5 +26,6 @@ urlpatterns = i18n_patterns('',
     url(r'^user/new/$', views.user_create, name='user_create'),
     url(r'^user/(?P<pk>[\d]+)/delete/$',
         views.user_delete, name='user_delete'),
+    url(r'^ajax-proxy/$', cache_page(180)(views.ajax_proxy), name='ajax-proxy'),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [url(r'^i18n/', include('django.conf.urls.i18n')),]

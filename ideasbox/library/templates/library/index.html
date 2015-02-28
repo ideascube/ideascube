@@ -1,5 +1,5 @@
 {% extends 'two-third-third.html' %}
-{% load i18n %}
+{% load i18n ideasbox_tags %}
 
 {% block twothird %}
     <h2><span class="theme read">{% trans "read" %}</span> {% trans "Library" %}</h2>
@@ -14,7 +14,7 @@
 {% endblock twothird %}
 {% block third %}
     <ul class="card tinted admin">
-        <li><a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a></li>
-        <li><a href="{% url 'library:book_import' %}">{% trans "Import notices" %}</a></li>
+        <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a></li>
+        <li>{% fa 'upload' 'fa-fw' %} <a href="{% url 'library:book_import' %}">{% trans "Import notices" %}</a></li>
     </ul>
 {% endblock third %}

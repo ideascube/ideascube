@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
+{% load i18n ideasbox_tags %}
 
 {% block content %}
     <form method="POST" enctype="multipart/form-data" id="model_form">
@@ -8,7 +8,9 @@
                 <div class="col two-third">
                     {% block heading %}{% endblock heading %}
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {% for field in form %}
+                        {% form_field field %}
+                    {% endfor %}
                 </div>
                 <div class="col third">
                     {% block col %}{% endblock col %}
