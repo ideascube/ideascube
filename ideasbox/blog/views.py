@@ -3,6 +3,7 @@ from django.views.generic import (ListView, DetailView, UpdateView, CreateView)
 
 from ideasbox.mixins import ByTagListView
 
+from .forms import ContentForm
 from .models import Content
 
 
@@ -38,9 +39,11 @@ content_detail = ContentDetail.as_view()
 
 class ContentUpdate(UpdateView):
     model = Content
+    form_class = ContentForm
 content_update = staff_member_required(ContentUpdate.as_view())
 
 
 class ContentCreate(CreateView):
     model = Content
+    form_class = ContentForm
 content_create = staff_member_required(ContentCreate.as_view())

@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{% static 'ideasbox/vendor/minislate/minislate.min.css' %}" />
         <link rel="stylesheet" href="{% static 'ideasbox/vendor/font-awesome/css/font-awesome.min.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static "ideasbox/main.css" %}">
+        <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
         {% block extra_head %}{% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}">

@@ -6,3 +6,9 @@ file_filter = ideasbox/locale/<lang>/LC_MESSAGES/django.po
 source_file = ideasbox/locale/en/LC_MESSAGES/django.po
 source_lang = en
 type = PO
+
+[ideasboxlan.frontend]
+file_filter = ideasbox/locale/<lang>/LC_MESSAGES/djangojs.po
+source_file = ideasbox/locale/en/LC_MESSAGES/djangojs.po
+source_lang = en
+type = PO

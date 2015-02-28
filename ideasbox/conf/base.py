@@ -107,7 +107,7 @@ for code, label in AVAILABLE_LANGUAGES:
         LANGUAGES.append((code, label))
 
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, 'ideasbox', 'locale'),
 )
 
 # Static files (CSS, JavaScript, Images)

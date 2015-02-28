@@ -2,7 +2,7 @@
 *.sqlite
 docs/_build/*
 storage/
-debian/ideasbox
+debian/ideasbox/*
 debian/files
 debian/ideasbox.debhelper.log
 debian/ideasbox.postinst.debhelper

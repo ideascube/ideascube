@@ -8,6 +8,7 @@ from django.views.decorators.cache import cache_page
 
 from . import views
 
+
 urlpatterns = i18n_patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('ideasbox.blog.urls', namespace="blog")),
@@ -27,6 +28,9 @@ urlpatterns = i18n_patterns('',
     url(r'^user/new/$', views.user_create, name='user_create'),
     url(r'^user/(?P<pk>[\d]+)/delete/$',
         views.user_delete, name='user_delete'),
-    url(r'^ajax-proxy/$', cache_page(180)(views.ajax_proxy), name='ajax-proxy'),
-
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [url(r'^i18n/', include('django.conf.urls.i18n')),]
+    url(r'^ajax-proxy/$', cache_page(180)(views.ajax_proxy), name='ajax-proxy')
+)
+urlpatterns = urlpatterns + [
+    url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

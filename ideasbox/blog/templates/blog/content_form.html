@@ -3,7 +3,10 @@
 
 {% block extra_head %}
     <link rel="stylesheet" href="{% static 'ideasbox/vendor/minislate/minislate.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'ideasbox/vendor/pikaday/pikaday.css' %}" />
     <script src="{% static 'ideasbox/vendor/minislate/minislate.js' %}"></script>
+    <script src="{% static 'ideasbox/vendor/moment/moment-with-locales.min.js' %}"></script>
+    <script src="{% static 'ideasbox/vendor/pikaday/pikaday.js' %}"></script>
     <script src="{% static 'ideasbox/js/forms.js' %}"></script>
 {% endblock extra_head %}
 
@@ -27,22 +30,14 @@
                 </div>
                 <div class="col two-third">
                     <h3>{% trans 'Content' %}</h3>
-                    <div id="editable-content" placeholder="{% trans 'Type your text here…' %}">{{ content.text|safe }}</div>
+                    <div data-editable-for="text" placeholder="{% trans 'Type your text here…' %}">{{ content.text|safe }}</div>
                 </div>
         </div>
     </form>
 {% endblock content %}
 {% block extra_foot %}
     <script type="text/javascript">
-        var textarea = document.querySelector('textarea[name="text"]');
-        var label = document.querySelector('label[for="text"]');
-        var form = document.querySelector('form#model_form');
-        var element = document.querySelector('#editable-content');
-        textarea.style.display = 'none';
-        label.style.display = 'none';
-        var editor = new IDB.editor(element);
-        form.onsubmit = function () {
-            textarea.innerHTML = element.innerHTML;
-        };
+        IDB.initEditor('text');
+        IDB.initDatepicker('published_at')
     </script>
 {% endblock extra_foot %}

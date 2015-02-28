@@ -1,6 +1,9 @@
+from datetime import date
+
 import pytest
 
 from django.core.urlresolvers import reverse
+from django.utils import translation
 
 from ..views import Index, ByTag
 from ..models import Content
@@ -114,7 +117,7 @@ def test_staff_can_edit_draft_content(staffapp, draft):
     assert Content.objects.get(pk=draft.pk).title == title
 
 
-def test_staff_can_edit_delete_content(staffapp, deleted):
+def test_staff_can_edit_deleted_content(staffapp, deleted):
     url = reverse('blog:content_update', kwargs={'pk': deleted.pk})
     form = staffapp.get(url).forms['model_form']
     title = "New title"
@@ -122,6 +125,30 @@ def test_staff_can_edit_delete_content(staffapp, deleted):
     form['title'] = title
     form.submit().follow()
     assert Content.objects.get(pk=deleted.pk).title == title
+
+
+def test_published_at_is_YMD_formatted_even_in_other_locale(staffapp,
+                                                            published):
+    published.published_at = date(2015, 1, 7)
+    published.save()
+    translation.activate('fr')
+    url = reverse('blog:content_update', kwargs={'pk': published.pk})
+    form = staffapp.get(url).forms['model_form']
+    assert form['published_at'].value == '2015-01-07'
+    translation.deactivate()
+
+
+def test_published_at_can_be_still_set_the_French_way(staffapp, published):
+    # We force the input at load time, but we should still accept other format
+    # at save.
+    translation.activate('fr')
+    url = reverse('blog:content_update', kwargs={'pk': published.pk})
+    form = staffapp.get(url).forms['model_form']
+    form['published_at'] = '11/01/2015'
+    form.submit().follow()
+    assert Content.objects.count()
+    assert Content.objects.first().published_at.date() == date(2015, 1, 11)
+    translation.deactivate()
 
 
 def test_can_create_content_without_image(staffapp):

@@ -1,5 +1,5 @@
-/*global Minislate document window */
-/* eslint new-cap:0, strict:0, quotes:[2, "simple"] global-strict:0, no-underscore-dangle:0, curly:0, consistent-return:0*/
+/*global Minislate document window Pikaday console gettext*/
+/* eslint new-cap:0, strict:0, quotes:[2, "simple"] global-strict:0, no-underscore-dangle:0, curly:0, consistent-return:0, no-new:0, no-console:0*/
 'use strict';
 
 var IDB = {};
@@ -209,3 +209,30 @@ IDB.editor = Minislate.Class(Minislate.Editor, {
         this.toolbar.addControl(IDB.Oembed, 'oembed');
     }
 });
+
+IDB.initEditor = function (name) {
+    var input = document.querySelector('[name="' + name + '"]');
+    var label = document.querySelector('label[for="' + name + '"]');
+    var element = document.querySelector('[data-editable-for="' + name + '"]');
+    if (!input || !element) return console.error('Missing elements for editor ' + name);
+    input.style.display = 'none';
+    if (label) label.style.display = 'none';
+    new IDB.editor(element);
+    input.form.onsubmit = function () {
+        input.innerHTML = element.innerHTML;
+    };
+};
+
+IDB.initDatepicker = function (name) {
+    new Pikaday({
+        field: document.querySelector('[name="' + name + '"]'),
+        format: 'YYYY-MM-DD',
+        i18n: {
+            previousMonth: gettext('Previous Month'),
+            nextMonth: gettext('Next Month'),
+            months: [gettext('January'), gettext('February'), gettext('March'), gettext('April'), gettext('May'), gettext('June'), gettext('July'), gettext('August'), gettext('September'), gettext('October'), gettext('November'), gettext('December')],
+            weekdays: [gettext('Sunday'), gettext('Monday'), gettext('Tuesday'), gettext('Wednesday'), gettext('Thursday'), gettext('Friday'), gettext('Saturday')],
+            weekdaysShort: [gettext('Sun'), gettext('Mon'), gettext('Tue'), gettext('Wed'), gettext('Thu'), gettext('Fri'), gettext('Sat')]
+        }
+    });
+};
