@@ -2,12 +2,7 @@
 {% load i18n static ideasbox_tags %}
 
 {% block extra_head %}
-    <link rel="stylesheet" href="{% static 'ideasbox/vendor/minislate/minislate.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'ideasbox/vendor/pikaday/pikaday.css' %}" />
-    <script src="{% static 'ideasbox/vendor/minislate/minislate.js' %}"></script>
-    <script src="{% static 'ideasbox/vendor/moment/moment-with-locales.min.js' %}"></script>
-    <script src="{% static 'ideasbox/vendor/pikaday/pikaday.js' %}"></script>
-    <script src="{% static 'ideasbox/js/forms.js' %}"></script>
+    {% include 'ideasbox/includes/form_statics.html' %}
 {% endblock extra_head %}
 
 {% block content %}

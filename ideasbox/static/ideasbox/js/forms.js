@@ -236,3 +236,8 @@ IDB.initDatepicker = function (name) {
         }
     });
 };
+
+IDB.focusOn = function (selector) {
+    var element = document.querySelector(selector);
+    if (element) element.focus();
+};

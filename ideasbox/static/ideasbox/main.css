@@ -687,3 +687,15 @@ html[dir='rtl'] .card.document img {
 .card.document {
     overflow: hidden;
 }
+
+
+/* ************************************************* */
+/* ****************** MONITORING ******************* */
+/* ************************************************* */
+.module {text-transform: uppercase;}
+.cinema {color: #22A7F0;}
+.library {color: #F89406;}
+.digital {color: #87D37C;}
+input.cinema {background-color: #22A7F0;}
+input.library {background-color: #F89406;}
+input.digital {background-color: #87D37C;}
