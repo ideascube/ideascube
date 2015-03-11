@@ -291,6 +291,16 @@ label.strip + input[type="text"] {
     margin: 0;
     display: inline;
 }
+label.required:after {
+    content: ' *';
+    color: #D35400;
+    font-size: 1.2em;
+    line-height: 1em;
+    float: right;
+}
+html[dir="rtl"] label.required:after {
+    float: left;
+}
 
 
 /* ************************************************* */
