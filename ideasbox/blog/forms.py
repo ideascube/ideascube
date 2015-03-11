@@ -11,4 +11,5 @@ class ContentForm(forms.ModelForm):
             # We need a normalized date string for JS datepicker, so we take
             # control over the format to bypass L10N.
             "published_at": forms.DateInput(format='%Y-%m-%d')
-        }
+        },
+        fields = "__all__"
