@@ -502,11 +502,15 @@ html[dir='rtl'] .card.book img {
     color: #D2527F;
 }
 .errorlist,
+small.error,
 div.error,
 span.error {
     background-color: #C0392B;
     color: #eee;
     padding: 5px;
+    display: block;
+    margin-top: -14px;
+    margin-bottom: 14px;
 }
 .messages li {
     margin-bottom: 40px;

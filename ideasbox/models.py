@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from .utils import classproperty
+
 
 class TimeStampedModel(models.Model):
     """
@@ -19,18 +21,18 @@ class TimeStampedModel(models.Model):
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, serial, password=None):
+    def create_user(self, serial, password=None, **extra):
         if not serial:
             raise ValueError('Users must have a serial')
 
-        user = self.model(serial=serial)
+        user = self.model(serial=serial, **extra)
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, serial, password):
-        user = self.create_user(serial=serial, password=password)
+    def create_superuser(self, serial, password, **extra):
+        user = self.create_user(serial=serial, password=password, **extra)
         user.is_staff = True
         user.save(using=self._db)
         return user
@@ -43,10 +45,10 @@ class AbstractUser(TimeStampedModel, AbstractBaseUser):
     USERNAME_FIELD = 'serial'
 
     LANG_KNOWLEDGE_CHOICES = (
-        (1, 'Understood'),
-        (2, 'Written'),
-        (3, 'Spoken'),
-        (4, 'Read'),
+        ('understood', 'Understood'),
+        ('written', 'Written'),
+        ('spoken', 'Spoken'),
+        ('read', 'Read'),
     )
 
     serial = models.CharField(max_length=40, unique=True)
@@ -95,6 +97,21 @@ class AbstractUser(TimeStampedModel, AbstractBaseUser):
         return {f.name: {'label': f.verbose_name, 'value': val(f.name)}
                 for f in fields}
 
+    @classproperty
+    @classmethod
+    def REQUIRED_FIELDS(cls):
+        """
+        Make it dynamic, as we need to be able to run createsuperuser command
+        with every user model.
+        """
+        already_included = ['serial', 'password']
+
+        def wanted(field):
+            return not any([field.blank, field.name in already_included,
+                           field.has_default()])
+
+        return [f.name for f in cls._meta.fields if wanted(f)]
+
 
 class DefaultUser(AbstractUser):
     """
@@ -109,26 +126,37 @@ class ProfileMixin(models.Model):
     # Should we use numeric indexes? Maybe using string make the data in the db
     # more robust for backup/restore between different code versions.
     BOX_AWARENESS_CHOICES = (
-        (1, _('Seen the Box')),
-        (2, _('Has been informed by partner organization')),
-        (3, _('Word of mouth')),
-        (4, _('Poster campaign')),
-        (5, _('Other')),
+        ('seen_box', _('Seen the Box')),
+        ('partner', _('Has been informed by partner organization')),
+        ('word_of_mouth', _('Word of mouth')),
+        ('campaign', _('Poster campaign')),
+        ('other', _('Other')),
     )
 
     SCHOOL_LEVEL_CHOICES = (
-        (1, _('Primary')),
-        (2, _('Secondary')),
-        (3, _('Professional')),
-        (4, _('College')),
+        ('primary', _('Primary')),
+        ('secondary', _('Secondary')),
+        ('professional', _('Professional')),
+        ('college', _('College')),
     )
 
     MARITAL_STATUS_CHOICES = (
-        (1, _('Couple')),
-        (2, _('Single')),
-        (3, _('Widowed')),
+        ('couple', _('Couple')),
+        ('single', _('Single')),
+        ('widowed', _('Widowed')),
     )
 
+    GENDER_CHOICES = (
+        ('undefined', _('Undefined')),
+        ('male', _('Male')),
+        ('female', _('Female')),
+    )
+
+    birth_year = models.PositiveSmallIntegerField(
+        _('Birth year'), blank=True, null=True)
+    gender = models.CharField(
+        _('Gender'), choices=GENDER_CHOICES, blank=True,
+        max_length=32)
     # Do we want a fixed choice list instead of a text field?
     nationality = models.CharField(_('Nationality'), max_length=100,
                                    blank=True)
@@ -137,25 +165,22 @@ class ProfileMixin(models.Model):
                                       blank=True)
     children_under_12 = models.PositiveSmallIntegerField(
         _('Number of children under 12'),
-        blank=True)
+        blank=True, null=True)
     children_under_18 = models.PositiveSmallIntegerField(
         _('Number of children under 18'),
-        blank=True)
+        blank=True, null=True)
     children_above_18 = models.PositiveSmallIntegerField(
         _('Number of children above 18'),
-        blank=True)
-    school_level = models.PositiveSmallIntegerField(
-        _('School level'),
-        choices=SCHOOL_LEVEL_CHOICES,
-        blank=True)
-    marital_status = models.PositiveSmallIntegerField(
-        _('Family status'),
-        choices=MARITAL_STATUS_CHOICES,
-        blank=True)
-    box_awareness = models.PositiveSmallIntegerField(
-        _('Ideas Box awareness'),
-        choices=BOX_AWARENESS_CHOICES,
-        blank=True)
+        blank=True, null=True)
+    school_level = models.CharField(
+        _('School level'), choices=SCHOOL_LEVEL_CHOICES, blank=True,
+        max_length=32)
+    marital_status = models.CharField(
+        _('Family status'), choices=MARITAL_STATUS_CHOICES, blank=True,
+        max_length=32)
+    box_awareness = models.CharField(
+        _('Ideas Box awareness'), choices=BOX_AWARENESS_CHOICES, blank=True,
+        max_length=32)
 
     class Meta:
         abstract = True
@@ -164,44 +189,43 @@ class ProfileMixin(models.Model):
 class RefugeeMixin(models.Model):
 
     OCCUPATION_CHOICES = (
-        (1, _('Student')),
-        (2, _('Teacher')),
-        (3, _('Without profession')),
-        (4, _('Profit profession')),
-        (5, _('Other')),
+        ('student', _('Student')),
+        ('teacher', _('Teacher')),
+        ('no_profession', _('Without profession')),
+        ('profit_profession', _('Profit profession')),
+        ('other', _('Other')),
     )
 
     FAMILY_STATUS_CHOICES = (
-        (1, _('Lives with family in the camp')),
-        (2, _('Lives without family in the camp')),
-        (3, _('Has family in the camp but lives without')),
+        ('with_family', _('Lives with family in the camp')),
+        ('no_family', _('Lives without family in the camp')),
+        ('without_family', _('Has family in the camp but lives without')),
     )
 
     CAMP_ACTIVITY_CHOICES = (
-        (1, 'Comitees, representation groups'),
-        (2, 'Music, dance, singing'),
-        (3, 'Other cultural activities'),
-        (4, 'Informatic workshops'),
-        (5, 'Literacy working group'),
-        (6, 'Talking group'),
-        (7, 'Children activities'),
-        (8, 'Other'),
+        ('comitees', 'Comitees, representation groups'),
+        ('arts', 'Music, dance, singing'),
+        ('other_arts', 'Other cultural activities'),
+        ('informatic', 'Informatic workshops'),
+        ('literacy', 'Literacy working group'),
+        ('talking', 'Talking group'),
+        ('children', 'Children activities'),
+        ('other', 'Other'),
     )
 
     refugee_id = models.CharField(_('Refugee ID'), max_length=100, blank=True)
-    camp_entry_date = models.DateField(_('Camp entry date'))
-    current_occupation = models.PositiveSmallIntegerField(
-        _('Current occupation'),
-        choices=OCCUPATION_CHOICES,
-        blank=True)
+    camp_entry_date = models.DateField(_('Camp entry date'), blank=True,
+                                       null=True)
+    current_occupation = models.CharField(
+        _('Current occupation'), choices=OCCUPATION_CHOICES, blank=True,
+        max_length=32)
     country_of_origin_occupation = models.CharField(
         _('Occupation in the country of origin'),
         max_length=100,
         blank=True)
-    family_status = models.PositiveSmallIntegerField(
-        _('Family status'),
-        choices=FAMILY_STATUS_CHOICES,
-        blank=True)
+    family_status = models.CharField(
+        _('Family status'), choices=FAMILY_STATUS_CHOICES, blank=True,
+        max_length=32)
     is_sent_to_school = models.BooleanField(
         _('Sent to school (if under 18)'),
         default=False)
@@ -216,40 +240,36 @@ class RefugeeMixin(models.Model):
 
 
 class SwahiliLangMixin(object):
-    sw_level = models.PositiveSmallIntegerField(
-        _('Swahili knowledge'),
-        choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
-        blank=True)
+    sw_level = models.CharField(
+        _('Swahili knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
 
     class Meta:
         abstract = True
 
 
 class FrenchLangMixin(object):
-    fr_level = models.PositiveSmallIntegerField(
-        _('French knowledge'),
-        choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
-        blank=True)
+    fr_level = models.CharField(
+        _('French knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
 
     class Meta:
         abstract = True
 
 
 class KirundiLangMixin(models.Model):
-    rn_level = models.PositiveSmallIntegerField(
-        _('Kirundi knowledge'),
-        choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
-        blank=True)
+    rn_level = models.CharField(
+        _('Kirundi knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
 
     class Meta:
         abstract = True
 
 
 class ArabicLangMixin(models.Model):
-    ar_level = models.PositiveSmallIntegerField(
-        _('Arabic knowledge'),
-        choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
-        blank=True)
+    ar_level = models.CharField(
+        _('Arabic knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
 
     class Meta:
         abstract = True
@@ -271,7 +291,7 @@ class BurundiMakambaUser(AbstractUser, ProfileMixin, SwahiliLangMixin,
     pass
 
 
-class AzraqUser(AbstractUser, ProfileMixin, ArabicLangMixin):
+class AzraqUser(AbstractUser, ProfileMixin, RefugeeMixin, ArabicLangMixin):
     """
     User for Azraq camp box in Northen Jordan.
     """
