@@ -1,5 +1,6 @@
 Django==1.7.6
-Pillow==2.7.0
+django-countries==3.2
 django-taggit==0.12.3
 gunicorn==19.3.0
+Pillow==2.7.0
 pymarc==3.0.3

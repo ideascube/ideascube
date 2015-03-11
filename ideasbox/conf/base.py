@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'ideasbox.mediacenter',
     'ideasbox.monitoring',
     'taggit',
+    'django_countries',
 )
 
 MIDDLEWARE_CLASSES = (

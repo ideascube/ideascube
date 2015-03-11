@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django_countries.fields import CountryField
 
 from .utils import classproperty
 
@@ -157,9 +158,7 @@ class ProfileMixin(models.Model):
     gender = models.CharField(
         _('Gender'), choices=GENDER_CHOICES, blank=True,
         max_length=32)
-    # Do we want a fixed choice list instead of a text field?
-    nationality = models.CharField(_('Nationality'), max_length=100,
-                                   blank=True)
+    country = CountryField(_('Country of origin'), max_length=100, blank=True)
     city = models.CharField(_('City of origin'), max_length=100, blank=True)
     id_card_number = models.CharField(_('ID card number'), max_length=50,
                                       blank=True)
