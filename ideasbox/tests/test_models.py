@@ -40,7 +40,7 @@ def test_client_login(client, user):
 def test_user_public_fields_should_return_labels_and_values():
     user = BurundiRefugeeUser(
         short_name='my name',
-        school_level=1
+        school_level='primary'
     )
     fields = user.public_fields
     assert 'is_staff' not in fields
