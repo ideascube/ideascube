@@ -15,6 +15,8 @@ try:
     sub = importlib.import_module(".conf." + IDEASBOX_ID, package="ideasbox")
 except ImportError:
     from .conf import dev as sub
+except Exception as e:
+    print(e)
 finally:
     # Make it available as a settings, to be able to display it in the admin.
     SETTINGS_MODULE = sub.__name__

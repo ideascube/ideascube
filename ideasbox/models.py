@@ -245,6 +245,16 @@ class KirundiLangMixin(models.Model):
         abstract = True
 
 
+class ArabicLangMixin(models.Model):
+    ar_level = models.PositiveSmallIntegerField(
+        _('Arabic knowledge'),
+        choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
+        blank=True)
+
+    class Meta:
+        abstract = True
+
+
 class BurundiRefugeeUser(AbstractUser, ProfileMixin, RefugeeMixin,
                          SwahiliLangMixin, FrenchLangMixin, KirundiLangMixin):
     """
@@ -257,5 +267,12 @@ class BurundiMakambaUser(AbstractUser, ProfileMixin, SwahiliLangMixin,
                          FrenchLangMixin, KirundiLangMixin):
     """
     User for Makamba Box, run by the PNUD, and not in a refugees camp.
+    """
+    pass
+
+
+class AzraqUser(AbstractUser, ProfileMixin, ArabicLangMixin):
+    """
+    User for Azraq camp box in Northen Jordan.
     """
     pass
