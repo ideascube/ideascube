@@ -305,3 +305,10 @@ class AzraqUser(AbstractUser, ProfileMixin, RefugeeMixin, ArabicLangMixin,
     User for Azraq camp box in Northen Jordan.
     """
     pass
+
+
+class MaediUser(AbstractUser, ProfileMixin, ArabicLangMixin, EnglishLangMixin):
+    """
+    User for MAEDI box in Lebanon.
+    """
+    pass
