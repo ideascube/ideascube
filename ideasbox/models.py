@@ -46,10 +46,10 @@ class AbstractUser(TimeStampedModel, AbstractBaseUser):
     USERNAME_FIELD = 'serial'
 
     LANG_KNOWLEDGE_CHOICES = (
-        ('understood', 'Understood'),
-        ('written', 'Written'),
-        ('spoken', 'Spoken'),
-        ('read', 'Read'),
+        ('u', 'Understood'),
+        ('w', 'Written'),
+        ('s', 'Spoken'),
+        ('r', 'Read'),
     )
 
     serial = models.CharField(max_length=40, unique=True)
@@ -274,6 +274,15 @@ class ArabicLangMixin(models.Model):
         abstract = True
 
 
+class EnglishLangMixin(models.Model):
+    en_level = models.CharField(
+        _('English knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
+
+    class Meta:
+        abstract = True
+
+
 class BurundiRefugeeUser(AbstractUser, ProfileMixin, RefugeeMixin,
                          SwahiliLangMixin, FrenchLangMixin, KirundiLangMixin):
     """
@@ -290,7 +299,8 @@ class BurundiMakambaUser(AbstractUser, ProfileMixin, SwahiliLangMixin,
     pass
 
 
-class AzraqUser(AbstractUser, ProfileMixin, RefugeeMixin, ArabicLangMixin):
+class AzraqUser(AbstractUser, ProfileMixin, RefugeeMixin, ArabicLangMixin,
+                EnglishLangMixin):
     """
     User for Azraq camp box in Northen Jordan.
     """
