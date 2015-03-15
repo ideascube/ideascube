@@ -32,6 +32,8 @@ def index(request):
         'blog_contents': contents,
         'random_book': random_book,
         'random_doc': random_doc,
+        'khanacademy_url': settings.KHANACADEMY_URL,
+        'wikipedia_url': settings.WIKIPEDIA_URL,
     }
     return render(request, 'index.html', context)
 
