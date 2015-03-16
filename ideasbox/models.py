@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 
+from .fields import CommaSeparatedCharField
 from .utils import classproperty
 
 
@@ -239,7 +240,7 @@ class RefugeeMixin(models.Model):
 
 
 class SwahiliLangMixin(object):
-    sw_level = models.CharField(
+    sw_level = CommaSeparatedCharField(
         _('Swahili knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
 
@@ -248,7 +249,7 @@ class SwahiliLangMixin(object):
 
 
 class FrenchLangMixin(object):
-    fr_level = models.CharField(
+    fr_level = CommaSeparatedCharField(
         _('French knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
 
@@ -257,7 +258,7 @@ class FrenchLangMixin(object):
 
 
 class KirundiLangMixin(models.Model):
-    rn_level = models.CharField(
+    rn_level = CommaSeparatedCharField(
         _('Kirundi knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
 
@@ -266,7 +267,7 @@ class KirundiLangMixin(models.Model):
 
 
 class ArabicLangMixin(models.Model):
-    ar_level = models.CharField(
+    ar_level = CommaSeparatedCharField(
         _('Arabic knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
 
@@ -275,7 +276,7 @@ class ArabicLangMixin(models.Model):
 
 
 class EnglishLangMixin(models.Model):
-    en_level = models.CharField(
+    en_level = CommaSeparatedCharField(
         _('English knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
 

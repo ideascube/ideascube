@@ -1,5 +1,6 @@
 Django==1.7.6
 django-countries==3.2
+django-select-multiple-field==0.4.0
 django-taggit==0.12.3
 gunicorn==19.3.0
 Pillow==2.7.0
