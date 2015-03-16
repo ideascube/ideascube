@@ -5,7 +5,6 @@
     <section class="menu">
       <a class="mwide tthird" href="{% url 'blog:index' %}">{% trans "blog" %}</a>
       <a class="mwide tthird" href="{% url 'library:index' %}">{% trans "library" %}</a>
-      <a class="mwide tthird" href="#">Contents</a>
       <a class="mwide tthird" href="{% url 'mediacenter:index' %}">Medias</a>
       {% if not user.is_authenticated %}<a href="{% url 'login' %}" class="mwide tthird">{% trans "log in" %}</a>{% endif %}
     </section>
