@@ -94,6 +94,14 @@
 .editor-controls li.editor-menu span.editor-menu-arrow {
   color: #808080;
 }
+.editor-controls.rtl li,
+html[dir='rtl'] .editor-controls li {
+  float: right;
+}
+.editor-controls.rtl li li button,
+html[dir='rtl'] .editor-controls li li button {
+  text-align: right;
+}
 .editor-dialog {
   padding: 6px;
   font-size: 12px;

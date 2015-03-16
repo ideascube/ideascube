@@ -8,7 +8,7 @@
  * Copyright 2015, Olivier Meunier and contributors
  * Released under the MIT license
  *
- * Date: 2015-02-22T13:49:27Z
+ * Date: 2015-03-16T20:27:49Z
  */
 !function(e) {
     if ("object" == typeof exports && "undefined" != typeof module) module.exports = e(); else if ("function" == typeof define && define.amd) define([], e); else {
@@ -100,14 +100,14 @@
                         this.element.removeChild(this.element.firstChild);
                     }
                     var text = document.createTextNode(label);
+                    var span = document.createElement("span");
+                    span.appendChild(text);
                     if (this.toolbar.options.fontAwesomeEnabled && fontAwesomeID) {
                         var fa = this.getFaElement(fontAwesomeID);
-                        var span = document.createElement("span");
-                        span.appendChild(text);
                         fa.appendChild(span);
                         this.element.appendChild(fa);
                     } else {
-                        this.element.appendChild(text);
+                        this.element.appendChild(span);
                     }
                 },
                 isHighlighted: function() {
@@ -363,7 +363,7 @@
             "./util": 9
         } ],
         2: [ function(_dereq_, module, exports) {
-            var _util = _dereq_("../util"), _controls = _dereq_("../controls"), rangy = _dereq_("../../vendor/rangy/core").api, Class = _util.Class, extend = _util.extend, _ = _util._, Button = _controls.Button;
+            var _util = _dereq_("../util"), _controls = _dereq_("../controls"), rangy = _dereq_("../../vendor/rangy/core").api, Class = _util.Class, extend = _util.extend, _ = _util._, tr = _util.tr, Button = _controls.Button;
             var Block = Class(Button, {
                 tagList: [],
                 tag: null,
@@ -401,7 +401,7 @@
                 command: "formatblock",
                 defaults: extend({}, Block.prototype.defaults, {
                     label: "¶",
-                    title: "Paragraph"
+                    title: tr("Paragraph")
                 })
             });
             for (var i = 1; i <= 6; i++) {
@@ -410,7 +410,9 @@
                     tag: "h" + i,
                     defaults: extend({}, Block.prototype.defaults, {
                         label: "H" + i,
-                        title: "Title level " + i
+                        title: tr("Title level {level}", {
+                            level: i
+                        })
                     })
                 });
                 exports["H" + i] = C;
@@ -420,7 +422,7 @@
                 tag: "pre",
                 defaults: extend({}, Block.prototype.defaults, {
                     label: "<>",
-                    title: "Code",
+                    title: tr("Code"),
                     fontAwesomeID: "code",
                     tabReplacement: "    "
                 }),
@@ -490,7 +492,7 @@
                 command: "insertunorderedlist",
                 defaults: extend({}, BaseList.prototype.defaults, {
                     label: "UL",
-                    title: "Unordered list",
+                    title: tr("Unordered list"),
                     fontAwesomeID: "list-ul"
                 })
             });
@@ -500,7 +502,7 @@
                 command: "insertorderedlist",
                 defaults: extend({}, BaseList.prototype.defaults, {
                     label: "OL",
-                    title: "Ordered list",
+                    title: tr("Ordered list"),
                     fontAwesomeID: "list-ol"
                 })
             });
@@ -508,7 +510,7 @@
                 tagList: [ "blockquote" ],
                 defaults: extend({}, Block.prototype.defaults, {
                     label: "Quote",
-                    title: "Quote",
+                    title: tr("Quote"),
                     fontAwesomeID: "quote-right"
                 }),
                 init: function() {
@@ -592,7 +594,7 @@
             "../util": 9
         } ],
         3: [ function(_dereq_, module, exports) {
-            var _util = _dereq_("../util"), _controls = _dereq_("../controls"), rangy = _dereq_("../../vendor/rangy/core").api, Class = _util.Class, extend = _util.extend, _ = _util._, Button = _controls.Button, Dialog = _controls.Dialog;
+            var _util = _dereq_("../util"), _controls = _dereq_("../controls"), rangy = _dereq_("../../vendor/rangy/core").api, Class = _util.Class, extend = _util.extend, _ = _util._, tr = _util.tr, Button = _controls.Button, Dialog = _controls.Dialog;
             var Inline = Class(Button, {
                 tagList: [],
                 command: null,
@@ -620,7 +622,7 @@
             exports.Bold = Class(Inline, {
                 defaults: extend({}, Inline.prototype.defaults, {
                     label: "B",
-                    title: "Bold",
+                    title: tr("Bold"),
                     fontAwesomeID: "bold"
                 }),
                 tagList: [ "b", "strong" ],
@@ -639,7 +641,7 @@
             exports.Italic = Class(Inline, {
                 defaults: extend({}, Inline.prototype.defaults, {
                     label: "I",
-                    title: "Italic",
+                    title: tr("Italic"),
                     fontAwesomeID: "italic"
                 }),
                 tagList: [ "i", "em" ],
@@ -658,7 +660,7 @@
             exports.Underline = Class(Inline, {
                 defaults: extend({}, Inline.prototype.defaults, {
                     label: "U",
-                    title: "Underline",
+                    title: tr("Underline"),
                     fontAwesomeID: "underline"
                 }),
                 tagList: [ "u", "ins" ],
@@ -667,7 +669,7 @@
             exports.StrikeThrough = Class(Inline, {
                 defaults: extend({}, Inline.prototype.defaults, {
                     label: "S",
-                    title: "Strike-Through",
+                    title: tr("Strike-Through"),
                     fontAwesomeID: "strikethrough"
                 }),
                 tagList: [ "strike", "del" ],
@@ -712,7 +714,7 @@
             exports.Link = Class(Button, {
                 defaults: extend({}, Button.prototype.defaults, {
                     label: "#",
-                    base_title: "Link",
+                    base_title: tr("Link"),
                     title: "",
                     fontAwesomeID: "link"
                 }),
@@ -783,7 +785,7 @@
             "../util": 9
         } ],
         4: [ function(_dereq_, module, exports) {
-            var _util = _dereq_("../util"), _controls = _dereq_("../controls"), rangy = _dereq_("../../vendor/rangy/core").api, Class = _util.Class, extend = _util.extend, Button = _controls.Button, Dialog = _controls.Dialog;
+            var _util = _dereq_("../util"), _controls = _dereq_("../controls"), rangy = _dereq_("../../vendor/rangy/core").api, Class = _util.Class, extend = _util.extend, Button = _controls.Button, tr = _util.tr, Dialog = _controls.Dialog;
             var ImageDialog = Class(Dialog, {
                 show: function(node) {
                     var control = this.control, editor = this.toolbar.editor, selection = rangy.saveSelection();
@@ -815,7 +817,7 @@
             exports.Image = Class(Button, {
                 defaults: extend({}, Button.prototype.defaults, {
                     label: "IMG",
-                    title: "Image",
+                    title: tr("Image"),
                     fontAwesomeID: "picture-o"
                 }),
                 init: function() {
@@ -853,86 +855,14 @@
                     return node;
                 }
             });
-            var OembedDialog = Class(Dialog, {
-                show: function(node) {
-                    var control = this.control, editor = this.toolbar.editor, selection = rangy.saveSelection();
-                    editor.showDialog(function() {
-                        input.focus();
-                    });
-                    var input = this.addTextField("URL: ", {
-                        escape: function() {
-                            editor.restoreSelection(selection);
-                        },
-                        enter: function(evt) {
-                            editor.restoreSelection(selection);
-                            control.saveOembed(node, evt.target.value);
-                        }
-                    });
-                    this.addButton("Save", {
-                        fontAwesomeID: "check",
-                        click: function(evt) {
-                            evt.stopImmediatePropagation();
-                            editor.restoreSelection(selection);
-                            control.saveOembed(node, input.value);
-                        }
-                    });
-                    if (node) {
-                        input.value = node.getAttribute("src");
-                    }
-                }
-            });
             exports.Oembed = Class(Button, {
                 defaults: extend({}, Button.prototype.defaults, {
                     label: "Embeded",
-                    title: "Embeded content",
+                    title: tr("Embeded content"),
                     fontAwesomeID: "youtube-play"
                 }),
-                init: function() {
-                    Button.prototype.init.apply(this, arguments);
-                    var editor = this.toolbar.editor;
-                    editor.on("click", function(evt) {
-                        if (evt.target.tagName.toLowerCase() === "div") {
-                            editor.setRange(evt.target);
-                            editor.showToolbar();
-                        }
-                    });
-                },
-                getWrapper: function() {
-                    return this.toolbar.editor.getTopNodes(function(n) {
-                        return n.nodeName.toLowerCase === "div" && n.className === "minislate-oembed-container";
-                    })[0];
-                },
-                isHighlighted: function() {
-                    return !!this.getWrapper();
-                },
                 click: function() {
-                    new OembedDialog(this).show(this.getWrapper());
-                },
-                saveOembed: function(node, url) {
-                    var editor = this.toolbar.editor, range = editor.getRange();
-                    var callback = function(status, resp) {
-                        if (status === 200) {
-                            resp = JSON.parse(resp);
-                            if (node && url) {
-                                node.setAttribute("data-url", url);
-                                editor.setRange(node);
-                                node.innerHTML = resp.html;
-                            } else if (url) {
-                                node = document.createElement("div");
-                                node.setAttribute("data-url", url);
-                                node.setAttribute("class", "minislate-oembed-container");
-                                range.deleteContents();
-                                range.insertNode(node);
-                                node.innerHTML = resp.html;
-                                editor.cleanBlock(node.parentNode);
-                                editor.setRange(node);
-                            }
-                            editor.showToolbar();
-                        }
-                    };
-                    _util.http.get("http://www.youtube.com/oembed?url=http%3A//www.youtube.com/watch?v%3D-UUx10KOWIE", {
-                        callback: callback
-                    });
+                    window.alert("No implemented yet :)");
                 }
             });
         }, {
@@ -946,14 +876,16 @@
             var Class = _dereq_("./util").Class;
             var Toolbar = _dereq_("./toolbar").Toolbar;
             var _ = _dereq_("./util")._;
+            var tr = _dereq_("./util").tr;
             var HtmlCleaner = _dereq_("./html-cleaner").HtmlCleaner;
             var Editor = Class(Object, {
                 defaults: {
                     delay: 300,
-                    diffLeft: 2,
-                    diffTop: -10,
+                    offsetX: 2,
+                    offsetY: -10,
                     classPrefix: "editor-",
-                    fontAwesomeEnabled: true
+                    fontAwesomeEnabled: true,
+                    rtl: false
                 },
                 BLOCK_NODES: "P H1 H2 H3 H4 H5 H6 UL OL PRE DL DIV NOSCRIPT BLOCKQUOTE FORM HR TABLE FIELDSET ADDRESS".split(" "),
                 init: function(element, options) {
@@ -970,6 +902,8 @@
                     this.isActive = true;
                     this.isSelected = false;
                     this.options = extend({}, this.defaults, options);
+                    if (this.options.i18n) tr.register(this.options.i18n);
+                    this.isRtl = this.options.rtl || document.documentElement.getAttribute("dir") === "rtl";
                     this._currentEditor = null;
                     this._resizeHandler = function(self) {
                         var timeout = null;
@@ -1079,14 +1013,12 @@
                     }
                     var top = 0;
                     if (boundary.top < height) {
-                        top = boundary.bottom - this.options.diffTop + window.pageYOffset;
+                        top = boundary.bottom - this.options.offsetY + window.pageYOffset;
                     } else {
-                        top = boundary.top + this.options.diffTop + window.pageYOffset - height;
+                        top = boundary.top + this.options.offsetY + window.pageYOffset - height;
                     }
-                    var left = boundary.left - this.options.diffLeft;
-                    if (this._currentEditor.offsetWidth < width + boundary.left) {
-                        left = boundary.right - width + this.options.diffLeft;
-                    }
+                    var left = boundary.left - this.options.offsetX, right = boundary.right - width + this.options.offsetX, overflowLeft = boundary.right - width < this._currentEditor.offsetLeft, overflowRight = this._currentEditor.offsetLeft + this._currentEditor.offsetWidth < width + boundary.left;
+                    if (this.isRtl && !overflowLeft || overflowRight) left = right;
                     this.toolbar.move(top, left);
                 },
                 restoreSelection: function(selection, showToolbar) {
@@ -1458,6 +1390,7 @@
                     this.container = document.createElement("ul");
                     this.dialog = document.createElement("div");
                     this.container.classList.add(this._getClassName("controls"));
+                    if (this.editor.isRtl) this.container.classList.add("rtl");
                     this.element.classList.add(this._getClassName("toolbar"));
                     document.body.appendChild(this.element);
                     this.dialog.classList.add(this._getClassName("dialog"));
@@ -1575,31 +1508,24 @@
                 extend(C.prototype, proto);
                 return C;
             };
-            var http = {
-                _ajax: function(settings) {
-                    var xhr = new window.XMLHttpRequest();
-                    xhr.open(settings.verb, settings.uri, true);
-                    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4) {
-                            settings.callback.call(settings.context || xhr, xhr.status, xhr.responseText, xhr);
-                        }
-                    };
-                    xhr.send(settings.data);
-                    return xhr;
-                },
-                get: function(uri, options) {
-                    options.verb = "GET";
-                    options.uri = uri;
-                    return http._ajax(options);
-                },
-                queryString: function(params) {
-                    var queryString = [];
-                    for (var key in params) {
-                        queryString.push(encodeURIComponent(key) + "=" + encodeURIComponent(params[key]));
-                    }
-                    return queryString.join("&");
-                }
+            var I18n = function(s, data) {
+                return new I18n.LazyString(s, data);
+            };
+            I18n.locale = {};
+            I18n.register = function(locale) {
+                for (var k in locale) I18n.locale[k] = locale[k];
+            };
+            I18n.LazyString = function(s, data) {
+                this.s = s;
+                this.data = data || {};
+            };
+            I18n.LazyString.prototype.toString = function() {
+                return I18n.template(I18n.locale[this.s] || this.s, this.data);
+            };
+            I18n.template = function(str, data) {
+                return str.replace(/\{ *([\w_]+) *\}/g, function(s, k) {
+                    return data[k] || "";
+                });
             };
             var _ = {};
             var breaker = {};
@@ -1640,8 +1566,8 @@
             };
             exports.extend = extend;
             exports.Class = Class;
-            exports.http = http;
             exports._ = _;
+            exports.tr = I18n;
         }, {} ],
         10: [ function(_dereq_, module, exports) {
             exports.VERSION = "0.3.0";
@@ -1653,6 +1579,7 @@
             _dereq_("./vendor/rangy/wrappedselection");
             _dereq_("./lib/rangy-extensions");
             exports.extend = _dereq_("./lib/util").extend;
+            exports.tr = _dereq_("./lib/util").tr;
             exports.Class = _dereq_("./lib/util").Class;
             exports.HtmlCleaner = _dereq_("./lib/html-cleaner").HtmlCleaner;
             exports.Editor = _dereq_("./lib/editor").Editor;
