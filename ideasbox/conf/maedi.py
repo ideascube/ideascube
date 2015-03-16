@@ -5,3 +5,4 @@ IDEASBOX_NAME = u"Jordan"  # Fixme
 AUTH_USER_MODEL = 'ideasbox.MaediUser'
 COUNTRIES_FIRST = ['LB', 'SY', 'JO', 'PS']
 TIME_ZONE = 'Asia/Beirut'
+LANGUAGE_CODE = 'ar'
