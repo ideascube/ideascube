@@ -203,14 +203,14 @@ class RefugeeMixin(models.Model):
     )
 
     CAMP_ACTIVITY_CHOICES = (
-        ('comitees', 'Comitees, representation groups'),
-        ('arts', 'Music, dance, singing'),
-        ('other_arts', 'Other cultural activities'),
-        ('informatic', 'Informatic workshops'),
-        ('literacy', 'Literacy working group'),
-        ('talking', 'Talking group'),
-        ('children', 'Children activities'),
-        ('other', 'Other'),
+        ('1', 'Comitees, representation groups'),
+        ('2', 'Music, dance, singing'),
+        ('3', 'Other cultural activities'),
+        ('4', 'Informatic workshops'),
+        ('5', 'Literacy working group'),
+        ('6', 'Talking group'),
+        ('7', 'Children activities'),
+        ('8', 'Other'),
     )
 
     refugee_id = models.CharField(_('Refugee ID'), max_length=100, blank=True)
@@ -229,7 +229,7 @@ class RefugeeMixin(models.Model):
     is_sent_to_school = models.BooleanField(
         _('Sent to school (if under 18)'),
         default=False)
-    camp_activities = models.CommaSeparatedIntegerField(
+    camp_activities = CommaSeparatedCharField(
         _('Activities in the camp'),
         max_length=512,
         choices=CAMP_ACTIVITY_CHOICES,
