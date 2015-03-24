@@ -1,5 +1,5 @@
 {% extends 'two-third-third.html' %}
-{% load ideasbox_tags %}
+{% load i18n ideasbox_tags %}
 
 {% block twothird %}
     <h2>{{ user_obj }}</h2>
@@ -10,8 +10,9 @@
 {% block third %}
     {% if user.is_staff %}
     <ul class="card tinted admin">
-        <li>{% fa 'pencil' 'fa-fw' %} <a href="{% url 'user_update' pk=user_obj.pk %}">Edit</a></li>
-        <li>{% fa 'trash' 'fa-fw' %} <a href="{% url 'user_delete' pk=user_obj.pk %}">Delete</a></li>
+        <li>{% fa 'pencil' 'fa-fw' %} <a href="{% url 'user_update' pk=user_obj.pk %}">{% trans 'Edit' %}</a></li>
+        <li>{% fa 'trash' 'fa-fw' %} <a href="{% url 'user_delete' pk=user_obj.pk %}">{% trans 'Delete' %}</a></li>
+        <li>{% fa 'key' 'fa-fw' %} <a href="{% url 'user_set_password' pk=user_obj.pk %}">{% trans 'Set password' %}</a></li>
     </ul>
     {% endif %}
 {% endblock third %}

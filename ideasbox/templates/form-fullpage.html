@@ -3,7 +3,7 @@
 {% load i18n ideasbox_tags %}
 
 {% block content %}
-    <form method="POST" enctype="multipart/form-data" id="model_form">
+    <form method="POST" enctype="multipart/form-data" id="{% block form_id %}model_form{% endblock %}">
         <div class="row">
                 <div class="col two-third">
                     {% block heading %}{% endblock heading %}

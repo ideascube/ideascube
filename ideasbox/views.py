@@ -1,20 +1,21 @@
-import urllib2
 import mimetypes
 import socket
-
+import urllib2
 from urlparse import urlparse
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import SetPasswordForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.validators import URLValidator, ValidationError
 from django.forms.models import modelform_factory
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render
-from django.views.generic import (ListView, DetailView, UpdateView, CreateView,
-                                  DeleteView, View)
-
+from django.shortcuts import get_object_or_404, render
+from django.utils.translation import ugettext as _
+from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
+                                  ListView, UpdateView, View)
 from taggit.models import TaggedItem
 
 from ideasbox.blog.models import Content
@@ -89,6 +90,26 @@ class UserDelete(DeleteView):
     context_object_name = 'user_obj'
     success_url = reverse_lazy('user_list')
 user_delete = staff_member_required(UserDelete.as_view())
+
+
+class SetPassword(FormView):
+    form_class = SetPasswordForm
+    template_name = 'ideasbox/set_password.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(SetPassword, self).get_form_kwargs()
+        kwargs['user'] = get_object_or_404(user_model, pk=self.kwargs['pk'])
+        return kwargs
+
+    def form_valid(self, form):
+        msg = _('Password has been set for {user}').format(user=form.user)
+        messages.add_message(self.request, messages.SUCCESS, msg)
+        return super(SetPassword, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('user_detail', kwargs=self.kwargs)
+
+set_password = staff_member_required(SetPassword.as_view())
 
 
 def validate_url(request):

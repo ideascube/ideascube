@@ -8,7 +8,6 @@ from django.views.decorators.cache import cache_page
 
 from . import views
 
-
 urlpatterns = i18n_patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('ideasbox.blog.urls', namespace="blog")),
@@ -27,6 +26,8 @@ urlpatterns = i18n_patterns('',
     url(r'^user/$', views.user_list, name='user_list'),
     url(r'^user/(?P<pk>[\d]+)/$', views.user_detail, name='user_detail'),
     url(r'^user/(?P<pk>[\d]+)/edit/$', views.user_update, name='user_update'),
+    url(r'^user/(?P<pk>[\d]+)/set-password/$', views.set_password,
+        name='user_set_password'),
     url(r'^user/new/$', views.user_create, name='user_create'),
     url(r'^user/(?P<pk>[\d]+)/delete/$',
         views.user_delete, name='user_delete'),

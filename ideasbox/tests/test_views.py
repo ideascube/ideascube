@@ -170,6 +170,32 @@ def test_staff_user_can_delete_user(staffapp, user):
     assert len(user_model.objects.all()) == 1
 
 
+def test_anonymous_cannot_access_set_password_page(app, user):
+    assert app.get(reverse('user_set_password', kwargs={'pk': user.pk}),
+                   status=302)
+
+
+def test_logged_user_cannot_access_set_password_page(loggedapp, user):
+    assert loggedapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
+                         status=302)
+
+
+def test_staff_cannot_access_set_password_page(staffapp, user):
+    assert staffapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
+                        status=200)
+
+
+def test_staff_can_set_password(staffapp, client, user):
+    old_password = user.password
+    url = reverse('user_set_password', kwargs={'pk': user.pk})
+    form = staffapp.get(url).forms['set_password']
+    password = 'thisisanewpassword'
+    form['new_password1'] = password
+    form['new_password2'] = password
+    form.submit().follow()
+    assert user_model.objects.get(pk=user.pk) != old_password
+
+
 def build_request(target="http://example.org", verb="get", **kwargs):
     defaults = {
         'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest',
