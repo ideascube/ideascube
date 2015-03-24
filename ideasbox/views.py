@@ -53,6 +53,12 @@ class UserList(ListView):
     model = user_model
     template_name = 'ideasbox/user_list.html'
     context_object_name = 'user_list'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserList, self).get_context_data(**kwargs)
+        context['USERS_LIST_EXTRA_FIELDS'] = settings.USERS_LIST_EXTRA_FIELDS
+        return context
+
 user_list = UserList.as_view()
 
 

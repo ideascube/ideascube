@@ -2,6 +2,7 @@ import re
 
 from django import template
 from django.db.models import Count
+from django.db.models.fields import FieldDoesNotExist
 from django.utils.safestring import mark_safe
 from django.utils.translation.trans_real import language_code_prefix_re
 
@@ -61,3 +62,18 @@ def tag_cloud(url, model=None, limit=20):
         qs = qs.filter(taggit_taggeditem_items__content_type=content_type)
     qs = qs.annotate(count=Count('taggit_taggeditem_items__id'))
     return {'tags': qs.order_by('-count', 'slug')[:limit], 'url': url}
+
+
+@register.filter(name='getattr')
+def do_getattr(obj, attr):
+    return getattr(obj, attr, None)
+
+
+@register.filter()
+def field_verbose_name(model, name):
+    try:
+        field, _, _, _ = model._meta.get_field_by_name(name)
+    except FieldDoesNotExist:
+        return ''
+    else:
+        return field.verbose_name

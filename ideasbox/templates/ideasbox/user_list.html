@@ -2,10 +2,23 @@
 {% load i18n ideasbox_tags %}
 
 {% block twothird %}
-    <h2>{% trans "Users" %} ({{ user_list.count }})</h2>
+    <table>
+        <caption>{% trans "Users" %} ({{ user_list.count }})</caption>
+        <tr>
+            <th>{% trans 'Name' %}</th>
+            {% for field in USERS_LIST_EXTRA_FIELDS %}
+                <th>{{ view.model|field_verbose_name:field }}</th>
+            {% endfor %}
+        </tr>
     {% for user in user_list  %}
-        <p><a href="{% url 'user_detail' pk=user.pk %}">{{ user }}</a></p>
+        <tr>
+            <td><a href="{% url 'user_detail' pk=user.pk %}">{{ user }}</a></td>
+            {% for field in USERS_LIST_EXTRA_FIELDS %}
+                <td>{{ user|getattr:field }}</td>
+            {% endfor %}
+        </tr>
     {% endfor %}
+    </table>
 {% endblock twothird %}
 {% block third %}
     <div class="card tinted admin">

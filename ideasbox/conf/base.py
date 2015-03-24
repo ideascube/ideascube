@@ -140,6 +140,8 @@ KHANACADEMY_URL = 'http://khanacademy.{domain}'.format(domain=DOMAIN)
 # anonymized, so no personal data like name.
 MONITORING_ENTRY_EXPORT_FIELDS = []
 
+USERS_LIST_EXTRA_FIELDS = ['serial']
+
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
