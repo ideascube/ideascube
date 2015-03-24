@@ -756,6 +756,7 @@ table.stock th {
 table.cinema caption {background-color: #22A7F0;}
 table.library caption {background-color: #F89406;}
 table.digital caption {background-color: #87D37C;}
+table.admin caption {background-color: #F2CC11;}
 table.stock tr.stockitem .actions,
 table.stock .actions {
     text-align: right;
