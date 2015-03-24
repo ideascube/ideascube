@@ -13,7 +13,7 @@ class Entry(TimeStampedModel):
     MODULES = (
         (CINEMA, _('Cinema')),
         (LIBRARY, _('Library')),
-        (DIGITAL, _('Digital')),
+        (DIGITAL, _('Multimedia')),
     )
     module = models.CharField(max_length=20, choices=MODULES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -55,7 +55,7 @@ class StockItem(models.Model):
     MODULES = (
         (CINEMA, _('Cinema')),
         (LIBRARY, _('Library')),
-        (DIGITAL, _('Digital')),
+        (DIGITAL, _('Multimedia')),
         (ADMIN, _('Administration')),
         (OTHER, _('Other')),
     )
