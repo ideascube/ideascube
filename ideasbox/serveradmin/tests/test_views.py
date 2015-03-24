@@ -36,7 +36,7 @@ def test_normals_user_should_not_access_server(loggedapp, page):
 def test_staff_user_should_access_services(monkeypatch, staffapp):
     class Mock(object):
         def __init__(self, *args, **kwargs):
-            pass
+            self.returncode = 0
 
         def communicate(self):
             return "", ""
