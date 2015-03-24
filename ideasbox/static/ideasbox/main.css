@@ -713,3 +713,50 @@ html[dir='rtl'] .card.document img {
 input.cinema {background-color: #22A7F0;}
 input.library {background-color: #F89406;}
 input.digital {background-color: #87D37C;}
+
+table.stock {
+    color: #444;
+}
+table.stock td {
+    padding: 5px 10px;
+}
+table.stock tr.stockitem {
+    background-color: #eee;
+}
+table.stock tr.stockitem td {
+    text-align: left;
+}
+table.stock tr.specimen {
+    background-color: #fff;
+}
+table.stock .notfound {
+    background-color: #C0392B;
+}
+table.stock .missing {
+    background-color: #F27935;
+}
+table.stock .missing,
+table.stock .notfound,
+table.stock .notfound a {
+    color: #E0E0D1;
+    line-height: 100%;
+}
+table.stock caption {
+    color: #fff;
+    text-transform: uppercase;
+    padding: 5px 0;
+    background-color: #444;
+}
+table.stock th {
+    background-color: #999;
+    color: #fff;
+    font-family: 'fira_sansmedium';
+    font-weight: normal;
+}
+table.cinema caption {background-color: #22A7F0;}
+table.library caption {background-color: #F89406;}
+table.digital caption {background-color: #87D37C;}
+table.stock tr.stockitem .actions,
+table.stock .actions {
+    text-align: right;
+}

@@ -4,16 +4,16 @@
 <footer>
     <div class="row">
         <ul class="col quarter">Ideas Box
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Library</a></li>
-            <li><a href="#">Contents</a></li>
+            <li><a href="{% url 'blog:index' %}">{% trans 'Blog' %}</a></li>
+            <li><a href="{% url 'library:index' %}">{% trans 'Library' %}</a></li>
+            <li><a href="{% url 'mediacenter:index' %}">{% trans 'Medias' %}</a></li>
         </ul>
-        <ul class="col quarter">Site Administration
-            <li><a href="{% url 'user_list' %}">Manage members</a></li>
-            <li><a href="{% url 'monitoring:entry' %}">Manage entries</a></li>
-            <li><a href="{% url 'library:index' %}">Manage library</a></li>
+        <ul class="col quarter">{% trans 'Box Administration' %}
+            <li><a href="{% url 'user_list' %}">{% trans 'Manage members' %}</a></li>
+            <li><a href="{% url 'monitoring:entry' %}">{% trans 'Manage entries' %}</a></li>
+            <li><a href="{% url 'monitoring:stock' %}">{% trans 'Stock' %}</a></li>
         </ul>
-        <ul class="col quarter">Server Administration
+        <ul class="col quarter">{% trans 'Server Administration' %}
             <li><a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
             <li><a href="{% url 'server:power' %}">{% trans "Restart server" %}</a></li>
             <li><a href="{% url 'server:backup' %}">{% trans "Backup / restore" %}</a></li>

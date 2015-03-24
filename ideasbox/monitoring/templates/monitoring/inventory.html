@@ -1,0 +1,54 @@
+{% extends 'two-third-third.html' %}
+
+{% load i18n ideasbox_tags monitoring_tags %}
+
+{% block extra_head %}
+    {% include 'ideasbox/includes/form_statics.html' %}
+{% endblock extra_head %}
+
+{% block twothird %}
+    <h2>{{ inventory.made_at }}</h2>
+    <form action="{% url 'monitoring:inventoryspecimen_bybarcode' %}" method="post" id="by_barcode">
+        {% csrf_token %}
+        {{ inventoryspecimen_form.specimen }}
+        {{ inventoryspecimen_form.inventory }}
+        {{ inventoryspecimen_form.count }}
+    </form>
+    {% for module in stock %}
+        <table class="stock {{ module.key }}">
+            <caption>{% trans module.name %}</caption>
+            <tr><th>{% trans 'count' %}</th><th>{% trans 'barcode' %}</th><th>{% trans 'status' %}</th></tr>
+        {% for item in module.objects  %}
+            <tr class="stockitem"><td colspan="3">{{ item }}</td></tr>
+            {% for specimen in item.specimens.all %}
+                {% get_inventory_specimen inventory specimen as inventoryspecimen %}
+                <tr class="specimen">
+                    <td>{{ specimen.count }}</td>
+                    <td>{{ specimen.barcode|default:'—' }}</td>
+                    {% if inventoryspecimen %}
+                        <td class="{% if inventoryspecimen.count >= specimen.count %}found{% else %}missing{% endif %}">{{ inventoryspecimen.count }} <a href="{% url 'monitoring:inventoryspecimen_increase' pk=inventoryspecimen.pk %}">{% fa "plus-circle" %}</a> <a href="{% url 'monitoring:inventoryspecimen_decrease' pk=inventoryspecimen.pk %}">{% fa "minus-circle" %}</a> <a href="{% url 'monitoring:inventoryspecimen_remove' inventory_pk=inventory.pk specimen_pk=specimen.pk %}">{% fa "times-circle" %}</a></td>
+                    {% else %}
+                        <td class="notfound"><a href="{% url 'monitoring:inventoryspecimen_add' inventory_pk=inventory.pk specimen_pk=specimen.pk %}">{% fa "check-circle" %}</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        {% empty %}
+            <tr><td colspan="3">{% trans 'Stock is empty for this module.' %}</td></tr>
+        {% endfor %}
+        </table>
+        <hr />
+    {% endfor %}
+{% endblock twothird %}
+{% block third %}
+    <ul class="card tinted admin">
+        <li>{% fa 'pencil' 'fa-fw' %} <a href="{% url 'monitoring:inventory_update' pk=inventory.pk %}">{% trans 'Edit' %}</a></li>
+        <li>{% fa 'arrow-right' 'fa-fw' %} <a href="{% url 'monitoring:stock' %}">{% trans 'Manage stock' %}</a></li>
+    </ul>
+{% endblock third %}
+
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        IDB.focusOn('[name="specimen"]');
+    </script>
+{% endblock extra_foot %}

@@ -1,0 +1,26 @@
+{% extends 'form-fullpage.html' %}
+{% load i18n %}
+
+{% block extra_head %}
+    {% include 'ideasbox/includes/form_statics.html' %}
+{% endblock extra_head %}
+
+{% block heading %}
+    {% if inventory %}
+        <h2>{% blocktrans with date=inventory.made_at %}Edit inventory from {{ date }}{% endblocktrans %}</h2>
+    {% else %}
+        <h2>{% trans "Start new inventory" %}</h2>
+    {% endif %}
+{% endblock heading %}
+{% block col %}
+    <input type="submit" value="{% trans 'submit' %}" />
+    {% if inventory %}
+        <a class="button" href="{{ inventory.get_absolute_url }}">{% trans 'cancel' %}</a>
+    {% endif %}
+{% endblock col %}
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        IDB.initDatepicker('made_at')
+    </script>
+{% endblock extra_foot %}

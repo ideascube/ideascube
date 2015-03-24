@@ -1,10 +1,14 @@
-{% if field.label %}
-<label class="strip{% if field.field.required %} required{% endif %}" for="{{ field.html_name }}">{{ field.label }}</label>
-{% endif %}
-{{ field }}
-{% for error in field.errors %}
-    <small class="error">{{ error|escape }}</small>
-{% endfor %}
-{% if field.help_text %}
-<small class="help-text">{{ field.help_text }}</small>
+{% if not field.is_hidden %}
+    {% if field.label %}
+    <label class="strip{% if field.field.required %} required{% endif %}" for="{{ field.html_name }}">{{ field.label }}</label>
+    {% endif %}
+    {{ field }}
+    {% for error in field.errors %}
+        <small class="error">{{ error|escape }}</small>
+    {% endfor %}
+    {% if field.help_text %}
+    <small class="help-text">{{ field.help_text }}</small>
+    {% endif %}
+{% else %}
+    {{ field }}
 {% endif %}

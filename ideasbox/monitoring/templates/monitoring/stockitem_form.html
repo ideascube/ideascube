@@ -1,0 +1,16 @@
+{% extends 'form-fullpage.html' %}
+{% load i18n %}
+
+{% block heading %}
+    {% if item %}
+        <h2>{% trans "Edit item" %} "{{ item }}"</h2>
+    {% else %}
+        <h2>{% trans "Add new item" %}</h2>
+    {% endif %}
+{% endblock heading %}
+{% block col %}
+    <input type="submit" value="{% trans 'submit' %}" />
+    {% if item %}
+        <a class="button" href="{{ item.get_absolute_url }}">{% trans 'cancel' %}</a>
+    {% endif %}
+{% endblock col %}
