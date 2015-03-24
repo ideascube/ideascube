@@ -152,7 +152,6 @@ DATABASES = {
 SERVICES = [
     {'name': 'ideasbox', 'description': _('Ideasbox web server')},
     {'name': 'nginx', 'description': _('Global proxy')},
-    {'name': 'bind9', 'description': _('Local DNS')},
     {'name': 'kalite',
         'description': _('Daemon which provides KhanAcademy on lan')},
     {'name': 'kiwix',
