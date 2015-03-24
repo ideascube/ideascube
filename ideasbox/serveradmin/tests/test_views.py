@@ -41,6 +41,9 @@ def test_staff_user_should_access_services(monkeypatch, staffapp):
         def communicate(self):
             return "", ""
 
+        def wait(self):
+            pass
+
     monkeypatch.setattr("subprocess.Popen", Mock)
     assert staffapp.get(reverse("server:services"), status=200)
 

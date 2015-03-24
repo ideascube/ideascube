@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 import os
+import subprocess
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -152,8 +153,11 @@ DATABASES = {
 SERVICES = [
     {'name': 'ideasbox', 'description': _('Ideasbox web server')},
     {'name': 'nginx', 'description': _('Global proxy')},
-    {'name': 'kalite',
-        'description': _('Daemon which provides KhanAcademy on lan')},
+    {
+        'name': 'kalite',
+        'description': _('Daemon which provides KhanAcademy on lan'),
+        'status': lambda x: {'status': False} if subprocess.call(['pgrep', 'kalite', '-f']) else {'status': True}  # noqa
+    },
     {'name': 'kiwix',
         'description': _('Daemon which provides Wikipedia on lan')},
     {'name': 'ntp', 'description': _('Net time protocol')},

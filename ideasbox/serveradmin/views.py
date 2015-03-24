@@ -31,9 +31,12 @@ def services(request):
             service['action'] = service_action
         else:
             service['action'] = 'status'
-        service_return = call_service(service)
-        service['error'] = service_return.get('error')
-        service['status'] = service_return.get('status')
+        if service['action'] in service:
+            status = service[service['action']](service)
+        else:
+            status = call_service(service)
+        service['error'] = status.get('error')
+        service['status'] = status.get('status')
     return render(request, 'serveradmin/services.html', {'services': services})
 
 
