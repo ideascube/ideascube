@@ -53,20 +53,29 @@ class UserList(ListView):
     model = user_model
     template_name = 'ideasbox/user_list.html'
     context_object_name = 'user_list'
+    paginate_by = 50
 
     def get_context_data(self, **kwargs):
         context = super(UserList, self).get_context_data(**kwargs)
         context['USERS_LIST_EXTRA_FIELDS'] = settings.USERS_LIST_EXTRA_FIELDS
+        context['q'] = self.request.GET.get('q', '')
         return context
 
-user_list = UserList.as_view()
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return self.model.objects.search(query)
+        else:
+            return super(UserList, self).get_queryset()
+
+user_list = staff_member_required(UserList.as_view())
 
 
 class UserDetail(DetailView):
     model = user_model
     template_name = 'ideasbox/user_detail.html'
     context_object_name = 'user_obj'
-user_detail = UserDetail.as_view()
+user_detail = staff_member_required(UserDetail.as_view())
 
 
 class UserFormMixin(object):

@@ -10,7 +10,8 @@ from ideasbox.blog.tests.factories import ContentFactory
 from ideasbox.blog.models import Content
 from ideasbox.library.tests.factories import BookSpecimenFactory
 
-from ..views import ByTag
+from .factories import UserFactory
+from ..views import ByTag, UserList
 
 pytestmark = pytest.mark.django_db
 user_model = get_user_model()
@@ -58,13 +59,52 @@ def test_login_page_should_not_log_in_user_with_incorrect_POST(client, user):
     assert not response.context['user'].is_authenticated()
 
 
-def test_user_list_page_should_be_accessible(app, user):
-    response = app.get(reverse('user_list'))
+def test_user_list_page_should_not_be_accessible_to_anonymous(app):
+    assert app.get(reverse('user_list'), status=302)
+
+
+def test_non_staff_should_not_access_user_list_page(loggedapp):
+    assert loggedapp.get(reverse('user_list'), status=302)
+
+
+def test_user_list_page_should_be_accessible_to_staff(staffapp, user):
+    response = staffapp.get(reverse('user_list'), status=200)
     response.mustcontain(unicode(user))
 
 
-def test_user_detail_page_should_be_accessible(app, user):
-    response = app.get(reverse('user_detail', kwargs={'pk': user.pk}))
+def test_user_list_page_is_paginated(staffapp, monkeypatch):
+    monkeypatch.setattr(UserList, 'paginate_by', 2)
+    UserFactory.create_batch(size=3)  # There is also the staff user.
+    response = staffapp.get(reverse('user_list'))
+    assert response.pyquery.find('.pagination')
+    assert response.pyquery.find('.next')
+    assert not response.pyquery.find('.previous')
+    response = staffapp.get(reverse('user_list') + '?page=2')
+    assert response.pyquery.find('.pagination')
+    assert not response.pyquery.find('.next')
+    assert response.pyquery.find('.previous')
+    response = staffapp.get(reverse('user_list') + '?page=3', status=404)
+
+
+def test_user_list_page_should_be_searchable(staffapp):
+    user1 = UserFactory(full_name="user1")
+    user2 = UserFactory(full_name="user2")
+    response = staffapp.get(reverse('user_list') + '?q=user1')
+    response.mustcontain(unicode(user1), no=unicode(user2))
+
+
+def test_user_detail_page_should_not_be_accessible_to_anonymous(app, user):
+    assert app.get(reverse('user_detail', kwargs={'pk': user.pk}),
+                   status=302)
+
+
+def test_non_staff_should_not_access_user_detail_page(loggedapp, user):
+    assert loggedapp.get(reverse('user_detail', kwargs={'pk': user.pk}),
+                         status=302)
+
+
+def test_user_detail_page_should_be_accessible_to_staff(staffapp, user):
+    response = staffapp.get(reverse('user_detail', kwargs={'pk': user.pk}))
     response.mustcontain(unicode(user))
 
 

@@ -1,8 +1,11 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
+
+from ideasbox.search.models import SearchMixin, SearchableQuerySet
 
 from .fields import CommaSeparatedCharField
 from .utils import classproperty
@@ -21,7 +24,11 @@ class TimeStampedModel(models.Model):
         ordering = ["-modified_at", ]
 
 
-class UserManager(BaseUserManager):
+class UserQuerySet(SearchableQuerySet, models.QuerySet):
+    pass
+
+
+class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
 
     def create_user(self, serial, password=None, **extra):
         if not serial:
@@ -40,7 +47,7 @@ class UserManager(BaseUserManager):
         return user
 
 
-class AbstractUser(TimeStampedModel, AbstractBaseUser):
+class AbstractUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
     """
     Minimum definition of a user. Inherit at least from this model.
     """
@@ -114,11 +121,18 @@ class AbstractUser(TimeStampedModel, AbstractBaseUser):
 
         return [f.name for f in cls._meta.fields if wanted(f)]
 
+    @property
+    def index_strings(self):
+        return (unicode(getattr(self, name, ''))
+                for name in settings.USER_INDEX_FIELDS)
+
+    index_public = False  # Searchable only by staff.
+
 
 class DefaultUser(AbstractUser):
     """
-    Just a non abstrct version of the AbstractUser model. To be used mainly for
-    dev and tests.
+    Just a non abstract version of the AbstractUser model. To be used mainly
+    for dev and tests.
     """
     pass
 

@@ -1,9 +1,7 @@
 from django.core.management.base import BaseCommand
 
-
-from ideasbox.blog.models import Content
-from ideasbox.library.models import Book
 from ideasbox.search.utils import create_index_table
+from ideasbox.search.models import SEARCHABLE
 
 
 class Command(BaseCommand):
@@ -11,9 +9,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         create_index_table()
-        models = [Content, Book]
-        for model in models:
-            self.stdout.write('Indexing {} content.'.format(model.__name__))
+        for model in SEARCHABLE.values():
+            count = 0
             for inst in model.objects.all():
                 inst.index()
+                count += 1
+            if count:
+                self.stdout.write('Indexed {} content.'.format(model.__name__))
         self.stdout.write('Done reindexing.')

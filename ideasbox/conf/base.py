@@ -142,6 +142,8 @@ MONITORING_ENTRY_EXPORT_FIELDS = []
 
 USERS_LIST_EXTRA_FIELDS = ['serial']
 
+USER_INDEX_FIELDS = ['short_name', 'full_name', 'serial']
+
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 

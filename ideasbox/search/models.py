@@ -50,7 +50,7 @@ class Search(models.Model):
     def search(cls, **kwargs):
         qs = Search.objects.filter(**kwargs).order_by_relevancy()
         for row in qs:
-            yield _SEARCHABLE[row.model].objects.get(pk=row.model_id)
+            yield SEARCHABLE[row.model].objects.get(pk=row.model_id)
 
 
 class SearchMixin(models.Model):
@@ -115,5 +115,5 @@ def add_rank_function(sender, connection, **kwargs):
 @receiver(class_prepared)
 def register_searchable_model(sender, **kwargs):
     if issubclass(sender, SearchMixin):
-        _SEARCHABLE[sender.__name__] = sender
-_SEARCHABLE = {}
+        SEARCHABLE[sender.__name__] = sender
+SEARCHABLE = {}

@@ -2,6 +2,7 @@
 import pytest
 
 from ideasbox.blog.tests.factories import ContentFactory
+from ideasbox.blog.models import Content
 from ..models import Search
 
 
@@ -13,9 +14,9 @@ def test_nothing_is_indexed_without_any_fixture():
 
 
 def test_searchable_model_is_indexed():
-    assert Search.objects.count() == 0
+    assert Content.objects.count() == 0
     content = ContentFactory(title="music")
-    assert Search.objects.count() == 1
+    assert Content.objects.count() == 1
     assert content in Search.search(text__match="music")
 
 
@@ -23,7 +24,7 @@ def test_more_relevant_should_come_first():
     second = ContentFactory(title="About music and music")
     third = ContentFactory(title="About music")
     first = ContentFactory(title="About music and music but also music")
-    assert Search.objects.count() == 3
+    assert Content.objects.count() == 3
     assert first == list(Search.search(text__match="music"))[0]
     assert second == list(Search.search(text__match="music"))[1]
     assert third == list(Search.search(text__match="music"))[2]

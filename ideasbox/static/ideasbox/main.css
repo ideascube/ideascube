@@ -139,6 +139,9 @@ table td, table th {
 table tr:nth-child(odd) {
     background-color: #eee;
 }
+table tr th {
+    background-color: #ccc;
+}
 
 /* ************************************************* */
 /* *********************** GRID ******************** */

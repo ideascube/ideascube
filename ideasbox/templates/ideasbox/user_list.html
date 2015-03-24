@@ -19,8 +19,10 @@
         </tr>
     {% endfor %}
     </table>
+    {% include "ideasbox/pagination.html" %}
 {% endblock twothird %}
 {% block third %}
+    {% include 'search/box.html' with action='.' %}
     <div class="card tinted admin">
         {% fa 'user-plus' 'fa-fw' %} <a href="{% url 'user_create' %}">{% trans "Add user" %}</a>
     </div>
