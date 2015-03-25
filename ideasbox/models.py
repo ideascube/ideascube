@@ -72,6 +72,7 @@ class AbstractUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
 
     class Meta:
         abstract = True
+        ordering = ["-modified_at"]
 
     def __unicode__(self):
         return self.get_full_name() or self.serial
