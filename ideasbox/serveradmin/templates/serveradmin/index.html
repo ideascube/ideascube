@@ -3,9 +3,12 @@
 {% load i18n ideasbox_tags %}
 
 {% block third %}
-    <ul class="card tinted admin">
-        <li>{% fa 'cogs' 'fa-fw' %} <a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
-        <li>{% fa 'power-off' 'fa-fw' %} <a href="{% url 'server:power' %}">{% trans "Restart server" %}</a></li>
-        <li>{% fa 'life-ring' 'fa-fw' %} <a href="{% url 'server:backup' %}">{% trans "Manage backups" %}</a></li>
-    </ul>
+    <div class="card tinted admin">
+        <h4>{% blocktrans with version=IDEASBOX_VERSION %}Current version: {{ version }}{% endblocktrans %}</h4>
+        <ul>
+            <li>{% fa 'cogs' 'fa-fw' %} <a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
+            <li>{% fa 'power-off' 'fa-fw' %} <a href="{% url 'server:power' %}">{% trans "Restart server" %}</a></li>
+            <li>{% fa 'life-ring' 'fa-fw' %} <a href="{% url 'server:backup' %}">{% trans "Manage backups" %}</a></li>
+        </ul>
+    </div>
 {% endblock third %}

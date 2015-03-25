@@ -71,7 +71,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
-    "ideasbox.context_processors.settings"
+    "ideasbox.context_processors.settings",
+    "ideasbox.context_processors.version",
 )
 
 ROOT_URLCONF = 'ideasbox.urls'
