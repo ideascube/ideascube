@@ -11,7 +11,7 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.validators import URLValidator, ValidationError
 from django.forms.models import modelform_factory
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
@@ -79,7 +79,7 @@ user_detail = staff_member_required(UserDetail.as_view())
 
 
 class UserFormMixin(object):
-    exclude = ['password', 'last_login']
+    exclude = ['password', 'last_login', 'is_staff']
 
     def get_form_class(self):
         return modelform_factory(self.model, exclude=self.exclude)
@@ -105,6 +105,16 @@ class UserDelete(DeleteView):
     context_object_name = 'user_obj'
     success_url = reverse_lazy('user_list')
 user_delete = staff_member_required(UserDelete.as_view())
+
+
+class UserToggleStaff(View):
+
+    def get(self, *args, **kwargs):
+        self.user = get_object_or_404(user_model, pk=self.kwargs['pk'])
+        self.user.is_staff = not self.user.is_staff
+        self.user.save()
+        return HttpResponseRedirect(self.user.get_absolute_url())
+user_toggle_staff = staff_member_required(UserToggleStaff.as_view())
 
 
 class SetPassword(FormView):

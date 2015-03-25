@@ -2,7 +2,7 @@
 {% load i18n ideasbox_tags %}
 
 {% block twothird %}
-    <h2>{{ user_obj }}</h2>
+    <h2>{% if user_obj.is_staff %}{% fa 'shield' 'fa-fw' %}{% endif %}{{ user_obj }}</h2>
     {% for field in user_obj.public_fields.values %}
         {% if field.value %}<p><strong>{{ field.label }}</strong> {{ field.value }}</p>{% endif %}
     {% endfor %}
@@ -13,6 +13,7 @@
         <li>{% fa 'pencil' 'fa-fw' %} <a href="{% url 'user_update' pk=user_obj.pk %}">{% trans 'Edit' %}</a></li>
         <li>{% fa 'trash' 'fa-fw' %} <a href="{% url 'user_delete' pk=user_obj.pk %}">{% trans 'Delete' %}</a></li>
         <li>{% fa 'key' 'fa-fw' %} <a href="{% url 'user_set_password' pk=user_obj.pk %}">{% trans 'Set password' %}</a></li>
+        <li>{% fa 'shield' 'fa-fw' %} <a href="{% url 'user_toggle_staff' pk=user_obj.pk %}">{% if user_obj.is_staff %}{% trans 'Remove staff status' %}{% else %}{% trans 'Add staff status' %}{% endif %}</a></li>
     </ul>
     {% endif %}
 {% endblock third %}

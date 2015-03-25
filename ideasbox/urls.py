@@ -31,6 +31,8 @@ urlpatterns = i18n_patterns('',
     url(r'^user/new/$', views.user_create, name='user_create'),
     url(r'^user/(?P<pk>[\d]+)/delete/$',
         views.user_delete, name='user_delete'),
+    url(r'^user/(?P<pk>[\d]+)/toggle-staff/$',
+        views.user_toggle_staff, name='user_toggle_staff'),
     url(r'^ajax-proxy/$', cache_page(180)(views.ajax_proxy), name='ajax-proxy')
 )
 urlpatterns = urlpatterns + [

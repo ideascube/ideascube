@@ -12,7 +12,7 @@
         </tr>
     {% for user in user_list  %}
         <tr>
-            <td><a href="{% url 'user_detail' pk=user.pk %}">{{ user }}</a></td>
+            <td><a href="{% url 'user_detail' pk=user.pk %}">{{ user }}{% if user.is_staff %}{% fa 'shield' 'fa-fw' %}{% endif %}</a></td>
             {% for field in USERS_LIST_EXTRA_FIELDS %}
                 <td>{{ user|getattr:field }}</td>
             {% endfor %}

@@ -210,6 +210,33 @@ def test_staff_user_can_delete_user(staffapp, user):
     assert len(user_model.objects.all()) == 1
 
 
+def test_anonymous_cannot_access_toggle_staff_page(app, user):
+    assert app.get(reverse('user_toggle_staff', kwargs={'pk': user.pk}),
+                   status=302)
+    assert not user_model.objects.get(pk=user.pk).is_staff
+
+
+def test_logged_user_cannot_access_toggle_staff_page(loggedapp, user):
+    assert loggedapp.get(reverse('user_toggle_staff', kwargs={'pk': user.pk}),
+                         status=302)
+    assert not user_model.objects.get(pk=user.pk).is_staff
+
+
+def test_staff_can_access_toggle_staff_page(staffapp, user):
+    assert staffapp.get(reverse('user_toggle_staff', kwargs={'pk': user.pk}),
+                        status=302)
+    assert user_model.objects.get(pk=user.pk).is_staff
+
+
+def test_staff_can_toggle_user_is_staff_flag(staffapp, user):
+    assert not user.is_staff
+    url = reverse('user_toggle_staff', kwargs={'pk': user.pk})
+    assert staffapp.get(url)
+    assert user_model.objects.get(pk=user.pk).is_staff
+    assert staffapp.get(url)
+    assert not user_model.objects.get(pk=user.pk).is_staff
+
+
 def test_anonymous_cannot_access_set_password_page(app, user):
     assert app.get(reverse('user_set_password', kwargs={'pk': user.pk}),
                    status=302)
@@ -220,7 +247,7 @@ def test_logged_user_cannot_access_set_password_page(loggedapp, user):
                          status=302)
 
 
-def test_staff_cannot_access_set_password_page(staffapp, user):
+def test_staff_can_access_set_password_page(staffapp, user):
     assert staffapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
                         status=200)
 
