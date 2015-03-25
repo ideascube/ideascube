@@ -3,8 +3,8 @@ import mimetypes
 import socket
 import StringIO
 import urllib2
-from urlparse import urlparse
 from datetime import datetime
+from urlparse import urlparse
 
 from django.conf import settings
 from django.contrib import messages
@@ -14,7 +14,8 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.validators import URLValidator, ValidationError
 from django.forms.models import modelform_factory
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import (HttpResponse, HttpResponseBadRequest,
+                         HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
@@ -24,6 +25,8 @@ from taggit.models import TaggedItem
 from ideasbox.blog.models import Content
 from ideasbox.library.models import Book
 from ideasbox.mediacenter.models import Document
+
+from .forms import UserForm
 
 user_model = get_user_model()
 
@@ -81,24 +84,19 @@ class UserDetail(DetailView):
 user_detail = staff_member_required(UserDetail.as_view())
 
 
-class UserFormMixin(object):
-    exclude = ['password', 'last_login', 'is_staff']
-
-    def get_form_class(self):
-        return modelform_factory(self.model, exclude=self.exclude)
-
-
-class UserUpdate(UserFormMixin, UpdateView):
+class UserUpdate(UpdateView):
     model = user_model
     template_name = 'ideasbox/user_form.html'
     context_object_name = 'user_obj'
+    form_class = UserForm
 user_update = staff_member_required(UserUpdate.as_view())
 
 
-class UserCreate(UserFormMixin, CreateView):
+class UserCreate(CreateView):
     model = user_model
     template_name = 'ideasbox/user_form.html'
     context_object_name = 'user_obj'
+    form_class = UserForm
 user_create = staff_member_required(UserCreate.as_view())
 
 
