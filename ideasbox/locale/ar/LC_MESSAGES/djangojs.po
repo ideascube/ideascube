@@ -1,132 +1,131 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# narjis naji areff ihloh <nano_naji@yahoo.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: ideasbox.lan\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-25 09:51+0000\n"
-"PO-Revision-Date: 2015-02-28 18:49+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Arabic (http://www.transifex.com/projects/p/ideasboxlan/"
-"language/ar/)\n"
-"Language: ar\n"
+"PO-Revision-Date: 2015-03-25 13:27+0000\n"
+"Last-Translator: narjis naji areff ihloh <nano_naji@yahoo.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/ideasboxlan/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: ideasbox/static/ideasbox/js/forms.js:231
 msgid "Previous Month"
-msgstr ""
+msgstr "الشهر السابق "
 
 #: ideasbox/static/ideasbox/js/forms.js:232
 msgid "Next Month"
-msgstr ""
+msgstr "الشهر التالي "
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "January"
-msgstr ""
+msgstr "يناير"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "February"
-msgstr ""
+msgstr "فبراير"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "March"
-msgstr ""
+msgstr "مارس"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "April"
-msgstr ""
+msgstr "ابريل"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "May"
-msgstr ""
+msgstr "ايار"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "June"
-msgstr ""
+msgstr "حزيران"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "July"
-msgstr ""
+msgstr "تموز"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "August"
-msgstr ""
+msgstr "اب"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "September"
-msgstr ""
+msgstr "ايلول"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "October"
-msgstr ""
+msgstr "اكتوبر"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "November"
-msgstr ""
+msgstr "نوفمبر"
 
 #: ideasbox/static/ideasbox/js/forms.js:233
 msgid "December"
-msgstr ""
+msgstr "ديسمبر"
 
 #: ideasbox/static/ideasbox/js/forms.js:234
 msgid "Sunday"
-msgstr ""
+msgstr "الأحد"
 
 #: ideasbox/static/ideasbox/js/forms.js:234
 msgid "Monday"
-msgstr ""
+msgstr "الأثنين"
 
 #: ideasbox/static/ideasbox/js/forms.js:234
 msgid "Tuesday"
-msgstr ""
+msgstr "الثلاثاء"
 
 #: ideasbox/static/ideasbox/js/forms.js:234
 msgid "Wednesday"
-msgstr ""
+msgstr "الأربعاء"
 
 #: ideasbox/static/ideasbox/js/forms.js:234
 msgid "Thursday"
-msgstr ""
+msgstr "الخميس"
 
 #: ideasbox/static/ideasbox/js/forms.js:234
 msgid "Friday"
-msgstr ""
+msgstr "الجمعة"
 
 #: ideasbox/static/ideasbox/js/forms.js:234
 msgid "Saturday"
-msgstr ""
+msgstr "السبت"
 
 #: ideasbox/static/ideasbox/js/forms.js:235
 msgid "Sun"
-msgstr ""
+msgstr "الأحد"
 
 #: ideasbox/static/ideasbox/js/forms.js:235
 msgid "Mon"
-msgstr ""
+msgstr "الأثنين"
 
 #: ideasbox/static/ideasbox/js/forms.js:235
 msgid "Tue"
-msgstr ""
+msgstr "الثلاثاء"
 
 #: ideasbox/static/ideasbox/js/forms.js:235
 msgid "Wed"
-msgstr ""
+msgstr "الأربعاء"
 
 #: ideasbox/static/ideasbox/js/forms.js:235
 msgid "Thu"
-msgstr ""
+msgstr "الخميس"
 
 #: ideasbox/static/ideasbox/js/forms.js:235
 msgid "Fri"
-msgstr ""
+msgstr "الجمعة"
 
 #: ideasbox/static/ideasbox/js/forms.js:235
 msgid "Sat"
-msgstr ""
+msgstr "السبت"
