@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-28 18:36+0000\n"
+"POT-Creation-Date: 2015-03-25 09:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,30 +78,34 @@ msgstr ""
 msgid "Browse theme \"%(theme)s\""
 msgstr ""
 
-#: ideasbox/blog/templates/blog/content_form.html:17
+#: ideasbox/blog/templates/blog/content_form.html:12
 msgid "Edit post"
 msgstr ""
 
-#: ideasbox/blog/templates/blog/content_form.html:19
+#: ideasbox/blog/templates/blog/content_form.html:14
 msgid "New post"
 msgstr ""
 
-#: ideasbox/blog/templates/blog/content_form.html:25
+#: ideasbox/blog/templates/blog/content_form.html:20
 msgid "Metadatas"
 msgstr ""
 
-#: ideasbox/blog/templates/blog/content_form.html:29
+#: ideasbox/blog/templates/blog/content_form.html:24
 #: ideasbox/library/templates/library/book_form.html:12
 #: ideasbox/library/templates/library/specimen_form.html:12
 #: ideasbox/mediacenter/templates/mediacenter/document_form.html:12
+#: ideasbox/monitoring/templates/monitoring/inventory_form.html:16
+#: ideasbox/monitoring/templates/monitoring/specimen_form.html:16
+#: ideasbox/monitoring/templates/monitoring/stockitem_form.html:12
+#: ideasbox/templates/ideasbox/set_password.html:11
 msgid "submit"
 msgstr ""
 
-#: ideasbox/blog/templates/blog/content_form.html:32
+#: ideasbox/blog/templates/blog/content_form.html:27
 msgid "Content"
 msgstr ""
 
-#: ideasbox/blog/templates/blog/content_form.html:33
+#: ideasbox/blog/templates/blog/content_form.html:28
 msgid "Type your text here…"
 msgstr ""
 
@@ -109,31 +113,27 @@ msgstr ""
 msgid "Add content"
 msgstr ""
 
-#: ideasbox/conf/base.py:143
+#: ideasbox/conf/base.py:158
 msgid "Ideasbox web server"
 msgstr ""
 
-#: ideasbox/conf/base.py:144
+#: ideasbox/conf/base.py:159
 msgid "Global proxy"
 msgstr ""
 
-#: ideasbox/conf/base.py:145
-msgid "Local DNS"
-msgstr ""
-
-#: ideasbox/conf/base.py:147
+#: ideasbox/conf/base.py:162
 msgid "Daemon which provides KhanAcademy on lan"
 msgstr ""
 
-#: ideasbox/conf/base.py:149
+#: ideasbox/conf/base.py:166
 msgid "Daemon which provides Wikipedia on lan"
 msgstr ""
 
-#: ideasbox/conf/base.py:150
+#: ideasbox/conf/base.py:167
 msgid "Net time protocol"
 msgstr ""
 
-#: ideasbox/conf/base.py:152
+#: ideasbox/conf/base.py:169
 msgid "Daemon used for distant connexion to server"
 msgstr ""
 
@@ -276,6 +276,9 @@ msgstr ""
 
 #: ideasbox/library/templates/library/book_form.html:14
 #: ideasbox/mediacenter/templates/mediacenter/document_form.html:14
+#: ideasbox/monitoring/templates/monitoring/inventory_form.html:18
+#: ideasbox/monitoring/templates/monitoring/specimen_form.html:18
+#: ideasbox/monitoring/templates/monitoring/stockitem_form.html:14
 msgid "cancel"
 msgstr ""
 
@@ -309,6 +312,8 @@ msgid "Load notices from ISBN"
 msgstr ""
 
 #: ideasbox/library/templates/library/index.html:5
+#: ideasbox/monitoring/models.py:15 ideasbox/monitoring/models.py:57
+#: ideasbox/templates/ideasbox/includes/footer.html:8
 msgid "Library"
 msgstr ""
 
@@ -411,10 +416,14 @@ msgid "Download document"
 msgstr ""
 
 #: ideasbox/mediacenter/templates/mediacenter/document_detail.html:26
+#: ideasbox/monitoring/templates/monitoring/inventory.html:44
+#: ideasbox/monitoring/templates/monitoring/stock.html:11
+#: ideasbox/templates/ideasbox/user_detail.html:13
 msgid "Edit"
 msgstr ""
 
 #: ideasbox/mediacenter/templates/mediacenter/document_detail.html:27
+#: ideasbox/templates/ideasbox/user_detail.html:14
 msgid "Delete"
 msgstr ""
 
@@ -438,168 +447,394 @@ msgstr ""
 msgid "Add a document"
 msgstr ""
 
-#: ideasbox/models.py:53
+#: ideasbox/models.py:64
 msgid "usual name"
 msgstr ""
 
-#: ideasbox/models.py:54
+#: ideasbox/models.py:65
 msgid "full name"
 msgstr ""
 
-#: ideasbox/models.py:55
+#: ideasbox/models.py:66
 msgid "staff status"
 msgstr ""
 
-#: ideasbox/models.py:56
+#: ideasbox/models.py:67
 msgid "Designates whether the user can log into this admin site."
 msgstr ""
 
-#: ideasbox/models.py:112
+#: ideasbox/models.py:146
 msgid "Seen the Box"
 msgstr ""
 
-#: ideasbox/models.py:113
+#: ideasbox/models.py:147
 msgid "Has been informed by partner organization"
 msgstr ""
 
-#: ideasbox/models.py:114
+#: ideasbox/models.py:148
 msgid "Word of mouth"
 msgstr ""
 
-#: ideasbox/models.py:115
+#: ideasbox/models.py:149
 msgid "Poster campaign"
 msgstr ""
 
-#: ideasbox/models.py:116 ideasbox/models.py:171
+#: ideasbox/models.py:150 ideasbox/models.py:211
+#: ideasbox/monitoring/models.py:60
 msgid "Other"
 msgstr ""
 
-#: ideasbox/models.py:120
+#: ideasbox/models.py:154
 msgid "Primary"
 msgstr ""
 
-#: ideasbox/models.py:121
+#: ideasbox/models.py:155
 msgid "Secondary"
 msgstr ""
 
-#: ideasbox/models.py:122
+#: ideasbox/models.py:156
 msgid "Professional"
 msgstr ""
 
-#: ideasbox/models.py:123
+#: ideasbox/models.py:157
 msgid "College"
 msgstr ""
 
-#: ideasbox/models.py:127
+#: ideasbox/models.py:161
 msgid "Couple"
 msgstr ""
 
-#: ideasbox/models.py:128
+#: ideasbox/models.py:162
 msgid "Single"
 msgstr ""
 
-#: ideasbox/models.py:129
+#: ideasbox/models.py:163
 msgid "Widowed"
 msgstr ""
 
-#: ideasbox/models.py:133
-msgid "Nationality"
-msgstr ""
-
-#: ideasbox/models.py:135
-msgid "City of origin"
-msgstr ""
-
-#: ideasbox/models.py:136
-msgid "ID card number"
-msgstr ""
-
-#: ideasbox/models.py:139
-msgid "Number of children under 12"
-msgstr ""
-
-#: ideasbox/models.py:142
-msgid "Number of children under 18"
-msgstr ""
-
-#: ideasbox/models.py:145
-msgid "Number of children above 18"
-msgstr ""
-
-#: ideasbox/models.py:148
-msgid "School level"
-msgstr ""
-
-#: ideasbox/models.py:152 ideasbox/models.py:202
-msgid "Family status"
-msgstr ""
-
-#: ideasbox/models.py:156
-msgid "Ideas Box awareness"
-msgstr ""
-
 #: ideasbox/models.py:167
-msgid "Student"
+msgid "Undefined"
 msgstr ""
 
 #: ideasbox/models.py:168
-msgid "Teacher"
+msgid "Male"
 msgstr ""
 
 #: ideasbox/models.py:169
-msgid "Without profession"
+msgid "Female"
 msgstr ""
 
-#: ideasbox/models.py:170
-msgid "Profit profession"
+#: ideasbox/models.py:173
+msgid "Birth year"
 msgstr ""
 
 #: ideasbox/models.py:175
-msgid "Lives with family in the camp"
-msgstr ""
-
-#: ideasbox/models.py:176
-msgid "Lives without family in the camp"
+msgid "Gender"
 msgstr ""
 
 #: ideasbox/models.py:177
-msgid "Has family in the camp but lives without"
+msgid "Country of origin"
+msgstr ""
+
+#: ideasbox/models.py:178
+msgid "City of origin"
+msgstr ""
+
+#: ideasbox/models.py:179
+msgid "ID card number"
+msgstr ""
+
+#: ideasbox/models.py:182
+msgid "Number of children under 12"
+msgstr ""
+
+#: ideasbox/models.py:185
+msgid "Number of children under 18"
+msgstr ""
+
+#: ideasbox/models.py:188
+msgid "Number of children above 18"
 msgstr ""
 
 #: ideasbox/models.py:191
-msgid "Refugee ID"
+msgid "School level"
 msgstr ""
 
-#: ideasbox/models.py:192
-msgid "Camp entry date"
+#: ideasbox/models.py:194 ideasbox/models.py:242
+msgid "Family status"
 msgstr ""
 
-#: ideasbox/models.py:194
-msgid "Current occupation"
+#: ideasbox/models.py:197
+msgid "Ideas Box awareness"
 msgstr ""
 
-#: ideasbox/models.py:198
-msgid "Occupation in the country of origin"
+#: ideasbox/models.py:207
+msgid "Student"
 msgstr ""
 
-#: ideasbox/models.py:206
-msgid "Sent to school (if under 18)"
+#: ideasbox/models.py:208
+msgid "Teacher"
 msgstr ""
 
 #: ideasbox/models.py:209
+msgid "Without profession"
+msgstr ""
+
+#: ideasbox/models.py:210
+msgid "Profit profession"
+msgstr ""
+
+#: ideasbox/models.py:215
+msgid "Lives with family in the camp"
+msgstr ""
+
+#: ideasbox/models.py:216
+msgid "Lives without family in the camp"
+msgstr ""
+
+#: ideasbox/models.py:217
+msgid "Has family in the camp but lives without"
+msgstr ""
+
+#: ideasbox/models.py:231
+msgid "Refugee ID"
+msgstr ""
+
+#: ideasbox/models.py:232
+msgid "Camp entry date"
+msgstr ""
+
+#: ideasbox/models.py:235
+msgid "Current occupation"
+msgstr ""
+
+#: ideasbox/models.py:238
+msgid "Occupation in the country of origin"
+msgstr ""
+
+#: ideasbox/models.py:245
+msgid "Sent to school (if under 18)"
+msgstr ""
+
+#: ideasbox/models.py:248
 msgid "Activities in the camp"
 msgstr ""
 
-#: ideasbox/models.py:220
+#: ideasbox/models.py:259
 msgid "Swahili knowledge"
 msgstr ""
 
-#: ideasbox/models.py:230
+#: ideasbox/models.py:268
 msgid "French knowledge"
 msgstr ""
 
-#: ideasbox/models.py:240
+#: ideasbox/models.py:277
 msgid "Kirundi knowledge"
+msgstr ""
+
+#: ideasbox/models.py:286
+msgid "Arabic knowledge"
+msgstr ""
+
+#: ideasbox/models.py:295
+msgid "English knowledge"
+msgstr ""
+
+#: ideasbox/monitoring/forms.py:12
+msgid "Enter user serials"
+msgstr ""
+
+#: ideasbox/monitoring/forms.py:21
+msgid "Missing module name"
+msgstr ""
+
+#: ideasbox/monitoring/forms.py:52
+msgid "Enter a bar code"
+msgstr ""
+
+#: ideasbox/monitoring/forms.py:60
+#, python-brace-format
+msgid "Bar code {barcode} not found"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:14 ideasbox/monitoring/models.py:56
+msgid "Cinema"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:16 ideasbox/monitoring/models.py:58
+msgid "Multimedia"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:22
+msgid "entry"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:23
+msgid "entries"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:35
+msgid "date"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:36 ideasbox/monitoring/models.py:80
+msgid "comments"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:59
+msgid "Administration"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:63
+msgid "name"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:64
+msgid "description"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:74
+msgid "Ideasbox bar code"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:76
+msgid "Serial number"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/entry.html:15
+msgid "To the cinema module"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/entry.html:16
+msgid "To the library module"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/entry.html:17
+msgid "To the digital module"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/entry.html:22
+#, python-format
+msgid "%(time)s ago"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/entry.html:28
+#: ideasbox/monitoring/templates/monitoring/entry.html:31
+msgid "Export"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/inventory.html:20
+#: ideasbox/monitoring/templates/monitoring/stock.html:9
+msgid "count"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/inventory.html:20
+msgid "barcode"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/inventory.html:20
+msgid "status"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/inventory.html:36
+#: ideasbox/monitoring/templates/monitoring/stock.html:16
+msgid "Stock is empty for this module."
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/inventory.html:45
+msgid "Manage stock"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/inventory_form.html:10
+#, python-format
+msgid "Edit inventory from %(date)s"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/inventory_form.html:12
+#: ideasbox/monitoring/templates/monitoring/stock.html:25
+msgid "Start new inventory"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/specimen_form.html:10
+#, python-format
+msgid "Edit specimen of %(item)s"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/specimen_form.html:12
+msgid "Add new specimen"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stock.html:5
+#: ideasbox/templates/ideasbox/includes/footer.html:14
+msgid "Stock"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stock.html:9
+msgid "Reference"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stock.html:9
+msgid "Actions"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stock.html:11
+msgid "Total:"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stock.html:11
+msgid "Add new specimen of this item"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stock.html:13
+msgid "Edit this specimen"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stock.html:24
+msgid "Add new stock item"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stock.html:28
+msgid "Inventories"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stock.html:32
+msgid "No inventory yet."
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stock.html:32
+msgid "Start one now"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stockitem_form.html:6
+msgid "Edit item"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/stockitem_form.html:8
+msgid "Add new item"
+msgstr ""
+
+#: ideasbox/monitoring/views.py:35
+#, python-brace-format
+msgid "No user found with serial {serial}"
+msgstr ""
+
+#: ideasbox/monitoring/views.py:42
+#, python-brace-format
+msgid "Created {count} entries"
+msgstr ""
+
+#: ideasbox/monitoring/views.py:46
+msgid "No entry created."
+msgstr ""
+
+#: ideasbox/monitoring/views.py:203
+#, python-brace-format
+msgid "Specimen {specimen} has been added to {inventory} inventory"
+msgstr ""
+
+#: ideasbox/monitoring/views.py:210
+#, python-brace-format
+msgid "Specimen {specimen} has not been found"
 msgstr ""
 
 #: ideasbox/search/templates/search/box.html:6
@@ -721,34 +956,30 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: ideasbox/serveradmin/utils.py:13
-msgid "unknown error"
-msgstr ""
-
-#: ideasbox/serveradmin/views.py:56
+#: ideasbox/serveradmin/views.py:59
 #, python-brace-format
 msgid "Succesfully created backup {filename}"
 msgstr ""
 
-#: ideasbox/serveradmin/views.py:67
+#: ideasbox/serveradmin/views.py:70
 msgid "Unable to load file."
 msgstr ""
 
-#: ideasbox/serveradmin/views.py:69
+#: ideasbox/serveradmin/views.py:72
 #, python-brace-format
 msgid "File {name} has been loaded."
 msgstr ""
 
-#: ideasbox/serveradmin/views.py:74
+#: ideasbox/serveradmin/views.py:77
 msgid "No file found to upload."
 msgstr ""
 
-#: ideasbox/serveradmin/views.py:80
+#: ideasbox/serveradmin/views.py:83
 #, python-brace-format
 msgid "Succesfully deleted backup {filename}"
 msgstr ""
 
-#: ideasbox/serveradmin/views.py:86
+#: ideasbox/serveradmin/views.py:89
 #, python-brace-format
 msgid "Succesfully restored backup {filename}"
 msgstr ""
@@ -765,6 +996,30 @@ msgstr ""
 msgid "medias center"
 msgstr ""
 
+#: ideasbox/templates/ideasbox/includes/footer.html:7
+msgid "Blog"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/footer.html:9
+msgid "Medias"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/footer.html:11
+msgid "Box Administration"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/footer.html:12
+msgid "Manage members"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/footer.html:13
+msgid "Manage entries"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/footer.html:16
+msgid "Server Administration"
+msgstr ""
+
 #: ideasbox/templates/ideasbox/includes/footer.html:19
 msgid "Backup / restore"
 msgstr ""
@@ -773,11 +1028,7 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
-#: ideasbox/templates/ideasbox/includes/header.html:4
-msgid "ideas box"
-msgstr ""
-
-#: ideasbox/templates/ideasbox/includes/header.html:10
+#: ideasbox/templates/ideasbox/includes/header.html:9
 msgid "log in"
 msgstr ""
 
@@ -786,7 +1037,7 @@ msgid "Khan Academy"
 msgstr ""
 
 #: ideasbox/templates/ideasbox/includes/khan-academy_card.html:4
-msgid "blah blah blah xxxx."
+msgid "Learn with videos and exercises."
 msgstr ""
 
 #: ideasbox/templates/ideasbox/includes/tag_cloud.html:4
@@ -798,7 +1049,7 @@ msgid "wikipedia"
 msgstr ""
 
 #: ideasbox/templates/ideasbox/includes/wikipedia_card.html:4
-msgid "Consultez l'encyclopédie libre et gratuite."
+msgid "Browse the free encyclopedia."
 msgstr ""
 
 #: ideasbox/templates/ideasbox/pagination.html:5
@@ -814,9 +1065,26 @@ msgstr ""
 msgid "next"
 msgstr ""
 
+#: ideasbox/templates/ideasbox/set_password.html:5
+#, python-format
+msgid "Set %(user)s password"
+msgstr ""
+
 #: ideasbox/templates/ideasbox/user_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete user \"%(user_obj)s\"?"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/user_detail.html:15
+msgid "Set password"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/user_detail.html:16
+msgid "Remove staff status"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/user_detail.html:16
+msgid "Add staff status"
 msgstr ""
 
 #: ideasbox/templates/ideasbox/user_form.html:6
@@ -827,11 +1095,15 @@ msgstr ""
 msgid "New User"
 msgstr ""
 
-#: ideasbox/templates/ideasbox/user_list.html:5
-msgid "users"
+#: ideasbox/templates/ideasbox/user_list.html:6
+msgid "Users"
 msgstr ""
 
-#: ideasbox/templates/ideasbox/user_list.html:12
+#: ideasbox/templates/ideasbox/user_list.html:8
+msgid "Name"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/user_list.html:27
 msgid "Add user"
 msgstr ""
 
@@ -841,4 +1113,9 @@ msgstr ""
 
 #: ideasbox/templates/registration/login.html:10
 msgid "Log in"
+msgstr ""
+
+#: ideasbox/views.py:130
+#, python-brace-format
+msgid "Password has been set for {user}"
 msgstr ""
