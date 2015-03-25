@@ -241,3 +241,7 @@ IDB.focusOn = function (selector) {
     var element = document.querySelector(selector);
     if (element) element.focus();
 };
+
+IDB.endswith = function (str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+};

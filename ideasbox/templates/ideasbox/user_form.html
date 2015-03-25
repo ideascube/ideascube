@@ -1,6 +1,10 @@
 {% extends 'form-fullpage.html' %}
 {% load i18n %}
 
+{% block extra_head %}
+    {% include 'ideasbox/includes/form_statics.html' %}
+{% endblock extra_head %}
+
 {% block heading %}
     {% if user_obj %}
         <h2>{% trans "Edit user" %} {{ user_obj }}</h2>
@@ -8,6 +12,16 @@
         <h2>{% trans "New User" %}</h2>
     {% endif %}
 {% endblock heading %}
+
 {% block col %}
         <input type="submit" value="submit" />
 {% endblock col %}
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        var inputs = document.querySelectorAll('#model_form input[type="text"]');
+        for (var i = 0; i < inputs.length; i++) {
+            if (IDB.endswith(inputs[i].name, '_date')) IDB.initDatepicker(inputs[i].name);
+        }
+    </script>
+{% endblock extra_foot %}
