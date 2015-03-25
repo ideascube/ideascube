@@ -23,7 +23,8 @@
 {% endblock twothird %}
 {% block third %}
     {% include 'search/box.html' with action='.' %}
-    <div class="card tinted admin">
-        {% fa 'user-plus' 'fa-fw' %} <a href="{% url 'user_create' %}">{% trans "Add user" %}</a>
-    </div>
+    <ul class="card tinted admin">
+        <li>{% fa 'user-plus' 'fa-fw' %} <a href="{% url 'user_create' %}">{% trans "Add user" %}</a></li>
+        <li>{% fa 'table' 'fa-fw' %} <a href="{% url 'user_export' %}">{% trans "Export all users" %}</a></li>
+    </ul>
 {% endblock third %}

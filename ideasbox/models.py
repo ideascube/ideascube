@@ -92,11 +92,17 @@ class AbstractUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+    @classmethod
+    def get_public_fields(cls):
+        exclude = ['last_login', 'password', 'id', 'is_staff']
+        fields = [f for f in cls._meta.fields if f.name not in exclude]
+        fields.sort(key=lambda x: x.verbose_name)
+        return fields
+
     @property
     def public_fields(self):
         """Return user public fields labels and values."""
-        exclude = ['last_login', 'password', 'id', 'is_staff']
-        fields = [f for f in self._meta.fields if f.name not in exclude]
+        fields = self.get_public_fields()
 
         def val(name):
             try:

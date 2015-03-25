@@ -1,7 +1,10 @@
+import csv
 import mimetypes
 import socket
+import StringIO
 import urllib2
 from urlparse import urlparse
+from datetime import datetime
 
 from django.conf import settings
 from django.contrib import messages
@@ -135,6 +138,34 @@ class SetPassword(FormView):
         return reverse_lazy('user_detail', kwargs=self.kwargs)
 
 set_password = staff_member_required(SetPassword.as_view())
+
+
+@staff_member_required
+def user_export(request):
+    out = StringIO.StringIO()
+    fields = user_model.get_public_fields()
+    writer = csv.DictWriter(out, [unicode(f.verbose_name) for f in fields])
+    writer.writeheader()
+    qs = user_model.objects.all()
+    for user in qs:
+        public_fields = user.public_fields
+        row = {}
+        for field in fields:
+            value = public_fields[field.name]['value']
+            if value is None:
+                value = ''
+            value = unicode(value).encode('utf-8')
+            row[field.verbose_name] = value
+        writer.writerow(row)
+    out.seek(0)
+    response = HttpResponse(out.read())
+    filename = 'users_{id}_{date}'.format(id=settings.IDEASBOX_ID,
+                                          date=datetime.now())
+    attachment = 'attachment; filename="{name}.csv"'.format(
+        name=filename)
+    response['Content-Disposition'] = attachment
+    response['Content-Type'] = 'text/csv'
+    return response
 
 
 def validate_url(request):

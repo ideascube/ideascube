@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 
 from django.contrib.auth import get_user_model
@@ -261,6 +262,32 @@ def test_staff_can_set_password(staffapp, client, user):
     form['new_password2'] = password
     form.submit().follow()
     assert user_model.objects.get(pk=user.pk) != old_password
+
+
+def test_anonymous_cannot_export_users(app, user):
+    assert app.get(reverse('user_set_password', kwargs={'pk': user.pk}),
+                   status=302)
+
+
+def test_logged_user_cannot_export_users(loggedapp, user):
+    assert loggedapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
+                         status=302)
+
+
+def test_staff_can_export_users(staffapp, user):
+    assert staffapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
+                        status=200)
+
+
+def test_export_entry_should_return_csv_with_entries(staffapp, settings):
+    user1 = UserFactory(short_name="user1", full_name="I'm user1")
+    user2 = UserFactory(short_name="user2", full_name=u"I'm user2 with é")
+    resp = staffapp.get(reverse('user_export'), status=200)
+    assert resp.content.startswith("created at,full name,modified at,serial,usual name")  # noqa
+    resp.mustcontain(user1.short_name)
+    resp.mustcontain(user1.full_name)
+    resp.mustcontain(user2.short_name)
+    resp.mustcontain(user2.full_name)
 
 
 def build_request(target="http://example.org", verb="get", **kwargs):
