@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: ideasbox.lan\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-25 09:51+0000\n"
-"PO-Revision-Date: 2015-03-25 15:50+0000\n"
-"Last-Translator: Salah Saud <salahsaud@gmail.com>\n"
+"PO-Revision-Date: 2015-03-26 09:48+0000\n"
+"Last-Translator: narjis naji areff ihloh <nano_naji@yahoo.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/ideasboxlan/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -364,7 +364,7 @@ msgstr "غير قادر على معالجة الخصائص"
 #: ideasbox/library/views.py:77
 #, python-brace-format
 msgid "Successfully processed {count} notices."
-msgstr "تم معالدجة الخصائص بنجاح و {count}"
+msgstr "تم معالدجة الخصائص بنجاح و {count} "
 
 #: ideasbox/library/views.py:83
 msgid "No notice processed"
@@ -887,32 +887,32 @@ msgstr ""
 
 #: ideasbox/serveradmin/templates/serveradmin/backup.html:13
 msgid "Date"
-msgstr ""
+msgstr "البيانات"
 
 #: ideasbox/serveradmin/templates/serveradmin/backup.html:13
 msgid "Size"
-msgstr ""
+msgstr "الحجم "
 
 #: ideasbox/serveradmin/templates/serveradmin/backup.html:24
 msgid "Download selected"
-msgstr ""
+msgstr "تحميل الذي تم أختياره"
 
 #: ideasbox/serveradmin/templates/serveradmin/backup.html:25
 msgid "Restore selected"
-msgstr ""
+msgstr "أسترجاع المحدد"
 
 #: ideasbox/serveradmin/templates/serveradmin/backup.html:25
 #: ideasbox/serveradmin/templates/serveradmin/backup.html:26
 msgid "Sure?"
-msgstr ""
+msgstr "هل أنت متأكد ؟"
 
 #: ideasbox/serveradmin/templates/serveradmin/backup.html:26
 msgid "Delete selected"
-msgstr ""
+msgstr "حذف المحدد"
 
 #: ideasbox/serveradmin/templates/serveradmin/backup.html:28
 msgid "Upload"
-msgstr ""
+msgstr "تحميل"
 
 #: ideasbox/serveradmin/templates/serveradmin/backup.html:30
 #, python-brace-format
@@ -923,7 +923,7 @@ msgstr ""
 
 #: ideasbox/serveradmin/templates/serveradmin/backup.html:31
 msgid "Upload backup file"
-msgstr ""
+msgstr "تحميل ملفات النسخ الأحتياطي"
 
 #: ideasbox/serveradmin/templates/serveradmin/index.html:7
 #: ideasbox/serveradmin/templates/serveradmin/services.html:6
@@ -934,15 +934,15 @@ msgstr "إدارة الخدمات"
 #: ideasbox/serveradmin/templates/serveradmin/index.html:8
 #: ideasbox/templates/ideasbox/includes/footer.html:18
 msgid "Restart server"
-msgstr ""
+msgstr "إعادة تشغيل الخادم "
 
 #: ideasbox/serveradmin/templates/serveradmin/index.html:9
 msgid "Manage backups"
-msgstr ""
+msgstr "إدارة النسخ الأحتياطي"
 
 #: ideasbox/serveradmin/templates/serveradmin/power.html:5
 msgid "Stop or restart the server"
-msgstr ""
+msgstr "إيقاف او إعادة تشغيل الخادم"
 
 #: ideasbox/serveradmin/templates/serveradmin/power.html:8
 #: ideasbox/serveradmin/templates/serveradmin/service_form.html:13
@@ -961,30 +961,30 @@ msgstr "ابدأ"
 #: ideasbox/serveradmin/views.py:59
 #, python-brace-format
 msgid "Succesfully created backup {filename}"
-msgstr ""
+msgstr "تم إنشاء النسخ الأحتياطي بنجاح {filename}"
 
 #: ideasbox/serveradmin/views.py:70
 msgid "Unable to load file."
-msgstr ""
+msgstr "لا يمكن تحميل الملف ."
 
 #: ideasbox/serveradmin/views.py:72
 #, python-brace-format
 msgid "File {name} has been loaded."
-msgstr ""
+msgstr "الملف {name} تم تحميله بنجاح."
 
 #: ideasbox/serveradmin/views.py:77
 msgid "No file found to upload."
-msgstr ""
+msgstr "لا يوجد ملفات ليتم تحميلها ."
 
 #: ideasbox/serveradmin/views.py:83
 #, python-brace-format
 msgid "Succesfully deleted backup {filename}"
-msgstr ""
+msgstr "تم حذف ملفات النسخ الاحتياطي بنجاح {filename} "
 
 #: ideasbox/serveradmin/views.py:89
 #, python-brace-format
 msgid "Succesfully restored backup {filename}"
-msgstr ""
+msgstr "تم أستعاده ملفات النسخ الأحتياطي بنجاح {filename}"
 
 #: ideasbox/templates/ideasbox/includes/book_card.html:4
 msgid "one book at random"
@@ -996,39 +996,39 @@ msgstr "بـــ / من خلال"
 
 #: ideasbox/templates/ideasbox/includes/document_card.html:4
 msgid "medias center"
-msgstr ""
+msgstr "مركز وسائط الأعلام"
 
 #: ideasbox/templates/ideasbox/includes/footer.html:7
 msgid "Blog"
-msgstr ""
+msgstr "مدونة"
 
 #: ideasbox/templates/ideasbox/includes/footer.html:9
 msgid "Medias"
-msgstr ""
+msgstr "وسائط الأعلام"
 
 #: ideasbox/templates/ideasbox/includes/footer.html:11
 msgid "Box Administration"
-msgstr ""
+msgstr "إدارة صندوق الأفكار "
 
 #: ideasbox/templates/ideasbox/includes/footer.html:12
 msgid "Manage members"
-msgstr ""
+msgstr "إدارة الأعضاء"
 
 #: ideasbox/templates/ideasbox/includes/footer.html:13
 msgid "Manage entries"
-msgstr ""
+msgstr "إدارة المدخلات"
 
 #: ideasbox/templates/ideasbox/includes/footer.html:16
 msgid "Server Administration"
-msgstr ""
+msgstr "إدارة الخادم"
 
 #: ideasbox/templates/ideasbox/includes/footer.html:19
 msgid "Backup / restore"
-msgstr ""
+msgstr "إستعادة / النسخ الأحتياطي"
 
 #: ideasbox/templates/ideasbox/includes/footer.html:34
 msgid "Change"
-msgstr ""
+msgstr "تغيير"
 
 #: ideasbox/templates/ideasbox/includes/header.html:9
 msgid "log in"
@@ -1040,11 +1040,11 @@ msgstr "أكاديمية خان"
 
 #: ideasbox/templates/ideasbox/includes/khan-academy_card.html:4
 msgid "Learn with videos and exercises."
-msgstr ""
+msgstr "التعلم بأستخدام الفيديو و التمرينات"
 
 #: ideasbox/templates/ideasbox/includes/tag_cloud.html:4
 msgid "browse"
-msgstr ""
+msgstr "تصفح"
 
 #: ideasbox/templates/ideasbox/includes/wikipedia_card.html:3
 msgid "wikipedia"
@@ -1052,7 +1052,7 @@ msgstr "ويكيبيديا"
 
 #: ideasbox/templates/ideasbox/includes/wikipedia_card.html:4
 msgid "Browse the free encyclopedia."
-msgstr ""
+msgstr "تصفح الموسوعة الحرة "
 
 #: ideasbox/templates/ideasbox/pagination.html:5
 msgid "previous"
@@ -1075,15 +1075,15 @@ msgstr ""
 #: ideasbox/templates/ideasbox/user_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete user \"%(user_obj)s\"?"
-msgstr ""
+msgstr "هل أنت متأكد من حذف المستخدم \"%(user_obj)s\"?"
 
 #: ideasbox/templates/ideasbox/user_detail.html:15
 msgid "Set password"
-msgstr ""
+msgstr "ضبط كلمة السر"
 
 #: ideasbox/templates/ideasbox/user_detail.html:16
 msgid "Remove staff status"
-msgstr ""
+msgstr "إزالة من قائمة الموظفين"
 
 #: ideasbox/templates/ideasbox/user_detail.html:16
 msgid "Add staff status"
