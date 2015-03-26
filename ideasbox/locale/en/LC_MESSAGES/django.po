@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-25 09:51+0000\n"
+"POT-Creation-Date: 2015-03-26 13:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,27 +113,27 @@ msgstr ""
 msgid "Add content"
 msgstr ""
 
-#: ideasbox/conf/base.py:158
+#: ideasbox/conf/base.py:159
 msgid "Ideasbox web server"
 msgstr ""
 
-#: ideasbox/conf/base.py:159
+#: ideasbox/conf/base.py:160
 msgid "Global proxy"
 msgstr ""
 
-#: ideasbox/conf/base.py:162
+#: ideasbox/conf/base.py:163
 msgid "Daemon which provides KhanAcademy on lan"
 msgstr ""
 
-#: ideasbox/conf/base.py:166
+#: ideasbox/conf/base.py:167
 msgid "Daemon which provides Wikipedia on lan"
 msgstr ""
 
-#: ideasbox/conf/base.py:167
+#: ideasbox/conf/base.py:168
 msgid "Net time protocol"
 msgstr ""
 
-#: ideasbox/conf/base.py:169
+#: ideasbox/conf/base.py:170
 msgid "Daemon used for distant connexion to server"
 msgstr ""
 
@@ -447,6 +447,22 @@ msgstr ""
 msgid "Add a document"
 msgstr ""
 
+#: ideasbox/models.py:57
+msgid "Understood"
+msgstr ""
+
+#: ideasbox/models.py:58
+msgid "Written"
+msgstr ""
+
+#: ideasbox/models.py:59
+msgid "Spoken"
+msgstr ""
+
+#: ideasbox/models.py:60
+msgid "Read"
+msgstr ""
+
 #: ideasbox/models.py:64
 msgid "usual name"
 msgstr ""
@@ -463,180 +479,212 @@ msgstr ""
 msgid "Designates whether the user can log into this admin site."
 msgstr ""
 
-#: ideasbox/models.py:146
+#: ideasbox/models.py:152
 msgid "Seen the Box"
 msgstr ""
 
-#: ideasbox/models.py:147
+#: ideasbox/models.py:153
 msgid "Has been informed by partner organization"
 msgstr ""
 
-#: ideasbox/models.py:148
+#: ideasbox/models.py:154
 msgid "Word of mouth"
 msgstr ""
 
-#: ideasbox/models.py:149
+#: ideasbox/models.py:155
 msgid "Poster campaign"
 msgstr ""
 
-#: ideasbox/models.py:150 ideasbox/models.py:211
+#: ideasbox/models.py:156 ideasbox/models.py:217
 #: ideasbox/monitoring/models.py:60
 msgid "Other"
 msgstr ""
 
-#: ideasbox/models.py:154
+#: ideasbox/models.py:160
 msgid "Primary"
 msgstr ""
 
-#: ideasbox/models.py:155
+#: ideasbox/models.py:161
 msgid "Secondary"
 msgstr ""
 
-#: ideasbox/models.py:156
+#: ideasbox/models.py:162
 msgid "Professional"
 msgstr ""
 
-#: ideasbox/models.py:157
+#: ideasbox/models.py:163
 msgid "College"
 msgstr ""
 
-#: ideasbox/models.py:161
+#: ideasbox/models.py:167
 msgid "Couple"
 msgstr ""
 
-#: ideasbox/models.py:162
+#: ideasbox/models.py:168
 msgid "Single"
 msgstr ""
 
-#: ideasbox/models.py:163
+#: ideasbox/models.py:169
 msgid "Widowed"
 msgstr ""
 
-#: ideasbox/models.py:167
+#: ideasbox/models.py:173
 msgid "Undefined"
 msgstr ""
 
-#: ideasbox/models.py:168
+#: ideasbox/models.py:174
 msgid "Male"
 msgstr ""
 
-#: ideasbox/models.py:169
+#: ideasbox/models.py:175
 msgid "Female"
 msgstr ""
 
-#: ideasbox/models.py:173
+#: ideasbox/models.py:179
 msgid "Birth year"
 msgstr ""
 
-#: ideasbox/models.py:175
+#: ideasbox/models.py:181
 msgid "Gender"
 msgstr ""
 
-#: ideasbox/models.py:177
+#: ideasbox/models.py:183
 msgid "Country of origin"
 msgstr ""
 
-#: ideasbox/models.py:178
+#: ideasbox/models.py:184
 msgid "City of origin"
 msgstr ""
 
-#: ideasbox/models.py:179
+#: ideasbox/models.py:185
 msgid "ID card number"
 msgstr ""
 
-#: ideasbox/models.py:182
+#: ideasbox/models.py:188
 msgid "Number of children under 12"
 msgstr ""
 
-#: ideasbox/models.py:185
+#: ideasbox/models.py:191
 msgid "Number of children under 18"
 msgstr ""
 
-#: ideasbox/models.py:188
+#: ideasbox/models.py:194
 msgid "Number of children above 18"
 msgstr ""
 
-#: ideasbox/models.py:191
+#: ideasbox/models.py:197
 msgid "School level"
 msgstr ""
 
-#: ideasbox/models.py:194 ideasbox/models.py:242
+#: ideasbox/models.py:200 ideasbox/models.py:248
 msgid "Family status"
 msgstr ""
 
-#: ideasbox/models.py:197
+#: ideasbox/models.py:203
 msgid "Ideas Box awareness"
 msgstr ""
 
-#: ideasbox/models.py:207
+#: ideasbox/models.py:213
 msgid "Student"
 msgstr ""
 
-#: ideasbox/models.py:208
+#: ideasbox/models.py:214
 msgid "Teacher"
 msgstr ""
 
-#: ideasbox/models.py:209
+#: ideasbox/models.py:215
 msgid "Without profession"
 msgstr ""
 
-#: ideasbox/models.py:210
+#: ideasbox/models.py:216
 msgid "Profit profession"
 msgstr ""
 
-#: ideasbox/models.py:215
+#: ideasbox/models.py:221
 msgid "Lives with family in the camp"
 msgstr ""
 
-#: ideasbox/models.py:216
+#: ideasbox/models.py:222
 msgid "Lives without family in the camp"
 msgstr ""
 
-#: ideasbox/models.py:217
+#: ideasbox/models.py:223
 msgid "Has family in the camp but lives without"
 msgstr ""
 
+#: ideasbox/models.py:227
+msgid "Comitees, representation groups"
+msgstr ""
+
+#: ideasbox/models.py:228
+msgid "Music, dance, singing"
+msgstr ""
+
+#: ideasbox/models.py:229
+msgid "Other cultural activities"
+msgstr ""
+
+#: ideasbox/models.py:230
+msgid "Informatic workshops"
+msgstr ""
+
 #: ideasbox/models.py:231
-msgid "Refugee ID"
+msgid "Literacy working group"
 msgstr ""
 
 #: ideasbox/models.py:232
-msgid "Camp entry date"
+msgid "Talking group"
 msgstr ""
 
-#: ideasbox/models.py:235
-msgid "Current occupation"
+#: ideasbox/models.py:233
+msgid "Children activities"
+msgstr ""
+
+#: ideasbox/models.py:234
+msgid "Volunteering"
+msgstr ""
+
+#: ideasbox/models.py:237
+msgid "Refugee ID"
 msgstr ""
 
 #: ideasbox/models.py:238
+msgid "Camp entry date"
+msgstr ""
+
+#: ideasbox/models.py:241
+msgid "Current occupation"
+msgstr ""
+
+#: ideasbox/models.py:244
 msgid "Occupation in the country of origin"
 msgstr ""
 
-#: ideasbox/models.py:245
+#: ideasbox/models.py:251
 msgid "Sent to school (if under 18)"
 msgstr ""
 
-#: ideasbox/models.py:248
+#: ideasbox/models.py:254
 msgid "Activities in the camp"
 msgstr ""
 
-#: ideasbox/models.py:259
+#: ideasbox/models.py:265
 msgid "Swahili knowledge"
 msgstr ""
 
-#: ideasbox/models.py:268
+#: ideasbox/models.py:274
 msgid "French knowledge"
 msgstr ""
 
-#: ideasbox/models.py:277
+#: ideasbox/models.py:283
 msgid "Kirundi knowledge"
 msgstr ""
 
-#: ideasbox/models.py:286
+#: ideasbox/models.py:292
 msgid "Arabic knowledge"
 msgstr ""
 
-#: ideasbox/models.py:295
+#: ideasbox/models.py:301
 msgid "English knowledge"
 msgstr ""
 
@@ -924,17 +972,22 @@ msgid "Upload backup file"
 msgstr ""
 
 #: ideasbox/serveradmin/templates/serveradmin/index.html:7
+#, python-format
+msgid "Current version: %(version)s"
+msgstr ""
+
+#: ideasbox/serveradmin/templates/serveradmin/index.html:9
 #: ideasbox/serveradmin/templates/serveradmin/services.html:6
 #: ideasbox/templates/ideasbox/includes/footer.html:17
 msgid "Manage services"
 msgstr ""
 
-#: ideasbox/serveradmin/templates/serveradmin/index.html:8
+#: ideasbox/serveradmin/templates/serveradmin/index.html:10
 #: ideasbox/templates/ideasbox/includes/footer.html:18
 msgid "Restart server"
 msgstr ""
 
-#: ideasbox/serveradmin/templates/serveradmin/index.html:9
+#: ideasbox/serveradmin/templates/serveradmin/index.html:11
 msgid "Manage backups"
 msgstr ""
 
@@ -1028,8 +1081,12 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
-#: ideasbox/templates/ideasbox/includes/header.html:9
+#: ideasbox/templates/ideasbox/includes/header.html:10
 msgid "log in"
+msgstr ""
+
+#: ideasbox/templates/ideasbox/includes/header.html:12
+msgid "log out"
 msgstr ""
 
 #: ideasbox/templates/ideasbox/includes/khan-academy_card.html:3
@@ -1087,11 +1144,11 @@ msgstr ""
 msgid "Add staff status"
 msgstr ""
 
-#: ideasbox/templates/ideasbox/user_form.html:6
+#: ideasbox/templates/ideasbox/user_form.html:10
 msgid "Edit user"
 msgstr ""
 
-#: ideasbox/templates/ideasbox/user_form.html:8
+#: ideasbox/templates/ideasbox/user_form.html:12
 msgid "New User"
 msgstr ""
 
@@ -1107,6 +1164,10 @@ msgstr ""
 msgid "Add user"
 msgstr ""
 
+#: ideasbox/templates/ideasbox/user_list.html:28
+msgid "Export all users"
+msgstr ""
+
 #: ideasbox/templates/index.html:8
 msgid "LAST POSTS"
 msgstr ""
@@ -1115,7 +1176,7 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: ideasbox/views.py:130
+#: ideasbox/views.py:131
 #, python-brace-format
 msgid "Password has been set for {user}"
 msgstr ""

@@ -54,10 +54,10 @@ class AbstractUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
     USERNAME_FIELD = 'serial'
 
     LANG_KNOWLEDGE_CHOICES = (
-        ('u', 'Understood'),
-        ('w', 'Written'),
-        ('s', 'Spoken'),
-        ('r', 'Read'),
+        ('u', _('Understood')),
+        ('w', _('Written')),
+        ('s', _('Spoken')),
+        ('r', _('Read')),
     )
 
     serial = models.CharField(max_length=40, unique=True)
@@ -224,14 +224,14 @@ class RefugeeMixin(models.Model):
     )
 
     CAMP_ACTIVITY_CHOICES = (
-        ('1', 'Comitees, representation groups'),
-        ('2', 'Music, dance, singing'),
-        ('3', 'Other cultural activities'),
-        ('4', 'Informatic workshops'),
-        ('5', 'Literacy working group'),
-        ('6', 'Talking group'),
-        ('7', 'Children activities'),
-        ('8', 'Other'),
+        ('1', _('Comitees, representation groups')),
+        ('2', _('Music, dance, singing')),
+        ('3', _('Other cultural activities')),
+        ('4', _('Informatic workshops')),
+        ('5', _('Literacy working group')),
+        ('6', _('Talking group')),
+        ('7', _('Children activities')),
+        ('8', _('Volunteering')),
     )
 
     refugee_id = models.CharField(_('Refugee ID'), max_length=100, blank=True)
