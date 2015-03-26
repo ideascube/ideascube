@@ -261,7 +261,7 @@ def test_staff_can_set_password(staffapp, client, user):
     form['new_password1'] = password
     form['new_password2'] = password
     form.submit().follow()
-    assert user_model.objects.get(pk=user.pk) != old_password
+    assert user_model.objects.get(pk=user.pk).password != old_password
 
 
 def test_anonymous_cannot_export_users(app, user):

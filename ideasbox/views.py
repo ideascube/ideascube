@@ -13,7 +13,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import SetPasswordForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.validators import URLValidator, ValidationError
-from django.forms.models import modelform_factory
 from django.http import (HttpResponse, HttpResponseBadRequest,
                          HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, render
@@ -128,6 +127,7 @@ class SetPassword(FormView):
         return kwargs
 
     def form_valid(self, form):
+        form.save()
         msg = _('Password has been set for {user}').format(user=form.user)
         messages.add_message(self.request, messages.SUCCESS, msg)
         return super(SetPassword, self).form_valid(form)

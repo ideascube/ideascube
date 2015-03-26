@@ -6,7 +6,11 @@
       <a class="mwide tthird" href="{% url 'blog:index' %}">{% trans "blog" %}</a>
       <a class="mwide tthird" href="{% url 'library:index' %}">{% trans "library" %}</a>
       <a class="mwide tthird" href="{% url 'mediacenter:index' %}">Medias</a>
-      {% if not user.is_authenticated %}<a href="{% url 'login' %}" class="mwide tthird">{% trans "log in" %}</a>{% endif %}
+      {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}" class="mwide tthird">{% trans "log in" %}</a>
+      {% else %}
+        <a href="{% url 'logout' %}" class="mwide tthird">{% trans "log out" %}</a>
+      {% endif %}
     </section>
 </header>
 {% if messages %}
