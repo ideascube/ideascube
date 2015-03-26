@@ -63,25 +63,30 @@ class BookImport(FormView):
     success_url = reverse_lazy('library:book_import')
 
     def form_valid(self, form):
+        handler = None
         if form.cleaned_data['from_files']:
             handler = form.save_from_files
         elif form.cleaned_data['from_isbn']:
             handler = form.save_from_isbn
-        try:
-            notices = handler()
-        except ValueError:
-            msg = _('Unable to process notices.')
-            messages.add_message(self.request, messages.ERROR, msg)
-        else:
-            if notices:
-                msg = _('Successfully processed {count} notices.')
-                msg = msg.format(count=len(notices))
-                messages.add_message(self.request, messages.SUCCESS, msg)
-                if len(notices) == 1:
-                    self.success_url = notices[0].get_absolute_url()
+        if handler:
+            try:
+                notices = handler()
+            except ValueError:
+                msg = _('Unable to process notices.')
+                messages.add_message(self.request, messages.ERROR, msg)
             else:
-                msg = _('No notice processed')
-                messages.add_message(self.request, messages.INFO, msg)
+                if notices:
+                    msg = _('Successfully processed {count} notices.')
+                    msg = msg.format(count=len(notices))
+                    messages.add_message(self.request, messages.SUCCESS, msg)
+                    if len(notices) == 1:
+                        self.success_url = notices[0].get_absolute_url()
+                else:
+                    msg = _('No notice processed')
+                    messages.add_message(self.request, messages.INFO, msg)
+        else:
+            msg = _('You need to provide a file.')
+            messages.add_message(self.request, messages.ERROR, msg)
         return super(BookImport, self).form_valid(form)
 
 book_import = staff_member_required(BookImport.as_view())
