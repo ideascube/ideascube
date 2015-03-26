@@ -4,6 +4,7 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import RequestFactory
+from django.utils import translation
 
 from ideasbox.views import validate_url
 
@@ -279,7 +280,7 @@ def test_staff_can_export_users(staffapp, user):
                         status=200)
 
 
-def test_export_entry_should_return_csv_with_entries(staffapp, settings):
+def test_export_users_should_return_csv_with_users(staffapp, settings):
     user1 = UserFactory(short_name="user1", full_name="I'm user1")
     user2 = UserFactory(short_name="user2", full_name=u"I'm user2 with é")
     resp = staffapp.get(reverse('user_export'), status=200)
@@ -288,6 +289,20 @@ def test_export_entry_should_return_csv_with_entries(staffapp, settings):
     resp.mustcontain(user1.full_name)
     resp.mustcontain(user2.short_name)
     resp.mustcontain(user2.full_name)
+
+
+def test_export_users_should_be_ok_in_arabic(staffapp, settings):
+    translation.activate('ar')
+    user1 = UserFactory(short_name="user1", full_name=u"جبران خليل جبران")
+    user2 = UserFactory(short_name="user2", full_name=u"النبي (كتاب)")
+    resp = staffapp.get(reverse('user_export'), status=200)
+    field, _, _, _ = user_model._meta.get_field_by_name('full_name')
+    resp.mustcontain(unicode(field.verbose_name))
+    resp.mustcontain(user1.short_name)
+    resp.mustcontain(user1.full_name)
+    resp.mustcontain(user2.short_name)
+    resp.mustcontain(user2.full_name)
+    translation.deactivate()
 
 
 def build_request(target="http://example.org", verb="get", **kwargs):

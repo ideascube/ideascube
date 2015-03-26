@@ -142,7 +142,8 @@ set_password = staff_member_required(SetPassword.as_view())
 def user_export(request):
     out = StringIO.StringIO()
     fields = user_model.get_public_fields()
-    writer = csv.DictWriter(out, [unicode(f.verbose_name) for f in fields])
+    headers = [unicode(f.verbose_name).encode('utf-8') for f in fields]
+    writer = csv.DictWriter(out, headers)
     writer.writeheader()
     qs = user_model.objects.all()
     for user in qs:
@@ -153,7 +154,7 @@ def user_export(request):
             if value is None:
                 value = ''
             value = unicode(value).encode('utf-8')
-            row[field.verbose_name] = value
+            row[unicode(field.verbose_name).encode('utf-8')] = value
         writer.writerow(row)
     out.seek(0)
     response = HttpResponse(out.read())
