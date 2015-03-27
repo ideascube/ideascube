@@ -15,7 +15,7 @@
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Ideasbox server"
-NAME=`basename $0`
+NAME="ideasbox"
 DAEMON=/usr/share/python/ideasbox/bin/gunicorn
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
