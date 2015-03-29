@@ -66,6 +66,12 @@ class StockItem(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return '{url}#stockitem-{pk}'.format(
+            url=reverse('monitoring:stock'),
+            pk=self.pk
+        )
+
     class Meta:
         ordering = ('module', 'name')
 
@@ -80,7 +86,7 @@ class Specimen(models.Model):
     comments = models.TextField(_('comments'), blank=True)
 
     def get_absolute_url(self):
-        return reverse('monitoring:stock')
+        return self.item.get_absolute_url()
 
 
 class InventorySpecimen(models.Model):

@@ -1,13 +1,9 @@
-import csv
-import StringIO
-from datetime import datetime
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
@@ -184,13 +180,11 @@ inventory_export = staff_member_required(InventoryExport.as_view())
 
 class StockItemUpdate(UpdateView):
     model = StockItem
-    success_url = reverse_lazy('monitoring:stock')
 stockitem_update = staff_member_required(StockItemUpdate.as_view())
 
 
 class StockItemCreate(CreateView):
     model = StockItem
-    success_url = reverse_lazy('monitoring:stock')
 stockitem_create = staff_member_required(StockItemCreate.as_view())
 
 
@@ -209,7 +203,6 @@ specimen_update = staff_member_required(SpecimenUpdate.as_view())
 class SpecimenCreate(CreateView):
     model = Specimen
     form_class = SpecimenForm
-    success_url = reverse_lazy('monitoring:stock')
 
     def get_initial(self):
         item = get_object_or_404(StockItem, pk=self.kwargs['item_pk'])
