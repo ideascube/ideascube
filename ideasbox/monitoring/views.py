@@ -13,6 +13,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   TemplateView, UpdateView, View)
 
+from ideasbox.views import CSVExportMixin
 from .forms import (EntryForm, ExportEntryForm, InventorySpecimenForm,
                     SpecimenForm)
 from .models import Entry, Inventory, InventorySpecimen, Specimen, StockItem
@@ -56,32 +57,37 @@ class EntryView(FormView):
 entry = staff_member_required(EntryView.as_view())
 
 
-@staff_member_required
-def export_entry(request):
-    form = ExportEntryForm(request.GET)
-    if form.is_valid():
-        out = StringIO.StringIO()
-        fields = ['module', 'date']
-        fields.extend(settings.MONITORING_ENTRY_EXPORT_FIELDS)
-        writer = csv.DictWriter(out, fields)
-        writer.writeheader()
+class ExportEntry(CSVExportMixin, View):
+    prefix = 'entry'
+
+    def get(self, *args, **kwargs):
+        self.form = ExportEntryForm(self.request.GET)
+        if self.form.is_valid():
+            return self.to_csv()
+        else:
+            msg = _('Error while processing entries export')
+            messages.add_message(self.request, messages.ERROR, msg)
+            messages.add_message()
+            return HttpResponseRedirect(reverse_lazy('monitoring:entry'))
+
+    def get_headers(self):
+        self.fields = ['module', 'date']
+        self.fields.extend(settings.MONITORING_ENTRY_EXPORT_FIELDS)
+        return self.fields
+
+    def get_queryset(self):
         qs = Entry.objects.all()
-        if form.cleaned_data['since']:
-            qs = qs.filter(created_at__gte=form.cleaned_data['since'])
-        for entry in qs:
-            row = {'module': entry.module, 'date': entry.created_at}
-            for field in settings.MONITORING_ENTRY_EXPORT_FIELDS:
-                row[field] = getattr(entry.user, field, None)
-            writer.writerow(row)
-        out.seek(0)
-        response = HttpResponse(out.read())
-        filename = 'entries_{id}_{date}'.format(id=settings.IDEASBOX_ID,
-                                                date=datetime.now())
-        attachment = 'attachment; filename="{name}.csv"'.format(
-            name=filename)
-        response['Content-Disposition'] = attachment
-        response['Content-Type'] = 'text/csv'
-        return response
+        if self.form.cleaned_data['since']:
+            qs = qs.filter(created_at__gte=self.form.cleaned_data['since'])
+        return qs
+
+    def get_row(self, entry):
+        row = {'module': entry.module, 'date': entry.created_at}
+        for field in settings.MONITORING_ENTRY_EXPORT_FIELDS:
+            row[field] = getattr(entry.user, field, None)
+        return row
+
+export_entry = staff_member_required(ExportEntry.as_view())
 
 
 class StockListMixin(object):

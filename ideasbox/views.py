@@ -138,33 +138,64 @@ class SetPassword(FormView):
 set_password = staff_member_required(SetPassword.as_view())
 
 
-@staff_member_required
-def user_export(request):
-    out = StringIO.StringIO()
-    fields = user_model.get_public_fields()
-    headers = [unicode(f.verbose_name).encode('utf-8') for f in fields]
-    writer = csv.DictWriter(out, headers)
-    writer.writeheader()
-    qs = user_model.objects.all()
-    for user in qs:
+class CSVExportMixin(object):
+
+    prefix = 'idb'
+
+    def to_csv(self):
+        out = StringIO.StringIO()
+        headers = self.get_headers()
+        writer = csv.DictWriter(out, headers)
+        writer.writeheader()
+        for item in self.get_queryset():
+            row = self.get_row(item)
+            writer.writerow(row)
+        out.seek(0)
+        response = HttpResponse(out.read())
+        filename = self.get_filename()
+        attachment = 'attachment; filename="{name}.csv"'.format(name=filename)
+        response['Content-Disposition'] = attachment
+        response['Content-Type'] = 'text/csv'
+        return response
+
+    def get_queryset(self):
+        raise NotImplementedError('CSVExportMixin needs a get_queryset method')
+
+    def get_headers(self):
+        raise NotImplementedError('CSVExportMixin needs a get_headers method')
+
+    def get_filename(self):
+        filename = "_".join([
+            self.prefix,
+            settings.IDEASBOX_ID,
+            str(datetime.now())
+        ])
+        return filename
+
+
+class UserExport(CSVExportMixin, View):
+
+    def get(self, *args, **kwargs):
+        return self.to_csv()
+
+    def get_queryset(self):
+        return user_model.objects.all()
+
+    def get_headers(self):
+        self.fields = user_model.get_public_fields()
+        return [unicode(f.verbose_name).encode('utf-8') for f in self.fields]
+
+    def get_row(self, user):
         public_fields = user.public_fields
         row = {}
-        for field in fields:
+        for field in self.fields:
             value = public_fields[field.name]['value']
             if value is None:
                 value = ''
             value = unicode(value).encode('utf-8')
             row[unicode(field.verbose_name).encode('utf-8')] = value
-        writer.writerow(row)
-    out.seek(0)
-    response = HttpResponse(out.read())
-    filename = 'users_{id}_{date}'.format(id=settings.IDEASBOX_ID,
-                                          date=datetime.now())
-    attachment = 'attachment; filename="{name}.csv"'.format(
-        name=filename)
-    response['Content-Disposition'] = attachment
-    response['Content-Type'] = 'text/csv'
-    return response
+        return row
+user_export = staff_member_required(UserExport.as_view())
 
 
 def validate_url(request):
