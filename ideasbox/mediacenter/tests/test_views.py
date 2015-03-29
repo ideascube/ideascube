@@ -185,3 +185,28 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
     response = app.get(url + '?page=3', status=404)
+
+
+def test_can_create_document_with_tags(staffapp):
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
+    form['title'] = 'my document title'
+    form['summary'] = 'my document summary'
+    form['credits'] = 'my document credits'
+    form['original'] = Upload('image.jpg', 'xxxxxx', 'image/jpeg')
+    form['tags'] = 'tag1, tag2'
+    form.submit().follow()
+    doc = Document.objects.last()
+    assert doc.tags.count() == 2
+    assert doc.tags.first().name == 'tag1'
+
+
+def test_can_update_document_tags(staffapp, pdf):
+    assert pdf.tags.count() == 0
+    url = reverse('mediacenter:document_update', kwargs={'pk': pdf.pk})
+    form = staffapp.get(url).forms['model_form']
+    form['tags'] = 'tag1, tag2'
+    form.submit().follow()
+    doc = Document.objects.get(pk=pdf.pk)
+    assert doc.tags.count() == 2
+    assert doc.tags.first().name == 'tag1'

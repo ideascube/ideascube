@@ -185,3 +185,29 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
     response = app.get(url + '?page=3', status=404)
+
+
+def test_can_create_content_with_tags(staffapp):
+    url = reverse('blog:content_create')
+    form = staffapp.get(url).forms['model_form']
+    form['title'] = 'my content title'
+    form['summary'] = 'my content summary'
+    form['text'] = 'my content text'
+    form['author'] = staffapp.user.pk
+    form['published_at'] = '2014-12-10'
+    form['tags'] = 'tag1, tag2'
+    form.submit().follow()
+    content = Content.objects.last()
+    assert content.tags.count() == 2
+    assert content.tags.first().name == 'tag1'
+
+
+def test_can_update_content_tags(staffapp, published):
+    assert published.tags.count() == 0
+    url = reverse('blog:content_update', kwargs={'pk': published.pk})
+    form = staffapp.get(url).forms['model_form']
+    form['tags'] = 'tag1, tag2'
+    form.submit().follow()
+    content = Content.objects.get(pk=published.pk)
+    assert content.tags.count() == 2
+    assert content.tags.first().name == 'tag1'

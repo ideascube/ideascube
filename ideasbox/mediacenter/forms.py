@@ -20,4 +20,5 @@ class DocumentForm(forms.ModelForm):
         if kind:
             document.kind = kind
         document.save()
+        self.save_m2m()
         return document

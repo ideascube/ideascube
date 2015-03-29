@@ -262,3 +262,27 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
     response = app.get(url + '?page=3', status=404)
+
+
+def test_can_create_book_with_tags(staffapp):
+    url = reverse('library:book_create')
+    form = staffapp.get(url).forms['model_form']
+    form['title'] = 'My book title'
+    form['summary'] = 'My book summary'
+    form['section'] = '1'
+    form['tags'] = 'tag1, tag2'
+    form.submit().follow()
+    book = Book.objects.last()
+    assert book.tags.count() == 2
+    assert book.tags.first().name == 'tag1'
+
+
+def test_can_update_book_tags(staffapp, book):
+    assert book.tags.count() == 0
+    url = reverse('library:book_update', kwargs={'pk': book.pk})
+    form = staffapp.get(url).forms['model_form']
+    form['tags'] = 'tag1, tag2'
+    form.submit().follow()
+    other = Book.objects.get(pk=book.pk)
+    assert other.tags.count() == 2
+    assert other.tags.first().name == 'tag1'
