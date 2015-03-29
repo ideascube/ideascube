@@ -42,6 +42,7 @@
 {% block third %}
     <ul class="card tinted admin">
         <li>{% fa 'pencil' 'fa-fw' %} <a href="{% url 'monitoring:inventory_update' pk=inventory.pk %}">{% trans 'Edit' %}</a></li>
+        <li>{% fa 'download' 'fa-fw' %} <a href="{% url 'monitoring:inventory_export' pk=inventory.pk %}">{% trans 'Export in CSV' %}</a></li>
         <li>{% fa 'arrow-right' 'fa-fw' %} <a href="{% url 'monitoring:stock' %}">{% trans 'Manage stock' %}</a></li>
     </ul>
 {% endblock third %}

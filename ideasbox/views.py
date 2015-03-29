@@ -142,12 +142,12 @@ class CSVExportMixin(object):
 
     prefix = 'idb'
 
-    def to_csv(self):
+    def render_to_csv(self):
         out = StringIO.StringIO()
         headers = self.get_headers()
         writer = csv.DictWriter(out, headers)
         writer.writeheader()
-        for item in self.get_queryset():
+        for item in self.get_items():
             row = self.get_row(item)
             writer.writerow(row)
         out.seek(0)
@@ -158,8 +158,8 @@ class CSVExportMixin(object):
         response['Content-Type'] = 'text/csv'
         return response
 
-    def get_queryset(self):
-        raise NotImplementedError('CSVExportMixin needs a get_queryset method')
+    def get_item(self):
+        raise NotImplementedError('CSVExportMixin needs a get_items method')
 
     def get_headers(self):
         raise NotImplementedError('CSVExportMixin needs a get_headers method')
@@ -176,9 +176,9 @@ class CSVExportMixin(object):
 class UserExport(CSVExportMixin, View):
 
     def get(self, *args, **kwargs):
-        return self.to_csv()
+        return self.render_to_csv()
 
-    def get_queryset(self):
+    def get_items(self):
         return user_model.objects.all()
 
     def get_headers(self):

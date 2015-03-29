@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 import pytest
 from django.core.urlresolvers import reverse
+from django.utils import translation
 
 from ideasbox.tests.factories import UserFactory
 
@@ -162,6 +164,26 @@ def test_staff_should_access_inventory_detail_page(staffapp):
     inventory = InventoryFactory()
     url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
     assert staffapp.get(url, status=200)
+
+
+def test_can_export_inventory(staffapp):
+    inventory = InventoryFactory()
+    specimen = SpecimenFactory(item__name="an item")
+    InventorySpecimen.objects.create(inventory=inventory, specimen=specimen)
+    url = reverse('monitoring:inventory_export', kwargs={'pk': inventory.pk})
+    resp = staffapp.get(url, status=200)
+    assert resp.content.startswith("module,name,description,barcode,serial,count,comments,status\r\ncinema,an item")  # noqa
+
+
+def test_export_inventory_should_be_ok_in_arabic(staffapp, settings):
+    translation.activate('ar')
+    inventory = InventoryFactory()
+    specimen = SpecimenFactory(item__name="an item", comments=u"النبي (كتاب)")
+    InventorySpecimen.objects.create(inventory=inventory, specimen=specimen)
+    url = reverse('monitoring:inventory_export', kwargs={'pk': inventory.pk})
+    resp = staffapp.get(url, status=200)
+    resp.mustcontain(specimen.comments)
+    translation.deactivate()
 
 
 def test_staff_can_create_inventoryspeciment_by_barcode(staffapp):

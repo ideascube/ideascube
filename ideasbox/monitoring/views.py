@@ -63,7 +63,7 @@ class ExportEntry(CSVExportMixin, View):
     def get(self, *args, **kwargs):
         self.form = ExportEntryForm(self.request.GET)
         if self.form.is_valid():
-            return self.to_csv()
+            return self.render_to_csv()
         else:
             msg = _('Error while processing entries export')
             messages.add_message(self.request, messages.ERROR, msg)
@@ -75,7 +75,7 @@ class ExportEntry(CSVExportMixin, View):
         self.fields.extend(settings.MONITORING_ENTRY_EXPORT_FIELDS)
         return self.fields
 
-    def get_queryset(self):
+    def get_items(self):
         qs = Entry.objects.all()
         if self.form.cleaned_data['since']:
             qs = qs.filter(created_at__gte=self.form.cleaned_data['since'])
@@ -143,6 +143,43 @@ class InventoryDelete(DeleteView):
     model = Inventory
     success_url = reverse_lazy('monitoring:stock')
 inventory_delete = staff_member_required(InventoryDelete.as_view())
+
+
+class InventoryExport(CSVExportMixin, DetailView):
+    model = Inventory
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return self.render_to_csv()
+
+    def get_headers(self):
+        self.headers = ['module', 'name', 'description', 'barcode', 'serial',
+                        'count', 'comments', 'status']
+        return self.headers
+
+    def get_items(self):
+        return Specimen.objects.all()
+
+    def get_row(self, specimen):
+        return {
+            'module': specimen.item.module,
+            'name': specimen.item.name.encode('utf-8'),
+            'description': specimen.item.description.encode('utf-8'),
+            'barcode': specimen.barcode,
+            'serial': specimen.serial,
+            'count': specimen.count,
+            'comments': specimen.comments.encode('utf-8'),
+            'status': specimen.count if specimen in self.object else 'ko'
+        }
+
+    def get_filename(self):
+        filename = "_".join([
+            'inventory',
+            settings.IDEASBOX_ID,
+            str(self.object.made_at)
+        ])
+        return filename
+inventory_export = staff_member_required(InventoryExport.as_view())
 
 
 class StockItemUpdate(UpdateView):
