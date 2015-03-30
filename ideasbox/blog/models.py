@@ -3,10 +3,23 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from taggit.managers import TaggableManager
-
+from taggit.models import TagBase
+from unidecode import unidecode
 
 from ideasbox.models import TimeStampedModel
 from ideasbox.search.models import SearchableQuerySet, SearchMixin
+
+
+# Monkeypatch TagBase.slugify, see:
+# https://github.com/ideas-box/ideasbox.lan/issues/118
+original_slugify = TagBase.slugify
+
+
+def custom_slugify(self, tag, i=None):
+    tag = unidecode(tag)
+    return original_slugify(self, tag, i)
+
+TagBase.slugify = custom_slugify
 
 
 class ContentQuerySet(SearchableQuerySet, models.QuerySet):

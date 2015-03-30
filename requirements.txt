@@ -5,3 +5,4 @@ django-taggit==0.12.3
 gunicorn==19.3.0
 Pillow==2.7.0
 pymarc==3.0.3
+Unidecode==0.4.17

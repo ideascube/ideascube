@@ -238,7 +238,6 @@ class AjaxProxy(View):
         }
         request = urllib2.Request(url, headers=headers)
         opener = urllib2.build_opener()
-        print(url)
         try:
             proxied_request = opener.open(request)
         except urllib2.HTTPError as e:

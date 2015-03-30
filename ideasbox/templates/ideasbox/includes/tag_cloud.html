@@ -3,7 +3,9 @@
 <div class="card tinted">
     <h4><span class="theme learn">{% trans "browse" %}</span> {% trans "Themes" %}</h4>
     {% for tag in tags %}
-        <a href="{% url url tag=tag.slug %}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+        {% if tag.slug %}
+            <a href="{% url url tag=tag.slug %}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+        {% endif %}
     {% endfor %}
 </div>
 {% endspaceless %}
