@@ -91,7 +91,7 @@ IDB.Oembed = Minislate.Class(Minislate.controls.Button, {
         '^(http(s)?://)?(www\.)?dailymotion\.com': 'http://www.dailymotion.com/services/oembed',
         '^(https?://)?vimeo.com/': 'http://vimeo.com/api/oembed.json',
         '^(https?://)?(www\.)?flickr.com/': 'https://www.flickr.com/services/oembed/',
-        '^(https?://)?((www\.)?ideasbox.lan/|localhost)': window.location.origin + '/mediacenter/oembed/'
+        '^(https?://)?((www\.)?ideasbox.lan/|localhost)': window.location.origin + window.location.pathname.slice(0, 3) + '/mediacenter/oembed/'
     },
 
     filterContainer: function (node) {
