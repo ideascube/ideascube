@@ -199,6 +199,22 @@ def test_staff_can_create_inventoryspeciment_by_barcode(staffapp):
                                          specimen=specimen)
 
 
+def test_cant_create_inventoryspeciment_by_barcode_twice(staffapp):
+    inventory = InventoryFactory()
+    specimen = SpecimenFactory()
+    assert not InventorySpecimen.objects.filter(inventory=inventory,
+                                                specimen=specimen)
+    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = specimen.barcode
+    form.submit().follow()
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = specimen.barcode
+    form.submit().follow()
+    assert InventorySpecimen.objects.filter(inventory=inventory,
+                                            specimen=specimen).count() == 1
+
+
 def test_staff_can_create_inventoryspeciment_by_click_on_add_link(staffapp):
     inventory = InventoryFactory()
     specimen = SpecimenFactory(count=3)

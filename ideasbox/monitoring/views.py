@@ -243,7 +243,7 @@ class InventorySpecimenByBarCode(FormView):
         return self.redirect(form)
 
     def form_invalid(self, form):
-        msg = _('Specimen {specimen} has not been found')
+        msg = _('Specimen {specimen} not found or already done.')
         msg = msg.format(specimen=form.data['specimen'])
         messages.add_message(self.request, messages.ERROR, msg)
         return self.redirect(form)

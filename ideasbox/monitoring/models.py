@@ -93,3 +93,6 @@ class InventorySpecimen(models.Model):
     inventory = models.ForeignKey(Inventory)
     specimen = models.ForeignKey(Specimen)
     count = models.IntegerField(default=1)
+
+    class Meta:
+        unique_together = ('inventory', 'specimen')
