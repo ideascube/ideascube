@@ -60,6 +60,9 @@ class Document(SearchMixin, TimeStampedModel):
     objects = DocumentQuerySet.as_manager()
     tags = TaggableManager(blank=True)
 
+    class Meta:
+        ordering = ["-modified_at", ]
+
     def __unicode__(self):
         return self.title
 
