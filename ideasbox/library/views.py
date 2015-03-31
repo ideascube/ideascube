@@ -9,8 +9,8 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
 
 from ideasbox.mixins import ByTagListView
 
-from .forms import BookForm, BookSpecimenForm, ImportForm
-from .models import Book, BookSpecimen
+from .forms import BookForm, BookSpecimenForm, ImportForm, BookSpecimenDigitalForm
+from .models import Book, BookSpecimen, BookSpecimenDigital
 
 
 class Index(ListView):
@@ -116,3 +116,34 @@ class SpecimenDelete(DeleteView):
         return self.object.get_absolute_url()
 
 specimen_delete = staff_member_required(SpecimenDelete.as_view())
+
+#
+class SpecimenDigitalCreate(CreateView):
+    model = BookSpecimenDigital
+    form_class = BookSpecimenDigitalForm
+    template_name = 'library/specimen_digital_form.html'
+
+    def get_initial(self):
+        book = get_object_or_404(Book, pk=self.kwargs['book_pk'])
+        return {'book': book}
+
+specimen_digital_create = staff_member_required(SpecimenDigitalCreate.as_view())
+
+
+class SpecimenDigitalUpdate(UpdateView):
+    model = BookSpecimenDigital
+    form_class = BookSpecimenDigitalForm
+    context_object_name = 'specimen_digital'
+    template_name = 'library/specimen_digital_form.html'
+specimen_digital_update = staff_member_required(SpecimenDigitalUpdate.as_view())
+
+
+class SpecimenDigitalDelete(DeleteView):
+    model = BookSpecimenDigital
+    context_object_name = 'specimen_digital'
+    template_name = 'library/specimen_digital_confirm_delete.html'
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
+specimen_digital_delete = staff_member_required(SpecimenDigitalDelete.as_view())

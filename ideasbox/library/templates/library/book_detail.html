@@ -22,7 +22,10 @@
 {% block third %}
     {% if user.is_staff %}
     <ul class="card tinted admin">
-        <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_create' book_pk=book.pk %}">{% trans "Add a specimen" %}</a></li>
+        <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_create' book_pk=book.pk %}">{% trans "Add a physical specimen" %}</a></li>
+		
+		<li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_digital_create' book_pk=book.pk %}">{% trans "Add a digital specimen" %}</a></li> <!-- add a specific button for digital specimen -->
+
         <li>{% fa 'trash' 'fa-fw' %} <a href="{% url 'library:book_delete' pk=book.pk %}">{% trans "Delete this book" %}</a></li>
         <li>{% fa 'pencil' 'fa-fw' %} <a href="{% url 'library:book_update' pk=book.pk %}">{% trans "Edit this book" %}</a></li>
     </ul>
@@ -30,8 +33,16 @@
         <h4>{% trans "Specimens" %}</h4>
         {% for specimen in book.specimens.all %}
             <li>{{ specimen.serial }} {% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_update' pk=specimen.pk %}">{% trans "Edit specimen" %}</a></li>
+		
         {% empty %}
-            {% trans "No specimen for this book." %}
+            {% trans "No physical specimen for this book." %}<br>
+        {% endfor %}
+
+		{% for specimen_digital in book.specimens_digital.all %}
+            <li>{{ specimen_digital.name }} {% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_digital_update' pk=specimen_digital.pk %}">{% trans "Edit specimen" %}</a></li>
+		
+        {% empty %}
+            {% trans "No digital specimen for this book." %}
         {% endfor %}
     </ul>
     {% endif %}

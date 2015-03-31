@@ -1,0 +1,16 @@
+{% extends 'form-fullpage.html' %}
+{% load i18n %}
+
+{% block heading %}
+    {% if specimen_digital %}
+        <h2>{% trans "Edit book specimen" %} "{{ specimen_digital }}"</h2>
+    {% else %}
+        <h2>{% trans "New book specimen" %}</h2>
+    {% endif %}
+{% endblock heading %}
+{% block col %}
+    <input type="submit" value="{% trans 'submit' %}" />
+    {% if specimen_digital %}
+        <a href="{% url 'library:specimen_digital_delete' pk=specimen_digital.pk %}">{% trans "Delete specimen" %}</a>
+    {% endif %}
+{% endblock col %}

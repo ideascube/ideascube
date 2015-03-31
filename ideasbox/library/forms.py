@@ -2,7 +2,7 @@ import re
 
 from django import forms
 
-from .models import Book, BookSpecimen
+from .models import Book, BookSpecimen, BookSpecimenDigital
 from .utils import fetch_from_openlibrary, load_from_moccam_csv, load_unimarc
 
 
@@ -13,6 +13,12 @@ class BookSpecimenForm(forms.ModelForm):
         widgets = {'book': forms.HiddenInput}
         fields = '__all__'
 
+class BookSpecimenDigitalForm(forms.ModelForm):
+#
+    class Meta:
+        model = BookSpecimenDigital
+        widgets = {'book': forms.HiddenInput}
+        fields = ['book','remarks']
 
 class BookForm(forms.ModelForm):
 

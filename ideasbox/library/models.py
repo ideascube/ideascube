@@ -18,17 +18,16 @@ class BookQuerySet(SearchableQuerySet, models.QuerySet):
 class Book(SearchMixin, TimeStampedModel):
 
     OTHER = 99
-
+    # We deleted the 'digital' category  
     SECTION_CHOICES = (
-        (1, _('digital')),
-        (2, _('children - cartoons')),
-        (3, _('children - novels')),
-        (4, _('children - documentary')),
-        (5, _('children - comics')),
-        (6, _('adults - novels')),
-        (7, _('adults - documentary')),
-        (8, _('adults - comics')),
-        (9, _('game')),
+        (1, _('children - cartoons')),
+        (2, _('children - novels')),
+        (3, _('children - documentary')),
+        (4, _('children - comics')),
+        (5, _('adults - novels')),
+        (6, _('adults - documentary')),
+        (7, _('adults - comics')),
+        (8, _('game')),
         (OTHER, _('other')),
     )
 
@@ -69,8 +68,22 @@ class Book(SearchMixin, TimeStampedModel):
 class BookSpecimen(TimeStampedModel):
 
     book = models.ForeignKey(Book, related_name='specimens')
-    serial = models.CharField(_('serial'), max_length=40, unique=True)
+    serial = models.CharField(_('serial'), max_length=40, null=True, blank=True, unique=True)
     remarks = models.TextField(_('remarks'), blank=True)
+
+    def __unicode__(self):
+        return u'Specimen {0} of "{1}"'.format(self.serial, self.book)
+
+    def get_absolute_url(self):
+        return reverse('library:book_detail', kwargs={'pk': self.book.pk})
+
+class BookSpecimenDigital(TimeStampedModel):
+
+    book = models.ForeignKey(Book, related_name='specimens_digital')
+    # We allow serial to be null, but when it is set it needs to be unique.
+    serial = models.CharField(_('serial'), max_length=40, null=True, blank=True, default='livre')
+    remarks = models.TextField(_('remarks'), blank=True)
+    name = 'Digital Version'
 
     def __unicode__(self):
         return u'Specimen {0} of "{1}"'.format(self.serial, self.book)
