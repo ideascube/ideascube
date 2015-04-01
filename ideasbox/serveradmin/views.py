@@ -85,7 +85,6 @@ def backup(request):
                     filename=backup.name
                 )
             elif 'do_restore' in request.POST:
-                Backup.create()  # Security backup.
                 backup.restore()
                 msg = _('Succesfully restored backup {filename}').format(
                     filename=backup.name

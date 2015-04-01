@@ -88,8 +88,8 @@ def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
     os.remove(proof_file)
 
 
-def test_restore_button_should_backup_and_restore(staffapp, monkeypatch,
-                                                  settings, backup):
+def test_restore_button_should_restore(staffapp, monkeypatch, settings,
+                                       backup):
     backups = os.listdir(DATA_ROOT)
     assert len(backups) == 1  # Only one backup exists.
     TEST_BACKUPED_ROOT = 'ideasbox/serveradmin/tests/backuped'
@@ -101,12 +101,6 @@ def test_restore_button_should_backup_and_restore(staffapp, monkeypatch,
     form.submit('do_restore')
     assert os.path.exists(dbpath)
     os.remove(dbpath)
-    backups = os.listdir(DATA_ROOT)
-    assert len(backups) == 2
-    # Remove the backup that has just been made.
-    for name in backups:
-        if name != backup.name:
-            os.remove(os.path.join(DATA_ROOT, name))
 
 
 def test_download_button_should_download_zip_file(staffapp, backup):
