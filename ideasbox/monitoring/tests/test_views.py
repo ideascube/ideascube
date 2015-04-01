@@ -34,6 +34,15 @@ def test_can_create_entries(module, staffapp):
     assert Entry.objects.count()
 
 
+def test_cannot_create_entries_with_duplicate_serials(staffapp):
+    UserFactory(serial='123456')
+    assert not Entry.objects.count()
+    form = staffapp.get(reverse('monitoring:entry')).forms['entry_form']
+    form['serials'] = '123456\n123456'
+    form.submit('entry_cinema').follow()
+    assert Entry.objects.count() == 1
+
+
 def test_can_create_entries_with_activity(staffapp):
     UserFactory(serial='123456')
     form = staffapp.get(reverse('monitoring:entry')).forms['entry_form']

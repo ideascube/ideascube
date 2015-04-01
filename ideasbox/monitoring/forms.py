@@ -30,7 +30,7 @@ class EntryForm(forms.Form):
 
     def clean_serials(self):
         serials = self.cleaned_data['serials']
-        return [s for s in serials.splitlines() if s]
+        return set([s for s in serials.splitlines() if s])
 
 
 class ExportEntryForm(forms.Form):
