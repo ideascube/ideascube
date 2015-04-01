@@ -14,7 +14,6 @@ class BookQuerySet(SearchableQuerySet, models.QuerySet):
         return self.filter(specimens__isnull=False).distinct()
 
 
-# Create your models here.
 class Book(SearchMixin, TimeStampedModel):
 
     OTHER = 99
@@ -23,9 +22,13 @@ class Book(SearchMixin, TimeStampedModel):
         (1, _('digital')),
         (2, _('children - cartoons')),
         (3, _('children - novels')),
+        (10, _('children - poetry')),
+        (11, _('children - theatre')),
         (4, _('children - documentary')),
         (5, _('children - comics')),
         (6, _('adults - novels')),
+        (12, _('adults - poetry')),
+        (13, _('adults - theatre')),
         (7, _('adults - documentary')),
         (8, _('adults - comics')),
         (9, _('game')),
