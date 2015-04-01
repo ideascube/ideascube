@@ -16,6 +16,8 @@ class Entry(TimeStampedModel):
         (DIGITAL, _('Multimedia')),
     )
     module = models.CharField(max_length=20, choices=MODULES)
+    activity = models.CharField(max_length=200, blank=True)
+    partner = models.CharField(max_length=200, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     class Meta:

@@ -1,6 +1,7 @@
 import re
 
 from django import forms
+from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from .models import Entry, InventorySpecimen, Specimen
@@ -13,6 +14,13 @@ class EntryForm(forms.Form):
             'rows': 4
         }))
     module = forms.CharField(widget=forms.HiddenInput, required=False)
+    activity = forms.CharField(required=False, widget=forms.TextInput(attrs={
+            'placeholder': _('Enter a activity name if missing on the list')}))
+    partner = forms.CharField(required=False, widget=forms.TextInput(attrs={
+            'placeholder': _('Partner involved in activity')}))
+    activity_list = forms.ChoiceField(
+        choices=[('', '------')] + settings.ENTRY_ACTIVITY_CHOICES,
+        required=False)
 
     def clean_module(self):
         for key, label in Entry.MODULES:

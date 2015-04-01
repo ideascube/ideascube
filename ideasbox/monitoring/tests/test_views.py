@@ -34,6 +34,15 @@ def test_can_create_entries(module, staffapp):
     assert Entry.objects.count()
 
 
+def test_can_create_entries_with_activity(staffapp):
+    UserFactory(serial='123456')
+    form = staffapp.get(reverse('monitoring:entry')).forms['entry_form']
+    form['serials'] = '123456'
+    form['activity'] = 'special activity'
+    form.submit('entry_cinema').follow()
+    Entry.objects.last().activity == 'special activity'
+
+
 def test_anonymous_should_not_access_export_entry_url(app):
     assert app.get(reverse('monitoring:export_entry'), status=302)
 
@@ -50,7 +59,7 @@ def test_export_entry_should_return_csv_with_entries(staffapp, settings):
     EntryFactory.create_batch(3)
     settings.MONITORING_ENTRY_EXPORT_FIELDS = []
     resp = staffapp.get(reverse('monitoring:export_entry'), status=200)
-    assert resp.content.startswith("module,date\r\ncinema,")
+    assert resp.content.startswith("module,date,activity,partner\r\ncinema,")
     assert resp.content.count("cinema") == 3
 
 

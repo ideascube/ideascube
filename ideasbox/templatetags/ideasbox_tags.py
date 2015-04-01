@@ -85,3 +85,16 @@ def field_verbose_name(model, name):
         return ''
     else:
         return field.verbose_name
+
+
+@register.filter()
+def field_value_display(obj, name):
+    try:
+        return getattr(obj, 'get_{0}_display'.format(name))()
+    except AttributeError:
+        return getattr(obj, name, None)
+
+
+@register.filter()
+def model(obj):
+    return obj.__class__

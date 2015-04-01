@@ -150,6 +150,9 @@ USER_FORM_FIELDS = (
     (_('Language skills'), ['ar_level', 'en_level']),
 )
 
+ENTRY_ACTIVITY_CHOICES = [
+]
+
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 

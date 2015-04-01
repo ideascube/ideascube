@@ -25,6 +25,11 @@ class EntryView(FormView):
     def form_valid(self, form):
         count = 0
         module = form.cleaned_data['module']
+        activity = form.cleaned_data['activity']
+        partner = form.cleaned_data['partner']
+        activity_select = form.cleaned_data['activity_list']
+        if not activity and activity_select:
+            activity = activity_select
         for serial in form.cleaned_data['serials']:
             try:
                 user = user_model.objects.get(serial=serial)
@@ -33,7 +38,8 @@ class EntryView(FormView):
                 msg = msg.format(serial=serial)
                 messages.add_message(self.request, messages.ERROR, msg)
             else:
-                Entry.objects.create(user=user, module=module)
+                Entry.objects.create(user=user, module=module,
+                                     activity=activity, partner=partner)
                 count += 1
         if count:
             msg = _('Created {count} entries')
@@ -46,8 +52,9 @@ class EntryView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(EntryView, self).get_context_data(**kwargs)
-        context['entries'] = Entry.objects.all()[:20]
+        context['entries'] = Entry.objects.all()[:50]
         context['export_form'] = ExportEntryForm()
+        context['MONITORING_ENTRY_EXPORT_FIELDS'] = settings.MONITORING_ENTRY_EXPORT_FIELDS  # noqa
         return context
 
 entry = staff_member_required(EntryView.as_view())
@@ -67,18 +74,19 @@ class ExportEntry(CSVExportMixin, View):
             return HttpResponseRedirect(reverse_lazy('monitoring:entry'))
 
     def get_headers(self):
-        self.fields = ['module', 'date']
+        self.fields = ['module', 'date', 'activity', 'partner']
         self.fields.extend(settings.MONITORING_ENTRY_EXPORT_FIELDS)
         return self.fields
 
     def get_items(self):
-        qs = Entry.objects.all()
+        qs = Entry.objects.order_by('created_at')
         if self.form.cleaned_data['since']:
             qs = qs.filter(created_at__gte=self.form.cleaned_data['since'])
         return qs
 
     def get_row(self, entry):
-        row = {'module': entry.module, 'date': entry.created_at}
+        row = {'module': entry.module, 'date': entry.created_at,
+               'activity': entry.activity, 'partner': entry.partner}
         for field in settings.MONITORING_ENTRY_EXPORT_FIELDS:
             row[field] = getattr(entry.user, field, None)
         return row

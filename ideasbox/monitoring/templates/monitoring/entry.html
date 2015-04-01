@@ -11,17 +11,37 @@
         {% csrf_token %}
         {{ form.errors }}
         {{ form.serials }}
+        <h5>{% trans 'Specific activity (optional)' %}</h5>
+        {{ form.activity_list }}
+        {{ form.activity }}
+        <h5>{% trans 'Partner (optional)' %}</h5>
+        {{ form.partner }}
         {{ form.module }}
         <input type="submit" name="entry_cinema" value="{% trans 'To the cinema module' %}" class="cinema" />
         <input type="submit" name="entry_library" value="{% trans 'To the library module' %}" class="library" />
         <input type="submit" name="entry_digital" value="{% trans 'To the digital module' %}" class="digital" />
     </form>
     <hr />
-    <ul class="entries">
+    <table>
+        <tr>
+            <th>{% trans "Module" %}</th>
+            <th>{% trans "Member" %}</th>
+            <th>{% trans "When" %}</th>
+            {% for field in MONITORING_ENTRY_EXPORT_FIELDS %}
+                <th>{{ user|model|field_verbose_name:field }}</th>
+            {% endfor %}
+        </tr>
         {% for entry in entries %}
-            <li><span class="{{ entry.module }} module">{{ entry.module }}</span> {{ entry.user }} {% blocktrans  with time=entry.created_at|timesince %}{{ time }} ago{% endblocktrans%}</li>
+        <tr>
+            <td><span class="{{ entry.module }} module">{{ entry.module }}</span></td>
+            <td>{{ entry.user }}</td>
+            <td>{% blocktrans  with time=entry.created_at|timesince %}{{ time }} ago{% endblocktrans%}</td>
+            {% for field in MONITORING_ENTRY_EXPORT_FIELDS %}
+                <td>{{ entry.user|field_value_display:field|default:'—' }}</td>
+            {% endfor %}
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% endblock twothird %}
 {% block third %}
     <div class="card tinted">
@@ -35,6 +55,8 @@
 {% block extra_foot %}
     <script type="text/javascript">
         IDB.focusOn('[name="serials"]');
-        IDB.initDatepicker('since')
+        IDB.initDatepicker('since');
+        IDB.stopEnterKey('activity');
+        IDB.stopEnterKey('partner');
     </script>
 {% endblock extra_foot %}
