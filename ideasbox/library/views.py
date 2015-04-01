@@ -18,6 +18,19 @@ class Index(ListView):
     queryset = Book.objects.available()
     template_name = 'library/index.html'
     paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs)
+        context['q'] = self.request.GET.get('q', '')
+        return context
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return self.model.objects.search(query)
+        else:
+            return super(Index, self).get_queryset()
+
 index = Index.as_view()
 
 
