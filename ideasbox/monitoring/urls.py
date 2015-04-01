@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^stock/item/new/$', views.stockitem_create, name='stockitem_create'),
     url(r'^stock/item/(?P<item_pk>[\d]+)/new-specimen/$', views.specimen_create, name='specimen_create'),  # noqa
     url(r'^stock/specimen/(?P<pk>[\d]+)/edit/$', views.specimen_update, name='specimen_update'),  # noqa
+    url(r'^stock/specimen/(?P<pk>[\d]+)/delete/$', views.specimen_delete, name='specimen_delete'),  # noqa
     url(r'^stock/inventory/specimen/add/(?P<inventory_pk>[\d]+)/(?P<specimen_pk>[\d]+)/$', views.inventoryspecimen_add, name='inventoryspecimen_add'),  # noqa
     url(r'^stock/inventory/specimen/increase/(?P<pk>[\d]+)/$', views.inventoryspecimen_increase, name='inventoryspecimen_increase'),  # noqa
     url(r'^stock/inventory/specimen/decrease/(?P<pk>[\d]+)/$', views.inventoryspecimen_decrease, name='inventoryspecimen_decrease'),  # noqa

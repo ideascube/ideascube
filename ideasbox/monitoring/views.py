@@ -218,6 +218,12 @@ class SpecimenCreate(CreateView):
 specimen_create = staff_member_required(SpecimenCreate.as_view())
 
 
+class SpecimenDelete(DeleteView):
+    model = Specimen
+    success_url = reverse_lazy('monitoring:stock')
+specimen_delete = staff_member_required(SpecimenDelete.as_view())
+
+
 class InventorySpecimenAdd(View):
 
     def get(self, request, *args, **kwargs):

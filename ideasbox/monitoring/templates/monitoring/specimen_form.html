@@ -12,6 +12,7 @@
     <input type="submit" value="{% trans 'submit' %}" />
     {% if specimen %}
         <a class="button" href="{{ specimen.get_absolute_url }}">{% trans 'cancel' %}</a>
+        <a class="button warning" href="{% url 'monitoring:specimen_delete' pk=specimen.pk %}">{% trans 'delete' %}</a>
     {% endif %}
 {% endblock col %}
 
