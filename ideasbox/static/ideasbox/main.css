@@ -689,6 +689,7 @@ html[dir='rtl'] .search input[type='submit'] {
 }
 .document-list .card img {
     float: none;
+    max-height: 150px;
 }
 .card.document img {
     float: right;
