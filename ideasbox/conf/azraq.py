@@ -3,7 +3,7 @@
 from .base import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
-IDEASBOX_NAME = u"الأزرق مخيم"
+IDEASBOX_NAME = u"مخيم الأزرق"
 COUNTRIES_FIRST = ['SY', 'JO']
 TIME_ZONE = 'Asia/Amman'
 LANGUAGE_CODE = 'ar'

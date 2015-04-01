@@ -58,8 +58,7 @@ class BookCreate(CreateView):
     model = Book
     form_class = BookForm
     initial = {
-        'lang': settings.LANGUAGE_CODE,
-        'location': settings.IDEASBOX_ID
+        'lang': settings.LANGUAGE_CODE
     }
 book_create = staff_member_required(BookCreate.as_view())
 
@@ -112,7 +111,7 @@ class SpecimenCreate(CreateView):
 
     def get_initial(self):
         book = get_object_or_404(Book, pk=self.kwargs['book_pk'])
-        return {'book': book}
+        return {'book': book, 'location': settings.IDEASBOX_NAME}
 
 specimen_create = staff_member_required(SpecimenCreate.as_view())
 

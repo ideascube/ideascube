@@ -45,7 +45,6 @@ class Book(SearchMixin, TimeStampedModel):
     publisher = models.CharField(_('publisher'), max_length=100, blank=True)
     section = models.PositiveSmallIntegerField(_('section'),
                                                choices=SECTION_CHOICES)
-    location = models.CharField(_('location'), max_length=300, blank=True)
     lang = models.CharField(_('Language'), max_length=10,
                             choices=settings.LANGUAGES)
     cover = models.ImageField(_('cover'), upload_to='library/cover',
@@ -73,6 +72,7 @@ class BookSpecimen(TimeStampedModel):
 
     book = models.ForeignKey(Book, related_name='specimens')
     serial = models.CharField(_('serial'), max_length=40, unique=True)
+    location = models.CharField(_('location'), max_length=300, blank=True)
     remarks = models.TextField(_('remarks'), blank=True)
 
     def __unicode__(self):
