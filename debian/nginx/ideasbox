@@ -2,6 +2,7 @@ server {
     listen   80;
     server_name ideasbox.lan www.ideasbox.lan ideasbox.local www.ideasbox.local;
     root /usr/share/python/ideasbox/local/lib/python2.7/site-packages/ideasbox/;
+    proxy_read_timeout 600s;
     location /static/ {
         alias /var/ideasbox/static/;
         expires 30d;

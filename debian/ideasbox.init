@@ -34,7 +34,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
-DAEMON_ARGS="ideasbox.wsgi:application -b $HOST:$PORT -w 4 -p $PIDFILE -D --name $NAME"
+DAEMON_ARGS="ideasbox.wsgi:application -b $HOST:$PORT -w 4 -t 600 -p $PIDFILE -D --name $NAME"
 
 #
 # Function that starts the daemon/service
