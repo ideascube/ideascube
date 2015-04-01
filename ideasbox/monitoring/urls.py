@@ -9,8 +9,7 @@ urlpatterns = [
     url(r'^stock/inventory/(?P<pk>[\d]+)/$', views.inventory, name='inventory'),  # noqa
     url(r'^stock/inventory/(?P<pk>[\d]+)/edit/$', views.inventory_update, name='inventory_update'),  # noqa
     url(r'^stock/inventory/(?P<pk>[\d]+)/export/$', views.inventory_export, name='inventory_export'),  # noqa
-    # url(r'^inventory/(?P<pk>[\d]+)/delete/$', views.inventory_delete,
-    #     name='inventory_delete'),
+    url(r'^inventory/(?P<pk>[\d]+)/delete/$', views.inventory_delete, name='inventory_delete'),  # noqa
     url(r'^stock/inventory/new/$', views.inventory_create, name='inventory_create'),  # noqa
     url(r'^stock/item/(?P<pk>[\d]+)/edit/$', views.stockitem_update, name='stockitem_update'),  # noqa
     url(r'^stock/item/new/$', views.stockitem_create, name='stockitem_create'),
