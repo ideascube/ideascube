@@ -1,5 +1,7 @@
 from django.views.generic import ListView
 
+from taggit.models import Tag
+
 
 class ByTagListView(ListView):
 
@@ -11,5 +13,5 @@ class ByTagListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ByTagListView, self).get_context_data(**kwargs)
-        context['tag'] = self.kwargs.get('tag')
+        context['tag'] = Tag.objects.get(slug=self.kwargs.get('tag'))
         return context
