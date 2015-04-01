@@ -1,10 +1,6 @@
 {% extends 'form-fullpage.html' %}
 {% load i18n ideasbox_tags %}
 
-{% block extra_head %}
-    {% include 'ideasbox/includes/form_statics.html' %}
-{% endblock extra_head %}
-
 {% block heading %}
     {% if user_obj %}
         <h2>{% trans "Edit user" %} {{ user_obj }}</h2>
@@ -33,5 +29,6 @@
         for (var i = 0; i < inputs.length; i++) {
             if (IDB.endswith(inputs[i].name, '_date')) IDB.initDatepicker(inputs[i].name);
         }
+        IDB.stopEnterKey('serial');
     </script>
 {% endblock extra_foot %}

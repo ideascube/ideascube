@@ -1,10 +1,6 @@
 {% extends 'form-fullpage.html' %}
 {% load i18n %}
 
-{% block extra_head %}
-    {% include 'ideasbox/includes/form_statics.html' %}
-{% endblock extra_head %}
-
 {% block heading %}
     {% if specimen %}
         <h2>{% blocktrans with item=specimen.item %}Edit specimen of {{item}}{% endblocktrans %}</h2>

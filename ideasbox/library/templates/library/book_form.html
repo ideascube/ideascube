@@ -14,3 +14,9 @@
         <a class="button" href="{{ book.get_absolute_url }}">{% trans 'cancel' %}</a>
     {% endif %}
 {% endblock col %}
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        IDB.stopEnterKey('isbn');
+    </script>
+{% endblock extra_foot %}

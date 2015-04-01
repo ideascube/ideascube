@@ -29,7 +29,7 @@
     <ul class="card tinted">
         <h4>{% trans "Specimens" %}</h4>
         {% for specimen in book.specimens.all %}
-            <li>{{ specimen.serial }} {% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_update' pk=specimen.pk %}">{% trans "Edit specimen" %}</a></li>
+            <li>{{ specimen.serial }} <a href="{% url 'library:specimen_update' pk=specimen.pk %}" title="{% trans 'Edit specimen' %}">{% fa 'pencil' 'fa-fw' %}</a></li>
         {% empty %}
             {% trans "No specimen for this book." %}
         {% endfor %}

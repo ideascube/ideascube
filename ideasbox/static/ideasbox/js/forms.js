@@ -245,3 +245,13 @@ IDB.focusOn = function (selector) {
 IDB.endswith = function (str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
 };
+
+
+IDB.stopEnterKey = function (name) {
+    var el = document.querySelector('[name="' + name + '"]');
+    if (!el) return;
+    var stop = function (e) {
+        if (e.keyCode === 13) e.preventDefault();
+    };
+    el.addEventListener('keydown', stop, false);
+};
