@@ -29,7 +29,7 @@ class Index(ListView):
         if query:
             return self.model.objects.search(query)
         else:
-            return super(Index, self).get_queryset()
+            return super(Index, self).get_queryset().order_by('-modified_at')
 
 index = Index.as_view()
 
