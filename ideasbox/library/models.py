@@ -66,7 +66,7 @@ class Book(SearchMixin, TimeStampedModel):
     @property
     def index_strings(self):
         return (self.title, self.isbn, self.authors, self.subtitle,
-                self.summary, self.serie)
+                self.summary, self.serie, u' '.join(self.tags.names()))
 
 
 class BookSpecimen(TimeStampedModel):

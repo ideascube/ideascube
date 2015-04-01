@@ -83,4 +83,5 @@ class Document(SearchMixin, TimeStampedModel):
 
     @property
     def index_strings(self):
-        return (self.title, self.summary, self.credits)
+        return (self.title, self.summary, self.credits,
+                u' '.join(self.tags.names()))

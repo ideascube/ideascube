@@ -35,3 +35,8 @@ def test_it_should_not_be_possible_to_have_twice_the_same_isbn():
     BookFactory(isbn='123456')
     with pytest.raises(IntegrityError):
         BookFactory(isbn='123456')
+
+
+def test_can_search_books_by_tags():
+    BookFactory(tags=['jordan', 'dead sea'])
+    assert Book.objects.search("jordan")
