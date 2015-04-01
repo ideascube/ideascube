@@ -284,7 +284,10 @@ def test_export_users_should_return_csv_with_users(staffapp, settings):
     user1 = UserFactory(short_name="user1", full_name="I'm user1")
     user2 = UserFactory(short_name="user2", full_name=u"I'm user2 with é")
     resp = staffapp.get(reverse('user_export'), status=200)
-    assert resp.content.startswith("created at,full name,modified at,serial,usual name")  # noqa
+    resp.mustcontain('created at')
+    resp.mustcontain('full name')
+    resp.mustcontain('serial')
+    resp.mustcontain('usual name')
     resp.mustcontain(user1.short_name)
     resp.mustcontain(user1.full_name)
     resp.mustcontain(user2.short_name)

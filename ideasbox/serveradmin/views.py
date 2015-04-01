@@ -65,9 +65,10 @@ def backup(request):
                 file_ = request.FILES['upload']
                 try:
                     backup = Backup.load(file_)
-                except:
-                    messages.add_message(request, messages.ERROR,
-                                         _('Unable to load file.'))
+                except Exception as e:
+                    msg = _('Unable to load file:')
+                    msg = "{msg} {error}".format(msg=msg, error=e.message)
+                    messages.add_message(request, messages.ERROR, msg)
                 else:
                     msg = _('File {name} has been loaded.').format(
                         name=backup.name)

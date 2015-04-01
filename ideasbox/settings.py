@@ -25,3 +25,6 @@ finally:
     for k in sub.__dict__:
         if k.isupper() and not k.startswith('__') or not k.endswith('__'):
             ldict[k] = sub.__dict__[k]
+    USER_DATA_FIELDS = []
+    for section, fields in USER_FORM_FIELDS:  # noqa
+        USER_DATA_FIELDS.extend(fields)

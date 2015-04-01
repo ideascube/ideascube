@@ -69,6 +69,14 @@ def do_getattr(obj, attr):
     return getattr(obj, attr, None)
 
 
+@register.filter(name='getitem')
+def do_getitem(obj, key):
+    try:
+        return obj[key]
+    except KeyError:
+        return None
+
+
 @register.filter()
 def field_verbose_name(model, name):
     try:

@@ -92,7 +92,7 @@ class Backup(object):
 
     @classmethod
     def load(cls, file_):
-        assert zipfile.is_zipfile(file_)
+        assert zipfile.is_zipfile(file_), _("Not a zip file")
         file_.seek(0)  # Reset cursor.
         backup = Backup(os.path.basename(file_.name))
         with open(backup.path, mode='wb') as f:

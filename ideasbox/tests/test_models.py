@@ -2,7 +2,7 @@ import pytest
 
 from django.contrib.auth import get_user_model
 
-from ..models import BurundiRefugeeUser
+from ..models import IDBUser
 from .factories import UserFactory
 
 pytestmark = pytest.mark.django_db
@@ -37,14 +37,14 @@ def test_client_login(client, user):
     assert client.login(serial=user.serial, password='password')
 
 
-def test_user_public_fields_should_return_labels_and_values():
-    user = BurundiRefugeeUser(
+def test_user_data_fields_should_return_labels_and_values():
+    user = IDBUser(
         short_name='my name',
-        school_level='primary'
+        ar_level=['u', 's']
     )
-    fields = user.public_fields
+    fields = user.data_fields
     assert 'is_staff' not in fields
     assert fields['short_name']['value'] == 'my name'
     assert fields['short_name']['label'] == 'usual name'
-    assert fields['school_level']['value'] == 'Primary'
-    assert fields['school_level']['label'] == 'School level'
+    assert fields['ar_level']['value'] == 'Understood, Spoken'
+    assert unicode(fields['ar_level']['label']) == 'Arabic knowledge'

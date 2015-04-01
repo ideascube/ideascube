@@ -8,9 +8,11 @@
                 <div class="col two-third">
                     {% block heading %}{% endblock heading %}
                     {% csrf_token %}
-                    {% for field in form %}
-                        {% form_field field %}
-                    {% endfor %}
+                    {% block form %}
+                        {% for field in form %}
+                            {% form_field field %}
+                        {% endfor %}
+                    {% endblock form %}
                 </div>
                 <div class="col third">
                     {% block col %}{% endblock col %}

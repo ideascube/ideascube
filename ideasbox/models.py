@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
@@ -47,7 +49,7 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
         return user
 
 
-class AbstractUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
+class IDBUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
     """
     Minimum definition of a user. Inherit at least from this model.
     """
@@ -71,7 +73,6 @@ class AbstractUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
     objects = UserManager()
 
     class Meta:
-        abstract = True
         ordering = ["-modified_at"]
 
     def __unicode__(self):
@@ -93,16 +94,16 @@ class AbstractUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
         return True
 
     @classmethod
-    def get_public_fields(cls):
-        exclude = ['last_login', 'password', 'id', 'is_staff']
-        fields = [f for f in cls._meta.fields if f.name not in exclude]
-        fields.sort(key=lambda x: x.verbose_name)
+    def get_data_fields(cls):
+        names = ['created_at']
+        names.extend(settings.USER_DATA_FIELDS)
+        fields = [cls._meta.get_field_by_name(name)[0] for name in names]
         return fields
 
     @property
-    def public_fields(self):
+    def data_fields(self):
         """Return user public fields labels and values."""
-        fields = self.get_public_fields()
+        fields = self.get_data_fields()
 
         def val(name):
             try:
@@ -110,8 +111,10 @@ class AbstractUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
             except AttributeError:
                 return getattr(self, name)
 
-        return {f.name: {'label': f.verbose_name, 'value': val(f.name)}
-                for f in fields}
+        out = OrderedDict()
+        for f in fields:
+            out[f.name] = {'label': f.verbose_name, 'value': val(f.name)}
+        return out
 
     @classproperty
     @classmethod
@@ -135,22 +138,38 @@ class AbstractUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
 
     index_public = False  # Searchable only by staff.
 
+    OCCUPATION_CHOICES = (
+        ('student', _('Student')),
+        ('teacher', _('Teacher')),
+        ('no_profession', _('Without profession')),
+        ('profit_profession', _('Profit profession')),
+        ('other', _('Other')),
+    )
 
-class DefaultUser(AbstractUser):
-    """
-    Just a non abstract version of the AbstractUser model. To be used mainly
-    for dev and tests.
-    """
-    pass
+    FAMILY_STATUS_CHOICES = (
+        ('with_family', _('Lives with family in the camp')),
+        ('no_family', _('Lives without family in the camp')),
+        ('without_family', _('Has family in the camp but lives without')),
+    )
 
+    CAMP_ACTIVITY_CHOICES = (
+        ('1', _('Comitees, representation groups')),
+        ('2', _('Music, dance, singing')),
+        ('3', _('Other cultural activities')),
+        ('4', _('Informatic workshops')),
+        ('5', _('Literacy working group')),
+        ('6', _('Talking group')),
+        ('7', _('Recreational')),
+        ('8', _('Volunteering')),
+        ('9', _('Psycosocial')),
+        ('10', _('Educational')),
+        ('11', _('Sport')),
+    )
 
-class ProfileMixin(models.Model):
-
-    # Should we use numeric indexes? Maybe using string make the data in the db
-    # more robust for backup/restore between different code versions.
     BOX_AWARENESS_CHOICES = (
         ('seen_box', _('Seen the Box')),
         ('partner', _('Has been informed by partner organization')),
+        ('other_org', _('Has been informed by other organization')),
         ('word_of_mouth', _('Word of mouth')),
         ('campaign', _('Poster campaign')),
         ('other', _('Other')),
@@ -160,7 +179,7 @@ class ProfileMixin(models.Model):
         ('primary', _('Primary')),
         ('secondary', _('Secondary')),
         ('professional', _('Professional')),
-        ('college', _('College')),
+        ('college', _('Higher education')),
     )
 
     MARITAL_STATUS_CHOICES = (
@@ -174,6 +193,9 @@ class ProfileMixin(models.Model):
         ('male', _('Male')),
         ('female', _('Female')),
     )
+
+    latin_name = models.CharField(_('Latin written name'),
+                                  max_length=200, blank=True)
 
     birth_year = models.PositiveSmallIntegerField(
         _('Birth year'), blank=True, null=True)
@@ -197,42 +219,11 @@ class ProfileMixin(models.Model):
         _('School level'), choices=SCHOOL_LEVEL_CHOICES, blank=True,
         max_length=32)
     marital_status = models.CharField(
-        _('Family status'), choices=MARITAL_STATUS_CHOICES, blank=True,
+        _('Marital situation'), choices=MARITAL_STATUS_CHOICES, blank=True,
         max_length=32)
     box_awareness = models.CharField(
         _('Ideas Box awareness'), choices=BOX_AWARENESS_CHOICES, blank=True,
         max_length=32)
-
-    class Meta:
-        abstract = True
-
-
-class RefugeeMixin(models.Model):
-
-    OCCUPATION_CHOICES = (
-        ('student', _('Student')),
-        ('teacher', _('Teacher')),
-        ('no_profession', _('Without profession')),
-        ('profit_profession', _('Profit profession')),
-        ('other', _('Other')),
-    )
-
-    FAMILY_STATUS_CHOICES = (
-        ('with_family', _('Lives with family in the camp')),
-        ('no_family', _('Lives without family in the camp')),
-        ('without_family', _('Has family in the camp but lives without')),
-    )
-
-    CAMP_ACTIVITY_CHOICES = (
-        ('1', _('Comitees, representation groups')),
-        ('2', _('Music, dance, singing')),
-        ('3', _('Other cultural activities')),
-        ('4', _('Informatic workshops')),
-        ('5', _('Literacy working group')),
-        ('6', _('Talking group')),
-        ('7', _('Children activities')),
-        ('8', _('Volunteering')),
-    )
 
     refugee_id = models.CharField(_('Refugee ID'), max_length=100, blank=True)
     camp_entry_date = models.DateField(_('Camp entry date'), blank=True,
@@ -248,89 +239,28 @@ class RefugeeMixin(models.Model):
         _('Family status'), choices=FAMILY_STATUS_CHOICES, blank=True,
         max_length=32)
     is_sent_to_school = models.BooleanField(
-        _('Sent to school (if under 18)'),
+        _('Sent to school in the country of origin (if under 18)'),
         default=False)
     camp_activities = CommaSeparatedCharField(
         _('Activities in the camp'),
         max_length=512,
         choices=CAMP_ACTIVITY_CHOICES,
         blank=True)
+    camp_address = models.CharField(_('Address in the camp'),
+                                    max_length=200, blank=True)
 
-    class Meta:
-        abstract = True
-
-
-class SwahiliLangMixin(object):
-    sw_level = CommaSeparatedCharField(
-        _('Swahili knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
-        blank=True, max_length=32)
-
-    class Meta:
-        abstract = True
-
-
-class FrenchLangMixin(object):
-    fr_level = CommaSeparatedCharField(
-        _('French knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
-        blank=True, max_length=32)
-
-    class Meta:
-        abstract = True
-
-
-class KirundiLangMixin(models.Model):
-    rn_level = CommaSeparatedCharField(
-        _('Kirundi knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
-        blank=True, max_length=32)
-
-    class Meta:
-        abstract = True
-
-
-class ArabicLangMixin(models.Model):
-    ar_level = CommaSeparatedCharField(
-        _('Arabic knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
-        blank=True, max_length=32)
-
-    class Meta:
-        abstract = True
-
-
-class EnglishLangMixin(models.Model):
     en_level = CommaSeparatedCharField(
-        _('English knowledge'), choices=AbstractUser.LANG_KNOWLEDGE_CHOICES,
+        _('English knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
-
-    class Meta:
-        abstract = True
-
-
-class BurundiRefugeeUser(AbstractUser, ProfileMixin, RefugeeMixin,
-                         SwahiliLangMixin, FrenchLangMixin, KirundiLangMixin):
-    """
-    User for UNHCR Boxes, in Burundi.
-    """
-    pass
-
-
-class BurundiMakambaUser(AbstractUser, ProfileMixin, SwahiliLangMixin,
-                         FrenchLangMixin, KirundiLangMixin):
-    """
-    User for Makamba Box, run by the PNUD, and not in a refugees camp.
-    """
-    pass
-
-
-class AzraqUser(AbstractUser, ProfileMixin, RefugeeMixin, ArabicLangMixin,
-                EnglishLangMixin):
-    """
-    User for Azraq camp box in Northen Jordan.
-    """
-    pass
-
-
-class MaediUser(AbstractUser, ProfileMixin, ArabicLangMixin, EnglishLangMixin):
-    """
-    User for MAEDI box in Lebanon.
-    """
-    pass
+    ar_level = CommaSeparatedCharField(
+        _('Arabic knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
+    rn_level = CommaSeparatedCharField(
+        _('Kirundi knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
+    fr_level = CommaSeparatedCharField(
+        _('French knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
+    sw_level = CommaSeparatedCharField(
+        _('Swahili knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)

@@ -130,7 +130,7 @@ BACKUPED_ROOT = os.path.join(STORAGE_ROOT, 'main')
 MEDIA_ROOT = os.path.join(BACKUPED_ROOT, 'media')
 STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')
 
-AUTH_USER_MODEL = 'ideasbox.DefaultUser'
+AUTH_USER_MODEL = 'ideasbox.IDBUser'
 IDEASBOX_NAME = 'debugbox'
 
 DOMAIN = 'ideasbox.lan'
@@ -139,11 +139,16 @@ KHANACADEMY_URL = 'http://khanacademy.{domain}'.format(domain=DOMAIN)
 
 # Fields to be used in the entry export. This export is supposed to be
 # anonymized, so no personal data like name.
-MONITORING_ENTRY_EXPORT_FIELDS = []
+MONITORING_ENTRY_EXPORT_FIELDS = ['birth_year', 'gender']
 
 USERS_LIST_EXTRA_FIELDS = ['serial']
 
 USER_INDEX_FIELDS = ['short_name', 'full_name', 'serial']
+
+USER_FORM_FIELDS = (
+    (_('Basic informations'), ['serial', 'short_name', 'full_name']),
+    (_('Language skills'), ['ar_level', 'en_level']),
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

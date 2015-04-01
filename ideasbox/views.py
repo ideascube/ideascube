@@ -83,7 +83,15 @@ class UserDetail(DetailView):
 user_detail = staff_member_required(UserDetail.as_view())
 
 
-class UserUpdate(UpdateView):
+class UserFormMixin(object):
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserFormMixin, self).get_context_data(*args, **kwargs)
+        context['USER_FORM_FIELDS'] = settings.USER_FORM_FIELDS
+        return context
+
+
+class UserUpdate(UserFormMixin, UpdateView):
     model = user_model
     template_name = 'ideasbox/user_form.html'
     context_object_name = 'user_obj'
@@ -91,7 +99,7 @@ class UserUpdate(UpdateView):
 user_update = staff_member_required(UserUpdate.as_view())
 
 
-class UserCreate(CreateView):
+class UserCreate(UserFormMixin, CreateView):
     model = user_model
     template_name = 'ideasbox/user_form.html'
     context_object_name = 'user_obj'
@@ -182,14 +190,14 @@ class UserExport(CSVExportMixin, View):
         return user_model.objects.all()
 
     def get_headers(self):
-        self.fields = user_model.get_public_fields()
+        self.fields = user_model.get_data_fields()
         return [unicode(f.verbose_name).encode('utf-8') for f in self.fields]
 
     def get_row(self, user):
-        public_fields = user.public_fields
+        data_fields = user.data_fields
         row = {}
         for field in self.fields:
-            value = public_fields[field.name]['value']
+            value = data_fields[field.name]['value']
             if value is None:
                 value = ''
             value = unicode(value).encode('utf-8')
