@@ -2,15 +2,16 @@
 {% load i18n %}
 
 {% block heading %}
-    {% if item %}
-        <h2>{% trans "Edit item" %} "{{ item }}"</h2>
+    {% if stockitem %}
+        <h2>{% trans "Edit item" %} "{{ stockitem }}"</h2>
     {% else %}
         <h2>{% trans "Add new item" %}</h2>
     {% endif %}
 {% endblock heading %}
 {% block col %}
     <input type="submit" value="{% trans 'submit' %}" />
-    {% if item %}
-        <a class="button" href="{{ item.get_absolute_url }}">{% trans 'cancel' %}</a>
+    {% if stockitem %}
+        <a class="button" href="{{ stockitem.get_absolute_url }}">{% trans 'cancel' %}</a>
+        <a class="button warning" href="{% url 'monitoring:stockitem_delete' pk=stockitem.pk %}">{% trans 'delete' %}</a>
     {% endif %}
 {% endblock col %}
