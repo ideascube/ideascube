@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -98,3 +100,26 @@ class InventorySpecimen(models.Model):
 
     class Meta:
         unique_together = ('inventory', 'specimen')
+
+
+class LoanQuerySet(models.QuerySet):
+
+    def ongoing(self):
+        return self.filter(due_date__lte=date.today())
+
+
+class Loan(TimeStampedModel):
+    specimen = models.ForeignKey(Specimen, unique=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans')
+    by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans_made')
+    due_date = models.DateField(_('Due date'), default=date.today)
+    comments = models.CharField(_('Comments'), blank=True, max_length=500)
+
+    objects = LoanQuerySet.as_manager()
+
+    @property
+    def due(self):
+        return self.due_date <= date.today()
+
+    class Meta:
+        ordering = ('-due_date', '-created_at')

@@ -5,7 +5,8 @@ from django.utils import translation
 
 from ideasbox.tests.factories import UserFactory
 
-from ..models import Entry, Inventory, InventorySpecimen, Specimen, StockItem
+from ..models import (Entry, Inventory, InventorySpecimen, Loan, Specimen,
+                      StockItem)
 from .factories import (EntryFactory, InventoryFactory, SpecimenFactory,
                         StockItemFactory)
 
@@ -295,3 +296,42 @@ def test_can_decrease_inventoryspeciment_by_click_on_decrease_link(staffapp):
     assert redirect.location.endswith(url)
     assert InventorySpecimen.objects.get(inventory=inventory,
                                          specimen=specimen).count == 1
+
+
+def test_can_loan(staffapp, user):
+    assert not Loan.objects.count()
+    specimen = SpecimenFactory()
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.barcode
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.count() == 1
+
+
+def test_cannot_loan_twice_same_item(staffapp, user):
+    assert not Loan.objects.count()
+    specimen = SpecimenFactory()
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.barcode
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.count() == 1
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.barcode
+    form['user'] = staffapp.user.serial
+    form.submit('do_loan')
+    assert Loan.objects.count() == 1
+
+
+def test_can_return_loan(staffapp, user):
+    specimen = SpecimenFactory()
+    Loan.objects.create(user=user, specimen=specimen,
+                        by=staffapp.user)
+    assert Loan.objects.count() == 1
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['return_form']
+    form['loan'] = specimen.barcode
+    form.submit('do_return')
+    assert not Loan.objects.count()

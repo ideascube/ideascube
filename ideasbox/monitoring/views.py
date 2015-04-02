@@ -10,9 +10,11 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   TemplateView, UpdateView, View)
 
 from ideasbox.views import CSVExportMixin
+
 from .forms import (EntryForm, ExportEntryForm, InventorySpecimenForm,
-                    SpecimenForm)
-from .models import Entry, Inventory, InventorySpecimen, Specimen, StockItem
+                    LoanForm, ReturnForm, SpecimenForm)
+from .models import (Entry, Inventory, InventorySpecimen, Loan, Specimen,
+                     StockItem)
 
 user_model = get_user_model()
 
@@ -306,3 +308,47 @@ class InventorySpecimenDecrease(View):
         return HttpResponseRedirect(url)
 inventoryspecimen_decrease = staff_member_required(
     InventorySpecimenDecrease.as_view())
+
+
+class ItemLoan(TemplateView):
+    template_name = 'monitoring/loan.html'
+
+    def get_context_data(self, **kwargs):
+        defaults = {
+            'loan_form': LoanForm,
+            'return_form': ReturnForm,
+            'loans': Loan.objects.all()
+        }
+        defaults.update(kwargs)
+        return super(ItemLoan, self).get_context_data(**defaults)
+
+    def post(self, request, *args, **kwargs):
+        context = {}
+        if 'do_loan' in request.POST:
+            loan_form = LoanForm(data=request.POST)
+            if loan_form.is_valid():
+                specimen = loan_form.cleaned_data['specimen']
+                user = loan_form.cleaned_data['user']
+                Loan.objects.create(
+                    specimen=specimen,
+                    user=user,
+                    comments=loan_form.cleaned_data['comments'],
+                    due_date=loan_form.cleaned_data['due_date'],
+                    by=request.user)
+                msg = _('Item {item} has been loaned to {user}')
+                msg = msg.format(item=specimen.item, user=user)
+                messages.add_message(self.request, messages.SUCCESS, msg)
+            else:
+                context['loan_form'] = loan_form
+        elif 'do_return' in request.POST:
+            return_form = ReturnForm(data=request.POST)
+            if return_form.is_valid():
+                loan = return_form.cleaned_data['loan']
+                loan.delete()
+                msg = _('Item {item} has been returned')
+                msg = msg.format(item=loan.specimen.item)
+                messages.add_message(self.request, messages.SUCCESS, msg)
+            else:
+                context['return_form'] = return_form
+        return self.render_to_response(self.get_context_data(**context))
+loan = staff_member_required(ItemLoan.as_view())
