@@ -23,8 +23,11 @@
     {% if user.is_staff %}
     <ul class="card tinted admin">
         <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_create' book_pk=book.pk %}">{% trans "Add a physical specimen" %}</a></li>
-		
-		<li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_digital_create' book_pk=book.pk %}">{% trans "Add a digital specimen" %}</a></li> <!-- add a specific button for digital specimen -->
+		{% for specimen_digital in book.specimens_digital.all %}
+
+			{% empty %} 
+				<li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_digital_create' book_pk=book.pk %}">{% trans "Add a digital specimen" %}</a></li> <!-- add a specific button for digital specimen if there is no digital specimen -->
+		{% endfor %}
 
         <li>{% fa 'trash' 'fa-fw' %} <a href="{% url 'library:book_delete' pk=book.pk %}">{% trans "Delete this book" %}</a></li>
         <li>{% fa 'pencil' 'fa-fw' %} <a href="{% url 'library:book_update' pk=book.pk %}">{% trans "Edit this book" %}</a></li>

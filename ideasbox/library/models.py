@@ -80,13 +80,11 @@ class BookSpecimen(TimeStampedModel):
 class BookSpecimenDigital(TimeStampedModel):
 
     book = models.ForeignKey(Book, related_name='specimens_digital')
-    # We allow serial to be null, but when it is set it needs to be unique.
-    serial = models.CharField(_('serial'), max_length=40, null=True, blank=True, default='livre')
     remarks = models.TextField(_('remarks'), blank=True)
     name = 'Digital Version'
 
     def __unicode__(self):
-        return u'Specimen {0} of "{1}"'.format(self.serial, self.book)
+        return u'Specimen {0} of "{1}"'.format(self.name, self.book)
 
     def get_absolute_url(self):
         return reverse('library:book_detail', kwargs={'pk': self.book.pk})
