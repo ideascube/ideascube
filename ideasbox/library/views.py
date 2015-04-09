@@ -117,7 +117,7 @@ class SpecimenDelete(DeleteView):
 
 specimen_delete = staff_member_required(SpecimenDelete.as_view())
 
-#
+# New views associated with the digital specimen model
 class SpecimenDigitalCreate(CreateView):
     model = BookSpecimenDigital
     form_class = BookSpecimenDigitalForm

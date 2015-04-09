@@ -14,11 +14,11 @@ class BookSpecimenForm(forms.ModelForm):
         fields = '__all__'
 
 class BookSpecimenDigitalForm(forms.ModelForm):
-#
+
     class Meta:
         model = BookSpecimenDigital
         widgets = {'book': forms.HiddenInput}
-        fields = ['book','remarks']
+        fields = ['book','remarks'] # Only displays the needed fields
 
 class BookForm(forms.ModelForm):
 

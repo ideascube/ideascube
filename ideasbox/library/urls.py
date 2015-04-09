@@ -16,11 +16,11 @@ urlpatterns = [
         name='specimen_update'),
     url(r'^specimen/(?P<pk>[\d]+)/delete/$', views.specimen_delete,
         name='specimen_delete'),
-    url(r'^book/(?P<book_pk>[\d]+)/new-digital-specimen/$', views.specimen_digital_create, #
+    url(r'^book/(?P<book_pk>[\d]+)/new-digital-specimen/$', views.specimen_digital_create, # URL associated with the SpecimenDigitalCreate view
         name='specimen_digital_create'), 
-    url(r'^specimen_digital/(?P<pk>[\d]+)/edit/$', views.specimen_digital_update, #
+    url(r'^specimen_digital/(?P<pk>[\d]+)/edit/$', views.specimen_digital_update, # URL associated with the SpecimenDigitalUpdate view
         name='specimen_digital_update'),
-    url(r'^specimen_digital/(?P<pk>[\d]+)/delete/$', views.specimen_digital_delete, #
+    url(r'^specimen_digital/(?P<pk>[\d]+)/delete/$', views.specimen_digital_delete, # URL associated with the SpecimenDigitalDelete view
         name='specimen_digital_delete'),
     url(r'^import/$', views.book_import, name='book_import'),
 ]

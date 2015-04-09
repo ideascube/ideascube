@@ -35,7 +35,7 @@
     <ul class="card tinted">
         <h4>{% trans "Specimens" %}</h4>
         {% for specimen in book.specimens.all %}
-            <li>{{ specimen.serial }} {% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_update' pk=specimen.pk %}">{% trans "Edit specimen" %}</a></li>
+            <li>{{ specimen.serial }} {% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_update' pk=specimen.pk %}">{% trans "Edit specimen" %}</a></li> <!-- add a specific button for editing digital specimen  -->
 		
         {% empty %}
             {% trans "No physical specimen for this book." %}<br>
@@ -45,7 +45,7 @@
             <li>{{ specimen_digital.name }} {% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_digital_update' pk=specimen_digital.pk %}">{% trans "Edit specimen" %}</a></li>
 		
         {% empty %}
-            {% trans "No digital specimen for this book." %}
+            {% trans "No digital specimen for this book." %} <!-- add a specific statement when no digital specimen exists -->
         {% endfor %}
     </ul>
     {% endif %}

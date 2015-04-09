@@ -78,10 +78,10 @@ class BookSpecimen(TimeStampedModel):
         return reverse('library:book_detail', kwargs={'pk': self.book.pk})
 
 class BookSpecimenDigital(TimeStampedModel):
-
+#This creates the digital specimen field in the data base 
     book = models.ForeignKey(Book, related_name='specimens_digital')
     remarks = models.TextField(_('remarks'), blank=True)
-    name = 'Digital Version'
+    name = 'Digital Version' # There is no more "serial" field but a "name" field instead
 
     def __unicode__(self):
         return u'Specimen {0} of "{1}"'.format(self.name, self.book)
