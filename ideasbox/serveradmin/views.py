@@ -31,8 +31,9 @@ def services(request):
             service['action'] = service_action
         else:
             service['action'] = 'status'
-        if service['action'] in service:
-            status = service[service['action']](service)
+        caller = 'call_{action}'.format(**service)
+        if caller in service:
+            status = service[caller](service)
         else:
             status = call_service(service)
         service['error'] = status.get('error')
