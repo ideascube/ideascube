@@ -20,6 +20,7 @@ user_model = get_user_model()
 
 
 class EntryView(FormView):
+    fields = '__all__'
     template_name = 'monitoring/entry.html'
     form_class = EntryForm
     success_url = reverse_lazy('monitoring:entry')
@@ -137,11 +138,13 @@ inventory = staff_member_required(InventoryDetail.as_view())
 
 class InventoryUpdate(UpdateView):
     model = Inventory
+    fields = '__all__'
 inventory_update = staff_member_required(InventoryUpdate.as_view())
 
 
 class InventoryCreate(CreateView):
     model = Inventory
+    fields = '__all__'
 inventory_create = staff_member_required(InventoryCreate.as_view())
 
 
@@ -190,11 +193,13 @@ inventory_export = staff_member_required(InventoryExport.as_view())
 
 class StockItemUpdate(UpdateView):
     model = StockItem
+    fields = '__all__'
 stockitem_update = staff_member_required(StockItemUpdate.as_view())
 
 
 class StockItemCreate(CreateView):
     model = StockItem
+    fields = '__all__'
 stockitem_create = staff_member_required(StockItemCreate.as_view())
 
 
@@ -244,6 +249,7 @@ inventoryspecimen_add = staff_member_required(
 
 class InventorySpecimenByBarCode(FormView):
     form_class = InventorySpecimenForm
+    fields = '__all__'
 
     def redirect(self, form):
         url = reverse_lazy('monitoring:inventory',
