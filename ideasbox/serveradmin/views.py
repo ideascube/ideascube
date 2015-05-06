@@ -31,7 +31,9 @@ def services(request):
             service['action'] = service_action
         else:
             service['action'] = 'status'
-        caller = 'call_{action}'.format(**service)
+        # The way to run the action may be overrided in the service definition
+        # in the settings.
+        caller = '{action}_caller'.format(**service)
         if caller in service:
             status = service[caller](service)
         else:
