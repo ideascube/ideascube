@@ -3,6 +3,7 @@ import zipfile
 
 import pytest
 from webtest.forms import Upload
+from mock import MagicMock
 
 from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
@@ -46,6 +47,13 @@ def test_staff_user_should_access_services(monkeypatch, staffapp):
 
     monkeypatch.setattr("subprocess.Popen", Mock)
     assert staffapp.get(reverse("server:services"), status=200)
+
+
+def test_should_override_service_action_caller(staffapp, settings):
+    spy = MagicMock()
+    settings.SERVICES = [{'name': 'xxxx', 'status_caller': spy}]
+    assert staffapp.get(reverse("server:services"), status=200)
+    assert spy.called
 
 
 def test_staff_user_should_access_power_admin(staffapp):
