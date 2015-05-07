@@ -1,4 +1,4 @@
-batinfo==0.2
+batinfo==0.3
 Django==1.8
 django-countries==3.2
 django-select-multiple-field==0.4.0
