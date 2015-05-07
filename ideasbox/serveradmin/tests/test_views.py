@@ -18,6 +18,7 @@ pytestmark = pytest.mark.django_db
     ("services"),
     ("power"),
     ("backup"),
+    ("battery"),
 ])
 def test_anonymous_user_should_not_access_server(app, page):
     response = app.get(reverse("server:" + page), status=302)
@@ -28,6 +29,7 @@ def test_anonymous_user_should_not_access_server(app, page):
     ("services"),
     ("power"),
     ("backup"),
+    ("battery"),
 ])
 def test_normals_user_should_not_access_server(loggedapp, page):
     response = loggedapp.get(reverse("server:" + page), status=302)
@@ -173,3 +175,18 @@ def test_upload_button_do_not_create_backup_with_bad_file_name(staffapp,
         resp = form.submit('do_upload')
         assert resp.status_code == 200
         assert not os.path.exists(backup_path)
+
+
+def test_staff_user_should_access_battery_management(monkeypatch, staffapp):
+    class Mock(object):
+        def __init__(self, *args, **kwargs):
+            self.returncode = 0
+
+        def communicate(self):
+            return "", ""
+
+        def wait(self):
+            pass
+
+    monkeypatch.setattr("subprocess.Popen", Mock)
+    assert staffapp.get(reverse("server:battery"), status=200)

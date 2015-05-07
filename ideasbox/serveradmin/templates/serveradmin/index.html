@@ -9,6 +9,7 @@
             <li>{% fa 'cogs' 'fa-fw' %} <a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
             <li>{% fa 'power-off' 'fa-fw' %} <a href="{% url 'server:power' %}">{% trans "Restart server" %}</a></li>
             <li>{% fa 'life-ring' 'fa-fw' %} <a href="{% url 'server:backup' %}">{% trans "Manage backups" %}</a></li>
+            <li>{% fa 'plug' 'fa-fw' %} <a href="{% url 'server:battery' %}">{% trans "Monitor battery" %}</a></li>
         </ul>
     </div>
 {% endblock third %}
