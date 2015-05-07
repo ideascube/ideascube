@@ -5,8 +5,8 @@
 <h2>{% trans "Battery monitoring" %}</h2>
 <ul>
 {% for battery in batteries.stat %}
-	<li>Status: {{ battery.status }}</li>
-	<li>Capacity: {{ battery.capacity }}%</li>
+	<li><strong>{% trans 'Status' %}</strong> {{ battery.status }}</li>
+	<li><strong>{% trans 'Capacity' %}</strong> {{ battery.capacity }}%</li>
 </ul>
 {% endfor %}
 {% endblock twothird %}

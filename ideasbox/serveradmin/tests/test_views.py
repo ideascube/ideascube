@@ -14,6 +14,17 @@ from .test_backup import BACKUPS_ROOT, DATA_ROOT
 pytestmark = pytest.mark.django_db
 
 
+class FakePopen(object):
+    def __init__(self, *args, **kwargs):
+        self.returncode = 0
+
+    def communicate(self):
+        return "", ""
+
+    def wait(self):
+        pass
+
+
 @pytest.mark.parametrize("page", [
     ("services"),
     ("power"),
@@ -37,17 +48,7 @@ def test_normals_user_should_not_access_server(loggedapp, page):
 
 
 def test_staff_user_should_access_services(monkeypatch, staffapp):
-    class Mock(object):
-        def __init__(self, *args, **kwargs):
-            self.returncode = 0
-
-        def communicate(self):
-            return "", ""
-
-        def wait(self):
-            pass
-
-    monkeypatch.setattr("subprocess.Popen", Mock)
+    monkeypatch.setattr("subprocess.Popen", FakePopen)
     assert staffapp.get(reverse("server:services"), status=200)
 
 
@@ -178,15 +179,5 @@ def test_upload_button_do_not_create_backup_with_bad_file_name(staffapp,
 
 
 def test_staff_user_should_access_battery_management(monkeypatch, staffapp):
-    class Mock(object):
-        def __init__(self, *args, **kwargs):
-            self.returncode = 0
-
-        def communicate(self):
-            return "", ""
-
-        def wait(self):
-            pass
-
-    monkeypatch.setattr("subprocess.Popen", Mock)
+    monkeypatch.setattr("subprocess.Popen", FakePopen)
     assert staffapp.get(reverse("server:battery"), status=200)

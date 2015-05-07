@@ -1,12 +1,10 @@
 import os
 import shutil
 import zipfile
-
 from datetime import datetime
 
 from django.conf import settings
 from django.utils.translation import ugettext as _
-
 
 from ideasbox import __version__
 
