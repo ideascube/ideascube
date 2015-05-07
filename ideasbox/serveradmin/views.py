@@ -1,5 +1,7 @@
 from subprocess import call
 
+import batinfo
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -103,3 +105,9 @@ def backup(request):
         'backups': Backup.list()
     }
     return render(request, 'serveradmin/backup.html', context)
+
+
+@staff_member_required
+def battery(request):
+    return render(request, 'serveradmin/battery.html',
+                  {'batteries': batinfo.batteries()})

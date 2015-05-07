@@ -1,0 +1,12 @@
+{% extends 'serveradmin/index.html' %}
+{% load i18n %}
+
+{% block twothird %}
+<h2>{% trans "Battery monitoring" %}</h2>
+<ul>
+{% for battery in batteries.stat %}
+	<li>Status: {{ battery.status }}</li>
+	<li>Capacity: {{ battery.capacity }}%</li>
+</ul>
+{% endfor %}
+{% endblock twothird %}
