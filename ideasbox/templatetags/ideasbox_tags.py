@@ -98,3 +98,8 @@ def field_value_display(obj, name):
 @register.filter()
 def model(obj):
     return obj.__class__
+
+
+@register.filter(name='min')
+def do_min(left, right):
+    return min(left, right)

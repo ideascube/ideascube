@@ -5,7 +5,7 @@ from ideasbox.library.tests.factories import BookFactory
 from ideasbox.blog.models import Content
 from ideasbox.library.models import Book
 
-from ..templatetags.ideasbox_tags import theme_slug, remove_i18n, tag_cloud, fa
+from ..templatetags.ideasbox_tags import theme_slug, remove_i18n, tag_cloud, fa, do_min
 
 pytestmark = pytest.mark.django_db
 
@@ -58,3 +58,12 @@ def test_tag_cloud_should_be_filtered_by_model_if_given():
     assert [t.name for t in context['tags']] == ['boat', 'plane']
     context = tag_cloud('xxxx', limit=2, model=Book)
     assert [t.name for t in context['tags']] == ['bike', 'boat']
+
+
+@pytest.mark.parametrize('left,right,expected', [
+    [0, 100, 0],
+    [27, 22, 22],
+])
+def test_do_min(left, right, expected):
+    assert do_min(left, right) == expected
+    assert do_min(right, left) == expected
