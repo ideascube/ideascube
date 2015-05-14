@@ -113,6 +113,12 @@ class SpecimenCreate(CreateView):
         book = get_object_or_404(Book, pk=self.kwargs['book_pk'])
         return {'book': book, 'location': settings.IDEASBOX_NAME}
 
+    #def create(request):
+    #    if (request.method == 'POST'):
+    #        form = StatementForm(request.POST)
+            
+                
+
 specimen_create = staff_member_required(SpecimenCreate.as_view())
 
 

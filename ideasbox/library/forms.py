@@ -12,7 +12,10 @@ class BookSpecimenForm(forms.ModelForm):
         model = BookSpecimen
         widgets = {'book': forms.HiddenInput}
         fields = '__all__'
-
+    
+    #def is_valid():
+    #valid = super(BookSpecimenForm, )
+    #    if form
 
 class BookForm(forms.ModelForm):
 
