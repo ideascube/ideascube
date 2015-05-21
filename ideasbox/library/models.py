@@ -71,13 +71,13 @@ class Book(SearchMixin, TimeStampedModel):
 class BookSpecimen(TimeStampedModel):
 
     book = models.ForeignKey(Book, related_name='specimens')
-    serial = models.CharField(_('serial'), max_length=40, unique=True, null=True)
+    serial = models.CharField(_('serial'), max_length=40, unique=True, blank=True)
     location = models.CharField(_('location'), max_length=300, blank=True)
     remarks = models.TextField(_('remarks'), blank=True)
-    sp_file = models.FileField(_('file'), upload_to='library/file', blank=True)
+    spfile = models.FileField(_('file'), upload_to='library/file', blank=True)
 
     def is_digital(self):
-        return (u'{0}'.format(self.sp_file) != '')
+        return (u'{0}'.format(self.spfile) != '')
 # if the file property has not been set yet it will return 'False' that is to say digital specimen must have the file set
 
 

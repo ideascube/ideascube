@@ -4,18 +4,24 @@ from django import forms
 
 from .models import Book, BookSpecimen
 from .utils import fetch_from_openlibrary, load_from_moccam_csv, load_unimarc
+from  django.core.exceptions import ValidationError
 
 
 class BookSpecimenForm(forms.ModelForm):
+    
+    def clean_spfile(self):
+        # Does not allow to enter a file and a serial
+        if (self.cleaned_data['spfile']!=None)and(self.cleaned_data.get('serial')!=''):
+            raise ValidationError('You entered a file and a serial')
+        if (self.cleaned_data['spfile']==None)and(self.cleaned_data.get('serial')==''):
+            raise ValidationError('You must enter a file or a serial')
+        return self.cleaned_data['spfile']
 
     class Meta:
         model = BookSpecimen
         widgets = {'book': forms.HiddenInput}
         fields = '__all__'
     
-    #def is_valid():
-    #valid = super(BookSpecimenForm, )
-    #    if form
 
 class BookForm(forms.ModelForm):
 
