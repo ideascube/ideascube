@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('library', '0005_auto_20150521_1134'),
+        ('ideasbox', '0003_auto_20150527_1748'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='bookspecimen',
-            name='serial',
-            field=models.CharField(unique=True, max_length=40, verbose_name='serial', blank=True),
+            model_name='idbuser',
+            name='last_login',
+            field=models.DateTimeField(null=True, verbose_name='last login', blank=True),
         ),
     ]

@@ -286,3 +286,41 @@ def test_can_update_book_tags(staffapp, book):
     other = Book.objects.get(pk=book.pk)
     assert other.tags.count() == 2
     assert other.tags.first().name == 'tag1'
+
+    
+def test_cannot_create_digital_specimen_when_serial_and_file_not_set(staffapp, book):
+    url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
+    form = staffapp.get(url).forms['model_form']
+    assert not book.specimens.count()
+    form.submit()
+    assert not book.specimens.count()
+
+
+def test_cannot_create_digital_specimen_when_serial_and_file_both_set(staffapp, book):
+    url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
+    form = staffapp.get(url).forms['model_form']
+    assert not book.specimens.count()
+    form['serial'] = '123456'
+    form['specimenfile'] = Upload('ideasbox/library/tests/data/test-digital')
+    form.submit()
+    assert not book.specimens.count()
+
+
+def test_when_only_file_is_set_specimen_is_created_as_digital(staffapp, book):
+    url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
+    form = staffapp.get(url).forms['model_form']
+    assert not book.specimens.count()
+    form['specimenfile'] = Upload('ideasbox/library/tests/data/test-digital')
+    form.submit()
+    assert book.specimens.count()
+    assert BookSpecimen.objects.last().digital
+
+
+def test_when_only_serial_is_set_specimen_is_created_as_not_digital(staffapp, book):
+    url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
+    form = staffapp.get(url).forms['model_form']
+    assert not book.specimens.count()
+    form['serial'] = '123456'
+    form.submit()
+    assert book.specimens.count()
+    assert not BookSpecimen.objects.last().digital

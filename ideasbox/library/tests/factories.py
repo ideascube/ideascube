@@ -29,3 +29,13 @@ class BookSpecimenFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = BookSpecimen
+
+class BookDigitalSpecimenFactory(factory.django.DjangoModelFactory):
+
+    book = factory.SubFactory(BookFactory)
+    digital = True
+    specimenfile = 'ideasbox/library/tests/data/test-digital'
+    
+    class Meta:
+        model = BookSpecimen
+    

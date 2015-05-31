@@ -4,7 +4,8 @@ from django import forms
 
 from .models import Book, BookSpecimen
 from .utils import fetch_from_openlibrary, load_from_moccam_csv, load_unimarc
-from  django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 
 class BookSpecimenForm(forms.ModelForm):
@@ -22,15 +23,17 @@ class BookSpecimenForm(forms.ModelForm):
 	"""
         if ((self.cleaned_data['specimenfile'] != None)
             and (self.cleaned_data['serial'] != None)):
-            raise ValidationError('You entered a file and a serial')
+            raise ValidationError(_('You entered a file and a serial'))
         if ((self.cleaned_data['specimenfile'] == None)
             and (self.cleaned_data['serial'] == None)):
-            raise ValidationError('You must enter a file or a serial')
+            raise ValidationError(_('You must enter a file or a serial'))
         return self.cleaned_data['specimenfile']
 
     def clean_digital(self):
 	"""Affects the value of specimen.digital automatically"""
-        return (self.cleaned_data['specimenfile'] != None)
+        if (self.cleaned_data['serial'] == None):
+            return True
+        return False
 
     class Meta:
         model = BookSpecimen
