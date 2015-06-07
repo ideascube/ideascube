@@ -59,7 +59,7 @@ def test_logged_users_are_logged_out_after_a_given_time(client, user):
 
     cookies = dict(client.cookies.items())
     sessionid = cookies['sessionid']
-    # One our currently defined by SESSION_COOKIE_AGE in conf/base.py
+    # One hour currently defined by SESSION_COOKIE_AGE in conf/base.py
     assert dict(sessionid.items()).get('max-age') == 3600
 
 
