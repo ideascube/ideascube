@@ -1,3 +1,5 @@
+import datetime
+
 import pytest
 
 from ..models import Content
@@ -7,6 +9,13 @@ from .factories import ContentFactory
 @pytest.fixture()
 def published():
     return ContentFactory(status=Content.PUBLISHED)
+
+
+@pytest.fixture()
+def published_in_the_future():
+    publication_date = datetime.datetime.utcnow() + datetime.timedelta(days=10)
+    return ContentFactory(status=Content.PUBLISHED,
+                          published_at=publication_date)
 
 
 @pytest.fixture()
