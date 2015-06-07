@@ -13,7 +13,7 @@ class ContentFactory(factory.django.DjangoModelFactory):
     text = "This is a test subtitle"
     author = factory.SubFactory(UserFactory)
     published_at = factory.LazyAttribute(
-        lambda o: datetime.datetime.utcnow()-datetime.timedelta(hours=1))
+        lambda o: datetime.datetime.utcnow() - datetime.timedelta(hours=1))
     image = factory.django.ImageField()
 
     @factory.post_generation
