@@ -2,10 +2,10 @@
 """Django settings for ideasbox project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/1.7/topics/settings/
+https://docs.djangoproject.com/en/1.8/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.7/ref/settings/
+https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import os
@@ -177,3 +177,6 @@ SERVICES = [
     {'name': 'ssh',
         'description': _('Daemon used for distant connexion to server')},
 ]
+
+
+SESSION_COOKIE_AGE = 60*60 # Members must be logged out after one hour
