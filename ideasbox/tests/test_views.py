@@ -51,6 +51,18 @@ def test_login_page_should_log_in_user_if_POST_data_is_correct(client, user):
     assert response.context['user'].is_authenticated()
 
 
+def test_logged_users_are_logged_out_after_a_given_time(client, user):
+    client.post(reverse('login'), {
+        'username': user.serial,
+        'password': 'password'
+    }, follow=True)
+
+    cookies = dict(client.cookies.items())
+    sessionid = cookies['sessionid']
+    # One our currently defined by SESSION_COOKIE_AGE in conf/base.py
+    assert dict(sessionid.items()).get('max-age') == 3600
+
+
 def test_login_page_should_not_log_in_user_with_incorrect_POST(client, user):
     response = client.post(reverse('login'), {
         'username': user.serial,
