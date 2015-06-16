@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
-"""Mapmoon box in Australia"""
+"""Mapoon box in Australia"""
 from .base import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
 IDEASBOX_NAME = u"Mapoon"
 COUNTRIES_FIRST = ['AU']
 TIME_ZONE = 'Australia/Darwin'
-LANGUAGE_CODE = 'en'
-MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'refugee_id', 'birth_year',
+LANGUAGE_CODE = ['en','aus']
+MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'user_id', 'birth_year',
                                   'gender']
 USER_FORM_FIELDS = (
     ('Ideasbox', ['serial', 'box_awareness']),
     (_('Personal informations'), ['refugee_id', 'short_name', 'full_name', 'latin_name', 'birth_year', 'gender']),  # noqa
     (_('Family'), ['marital_status', 'family_status', 'children_under_12', 'children_under_18', 'children_above_18']),  # noqa
-    (_('In the camp'), ['camp_entry_date', 'camp_activities', 'current_occupation', 'camp_address']),  # noqa
+    (_('In the town'), ['activities', 'current_occupation', 'address']),  # noqa
     (_('Origin'), ['country', 'city', 'country_of_origin_occupation', 'school_level', 'is_sent_to_school']),  # noqa
-    (_('Language skills'), ['ar_level', 'en_level']),
+    (_('Language skills'), ['aus_level', 'en_level']),
     (_('National residents'), ['id_card_number']),
 )
 
