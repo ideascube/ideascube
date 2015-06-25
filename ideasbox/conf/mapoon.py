@@ -6,45 +6,12 @@ from django.utils.translation import ugettext_lazy as _
 IDEASBOX_NAME = u"Mapoon"
 COUNTRIES_FIRST = ['AU']
 TIME_ZONE = 'Australia/Darwin'
-LANGUAGE_CODE = ['en','aus']
-MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'user_id', 'birth_year',
-                                  'gender']
+LANGUAGE_CODE = 'en'
+MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'user_id', 'birth_year', 'gender']
 USER_FORM_FIELDS = (
     ('Ideasbox', ['serial', 'box_awareness']),
-    (_('Personal informations'), ['refugee_id', 'short_name', 'full_name', 'latin_name', 'birth_year', 'gender']),  # noqa
+    (_('Personal informations'), ['short_name', 'full_name', 'latin_name', 'birth_year', 'gender', 'id_card_number']),  # noqa
     (_('Family'), ['marital_status', 'family_status', 'children_under_12', 'children_under_18', 'children_above_18']),  # noqa
-    (_('In the town'), ['activities', 'current_occupation', 'address']),  # noqa
-    (_('Origin'), ['country', 'city', 'country_of_origin_occupation', 'school_level', 'is_sent_to_school']),  # noqa
-    (_('Language skills'), ['aus_level', 'en_level']),
-    (_('National residents'), ['id_card_number']),
+    (_('In the town'), ['current_occupation', 'school_level', 'is_sent_to_school']),  # noqa
+    (_('Language skills'), ['en_level']),
 )
-
-ENTRY_ACTIVITY_CHOICES = [
-    ('16 Days of Activism', _('16 Days of Activism')),
-    ("AMANI Campaign", _("AMANI Campaign")),
-    ("Anger Management Training", _("Anger Management Training")),
-    ("Basic Computer Training", _("Basic Computer Training")),
-    ("Beauty Training", _("Beauty Training")),
-    ("Book Club", _("Book Club")),
-    ("Conflict Resolution Training", _("Conflict Resolution Training")),
-    ("Coping Skills and Mechanisms Training", _("Coping Skills and Mechanisms Training")),  # noqa
-    ("EDRAAK", _("EDRAAK")),
-    ("Emotional intelligence Training", _("Emotional intelligence Training")),
-    ("Handicrafts", _("Handicrafts")),
-    ("How to be a Psychosocial Counselor Training", _("How to be a Psychosocial Counselor Training")),  # noqa
-    ("I am Woman", _("I am Woman")),
-    ("International Children Day", _("International Children Day")),
-    ("International Refugee Day", _("International Refugee Day")),
-    ("Marathon", _("Marathon")),
-    ("Mother's day celebration", _("Mother's day celebration")),
-    ("Parenting Skills Training", _("Parenting Skills Training")),
-    ("Peer Support Group", _("Peer Support Group")),
-    ("Psychosocial ART Interventions Training", _("Psychosocial ART Interventions Training")),  # noqa
-    ("Puppets and Theatre", _("Puppets and Theatre")),
-    ("Sewing and stitching", _("Sewing and stitching")),
-    ("SIMSIM Club", _("SIMSIM Club")),
-    ("Social Work Training", _("Social Work Training")),
-    ("Stress Management Training", _("Stress Management Training")),
-    ("Training of Trainers", _("Training of Trainers")),
-    ("World Mental Health Day", _("World Mental Health Day")),
-]

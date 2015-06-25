@@ -1,4 +1,4 @@
-User Model
+User Fields
 ==========
 
 As every box can have its own needs about users fields, there is a mecanism
