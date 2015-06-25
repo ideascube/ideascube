@@ -2,7 +2,7 @@ import pytest
 from django.db import IntegrityError
 
 from ..models import Book, BookSpecimen
-from .factories import BookFactory, BookDigitalSpecimenFactory
+from .factories import BookFactory, BookSpecimenFactory
 
 from factory.fuzzy import FuzzyText
 
@@ -45,13 +45,13 @@ def test_can_search_books_by_tags():
 
 
 def test_it_should_be_allowed_to_create_more_than_one_digital_specimen():
-    specimen1 = BookDigitalSpecimenFactory()
-    specimen2 = BookDigitalSpecimenFactory()
+    BookSpecimenFactory(is_digital=True)
+    BookSpecimenFactory(is_digital=True)
     assert BookSpecimen.objects.count() == 2
-    
-    
+
+
 def test_deleting_digital_specimen():
-    specimen1 = BookDigitalSpecimenFactory()
+    specimen1 = BookSpecimenFactory()
     assert BookSpecimen.objects.count()
     assert Book.objects.count()
     specimen1.delete()
@@ -60,22 +60,21 @@ def test_deleting_digital_specimen():
 
 
 def test_is_digital_from_model_method():
-    specimen1 = BookDigitalSpecimenFactory()
-    assert specimen1.is_digital()
+    specimen = BookSpecimenFactory(is_digital=True)
+    assert specimen.is_digital
 
 
 def test_is_digital_after_filling_serial_whithout_removing_file():
-    specimen1 = BookDigitalSpecimenFactory(serial=FuzzyText(length=6))
-    assert specimen1.is_digital()
+    specimen = BookSpecimenFactory(serial=FuzzyText(length=6), is_digital=True)
+    assert specimen.is_digital
 
 
 def test_is_not_digital_after_removing_file():
-    specimen1 = BookDigitalSpecimenFactory(specimenfile=None)
-    assert not specimen1.is_digital()
+    specimen = BookSpecimenFactory(file=None)
+    assert not specimen.is_digital
 
 
 def test_unicode_returns_digital_specimen_of_book():
-
     book = BookFactory()
-    specimen1 = BookDigitalSpecimenFactory(book=book)
-    assert unicode(specimen1).startswith(u'Digital specimen of')
+    specimen = BookSpecimenFactory(book=book, is_digital=True)
+    assert unicode(specimen).startswith(u'Digital specimen of')
