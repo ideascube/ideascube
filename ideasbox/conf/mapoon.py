@@ -4,6 +4,7 @@ from .base import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
 IDEASBOX_NAME = u"Mapoon"
+IDEASBOX_PLACE_NAME = _("the community")
 COUNTRIES_FIRST = ['AU']
 TIME_ZONE = 'Australia/Darwin'
 LANGUAGE_CODE = 'en'

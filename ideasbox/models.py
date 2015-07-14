@@ -147,9 +147,12 @@ class IDBUser(SearchMixin, TimeStampedModel, AbstractBaseUser):
     )
 
     FAMILY_STATUS_CHOICES = (
-        ('with_family', _('Lives with family in the camp')),
-        ('no_family', _('Lives without family in the camp')),
-        ('without_family', _('Has family in the camp but lives without')),
+        ('with_family', _('Lives with family in {place}').format(
+            place=settings.IDEASBOX_PLACE_NAME)),
+        ('no_family', _('Lives without family in {place}').format(
+            place=settings.IDEASBOX_PLACE_NAME)),
+        ('without_family', _('Has family in {place} but lives without').format(
+            place=settings.IDEASBOX_PLACE_NAME)),
     )
 
     CAMP_ACTIVITY_CHOICES = (
