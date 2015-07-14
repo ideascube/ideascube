@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideasbox.lan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-01 15:16+0000\n"
+"POT-Creation-Date: 2015-07-14 13:48+0000\n"
 "PO-Revision-Date: 2015-03-26 12:03+0000\n"
 "Last-Translator: narjis naji areff ihloh <nano_naji@yahoo.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/ideasboxlan/"
@@ -22,49 +22,50 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: ideasbox/blog/models.py:42
+#: ideasbox/blog/models.py:44
 msgid "draft"
 msgstr "مسودة"
 
-#: ideasbox/blog/models.py:43
+#: ideasbox/blog/models.py:45
 msgid "published"
 msgstr "منشور"
 
-#: ideasbox/blog/models.py:44
+#: ideasbox/blog/models.py:46
 msgid "deleted"
 msgstr "تمت إزالته"
 
-#: ideasbox/blog/models.py:47 ideasbox/library/models.py:42
+#: ideasbox/blog/models.py:49 ideasbox/library/models.py:42
 #: ideasbox/mediacenter/models.py:48
 msgid "title"
 msgstr "العنوان"
 
-#: ideasbox/blog/models.py:49
+#: ideasbox/blog/models.py:51
 msgid "author text"
 msgstr "مؤلف النص"
 
-#: ideasbox/blog/models.py:51 ideasbox/library/models.py:44
+#: ideasbox/blog/models.py:53 ideasbox/library/models.py:44
 #: ideasbox/mediacenter/models.py:49
 msgid "summary"
 msgstr "ملخص"
 
-#: ideasbox/blog/models.py:52 ideasbox/mediacenter/models.py:40
+#: ideasbox/blog/models.py:54 ideasbox/mediacenter/models.py:40
 msgid "image"
 msgstr "صورة"
 
-#: ideasbox/blog/models.py:53 ideasbox/mediacenter/models.py:44
+#: ideasbox/blog/models.py:55 ideasbox/mediacenter/models.py:44
 msgid "text"
 msgstr "نص"
 
-#: ideasbox/blog/models.py:54
+#: ideasbox/blog/models.py:56
 msgid "publication date"
 msgstr "تاريخ النشر"
 
-#: ideasbox/blog/models.py:55
+#: ideasbox/blog/models.py:57
+#: ideasbox/serveradmin/templates/serveradmin/battery.html:8
 msgid "Status"
 msgstr "الحالة"
 
-#: ideasbox/blog/models.py:57 ideasbox/library/models.py:48
+#: ideasbox/blog/models.py:59 ideasbox/library/models.py:48
 #: ideasbox/library/templates/library/book_detail.html:17
 #: ideasbox/mediacenter/models.py:50
 msgid "Language"
@@ -118,11 +119,11 @@ msgstr "أكتب النص هنا ...."
 msgid "Add content"
 msgstr "أضف محتوى"
 
-#: ideasbox/conf/azraq.py:14
+#: ideasbox/conf/azraq.py:14 ideasbox/conf/mapoon.py:15
 msgid "Personal informations"
 msgstr ""
 
-#: ideasbox/conf/azraq.py:15
+#: ideasbox/conf/azraq.py:15 ideasbox/conf/mapoon.py:16
 #, fuzzy
 #| msgid "Family status"
 msgid "Family"
@@ -140,7 +141,8 @@ msgstr "الأنشطة في المخيم"
 msgid "Origin"
 msgstr "أصلي"
 
-#: ideasbox/conf/azraq.py:18 ideasbox/conf/base.py:150
+#: ideasbox/conf/azraq.py:18 ideasbox/conf/base.py:153
+#: ideasbox/conf/mapoon.py:18
 #, fuzzy
 #| msgid "Language"
 msgid "Language skills"
@@ -260,33 +262,49 @@ msgstr ""
 msgid "World Mental Health Day"
 msgstr ""
 
-#: ideasbox/conf/base.py:149
+#: ideasbox/conf/base.py:135
+#, fuzzy
+#| msgid "Activities in the camp"
+msgid "the camp"
+msgstr "الأنشطة في المخيم"
+
+#: ideasbox/conf/base.py:152
 msgid "Basic informations"
 msgstr ""
 
-#: ideasbox/conf/base.py:167
+#: ideasbox/conf/base.py:170
 msgid "Ideasbox web server"
 msgstr "متصفح صناديق الافكار"
 
-#: ideasbox/conf/base.py:168
+#: ideasbox/conf/base.py:171
 msgid "Global proxy"
 msgstr "وكيل العالمي"
 
-#: ideasbox/conf/base.py:171
+#: ideasbox/conf/base.py:174
 msgid "Daemon which provides KhanAcademy on lan"
 msgstr "البرنامج الذي يزود KhanAcademy على الشبكة المحلية"
 
-#: ideasbox/conf/base.py:175
+#: ideasbox/conf/base.py:178
 msgid "Daemon which provides Wikipedia on lan"
 msgstr "البرنامج الذي يزود Wikipedia على الشبكة المحلية"
 
-#: ideasbox/conf/base.py:176
+#: ideasbox/conf/base.py:179
 msgid "Net time protocol"
 msgstr "بروتوكول الوقت الصافي"
 
-#: ideasbox/conf/base.py:178
+#: ideasbox/conf/base.py:181
 msgid "Daemon used for distant connexion to server"
 msgstr "الناطرة المستخدمة للاتصال بالمخدم عن بعد"
+
+#: ideasbox/conf/mapoon.py:7
+msgid "the community"
+msgstr ""
+
+#: ideasbox/conf/mapoon.py:17
+#, fuzzy
+#| msgid "Activities in the camp"
+msgid "In the town"
+msgstr "الأنشطة في المخيم"
 
 #: ideasbox/library/models.py:22
 msgid "digital"
@@ -499,7 +517,7 @@ msgid "Load notices from ISBN"
 msgstr "تحميل الخصائص من ISBN"
 
 #: ideasbox/library/templates/library/index.html:5
-#: ideasbox/monitoring/models.py:15 ideasbox/monitoring/models.py:59
+#: ideasbox/monitoring/models.py:17 ideasbox/monitoring/models.py:61
 #: ideasbox/templates/ideasbox/includes/footer.html:8
 msgid "Library"
 msgstr "مكتبة"
@@ -686,307 +704,355 @@ msgstr "عاطل عن العمل"
 msgid "Profit profession"
 msgstr "الدخل"
 
-#: ideasbox/models.py:146 ideasbox/models.py:175
-#: ideasbox/monitoring/models.py:62
+#: ideasbox/models.py:146 ideasbox/models.py:178
+#: ideasbox/monitoring/models.py:64
 msgid "Other"
 msgstr "الآخر"
 
 #: ideasbox/models.py:150
-msgid "Lives with family in the camp"
+#, fuzzy, python-brace-format
+#| msgid "Lives with family in the camp"
+msgid "Lives with family in {place}"
 msgstr "العيش مع العائلة في المخيم"
 
-#: ideasbox/models.py:151
-msgid "Lives without family in the camp"
+#: ideasbox/models.py:152
+#, fuzzy, python-brace-format
+#| msgid "Lives without family in the camp"
+msgid "Lives without family in {place}"
 msgstr "العيش في المخيم من دون العائلة "
 
-#: ideasbox/models.py:152
-msgid "Has family in the camp but lives without"
+#: ideasbox/models.py:154
+#, fuzzy, python-brace-format
+#| msgid "Has family in the camp but lives without"
+msgid "Has family in {place} but lives without"
 msgstr "لديه عائلة في المخيم لكنه يعيش من دونها"
 
-#: ideasbox/models.py:156
+#: ideasbox/models.py:159
 msgid "Comitees, representation groups"
 msgstr ""
 
-#: ideasbox/models.py:157
+#: ideasbox/models.py:160
 msgid "Music, dance, singing"
 msgstr ""
 
-#: ideasbox/models.py:158
+#: ideasbox/models.py:161
 msgid "Other cultural activities"
 msgstr ""
 
-#: ideasbox/models.py:159
+#: ideasbox/models.py:162
 msgid "Informatic workshops"
 msgstr ""
 
-#: ideasbox/models.py:160
+#: ideasbox/models.py:163
 msgid "Literacy working group"
 msgstr ""
 
-#: ideasbox/models.py:161
+#: ideasbox/models.py:164
 msgid "Talking group"
 msgstr ""
 
-#: ideasbox/models.py:162
+#: ideasbox/models.py:165
 #, fuzzy
 #| msgid "section"
 msgid "Recreational"
 msgstr "قسم /فرع"
 
-#: ideasbox/models.py:163
+#: ideasbox/models.py:166
 msgid "Volunteering"
 msgstr ""
 
-#: ideasbox/models.py:164
+#: ideasbox/models.py:167
 msgid "Psycosocial"
 msgstr ""
 
-#: ideasbox/models.py:165
+#: ideasbox/models.py:168
 #, fuzzy
 #| msgid "location"
 msgid "Educational"
 msgstr "موقع"
 
-#: ideasbox/models.py:166
+#: ideasbox/models.py:169
 #, fuzzy
 #| msgid "Export"
 msgid "Sport"
 msgstr "استدراج"
 
-#: ideasbox/models.py:170
+#: ideasbox/models.py:173
 msgid "Seen the Box"
 msgstr "تمت مشاهدة الصندوق"
 
-#: ideasbox/models.py:171
+#: ideasbox/models.py:174
 msgid "Has been informed by partner organization"
 msgstr "تم إعلامه من قبل المنظمة الشريكة"
 
-#: ideasbox/models.py:172
+#: ideasbox/models.py:175
 #, fuzzy
 #| msgid "Has been informed by partner organization"
 msgid "Has been informed by other organization"
 msgstr "تم إعلامه من قبل المنظمة الشريكة"
 
-#: ideasbox/models.py:173
+#: ideasbox/models.py:176
 msgid "Word of mouth"
 msgstr "سراً"
 
-#: ideasbox/models.py:174
+#: ideasbox/models.py:177
 msgid "Poster campaign"
 msgstr "ملصق الحملة"
 
-#: ideasbox/models.py:179
+#: ideasbox/models.py:182
 msgid "Primary"
 msgstr "الأولي"
 
-#: ideasbox/models.py:180
+#: ideasbox/models.py:183
 msgid "Secondary"
 msgstr "الثانوي"
 
-#: ideasbox/models.py:181
+#: ideasbox/models.py:184
 msgid "Professional"
 msgstr "مهني"
 
-#: ideasbox/models.py:182
+#: ideasbox/models.py:185
 msgid "Higher education"
 msgstr ""
 
-#: ideasbox/models.py:186
+#: ideasbox/models.py:189
 msgid "Couple"
 msgstr "ثنائي"
 
-#: ideasbox/models.py:187
+#: ideasbox/models.py:190
 msgid "Single"
 msgstr "مفرد/عازب "
 
-#: ideasbox/models.py:188
+#: ideasbox/models.py:191
 msgid "Widowed"
 msgstr "أرمل"
 
-#: ideasbox/models.py:192
+#: ideasbox/models.py:195
 msgid "Undefined"
 msgstr "غير محدد"
 
-#: ideasbox/models.py:193
+#: ideasbox/models.py:196
 msgid "Male"
 msgstr "ذكر"
 
-#: ideasbox/models.py:194
+#: ideasbox/models.py:197
 msgid "Female"
 msgstr "انثى"
 
-#: ideasbox/models.py:197
+#: ideasbox/models.py:200
 msgid "Latin written name"
 msgstr ""
 
-#: ideasbox/models.py:201
+#: ideasbox/models.py:204
 msgid "Birth year"
 msgstr "سنة الميلاد"
 
-#: ideasbox/models.py:203
+#: ideasbox/models.py:206
 msgid "Gender"
 msgstr "الجنس"
 
-#: ideasbox/models.py:205
+#: ideasbox/models.py:208
 msgid "Country of origin"
 msgstr "بلد الاصل"
 
-#: ideasbox/models.py:206
+#: ideasbox/models.py:209
 msgid "City of origin"
 msgstr "المدينة مسقط الرأس"
 
-#: ideasbox/models.py:207
+#: ideasbox/models.py:210
 msgid "ID card number"
 msgstr "رقم الهوية الشخصية"
 
-#: ideasbox/models.py:210
+#: ideasbox/models.py:213
 msgid "Number of children under 12"
 msgstr "عدد الأطفال تحت سن الــ12"
 
-#: ideasbox/models.py:213
+#: ideasbox/models.py:216
 msgid "Number of children under 18"
 msgstr "عدد الأطفال تحت سن الــ18"
 
-#: ideasbox/models.py:216
+#: ideasbox/models.py:219
 msgid "Number of children above 18"
 msgstr "عدد الأولاد فوق سن الــ18"
 
-#: ideasbox/models.py:219
+#: ideasbox/models.py:222
 msgid "School level"
 msgstr "المستوى التعليمي"
 
-#: ideasbox/models.py:222
+#: ideasbox/models.py:225
 msgid "Marital situation"
 msgstr ""
 
-#: ideasbox/models.py:225
+#: ideasbox/models.py:228
 msgid "Ideas Box awareness"
 msgstr "وعي صندوق الأفكار"
 
-#: ideasbox/models.py:228
+#: ideasbox/models.py:231
 msgid "Refugee ID"
 msgstr "هوية اللاجئ"
 
-#: ideasbox/models.py:229
+#: ideasbox/models.py:232
 msgid "Camp entry date"
 msgstr "تاريخ الالتحاق بالمخيم"
 
-#: ideasbox/models.py:232
+#: ideasbox/models.py:235
 msgid "Current occupation"
 msgstr "المهنة الحالية"
 
-#: ideasbox/models.py:235
+#: ideasbox/models.py:238
 msgid "Occupation in the country of origin"
 msgstr "المهنة في بلد المنشأ"
 
-#: ideasbox/models.py:239
+#: ideasbox/models.py:242
 msgid "Family status"
 msgstr "الوضع العائلي"
 
-#: ideasbox/models.py:242
+#: ideasbox/models.py:245
 #, fuzzy
 #| msgid "Sent to school (if under 18)"
 msgid "Sent to school in the country of origin (if under 18)"
 msgstr "طالب في المدرسة (تحت سن 18)"
 
-#: ideasbox/models.py:245
+#: ideasbox/models.py:248
 msgid "Activities in the camp"
 msgstr "الأنشطة في المخيم"
 
-#: ideasbox/models.py:249
+#: ideasbox/models.py:252
 #, fuzzy
 #| msgid "Activities in the camp"
 msgid "Address in the camp"
 msgstr "الأنشطة في المخيم"
 
-#: ideasbox/models.py:253
+#: ideasbox/models.py:256
 msgid "English knowledge"
 msgstr "المعرفة باللغة الانجليزية"
 
-#: ideasbox/models.py:256
+#: ideasbox/models.py:259
 msgid "Arabic knowledge"
 msgstr "المعرفة باللغة العربية"
 
-#: ideasbox/models.py:259
+#: ideasbox/models.py:262
 msgid "Kirundi knowledge"
 msgstr "المعرفة باللغة الكيروندية"
 
-#: ideasbox/models.py:262
+#: ideasbox/models.py:265
 msgid "French knowledge"
 msgstr "المعرفة باللغة الفرنسية"
 
-#: ideasbox/models.py:265
+#: ideasbox/models.py:268
 msgid "Swahili knowledge"
 msgstr "المعرفة باللغة السواحلية"
 
-#: ideasbox/monitoring/forms.py:13
+#: ideasbox/monitoring/forms.py:17
 msgid "Enter user serials"
 msgstr "ادخل الرقم المتسلسل للمستخدم"
 
-#: ideasbox/monitoring/forms.py:18
+#: ideasbox/monitoring/forms.py:22
 msgid "Enter a activity name if missing on the list"
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:20
+#: ideasbox/monitoring/forms.py:24
 msgid "Partner involved in activity"
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:29
+#: ideasbox/monitoring/forms.py:33
 msgid "Missing module name"
 msgstr "اسم الصندوق مفقود"
 
-#: ideasbox/monitoring/forms.py:60
+#: ideasbox/monitoring/forms.py:64
 msgid "Enter a bar code"
 msgstr "ادخل الباركود"
 
-#: ideasbox/monitoring/forms.py:68
+#: ideasbox/monitoring/forms.py:72 ideasbox/monitoring/forms.py:99
 #, python-brace-format
 msgid "Bar code {barcode} not found"
 msgstr "الباركود {barcode} غير معرف"
 
-#: ideasbox/monitoring/models.py:14 ideasbox/monitoring/models.py:58
+#: ideasbox/monitoring/forms.py:84 ideasbox/monitoring/forms.py:120
+#, fuzzy
+#| msgid "Enter a bar code"
+msgid "Enter an item barcode"
+msgstr "ادخل الباركود"
+
+#: ideasbox/monitoring/forms.py:86
+#, fuzzy
+#| msgid "Enter user serials"
+msgid "Enter a user serial"
+msgstr "ادخل الرقم المتسلسل للمستخدم"
+
+#: ideasbox/monitoring/forms.py:93
+#, python-brace-format
+msgid "Item with barcode {barcode} is already loaned."
+msgstr ""
+
+#: ideasbox/monitoring/forms.py:109
+#, python-brace-format
+msgid "Serial {serial} not found"
+msgstr ""
+
+#: ideasbox/monitoring/forms.py:127
+#, fuzzy, python-brace-format
+#| msgid "Bar code {barcode} not found"
+msgid "Item with barcode {barcode} is not loaned."
+msgstr "الباركود {barcode} غير معرف"
+
+#: ideasbox/monitoring/models.py:16 ideasbox/monitoring/models.py:60
 msgid "Cinema"
 msgstr "سينما"
 
-#: ideasbox/monitoring/models.py:16 ideasbox/monitoring/models.py:60
+#: ideasbox/monitoring/models.py:18 ideasbox/monitoring/models.py:62
 msgid "Multimedia"
 msgstr "الوسائط المتعددة"
 
-#: ideasbox/monitoring/models.py:24
+#: ideasbox/monitoring/models.py:26
 msgid "entry"
 msgstr "ادخال"
 
-#: ideasbox/monitoring/models.py:25
+#: ideasbox/monitoring/models.py:27
 msgid "entries"
 msgstr "ادخالات"
 
-#: ideasbox/monitoring/models.py:37
+#: ideasbox/monitoring/models.py:39
 msgid "date"
 msgstr "التاريخ"
 
-#: ideasbox/monitoring/models.py:38 ideasbox/monitoring/models.py:88
+#: ideasbox/monitoring/models.py:40 ideasbox/monitoring/models.py:90
 msgid "comments"
 msgstr "تعليق"
 
-#: ideasbox/monitoring/models.py:61
+#: ideasbox/monitoring/models.py:63
 msgid "Administration"
 msgstr "الادارة"
 
-#: ideasbox/monitoring/models.py:65
+#: ideasbox/monitoring/models.py:67
 msgid "name"
 msgstr "الاسم"
 
-#: ideasbox/monitoring/models.py:66
+#: ideasbox/monitoring/models.py:68
 msgid "description"
 msgstr "الوصف"
 
-#: ideasbox/monitoring/models.py:82
+#: ideasbox/monitoring/models.py:84
 msgid "Ideasbox bar code"
 msgstr "الباركود الخاص بصناديق الافكار"
 
-#: ideasbox/monitoring/models.py:84
+#: ideasbox/monitoring/models.py:86
 msgid "Serial number"
 msgstr "الرقم المتسلسل"
+
+#: ideasbox/monitoring/models.py:115
+#: ideasbox/monitoring/templates/monitoring/loan.html:24
+#, fuzzy
+#| msgid "date"
+msgid "Due date"
+msgstr "التاريخ"
+
+#: ideasbox/monitoring/models.py:116
+#: ideasbox/monitoring/templates/monitoring/loan.html:25
+#, fuzzy
+#| msgid "comments"
+msgid "Comments"
+msgstr "تعليق"
 
 #: ideasbox/monitoring/templates/monitoring/entry.html:14
 msgid "Specific activity (optional)"
@@ -1084,6 +1150,40 @@ msgstr "بدء جرد جديد"
 msgid "delete"
 msgstr "تمت إزالته"
 
+#: ideasbox/monitoring/templates/monitoring/loan.html:10
+#: ideasbox/templates/ideasbox/includes/footer.html:15
+msgid "Loan"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/loan.html:16
+#: ideasbox/monitoring/templates/monitoring/loan.html:46
+#, fuzzy
+#| msgid "date"
+msgid "Validate"
+msgstr "التاريخ"
+
+#: ideasbox/monitoring/templates/monitoring/loan.html:19
+msgid "Ongoing loans"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/loan.html:22
+msgid "Item"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/loan.html:23
+#, fuzzy
+#| msgid "Users"
+msgid "User"
+msgstr "المستخدمين"
+
+#: ideasbox/monitoring/templates/monitoring/loan.html:26
+msgid "By"
+msgstr ""
+
+#: ideasbox/monitoring/templates/monitoring/loan.html:40
+msgid "Return"
+msgstr ""
+
 #: ideasbox/monitoring/templates/monitoring/specimen_confirm_delete.html:4
 #, fuzzy, python-format
 #| msgid "Are you sure you want to delete document \"%(document)s\"?"
@@ -1156,34 +1256,45 @@ msgstr "تعديل الموضوع"
 msgid "Add new item"
 msgstr "أضافة موضوع جديد"
 
-#: ideasbox/monitoring/views.py:37
+#: ideasbox/monitoring/views.py:42
 #, python-brace-format
 msgid "No user found with serial {serial}"
 msgstr "لا يوجد مستخدم يحمل هذا الرقم {serial}"
 
-#: ideasbox/monitoring/views.py:45
+#: ideasbox/monitoring/views.py:50
 #, python-brace-format
 msgid "Created {count} entries"
 msgstr "تم إنشاء {count} إدخالات "
 
-#: ideasbox/monitoring/views.py:49
+#: ideasbox/monitoring/views.py:54
 msgid "No entry created."
 msgstr "لا يوجد إدخالات"
 
-#: ideasbox/monitoring/views.py:71
+#: ideasbox/monitoring/views.py:76
 msgid "Error while processing entries export"
 msgstr ""
 
-#: ideasbox/monitoring/views.py:253
+#: ideasbox/monitoring/views.py:263
 #, python-brace-format
 msgid "Specimen {specimen} has been added to {inventory} inventory"
 msgstr "المتعلقات {specimen} لقد تم إدخالها الى {inventory} قائمة الموجودات "
 
-#: ideasbox/monitoring/views.py:260
+#: ideasbox/monitoring/views.py:270
 #, fuzzy, python-brace-format
 #| msgid "Specimen {specimen} has not been found"
 msgid "Specimen {specimen} not found or already done."
 msgstr "العينة{specimen} لم يتم إيجادها "
+
+#: ideasbox/monitoring/views.py:347
+#, fuzzy, python-brace-format
+#| msgid "File {name} has been loaded."
+msgid "Item {item} has been loaned to {user}"
+msgstr "الملف {name} تم تحميله بنجاح."
+
+#: ideasbox/monitoring/views.py:357
+#, python-brace-format
+msgid "Item {item} has been returned"
+msgstr ""
 
 #: ideasbox/search/templates/search/box.html:6
 #: ideasbox/search/templates/search/box.html:7
@@ -1199,11 +1310,11 @@ msgstr "البحث في الصندوق"
 msgid "No result for \"%(query)s\"."
 msgstr "لا يوجد نتائج لـ \"%(query)s\"."
 
-#: ideasbox/serveradmin/backup.py:31
+#: ideasbox/serveradmin/backup.py:29
 msgid "backup name must end with .zip"
 msgstr "أسم النسخة الأحتياطية يجب أن تنتهي بـ .zip"
 
-#: ideasbox/serveradmin/backup.py:95
+#: ideasbox/serveradmin/backup.py:93
 msgid "Not a zip file"
 msgstr ""
 
@@ -1277,6 +1388,14 @@ msgstr ""
 msgid "Upload backup file"
 msgstr "تحميل ملفات النسخ الأحتياطي"
 
+#: ideasbox/serveradmin/templates/serveradmin/battery.html:5
+msgid "Battery monitoring"
+msgstr ""
+
+#: ideasbox/serveradmin/templates/serveradmin/battery.html:9
+msgid "Capacity"
+msgstr ""
+
 #: ideasbox/serveradmin/templates/serveradmin/index.html:7
 #, python-format
 msgid "Current version: %(version)s"
@@ -1284,18 +1403,40 @@ msgstr ""
 
 #: ideasbox/serveradmin/templates/serveradmin/index.html:9
 #: ideasbox/serveradmin/templates/serveradmin/services.html:6
-#: ideasbox/templates/ideasbox/includes/footer.html:17
+#: ideasbox/templates/ideasbox/includes/footer.html:18
 msgid "Manage services"
 msgstr "إدارة الخدمات"
 
 #: ideasbox/serveradmin/templates/serveradmin/index.html:10
-#: ideasbox/templates/ideasbox/includes/footer.html:18
+#: ideasbox/templates/ideasbox/includes/footer.html:19
 msgid "Restart server"
 msgstr "إعادة تشغيل الخادم "
 
 #: ideasbox/serveradmin/templates/serveradmin/index.html:11
 msgid "Manage backups"
 msgstr "إدارة النسخ الأحتياطي"
+
+#: ideasbox/serveradmin/templates/serveradmin/index.html:12
+msgid "Monitor battery"
+msgstr ""
+
+#: ideasbox/serveradmin/templates/serveradmin/packages.html:5
+#, fuzzy
+#| msgid "Manage backups"
+msgid "Manage packages"
+msgstr "إدارة النسخ الأحتياطي"
+
+#: ideasbox/serveradmin/templates/serveradmin/packages.html:6
+msgid "Available Ideasbox packages"
+msgstr ""
+
+#: ideasbox/serveradmin/templates/serveradmin/packages.html:10
+msgid "Suggest"
+msgstr ""
+
+#: ideasbox/serveradmin/templates/serveradmin/packages.html:14
+msgid "System packages out of date"
+msgstr ""
 
 #: ideasbox/serveradmin/templates/serveradmin/power.html:5
 msgid "Stop or restart the server"
@@ -1315,32 +1456,32 @@ msgstr "ابدأ من جديد"
 msgid "Start"
 msgstr "ابدأ"
 
-#: ideasbox/serveradmin/views.py:59
+#: ideasbox/serveradmin/views.py:63
 #, python-brace-format
 msgid "Succesfully created backup {filename}"
 msgstr "تم إنشاء النسخ الأحتياطي بنجاح {filename}"
 
-#: ideasbox/serveradmin/views.py:69
+#: ideasbox/serveradmin/views.py:73
 #, fuzzy
 #| msgid "Unable to load file."
 msgid "Unable to load file:"
 msgstr "لا يمكن تحميل الملف ."
 
-#: ideasbox/serveradmin/views.py:73
+#: ideasbox/serveradmin/views.py:77
 #, python-brace-format
 msgid "File {name} has been loaded."
 msgstr "الملف {name} تم تحميله بنجاح."
 
-#: ideasbox/serveradmin/views.py:78
+#: ideasbox/serveradmin/views.py:82
 msgid "No file found to upload."
 msgstr "لا يوجد ملفات ليتم تحميلها ."
 
-#: ideasbox/serveradmin/views.py:84
+#: ideasbox/serveradmin/views.py:88
 #, python-brace-format
 msgid "Succesfully deleted backup {filename}"
 msgstr "تم حذف ملفات النسخ الاحتياطي بنجاح {filename} "
 
-#: ideasbox/serveradmin/views.py:89
+#: ideasbox/serveradmin/views.py:93
 #, python-brace-format
 msgid "Succesfully restored backup {filename}"
 msgstr "تم أستعاده ملفات النسخ الأحتياطي بنجاح {filename}"
@@ -1377,15 +1518,15 @@ msgstr "إدارة الأعضاء"
 msgid "Manage entries"
 msgstr "إدارة المدخلات"
 
-#: ideasbox/templates/ideasbox/includes/footer.html:16
+#: ideasbox/templates/ideasbox/includes/footer.html:17
 msgid "Server Administration"
 msgstr "إدارة الخادم"
 
-#: ideasbox/templates/ideasbox/includes/footer.html:19
+#: ideasbox/templates/ideasbox/includes/footer.html:20
 msgid "Backup / restore"
 msgstr "إستعادة / النسخ الأحتياطي"
 
-#: ideasbox/templates/ideasbox/includes/footer.html:34
+#: ideasbox/templates/ideasbox/includes/footer.html:35
 msgid "Change"
 msgstr "تغيير"
 
