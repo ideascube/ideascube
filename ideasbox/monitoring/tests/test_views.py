@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import date, timedelta
+
 import pytest
 from django.core.urlresolvers import reverse
 from django.utils import translation
@@ -307,6 +309,14 @@ def test_can_loan(staffapp, user):
     form['user'] = user.serial
     form.submit('do_loan')
     assert Loan.objects.count() == 1
+
+
+def test_default_loan_duration_can_be_changed(staffapp, settings):
+    settings.LOAN_DURATION = 7
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    due_date = (date.today() + timedelta(days=7)).isoformat()
+    assert form['due_date'].value == due_date
 
 
 def test_cannot_loan_twice_same_item(staffapp, user):

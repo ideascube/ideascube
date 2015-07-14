@@ -133,6 +133,8 @@ STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')
 AUTH_USER_MODEL = 'ideasbox.IDBUser'
 IDEASBOX_NAME = 'debugbox'
 
+LOAN_DURATION = 0  # In days.
+
 DOMAIN = 'ideasbox.lan'
 WIKIPEDIA_URL = 'http://wikipedia.{domain}'.format(domain=DOMAIN)
 KHANACADEMY_URL = 'http://khanacademy.{domain}'.format(domain=DOMAIN)

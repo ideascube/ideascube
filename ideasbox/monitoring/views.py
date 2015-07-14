@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -320,8 +322,9 @@ class ItemLoan(TemplateView):
     template_name = 'monitoring/loan.html'
 
     def get_context_data(self, **kwargs):
+        due_date = date.today() + timedelta(days=settings.LOAN_DURATION)
         defaults = {
-            'loan_form': LoanForm,
+            'loan_form': LoanForm(initial={'due_date': due_date}),
             'return_form': ReturnForm,
             'loans': Loan.objects.all()
         }

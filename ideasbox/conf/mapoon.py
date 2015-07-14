@@ -7,6 +7,7 @@ IDEASBOX_NAME = u"Mapoon"
 COUNTRIES_FIRST = ['AU']
 TIME_ZONE = 'Australia/Darwin'
 LANGUAGE_CODE = 'en'
+LOAN_DURATION = 14
 MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'user_id', 'birth_year', 'gender']
 USER_FORM_FIELDS = (
     ('Ideasbox', ['serial', 'box_awareness']),
