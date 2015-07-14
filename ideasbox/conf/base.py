@@ -134,6 +134,8 @@ AUTH_USER_MODEL = 'ideasbox.IDBUser'
 IDEASBOX_NAME = 'debugbox'
 IDEASBOX_PLACE_NAME = _('the camp')
 
+LOAN_DURATION = 0  # In days.
+
 DOMAIN = 'ideasbox.lan'
 WIKIPEDIA_URL = 'http://wikipedia.{domain}'.format(domain=DOMAIN)
 KHANACADEMY_URL = 'http://khanacademy.{domain}'.format(domain=DOMAIN)
