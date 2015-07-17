@@ -151,6 +151,7 @@ table tr th {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    display: -webkit-flex;
     display: flex;
     flex-direction: row;
 }
@@ -159,6 +160,7 @@ table tr th {
 }
 .col {
     flex: 0 1 auto;
+    -webkit-flex: 0 1 auto;
 }
 .col + .col {
     padding-left: 40px;
@@ -187,6 +189,7 @@ html[dir='rtl'] .col + .col {
     display: none;
 }
 .flow {
+    display: -webkit-flex;
     display: flex;
 }
 .flow * + * {
@@ -310,6 +313,7 @@ html[dir="rtl"] label.required:after {
 /* *************** HEADER & FOOTER ***************** */
 /* ************************************************* */
 header {
+    display: -webkit-flex;
     display: flex;
     flex-direction: row;
     min-height: 100px;
@@ -321,6 +325,7 @@ header {
 }
 header section {
     align-self: center;
+    display: -webkit-flex;
     display: flex;
 }
 header h1 {
@@ -469,6 +474,7 @@ html[dir='rtl'] .tinted {
 }
 .grid {
     display: flex;
+    display: -webkit-flex;
     flex-wrap: wrap;
 }
 .grid .card {
