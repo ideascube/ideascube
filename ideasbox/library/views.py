@@ -111,7 +111,7 @@ class SpecimenCreate(CreateView):
 
     def get_initial(self):
         book = get_object_or_404(Book, pk=self.kwargs['book_pk'])
-        return {'book': book, 'location': settings.IDEASBOX_NAME}
+        return {'book': book, 'location': settings.IDEASBOX_NAME}                
 
 specimen_create = staff_member_required(SpecimenCreate.as_view())
 

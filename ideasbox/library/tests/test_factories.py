@@ -1,6 +1,6 @@
 import pytest
 
-from .factories import BookFactory, BookSpecimenFactory
+from .factories import BookFactory, BookSpecimenFactory, BookDigitalSpecimenFactory
 
 pytestmark = pytest.mark.django_db
 
@@ -29,3 +29,18 @@ def test_it_should_override_specimen_fields_passed_to_factory():
     book = BookFactory()
     specimen = BookSpecimenFactory(book=book)
     assert specimen.book == book
+
+
+def test_it_should_create_a_default_book_digital_specimen_from_factory():
+    digitalspecimen = BookDigitalSpecimenFactory()
+    assert digitalspecimen.pk is not None
+    assert digitalspecimen.book.pk is not None
+    assert unicode(digitalspecimen)
+
+
+def test_it_should_override_digital_specimen_fields_passed_to_factory():
+    book = BookFactory()
+    digitalspecimen = BookDigitalSpecimenFactory(book=book)
+    assert digitalspecimen.book == book
+    digitalspecimen.digital = False
+    assert not digitalspecimen.digital
