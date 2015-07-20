@@ -2,7 +2,9 @@ import pytest
 from django.db import IntegrityError
 
 from ..models import Book, BookSpecimen
-from .factories import BookFactory
+from .factories import BookFactory, BookSpecimenFactory
+
+from factory.fuzzy import FuzzyText
 
 pytestmark = pytest.mark.django_db
 
@@ -40,3 +42,39 @@ def test_it_should_not_be_possible_to_have_twice_the_same_isbn():
 def test_can_search_books_by_tags():
     BookFactory(tags=['jordan', 'dead sea'])
     assert Book.objects.search("jordan")
+
+
+def test_it_should_be_allowed_to_create_more_than_one_digital_specimen():
+    BookSpecimenFactory(is_digital=True)
+    BookSpecimenFactory(is_digital=True)
+    assert BookSpecimen.objects.count() == 2
+
+
+def test_deleting_digital_specimen():
+    specimen1 = BookSpecimenFactory()
+    assert BookSpecimen.objects.count()
+    assert Book.objects.count()
+    specimen1.delete()
+    assert not BookSpecimen.objects.count()
+    assert Book.objects.count()
+
+
+def test_is_digital_from_model_method():
+    specimen = BookSpecimenFactory(is_digital=True)
+    assert specimen.is_digital
+
+
+def test_is_digital_after_filling_serial_whithout_removing_file():
+    specimen = BookSpecimenFactory(serial=FuzzyText(length=6), is_digital=True)
+    assert specimen.is_digital
+
+
+def test_is_not_digital_after_removing_file():
+    specimen = BookSpecimenFactory(file=None)
+    assert not specimen.is_digital
+
+
+def test_unicode_returns_digital_specimen_of_book():
+    book = BookFactory()
+    specimen = BookSpecimenFactory(book=book, is_digital=True)
+    assert unicode(specimen).startswith(u'Digital specimen of')

@@ -27,5 +27,11 @@ class BookSpecimenFactory(factory.django.DjangoModelFactory):
     serial = FuzzyText(length=6)
     book = factory.SubFactory(BookFactory)
 
+    @factory.post_generation
+    def is_digital(obj, create, extracted, **kwargs):
+        if extracted:
+            obj.file = 'ideasbox/library/tests/data/test-digital'
+            obj.serial = None
+
     class Meta:
         model = BookSpecimen
