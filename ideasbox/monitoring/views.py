@@ -353,10 +353,15 @@ class ItemLoan(TemplateView):
             return_form = ReturnForm(data=request.POST)
             if return_form.is_valid():
                 loan = return_form.cleaned_data['loan']
-                loan.delete()
-                msg = _('Item {item} has been returned')
-                msg = msg.format(item=loan.specimen.item)
-                messages.add_message(self.request, messages.SUCCESS, msg)
+                if loan:
+                    loan.delete()
+                    msg = _('Item {item} has been returned')
+                    msg = msg.format(item=loan.specimen.item)
+                    status = messages.SUCCESS
+                else:
+                    msg = _('Item not found')
+                    status = messages.ERROR
+                messages.add_message(self.request, status, msg)
             else:
                 context['return_form'] = return_form
         return self.render_to_response(self.get_context_data(**context))

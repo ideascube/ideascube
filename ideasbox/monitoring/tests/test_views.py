@@ -345,3 +345,10 @@ def test_can_return_loan(staffapp, user):
     form['loan'] = specimen.barcode
     form.submit('do_return')
     assert not Loan.objects.count()
+
+
+def test_return_unknown_id_does_not_fail(staffapp):
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['return_form']
+    form['loan'] = '123456'
+    form.submit('do_return', status=200)
