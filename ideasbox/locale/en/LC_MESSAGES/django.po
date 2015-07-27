@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-14 13:48+0000\n"
+"POT-Creation-Date: 2015-07-27 20:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,7 +55,7 @@ msgstr ""
 msgid "publication date"
 msgstr ""
 
-#: ideasbox/blog/models.py:57
+#: ideasbox/blog/models.py:57 ideasbox/monitoring/models.py:126
 #: ideasbox/serveradmin/templates/serveradmin/battery.html:8
 msgid "Status"
 msgstr ""
@@ -287,6 +287,14 @@ msgstr ""
 msgid "In the town"
 msgstr ""
 
+#: ideasbox/library/forms.py:23
+msgid "You can't have both a file and a serial"
+msgstr ""
+
+#: ideasbox/library/forms.py:25
+msgid "You must add a file or a serial"
+msgstr ""
+
 #: ideasbox/library/models.py:22
 msgid "digital"
 msgstr ""
@@ -371,12 +379,16 @@ msgstr ""
 msgid "serial"
 msgstr ""
 
-#: ideasbox/library/models.py:75
+#: ideasbox/library/models.py:76
 msgid "location"
 msgstr ""
 
-#: ideasbox/library/models.py:76
+#: ideasbox/library/models.py:77
 msgid "remarks"
+msgstr ""
+
+#: ideasbox/library/models.py:78
+msgid "digital file"
 msgstr ""
 
 #: ideasbox/library/templates/library/book_confirm_delete.html:4
@@ -913,34 +925,34 @@ msgstr ""
 msgid "Missing module name"
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:64
+#: ideasbox/monitoring/forms.py:71
 msgid "Enter a bar code"
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:72 ideasbox/monitoring/forms.py:99
+#: ideasbox/monitoring/forms.py:79 ideasbox/monitoring/forms.py:106
 #, python-brace-format
 msgid "Bar code {barcode} not found"
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:84 ideasbox/monitoring/forms.py:120
+#: ideasbox/monitoring/forms.py:91 ideasbox/monitoring/forms.py:127
 msgid "Enter an item barcode"
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:86
+#: ideasbox/monitoring/forms.py:93
 msgid "Enter a user serial"
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:93
+#: ideasbox/monitoring/forms.py:100
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:109
+#: ideasbox/monitoring/forms.py:116
 #, python-brace-format
 msgid "Serial {serial} not found"
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:127
+#: ideasbox/monitoring/forms.py:134
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
 msgstr ""
@@ -989,12 +1001,20 @@ msgstr ""
 msgid "Serial number"
 msgstr ""
 
-#: ideasbox/monitoring/models.py:115
+#: ideasbox/monitoring/models.py:118
+msgid "due"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:119
+msgid "returned"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:124
 #: ideasbox/monitoring/templates/monitoring/loan.html:24
 msgid "Due date"
 msgstr ""
 
-#: ideasbox/monitoring/models.py:116
+#: ideasbox/monitoring/models.py:125
 #: ideasbox/monitoring/templates/monitoring/loan.html:25
 msgid "Comments"
 msgstr ""
@@ -1038,6 +1058,8 @@ msgstr ""
 
 #: ideasbox/monitoring/templates/monitoring/entry.html:48
 #: ideasbox/monitoring/templates/monitoring/entry.html:51
+#: ideasbox/monitoring/templates/monitoring/loan.html:49
+#: ideasbox/monitoring/templates/monitoring/loan.html:55
 msgid "Export"
 msgstr ""
 
@@ -1216,14 +1238,22 @@ msgstr ""
 msgid "Specimen {specimen} not found or already done."
 msgstr ""
 
-#: ideasbox/monitoring/views.py:347
+#: ideasbox/monitoring/views.py:348
 #, python-brace-format
 msgid "Item {item} has been loaned to {user}"
 msgstr ""
 
-#: ideasbox/monitoring/views.py:357
+#: ideasbox/monitoring/views.py:359
 #, python-brace-format
 msgid "Item {item} has been returned"
+msgstr ""
+
+#: ideasbox/monitoring/views.py:363
+msgid "Item not found"
+msgstr ""
+
+#: ideasbox/monitoring/views.py:380
+msgid "Error while processing loans export"
 msgstr ""
 
 #: ideasbox/search/templates/search/box.html:6

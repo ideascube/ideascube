@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideasbox.lan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-14 13:48+0000\n"
+"POT-Creation-Date: 2015-07-27 20:47+0000\n"
 "PO-Revision-Date: 2015-03-26 12:03+0000\n"
 "Last-Translator: narjis naji areff ihloh <nano_naji@yahoo.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/ideasboxlan/"
@@ -60,7 +60,7 @@ msgstr "نص"
 msgid "publication date"
 msgstr "تاريخ النشر"
 
-#: ideasbox/blog/models.py:57
+#: ideasbox/blog/models.py:57 ideasbox/monitoring/models.py:126
 #: ideasbox/serveradmin/templates/serveradmin/battery.html:8
 msgid "Status"
 msgstr "الحالة"
@@ -306,6 +306,14 @@ msgstr ""
 msgid "In the town"
 msgstr "الأنشطة في المخيم"
 
+#: ideasbox/library/forms.py:23
+msgid "You can't have both a file and a serial"
+msgstr ""
+
+#: ideasbox/library/forms.py:25
+msgid "You must add a file or a serial"
+msgstr ""
+
 #: ideasbox/library/models.py:22
 msgid "digital"
 msgstr "رقمي"
@@ -398,13 +406,19 @@ msgstr "غلاف"
 msgid "serial"
 msgstr "دورية"
 
-#: ideasbox/library/models.py:75
+#: ideasbox/library/models.py:76
 msgid "location"
 msgstr "موقع"
 
-#: ideasbox/library/models.py:76
+#: ideasbox/library/models.py:77
 msgid "remarks"
 msgstr "ملاحظات"
+
+#: ideasbox/library/models.py:78
+#, fuzzy
+#| msgid "digital"
+msgid "digital file"
+msgstr "رقمي"
 
 #: ideasbox/library/templates/library/book_confirm_delete.html:4
 #, python-format
@@ -959,38 +973,38 @@ msgstr ""
 msgid "Missing module name"
 msgstr "اسم الصندوق مفقود"
 
-#: ideasbox/monitoring/forms.py:64
+#: ideasbox/monitoring/forms.py:71
 msgid "Enter a bar code"
 msgstr "ادخل الباركود"
 
-#: ideasbox/monitoring/forms.py:72 ideasbox/monitoring/forms.py:99
+#: ideasbox/monitoring/forms.py:79 ideasbox/monitoring/forms.py:106
 #, python-brace-format
 msgid "Bar code {barcode} not found"
 msgstr "الباركود {barcode} غير معرف"
 
-#: ideasbox/monitoring/forms.py:84 ideasbox/monitoring/forms.py:120
+#: ideasbox/monitoring/forms.py:91 ideasbox/monitoring/forms.py:127
 #, fuzzy
 #| msgid "Enter a bar code"
 msgid "Enter an item barcode"
 msgstr "ادخل الباركود"
 
-#: ideasbox/monitoring/forms.py:86
+#: ideasbox/monitoring/forms.py:93
 #, fuzzy
 #| msgid "Enter user serials"
 msgid "Enter a user serial"
 msgstr "ادخل الرقم المتسلسل للمستخدم"
 
-#: ideasbox/monitoring/forms.py:93
+#: ideasbox/monitoring/forms.py:100
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:109
+#: ideasbox/monitoring/forms.py:116
 #, python-brace-format
 msgid "Serial {serial} not found"
 msgstr ""
 
-#: ideasbox/monitoring/forms.py:127
+#: ideasbox/monitoring/forms.py:134
 #, fuzzy, python-brace-format
 #| msgid "Bar code {barcode} not found"
 msgid "Item with barcode {barcode} is not loaned."
@@ -1040,14 +1054,22 @@ msgstr "الباركود الخاص بصناديق الافكار"
 msgid "Serial number"
 msgstr "الرقم المتسلسل"
 
-#: ideasbox/monitoring/models.py:115
+#: ideasbox/monitoring/models.py:118
+msgid "due"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:119
+msgid "returned"
+msgstr ""
+
+#: ideasbox/monitoring/models.py:124
 #: ideasbox/monitoring/templates/monitoring/loan.html:24
 #, fuzzy
 #| msgid "date"
 msgid "Due date"
 msgstr "التاريخ"
 
-#: ideasbox/monitoring/models.py:116
+#: ideasbox/monitoring/models.py:125
 #: ideasbox/monitoring/templates/monitoring/loan.html:25
 #, fuzzy
 #| msgid "comments"
@@ -1095,6 +1117,8 @@ msgstr "%(time)s مضت "
 
 #: ideasbox/monitoring/templates/monitoring/entry.html:48
 #: ideasbox/monitoring/templates/monitoring/entry.html:51
+#: ideasbox/monitoring/templates/monitoring/loan.html:49
+#: ideasbox/monitoring/templates/monitoring/loan.html:55
 msgid "Export"
 msgstr "استدراج"
 
@@ -1285,15 +1309,23 @@ msgstr "المتعلقات {specimen} لقد تم إدخالها الى {invento
 msgid "Specimen {specimen} not found or already done."
 msgstr "العينة{specimen} لم يتم إيجادها "
 
-#: ideasbox/monitoring/views.py:347
+#: ideasbox/monitoring/views.py:348
 #, fuzzy, python-brace-format
 #| msgid "File {name} has been loaded."
 msgid "Item {item} has been loaned to {user}"
 msgstr "الملف {name} تم تحميله بنجاح."
 
-#: ideasbox/monitoring/views.py:357
+#: ideasbox/monitoring/views.py:359
 #, python-brace-format
 msgid "Item {item} has been returned"
+msgstr ""
+
+#: ideasbox/monitoring/views.py:363
+msgid "Item not found"
+msgstr ""
+
+#: ideasbox/monitoring/views.py:380
+msgid "Error while processing loans export"
 msgstr ""
 
 #: ideasbox/search/templates/search/box.html:6
