@@ -47,10 +47,10 @@ class ExportEntryForm(forms.Form):
 class SpecimenForm(forms.ModelForm):
 
     def clean_barcode(self):
-        # Keep only integers, and make sure empty values are mapped to None,
-        # not empty string (we need NULL values in db, not empty strings, for
-        # uniqueness constraints).
-        return re.sub(r'\D', '', self.cleaned_data['barcode']) or None
+        # Keep only integers and letters, and make sure empty values are mapped
+        # to None, not empty string (we need NULL values in db, not empty
+        # strings, for uniqueness constraints).
+        return re.sub(r'\W', '', self.cleaned_data['barcode']) or None
 
     class Meta:
         model = Specimen

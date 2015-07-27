@@ -128,6 +128,16 @@ def test_staff_can_create_specimen(staffapp):
     assert item.specimens.count()
 
 
+def test_staff_can_create_specimen_with_letters_and_ints_in_barcode(staffapp):
+    item = StockItemFactory()
+    url = reverse('monitoring:specimen_create', kwargs={'item_pk': item.pk})
+    form = staffapp.get(url).forms['model_form']
+    assert not item.specimens.count()
+    form['barcode'] = '123abc'
+    form.submit().follow()
+    assert item.specimens.filter(barcode='123abc').count()
+
+
 def test_staff_can_edit_specimen(staffapp):
     specimen = SpecimenFactory(count=3)
     url = reverse('monitoring:specimen_update', kwargs={'pk': specimen.pk})
