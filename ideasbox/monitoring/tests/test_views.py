@@ -9,8 +9,8 @@ from ideasbox.tests.factories import UserFactory
 
 from ..models import (Entry, Inventory, InventorySpecimen, Loan, Specimen,
                       StockItem)
-from .factories import (EntryFactory, InventoryFactory, SpecimenFactory,
-                        StockItemFactory)
+from .factories import (EntryFactory, InventoryFactory, LoanFactory,
+                        SpecimenFactory, StockItemFactory)
 
 pytestmark = pytest.mark.django_db
 
@@ -349,12 +349,12 @@ def test_can_return_loan(staffapp, user):
     specimen = SpecimenFactory()
     Loan.objects.create(user=user, specimen=specimen,
                         by=staffapp.user)
-    assert Loan.objects.count() == 1
+    assert Loan.objects.due().count() == 1
     url = reverse('monitoring:loan')
     form = staffapp.get(url).forms['return_form']
     form['loan'] = specimen.barcode
     form.submit('do_return')
-    assert not Loan.objects.count()
+    assert not Loan.objects.due().count()
 
 
 def test_return_unknown_id_does_not_fail(staffapp):
@@ -362,3 +362,22 @@ def test_return_unknown_id_does_not_fail(staffapp):
     form = staffapp.get(url).forms['return_form']
     form['loan'] = '123456'
     form.submit('do_return', status=200)
+
+
+def test_can_export_loan(staffapp):
+    specimen = SpecimenFactory(item__name="an item", barcode="123")
+    LoanFactory(specimen=specimen)
+    url = reverse('monitoring:export_loan')
+    resp = staffapp.get(url, status=200)
+    assert resp.content.startswith("item,barcode,user,created at,due date,status,comments\r\nan item,123")  # noqa
+
+
+def test_export_loan_should_be_ok_in_arabic(staffapp):
+    translation.activate('ar')
+    specimen = SpecimenFactory(item__name="an item", barcode="123")
+    loan = LoanFactory(specimen=specimen, comments=u"النبي (كتاب)")
+    url = reverse('monitoring:export_loan')
+    resp = staffapp.get(url, status=200)
+    assert resp.content.startswith("item,barcode,user,created at,due date,status,comments\r\nan item,123")  # noqa
+    resp.mustcontain(loan.comments)
+    translation.deactivate()

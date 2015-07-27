@@ -13,8 +13,8 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
 
 from ideasbox.views import CSVExportMixin
 
-from .forms import (EntryForm, ExportEntryForm, InventorySpecimenForm,
-                    LoanForm, ReturnForm, SpecimenForm)
+from .forms import (EntryForm, ExportEntryForm, ExportLoanForm,
+                    InventorySpecimenForm, LoanForm, ReturnForm, SpecimenForm)
 from .models import (Entry, Inventory, InventorySpecimen, Loan, Specimen,
                      StockItem)
 
@@ -326,7 +326,8 @@ class ItemLoan(TemplateView):
         defaults = {
             'loan_form': LoanForm(initial={'due_date': due_date}),
             'return_form': ReturnForm,
-            'loans': Loan.objects.all()
+            'loans': Loan.objects.due().order_by('due_date'),
+            'export_form': ExportLoanForm
         }
         defaults.update(kwargs)
         return super(ItemLoan, self).get_context_data(**defaults)
@@ -354,7 +355,7 @@ class ItemLoan(TemplateView):
             if return_form.is_valid():
                 loan = return_form.cleaned_data['loan']
                 if loan:
-                    loan.delete()
+                    loan.mark_returned()
                     msg = _('Item {item} has been returned')
                     msg = msg.format(item=loan.specimen.item)
                     status = messages.SUCCESS
@@ -366,3 +367,41 @@ class ItemLoan(TemplateView):
                 context['return_form'] = return_form
         return self.render_to_response(self.get_context_data(**context))
 loan = staff_member_required(ItemLoan.as_view())
+
+
+class ExportLoan(CSVExportMixin, View):
+    prefix = 'loan'
+
+    def get(self, *args, **kwargs):
+        self.form = ExportLoanForm(self.request.GET)
+        if self.form.is_valid():
+            return self.render_to_csv()
+        else:
+            msg = _('Error while processing loans export')
+            messages.add_message(self.request, messages.ERROR, msg)
+            messages.add_message()
+            return HttpResponseRedirect(reverse_lazy('monitoring:loan'))
+
+    def get_headers(self):
+        self.fields = ['item', 'barcode', 'user', 'created at', 'due date',
+                       'status', 'comments']
+        return self.fields
+
+    def get_items(self):
+        qs = Loan.objects.order_by('created_at')
+        if self.form.cleaned_data['since']:
+            qs = qs.filter(created_at__gte=self.form.cleaned_data['since'])
+        return qs
+
+    def get_row(self, entry):
+        return {
+            'item': unicode(entry.specimen.item).encode('utf-8'),
+            'barcode': entry.specimen.barcode,
+            'user': entry.user.serial.encode('utf-8'),
+            'created at': entry.created_at,
+            'due date': entry.due_date,
+            'status': entry.get_status_display().encode('utf-8'),
+            'comments': entry.comments.encode('utf-8')
+        }
+
+export_loan = staff_member_required(ExportLoan.as_view())

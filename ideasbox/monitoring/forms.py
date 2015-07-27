@@ -44,6 +44,13 @@ class ExportEntryForm(forms.Form):
         required=False)
 
 
+class ExportLoanForm(forms.Form):
+
+    since = forms.DateField(
+        widget=forms.DateInput(format='%Y-%m-%d'),
+        required=False)
+
+
 class SpecimenForm(forms.ModelForm):
 
     def clean_barcode(self):
@@ -112,7 +119,7 @@ class LoanForm(forms.ModelForm):
 
     class Meta:
         model = Loan
-        exclude = ['by']
+        exclude = ['by', 'status']
 
 
 class ReturnForm(forms.Form):

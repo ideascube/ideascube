@@ -104,22 +104,37 @@ class InventorySpecimen(models.Model):
 
 class LoanQuerySet(models.QuerySet):
 
-    def ongoing(self):
-        return self.filter(due_date__lte=date.today())
+    def due(self):
+        return self.filter(status=Loan.DUE)
+
+    def returned(self):
+        return self.filter(status=Loan.RETURNED)
 
 
 class Loan(TimeStampedModel):
-    specimen = models.ForeignKey(Specimen, unique=True)
+    DUE = 0
+    RETURNED = 1
+    STATUSES = (
+        (DUE, _('due')),
+        (RETURNED, _('returned')),
+    )
+    specimen = models.OneToOneField(Specimen)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans')
     by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans_made')
     due_date = models.DateField(_('Due date'), default=date.today)
     comments = models.CharField(_('Comments'), blank=True, max_length=500)
+    status = models.PositiveSmallIntegerField(_('Status'), choices=STATUSES,
+                                              default=DUE)
 
     objects = LoanQuerySet.as_manager()
 
     @property
     def due(self):
         return self.due_date <= date.today()
+
+    def mark_returned(self):
+        self.status = self.RETURNED
+        self.save()
 
     class Meta:
         ordering = ('-due_date', '-created_at')
