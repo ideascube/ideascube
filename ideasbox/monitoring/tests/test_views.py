@@ -337,12 +337,36 @@ def test_cannot_loan_twice_same_item(staffapp, user):
     form['specimen'] = specimen.barcode
     form['user'] = user.serial
     form.submit('do_loan')
-    assert Loan.objects.count() == 1
+    assert Loan.objects.due().count() == 1
     form = staffapp.get(url).forms['loan_form']
     form['specimen'] = specimen.barcode
     form['user'] = staffapp.user.serial
     form.submit('do_loan')
-    assert Loan.objects.count() == 1
+    assert Loan.objects.due().count() == 1
+
+
+def test_can_loan_twice_same_item_when_first_is_returned(staffapp, user):
+    assert not Loan.objects.count()
+    specimen = SpecimenFactory()
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.barcode
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+
+    # Return it.
+    form = staffapp.get(url).forms['return_form']
+    form['loan'] = specimen.barcode
+    form.submit('do_return')
+    assert Loan.objects.due().count() == 0
+
+    # Loan again same item.
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.barcode
+    form['user'] = staffapp.user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
 
 
 def test_can_return_loan(staffapp, user):

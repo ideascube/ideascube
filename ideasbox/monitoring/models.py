@@ -118,7 +118,7 @@ class Loan(TimeStampedModel):
         (DUE, _('due')),
         (RETURNED, _('returned')),
     )
-    specimen = models.OneToOneField(Specimen)
+    specimen = models.ForeignKey(Specimen)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans')
     by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans_made')
     due_date = models.DateField(_('Due date'), default=date.today)

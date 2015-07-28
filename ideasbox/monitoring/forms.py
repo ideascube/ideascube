@@ -96,9 +96,9 @@ class LoanForm(forms.ModelForm):
 
     def clean_specimen(self):
         barcode = self.cleaned_data['specimen']
-        if Loan.objects.filter(specimen__barcode=barcode).exists():
+        if Loan.objects.due().filter(specimen__barcode=barcode).exists():
             msg = _('Item with barcode {barcode} is already loaned.')
-            forms.ValidationError(msg.format(barcode=barcode))
+            raise forms.ValidationError(msg.format(barcode=barcode))
         try:
             specimen = Specimen.objects.get(barcode=barcode)
         except Specimen.DoesNotExist:
