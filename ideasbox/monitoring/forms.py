@@ -129,7 +129,7 @@ class ReturnForm(forms.Form):
     def clean_loan(self):
         barcode = self.cleaned_data['loan']
         try:
-            loan = Loan.objects.get(specimen__barcode=barcode)
+            loan = Loan.objects.due().get(specimen__barcode=barcode)
         except Loan.DoesNotExist:
             msg = _('Item with barcode {barcode} is not loaned.')
             forms.ValidationError(msg.format(barcode=barcode))
