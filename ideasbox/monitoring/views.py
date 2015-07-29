@@ -326,7 +326,7 @@ class ItemLoan(TemplateView):
         defaults = {
             'loan_form': LoanForm(initial={'due_date': due_date}),
             'return_form': ReturnForm,
-            'loans': Loan.objects.due().order_by('due_date'),
+            'loans': Loan.objects.due(),
             'export_form': ExportLoanForm
         }
         defaults.update(kwargs)
@@ -383,8 +383,8 @@ class ExportLoan(CSVExportMixin, View):
             return HttpResponseRedirect(reverse_lazy('monitoring:loan'))
 
     def get_headers(self):
-        self.fields = ['item', 'barcode', 'user', 'created at', 'due date',
-                       'status', 'comments']
+        self.fields = ['item', 'barcode', 'user', 'loaned at', 'due date',
+                       'returned at', 'comments']
         return self.fields
 
     def get_items(self):
@@ -398,9 +398,9 @@ class ExportLoan(CSVExportMixin, View):
             'item': unicode(entry.specimen.item).encode('utf-8'),
             'barcode': entry.specimen.barcode,
             'user': entry.user.serial.encode('utf-8'),
-            'created at': entry.created_at,
+            'loaned at': entry.created_at,
             'due date': entry.due_date,
-            'status': entry.get_status_display().encode('utf-8'),
+            'returned at': entry.returned_at,
             'comments': entry.comments.encode('utf-8')
         }
 

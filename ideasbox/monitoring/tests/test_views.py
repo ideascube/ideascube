@@ -393,7 +393,7 @@ def test_can_export_loan(staffapp):
     LoanFactory(specimen=specimen)
     url = reverse('monitoring:export_loan')
     resp = staffapp.get(url, status=200)
-    assert resp.content.startswith("item,barcode,user,created at,due date,status,comments\r\nan item,123")  # noqa
+    assert resp.content.startswith("item,barcode,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa
 
 
 def test_export_loan_should_be_ok_in_arabic(staffapp):
@@ -402,6 +402,6 @@ def test_export_loan_should_be_ok_in_arabic(staffapp):
     loan = LoanFactory(specimen=specimen, comments=u"النبي (كتاب)")
     url = reverse('monitoring:export_loan')
     resp = staffapp.get(url, status=200)
-    assert resp.content.startswith("item,barcode,user,created at,due date,status,comments\r\nan item,123")  # noqa
+    assert resp.content.startswith("item,barcode,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa
     resp.mustcontain(loan.comments)
     translation.deactivate()

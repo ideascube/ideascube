@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -105,36 +105,30 @@ class InventorySpecimen(models.Model):
 class LoanQuerySet(models.QuerySet):
 
     def due(self):
-        return self.filter(status=Loan.DUE)
+        return self.filter(returned_at__isnull=True)
 
     def returned(self):
-        return self.filter(status=Loan.RETURNED)
+        return self.filter(returned_at__isnull=False)
 
 
 class Loan(TimeStampedModel):
-    DUE = 0
-    RETURNED = 1
-    STATUSES = (
-        (DUE, _('due')),
-        (RETURNED, _('returned')),
-    )
     specimen = models.ForeignKey(Specimen)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans')
     by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans_made')
     due_date = models.DateField(_('Due date'), default=date.today)
+    returned_at = models.DateTimeField(_('Return time'), default=None,
+                                       null=True, blank=True)
     comments = models.CharField(_('Comments'), blank=True, max_length=500)
-    status = models.PositiveSmallIntegerField(_('Status'), choices=STATUSES,
-                                              default=DUE)
 
     objects = LoanQuerySet.as_manager()
 
     @property
     def due(self):
-        return self.due_date <= date.today()
+        return self.returned_at is None
 
     def mark_returned(self):
-        self.status = self.RETURNED
+        self.returned_at = datetime.now()
         self.save()
 
     class Meta:
-        ordering = ('-due_date', '-created_at')
+        ordering = ('due_date', 'created_at')

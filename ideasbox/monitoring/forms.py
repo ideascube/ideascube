@@ -119,7 +119,7 @@ class LoanForm(forms.ModelForm):
 
     class Meta:
         model = Loan
-        exclude = ['by', 'status']
+        exclude = ['by', 'returned_at']
 
 
 class ReturnForm(forms.Form):
@@ -132,6 +132,8 @@ class ReturnForm(forms.Form):
             loan = Loan.objects.due().get(specimen__barcode=barcode)
         except Loan.DoesNotExist:
             msg = _('Item with barcode {barcode} is not loaned.')
-            forms.ValidationError(msg.format(barcode=barcode))
-        else:
-            return loan
+            raise forms.ValidationError(msg.format(barcode=barcode))
+        except Loan.MultipleObjectsReturned:
+            # Should araise only after migration 0.3.2 to 0.3.0.
+            loan = Loan.objects.due().filter(specimen__barcode=barcode).first()
+        return loan
