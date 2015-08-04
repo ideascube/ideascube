@@ -1,8 +1,11 @@
 language: python
 python:
   - "2.7"
-sudo: false
+before_install:
+    - pip install git+https://github.com/Erf-/wifi.git@adding-sudo-args#egg=wifi
+sudo: required
 install:
+    - sudo apt-get install wireless-tools
     - make devinstall
 script: make test
 notifications:

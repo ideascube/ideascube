@@ -1,6 +1,9 @@
 from subprocess import call
 
 import batinfo
+from wifi import Cell, Scheme
+from wifi.exceptions import ConnectionError, InterfaceError
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -110,3 +113,29 @@ def backup(request):
 def battery(request):
     return render(request, 'serveradmin/battery.html',
                   {'batteries': batinfo.batteries()})
+
+
+@staff_member_required
+def wifi(request):
+
+    try:
+        wifi = Cell.all('wlan0', sudo=True)
+        #peut etre lister la liste des interfaces dispos avant
+        #Florian --> fichier config avec le nom de l'interface concernee
+    except InterfaceError:
+        wifi = ""
+
+    return render(request, 'serveradmin/wifi.html',
+                  {'wifiList': wifi})
+
+
+@staff_member_required
+def selectWifi(request):
+
+    if request.POST:
+        scheme = Scheme.for_cell('wlan0', 'koombook', 'request.POST', 'request.POST[key]')
+        scheme.save()
+        scheme.activate(sudo=True)
+    return render(request, 'serveradmin/wifi.html',
+                  {'AuthOk': "Connexion OK"})
+

@@ -11,6 +11,8 @@ from django.core.files.base import ContentFile
 from ..backup import Backup
 from .test_backup import BACKUPS_ROOT, DATA_ROOT
 
+from wifi import Cell
+
 pytestmark = pytest.mark.django_db
 
 
@@ -181,3 +183,10 @@ def test_upload_button_do_not_create_backup_with_bad_file_name(staffapp,
 def test_staff_user_should_access_battery_management(monkeypatch, staffapp):
     monkeypatch.setattr("subprocess.Popen", FakePopen)
     assert staffapp.get(reverse("server:battery"), status=200)
+
+
+def test_wifi_request_corresponds_to_hotspots_list(monkeypatch, staffapp, expected_output):
+    monkeypatch.setattr("wifi.subprocess_compat.check_output", MagicMock(return_value=expected_output))
+    response = staffapp.get(reverse('server:wifi'))
+    assert str(response.context['wifiList']) == str(Cell.all('wlan0', sudo=True))
+

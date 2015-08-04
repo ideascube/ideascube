@@ -1,0 +1,22 @@
+{% extends 'serveradmin/index.html' %}
+{% load i18n %}
+
+{% block twothird %}
+<h2>{% trans "Manage wifi" %}</h2>
+{% if wifiList %}
+	{% for hotspot in wifiList %}
+		<form name="selectWifi" action="." method="POST">
+		    {% csrf_token %}
+		    <input type="submit" name="{{ hotspot.ssid }}" 
+		    value="{{ hotspot.ssid }}"> 
+		    <input type="text" name="key">
+		</form>
+		{{ hotspot.signal }}dB, {{ hotspot.quality }}, {{ hotspot.encrypted }},
+		{{hotspot.mode }}, {{hotspot.encryption_type}}
+	<br />
+	{% endfor %}
+	Etat de la connexion: {{ AuthOK }}
+{% else %}
+	{% trans 'No wifi available' %}
+{% endif %}
+{% endblock twothird %}
