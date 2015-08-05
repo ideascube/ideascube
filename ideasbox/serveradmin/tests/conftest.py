@@ -12,7 +12,7 @@ def backup(monkeypatch):
     return Backup('musasa_0.1.0_201501241620.zip')
 
 @pytest.fixture
-def expected_output():
+def list_output():
     output = """wlan0     Scan completed :
           Cell 01 - Address: 70:62:B8:52:79:B0
                     Channel:6
@@ -48,4 +48,41 @@ def expected_output():
                         Authentication Suites (1) : PSK
 """
     return output
+
+@pytest.fixture
+def success_output():
+    SUCCESSFUL_IFUP_OUTPUT = """Internet Systems Consortium DHCP Client 4.2.4
+Copyright 2004-2012 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+Listening on LPF/wlan0/9c:4e:36:5d:2c:64
+Sending on   LPF/wlan0/9c:4e:36:5d:2c:64
+Sending on   Socket/fallback
+DHCPDISCOVER on wlan0 to 255.255.255.255 port 67 interval 4
+DHCPDISCOVER on wlan0 to 255.255.255.255 port 67 interval 8
+DHCPREQUEST on wlan0 to 255.255.255.255 port 67
+DHCPOFFER from 192.168.1.1
+DHCPACK from 192.168.1.1
+bound to 192.168.1.113 -- renewal in 2776 seconds.
+"""
+    return SUCCESSFUL_IFUP_OUTPUT
+
+@pytest.fixture
+def failure_output():
+    FAILED_IFUP_OUTPUT = """Internet Systems Consortium DHCP Client 4.2.4
+Copyright 2004-2012 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+Listening on LPF/wlan0/9c:4e:36:5d:2c:64
+Sending on   LPF/wlan0/9c:4e:36:5d:2c:64
+Sending on   Socket/fallback
+DHCPDISCOVER on wlan0 to 255.255.255.255 port 67 interval 5
+DHCPDISCOVER on wlan0 to 255.255.255.255 port 67 interval 8
+DHCPDISCOVER on wlan0 to 255.255.255.255 port 67 interval 18
+DHCPDISCOVER on wlan0 to 255.255.255.255 port 67 interval 18
+DHCPDISCOVER on wlan0 to 255.255.255.255 port 67 interval 12
+No DHCPOFFERS received.
+No working leases in persistent database - sleeping.
+"""
+    return FAILED_IFUP_OUTPUT
 

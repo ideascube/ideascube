@@ -3,6 +3,7 @@ from subprocess import call
 import batinfo
 from wifi import Cell, Scheme
 from wifi.exceptions import ConnectionError, InterfaceError
+from wifi.utils import get_property
 
 from django.conf import settings
 from django.contrib import messages
@@ -14,6 +15,7 @@ from django.utils.translation import ugettext as _
 from .backup import Backup
 from .utils import call_service
 
+interface = 'wlan0'
 
 @staff_member_required
 def services(request):
@@ -117,25 +119,32 @@ def battery(request):
 
 @staff_member_required
 def wifi(request):
-
+    #does not actually check interface connexion state
     try:
-        wifi = Cell.all('wlan0', sudo=True)
-        #peut etre lister la liste des interfaces dispos avant
-        #Florian --> fichier config avec le nom de l'interface concernee
+        wifi = Cell.all(interface, sudo=True)
+        #Florian --> config file with interface name
     except InterfaceError:
         wifi = ""
-
-    return render(request, 'serveradmin/wifi.html',
-                  {'wifiList': wifi})
-
-
-@staff_member_required
-def selectWifi(request):
-
     if request.POST:
-        scheme = Scheme.for_cell('wlan0', 'koombook', 'request.POST', 'request.POST[key]')
-        scheme.save()
-        scheme.activate(sudo=True)
+        cell_kwargs = {'interface' : interface,
+                       'name' : request.POST['ssid'],
+                       'passkey' : request.POST['key']}
+        ssid = cell_kwargs['name']
+        for cell in Cell.where(cell_kwargs['interface'],
+                               lambda cell: cell.ssid.lower() == ssid.lower()):
+            cell_kwargs['cell'] = cell
+            scheme = Scheme.for_cell(**cell_kwargs)
+            if not Scheme.find(cell_kwargs['interface'], scheme.name):
+                scheme.save()
+            try:
+                scheme.activate()
+                is_connected = True
+                break
+            except ConnectionError:
+                #just to verify in terminal
+                print "erreur"
     return render(request, 'serveradmin/wifi.html',
-                  {'AuthOk': "Connexion OK"})
+                  {'wifiList': wifi,
+                   'AuthOK' : is_connected,
+                   'connect' : _('Activate')})
 

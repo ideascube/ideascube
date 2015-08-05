@@ -8,5 +8,4 @@ urlpatterns = [
     url(r'^backup/$', views.backup, name='backup'),
     url(r'^battery/$', views.battery, name='battery'),
     url(r'^wifi/$', views.wifi, name='wifi'),
-    url(r'^selectWifi/$', views.selectWifi, name='selectWifi'),
 ]

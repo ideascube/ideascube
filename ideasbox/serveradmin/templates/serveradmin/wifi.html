@@ -8,8 +8,10 @@
 		<form name="selectWifi" action="." method="POST">
 		    {% csrf_token %}
 		    <input type="submit" name="{{ hotspot.ssid }}" 
-		    value="{{ hotspot.ssid }}"> 
-		    <input type="text" name="key">
+		    value="{{ hotspot.ssid }}"  disabled> 
+		    <input type="text" name="key" value="{{ key }}">
+		    <input type="submit" value="{{ connect }}">
+		    <input type="hidden" name="ssid" value="{{ hotspot.ssid }}">
 		</form>
 		{{ hotspot.signal }}dB, {{ hotspot.quality }}, {{ hotspot.encrypted }},
 		{{hotspot.mode }}, {{hotspot.encryption_type}}

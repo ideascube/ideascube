@@ -11,7 +11,9 @@ from django.core.files.base import ContentFile
 from ..backup import Backup
 from .test_backup import BACKUPS_ROOT, DATA_ROOT
 
-from wifi import Cell
+from wifi import Cell, Scheme
+from wifi.exceptions import ConnectionError
+from ..views import interface
 
 pytestmark = pytest.mark.django_db
 
@@ -185,8 +187,19 @@ def test_staff_user_should_access_battery_management(monkeypatch, staffapp):
     assert staffapp.get(reverse("server:battery"), status=200)
 
 
-def test_wifi_request_corresponds_to_hotspots_list(monkeypatch, staffapp, expected_output):
-    monkeypatch.setattr("wifi.subprocess_compat.check_output", MagicMock(return_value=expected_output))
+def test_wifi_request_corresponds_to_hotspots_list(monkeypatch, staffapp, list_output):
+    monkeypatch.setattr("wifi.subprocess_compat.check_output", MagicMock(return_value=list_output))
     response = staffapp.get(reverse('server:wifi'))
-    assert str(response.context['wifiList']) == str(Cell.all('wlan0', sudo=True))
+    assert str(response.context['wifiList']) == str(Cell.all(interface, sudo=True))
+
+
+def test_wifi_connection_to_hotspot(monkeypatch, staffapp, success_output, failure_output):
+    monkeypatch.setattr("wifi.subprocess_compat.check_output", MagicMock(return_value=success_output))
+    scheme = Scheme(interface, 'test')
+    connection = scheme.activate()
+    assert str(connection.scheme) == str(scheme)
+    assert connection.ip_address == '192.168.1.113'
+    monkeypatch.setattr("wifi.subprocess_compat.check_output", MagicMock(return_value=failure_output))
+    with pytest.raises(ConnectionError):
+        scheme.activate()
 
