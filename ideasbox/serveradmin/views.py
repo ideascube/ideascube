@@ -170,7 +170,7 @@ def wifi(request):
                 print "erreur"
         else:
             # disconnect
-            pass
+            call(["sbin/ifdown", interface])
     return render(request, 'serveradmin/wifi.html',
                   {'wifiList': set_wifilist()[0],
                    'AuthOK' : set_wifilist()[1]})
