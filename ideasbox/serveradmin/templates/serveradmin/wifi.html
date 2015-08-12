@@ -10,7 +10,9 @@
 		    <input type="submit" name="{{ hotspot.ssid }}" 
 		    value="{{ hotspot.ssid }}"  disabled> 
 		    <input type="text" name="key" value="{{ key }}">
-		    <input type="submit" value="{{ connect }}">
+		    <input type="submit" value="{{ hotspot.action }}">
+		    <input type="hidden" name="action" value="{{ hotspot.action }}">
+		    <input type="hidden" name="address" value="{{ hotspot.address }}">
 		    <input type="hidden" name="ssid" value="{{ hotspot.ssid }}">
 		</form>
 		{{ hotspot.signal }}dB, {{ hotspot.quality }}, {{ hotspot.encrypted }},

@@ -3,7 +3,7 @@ from subprocess import call
 import batinfo
 from wifi import Cell, Scheme
 from wifi.exceptions import ConnectionError, InterfaceError
-from wifi.utils import get_property
+from wifi.utils import get_property, set_properties
 
 from django.conf import settings
 from django.contrib import messages
@@ -117,34 +117,61 @@ def battery(request):
                   {'batteries': batinfo.batteries()})
 
 
-@staff_member_required
-def wifi(request):
-    #does not actually check interface connexion state
+def set_wifilist():
+    to_bool = {'True' : True, 'False' : False, None : False, 'None' : False}
+    # reset scheme_active property
+    essid = get_property('scheme_current').split('--')[0]
+    try:
+        is_essid = to_bool[essid]
+    except KeyError:
+        is_essid = True
+    if is_essid:
+        options = {'wireless-essid' : essid}
+    else:
+        options = None
+    set_properties(None, None, options)
+    is_connected = to_bool[get_property('scheme_active')] or False
+    action = {True : _('Disconnect'), False : _('Connect')}
     try:
         wifi = Cell.all(interface, sudo=True)
-        #Florian --> config file with interface name
+        # Florian --> config file with interface name
+        for hotspot in wifi:
+            # find out if connected with
+            id_ = '--'.join([hotspot.ssid, hotspot.address])
+            hotspot.is_active = (get_property('scheme_current') == id_)
+            hotspot.is_connected = (hotspot.is_active and is_connected)
+            hotspot.action = action[hotspot.is_connected]
     except InterfaceError:
         wifi = ""
+    return wifi, is_connected
+
+
+@staff_member_required
+def wifi(request):
+    set_wifilist()
     if request.POST:
-        cell_kwargs = {'interface' : interface,
-                       'name' : request.POST['ssid'],
-                       'passkey' : request.POST['key']}
-        ssid = cell_kwargs['name']
-        for cell in Cell.where(cell_kwargs['interface'],
-                               lambda cell: cell.ssid.lower() == ssid.lower()):
+        action_ = request.POST['action']
+        if action_ == _('Connect'):
+            # we use the addresses to set unicity of the schemes created
+            address = request.POST['address']
+            cell_kwargs = {'interface' : interface,
+                           'name' : '--'.join([request.POST['ssid'], address]),
+                           'passkey' : request.POST['key']}
+            cell = Cell.where(cell_kwargs['interface'],
+                              lambda cell: cell.address == address)[0]
             cell_kwargs['cell'] = cell
             scheme = Scheme.for_cell(**cell_kwargs)
             if not Scheme.find(cell_kwargs['interface'], scheme.name):
                 scheme.save()
             try:
                 scheme.activate()
-                is_connected = True
-                break
             except ConnectionError:
-                #just to verify in terminal
+                # just to verify in terminal
                 print "erreur"
+        else:
+            # disconnect
+            pass
     return render(request, 'serveradmin/wifi.html',
-                  {'wifiList': wifi,
-                   'AuthOK' : is_connected,
-                   'connect' : _('Activate')})
+                  {'wifiList': set_wifilist()[0],
+                   'AuthOK' : set_wifilist()[1]})
 
