@@ -3,9 +3,8 @@ python:
   - "2.7"
 before_install:
     - pip install git+https://github.com/Erf-/wifi.git@connection-status#egg=wifi
-sudo: required
+sudo: false
 install:
-    - sudo apt-get install wireless-tools
     - make devinstall
 script: make test
 notifications:

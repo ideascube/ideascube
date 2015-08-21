@@ -3,7 +3,6 @@ from subprocess import call
 import batinfo
 from wifi import Cell, Scheme
 from wifi.exceptions import ConnectionError, InterfaceError
-from wifi.utils import get_property, set_properties
 
 from django.conf import settings
 from django.contrib import messages
@@ -117,32 +116,44 @@ def battery(request):
                   {'batteries': batinfo.batteries()})
 
 
+unset_config_data = """scheme_current=None
+interface_current={interface}
+scheme_active=False
+""".format(interface=interface)
+
 def set_wifilist():
+    f = open('.runningconfig', 'r+')
+    read_data = f.read()
+    if len(read_data) == 0:
+        f.write(unset_config_data)
+    print f.read()
+    from wifi.utils import get_property, set_properties
     to_bool = {'True' : True, 'False' : False, None : False, 'None' : False}
     # reset scheme_active property
-    essid = get_property('scheme_current').split('--')[0]
+    essid = get_property('scheme_current')
     try:
         is_essid = to_bool[essid]
     except KeyError:
         is_essid = True
+        essid = essid.split('--')[0]
     if is_essid:
         options = {'wireless-essid' : essid}
     else:
         options = None
-    set_properties(None, None, options)
+    set_properties(None, None, config=options)
     is_connected = to_bool[get_property('scheme_active')] or False
     action = {True : _('Disconnect'), False : _('Connect')}
     try:
         wifi = Cell.all(interface, sudo=True)
         # Florian --> config file with interface name
-        for hotspot in wifi:
+    except InterfaceError:
+        wifi = ""
+    for hotspot in wifi:
             # find out if connected with
             id_ = '--'.join([hotspot.ssid, hotspot.address])
             hotspot.is_active = (get_property('scheme_current') == id_)
             hotspot.is_connected = (hotspot.is_active and is_connected)
             hotspot.action = action[hotspot.is_connected]
-    except InterfaceError:
-        wifi = ""
     return wifi, is_connected
 
 
@@ -150,12 +161,13 @@ def set_wifilist():
 def wifi(request):
     set_wifilist()
     if request.POST:
-        action_ = request.POST['action']
-        if action_ == _('Connect'):
+        action = request.POST['action']
+        if action == _('Connect'):
             # we use the addresses to set unicity of the schemes created
             address = request.POST['address']
+            ssid = request.POST['ssid']
             cell_kwargs = {'interface' : interface,
-                           'name' : '--'.join([request.POST['ssid'], address]),
+                           'name' : '--'.join([ssid, address]),
                            'passkey' : request.POST['key']}
             cell = Cell.where(cell_kwargs['interface'],
                               lambda cell: cell.address == address)[0]
@@ -167,11 +179,16 @@ def wifi(request):
                 scheme.activate()
             except ConnectionError:
                 # just to verify in terminal
-                print "erreur"
+                print "Connection Error"
         else:
             # disconnect
-            call(["sbin/ifdown", interface])
+            import subprocess
+            # to avoid errors in tests
+            subprocess.call(["/sbin/ifdown", interface])
+    # refresh wifilist
+    wifilist, status = set_wifilist()
+    # causes the long load time because of the scan
     return render(request, 'serveradmin/wifi.html',
-                  {'wifiList': set_wifilist()[0],
-                   'AuthOK' : set_wifilist()[1]})
+                  {'wifiList': wifilist,
+                   'connection_status' : status})
 

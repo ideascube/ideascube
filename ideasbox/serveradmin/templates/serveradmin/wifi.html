@@ -5,12 +5,12 @@
 <h2>{% trans "Manage wifi" %}</h2>
 {% if wifiList %}
 	{% for hotspot in wifiList %}
-		<form name="selectWifi" action="." method="POST">
+		<form name="selectWifi" action="." method="POST" id=selectWifi>
 		    {% csrf_token %}
 		    <input type="submit" name="{{ hotspot.ssid }}" 
-		    value="{{ hotspot.ssid }}"  disabled> 
-		    <input type="text" name="key" value="{{ key }}">
-		    <input type="submit" value="{{ hotspot.action }}">
+		    value="{{ hotspot.ssid }}"  disabled>
+		    <input type="text" name="key">
+		    <input type="submit" name="{{ hotspot.action }}" value="{{ hotspot.action }}">
 		    <input type="hidden" name="action" value="{{ hotspot.action }}">
 		    <input type="hidden" name="address" value="{{ hotspot.address }}">
 		    <input type="hidden" name="ssid" value="{{ hotspot.ssid }}">
@@ -19,7 +19,7 @@
 		{{hotspot.mode }}, {{hotspot.encryption_type}}
 	<br />
 	{% endfor %}
-	Etat de la connexion: {{ AuthOK }}
+	Etat de la connexion: {{ connection_status }}
 {% else %}
 	{% trans 'No wifi available' %}
 {% endif %}

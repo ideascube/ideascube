@@ -3,6 +3,13 @@ import pytest
 from ..backup import Backup
 
 DATA_ROOT = 'ideasbox/serveradmin/tests/data'
+try:
+    from io import StringIO
+except ImportError:  # Python < 3
+    from StringIO import StringIO
+from mock import patch
+from django.utils.translation import ugettext as _
+from wifi.utils import get_property, set_properties
 
 
 @pytest.fixture
@@ -13,7 +20,7 @@ def backup(monkeypatch):
 
 @pytest.fixture
 def list_output():
-    output = """wlan0     Scan completed :
+    bsf01 = """wlan0     Scan completed :
           Cell 01 - Address: 70:62:B8:52:79:B0
                     Channel:6
                     Frequency:2.437 GHz (Channel 6)
@@ -47,6 +54,22 @@ def list_output():
                         Pairwise Ciphers (2) : CCMP TKIP
                         Authentication Suites (1) : PSK
 """
+    
+    bsf02 = """Cell 02 - Address: 
+                    ESSID:"bsf02"
+                    Protocol:IEEE 802.11bg
+                    Mode:Master
+                    Frequency:2.457 GHz (Channel 10)
+                    Encryption key:on
+                    Bit Rates:54 Mb/s
+                    Extra:wpa_ie=dd160050f20101000050f20201000050f20201000050f202
+                    IE: WPA Version 1
+                        Group Cipher : TKIP
+                        Pairwise Ciphers (1) : TKIP
+                        Authentication Suites (1) : PSK
+                    Quality=100/100  Signal level=74/100
+"""
+    output = '\n'.join([bsf01, bsf02])
     return output
 
 @pytest.fixture
@@ -85,4 +108,81 @@ No DHCPOFFERS received.
 No working leases in persistent database - sleeping.
 """
     return FAILED_IFUP_OUTPUT
+
+@pytest.fixture
+def disconnected_output():
+    disconnected_output = """test-interface00     IEEE 802.11bgn  ESSID:off/any  
+          Mode:Managed  Access Point: Not-Associated   Tx-Power=20 dBm   
+          Retry short limit:7   RTS thr=2347 B   Fragment thr:off
+          Power Management:off
+"""
+    return disconnected_output
+
+class MyStringIO(StringIO):
+# extends StringIO buit-in class to override write and close methods
+# for testing IO operations.
+
+    def __init__(self, string):
+        super(MyStringIO, self).__init__(string.decode('unicode-escape'))
+        self.truncate = False
+    
+    def write(self, string):
+        if self.truncate:
+            self.__init__(string)
+        else:
+            value = self.getvalue() + string
+            self.__init__(value)
+    
+    def close(self):
+        self.truncate = True
+        self.seek(0)
+
+@pytest.fixture
+def properties_file():
+    content = """scheme_current=test-scheme
+    interface_current=test-interface
+    scheme_active=True
+    """
+    properties_file = MyStringIO(content)
+    return properties_file
+
+
+def getproperty(prop, _file=None):
+    #from wifi.utils import get_property
+    # to ensure we only patch within this function execution
+    with patch('__builtin__.open', return_value=_file):
+        return get_property(prop)
+
+
+def setproperties(interface_current=None, scheme_current=None, config=None, _file=None):
+    #from wifi.utils import set_properties
+    with patch('__builtin__.open', return_value=_file):
+        set_properties(interface_current, scheme_current, config)
+
+
+def adminset(interface_current=None, scheme_current=None, scheme_active=False, _file=None):
+    # arbitrary set of the running configfile
+    # does not verify coherence of the arguments
+    properties = {'interface_current' : interface_current,
+                  'scheme_current' : scheme_current,
+                  'scheme_active' : scheme_active}
+    _file.truncate = True
+    for prop in properties:
+        prop_line = str(prop) + '=' + str(properties[prop]) + '\n'
+        _file.write(prop_line)
+    _file.close()
+
+
+def set_hotspots(hotspots, active=-1, connected=False, _file=None, interface=None):
+    if active >= 0:
+        id_ = '--'.join([hotspots[active].ssid, hotspots[active].address])
+        kwargs = {'scheme_current' : id_,
+        'scheme_active' : connected,
+        'interface_current' : interface,
+        '_file' : _file}
+        adminset(**kwargs)
+
+
+#def do_nothing():
+#    pass
 
