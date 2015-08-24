@@ -1,22 +1,20 @@
 import os
+import subprocess
 import zipfile
 
 import pytest
-from webtest.forms import Upload
-from mock import MagicMock, patch
-
-from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
-
-from ..backup import Backup
-from .test_backup import BACKUPS_ROOT, DATA_ROOT
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+from mock import MagicMock, patch
+from webtest.forms import Upload
 
 from wifi import Cell, Scheme
 from wifi.exceptions import ConnectionError
+
+from ..backup import Backup
 from ..views import interface
-from django.utils.translation import ugettext as _
-from .conftest import getproperty, setproperties, set_hotspots
-import subprocess
+from .test_backup import BACKUPS_ROOT, DATA_ROOT
 
 pytestmark = pytest.mark.django_db
 
@@ -193,22 +191,23 @@ def test_staff_user_should_access_battery_management(monkeypatch, staffapp):
 def test_wifi_request_corresponds_to_hotspots_list(monkeypatch,
                                                    staffapp,
                                                    list_output):
-    monkeypatch.setattr("wifi.subprocess_compat.check_output", MagicMock(return_value=list_output))
+    monkeypatch.setattr("wifi.subprocess_compat.check_output",
+                        MagicMock(return_value=list_output))
     response = staffapp.get(reverse('server:wifi'))
-    assert str(response.context['wifiList']) == str(Cell.all(interface, sudo=True))
+    assert str(response.context['wifiList']) == str(Cell.all(interface,
+                                                             sudo=True))
 
 
 def test_wifi_connection_to_hotspot(monkeypatch,
                                     staffapp,
-                                    success_output,
-                                    failure_output,
-                                    list_output,
-                                    properties_file):
-    def save_mock():
+                                    list_output):
+    def save_mock(*args, **kwargs):
         pass
 
-    monkeypatch.setattr("wifi.scheme.Scheme.save",
-                        MagicMock(side_effect=save_mock))
+    def activate_mock():
+        pass
+
+    monkeypatch.setattr("wifi.scheme.Scheme.save", save_mock)
     monkeypatch.setattr("wifi.subprocess_compat.check_output",
                         MagicMock(return_value=list_output))
     # list hotspots
@@ -220,8 +219,8 @@ def test_wifi_connection_to_hotspot(monkeypatch,
     # launch connection request
     id_ = '--'.join([hotspots[0].ssid, hotspots[0].address])
     scheme = Scheme(interface, id_)
-    connection = scheme.parse_ifup_output(success_output)
-    monkeypatch.setattr("wifi.scheme.Scheme.activate", MagicMock(return_value = connection))
+    monkeypatch.setattr("wifi.scheme.Scheme.activate",
+                        MagicMock(side_effect=activate_mock))
     form.submit(hotspots[0].action)
     # assert connected
     Scheme.activate.assert_called_with()
@@ -229,58 +228,46 @@ def test_wifi_connection_to_hotspot(monkeypatch,
 
 def test_wifi_disconnection_to_hotspot(monkeypatch,
                                        staffapp,
-                                       list_output,
-                                       properties_file):
+                                       list_output):
     monkeypatch.setattr("wifi.subprocess_compat.check_output",
                         MagicMock(return_value=list_output))
     response = staffapp.get(reverse('server:wifi'))
     hotspots = response.context['wifiList']
 
-    def get_prop(prop, _file=properties_file):
-        return getproperty(prop, _file)
+    id_ = '--'.join([hotspots[1].ssid, hotspots[1].address])
+
+    def get_prop(prop):
+        if prop == 'scheme_active':
+            return 'True'
+        if prop == 'scheme_current':
+            return id_
 
     def set_props(interface_current=None,
                   scheme_current=None,
-                  config=None,
-                  _file=properties_file):
-        kwargs = {'interface_current' : interface_current,
-                  'scheme_current' : scheme_current,
-                  'config' : config,
-                  '_file' : _file}
-        setproperties(**kwargs)
+                  config=None):
+        pass
 
     def call_mock(args):
         pass
 
-    monkeypatch.setattr("wifi.utils.get_property",
-                        MagicMock(side_effect=get_prop))
-    monkeypatch.setattr("wifi.utils.set_properties",
-                        MagicMock(side_effect=set_props))
+    monkeypatch.setattr("wifi.utils.get_property", get_prop)
+    monkeypatch.setattr("wifi.utils.set_properties", set_props)
     monkeypatch.setattr("subprocess.call",
                         MagicMock(side_effect=call_mock))
+
     # set conditions
-    # we set connect kwarg value to True to actually test disconnetion
-    set_hotspots(hotspots,
-                 active=1,
-                 connected=True,
-                 _file=properties_file,
-                 interface=interface)
-    # mock hotspot list
-    monkeypatch.setattr("wifi.scan.Cell.all",
-                        MagicMock(return_value=hotspots))
-    # assert connected
+    # in facto, the get_proerty and set_properties patch will now actually
+    # be implemented
     response = staffapp.get(reverse('server:wifi'))
     hotspots = response.context['wifiList']
 
-    assert get_prop('scheme_active') == str(True)
-
-    id_ = '--'.join([hotspots[1].ssid, hotspots[1].address])
-    assert get_prop('scheme_current') == id_
+    # assert connected
     assert hotspots[1].action == _('Disconnect')
+
     # send request
-    form = staffapp.get(reverse('server:wifi')).forms['selectWifi']
+    form = response.forms['selectWifi']
     form.submit(hotspots[1].action)
+
     # assert disconnected
     args = ["/sbin/ifdown", interface]
     subprocess.call.assert_called_with(args)
-

@@ -1,15 +1,15 @@
 from subprocess import call
 
 import batinfo
-from wifi import Cell, Scheme
-from wifi.exceptions import ConnectionError, InterfaceError
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import StreamingHttpResponse
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
+
+from wifi import Cell, Scheme
+from wifi.exceptions import ConnectionError, InterfaceError
 
 from .backup import Backup
 from .utils import call_service
@@ -122,12 +122,12 @@ scheme_active=False
 """.format(interface=interface)
 
 def set_wifilist():
+    from wifi.utils import get_property, set_properties
     f = open('.runningconfig', 'r+')
     read_data = f.read()
     if len(read_data) == 0:
         f.write(unset_config_data)
-    print f.read()
-    from wifi.utils import get_property, set_properties
+    f.close()
     to_bool = {'True' : True, 'False' : False, None : False, 'None' : False}
     # reset scheme_active property
     essid = get_property('scheme_current')
@@ -141,7 +141,7 @@ def set_wifilist():
     else:
         options = None
     set_properties(None, None, config=options)
-    is_connected = to_bool[get_property('scheme_active')] or False
+    is_connected = to_bool[get_property('scheme_active')]
     action = {True : _('Disconnect'), False : _('Connect')}
     try:
         wifi = Cell.all(interface, sudo=True)
@@ -191,4 +191,3 @@ def wifi(request):
     return render(request, 'serveradmin/wifi.html',
                   {'wifiList': wifilist,
                    'connection_status' : status})
-
