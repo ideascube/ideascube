@@ -371,6 +371,20 @@ html[dir='rtl'] header .menu a + a {
     margin-left: 0;
     margin-right: 20px;
 }
+.dropdown-menu ul a {
+    color: #333;
+    line-height: 30px;
+    font-size: 15px;
+    font-family: 'fira_sansregular';
+    text-transform: capitalize;
+}
+.menu-subtitle {
+    font-family: 'fira_sansbold';
+}
+#logout {
+    font-family: 'fira_sansbold';
+    text-transform: uppercase;
+}
 footer {
     border-top: 1px solid #222;
     padding: 50px;
