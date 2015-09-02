@@ -371,12 +371,23 @@ html[dir='rtl'] header .menu a + a {
     margin-left: 0;
     margin-right: 20px;
 }
+.dropdown-menu {
+    position: relative;
+}
 .dropdown-menu ul a {
     color: #333;
     line-height: 30px;
     font-size: 15px;
     font-family: 'fira_sansregular';
     text-transform: capitalize;
+}
+.dropdown-menu ul {
+    position: absolute;
+    opacity: 0;
+}
+.dropdown-menu a:hover + ul {
+    display: block;
+    opacity: 1;
 }
 .menu-subtitle {
     font-family: 'fira_sansbold';
