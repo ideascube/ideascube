@@ -372,26 +372,35 @@ html[dir='rtl'] header .menu a + a {
     margin-right: 20px;
 }
 .dropdown-menu {
+    display: flex;
+    flex-direction : column;
+    margin-left: 20px;
     position: relative;
 }
-.dropdown-menu a {
-    color: #333;
-    font-size: 15px;
-    font-family: 'fira_sansregular';
-}
-.dropdown-menu {
-    position: absolute;
-    display: none;
-}
-a:hover + ul {
+header .menu .dropdown-menu:hover ul{
     display: block;
 }
 .menu-subtitle {
     font-family: 'fira_sansbold';
 }
+header .menu .dropdown-menu ul {
+    display: none;
+    position: absolute;
+    margin-top: -30px;
+    z-index: 999;
+    width: 200px;
+    background-color: white;
+    text-align: right;
+    left: -155px;   
+}
+.dropdown-menu ul a {
+    font-family: 'fira_sansregular';
+    text-transform: capitalize;
+    line-height: 30px;
+}
 #logout {
     font-family: 'fira_sansbold';
-    text-transform: uppercase;
+    text-transform : uppercase;
 }
 footer {
     border-top: 1px solid #222;
