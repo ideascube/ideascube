@@ -4,13 +4,24 @@
 
 {% block content %}
     <div class="row">
-        <div class="col half">
-            {% include 'search/box.html' %}
+        <div class="col third">
             {% include 'ideasbox/includes/wikipedia_card.html' %}
             {% include 'ideasbox/includes/khan-academy_card.html' %}
-            {% tag_cloud url="by_tag" %}
+            {% include 'ideasbox/includes/wikipedia_card.html' %}
+            {% include 'ideasbox/includes/khan-academy_card.html' %}
+            {% include 'ideasbox/includes/wikipedia_card.html' %}
+            {% include 'ideasbox/includes/khan-academy_card.html' %}
         </div>
-        <div class="col half">
+        <div class="col third">
+            {% include 'ideasbox/includes/wikipedia_card.html' %}
+            {% include 'ideasbox/includes/khan-academy_card.html' %}
+            {% include 'ideasbox/includes/wikipedia_card.html' %}
+            {% include 'ideasbox/includes/khan-academy_card.html' %}
+            {% include 'ideasbox/includes/wikipedia_card.html' %}
+            {% include 'ideasbox/includes/khan-academy_card.html' %}
+        </div>
+        <div class="col third">
+            {% include 'search/box.html' %}
             {% include 'ideasbox/includes/blog_card.html' with content=blog_contents %}
             {% if random_book %}
                 {% include 'ideasbox/includes/book_card.html' with book=random_book %}
@@ -18,6 +29,7 @@
             {% if random_doc %}
                 {% include 'ideasbox/includes/document_card.html' with document=random_doc %}
             {% endif %}
+            {% tag_cloud url="by_tag" %}
         </div>
     </div>
 {% endblock content %}
