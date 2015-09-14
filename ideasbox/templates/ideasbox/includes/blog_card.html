@@ -1,0 +1,7 @@
+{% load i18n %}
+<div class="card tinted book">
+    {% if content.image %}<img src="{{ content.image.url }}" class="cover" />{% endif %}
+    <h4 class="flow"><span class="theme create">blog</span> <span>{% trans "LAST POSTS" %}</span></h4>
+    <h3 class="flow"><a href="{% url 'blog:content_detail' pk=content.pk %}">{{ content }}</a><em>{% trans "by" %}</em><em>{{ content.get_author_display|truncatewords:5 }}</em></h3>
+    <p>{{ content.summary|truncatewords:20 }}</p>
+</div>
