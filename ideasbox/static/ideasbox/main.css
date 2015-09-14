@@ -374,7 +374,10 @@ html[dir='rtl'] header .menu a + a {
     margin-left: 20px;
     position: relative;
 }
-header .menu .dropdown-menu:hover ul{
+header .menu .dropdown-menu:hover > a {
+    text-decoration: underline;
+}
+header .menu .dropdown-menu:hover ul {
     display: block;
 }
 .menu-subtitle {
@@ -407,7 +410,7 @@ html[dir='rtl'] header .menu .dropdown-menu ul {
 }
 footer {
     border-top: 1px solid #222;
-    padding: 50px;
+    padding: 20px;
     color: #fefefe;
     background-color: #333;
     margin-top: 100px;
@@ -438,6 +441,12 @@ html[dir='rtl'] .boxid {
     float: left;
     right: -31px;
 }
+footer .half {
+    margin-left: 50%;
+}
+.i18n_switch {
+    padding-top: 40px;
+}
 .i18n_switch select {
     display: inline;
     width: calc(100% - 100px);
@@ -465,7 +474,6 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
 }
-
 /* ************************************************* */
 /* ******************** TOOLS ********************** */
 /* ************************************************* */
