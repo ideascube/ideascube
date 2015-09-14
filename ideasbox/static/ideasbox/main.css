@@ -390,8 +390,10 @@ header .menu .dropdown-menu ul {
     z-index: 999;
     width: 200px;
     background-color: white;
-    text-align: right;
-    left: -155px;   
+    text-align: left;
+    left: -155px;
+    padding: 20%;
+    border: 1px solid #CCCCCC;   
 }
 html[dir='rtl'] header .menu .dropdown-menu ul {
     margin-left: 200%;
