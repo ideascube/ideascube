@@ -1,8 +1,13 @@
-
-{% load i18n %}
-<div class="card tinted book">
-    {% if content.image %}<img src="{{ content.image.url }}" class="cover">{% endif %}
-    <h4 class="flow"><span class="theme create">blog</span> <span>{% trans "LAST POSTS" %}</span></h4>
-    <h3 class="flow"><a href={"{% url 'blog:content_detail' pk=content.pk %}">{{ content }}</a><em>{% trans "by" %}</em><em>{{ content.get_author_display|truncatewords:5 }}</em></h3>
-    <p>{{ content.summary|truncatewords:20 }}</p>
+<div class="card">
+    <a href="{% url 'blog:content_detail' pk=content.pk %}">
+        <h3>{{ content }}</h3>
+    </a>
+    <h5>{{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.get_author_display }}</h5>
+    <p>{% if content.image %}
+         <a href="{% url 'blog:content_detail' pk=content.pk %}">
+            <img src="{{ content.image.url }}">
+        </a>
+    {% endif %}
+        {{ content.summary }}
+    </p>
 </div>
