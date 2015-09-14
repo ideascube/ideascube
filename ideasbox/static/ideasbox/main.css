@@ -225,7 +225,7 @@ input[type="submit"],
 .button {
     border: none;
     border-radius: 2px;
-    padding: 0 20px;
+    padding: 0;
     text-decoration: none;
     color: #fff;
     font-size: 1.1em;
