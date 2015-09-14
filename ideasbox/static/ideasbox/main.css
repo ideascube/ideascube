@@ -331,16 +331,13 @@ header section {
     display: flex;
 }
 header h1 {
-    line-height: 100px;
     margin-left: 40px;
-    padding-left: 90px;
-    font-size: 40px;
-    font-weight: normal;
-    font-family: 'fira_sanslight';
-    background-image: url('./img/logo.svg');
+    background-image: url('./img/Logo-prop2.png');
     background-repeat: no-repeat;
     background-position: left center;
-    background-size: 80px;
+    background-size: 250px;
+    width: 300px;
+    height: 50px;
 }
 html[dir='rtl'] header h1 {
     background-position: right center;
@@ -434,7 +431,7 @@ header h1 a {
     text-align: center;
     text-transform: uppercase;
     top: 25px;
-    left: -31px;
+    left: -50px;
     float: right;
 }
 html[dir='rtl'] .boxid {

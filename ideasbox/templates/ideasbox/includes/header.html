@@ -1,7 +1,7 @@
 {% load i18n %}
 {% spaceless %}
 <header>
-    <section><h1><a href="{% url 'index' %}">ideasbox</a><span class="boxid">{{ IDEASBOX_NAME }}</span></h1></section>
+    <section><a href="{% url 'index' %}"><h1></h1></a><span class="boxid">{{ IDEASBOX_NAME }}</span></section>
     <section class="menu">
       <a class="mwide tthird" href="{% url 'blog:index' %}">{% trans "blog" %}</a>
       <a class="mwide tthird" href="{% url 'library:index' %}">{% trans "library" %}</a>
