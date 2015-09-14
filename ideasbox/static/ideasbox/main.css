@@ -368,7 +368,7 @@ header .menu a + a {
     margin-left: 20px;
 }
 html[dir='rtl'] header .menu a + a {
-    margin-left: 0;
+    margin-left: 20px;
     margin-right: 20px;
 }
 .dropdown-menu {
@@ -392,6 +392,10 @@ header .menu .dropdown-menu ul {
     background-color: white;
     text-align: right;
     left: -155px;   
+}
+html[dir='rtl'] header .menu .dropdown-menu ul {
+    margin-left: 200%;
+    text-align: right;
 }
 .dropdown-menu ul a {
     font-family: 'fira_sansregular';
