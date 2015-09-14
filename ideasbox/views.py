@@ -31,7 +31,7 @@ user_model = get_user_model()
 
 
 def index(request):
-    contents = Content.objects.published()[:3]
+    contents = Content.objects.published()[:1]
     random_book = Book.objects.available().order_by('?').first()
     random_doc = Document.objects.order_by('?').first()
     context = {
