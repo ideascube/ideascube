@@ -409,10 +409,10 @@ html[dir='rtl'] header .menu .dropdown-menu ul {
     text-transform : uppercase;
 }
 footer {
-    border-top: 1px solid #222;
+    /*border-top: 1px solid #222;*/
     padding: 20px;
     color: #fefefe;
-    background-color: #333;
+    background-color: #95A5A6;
     margin-top: 100px;
 }
 footer a,
