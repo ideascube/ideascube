@@ -102,6 +102,27 @@
     .card:first-child {
         margin-top: 20px !important;
     }
+    .flow {
+        flex-direction : column;
+        -webkit-flex-direction: column;
+    }
+    footer .row {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        align-items: center;
+    }
+    footer .half {
+        margin-left: 0% !important;
+    }
+    footer .i18n_switch {
+        padding-top: 0px;
+    }
+    footer .third {
+        width: 80%;
+    }
+    footer img {
+        margin-top: 10px;
+    }
 }
 @media screen and (min-width: 600px) and (max-width: 900px) {
     header {
@@ -118,6 +139,19 @@
     header .menu {
         margin-right: 0px;
     }
+    .column_small_screen {
+        flex-direction: column !important;
+        align-items: center;
+    }
+    .col {
+        width: 80% !important;
+    }
+    .col + .col {
+        padding-left: 0px !important;
+    }
+    .card:first-child {
+        margin-top: 20px !important;
+    }
     .menu a {
         font-size: 15px;
         max-height: 70px;
@@ -127,7 +161,7 @@
         margin-left: 40px;
     }
 }
-@media screen and (min-width: 900px) and (max-width: 1280px) {
+@media screen and (min-width: 900px) and (max-width: 1200px) {
     header {
         -webkit-flex-direction: row;
         flex-direction : row;
@@ -140,6 +174,20 @@
     header .menu {
         margin-right: 0px;
     }
+    .column_small_screen {
+        flex-direction: column !important;
+        align-items: center;
+    }
+    .col {
+        width: 70% !important;
+    }
+    .col + .col {
+        padding-left: 0px !important;
+    }
+    .card:first-child {
+        margin-top: 20px !important;
+    }
+
     .menu a {
         font-size: 15px;
     }
@@ -257,9 +305,9 @@ table tr th {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    display: -webkit-flex;
-    -webkit-flex-direction: row;
     display: flex;
+  display: -webkit-flex;
+    -webkit-flex-direction: row;
     flex-direction: row;
 }
 .row + .row {
@@ -547,6 +595,7 @@ footer .half {
 .i18n_switch select {
     display: inline;
     width: calc(100% - 100px);
+    min-width: 100px;
     margin: 0;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
