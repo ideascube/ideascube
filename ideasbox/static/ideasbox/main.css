@@ -840,13 +840,15 @@ table.stock .actions {
     header .menu a + a {
         margin-left: 20px;
     }
+    header .menu .dropdown-menu ul {
+        margin-top: 0;
+    }
     .row {
         max-width: 90%;
     }
     .column_small_screen {
         flex-direction: column;
         -webkit-flex-direction: column;
-
     }
     .column_small_screen div {
         width: 100%;
@@ -898,6 +900,9 @@ table.stock .actions {
     header .menu {
         margin-right: 0px;
     }
+    header .menu .dropdown-menu ul {
+        margin-top: 0;
+    }
     .column_small_screen {
         flex-direction: column;
         align-items: center;
@@ -925,6 +930,12 @@ table.stock .actions {
     header .menu a + a {
         margin-left: 40px;
     }
+    footer .half {
+        margin-left: 10%;
+    }    
+    footer .third {
+        width: 60%;
+    }
 }
 @media screen and (min-width: 900px) and (max-width: 1200px) {
     header {
@@ -940,14 +951,14 @@ table.stock .actions {
         margin-right: 0px;
     }
     .row {
-        max-width: 90%;
+        max-width: 95%;
     }
     .column_small_screen {
         flex-direction: column;
         align-items: center;
     }
     .col {
-        width: 70%;
+        width: 80%;
     }
     .col + .col {
         padding-left: 0px;
@@ -958,14 +969,19 @@ table.stock .actions {
     .card:first-child {
         margin-top: 20px;
     }
-
     .menu a {
         font-size: 15px;
     }
     header .menu a + a {
         margin-left: 20px;
     }
-    
+    footer .half {
+        margin-left: 30%;
+    }    
+    footer .third {
+        width: 50%;
+        margin-left: 5%;
+    }    
 }
 @media screen and (min-width: 1280px) {
     header {
