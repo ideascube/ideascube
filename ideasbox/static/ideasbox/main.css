@@ -818,6 +818,7 @@ table.stock .actions {
         flex-direction : column;
         -webkit-flex-direction: column;
         margin-bottom: 0px;
+        -webkit-align-items: center;
     }
     header section:first-child {
         margin-top: 15px;
@@ -839,6 +840,9 @@ table.stock .actions {
     header .menu a + a {
         margin-left: 20px;
     }
+    .row {
+        max-width: 90%;
+    }
     .column_small_screen {
         flex-direction: column;
         -webkit-flex-direction: column;
@@ -849,6 +853,9 @@ table.stock .actions {
     }
     .col + .col {
         padding-left: 0px;
+    }
+    html[dir='rtl'] .col + .col {
+        padding-right: 0px;
     }
     .card:first-child {
         margin-top: 20px;
@@ -861,6 +868,7 @@ table.stock .actions {
         -webkit-flex-direction: column;
         flex-direction: column;
         align-items: center;
+        -webkit-align-items: center;
     }
     footer .half {
         margin-left: 0%;
@@ -894,11 +902,17 @@ table.stock .actions {
         flex-direction: column;
         align-items: center;
     }
+    .row {
+        max-width: 90%;
+    }
     .col {
         width: 80%;
     }
     .col + .col {
         padding-left: 0px;
+    }
+    html[dir='rtl'] .col + .col {
+        padding-right: 0px;
     }
     .card:first-child {
         margin-top: 20px;
@@ -925,6 +939,9 @@ table.stock .actions {
     header .menu {
         margin-right: 0px;
     }
+    .row {
+        max-width: 90%;
+    }
     .column_small_screen {
         flex-direction: column;
         align-items: center;
@@ -934,6 +951,9 @@ table.stock .actions {
     }
     .col + .col {
         padding-left: 0px;
+    }
+    html[dir='rtl'] .col + .col {
+        padding-right: 0px;
     }
     .card:first-child {
         margin-top: 20px;
