@@ -61,161 +61,6 @@
     font-weight: normal;
     font-style: normal;
 }
-/* ************************************************* */
-/* ******************** MEDIA QUERIES ************** */
-/* ************************************************* */
-@media screen and (max-width: 600px) {
-    header {
-        flex-direction : column;
-        -webkit-flex-direction: column;
-        margin-bottom: 0px;
-    }
-    header section:first-child {
-        margin-top: 15px;
-    }
-    .boxid {
-        display: none;
-    }
-    header .menu {
-        margin-right: 0px;
-    }
-    html[dir='rtl'] header h1 {
-        margin-right: 50px !important;
-    }
-    .menu a{
-        font-size: 80%;
-        max-height: 70px;
-        margin-top: -20px;
-    }
-    header .menu a + a {
-        margin-left: 20px;
-    }
-    .column_small_screen {
-        flex-direction: column !important;
-    }
-    .column_small_screen div {
-        width: 100%;
-    }
-    .col + .col {
-        padding-left: 0px !important;
-    }
-    .card:first-child {
-        margin-top: 20px !important;
-    }
-    .flow {
-        flex-direction : column;
-        -webkit-flex-direction: column;
-    }
-    footer .row {
-        -webkit-flex-direction: column;
-        flex-direction: column;
-        align-items: center;
-    }
-    footer .half {
-        margin-left: 0% !important;
-    }
-    footer .i18n_switch {
-        padding-top: 0px;
-    }
-    footer .third {
-        width: 80%;
-    }
-    footer img {
-        margin-top: 10px;
-    }
-}
-@media screen and (min-width: 600px) and (max-width: 900px) {
-    header {
-        -webkit-flex-direction: column;
-        flex-direction : column;
-        margin-bottom: 0px;
-    }
-    header section:first-child {
-        margin-top: 15px;
-    }
-    .boxid {
-        display: inline;
-    }
-    header .menu {
-        margin-right: 0px;
-    }
-    .column_small_screen {
-        flex-direction: column !important;
-        align-items: center;
-    }
-    .col {
-        width: 80% !important;
-    }
-    .col + .col {
-        padding-left: 0px !important;
-    }
-    .card:first-child {
-        margin-top: 20px !important;
-    }
-    .menu a {
-        font-size: 15px;
-        max-height: 70px;
-        margin-top: -20px;
-    }
-    header .menu a + a {
-        margin-left: 40px;
-    }
-}
-@media screen and (min-width: 900px) and (max-width: 1200px) {
-    header {
-        -webkit-flex-direction: row;
-        flex-direction : row;
-        min-height: 100px;
-        margin-bottom: 40px;
-    }
-    .boxid {
-        display: inline;
-    }
-    header .menu {
-        margin-right: 0px;
-    }
-    .column_small_screen {
-        flex-direction: column !important;
-        align-items: center;
-    }
-    .col {
-        width: 70% !important;
-    }
-    .col + .col {
-        padding-left: 0px !important;
-    }
-    .card:first-child {
-        margin-top: 20px !important;
-    }
-
-    .menu a {
-        font-size: 15px;
-    }
-    header .menu a + a {
-        margin-left: 20px;
-    }
-    
-}
-@media screen and (min-width: 1280px) {
-    header {
-        -webkit-flex-direction: row;
-        flex-direction : row;
-        min-height: 100px;
-        margin-bottom: 40px;
-    }
-    .boxid {
-        display: inline;
-    }
-    header .menu {
-        margin-right: 60px;
-    }
-    .menu a {
-        font-size: 15px;
-    }
-    header .menu a + a {
-        margin-left: 20px;
-    }
-}
 
 /* ************************************************* */
 /* ******************** GENERIC RULES ************** */
@@ -963,4 +808,162 @@ table.admin caption {background-color: #F2CC11;}
 table.stock tr.stockitem .actions,
 table.stock .actions {
     text-align: right;
+}
+
+/* ************************************************* */
+/* ******************** MEDIA QUERIES ************** */
+/* ************************************************* */
+@media screen and (max-width: 600px) {
+    header {
+        flex-direction : column;
+        -webkit-flex-direction: column;
+        margin-bottom: 0px;
+    }
+    header section:first-child {
+        margin-top: 15px;
+    }
+    .boxid {
+        display: none;
+    }
+    header .menu {
+        margin-right: 0px;
+    }
+    html[dir='rtl'] header h1 {
+        margin-right: 50px;
+    }
+    .menu a{
+        font-size: 80%;
+        max-height: 70px;
+        margin-top: -20px;
+    }
+    header .menu a + a {
+        margin-left: 20px;
+    }
+    .column_small_screen {
+        flex-direction: column;
+        -webkit-flex-direction: column;
+
+    }
+    .column_small_screen div {
+        width: 100%;
+    }
+    .col + .col {
+        padding-left: 0px;
+    }
+    .card:first-child {
+        margin-top: 20px;
+    }
+    .flow {
+        flex-direction : column;
+        -webkit-flex-direction: column;
+    }
+    footer .row {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        align-items: center;
+    }
+    footer .half {
+        margin-left: 0%;
+    }
+    footer .i18n_switch {
+        padding-top: 0px;
+    }
+    footer .third {
+        width: 80%;
+    }
+    footer img {
+        margin-top: 10px;
+    }
+}
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    header {
+        -webkit-flex-direction: column;
+        flex-direction : column;
+        margin-bottom: 0px;
+    }
+    header section:first-child {
+        margin-top: 15px;
+    }
+    .boxid {
+        display: inline;
+    }
+    header .menu {
+        margin-right: 0px;
+    }
+    .column_small_screen {
+        flex-direction: column;
+        align-items: center;
+    }
+    .col {
+        width: 80%;
+    }
+    .col + .col {
+        padding-left: 0px;
+    }
+    .card:first-child {
+        margin-top: 20px;
+    }
+    .menu a {
+        font-size: 15px;
+        max-height: 70px;
+        margin-top: -20px;
+    }
+    header .menu a + a {
+        margin-left: 40px;
+    }
+}
+@media screen and (min-width: 900px) and (max-width: 1200px) {
+    header {
+        -webkit-flex-direction: row;
+        flex-direction : row;
+        min-height: 100px;
+        margin-bottom: 40px;
+    }
+    .boxid {
+        display: inline;
+    }
+    header .menu {
+        margin-right: 0px;
+    }
+    .column_small_screen {
+        flex-direction: column;
+        align-items: center;
+    }
+    .col {
+        width: 70%;
+    }
+    .col + .col {
+        padding-left: 0px;
+    }
+    .card:first-child {
+        margin-top: 20px;
+    }
+
+    .menu a {
+        font-size: 15px;
+    }
+    header .menu a + a {
+        margin-left: 20px;
+    }
+    
+}
+@media screen and (min-width: 1280px) {
+    header {
+        -webkit-flex-direction: row;
+        flex-direction : row;
+        min-height: 100px;
+        margin-bottom: 40px;
+    }
+    .boxid {
+        display: inline;
+    }
+    header .menu {
+        margin-right: 60px;
+    }
+    .menu a {
+        font-size: 15px;
+    }
+    header .menu a + a {
+        margin-left: 20px;
+    }
 }
