@@ -394,6 +394,29 @@ html[dir='rtl'] header .menu .dropdown-menu ul {
     text-transform: capitalize;
     line-height: 30px;
 }
+.dropdown-menu input[type='submit']{
+    width: 110px;
+    margin: 0;
+    padding: 0;
+    height: 30px !important;
+    line-height: 10px;
+    background-color: white;
+    color: black;
+    /*text-align: left;*/
+}
+.dropdown-menu input[type='submit']:hover {
+    text-decoration: underline;
+}
+header .power-input {
+    width: 150px !important;
+    margin-left: 50px !important;
+}
+html[dir='rtl'] header .menu .dropdown-menu input[type='submit'] {
+    text-align: right;
+}
+html[dir='rtl'] header .power-input {
+    margin-left: 120px !important;
+}
 #logout {
     font-family: 'fira_sansbold';
     text-transform : uppercase;

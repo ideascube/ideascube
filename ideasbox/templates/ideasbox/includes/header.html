@@ -1,5 +1,7 @@
 {% load i18n %}
+{% load i18n ideasbox_tags %}
 {% spaceless %}
+
 <header>
     <section><a href="{% url 'index' %}"><h1></h1></a><span class="boxid">{{ IDEASBOX_NAME }}</span></section>
     <section class="menu">
@@ -22,6 +24,16 @@
             <li><a href="{% url 'server:power' %}">{% trans "Restart server" %}</a></li>
             <li><a href="{% url 'server:backup' %}">{% trans "Backup / restore" %}</a></li>
             <li><a href="{% url 'logout' %}" id="logout">{% trans "log out" %}</a></li>
+          </ul>
+        </section>
+        <section class="dropdown-menu">
+          <a href="#">{% fa 'power-off' 'fa-fw' %}</a>
+          <ul class="power-input">
+            <form name="server" action="." method="POST">
+              {% csrf_token %}
+              <li><input type="submit" name="stop" value="{% trans 'Stop' %}"></li>
+              <li><input type="submit" name="restart" value="{% trans 'Restart' %}"></li>
+            </form>
           </ul>
         </section>
       {% endif %}
