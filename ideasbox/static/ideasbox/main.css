@@ -402,7 +402,7 @@ html[dir='rtl'] header .menu .dropdown-menu ul {
     line-height: 10px;
     background-color: white;
     color: black;
-    /*text-align: left;*/
+    text-align: left;
 }
 .dropdown-menu input[type='submit']:hover {
     text-decoration: underline;
