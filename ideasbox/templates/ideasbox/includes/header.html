@@ -29,7 +29,7 @@
         <section class="dropdown-menu">
           <a href="#">{% fa 'power-off' 'fa-fw' %}</a>
           <ul class="power-input">
-            <form name="server" action="." method="POST">
+            <form name="server" action="/{{ LANGUAGE_CODE }}/server/power/" method="POST">
               {% csrf_token %}
               <li><input type="submit" name="stop" value="{% trans 'Stop' %}"></li>
               <li><input type="submit" name="restart" value="{% trans 'Restart' %}"></li>
