@@ -4,9 +4,26 @@ from django import forms
 
 from .models import Book, BookSpecimen
 from .utils import fetch_from_openlibrary, load_from_moccam_csv, load_unimarc
+from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 
 
 class BookSpecimenForm(forms.ModelForm):
+
+    def clean_serial(self):
+        # Keep only letters, and make sure empty values are mapped to None,
+        # not empty string (we need NULL values in db, not empty strings, for
+        # uniqueness constraints).
+        return re.sub(r'\s', '', self.cleaned_data['serial']) or None
+
+    def clean_file(self):
+        # Ensure specimenfile and serial are not both filled or both set to
+        # None.
+        if all([self.cleaned_data['file'], self.cleaned_data['serial']]):
+            raise ValidationError(_("You can't have both a file and a serial"))
+        if not any([self.cleaned_data['file'], self.cleaned_data['serial']]):
+            raise ValidationError(_("You must add a file or a serial"))
+        return self.cleaned_data['file']
 
     class Meta:
         model = BookSpecimen

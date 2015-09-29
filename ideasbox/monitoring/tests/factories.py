@@ -5,7 +5,7 @@ from factory.fuzzy import FuzzyText
 
 from ideasbox.tests.factories import UserFactory
 
-from ..models import Entry, Inventory, Specimen, StockItem
+from ..models import Entry, Inventory, Loan, Specimen, StockItem
 
 
 class EntryFactory(factory.django.DjangoModelFactory):
@@ -37,3 +37,12 @@ class SpecimenFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Specimen
+
+
+class LoanFactory(factory.django.DjangoModelFactory):
+    specimen = factory.SubFactory(SpecimenFactory)
+    user = factory.SubFactory(UserFactory)
+    by = factory.SubFactory(UserFactory)
+
+    class Meta:
+        model = Loan

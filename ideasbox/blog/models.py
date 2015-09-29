@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from taggit.managers import TaggableManager
 from taggit.models import TagBase
@@ -24,7 +25,8 @@ TagBase.slugify = custom_slugify
 
 class ContentQuerySet(SearchableQuerySet, models.QuerySet):
     def published(self):
-        return self.filter(status=Content.PUBLISHED)
+        return self.filter(status=Content.PUBLISHED,
+                           published_at__lt=timezone.now())
 
     def draft(self):
         return self.filter(status=Content.DRAFT)

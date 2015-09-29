@@ -16,11 +16,13 @@ def test_anonymous_should_access_index_page(app):
     assert app.get(reverse('blog:index'), status=200)
 
 
-def test_only_published_should_be_in_index(app, published, draft, deleted):
+def test_only_published_should_be_in_index(app, published, draft, deleted,
+                                           published_in_the_future):
     response = app.get(reverse('blog:index'))
     assert published.title in response.content
     assert draft.title not in response.content
     assert deleted.title not in response.content
+    assert published_in_the_future.title not in response.content
 
 
 def test_index_page_is_paginated(app, monkeypatch):
@@ -49,12 +51,36 @@ def test_anonymous_should_not_access_draft_content(app, draft):
 
 def test_non_staff_should_not_access_draft_content(loggedapp, draft):
     assert loggedapp.get(reverse('blog:content_detail',
-                         kwargs={'pk': draft.pk}), status=404)
+                                 kwargs={'pk': draft.pk}), status=404)
 
 
 def test_staff_should_access_draft_content(staffapp, draft):
     assert staffapp.get(reverse('blog:content_detail',
                                 kwargs={'pk': draft.pk}), status=200)
+
+
+def test_anonymous_should_not_access_published_in_the_future_content(
+        app,
+        published_in_the_future):
+    assert app.get(
+        reverse('blog:content_detail',
+                kwargs={'pk': published_in_the_future.pk}), status=404)
+
+
+def test_non_staff_should_not_access_published_in_the_future_content(
+        loggedapp,
+        published_in_the_future):
+    assert loggedapp.get(
+        reverse('blog:content_detail',
+                kwargs={'pk': published_in_the_future.pk}), status=404)
+
+
+def test_staff_should_access_published_in_the_future_content(
+        staffapp,
+        published_in_the_future):
+    assert staffapp.get(
+        reverse('blog:content_detail',
+                kwargs={'pk': published_in_the_future.pk}), status=200)
 
 
 def test_anonymous_should_not_access_deleted_page(app, deleted):
@@ -64,7 +90,7 @@ def test_anonymous_should_not_access_deleted_page(app, deleted):
 
 def test_non_staff_should_not_access_delete_page(loggedapp, deleted):
     assert loggedapp.get(reverse('blog:content_detail',
-                         kwargs={'pk': deleted.pk}), status=404)
+                                 kwargs={'pk': deleted.pk}), status=404)
 
 
 def test_staff_should_access_deleted_content(staffapp, deleted):

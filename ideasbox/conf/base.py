@@ -2,10 +2,10 @@
 """Django settings for ideasbox project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/1.7/topics/settings/
+https://docs.djangoproject.com/en/1.8/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.7/ref/settings/
+https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import os
@@ -132,6 +132,9 @@ STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')
 
 AUTH_USER_MODEL = 'ideasbox.IDBUser'
 IDEASBOX_NAME = 'debugbox'
+IDEASBOX_PLACE_NAME = _('the camp')
+
+LOAN_DURATION = 0  # In days.
 
 DOMAIN = 'ideasbox.lan'
 WIKIPEDIA_URL = 'http://wikipedia.{domain}'.format(domain=DOMAIN)
@@ -177,3 +180,6 @@ SERVICES = [
     {'name': 'ssh',
         'description': _('Daemon used for distant connexion to server')},
 ]
+
+
+SESSION_COOKIE_AGE = 60*60 # Members must be logged out after one hour

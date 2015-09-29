@@ -71,11 +71,21 @@ class Book(SearchMixin, TimeStampedModel):
 class BookSpecimen(TimeStampedModel):
 
     book = models.ForeignKey(Book, related_name='specimens')
-    serial = models.CharField(_('serial'), max_length=40, unique=True)
+    serial = models.CharField(_('serial'), max_length=40, unique=True,
+                              blank=True, null=True)
     location = models.CharField(_('location'), max_length=300, blank=True)
     remarks = models.TextField(_('remarks'), blank=True)
+    file = models.FileField(_('digital file'), upload_to='library/digital',
+                            blank=True)
+
+    @property
+    def is_digital(self):
+        return bool(self.file)
 
     def __unicode__(self):
+        if self.is_digital:
+            # serial is null for digital specimens.
+            return u'Digital specimen of "{0}"'.format(self.book)
         return u'Specimen {0} of "{1}"'.format(self.serial, self.book)
 
     def get_absolute_url(self):

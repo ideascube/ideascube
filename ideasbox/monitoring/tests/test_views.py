@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import date, timedelta
+
 import pytest
 from django.core.urlresolvers import reverse
 from django.utils import translation
@@ -7,8 +9,8 @@ from ideasbox.tests.factories import UserFactory
 
 from ..models import (Entry, Inventory, InventorySpecimen, Loan, Specimen,
                       StockItem)
-from .factories import (EntryFactory, InventoryFactory, SpecimenFactory,
-                        StockItemFactory)
+from .factories import (EntryFactory, InventoryFactory, LoanFactory,
+                        SpecimenFactory, StockItemFactory)
 
 pytestmark = pytest.mark.django_db
 
@@ -124,6 +126,16 @@ def test_staff_can_create_specimen(staffapp):
     form['barcode'] = '23135321'
     form.submit().follow()
     assert item.specimens.count()
+
+
+def test_staff_can_create_specimen_with_letters_and_ints_in_barcode(staffapp):
+    item = StockItemFactory()
+    url = reverse('monitoring:specimen_create', kwargs={'item_pk': item.pk})
+    form = staffapp.get(url).forms['model_form']
+    assert not item.specimens.count()
+    form['barcode'] = '123abc'
+    form.submit().follow()
+    assert item.specimens.filter(barcode='123abc').count()
 
 
 def test_staff_can_edit_specimen(staffapp):
@@ -309,6 +321,14 @@ def test_can_loan(staffapp, user):
     assert Loan.objects.count() == 1
 
 
+def test_default_loan_duration_can_be_changed(staffapp, settings):
+    settings.LOAN_DURATION = 7
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    due_date = (date.today() + timedelta(days=7)).isoformat()
+    assert form['due_date'].value == due_date
+
+
 def test_cannot_loan_twice_same_item(staffapp, user):
     assert not Loan.objects.count()
     specimen = SpecimenFactory()
@@ -317,21 +337,71 @@ def test_cannot_loan_twice_same_item(staffapp, user):
     form['specimen'] = specimen.barcode
     form['user'] = user.serial
     form.submit('do_loan')
-    assert Loan.objects.count() == 1
+    assert Loan.objects.due().count() == 1
     form = staffapp.get(url).forms['loan_form']
     form['specimen'] = specimen.barcode
     form['user'] = staffapp.user.serial
     form.submit('do_loan')
-    assert Loan.objects.count() == 1
+    assert Loan.objects.due().count() == 1
+
+
+def test_can_loan_twice_same_item_when_first_is_returned(staffapp, user):
+    assert not Loan.objects.count()
+    specimen = SpecimenFactory()
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.barcode
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+
+    # Return it.
+    form = staffapp.get(url).forms['return_form']
+    form['loan'] = specimen.barcode
+    form.submit('do_return')
+    assert Loan.objects.due().count() == 0
+
+    # Loan again same item.
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.barcode
+    form['user'] = staffapp.user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
 
 
 def test_can_return_loan(staffapp, user):
     specimen = SpecimenFactory()
     Loan.objects.create(user=user, specimen=specimen,
                         by=staffapp.user)
-    assert Loan.objects.count() == 1
+    assert Loan.objects.due().count() == 1
     url = reverse('monitoring:loan')
     form = staffapp.get(url).forms['return_form']
     form['loan'] = specimen.barcode
     form.submit('do_return')
-    assert not Loan.objects.count()
+    assert not Loan.objects.due().count()
+
+
+def test_return_unknown_id_does_not_fail(staffapp):
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['return_form']
+    form['loan'] = '123456'
+    form.submit('do_return', status=200)
+
+
+def test_can_export_loan(staffapp):
+    specimen = SpecimenFactory(item__name="an item", barcode="123")
+    LoanFactory(specimen=specimen)
+    url = reverse('monitoring:export_loan')
+    resp = staffapp.get(url, status=200)
+    assert resp.content.startswith("item,barcode,user,created at,due date,status,comments\r\nan item,123")  # noqa
+
+
+def test_export_loan_should_be_ok_in_arabic(staffapp):
+    translation.activate('ar')
+    specimen = SpecimenFactory(item__name="an item", barcode="123")
+    loan = LoanFactory(specimen=specimen, comments=u"النبي (كتاب)")
+    url = reverse('monitoring:export_loan')
+    resp = staffapp.get(url, status=200)
+    assert resp.content.startswith("item,barcode,user,created at,due date,status,comments\r\nan item,123")  # noqa
+    resp.mustcontain(loan.comments)
+    translation.deactivate()

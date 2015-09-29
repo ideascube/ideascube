@@ -44,13 +44,20 @@ class ExportEntryForm(forms.Form):
         required=False)
 
 
+class ExportLoanForm(forms.Form):
+
+    since = forms.DateField(
+        widget=forms.DateInput(format='%Y-%m-%d'),
+        required=False)
+
+
 class SpecimenForm(forms.ModelForm):
 
     def clean_barcode(self):
-        # Keep only integers, and make sure empty values are mapped to None,
-        # not empty string (we need NULL values in db, not empty strings, for
-        # uniqueness constraints).
-        return re.sub(r'\D', '', self.cleaned_data['barcode']) or None
+        # Keep only integers and letters, and make sure empty values are mapped
+        # to None, not empty string (we need NULL values in db, not empty
+        # strings, for uniqueness constraints).
+        return re.sub(r'\W', '', self.cleaned_data['barcode']) or None
 
     class Meta:
         model = Specimen
@@ -89,9 +96,9 @@ class LoanForm(forms.ModelForm):
 
     def clean_specimen(self):
         barcode = self.cleaned_data['specimen']
-        if Loan.objects.filter(specimen__barcode=barcode).exists():
+        if Loan.objects.due().filter(specimen__barcode=barcode).exists():
             msg = _('Item with barcode {barcode} is already loaned.')
-            forms.ValidationError(msg.format(barcode=barcode))
+            raise forms.ValidationError(msg.format(barcode=barcode))
         try:
             specimen = Specimen.objects.get(barcode=barcode)
         except Specimen.DoesNotExist:
@@ -112,7 +119,7 @@ class LoanForm(forms.ModelForm):
 
     class Meta:
         model = Loan
-        exclude = ['by']
+        exclude = ['by', 'status']
 
 
 class ReturnForm(forms.Form):
@@ -122,7 +129,7 @@ class ReturnForm(forms.Form):
     def clean_loan(self):
         barcode = self.cleaned_data['loan']
         try:
-            loan = Loan.objects.get(specimen__barcode=barcode)
+            loan = Loan.objects.due().get(specimen__barcode=barcode)
         except Loan.DoesNotExist:
             msg = _('Item with barcode {barcode} is not loaned.')
             forms.ValidationError(msg.format(barcode=barcode))

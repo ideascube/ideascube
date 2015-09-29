@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^stock/inventory/specimen/remove/(?P<inventory_pk>[\d]+)/(?P<specimen_pk>[\d]+)/$', views.inventoryspecimen_remove, name='inventoryspecimen_remove'),  # noqa
     url(r'^stock/inventory/specimen/by-barcode/$', views.inventoryspecimen_bybarcode, name='inventoryspecimen_bybarcode'),  # noqa
     url(r'^loan/$', views.loan, name='loan'),
+    url(r'^loan/export/$', views.export_loan, name='export_loan'),
 ]

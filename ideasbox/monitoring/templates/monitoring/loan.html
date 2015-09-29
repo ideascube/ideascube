@@ -45,12 +45,22 @@
         {% endfor %}
         <input type="submit" name="do_return" value="{% trans 'Validate' %}">
     </form>
+    <hr />
+    <h3>{% trans "Export" %}</h3>
+    <form method="get" id="export_form" action="{% url 'monitoring:export_loan' %}">
+        {% csrf_token %}
+        {% for field in export_form %}
+            {% form_field field %}
+        {% endfor %}
+        <input type="submit" name="do_export" value="{% trans 'Export' %}">
+    </form>
 {% endblock third %}
 
 {% block extra_foot %}
     <script type="text/javascript">
         IDB.focusOn('[name="barcode"]');
         IDB.initDatepicker('due_date');
+        IDB.initDatepicker('since');
         IDB.stopEnterKey('specimen');
         IDB.stopEnterKey('user');
     </script>

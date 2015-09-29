@@ -1,7 +1,7 @@
 import pytest
 
-from .factories import (EntryFactory, InventoryFactory, SpecimenFactory,
-                        StockItemFactory)
+from .factories import (EntryFactory, InventoryFactory, LoanFactory,
+                        SpecimenFactory, StockItemFactory)
 
 pytestmark = pytest.mark.django_db
 
@@ -50,3 +50,15 @@ def test_it_should_override_specimen_fields_passed_to_factory():
     item = StockItemFactory()
     specimen = SpecimenFactory(item=item)
     assert specimen.item == item
+
+
+def test_it_should_create_a_default_loan_from_loan_factory():
+    loan = LoanFactory()
+    assert loan.pk is not None
+    assert loan.specimen.pk is not None
+
+
+def test_it_should_override_loan_fields_passed_to_factory():
+    specimen = SpecimenFactory()
+    loan = LoanFactory(specimen=specimen)
+    assert loan.specimen == specimen
