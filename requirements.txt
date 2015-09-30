@@ -1,9 +1,9 @@
 batinfo==0.3
-Django==1.8.3
+Django==1.8.4
 django-countries==3.3
 django-select-multiple-field==0.4.0
-django-taggit==0.16.2
+django-taggit==0.17.1
 gunicorn==19.3.0
 Pillow==2.9.0
-pymarc==3.0.3
+pymarc==3.0.4
 Unidecode==0.4.18
