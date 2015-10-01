@@ -151,7 +151,7 @@ table tr th {
     margin-left: auto;
     margin-right: auto;
     display: flex;
-  display: -webkit-flex;
+    display: -webkit-flex;
     -webkit-flex-direction: row;
     flex-direction: row;
 }
@@ -386,7 +386,7 @@ header .menu .dropdown-menu ul {
     border: 1px solid #CCCCCC;   
 }
 html[dir='rtl'] header .menu .dropdown-menu ul {
-    margin-left: 200%;
+    margin-left: 150px;
     text-align: right;
 }
 .dropdown-menu ul a {
@@ -399,7 +399,6 @@ html[dir='rtl'] header .menu .dropdown-menu ul {
     text-transform : uppercase;
 }
 footer {
-    /*border-top: 1px solid #222;*/
     padding: 20px;
     color: #fefefe;
     background-color: #95A5A6;
