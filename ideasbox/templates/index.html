@@ -22,7 +22,9 @@
         </div>
         <div class="col third">
             {% include 'search/box.html' %}
-            {% include 'ideasbox/includes/blog_card.html' with content=blog_contents %}
+            {% if blog_content %}
+                {% include 'ideasbox/includes/blog_card.html' with content=blog_content %}
+            {% endif %}
             {% if random_book %}
                 {% include 'ideasbox/includes/book_card.html' with book=random_book %}
             {% endif %}
