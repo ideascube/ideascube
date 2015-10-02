@@ -870,6 +870,14 @@ table.stock .actions {
         justify-content: center;
         -webkit-justify-content: center;
     }
+    .column_small_screen img {
+        display: block;
+        -webkit-display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 15px;
+        margin-top: 20px;
+    }
     .flow {
         flex-direction : column;
         -webkit-flex-direction: column;

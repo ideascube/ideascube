@@ -1,7 +1,7 @@
 {% extends 'two-third-third.html' %}
 {% load i18n ideasbox_tags %}
 {% block twothird %}
-    <div class="row">
+    <div class="row column_small_screen">
         <div class="col third">
             {% if book.cover %}<img src="{{ book.cover.url }}" class="cover" />{% endif %}
         </div>
