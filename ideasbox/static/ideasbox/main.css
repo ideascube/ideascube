@@ -858,8 +858,17 @@ table.stock .actions {
     html[dir='rtl'] .col + .col {
         padding-right: 0px;
     }
+    .two-third h2{
+        margin-top: 20px;
+        margin-bottom: 0px;
+        text-align: center;
+    }
     .card:first-child {
         margin-top: 20px;
+    }
+    .grid {
+        justify-content: center;
+        -webkit-justify-content: center;
     }
     .flow {
         flex-direction : column;
@@ -918,6 +927,15 @@ table.stock .actions {
     html[dir='rtl'] .col + .col {
         padding-right: 0px;
     }
+    .two-third h2{
+        margin-top: 20px;
+        margin-bottom: 0px;
+        text-align: center;
+    }
+    .grid {
+        justify-content: center;
+        -webkit-justify-content: center;
+    }
     .card:first-child {
         margin-top: 20px;
     }
@@ -964,9 +982,6 @@ table.stock .actions {
     }
     html[dir='rtl'] .col + .col {
         padding-right: 0px;
-    }
-    .card:first-child {
-        margin-top: 20px;
     }
     .menu a {
         font-size: 15px;
