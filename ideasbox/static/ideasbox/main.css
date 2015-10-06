@@ -151,7 +151,7 @@ table tr th {
     margin-left: auto;
     margin-right: auto;
     display: flex;
-  display: -webkit-flex;
+    display: -webkit-flex;
     -webkit-flex-direction: row;
     flex-direction: row;
 }
@@ -386,7 +386,7 @@ header .menu .dropdown-menu ul {
     border: 1px solid #CCCCCC;   
 }
 html[dir='rtl'] header .menu .dropdown-menu ul {
-    margin-left: 200%;
+    margin-left: 150px;
     text-align: right;
 }
 .dropdown-menu ul a {
@@ -422,7 +422,6 @@ html[dir='rtl'] header .power-input {
     text-transform : uppercase;
 }
 footer {
-    /*border-top: 1px solid #222;*/
     padding: 20px;
     color: #fefefe;
     background-color: #95A5A6;
@@ -882,7 +881,24 @@ table.stock .actions {
     html[dir='rtl'] .col + .col {
         padding-right: 0px;
     }
+    .two-third h2{
+        margin-top: 20px;
+        margin-bottom: 0px;
+        text-align: center;
+    }
     .card:first-child {
+        margin-top: 20px;
+    }
+    .grid {
+        justify-content: center;
+        -webkit-justify-content: center;
+    }
+    .column_small_screen img {
+        display: block;
+        -webkit-display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 15px;
         margin-top: 20px;
     }
     .flow {
@@ -942,6 +958,15 @@ table.stock .actions {
     html[dir='rtl'] .col + .col {
         padding-right: 0px;
     }
+    .two-third h2{
+        margin-top: 20px;
+        margin-bottom: 0px;
+        text-align: center;
+    }
+    .grid {
+        justify-content: center;
+        -webkit-justify-content: center;
+    }
     .card:first-child {
         margin-top: 20px;
     }
@@ -952,6 +977,10 @@ table.stock .actions {
     }
     header .menu a + a {
         margin-left: 40px;
+    }
+    .column_small_screen img {
+        margin-top: 20px;
+        margin-bottom: 15px;
     }
     footer .half {
         margin-left: 10%;
@@ -988,9 +1017,6 @@ table.stock .actions {
     }
     html[dir='rtl'] .col + .col {
         padding-right: 0px;
-    }
-    .card:first-child {
-        margin-top: 20px;
     }
     .menu a {
         font-size: 15px;
