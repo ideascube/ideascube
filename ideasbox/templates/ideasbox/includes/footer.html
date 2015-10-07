@@ -1,4 +1,5 @@
 {% load i18n ideasbox_tags %}
+{% load static i18n %}
 
 {% spaceless %}
 <footer>
@@ -20,7 +21,7 @@
             </form>
         </div>
         <div class="col half">
-            <img src="../../../../static/ideasbox/img/logoBSF.png" />
+            <img src="{% static "ideasbox/img/logoBSF.png" %}" />
         </div>
     </div>
 </footer>
