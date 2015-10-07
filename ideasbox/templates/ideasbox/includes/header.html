@@ -29,11 +29,11 @@
         <section class="dropdown-menu">
           <a href="#">{% fa 'power-off' 'fa-fw' %}</a>
           <ul class="power-input">
-            <form name="server" action="/{{ LANGUAGE_CODE }}/server/power/" method="POST">
-              {% csrf_token %}
-              <li><input type="submit" name="stop" value="{% trans 'Stop' %}"></li>
-              <li><input type="submit" name="restart" value="{% trans 'Restart' %}"></li>
+            <form name="server" action="/{{ LANGUAGE_CODE }}/server/power/" method="POST" id="adminaction">
+                {% csrf_token %}
             </form>
+            <li><a onclick="ServerAdmin('stop')">{% trans 'Stop' %}</a></li>
+            <li><a onclick="ServerAdmin('restart')">{% trans 'Restart' %}</a></li>
           </ul>
         </section>
       {% endif %}
