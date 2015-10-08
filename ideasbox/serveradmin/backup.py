@@ -30,6 +30,9 @@ class Backup(object):
         self.name = name
         self.parse_name()
 
+    def __str__(self):
+        return self.name
+
     def parse_name(self):
         self.source, self.version, date_ = self.basename.split('_')
         self.date = datetime.strptime(date_, Backup.DATE_FORMAT)
@@ -38,9 +41,13 @@ class Backup(object):
     def basename(self):
         return self.name[:-4]  # Minus extension.
 
+    @classmethod
+    def make_path(cls, name):
+        return os.path.join(Backup.ROOT, name)
+
     @property
     def path(self):
-        return os.path.join(Backup.ROOT, self.name)
+        return self.make_path(self.name)
 
     @property
     def size(self):
@@ -96,3 +103,7 @@ class Backup(object):
         with open(backup.path, mode='wb') as f:
             f.write(file_.read())
         return backup
+
+    @classmethod
+    def exists(cls, name):
+        return os.path.exists(cls.make_path(name))

@@ -108,3 +108,9 @@ def test_delete_should_not_fail_if_file_is_missing(monkeypatch):
 def test_load_should_raise_if_file_is_not_a_zip():
     with pytest.raises(AssertionError):
         Backup.load(ContentFile('xxx', name='musasa_0.1.0_201501241620.zip'))
+
+
+def test_exists(monkeypatch, settings):
+    monkeypatch.setattr('ideasbox.serveradmin.backup.Backup.ROOT', DATA_ROOT)
+    assert Backup.exists('musasa_0.1.0_201501241620.zip')
+    assert not Backup.exists('doesnotexist.zip')
