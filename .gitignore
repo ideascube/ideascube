@@ -10,3 +10,4 @@ debian/ideasbox.postrm.debhelper
 debian/ideasbox.prerm.debhelper
 debian/ideasbox.substvars
 debian/ideasbox.triggers
+.cache
