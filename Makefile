@@ -5,7 +5,7 @@ install:
 devinstall:
 	pip install -r requirements-dev.txt
 doc:
-	cd docs && make html
+	mkdocs serve
 dummydata:
 	python manage.py dummydata
 collect_translations:
