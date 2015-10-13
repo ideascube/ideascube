@@ -3,17 +3,18 @@
 {% load i18n ideasbox_tags %}
 
 {% block content %}
-    <div class="row">
-        <div class="col half">
-            <h2 class="flow"><span class="theme create">blog</span><span>{% trans "LAST POSTS" %}</span></h2>
-            {% for content in blog_contents %}
-                {% include 'blog/content_card.html' %}
-            {% endfor %}
-        </div>
-        <div class="col half">
-            {% include 'search/box.html' %}
+    <div class="row mwide twide">
+        <div class="col third">
             {% include 'ideasbox/includes/wikipedia_card.html' %}
+        </div>
+        <div class="col third">
             {% include 'ideasbox/includes/khan-academy_card.html' %}
+        </div>
+        <div class="col third">
+            {% include 'search/box.html' %}
+            {% if blog_content %}
+                {% include 'ideasbox/includes/blog_card.html' with content=blog_content %}
+            {% endif %}
             {% if random_book %}
                 {% include 'ideasbox/includes/book_card.html' with book=random_book %}
             {% endif %}

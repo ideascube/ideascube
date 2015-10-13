@@ -31,11 +31,11 @@ user_model = get_user_model()
 
 
 def index(request):
-    contents = Content.objects.published()[:3]
+    content = Content.objects.published().order_by('published_at').first()
     random_book = Book.objects.available().order_by('?').first()
     random_doc = Document.objects.order_by('?').first()
     context = {
-        'blog_contents': contents,
+        'blog_content': content,
         'random_book': random_book,
         'random_doc': random_doc,
         'khanacademy_url': settings.KHANACADEMY_URL,
