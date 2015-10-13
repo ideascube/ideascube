@@ -998,6 +998,9 @@ table.stock .actions {
     html[dir='rtl'] .col + .col {
         padding-right: 0px;
     }
+    .card:first-child {
+        margin-top: 20px;
+    }
     .menu a {
         font-size: 15px;
     }
