@@ -64,7 +64,7 @@ class Backup(object):
 
     def restore(self):
         """Restore a backup from a backup name."""
-        with zipfile.ZipFile(self.path, "r") as z:
+        with zipfile.ZipFile(self.path, "r", allowZip64=True) as z:
             z.extractall(settings.BACKUPED_ROOT)
 
     def delete(self):
