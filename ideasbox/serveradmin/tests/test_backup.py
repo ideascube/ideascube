@@ -2,7 +2,6 @@ import os
 import zipfile
 
 import pytest
-
 from django.core.files.base import ContentFile
 
 from ..backup import Backup

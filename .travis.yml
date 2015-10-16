@@ -1,6 +1,8 @@
 language: python
 python:
   - "2.7"
+before_install:
+    - pip install git+https://github.com/Erf-/wifi.git@connection-status#egg=wifi
 sudo: false
 install:
     - make devinstall
