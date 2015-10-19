@@ -64,6 +64,10 @@ Create a virtualenv (we name it `ideasbox` here but the name is up to you):
 
     mkvirtualenv ideasbox
 
+Activate this new virtualenv:
+
+    source ideasbox/bin/activate
+
 Install python dependencies:
 
     make devinstall
