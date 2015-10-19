@@ -6,15 +6,25 @@ This Django repository is the main application of the Ideas Box server.
 
 More about the Ideas Box concept: http://www.ideas-box.org/
 
-More details about the server of the [overview](https://github.com/ideas-box/ideasbox.lan/wiki/Server-Overview)
+More details about the server in the [overview](https://github.com/ideas-box/ideasbox.lan/wiki/Server-Overview).
 
 ## How can I give a hand?
 
-* Join the brainstorming: read and comment issues and wiki; join the #ideasbox chan on Freenode
-* Review [pull requests](https://github.com/ideas-box/ideasbox.lan/pulls)
-* Take an [issue](https://github.com/ideas-box/ideasbox.lan/issues) and code :)
-* What about a sprint ?
+Welcome! There are many ways you can help. See details in
+[contributor guide](https://github.com/ideas-box/ideasbox.lan/CONTRIBUTING.md).
 
-## IRC
+## Resources and contacts
 
-`#ideasbox` on `irc.freenode.net`
+* Homepage: http://www.ideas-box.org/
+* IRC chat: `#ideasbox` on `irc.freenode.net`. If you are not familiar with
+  [IRC](https://en.wikipedia.org/wiki/Internet_Relay_Chat), you can try
+  this simple [online chat application](https://kiwiirc.com/client/irc.freenode.net/?nick=new-user|?#ideasbox).
+* Contributor guide: https://github.com/ideas-box/ideasbox.lan/CONTRIBUTING.md
+* Code repository: https://github.com/ideas-box/ideasbox.lan
+* Issues, questions and feature requests:
+  https://github.com/ideas-box/ideasbox.lan/issues
+* Continuous integration: https://travis-ci.org/ideas-box/ideasbox.lan
+* Documentation:
+
+  * docs: https://github.com/ideas-box/ideasbox.lan/blob/master/docs/index.md
+  * wiki: https://github.com/ideas-box/ideasbox.lan/wiki
