@@ -8,6 +8,8 @@ More about the Ideas Box concept: http://www.ideas-box.org/
 
 More details about the server in the [overview](https://github.com/ideas-box/ideasbox.lan/wiki/Server-Overview).
 
+[ideasbox.lan is free software, published under the terms of MIT license](https://github.com/ideas-box/ideasbox.lan/LICENSE.md).
+
 ## How can I give a hand?
 
 Welcome! There are many ways you can help. See details in
