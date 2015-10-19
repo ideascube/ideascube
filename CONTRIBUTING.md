@@ -46,10 +46,12 @@ Project's typical development environment requires:
 
 * [Python 2.7](https://www.python.org/)
 * [Git](http://git-scm.com/)
+* JPEG development headers (for Pillow).
 
 On a Debian-based system, you may use:
 
     sudo apt-get install python-pip python-virtualenv virtualenvwrapper
+python-dev libjpeg-dev
 
 ### Download the souce code
 
