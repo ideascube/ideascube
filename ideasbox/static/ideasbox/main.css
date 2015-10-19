@@ -505,6 +505,22 @@ html[dir='rtl'] .card img {
     background-repeat: no-repeat;
     background-position: center right;
 }
+
+.smallButton {
+    color:#eee;
+    font-weight: bold;
+    padding: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px solid #eee;
+    border-radius: 2px;
+    text-decoration: none;
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-color: #95A5A6;
+}
+
+
 html[dir='rtl'] .tinted {
     background-position: center left;
 }
