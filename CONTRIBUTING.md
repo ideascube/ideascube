@@ -38,15 +38,29 @@ Here are online resources you may find useful to contribute to the project:
 * What about a sprint?
 
 
-## Installing for development
+## Install ideasbox.lan for development
 
-### System setup
+### Setup system
 
-You need python 2.7 installed.
+Project's typical development environment requires:
 
-Install system dependencies:
+* [Python 2.7](https://www.python.org/)
+* [Git](http://git-scm.com/)
+
+On a Debian-based system, you may use:
 
     sudo apt-get install python-pip python-virtualenv virtualenvwrapper
+
+### Download the souce code
+
+Get project's source code from
+[project's code repository](https://github.com/ideas-box/ideasbox.lan)
+(you may use your own fork):
+
+    git clone git@github.com:ideas-box/ideasbox.lan.git
+    cd ideasbox.lan/
+
+### Setup project
 
 Create a virtualenv (we name it `ideasbox` here but the name is up to you):
 
@@ -56,13 +70,22 @@ Install python dependencies:
 
     make devinstall
 
-
-### Project setup
-
 Run the initial database migration::
 
     python manage.py migrate
 
 To populate the database with some initial dummy data, you can run the command::
 
-    python manage.py dummydata
+    make dummydata
+
+### Check and run!
+
+Run the server:
+
+    python manage.py runserver
+
+Check it works:
+
+    firefox http://localhost:8000
+
+Done!
