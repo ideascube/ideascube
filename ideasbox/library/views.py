@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   ListView, UpdateView)
+from django.http import HttpResponse
+import csv
 
 from ideasbox.mixins import ByTagListView
 
@@ -46,6 +48,33 @@ by_tag = ByTag.as_view()
 class BookDetail(DetailView):
     model = Book
 book_detail = BookDetail.as_view()
+
+
+def book_csv(self):
+
+    """
+        Generate all book list from the database into csv format
+    """
+
+    #Http response generation
+    filename = 'books.csv'
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="{0}"'.format(
+        filename
+    )
+
+    # CSV content generation
+    writer = csv.writer(response)
+    book_fields = [field.name for field in Book._meta.fields]
+    writer.writerow(book_fields)
+
+    # Selecting all books
+    for book in Book.objects.all():
+        book_csv = [getattr(book, field) for field in book_fields]
+        writer.writerow(book_csv)
+
+    return response
 
 
 class BookUpdate(UpdateView):
