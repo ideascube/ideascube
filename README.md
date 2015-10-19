@@ -24,7 +24,4 @@ Welcome! There are many ways you can help. See details in
 * Issues, questions and feature requests:
   https://github.com/ideas-box/ideasbox.lan/issues
 * Continuous integration: https://travis-ci.org/ideas-box/ideasbox.lan
-* Documentation:
-
-  * docs: https://github.com/ideas-box/ideasbox.lan/blob/master/docs/index.md
-  * wiki: https://github.com/ideas-box/ideasbox.lan/wiki
+* Documentation: https://github.com/ideas-box/ideasbox.lan/blob/master/docs/index.md
