@@ -15,7 +15,7 @@ project's maintainers:
   just click "Start" then chat!
 
 * Ask questions, report issues or propose ideas as
-  [tickets] (https://github.com/issues).
+  [tickets](https://github.com/issues).
 
 Here are online resources you may find useful to contribute to the project:
 
