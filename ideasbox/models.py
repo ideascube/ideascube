@@ -13,28 +13,6 @@ from .fields import CommaSeparatedCharField
 from .utils import classproperty
 
 
-
-class Serializable(object):
-
-    """
-    Base class allowing model introspection for generic data export
-    """
-
-    def to_data_array(self):
-
-        data = []
-        data_fields = self.__class__.get_data_fields()
-        data_fields = [field.name for field in data_fields]
-        for field in data_fields:
-            value = getattr(self, field, '')
-            data.append(value)
-
-        return data
-
-    @classmethod
-    def get_data_fields(cls):
-        return cls._meta.fields
-
 class TimeStampedModel(models.Model):
     """
     An abstract base class model that provides self-
