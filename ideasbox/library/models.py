@@ -14,7 +14,7 @@ class BookQuerySet(SearchableQuerySet, models.QuerySet):
         return self.filter(specimens__isnull=False).distinct()
 
 
-class Book(SearchMixin, TimeStampedModel):
+class Book(SearchMixin, TimeStampedModel, Serializable):
 
     OTHER = 99
 
@@ -66,7 +66,6 @@ class Book(SearchMixin, TimeStampedModel):
     def index_strings(self):
         return (self.title, self.isbn, self.authors, self.subtitle,
                 self.summary, self.serie, u' '.join(self.tags.names()))
-
 
 class BookSpecimen(TimeStampedModel):
 

@@ -5,11 +5,9 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
-                                  ListView, UpdateView)
-from django.http import HttpResponse
-import csv
-
+                                  ListView, UpdateView, View)
 from ideasbox.mixins import ByTagListView
+from ideasbox.views import CSVExportMixin
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
@@ -49,32 +47,31 @@ class BookDetail(DetailView):
     model = Book
 book_detail = BookDetail.as_view()
 
-
-def book_csv(self):
+class BookExport(CSVExportMixin, View):
 
     """
-        Generate all book list from the database into csv format
+    Book model export class using seralizable Django model
     """
 
-    #Http response generation
-    filename = 'books.csv'
+    def get(self, *args, **kwargs):
+        return self.render_to_csv()
 
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="{0}"'.format(
-        filename
-    )
+    def get_items(self):
+        return Book.objects.all()
 
-    # CSV content generation
-    writer = csv.writer(response)
-    book_fields = [field.name for field in Book._meta.fields]
-    writer.writerow(book_fields)
+    def get_headers(self):
+        self.fields = Book.get_data_fields()
+        return [unicode(f.verbose_name).encode('utf-8') for f in self.fields]
 
-    # Selecting all books
-    for book in Book.objects.all():
-        book_csv = [getattr(book, field) for field in book_fields]
-        writer.writerow(book_csv)
+    def get_row(self, book):
+        data_fields = book.to_data_array()
+        row = {}
+        for x, field in enumerate(self.fields):
+            value = unicode(field).encode('utf-8')
+            row[unicode(field.verbose_name).encode('utf-8')] = data_fields[x]
+        return row
 
-    return response
+book_export = staff_member_required(BookExport.as_view())
 
 
 class BookUpdate(UpdateView):
