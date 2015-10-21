@@ -1,6 +1,6 @@
 server {
     listen   80;
-    server_name ideasbox.lan www.ideasbox.lan ideasbox.local www.ideasbox.local;
+    server_name ideasbox.lan www.ideasbox.lan ideasbox.local www.ideasbox.local koombook.lan www.koombook.lan koombook.local www.koombook.lan;
     root /usr/share/python/ideasbox/local/lib/python2.7/site-packages/ideasbox/;
     proxy_read_timeout 600s;
     location /static/ {
