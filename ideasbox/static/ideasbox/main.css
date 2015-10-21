@@ -470,6 +470,7 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card {
     float: none;
     clear: both;
+    max-width: 400px;
 }
 .card + .card {
     margin-top: 20px;
@@ -477,20 +478,34 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card h4 {
     text-transform: uppercase;
 }
-.card h4 a {
+.card h4 a,
+.card > a {
     text-decoration: none;
 }
 .card.khanacademy {
-    background-image: url('./img/khanacademy.png')
+    background-image: url('./img/khanacademy.png');
 }
 .card.wikipedia {
-    background-image: url('./img/wikipedia.png')
+    background-image: url('./img/wikipedia.png');
+}
+.grid .card.blog {
+    background-image: url('./img/blog.png');
+}
+.grid .card.library {
+    background-image: url('./img/library.png');
+}
+.grid .card.mediacenter {
+    background-image: url('./img/mediacenter.png');
 }
 .card img {
     max-width: 150px;
     float: left;
     margin-right: 10px;
     margin-bottom: 10px;
+}
+.card i.fa {
+    position: absolute;
+    right: 10px;
 }
 html[dir='rtl'] .card img {
     float: right;
@@ -519,7 +534,9 @@ html[dir='rtl'] .tinted {
     margin-right: 10px;
     margin-top: 0;
     margin-bottom: 10px;
-    text-align: center;
+    flex-grow: 1;
+    flex-basis: 300px;
+    position: relative;
 }
 .card.book img {
     float: right;
@@ -547,15 +564,20 @@ html[dir='rtl'] .card.book img {
 .theme {
     font-family: 'fira_sansbook';
     text-transform: uppercase;
+    color: #fff;
+    padding: 0 5px;
 }
 .learn {
-    color: #19B5FE;
+    background-color: #19B5FE;
 }
 .read {
-    color: #87D37C;
+    background-color: #87D37C;
 }
 .create {
-    color: #D2527F;
+    background-color: #D2527F;
+}
+.manage {
+    background-color: #FCE94F;
 }
 .errorlist,
 small.error,
@@ -628,6 +650,7 @@ img.cover {
     width: 250px;
     height: 300px;
     text-align: center;
+    flex-basis: 200px;
 }
 .book-list .card h3 {
     height: 2em;
@@ -969,7 +992,7 @@ table.stock .actions {
         width: 60%;
     }
 }
-@media screen and (min-width: 900px) and (max-width: 1200px) {
+@media screen and (min-width: 900px) and (max-width: 1279px) {
     header {
         -webkit-flex-direction: row;
         flex-direction : row;
@@ -997,9 +1020,6 @@ table.stock .actions {
     }
     html[dir='rtl'] .col + .col {
         padding-right: 0px;
-    }
-    .card:first-child {
-        margin-top: 20px;
     }
     .menu a {
         font-size: 15px;

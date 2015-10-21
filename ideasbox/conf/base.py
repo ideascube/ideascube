@@ -156,6 +156,83 @@ USER_FORM_FIELDS = (
 ENTRY_ACTIVITY_CHOICES = [
 ]
 
+STAFF_HOME_CARDS = [
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'user_list',
+        'title': _('Users'),
+        'description': _('Create, remove or modify users.'),
+        'fa': 'users',
+    },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'monitoring:entry',
+        'title': _('Entries'),
+        'description': _('Manage user entries.'),
+        'fa': 'sign-in',
+    },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'monitoring:stock',
+        'title': _('Stock'),
+        'description': _('Manage stock.'),
+        'fa': 'barcode',
+    },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'monitoring:loan',
+        'title': _('Loans'),
+        'description': _('Manage loans.'),
+        'fa': 'exchange',
+    },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'server:power',
+        'title': _('Stop/Restart'),
+        'description': _('Stop or restart the server.'),
+        'fa': 'power-off',
+    },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'server:power',
+        'title': _('Backups'),
+        'description': _('Create, restore, download, upload backups.'),
+        'fa': 'life-ring',
+    },
+]
+
+HOME_CARDS = STAFF_HOME_CARDS + [
+    {
+        'id': 'blog',
+    },
+    {
+        'id': 'library',
+    },
+    {
+        'id': 'mediacenter',
+    },
+    {
+        'id': 'wikipedia',
+    },
+    {
+        'id': 'khanacademy',
+    },
+    # {
+    #     'category': 'learn',
+    #     'url': 'http://mydomain.fr',
+    #     'title': 'The title of my custom card',
+    #     'description': 'The description of my custom card',
+    #     'img': '/img/wikipedia.png',
+    #     'fa': 'fax',
+    # },
+]
+
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 

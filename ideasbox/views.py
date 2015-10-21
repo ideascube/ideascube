@@ -38,8 +38,8 @@ def index(request):
         'blog_content': content,
         'random_book': random_book,
         'random_doc': random_doc,
-        'khanacademy_url': settings.KHANACADEMY_URL,
-        'wikipedia_url': settings.WIKIPEDIA_URL,
+        'cards': settings.HOME_CARDS,
+        'domain': settings.DOMAIN,
     }
     return render(request, 'index.html', context)
 

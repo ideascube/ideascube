@@ -4,24 +4,18 @@
 
 {% block content %}
     <div class="row mwide twide">
-        <div class="col third">
-            {% include 'ideasbox/includes/wikipedia_card.html' %}
-        </div>
-        <div class="col third">
-            {% include 'ideasbox/includes/khan-academy_card.html' %}
-        </div>
-        <div class="col third">
-            {% include 'search/box.html' %}
-            {% if blog_content %}
-                {% include 'ideasbox/includes/blog_card.html' with content=blog_content %}
-            {% endif %}
-            {% if random_book %}
-                {% include 'ideasbox/includes/book_card.html' with book=random_book %}
-            {% endif %}
-            {% if random_doc %}
-                {% include 'ideasbox/includes/document_card.html' with document=random_doc %}
-            {% endif %}
-            {% tag_cloud url="by_tag" %}
+        <div class="col wide grid">
+            {% for card in cards %}
+                {% if not card.is_staff or user.is_staff %}
+                    {% if card.id %}
+                        {% with 'ideasbox/includes/cards/'|add:card.id|add:'.html' as template %}
+                            {% include template with domain=domain %}
+                        {% endwith %}
+                    {% else %}
+                        {% include 'ideasbox/includes/cards/custom.html' with domain=domain card=card %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 {% endblock content %}
