@@ -4,13 +4,11 @@
         <h3>{{ book }}</h3>
     </a>
     <p>{{ book.authors }}</p>
+    <a href="{% url 'library:book_detail' pk=book.pk %}">
     {% if book.cover %}
-    	<a href="{% url 'library:book_detail' pk=book.pk %}">
-    		<img src="{{ book.cover.url }}" class="cover" />
-    	</a>
+    	<img src="{{ book.cover.url }}" class="cover" />
     {% else %}
-    	<a href="{% url 'library:book_detail' pk=book.pk %}">
-    		<img src="{% static "ideasbox/img/default-book.png" %}" class="cover" />
-    	</a>
+    	<img src="{% static "ideasbox/img/default-book.png" %}" class="cover" />
     {% endif %}
+    </a>
 </div>
