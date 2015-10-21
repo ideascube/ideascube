@@ -5,8 +5,12 @@
     </a>
     <p>{{ book.authors }}</p>
     {% if book.cover %}
-    	<img src="{{ book.cover.url }}" class="cover" />
+    	<a href="{% url 'library:book_detail' pk=book.pk %}">
+    		<img src="{{ book.cover.url }}" class="cover" />
+    	</a>
     {% else %}
-    	<img src="{% static "ideasbox/img/default-book.png" %}" class="cover" />
+    	<a href="{% url 'library:book_detail' pk=book.pk %}">
+    		<img src="{% static "ideasbox/img/default-book.png" %}" class="cover" />
+    	</a>
     {% endif %}
 </div>
