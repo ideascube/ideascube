@@ -40,6 +40,10 @@ def test_list(monkeypatch, settings):
 
 def test_create(monkeypatch, settings):
     settings.BACKUPED_ROOT = BACKUPED_ROOT
+    try:
+        os.makedirs(BACKUPED_ROOT)
+    except OSError:
+        pass
     filename = 'edoardo_0.0.0_201501231405.zip'
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:

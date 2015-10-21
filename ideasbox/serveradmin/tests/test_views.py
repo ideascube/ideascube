@@ -77,6 +77,10 @@ def test_backup_should_list_available_backups(staffapp, backup):
 def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
                                                 settings):
     settings.BACKUPED_ROOT = BACKUPED_ROOT
+    try:
+        os.makedirs(BACKUPED_ROOT)
+    except OSError:
+        pass
     filename = 'edoardo_0.0.0_201501231405.zip'
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
