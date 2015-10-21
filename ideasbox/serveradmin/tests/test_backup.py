@@ -9,6 +9,7 @@ from ..backup import Backup
 
 BACKUPS_ROOT = 'ideasbox/serveradmin/tests/backups'
 DATA_ROOT = 'ideasbox/serveradmin/tests/data'
+BACKUPED_ROOT = 'ideasbox/serveradmin/tests/backuped'
 
 
 def test_backup_init_should_raise_with_malformatted_string():
@@ -38,6 +39,7 @@ def test_list(monkeypatch, settings):
 
 
 def test_create(monkeypatch, settings):
+    settings.BACKUPED_ROOT = BACKUPED_ROOT
     filename = 'edoardo_0.0.0_201501231405.zip'
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
@@ -55,6 +57,7 @@ def test_create(monkeypatch, settings):
     assert os.path.exists(filepath)
     assert zipfile.is_zipfile(filepath)
     archive = zipfile.ZipFile(filepath)
+    print(archive.namelist())
     assert 'backup.me' in archive.namelist()
     os.remove(filepath)
     os.remove(proof_file)

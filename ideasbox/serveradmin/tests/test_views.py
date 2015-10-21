@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
 
 from ..backup import Backup
-from .test_backup import BACKUPS_ROOT, DATA_ROOT
+from .test_backup import BACKUPS_ROOT, DATA_ROOT, BACKUPED_ROOT
 
 pytestmark = pytest.mark.django_db
 
@@ -76,6 +76,7 @@ def test_backup_should_list_available_backups(staffapp, backup):
 
 def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
                                                 settings):
+    settings.BACKUPED_ROOT = BACKUPED_ROOT
     filename = 'edoardo_0.0.0_201501231405.zip'
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
