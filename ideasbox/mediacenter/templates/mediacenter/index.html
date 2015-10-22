@@ -13,8 +13,10 @@
     {% include "ideasbox/pagination.html" %}
 {% endblock twothird %}
 {% block third %}
+    {% if user.is_staff %}
     <div class="card tinted admin">
         {% fa 'plus' 'fa-fw' %} <a href="{% url 'mediacenter:document_create' %}">{% trans "Add a document" %}</a>
     </div>
+    {% endif %}
     {% tag_cloud url='mediacenter:by_tag' model=view.model %}
 {% endblock third %}
