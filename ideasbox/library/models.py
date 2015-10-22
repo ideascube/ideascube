@@ -9,12 +9,33 @@ from ideasbox.models import TimeStampedModel
 from ideasbox.search.models import SearchableQuerySet, SearchMixin
 
 
+class Serializable(object):
+
+    """
+    Base class allowing model introspection for generic data export
+    """
+
+    def to_data_array(self):
+
+        data = []
+        data_fields = self.__class__.get_data_fields()
+        data_fields = [field.name for field in data_fields]
+        for field in data_fields:
+            value = getattr(self, field, '')
+            data.append(value)
+
+        return data
+
+    @classmethod
+    def get_data_fields(cls):
+        return cls._meta.fields
+
 class BookQuerySet(SearchableQuerySet, models.QuerySet):
     def available(self):
         return self.filter(specimens__isnull=False).distinct()
 
 
-class Book(SearchMixin, TimeStampedModel):
+class Book(SearchMixin, TimeStampedModel, Serializable):
 
     OTHER = 99
 
@@ -66,7 +87,6 @@ class Book(SearchMixin, TimeStampedModel):
     def index_strings(self):
         return (self.title, self.isbn, self.authors, self.subtitle,
                 self.summary, self.serie, u' '.join(self.tags.names()))
-
 
 class BookSpecimen(TimeStampedModel):
 

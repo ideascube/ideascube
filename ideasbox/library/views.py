@@ -5,9 +5,9 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
-                                  ListView, UpdateView)
-
+                                  ListView, UpdateView, View)
 from ideasbox.mixins import ByTagListView
+from ideasbox.views import CSVExportMixin
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
@@ -46,6 +46,32 @@ by_tag = ByTag.as_view()
 class BookDetail(DetailView):
     model = Book
 book_detail = BookDetail.as_view()
+
+class BookExport(CSVExportMixin, View):
+
+    """
+    Book model export class using seralizable Django model
+    """
+
+    def get(self, *args, **kwargs):
+        return self.render_to_csv()
+
+    def get_items(self):
+        return Book.objects.all()
+
+    def get_headers(self):
+        self.fields = Book.get_data_fields()
+        return [unicode(f.verbose_name).encode('utf-8') for f in self.fields]
+
+    def get_row(self, book):
+        data_fields = book.to_data_array()
+        row = {}
+        for x, field in enumerate(self.fields):
+            value = unicode(field).encode('utf-8')
+            row[unicode(field.verbose_name).encode('utf-8')] = data_fields[x]
+        return row
+
+book_export = staff_member_required(BookExport.as_view())
 
 
 class BookUpdate(UpdateView):
