@@ -23,32 +23,7 @@ IDEASBOX_NAME = 'BSF Campus'
 
 DOMAIN = 'koombook.lan'
 
-STAFF_HOME_CARDS = [
-    {
-        'is_staff': True,
-        'category': 'manage',
-        'url': 'user_list',
-        'title': _('Users'),
-        'description': _('Create, remove or modify users.'),
-        'fa': 'users',
-    },
-    {
-        'is_staff': True,
-        'category': 'manage',
-        'url': 'server:power',
-        'title': _('Stop/Restart'),
-        'description': _('Stop or restart the server.'),
-        'fa': 'power-off',
-    },
-    {
-        'is_staff': True,
-        'category': 'manage',
-        'url': 'server:power',
-        'title': _('Backups'),
-        'description': _('Create, restore, download, upload backups.'),
-        'fa': 'life-ring',
-    },
-]
+STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS if c['url'] in ['user_list', 'server:power', 'server:backup']]
 
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
