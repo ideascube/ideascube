@@ -36,7 +36,7 @@ class Document(SearchMixin, TimeStampedModel):
     AUDIO = 'audio'
     OTHER = 'other'
 
-    TYPE_CHOICES = (
+    KIND_CHOICES = (
         (IMAGE, _('image')),
         (AUDIO, _('sound')),
         (VIDEO, _('video')),
@@ -54,7 +54,7 @@ class Document(SearchMixin, TimeStampedModel):
     preview = models.ImageField(_('preview'), upload_to='mediacenter/preview',
                                 blank=True)
     credits = models.CharField(_('credit'), max_length=300)
-    kind = models.CharField(_('type'), max_length=5, choices=TYPE_CHOICES,
+    kind = models.CharField(_('type'), max_length=5, choices=KIND_CHOICES,
                             default=OTHER)
 
     objects = DocumentQuerySet.as_manager()

@@ -17,14 +17,29 @@ from .models import Document
 from .forms import DocumentForm
 
 
-class Index(ListView):
+class KindMixin(object):
+
+    def get_queryset(self):
+        qs = super(KindMixin, self).get_queryset()
+        kind = self.request.GET.get('kind')
+        if kind:
+            qs = qs.filter(kind=kind)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super(KindMixin, self).get_context_data(**kwargs)
+        context['kind'] = self.request.GET.get('kind')
+        return context
+
+
+class Index(KindMixin, ListView):
     model = Document
     template_name = 'mediacenter/index.html'
     paginate_by = 10
 index = Index.as_view()
 
 
-class ByTag(ByTagListView):
+class ByTag(KindMixin, ByTagListView):
     model = Document
     template_name = 'mediacenter/by_tag.html'
     paginate_by = 10

@@ -745,6 +745,8 @@ html[dir='rtl'] .search input[type='submit'] {
     width: 250px;
     height: 250px;
     text-align: center;
+    flex-basis: 250px;
+    max-width: 300px;
 }
 .document-list .card > a {
     text-decoration: none;
