@@ -55,9 +55,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'blog',
     },
     {
-        'id': 'library',
-    },
-    {
         'id': 'mediacenter',
     },
     {
