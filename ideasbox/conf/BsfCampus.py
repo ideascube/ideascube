@@ -14,7 +14,7 @@ ALLOWED_HOSTS = ['.koombook.lan.', 'localhost', '127.0.0.1']
 
 LANGUAGE_CODE = 'fr'
 
-TIME_ZONE = 'Europe/Paris'
+TIME_ZONE = None
 
 # Ideas Box specifics
 STORAGE_ROOT = '/media/hdd/ideasServer/storage' 
