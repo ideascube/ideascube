@@ -3,7 +3,6 @@ import json
 from urlparse import urlparse
 
 from django.conf import settings
-from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse_lazy, resolve, Resolver404
 from django.http import Http404, HttpResponse
 from django.template import RequestContext
@@ -12,6 +11,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
 from ideasbox.mixins import ByTagListView
+from ideasbox.decorators import staff_member_required
 
 from .models import Document
 from .forms import DocumentForm

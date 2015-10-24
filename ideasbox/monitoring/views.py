@@ -2,7 +2,6 @@ from datetime import date, timedelta
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -12,6 +11,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   TemplateView, UpdateView, View)
 
 from ideasbox.views import CSVExportMixin
+from ideasbox.decorators import staff_member_required
 
 from .forms import (EntryForm, ExportEntryForm, ExportLoanForm,
                     InventorySpecimenForm, LoanForm, ReturnForm, SpecimenForm)

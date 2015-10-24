@@ -8,7 +8,6 @@ from urlparse import urlparse
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import SetPasswordForm
 from django.core.urlresolvers import reverse_lazy
@@ -22,6 +21,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
 from taggit.models import TaggedItem
 
 from ideasbox.blog.models import Content
+from ideasbox.decorators import staff_member_required
 from ideasbox.library.models import Book
 from ideasbox.mediacenter.models import Document
 

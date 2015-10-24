@@ -3,10 +3,11 @@ from subprocess import call
 import batinfo
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.http import StreamingHttpResponse
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
+
+from ideasbox.decorators import staff_member_required
 
 from .backup import Backup
 from .utils import call_service

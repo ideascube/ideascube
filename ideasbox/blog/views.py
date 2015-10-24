@@ -1,7 +1,7 @@
-from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import (ListView, DetailView, UpdateView, CreateView)
 
 from ideasbox.mixins import ByTagListView
+from ideasbox.decorators import staff_member_required
 
 from .forms import ContentForm
 from .models import Content
