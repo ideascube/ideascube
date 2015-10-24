@@ -8,7 +8,7 @@ script: make test
 notifications:
     irc:
         channels:
-            - "irc.freenode.net#ideasbox"
+            - "irc.freenode.net#ideastube"
         on_success: change
         on_failure: always
     email: false

@@ -3,7 +3,7 @@ import django_webtest
 
 from django.core.urlresolvers import reverse
 
-from ideasbox.tests.factories import UserFactory
+from ideastube.tests.factories import UserFactory
 
 
 @pytest.fixture()

@@ -1,0 +1,9 @@
+{% load static ideastube_tags mediacenter_tags %}
+
+<div class="card">
+    <a href="{{ document.get_absolute_url }}">
+        <h3><span class="theme read">{{ document.get_kind_display }}</span> {{ document }}</h3>
+        <img src="{{ document|preview_url }}" title="{{ document.title }}" />
+    </a>
+    
+</div>

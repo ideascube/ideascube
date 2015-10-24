@@ -1,6 +1,6 @@
-# Contributing to ideasbox.lan
+# Contributing to ideastube
 
-Do you like to make the ideasbox.lan project better? Welcome! This document
+Do you like to make the ideastube project better? Welcome! This document
 will try to provide guidelines about what and how you can help.
 
 
@@ -9,33 +9,33 @@ will try to provide guidelines about what and how you can help.
 If you have any question, problem or idea, feel free to get in touch with
 project's maintainers:
 
-* Chat using #ideasbox channel on Freenode. If you are not familiar with
+* Chat using #ideastube channel on Freenode. If you are not familiar with
   [IRC](https://en.wikipedia.org/wiki/Internet_Relay_Chat), you can try
-  this simple [online chat application](https://kiwiirc.com/client/irc.freenode.net/?nick=new-user|?#ideasbox):
+  this simple [online chat application](https://kiwiirc.com/client/irc.freenode.net/?nick=new-user|?#ideastube):
   just click "Start" then chat!
 
 * Ask questions, report issues or propose ideas as
-  [tickets](https://github.com/issues).
+  [tickets](https://github.com/ideastue/ideastube/issues).
 
 Here are online resources you may find useful to contribute to the project:
 
 * Homepage: http://www.ideas-box.org/
-* Code repository: https://github.com/ideas-box/ideasbox.lan
+* Code repository: https://github.com/ideastube/ideastube
 * Issues, questions and feature requests:
-  https://github.com/ideas-box/ideasbox.lan/issues
-* Continuous integration: https://travis-ci.org/ideas-box/ideasbox.lan
-* Documentation: https://github.com/ideas-box/ideasbox.lan/blob/master/docs/index.md
+  https://github.com/ideastube/ideastube/issues
+* Continuous integration: https://travis-ci.org/ideastube/ideastube
+* Documentation: https://github.com/ideastube/ideastube/blob/master/docs/index.md
 
 
 ## How can I give a hand?
 
 * Join the brainstorming: report or comment issues; edit wiki; join IRC chan
-* Review [pull requests](https://github.com/ideas-box/ideasbox.lan/pulls)
-* Take an [issue](https://github.com/ideas-box/ideasbox.lan/issues) and code :)
+* Review [pull requests](https://github.com/ideastube/ideastube/pulls)
+* Take an [issue](https://github.com/ideastube/ideastube/issues) and code :)
 * What about a sprint?
 
 
-## Install ideasbox.lan for development
+## Install ideastube for development
 
 ### Setup system
 
@@ -52,17 +52,17 @@ On a Debian-based system, you may use:
 ### Download the souce code
 
 Get project's source code from
-[project's code repository](https://github.com/ideas-box/ideasbox.lan)
+[project's code repository](https://github.com/ideastube/ideastube)
 (you may use your own fork):
 
-    git clone git@github.com:ideas-box/ideasbox.lan.git
-    cd ideasbox.lan/
+    git clone git@github.com:ideastube/ideastube.git
+    cd ideastube/
 
 ### Setup project
 
-Create a virtualenv (we name it `ideasbox` here but the name is up to you):
+Create a virtualenv (we name it `ideastube` here but the name is up to you):
 
-    mkvirtualenv ideasbox
+    mkvirtualenv ideastube
 
 Install python dependencies:
 

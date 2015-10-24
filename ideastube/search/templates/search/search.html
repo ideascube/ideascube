@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load i18n ideastube_tags %}
+
+{% block body_class %}search{% endblock %}
+
+{% block content %}
+    <div class="row main">
+        <div class="col two-third">
+            <h2>{% trans 'Search in the box' %}</h2>
+            {% include 'search/box.html' %}
+            <div class="results">
+                {% if q %}
+                    {% for result in results %}
+                        <div>{{ result|theme_slug }} <a href="{{ result.get_absolute_url }}">{{ result }}</a></div>
+                    {% empty %}
+                        {% blocktrans with query=q %}No result for "{{ query }}".{% endblocktrans %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

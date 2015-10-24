@@ -6,20 +6,20 @@ The first way of customizing the project installation is to provide a local
 settings file.
 This can be done in three ways:
 
-- add a file `hostname`.py in `ideasbox/conf` (for example, `ideabox/conf/azraq.py`
+- add a file `hostname`.py in `ideastube/conf` (for example, `ideabox/conf/azraq.py`
   if the `hostname` is `azraq`)
-- set an environment variable `IDEASBOX_ID` and add a file with this id in `ideasbox/conf`
+- set an environment variable `IDEASTUBE_ID` and add a file with this id in `ideastube/conf`
 - define `DJANGO_SETTINGS_MODULE` environment variable
 
 Good reading:
 - Django documentation about [settings](https://docs.djangoproject.com/en/1.8/ref/settings/)
-- examples of local [settings](https://github.com/ideas-box/ideasbox.lan/tree/master/ideasbox/conf)
+- examples of local [settings](https://github.com/ideas-box/ideastube/tree/master/ideastube/conf)
 
 ### Main settings
 
 Among all Django and custom settings, here are the one you may want to customize.
 
-#### IDEASBOX_NAME = *string*
+#### IDEASTUBE_NAME = *string*
 
 The displayed server name in the header.
 

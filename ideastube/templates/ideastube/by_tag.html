@@ -1,0 +1,16 @@
+{% extends 'two-third-third.html' %}
+{% load i18n ideastube_tags %}
+
+{% block twothird %}
+    <h2>{% blocktrans with theme=view.kwargs.tag %}Browse theme "{{ theme }}"{% endblocktrans %}</h2>
+    <div class="results">
+        {% for obj in object_list %}
+            <div>{{ obj.content_object|theme_slug }} <a href="{{ obj.content_object.get_absolute_url }}">{{ obj.content_object }}</a></div>
+        {% endfor %}
+    </div>
+    {% include "ideastube/pagination.html" %}
+{% endblock twothird %}
+{% block third %}
+    {% tag_cloud url="by_tag" %}
+    {% include 'search/box.html' %}
+{% endblock third %}

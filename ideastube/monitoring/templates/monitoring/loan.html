@@ -1,0 +1,67 @@
+{% extends 'two-third-third.html' %}
+
+{% load i18n ideastube_tags %}
+
+{% block extra_head %}
+    {% include 'ideastube/includes/form_statics.html' %}
+{% endblock extra_head %}
+
+{% block twothird %}
+    <h2>{% trans "Loan" %}</h2>
+    <form method="post" id="loan_form">
+        {% csrf_token %}
+        {% for field in loan_form %}
+            {% form_field field %}
+        {% endfor %}
+        <input type="submit" name="do_loan" value="{% trans 'Validate' %}">
+    </form>
+    <hr />
+    <h3>{% trans "Ongoing loans" %}</h3>
+    <table>
+        <tr>
+            <th>{% trans "Item" %}</th>
+            <th>{% trans "User" %}</th>
+            <th>{% trans "Due date" %}</th>
+            <th>{% trans "Comments" %}</th>
+            <th>{% trans "By" %}</th>
+        </tr>
+        {% for loan in loans %}
+            <tr>
+                <td>{{ loan.specimen.item }} - {{ loan.specimen.barcode }}</td>
+                <td>{{ loan.user }}</td>
+                <td>{% if loan.due %}{% fa 'exclamation' %} {% endif %}{{ loan.due_date }}</td>
+                <td>{{ loan.comments }}</td>
+                <td>{{ loan.by }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock twothird %}
+{% block third %}
+    <h3>{% trans "Return" %}</h3>
+    <form method="post" id="return_form">
+        {% csrf_token %}
+        {% for field in return_form %}
+            {% form_field field %}
+        {% endfor %}
+        <input type="submit" name="do_return" value="{% trans 'Validate' %}">
+    </form>
+    <hr />
+    <h3>{% trans "Export" %}</h3>
+    <form method="get" id="export_form" action="{% url 'monitoring:export_loan' %}">
+        {% csrf_token %}
+        {% for field in export_form %}
+            {% form_field field %}
+        {% endfor %}
+        <input type="submit" name="do_export" value="{% trans 'Export' %}">
+    </form>
+{% endblock third %}
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        ID.focusOn('[name="barcode"]');
+        ID.initDatepicker('due_date');
+        ID.initDatepicker('since');
+        ID.stopEnterKey('specimen');
+        ID.stopEnterKey('user');
+    </script>
+{% endblock extra_foot %}

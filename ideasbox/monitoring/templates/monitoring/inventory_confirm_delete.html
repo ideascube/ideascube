@@ -1,4 +1,0 @@
-{% extends 'ideasbox/form_confirm_delete.html' %}
-{% load i18n %}
-
-{% block confirm_message %}{% blocktrans with date=inventory.made_at %}Are you sure you want to delete the inventory of {{ date }}?{% endblocktrans %}{% endblock %}

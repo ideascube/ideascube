@@ -1,5 +1,5 @@
-# Ideasbox's Core application
+# Ideastube
 
-Welcome to the Ideasbox server documentation.
+Welcome to the Ideastube server documentation.
 
 You may want to start by [installing it](install.md).

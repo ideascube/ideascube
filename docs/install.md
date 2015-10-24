@@ -1,11 +1,11 @@
 # Installation
 
 **Here are instructions to run a production environment**, i.e. tasks to
-deploy, run and use an ideasbox.lan server.
+deploy, run and use an ideastube server.
 
 **If you want to setup a development environment**, as an example in order to
 contribute to the project, please see [Contributor guide]
-(https://github.com/ideas-box/ideasbox.lan/CONTRIBUTING.md).
+(https://github.com/ideastube/ideastube/CONTRIBUTING.md).
 
 
 ## System setup
@@ -16,9 +16,9 @@ Install system dependencies:
 
     sudo apt-get install python-pip python-virtualenv virtualenvwrapper
 
-Create a virtualenv (we name it `ideasbox` here but the name is up to you):
+Create a virtualenv (we name it `ideastube` here but the name is up to you):
 
-    mkvirtualenv ideasbox
+    mkvirtualenv ideastube
 
 Install python dependencies:
 
@@ -37,8 +37,8 @@ Then install the `.deb`:
 
 Run the initial database migration:
 
-    sudo ideasbox migrate
+    sudo ideastube migrate
 
 Create an administrator:
 
-    sudo ideasbox createsuperuser
+    sudo ideastube createsuperuser

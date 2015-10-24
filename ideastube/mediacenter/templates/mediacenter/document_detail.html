@@ -1,0 +1,30 @@
+{% extends 'two-third-third.html' %}
+
+{% load i18n static ideastube_tags %}
+
+{% block twothird %}
+    <h2><span class="theme read">{{ document.get_kind_display }}</span> {{ document }}</h2>
+    <h6>{% include 'ideastube/includes/tag_list.html' with url='mediacenter:by_tag' tags=document.tags.all %}</h6>
+    {% if document.kind == document.IMAGE %}
+        <img src="{{ document.original.url }}" />
+    {% elif document.kind == document.VIDEO %}
+        <video controls width="100%">
+            <source src="{{ document.original.url }}">
+        </video>
+    {% else %}
+        <div>
+            <a href="{{ document.original.url }}">
+                <img src="{% static 'mediacenter/document.svg' %}" /><br />{% trans 'Download document' %}
+            </a>
+        </div>
+    {% endif %}
+    <div class="text">{{ document.summary }}</div>
+{% endblock twothird %}
+{% block third %}
+    {% if user.is_staff %}
+        <ul class="card tinted admin">
+            <li>{% fa 'pencil' 'fa-fw' %}<a href="{% url 'mediacenter:document_update' pk=document.pk %}">{% trans 'Edit' %}</a></li>
+            <li>{% fa 'trash' 'fa-fw' %}<a href="{% url 'mediacenter:document_delete' pk=document.pk %}">{% trans 'Delete' %}</a></li>
+        </ul>
+    {% endif %}
+{% endblock third %}

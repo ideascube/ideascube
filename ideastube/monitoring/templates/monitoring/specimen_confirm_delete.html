@@ -1,0 +1,4 @@
+{% extends 'ideastube/form_confirm_delete.html' %}
+{% load i18n %}
+
+{% block confirm_message %}{% blocktrans with specimen=specimen.barcode item=specimen.item %}Are you sure you want to delete the specimen "{{ specimen }}" of "{{ item }}"?{% endblocktrans %}{% endblock %}
