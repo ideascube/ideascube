@@ -18,6 +18,10 @@ def test_backup_init_should_raise_with_malformatted_string():
         Backup('xxxxx')
 
 
+def test_underscore_as_separator_should_still_be_supported():
+    Backup('edoardo-0.0.0-201501231405.zip')
+
+
 @pytest.mark.parametrize('input,expected', [
     ('name.zip', 'zip'),
     ('name.tar', 'tar'),
@@ -32,7 +36,7 @@ def test_list(monkeypatch, settings):
     monkeypatch.setattr('ideastube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
     settings.DATETIME_FORMAT = 'Y'
-    filename = 'edoardo_0.0.0_201501231405.zip'
+    filename = 'edoardo-0.0.0-201501231405.zip'
     good = os.path.join(BACKUPS_ROOT, filename)
     bad = os.path.join(BACKUPS_ROOT, 'donotlistme.zip')
     try:
@@ -55,7 +59,7 @@ def test_create_zipfile(monkeypatch, settings):
         os.makedirs(BACKUPED_ROOT)
     except OSError:
         pass
-    filename = 'edoardo_0.0.0_201501231405.zip'
+    filename = 'edoardo-0.0.0-201501231405.zip'
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
         # Make sure it doesn't exist before running backup.
@@ -89,7 +93,7 @@ def test_create_tarfile(monkeypatch, settings, format, extension):
         os.makedirs(BACKUPED_ROOT)
     except OSError:
         pass
-    filename = 'edoardo_0.0.0_201501231405' + extension
+    filename = 'edoardo-0.0.0-201501231405' + extension
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
         # Make sure it doesn't exist before running backup.
@@ -125,7 +129,7 @@ def test_restore(monkeypatch, settings, extension):
     settings.BACKUPED_ROOT = TEST_BACKUPED_ROOT
     dbpath = os.path.join(TEST_BACKUPED_ROOT, 'default.sqlite')
     assert not os.path.exists(dbpath)
-    backup = Backup('musasa_0.1.0_201501241620' + extension)
+    backup = Backup('musasa-0.1.0-201501241620' + extension)
     assert os.path.exists(backup.path)  # Should be shipped in git.
     backup.restore()
     assert os.path.exists(dbpath)
@@ -141,7 +145,7 @@ def test_restore(monkeypatch, settings, extension):
 def test_load(monkeypatch, extension):
     monkeypatch.setattr('ideastube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
-    backup_name = 'musasa_0.1.0_201501241620' + extension
+    backup_name = 'musasa-0.1.0-201501241620' + extension
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
     with open(os.path.join(DATA_ROOT, backup_name), mode='rb') as f:
@@ -153,7 +157,7 @@ def test_load(monkeypatch, extension):
 def test_delete(monkeypatch):
     monkeypatch.setattr('ideastube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
-    backup_name = 'musasa_0.1.0_201501241620.zip'
+    backup_name = 'musasa-0.1.0-201501241620.zip'
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
     with open(os.path.join(DATA_ROOT, backup_name), mode='rb') as f:
@@ -166,7 +170,7 @@ def test_delete(monkeypatch):
 def test_delete_should_not_fail_if_file_is_missing(monkeypatch):
     monkeypatch.setattr('ideastube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
-    backup = Backup('doesnotexist_0.1.0_201501241620.zip')
+    backup = Backup('doesnotexist-0.1.0-201501241620.zip')
     backup.delete()
 
 
@@ -187,5 +191,5 @@ def test_load_should_raise_if_file_is_not_a_tar():
 
 def test_exists(monkeypatch, settings):
     monkeypatch.setattr('ideastube.serveradmin.backup.Backup.ROOT', DATA_ROOT)
-    assert Backup.exists('musasa_0.1.0_201501241620.zip')
+    assert Backup.exists('musasa-0.1.0-201501241620.zip')
     assert not Backup.exists('doesnotexist.zip')

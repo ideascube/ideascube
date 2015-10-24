@@ -13,7 +13,7 @@ from ideastube import __version__
 
 def make_name():
     """Return backup formatted file name."""
-    basename = '_'.join([
+    basename = '-'.join([
         settings.IDEASTUBE_ID,
         __version__,
         datetime.now().strftime(Backup.DATE_FORMAT)
@@ -42,7 +42,11 @@ class Backup(object):
         return self.name
 
     def parse_name(self):
-        self.source, self.version, date_ = self.basename.split('_')
+        try:
+            self.source, self.version, date_ = self.basename.split('-')
+        except ValueError:
+            # Retrocompat. Remove me in 1.0.
+            self.source, self.version, date_ = self.basename.split('_')
         self.date = datetime.strptime(date_, Backup.DATE_FORMAT)
 
     @property

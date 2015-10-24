@@ -82,7 +82,7 @@ def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
         os.makedirs(BACKUPED_ROOT)
     except OSError:
         pass
-    filename = 'edoardo_0.0.0_201501231405.zip'
+    filename = 'edoardo-0.0.0-201501231405.zip'
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
         # Make sure it doesn't exist before running backup.
@@ -132,7 +132,7 @@ def test_delete_button_should_remove_file(staffapp, backup):
     assert len(os.listdir(DATA_ROOT)) == 4
     with open(backup.path, mode='rb') as f:
         other = Backup.load(ContentFile(f.read(),
-                            name='kavumu_0.1.0_201401241620.zip'))
+                            name='kavumu-0.1.0-201401241620.zip'))
     assert len(os.listdir(DATA_ROOT)) == 5
     form = staffapp.get(reverse('server:backup')).forms['backup']
     form['backup'] = other.name
@@ -144,7 +144,7 @@ def test_upload_button_create_new_backup_with_uploaded_file(staffapp,
                                                             monkeypatch):
     monkeypatch.setattr('ideastube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
-    backup_name = 'musasa_0.1.0_201501241620.zip'
+    backup_name = 'musasa-0.1.0-201501241620.zip'
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
     with open(os.path.join(DATA_ROOT, backup_name), mode='rb') as f:
@@ -159,7 +159,7 @@ def test_upload_button_do_not_create_backup_with_non_zip_file(staffapp,
                                                               monkeypatch):
     monkeypatch.setattr('ideastube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
-    backup_name = 'musasa_0.1.0_201501241620.zip'
+    backup_name = 'musasa-0.1.0-201501241620.zip'
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
     form = staffapp.get(reverse('server:backup')).forms['backup']
@@ -173,7 +173,7 @@ def test_upload_button_do_not_create_backup_with_bad_file_name(staffapp,
                                                                monkeypatch):
     monkeypatch.setattr('ideastube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
-    backup_name = 'musasa_0.1.0_201501241620.zip'
+    backup_name = 'musasa-0.1.0-201501241620.zip'
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
     with open(os.path.join(DATA_ROOT, backup_name), mode='rb') as f:

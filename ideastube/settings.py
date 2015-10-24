@@ -1,11 +1,16 @@
 import importlib
 import os
+import re
 import socket
 import sys
 
 # The normal scenario is that we use the hostname, but let's make it
 # overridable, this is useful for dev and debugging.
 IDEASTUBE_ID = os.environ.get('IDEASTUBE_ID', socket.gethostname())
+
+if not re.match('^[\w_]+$', IDEASTUBE_ID):
+    raise ValueError('Invalid IDEASTUBE_ID: {}. It should contain only '
+                     'alphanumeric and underscore'.format(IDEASTUBE_ID))
 
 # Every box will have some edge specific needs, such as a specific user model,
 # we manage this with per box settings, but we want those specific settings
