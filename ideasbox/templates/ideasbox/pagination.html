@@ -2,13 +2,24 @@
 {% if is_paginated %}
     <div class="pagination">
         {% if page_obj.has_previous %}
-            <a href="{{ base_url }}?page={{ page_obj.previous_page_number }}" class="previous">{% trans "previous" %}</a>
+
+            {% if page_obj.previous_page_number != 1 %}
+                <a class="smallButton" title="{% trans  'first' %}" href="{{ base_url }}?page=1" class="previous">&lt;&lt;</a>
+            {% endif %}
+
+
+            <a class="smallButton" title="{% trans  'previous' %}" href="{{ base_url }}?page={{ page_obj.previous_page_number }}" class="previous">&lt;</a>
         {% endif %}
         <span class="current">
             {% blocktrans with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}.{% endblocktrans %}
         </span>
         {% if page_obj.has_next %}
-            <a href="{{ base_url }}?page={{ page_obj.next_page_number }}" class="next">{% trans "next" %}</a>
+            <a class="smallButton" title="{% trans  'next' %}" href="{{ base_url }}?page={{ page_obj.next_page_number }}" class="next">&gt;</a>
+
+            {% if page_obj.paginator.num_pages != page_obj.next_page_number %}
+                <a class="smallButton" title="{% trans  'last' %}" href="{{ base_url }}?page={{ page_obj.paginator.num_pages }}" class="next">&gt;&gt;</a>
+            {% endif %}
+
         {% endif %}
     </div>
 {% endif %}
