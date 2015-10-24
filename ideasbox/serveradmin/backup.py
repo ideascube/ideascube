@@ -1,5 +1,7 @@
 import os
+import re
 import shutil
+import tarfile
 import zipfile
 from datetime import datetime
 
@@ -11,22 +13,28 @@ from ideasbox import __version__
 
 def make_name():
     """Return backup formatted file name."""
-    return '{}.zip'.format('_'.join([
+    basename = '_'.join([
         settings.IDEASBOX_ID,
         __version__,
         datetime.now().strftime(Backup.DATE_FORMAT)
-    ]))
+    ])
+    return '{}{}'.format(basename, Backup.FORMAT_TO_EXTENSION[Backup.FORMAT])
 
 
 class Backup(object):
 
-    FORMAT = 'zip'
+    FORMAT = settings.BACKUP_FORMAT
+    SUPPORTED_FORMATS = ('zip', 'tar', 'bztar', 'gztar')
+    SUPPORTED_EXTENSIONS = ('.zip', '.tar', '.bz2', '.gz')
+    FORMAT_TO_EXTENSION = dict(zip(SUPPORTED_FORMATS, SUPPORTED_EXTENSIONS))
+    EXTENSION_TO_FORMAT = dict(zip(SUPPORTED_EXTENSIONS, SUPPORTED_FORMATS))
     DATE_FORMAT = "%Y%m%d%H%M"
     ROOT = os.path.join(settings.STORAGE_ROOT, 'backups')
 
     def __init__(self, name):
-        if not name.endswith('.zip'):
-            raise ValueError(_('backup name must end with .zip'))
+        if not name.endswith(self.SUPPORTED_EXTENSIONS):
+            msg = _('backup name must end with one of {extensions}')
+            raise ValueError(msg.format(extensions=self.SUPPORTED_EXTENSIONS))
         self.name = name
         self.parse_name()
 
@@ -39,7 +47,8 @@ class Backup(object):
 
     @property
     def basename(self):
-        return self.name[:-4]  # Minus extension.
+        # Remove every supported extension.
+        return re.sub('|'.join(Backup.SUPPORTED_EXTENSIONS), '', self.name)
 
     @classmethod
     def make_path(cls, name):
@@ -53,10 +62,14 @@ class Backup(object):
     def size(self):
         return os.path.getsize(self.path)
 
+    @property
+    def format(self):
+        return self.guess_file_format(self.name)
+
     def save(self):
         """Make a backup of the server data."""
         return shutil.make_archive(
-            base_name=os.path.join(Backup.ROOT, self.basename),  # W/o .zip.
+            base_name=os.path.join(Backup.ROOT, self.basename),  # W/o ext.
             format=self.FORMAT,
             root_dir=settings.BACKUPED_ROOT,
             base_dir='./'
@@ -64,8 +77,26 @@ class Backup(object):
 
     def restore(self):
         """Restore a backup from a backup name."""
+        if self.format == 'zip':
+            self.restore_zip()
+        else:
+            self.restore_tar()
+
+    def restore_zip(self):
         with zipfile.ZipFile(self.path, "r") as z:
             z.extractall(settings.BACKUPED_ROOT)
+
+    def restore_tar(self):
+        tar = tarfile.open(self.path, mode="r", format=self.format)
+        tar.extractall(settings.BACKUPED_ROOT)
+        tar.close()
+
+    @classmethod
+    def guess_file_format(cls, name):
+        for ext, format in cls.EXTENSION_TO_FORMAT.items():
+            if name.endswith(ext):
+                return format
+        raise ValueError(_('Unkown format for file {}').format(name))
 
     def delete(self):
         try:
@@ -97,9 +128,14 @@ class Backup(object):
 
     @classmethod
     def load(cls, file_):
-        assert zipfile.is_zipfile(file_), _("Not a zip file")
+        name = os.path.basename(file_.name)
+        if name.endswith('.zip'):
+            if not zipfile.is_zipfile(file_):
+                raise ValueError(_("Not a zip file"))
+        elif not tarfile.is_tarfile(file_.name):
+            raise ValueError(_("Not a tar file"))
         file_.seek(0)  # Reset cursor.
-        backup = Backup(os.path.basename(file_.name))
+        backup = Backup(name)
         with open(backup.path, mode='wb') as f:
             f.write(file_.read())
         return backup

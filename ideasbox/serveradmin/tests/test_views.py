@@ -70,12 +70,13 @@ def test_staff_user_should_access_backup_admin(staffapp):
 def test_backup_should_list_available_backups(staffapp, backup):
     form = staffapp.get(reverse('server:backup')).forms['backup']
     radio_options = form.get('backup').options
-    assert len(radio_options) == 1
-    assert radio_options[0][0] == backup.name
+    assert len(radio_options) == 4
+    assert radio_options[3][0] == backup.name
 
 
 def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
                                                 settings):
+    monkeypatch.setattr('ideasbox.serveradmin.backup.Backup.FORMAT', 'zip')
     settings.BACKUPED_ROOT = BACKUPED_ROOT
     try:
         os.makedirs(BACKUPED_ROOT)
@@ -106,8 +107,7 @@ def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
 
 def test_restore_button_should_restore(staffapp, monkeypatch, settings,
                                        backup):
-    backups = os.listdir(DATA_ROOT)
-    assert len(backups) == 1  # Only one backup exists.
+    assert len(os.listdir(DATA_ROOT)) == 4  # One by format.
     TEST_BACKUPED_ROOT = 'ideasbox/serveradmin/tests/backuped'
     settings.BACKUPED_ROOT = TEST_BACKUPED_ROOT
     dbpath = os.path.join(TEST_BACKUPED_ROOT, 'default.sqlite')
@@ -115,6 +115,7 @@ def test_restore_button_should_restore(staffapp, monkeypatch, settings,
     form = staffapp.get(reverse('server:backup')).forms['backup']
     form['backup'] = backup.name
     form.submit('do_restore')
+    assert len(os.listdir(DATA_ROOT)) == 4
     assert os.path.exists(dbpath)
     os.remove(dbpath)
 
@@ -127,16 +128,16 @@ def test_download_button_should_download_zip_file(staffapp, backup):
     assert zipfile.is_zipfile(ContentFile(resp.content))
 
 
-def test_delete_button_should_remote_file(staffapp, backup):
-    assert len(os.listdir(DATA_ROOT)) == 1
+def test_delete_button_should_remove_file(staffapp, backup):
+    assert len(os.listdir(DATA_ROOT)) == 4
     with open(backup.path, mode='rb') as f:
         other = Backup.load(ContentFile(f.read(),
                             name='kavumu_0.1.0_201401241620.zip'))
-    assert len(os.listdir(DATA_ROOT)) == 2
+    assert len(os.listdir(DATA_ROOT)) == 5
     form = staffapp.get(reverse('server:backup')).forms['backup']
     form['backup'] = other.name
     form.submit('do_delete')
-    assert len(os.listdir(DATA_ROOT)) == 1
+    assert len(os.listdir(DATA_ROOT)) == 4
 
 
 def test_upload_button_create_new_backup_with_uploaded_file(staffapp,

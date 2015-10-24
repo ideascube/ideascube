@@ -259,4 +259,5 @@ SERVICES = [
 ]
 
 
-SESSION_COOKIE_AGE = 60*60 # Members must be logged out after one hour
+SESSION_COOKIE_AGE = 60 * 60  # Members must be logged out after one hour
+BACKUP_FORMAT = 'zip'  # One of 'zip', 'tar', 'bztar', 'gztar'

@@ -11,3 +11,4 @@ debian/ideasbox.prerm.debhelper
 debian/ideasbox.substvars
 debian/ideasbox.triggers
 .cache
+*.bk
