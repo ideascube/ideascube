@@ -11,7 +11,7 @@
         <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
         {% block extra_head %}{% endblock %}
     </head>
-    <body class="{% block body_class %}{% endblock %}">
+    <body class="{% block body_class %}{% endblock %}" {% if IDEASTUBE_BODY_ID %}id="{{ IDEASTUBE_BODY_ID }}"{% endif %}>
         {% block header %}
             {% include 'ideastube/includes/header.html' %}
         {% endblock header %}

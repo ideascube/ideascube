@@ -133,6 +133,7 @@ STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')
 AUTH_USER_MODEL = 'ideastube.User'
 IDEASTUBE_NAME = 'debugbox'
 IDEASTUBE_PLACE_NAME = _('the camp')
+IDEASTUBE_BODY_ID = 'ideasbox'
 
 LOAN_DURATION = 0  # In days.
 

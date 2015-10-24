@@ -47,3 +47,5 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     #     'fa': 'fax',
     # },
 ]
+
+IDEASTUBE_BODY_ID = 'koombook'
