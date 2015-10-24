@@ -200,7 +200,7 @@ STAFF_HOME_CARDS = [
     {
         'is_staff': True,
         'category': 'manage',
-        'url': 'server:power',
+        'url': 'server:backup',
         'title': _('Backups'),
         'description': _('Create, restore, download, upload backups.'),
         'fa': 'life-ring',
