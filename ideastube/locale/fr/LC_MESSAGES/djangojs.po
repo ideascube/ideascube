@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideasbox.lan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-27 20:47+0000\n"
+"POT-Creation-Date: 2015-10-25 06:56+0000\n"
 "PO-Revision-Date: 2015-02-28 18:52+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/ideasboxlan/"
@@ -19,162 +19,114 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: docs/_build/html/_static/doctools.js:142
-msgid "Permalink to this headline"
-msgstr ""
-
-#: docs/_build/html/_static/doctools.js:148
-msgid "Permalink to this definition"
-msgstr ""
-
-#: docs/_build/html/_static/doctools.js:180
-msgid "Hide Search Matches"
-msgstr ""
-
-#: docs/_build/html/_static/searchtools.js:299
-msgid "Searching"
-msgstr ""
-
-#: docs/_build/html/_static/searchtools.js:304
-msgid "Preparing search..."
-msgstr ""
-
-#: docs/_build/html/_static/searchtools.js:461
-msgid "Search Results"
-msgstr ""
-
-#: docs/_build/html/_static/searchtools.js:463
-msgid ""
-"Your search did not match any documents. Please make sure that all words are "
-"spelled correctly and that you've selected enough categories."
-msgstr ""
-
-#: docs/_build/html/_static/searchtools.js:465
-#, javascript-format
-msgid "Search finished, found %s page(s) matching the search query."
-msgstr ""
-
-#: docs/_build/html/_static/searchtools.js:517
-msgid ", in "
-msgstr ""
-
-#: docs/_build/html/_static/sidebar.js:77
-msgid "Expand sidebar"
-msgstr ""
-
-#: docs/_build/html/_static/sidebar.js:90
-#: docs/_build/html/_static/sidebar.js:118
-msgid "Collapse sidebar"
-msgstr ""
-
-#: ideasbox/static/ideasbox/js/forms.js:231
+#: ideastube/static/ideastube/js/ideastube.js:231
 msgid "Previous Month"
 msgstr "Mois précédent"
 
-#: ideasbox/static/ideasbox/js/forms.js:232
+#: ideastube/static/ideastube/js/ideastube.js:232
 msgid "Next Month"
 msgstr "Mois suivant"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "January"
 msgstr "Janvier"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "February"
 msgstr "Février"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "March"
 msgstr "Mars"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "April"
 msgstr "Avril"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "May"
 msgstr "Mai"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "June"
 msgstr "Juin"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "July"
 msgstr "Juillet"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "August"
 msgstr "Août"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "September"
 msgstr "Septembre"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "October"
 msgstr "Octobre"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "November"
 msgstr "Novembre"
 
-#: ideasbox/static/ideasbox/js/forms.js:233
+#: ideastube/static/ideastube/js/ideastube.js:233
 msgid "December"
 msgstr "Décembre"
 
-#: ideasbox/static/ideasbox/js/forms.js:234
+#: ideastube/static/ideastube/js/ideastube.js:234
 msgid "Sunday"
 msgstr "Dimanche"
 
-#: ideasbox/static/ideasbox/js/forms.js:234
+#: ideastube/static/ideastube/js/ideastube.js:234
 msgid "Monday"
 msgstr "Lundi"
 
-#: ideasbox/static/ideasbox/js/forms.js:234
+#: ideastube/static/ideastube/js/ideastube.js:234
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: ideasbox/static/ideasbox/js/forms.js:234
+#: ideastube/static/ideastube/js/ideastube.js:234
 msgid "Wednesday"
 msgstr "Mercred"
 
-#: ideasbox/static/ideasbox/js/forms.js:234
+#: ideastube/static/ideastube/js/ideastube.js:234
 msgid "Thursday"
 msgstr "Jeudi"
 
-#: ideasbox/static/ideasbox/js/forms.js:234
+#: ideastube/static/ideastube/js/ideastube.js:234
 msgid "Friday"
 msgstr "Vendredi"
 
-#: ideasbox/static/ideasbox/js/forms.js:234
+#: ideastube/static/ideastube/js/ideastube.js:234
 msgid "Saturday"
 msgstr "Samedi"
 
-#: ideasbox/static/ideasbox/js/forms.js:235
+#: ideastube/static/ideastube/js/ideastube.js:235
 msgid "Sun"
 msgstr "Dim."
 
-#: ideasbox/static/ideasbox/js/forms.js:235
+#: ideastube/static/ideastube/js/ideastube.js:235
 msgid "Mon"
 msgstr "Lun."
 
-#: ideasbox/static/ideasbox/js/forms.js:235
+#: ideastube/static/ideastube/js/ideastube.js:235
 msgid "Tue"
 msgstr "Mar."
 
-#: ideasbox/static/ideasbox/js/forms.js:235
+#: ideastube/static/ideastube/js/ideastube.js:235
 msgid "Wed"
 msgstr "Mer."
 
-#: ideasbox/static/ideasbox/js/forms.js:235
+#: ideastube/static/ideastube/js/ideastube.js:235
 msgid "Thu"
 msgstr "Jeu."
 
-#: ideasbox/static/ideasbox/js/forms.js:235
+#: ideastube/static/ideastube/js/ideastube.js:235
 msgid "Fri"
 msgstr "Ven."
 
-#: ideasbox/static/ideasbox/js/forms.js:235
+#: ideastube/static/ideastube/js/ideastube.js:235
 msgid "Sat"
 msgstr "Sam."
