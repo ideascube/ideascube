@@ -4,8 +4,7 @@
 deploy, run and use an ideastube server.
 
 **If you want to setup a development environment**, as an example in order to
-contribute to the project, please see [Contributor guide]
-(https://github.com/ideastube/ideastube/CONTRIBUTING.md).
+contribute to the project, please see [Contributor guide](contributing.md).
 
 
 ## System setup
