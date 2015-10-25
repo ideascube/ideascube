@@ -21,10 +21,12 @@ case "$1" in
                     "$NAME"
             echo " OK"
         fi
+        chown $NAME:$NAME /var/$NAME
+        chown $NAME:$NAME /var/$NAME/main
         echo "Running migration"
-        /usr/bin/ideastube migrate --noinput -v 1
+        sudo -u $NAME /usr/bin/ideastube migrate --noinput -v 1
         echo "Running collectstatic"
-        /usr/bin/ideastube collectstatic --noinput -v 1
+        sudo -u $NAME /usr/bin/ideastube collectstatic --noinput -v 1
         # Nginx
         echo "Linking Nginx VHost"
         ln -fs /etc/nginx/sites-available/$NAME /etc/nginx/sites-enabled/$NAME
