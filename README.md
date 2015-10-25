@@ -21,7 +21,7 @@ Welcome! There are many ways you can help. See details in
 * IRC chat: `#ideastube` on `irc.freenode.net`. If you are not familiar with
   [IRC](https://en.wikipedia.org/wiki/Internet_Relay_Chat), you can try
   this simple [online chat application](https://kiwiirc.com/client/irc.freenode.net/?nick=new-user|?#ideastube).
-* Contributor guide: https://github.com/ideastube/ideastube/CONTRIBUTING.md
+* Contributor guide: http://ideastube.readthedocs.org/en/latest/contributing/
 * Code repository: https://github.com/ideastube/ideastube
 * Issues, questions and feature requests:
   https://github.com/ideastube/ideastube/issues
