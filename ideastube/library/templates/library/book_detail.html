@@ -3,6 +3,7 @@
 {% block twothird %}
     <div class="row mwide twide">
         <div class="col third">
+            <h5><a href="{% url 'library:index' %}">&lt; {% trans 'View all books' %}</a></h5>
             {% if book.cover %}<img src="{{ book.cover.url }}" class="cover" />{% endif %}
         </div>
         <div class="col two-third book-detail">
@@ -18,7 +19,6 @@
             <p><strong>{% trans "ISBN" %}</strong> {{ book.isbn|default:'—' }}</p>
             <hr />
             {% if book.section %}<p class="flow"><strong>{% trans "Section" %}</strong> <span>{{ book.get_section_display }}</span></p>{% endif %}
-            <p><strong>{% trans "Themes" %}</strong> {% include 'ideastube/includes/tag_list.html' with tags=book.tags.all url='library:by_tag' %}</p>
             <p>{{ book.summary }}</p>
         </div>
     </div>
@@ -39,4 +39,5 @@
         {% endfor %}
     </ul>
     {% endif %}
+    {% tag_cloud url="library:by_tag" model=view.model tags=book.tags.all %}
 {% endblock third %}

@@ -569,6 +569,7 @@ html[dir='rtl'] .card.book img {
     text-transform: uppercase;
     color: #fff;
     padding: 0 5px;
+    text-decoration: none;
 }
 .learn {
     background-color: #19B5FE;
@@ -643,7 +644,7 @@ span.error {
 /* ******************* LIBRARY ********************* */
 /* ************************************************* */
 img.cover {
-    box-shadow: 0 0 2px black;
+    box-shadow: 0px 0px 10px 0px #999;
     max-height: 300px;
     max-width: 200px;
 }
@@ -667,10 +668,6 @@ img.cover {
 }
 .book-detail h4 {
     text-transform: uppercase;
-}
-.book-detail h5 {
-    font-family: 'fira_sanslight';
-    font-size: 1.3em;
 }
 .book-detail h3 {
     font-family: 'fira_sansmedium';

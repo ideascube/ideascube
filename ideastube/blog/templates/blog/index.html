@@ -2,6 +2,7 @@
 {% load i18n ideastube_tags %}
 
 {% block twothird %}
+    <h2><a href="{% url 'blog:index' %}" class="theme create">{% trans 'Blog' %}</a></h2>
     {% for content in content_list  %}
         {% include 'blog/content_card.html' %}
         <hr />
