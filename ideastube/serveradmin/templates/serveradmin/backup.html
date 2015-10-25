@@ -10,7 +10,7 @@
     <hr>
     <h3 id="restore">{% trans 'Restore' %}</h3>
     <table>
-        <tr><th>{% trans 'Select' %}</th><th>{% trans 'Source' %}</th><th>{% trans 'Version' %}</th><th>{% trans 'Date' %}</th><th>{% trans 'Size' %}</th><th>{% trans 'Format' %}</th></tr>
+        <tr><td></td><th>{% trans 'Source' %}</th><th>{% trans 'Version' %}</th><th>{% trans 'Date' %}</th><th>{% trans 'Size' %}</th><th>{% trans 'Format' %}</th></tr>
     {% for backup in backups %}
         <tr>
             <th><input name="backup" type="radio" value="{{ backup.name }}"></th>
