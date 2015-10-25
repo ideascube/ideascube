@@ -3,8 +3,11 @@ python:
   - "2.7"
 sudo: false
 install:
-    - make devinstall
+- make devinstall
+- pip install python-coveralls
 script: make test
+after_success:
+- coveralls
 notifications:
     irc:
         channels:

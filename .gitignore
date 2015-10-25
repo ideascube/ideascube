@@ -13,3 +13,4 @@ debian/ideastube.triggers
 .cache
 *.bk
 *.egg-info
+.coverage

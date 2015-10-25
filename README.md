@@ -1,4 +1,4 @@
-[![Requirements Status](https://requires.io/github/ideastube/ideastube/requirements.svg?branch=master)](https://requires.io/github/ideastube/ideastube/requirements/?branch=master) [![Build Status](https://travis-ci.org/ideastube/ideastube.svg?branch=master)](https://travis-ci.org/ideastube/ideastube) [![Documentation Status](http://readthedocs.org/projects/ideastube/badge/?version=latest)](http://ideastube.readthedocs.org/en/latest/?badge=latest)
+[![Requirements Status](https://requires.io/github/ideastube/ideastube/requirements.svg?branch=master)](https://requires.io/github/ideastube/ideastube/requirements/?branch=master) [![Build Status](https://travis-ci.org/ideastube/ideastube.svg?branch=master)](https://travis-ci.org/ideastube/ideastube) [![Documentation Status](http://readthedocs.org/projects/ideastube/badge/?version=latest)](http://ideastube.readthedocs.org/en/latest/?badge=latest) [![Coverage Status](https://coveralls.io/repos/ideastube/ideastube/badge.svg?branch=master&service=github)](https://coveralls.io/github/ideastube/ideastube?branch=master)
 
 # ideastube
 

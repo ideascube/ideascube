@@ -1,0 +1,7 @@
+[run]
+omit =
+    ideastube/*/tests/*
+    ideastube/tests/*
+    ideastube/wsgi.py
+    ideastube/management/commands/dummydata.py
+    ideastube/conf/*
