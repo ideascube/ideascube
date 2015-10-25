@@ -3,5 +3,6 @@
 {% load i18n %}
 
 {% block content_title %}
+    <h5><a href="{% url 'mediacenter:index' %}">&lt; {% trans 'View all medias' %}</a></h5>
     <h2><span class="theme read">{% trans "Medias center" %}</span> {% blocktrans with theme=tag %}Browse theme "{{ theme }}"{% endblocktrans %}</h2>
 {% endblock  %}

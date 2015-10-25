@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block twothird %}
+{% block blog_title %}
+    <h5><a href="{% url 'blog:index' %}">&lt; {% trans 'View all posts' %}</a></h5>
     <h2><span class="theme create">{% trans "blog" %}</span> {% blocktrans with theme=tag %}Browse theme "{{ theme }}"{% endblocktrans %}</h2>
-    {{ block.super }}
-{% endblock twothird %}
+{% endblock blog_title %}
