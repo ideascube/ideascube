@@ -2,7 +2,6 @@
 /* eslint new-cap:0, strict:0, quotes:[2, "simple"] global-strict:0, no-underscore-dangle:0, curly:0, consistent-return:0, no-new:0, no-console:0*/
 'use strict';
 
-var ID = {};
 ID.http = {
 
     _ajax: function (settings) {
@@ -90,8 +89,7 @@ ID.Oembed = Minislate.Class(Minislate.controls.Button, {
         '^(http(s)?://)?(www\.)?(youtube\.com|youtu\.be)': 'http://www.youtube.com/oembed',
         '^(http(s)?://)?(www\.)?dailymotion\.com': 'http://www.dailymotion.com/services/oembed',
         '^(https?://)?vimeo.com/': 'http://vimeo.com/api/oembed.json',
-        '^(https?://)?(www\.)?flickr.com/': 'https://www.flickr.com/services/oembed/',
-        '^(https?://)?((www\.)?ideasbox.lan/|localhost)': window.location.origin + window.location.pathname.slice(0, 3) + '/mediacenter/oembed/'
+        '^(https?://)?(www\.)?flickr.com/': 'https://www.flickr.com/services/oembed/'
     },
 
     filterContainer: function (node) {
@@ -121,6 +119,7 @@ ID.Oembed = Minislate.Class(Minislate.controls.Button, {
     },
 
     matchProvider: function (value) {
+        this.PROVIDERS['^(https?://)?((www\.)?' + ID.DOMAIN + '/|localhost)'] = window.location.origin + window.location.pathname.slice(0, 3) + '/mediacenter/oembed/';
         for (var provider in this.PROVIDERS) {
             if (value.match(provider)) return this.PROVIDERS[provider];
         }

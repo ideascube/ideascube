@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="{% static 'ideastube/vendor/font-awesome/css/font-awesome.min.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static "ideastube/main.css" %}">
         <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
+        <script type="text/javascript" src="{% url 'javascript' %}"></script>
         {% block extra_head %}{% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}" {% if IDEASTUBE_BODY_ID %}id="{{ IDEASTUBE_BODY_ID }}"{% endif %}>

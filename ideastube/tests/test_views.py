@@ -408,3 +408,12 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
     response = app.get(url + '?page=3', status=404)
+
+
+def test_javascript_returns_ID_and_settings(app, settings):
+    settings.DOMAIN = 'domain.net'
+    response = app.get(reverse('javascript'))
+    assert response.status_code == 200
+    assert response.headers['Content-Type'] == 'text/javascript'
+    assert 'ID = ' in response
+    assert 'domain.net' in response
