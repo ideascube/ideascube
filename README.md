@@ -13,7 +13,7 @@ More details about the server in the [overview](https://github.com/ideastube/ide
 ## How can I give a hand?
 
 Welcome! There are many ways you can help. See details in
-[contributor guide](https://github.com/ideastube/ideastube/CONTRIBUTING.md).
+[contributor guide](http://ideastube.readthedocs.org/en/latest/contributing/).
 
 ## Resources and contacts
 
