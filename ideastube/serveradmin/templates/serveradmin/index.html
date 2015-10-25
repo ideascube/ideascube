@@ -4,7 +4,13 @@
 
 {% block third %}
     <div class="card tinted admin">
-        <h4>{% blocktrans with version=IDEASTUBE_VERSION %}Current version: {{ version }}{% endblocktrans %}</h4>
+        <h4>{% trans 'Server info' %}</h4>
+        <ul>
+            <li>{% blocktrans with version=IDEASTUBE_VERSION %}Version: {{ version }}{% endblocktrans %}</li>
+            <li>{% blocktrans with id=IDEASTUBE_ID %}ID: {{ id }}{% endblocktrans %}</li>
+            <li>{% blocktrans with name=IDEASTUBE_HOSTNAME %}Hostname: {{ name }}{% endblocktrans %}</li>
+        </ul>
+        <hr />
         <ul>
             <li>{% fa 'cogs' 'fa-fw' %} <a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
             <li>{% fa 'power-off' 'fa-fw' %} <a href="{% url 'server:power' %}">{% trans "Restart server" %}</a></li>

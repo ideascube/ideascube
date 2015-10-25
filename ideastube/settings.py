@@ -6,7 +6,8 @@ import sys
 
 # The normal scenario is that we use the hostname, but let's make it
 # overridable, this is useful for dev and debugging.
-IDEASTUBE_ID = os.environ.get('IDEASTUBE_ID', socket.gethostname())
+IDEASTUBE_HOSTNAME = socket.gethostname()  # Store it for later use.
+IDEASTUBE_ID = os.environ.get('IDEASTUBE_ID', IDEASTUBE_HOSTNAME)
 IDEASTUBE_ID = re.sub('[^\w_]', '', IDEASTUBE_ID)
 sys.stdout.write('IDEASTUBE_ID={}\n'.format(IDEASTUBE_ID))
 

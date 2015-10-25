@@ -4,7 +4,8 @@ from ideastube import __version__
 
 
 def settings(request):
-    keys = ['IDEASTUBE_NAME', 'IDEASTUBE_BODY_ID']
+    keys = ['IDEASTUBE_NAME', 'IDEASTUBE_BODY_ID', 'IDEASTUBE_ID',
+            'IDEASTUBE_HOSTNAME']
     return {k: getattr(djsettings, k) for k in keys}
 
 
