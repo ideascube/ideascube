@@ -1,0 +1,14 @@
+#!/bin/bash
+case "$1" in
+    upgrade)
+        # Do nothing
+    ;;
+
+    *)
+        # on removal we should clean project directory
+        if [ -d /var/lib/$DPKG_MAINTSCRIPT_PACKAGE ]; then
+            echo "Removing ideastube project directory"
+            rm -rf /var/lib/$DPKG_MAINTSCRIPT_PACKAGE
+        fi
+    ;;
+esac

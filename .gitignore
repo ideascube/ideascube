@@ -14,3 +14,4 @@ debian/ideastube.triggers
 *.bk
 *.egg-info
 .coverage
+builds/

@@ -32,11 +32,7 @@ First, build the `.deb`:
 
 Then install the `.deb`:
 
-    sudo dpkg -i ../path/to/package.deb
-
-Run the initial database migration:
-
-    sudo ideastube migrate
+    make install
 
 Create an administrator:
 

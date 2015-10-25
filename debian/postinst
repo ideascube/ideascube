@@ -2,17 +2,38 @@
 NAME=ideastube
 case "$1" in
     configure)
+        # Create elasticsearch group if not existing
+        if ! getent group "$NAME" > /dev/null 2>&1 ; then
+            echo -n "Creating $NAME group..."
+            addgroup --quiet --system "$NAME"
+            echo " OK"
+        fi
+
+        # Create elasticsearch user if not existing
+        if ! id $NAME > /dev/null 2>&1 ; then
+            echo -n "Creating $NAME user..."
+            adduser --quiet \
+                    --system \
+                    --no-create-home \
+                    --ingroup "$NAME" \
+                    --disabled-password \
+                    --shell /bin/false \
+                    "$NAME"
+            echo " OK"
+        fi
         echo "Running migration"
         /usr/bin/ideastube migrate --noinput -v 1
         echo "Running collectstatic"
         /usr/bin/ideastube collectstatic --noinput -v 1
         # Nginx
-        echo "Installing Nginx VHost"
+        echo "Linking Nginx VHost"
         ln -fs /etc/nginx/sites-available/$NAME /etc/nginx/sites-enabled/$NAME
         echo "Restarting Nginx"
         service nginx restart
-        echo "Make daemon autostart"
-        update-rc.d $NAME defaults
+        echo "Linking uWSGI app"
+        ln -fs /etc/uwsgi/apps-available/$NAME.ini /etc/uwsgi/apps-enabled/$NAME.ini
+        echo "Restarting uWSGI"
+        service uwsgi restart
         ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

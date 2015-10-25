@@ -1,26 +1,36 @@
+# the upstream component nginx needs to connect to
+upstream ideastube {
+    server unix:///tmp/ideastube.sock;
+}
+
+# configuration of the server
 server {
-    listen   80;
+    # the port your site will be served on
+    listen      80;
+    listen   [::]:80;
+    listen      443 ssl;
+    listen   [::]:443 ssl;
+    # the domain name it will serve for
     server_name ideasbox.lan www.ideasbox.lan ideasbox.local www.ideasbox.local koombook.lan www.koombook.lan koombook.local www.koombook.lan;
-    root /usr/share/python/ideastube/local/lib/python2.7/site-packages/ideastube/;
-    proxy_read_timeout 600s;
-    location /static/ {
-        alias /var/ideastube/static/;
-        expires 30d;
-    }
-    location /media/ {
+    charset     utf-8;
+
+    # max upload size
+    client_max_body_size 200M;
+
+    # Django media
+    location /media/  {
         alias /var/ideastube/main/media/;
         expires 30d;
     }
-    location / {
-        proxy_pass_header Server;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Scheme $scheme;
-        proxy_connect_timeout 300s;
-        proxy_read_timeout 300s;
-        proxy_pass http://localhost:8001/;
+
+    location /static/ {
+        alias /var/ideastube/static/;
     }
-    error_page 500 502 503 504 /media/500.html;
+
+    # Finally, send all non-media requests to the Django server.
+    location / {
+        uwsgi_pass  ideastube;
+        include     /var/ideastube/uwsgi_params;
+    }
 }
 

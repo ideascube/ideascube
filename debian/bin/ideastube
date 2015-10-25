@@ -1,5 +1,13 @@
 #!/bin/bash
-export DJANGO_SETTINGS_MODULE="ideastube.settings"
-export DEBUG=
-export STORAGE_ROOT="/var/ideastube"
-/usr/share/python/ideastube/bin/django-admin "$@"
+NAME=ideastube
+DJANGO_SETTINGS_MODULE="$NAME.settings"
+DEBUG=
+STORAGE_ROOT="/var/$NAME"
+
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export DEBUG=$DEBUG
+export STORAGE_ROOT=$STORAGE_ROOT
+
+/usr/share/python/$NAME/bin/django-admin "$@"

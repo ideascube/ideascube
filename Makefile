@@ -1,7 +1,5 @@
 test:
 	py.test
-install:
-	pip install -r requirements.txt
 devinstall:
 	pip install -r requirements-dev.txt
 doc:
@@ -17,5 +15,11 @@ pull_translations:
 	tx pull
 compile_translations:
 	python manage.py compilemessages
+clean:
+	-mv builds/ideastube_* builds/old
 build:
-	dpkg-buildpackage -us -uc
+	mkdir -p builds && dpkg-buildpackage -us -uc -Ibuilds && mv ../ideastube_* builds/
+install:
+	sudo dpkg -i builds/*.deb
+uninstall:
+	sudo dpkg -r ideastube
