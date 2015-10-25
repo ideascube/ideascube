@@ -1,4 +1,4 @@
-[![Requirements Status](https://requires.io/github/ideastube/ideastube/requirements.svg?branch=master)](https://requires.io/github/ideastube/ideastube/requirements/?branch=master) [![Build Status](https://travis-ci.org/ideastube/ideastube.svg?branch=master)](https://travis-ci.org/ideastube/ideastube)
+[![Requirements Status](https://requires.io/github/ideastube/ideastube/requirements.svg?branch=master)](https://requires.io/github/ideastube/ideastube/requirements/?branch=master) [![Build Status](https://travis-ci.org/ideastube/ideastube.svg?branch=master)](https://travis-ci.org/ideastube/ideastube) [![Documentation Status](http://readthedocs.org/projects/ideastube/badge/?version=latest)](http://ideastube.readthedocs.org/en/latest/?badge=latest)
 
 # ideastube
 
@@ -26,4 +26,5 @@ Welcome! There are many ways you can help. See details in
 * Issues, questions and feature requests:
   https://github.com/ideastube/ideastube/issues
 * Continuous integration: https://travis-ci.org/ideastube/ideastube
-* Documentation: https://github.com/ideastube/ideastube/blob/master/docs/index.md
+* Documentation: http://ideastube.readthedocs.org/
+* Translation: https://www.transifex.com/ideastube/ideastube/
