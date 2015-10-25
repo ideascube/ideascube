@@ -1,11 +1,11 @@
 #!/bin/bash
-NAME=ideasbox
+NAME=ideastube
 case "$1" in
     configure)
         echo "Running migration"
-        /usr/bin/ideasbox migrate --noinput -v 1
+        /usr/bin/ideastube migrate --noinput -v 1
         echo "Running collectstatic"
-        /usr/bin/ideasbox collectstatic --noinput -v 1
+        /usr/bin/ideastube collectstatic --noinput -v 1
         # Nginx
         echo "Installing Nginx VHost"
         ln -fs /etc/nginx/sites-available/$NAME /etc/nginx/sites-enabled/$NAME
