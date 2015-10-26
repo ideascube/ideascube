@@ -1,3 +1,3 @@
-# Contributing to ideastube
+# Contributing to ideascube
 
-See [contributing](http://ideastube.readthedocs.org/en/latest/contributing/).
+See [contributing](http://ideascube.readthedocs.org/en/latest/contributing/).

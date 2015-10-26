@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load i18n static ideascube_tags %}
+
+{% block extra_head %}
+    {% include 'ideascube/includes/form_statics.html' %}
+{% endblock extra_head %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data" id="model_form">
+        <div class="row">
+            {% if content %}
+                <h2>{% fa 'pencil' %} {% trans "Edit post" %} "{{ content }}"</h2>
+            {% else %}
+                <h2>{% trans "New post" %}</h2>
+            {% endif %}
+        </div>
+        <div class="row">
+                <div class="col third">
+                    {% csrf_token %}
+                    <h3>{% trans 'Metadatas' %}</h3>
+                    {% for field in form %}
+                        {% form_field field %}
+                    {% endfor %}
+                    <input type="submit" value="{% trans 'submit' %}" />
+                </div>
+                <div class="col two-third">
+                    <h3>{% trans 'Content' %}</h3>
+                    <div data-editable-for="text" placeholder="{% trans 'Type your text here…' %}">{{ content.text|safe }}</div>
+                </div>
+        </div>
+    </form>
+{% endblock content %}
+{% block extra_foot %}
+    <script type="text/javascript">
+        ID.initEditor('text');
+        ID.initDatepicker('published_at')
+    </script>
+{% endblock extra_foot %}

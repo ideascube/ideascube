@@ -1,0 +1,23 @@
+{% extends 'two-third-third.html' %}
+{% load i18n ideascube_tags %}
+
+{% block twothird %}
+    {% block content_title %}<h2><span class="theme read">{% trans "read" %}</span> {% trans "Library" %}</h2>{% endblock %}
+    <div class="grid book-list">
+        {% for book in book_list  %}
+            {% include 'library/book_card.html' %}
+        {% empty %}
+            {% trans "No books yet." %}
+        {% endfor %}
+    </div>
+    {% include "ideascube/pagination.html" %}
+{% endblock twothird %}
+{% block third %}
+    {% url 'library:index' as library_index %}
+    {% include 'search/box.html' with action=library_index %}
+    <ul class="card tinted admin">
+        <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a></li>
+        <li>{% fa 'upload' 'fa-fw' %} <a href="{% url 'library:book_import' %}">{% trans "Import notices" %}</a></li>
+    </ul>
+    {% tag_cloud url="library:by_tag" model=view.model %}
+{% endblock third %}

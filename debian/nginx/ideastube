@@ -1,6 +1,6 @@
 # the upstream component nginx needs to connect to
-upstream ideastube {
-    server unix:///tmp/ideastube.sock;
+upstream ideascube {
+    server unix:///tmp/ideascube.sock;
 }
 
 # configuration of the server
@@ -19,18 +19,18 @@ server {
 
     # Django media
     location /media/  {
-        alias /var/ideastube/main/media/;
+        alias /var/ideascube/main/media/;
         expires 30d;
     }
 
     location /static/ {
-        alias /var/ideastube/static/;
+        alias /var/ideascube/static/;
     }
 
     # Finally, send all non-media requests to the Django server.
     location / {
-        uwsgi_pass  ideastube;
-        include     /var/ideastube/uwsgi_params;
+        uwsgi_pass  ideascube;
+        include     /var/ideascube/uwsgi_params;
     }
 }
 

@@ -1,0 +1,1670 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Florian HESLOUIN <splite@zimdeo.fr>, 2015
+# kent1 <kent1@arscenic.info>, 2015
+# Yoann Vincent <yovincent.21@gmail.com>, 2014
+# yohanboniface <yohanboniface@free.fr>, 2014-2015
+msgid ""
+msgstr ""
+"Project-Id-Version: ideascube\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-25 06:56+0000\n"
+"PO-Revision-Date: 2015-10-21 10:13+0000\n"
+"Last-Translator: Florian HESLOUIN <splite@zimdeo.fr>\n"
+"Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/"
+"fr/)\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ideascube/blog/models.py:44
+msgid "draft"
+msgstr "brouillon"
+
+#: ideascube/blog/models.py:45
+msgid "published"
+msgstr "publié"
+
+#: ideascube/blog/models.py:46
+msgid "deleted"
+msgstr "supprimé"
+
+#: ideascube/blog/models.py:49 ideascube/library/models.py:42
+#: ideascube/mediacenter/models.py:48
+msgid "title"
+msgstr "titre"
+
+#: ideascube/blog/models.py:51
+msgid "author text"
+msgstr "auteurs vrac"
+
+#: ideascube/blog/models.py:53 ideascube/library/models.py:44
+#: ideascube/mediacenter/models.py:49
+msgid "summary"
+msgstr "résumé"
+
+#: ideascube/blog/models.py:54 ideascube/mediacenter/models.py:40
+msgid "image"
+msgstr "image"
+
+#: ideascube/blog/models.py:55 ideascube/mediacenter/models.py:44
+msgid "text"
+msgstr "texte"
+
+#: ideascube/blog/models.py:56
+msgid "publication date"
+msgstr "date de publication"
+
+#: ideascube/blog/models.py:57
+#: ideascube/serveradmin/templates/serveradmin/battery.html:8
+msgid "Status"
+msgstr "statut"
+
+#: ideascube/blog/models.py:59 ideascube/library/models.py:48
+#: ideascube/library/templates/library/book_detail.html:17
+#: ideascube/mediacenter/models.py:50
+msgid "Language"
+msgstr "Langue"
+
+#: ideascube/blog/templates/blog/by_tag.html:6
+msgid "blog"
+msgstr "blog"
+
+#: ideascube/blog/templates/blog/by_tag.html:6
+#: ideascube/library/templates/library/by_tag.html:6
+#: ideascube/mediacenter/templates/mediacenter/by_tag.html:6
+#: ideascube/templates/ideascube/by_tag.html:5
+#, python-format
+msgid "Browse theme \"%(theme)s\""
+msgstr "Parcourir le tag \"%(theme)s\""
+
+#: ideascube/blog/templates/blog/content_form.html:12
+msgid "Edit post"
+msgstr "Modifier le billet"
+
+#: ideascube/blog/templates/blog/content_form.html:14
+msgid "New post"
+msgstr "Créer un billet"
+
+#: ideascube/blog/templates/blog/content_form.html:20
+msgid "Metadatas"
+msgstr "Métadonnées "
+
+#: ideascube/blog/templates/blog/content_form.html:24
+#: ideascube/library/templates/library/book_form.html:12
+#: ideascube/library/templates/library/specimen_form.html:12
+#: ideascube/mediacenter/templates/mediacenter/document_form.html:12
+#: ideascube/monitoring/templates/monitoring/inventory_form.html:12
+#: ideascube/monitoring/templates/monitoring/specimen_form.html:12
+#: ideascube/monitoring/templates/monitoring/stockitem_form.html:12
+#: ideascube/templates/ideascube/set_password.html:11
+msgid "submit"
+msgstr "envoyer"
+
+#: ideascube/blog/templates/blog/content_form.html:27
+msgid "Content"
+msgstr "Contenu"
+
+#: ideascube/blog/templates/blog/content_form.html:28
+msgid "Type your text here…"
+msgstr "Tapez votre texte ici…"
+
+#: ideascube/blog/templates/blog/index.html:14
+msgid "Add content"
+msgstr "Ajouter un billet"
+
+#: ideascube/conf/azraq.py:14 ideascube/conf/mapoon.py:15
+msgid "Personal informations"
+msgstr "Informations personnelles"
+
+#: ideascube/conf/azraq.py:15 ideascube/conf/mapoon.py:16
+msgid "Family"
+msgstr ""
+
+#: ideascube/conf/azraq.py:16
+msgid "In the camp"
+msgstr ""
+
+#: ideascube/conf/azraq.py:17
+msgid "Origin"
+msgstr "Origine"
+
+#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:154
+#: ideascube/conf/mapoon.py:18
+msgid "Language skills"
+msgstr ""
+
+#: ideascube/conf/azraq.py:19
+msgid "National residents"
+msgstr ""
+
+#: ideascube/conf/azraq.py:23
+msgid "16 Days of Activism"
+msgstr ""
+
+#: ideascube/conf/azraq.py:24
+msgid "AMANI Campaign"
+msgstr ""
+
+#: ideascube/conf/azraq.py:25
+msgid "Anger Management Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:26
+msgid "Basic Computer Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:27
+msgid "Beauty Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:28
+msgid "Book Club"
+msgstr ""
+
+#: ideascube/conf/azraq.py:29
+msgid "Conflict Resolution Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:30
+msgid "Coping Skills and Mechanisms Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:31
+msgid "EDRAAK"
+msgstr ""
+
+#: ideascube/conf/azraq.py:32
+msgid "Emotional intelligence Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:33
+msgid "Handicrafts"
+msgstr ""
+
+#: ideascube/conf/azraq.py:34
+msgid "How to be a Psychosocial Counselor Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:35
+msgid "I am Woman"
+msgstr ""
+
+#: ideascube/conf/azraq.py:36
+msgid "International Children Day"
+msgstr ""
+
+#: ideascube/conf/azraq.py:37
+msgid "International Refugee Day"
+msgstr ""
+
+#: ideascube/conf/azraq.py:38
+msgid "Marathon"
+msgstr ""
+
+#: ideascube/conf/azraq.py:39
+msgid "Mother's day celebration"
+msgstr ""
+
+#: ideascube/conf/azraq.py:40
+msgid "Parenting Skills Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:41
+msgid "Peer Support Group"
+msgstr ""
+
+#: ideascube/conf/azraq.py:42
+msgid "Psychosocial ART Interventions Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:43
+msgid "Puppets and Theatre"
+msgstr ""
+
+#: ideascube/conf/azraq.py:44
+msgid "Sewing and stitching"
+msgstr ""
+
+#: ideascube/conf/azraq.py:45
+msgid "SIMSIM Club"
+msgstr ""
+
+#: ideascube/conf/azraq.py:46
+msgid "Social Work Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:47
+msgid "Stress Management Training"
+msgstr ""
+
+#: ideascube/conf/azraq.py:48
+msgid "Training of Trainers"
+msgstr ""
+
+#: ideascube/conf/azraq.py:49
+msgid "World Mental Health Day"
+msgstr ""
+
+#: ideascube/conf/base.py:135
+msgid "the camp"
+msgstr ""
+
+#: ideascube/conf/base.py:153
+msgid "Basic informations"
+msgstr ""
+
+#: ideascube/conf/base.py:165 ideascube/templates/ideascube/user_list.html:6
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: ideascube/conf/base.py:166
+msgid "Create, remove or modify users."
+msgstr ""
+
+#: ideascube/conf/base.py:173
+#, fuzzy
+#| msgid "Inventories"
+msgid "Entries"
+msgstr "Inventaires"
+
+#: ideascube/conf/base.py:174
+#, fuzzy
+#| msgid "Manage services"
+msgid "Manage user entries."
+msgstr "Gérer les services"
+
+#: ideascube/conf/base.py:181
+#: ideascube/monitoring/templates/monitoring/stock.html:5
+msgid "Stock"
+msgstr "Stock"
+
+#: ideascube/conf/base.py:182
+#, fuzzy
+#| msgid "Manage stock"
+msgid "Manage stock."
+msgstr "Gérer le stock"
+
+#: ideascube/conf/base.py:189
+msgid "Loans"
+msgstr ""
+
+#: ideascube/conf/base.py:190
+#, fuzzy
+#| msgid "Manage backups"
+msgid "Manage loans."
+msgstr "Gérer les sauvegardes"
+
+#: ideascube/conf/base.py:197
+#, fuzzy
+#| msgid "Restart"
+msgid "Stop/Restart"
+msgstr "Redémarrer"
+
+#: ideascube/conf/base.py:198
+#, fuzzy
+#| msgid "Stop or restart the server"
+msgid "Stop or restart the server."
+msgstr "Arrêter ou redémarrer le serveur"
+
+#: ideascube/conf/base.py:205
+#, fuzzy
+#| msgid "Backup"
+msgid "Backups"
+msgstr "Sauvegarder"
+
+#: ideascube/conf/base.py:206
+msgid "Create, restore, download, upload backups."
+msgstr ""
+
+#: ideascube/conf/base.py:248
+#, fuzzy
+#| msgid "Ideasbox web server"
+msgid "Ideascube web server"
+msgstr "Serveur Ideasbox"
+
+#: ideascube/conf/base.py:249
+msgid "Global proxy"
+msgstr "Proxy"
+
+#: ideascube/conf/base.py:252
+msgid "Daemon which provides KhanAcademy on lan"
+msgstr "Service pour lancer la Khan Academy"
+
+#: ideascube/conf/base.py:256
+msgid "Daemon which provides Wikipedia on lan"
+msgstr "Service permettant d'avoir Wikipedia en local"
+
+#: ideascube/conf/base.py:257
+msgid "Net time protocol"
+msgstr "Protocole Net Time"
+
+#: ideascube/conf/base.py:259
+msgid "Daemon used for distant connexion to server"
+msgstr "Daemon utilisé pour la connexion distante au serveur"
+
+#: ideascube/conf/mapoon.py:7
+msgid "the community"
+msgstr ""
+
+#: ideascube/conf/mapoon.py:17
+msgid "In the town"
+msgstr ""
+
+#: ideascube/library/forms.py:23
+msgid "You can't have both a file and a serial"
+msgstr ""
+
+#: ideascube/library/forms.py:25
+msgid "You must add a file or a serial"
+msgstr ""
+
+#: ideascube/library/models.py:22
+msgid "digital"
+msgstr "digital"
+
+#: ideascube/library/models.py:23
+msgid "children - cartoons"
+msgstr "enfants - bandes dessinées"
+
+#: ideascube/library/models.py:24
+msgid "children - novels"
+msgstr "Enfants - Nouvelles"
+
+#: ideascube/library/models.py:25
+msgid "children - poetry"
+msgstr "Enfants - Poésie"
+
+#: ideascube/library/models.py:26
+msgid "children - theatre"
+msgstr "Enfants - Théâtre"
+
+#: ideascube/library/models.py:27
+msgid "children - documentary"
+msgstr "Enfants - Documentaires"
+
+#: ideascube/library/models.py:28
+msgid "children - comics"
+msgstr "Enfants - Comics"
+
+#: ideascube/library/models.py:29
+msgid "adults - novels"
+msgstr "Adultes - Nouvelles"
+
+#: ideascube/library/models.py:30
+msgid "adults - poetry"
+msgstr "Adultes - Poésie"
+
+#: ideascube/library/models.py:31
+msgid "adults - theatre"
+msgstr "Adultes - Théâtre"
+
+#: ideascube/library/models.py:32
+msgid "adults - documentary"
+msgstr "Adultes - Documentaires"
+
+#: ideascube/library/models.py:33
+msgid "adults - comics"
+msgstr "Adultes - Comics"
+
+#: ideascube/library/models.py:34
+msgid "game"
+msgstr "jeux"
+
+#: ideascube/library/models.py:35 ideascube/mediacenter/models.py:45
+msgid "other"
+msgstr "autre"
+
+#: ideascube/library/models.py:40
+msgid "authors"
+msgstr "auteurs"
+
+#: ideascube/library/models.py:41
+msgid "serie"
+msgstr "série"
+
+#: ideascube/library/models.py:43
+msgid "subtitle"
+msgstr "sous-titre"
+
+#: ideascube/library/models.py:45
+msgid "publisher"
+msgstr "maison d'édition"
+
+#: ideascube/library/models.py:46
+msgid "section"
+msgstr "section"
+
+#: ideascube/library/models.py:50
+msgid "cover"
+msgstr "couverture"
+
+#: ideascube/library/models.py:74
+msgid "serial"
+msgstr "code-barres"
+
+#: ideascube/library/models.py:76
+msgid "location"
+msgstr "emplacement"
+
+#: ideascube/library/models.py:77
+msgid "remarks"
+msgstr ""
+
+#: ideascube/library/models.py:78
+msgid "digital file"
+msgstr ""
+
+#: ideascube/library/templates/library/book_confirm_delete.html:4
+#, python-format
+msgid ""
+"Are you sure you want to delete book \"%(book)s\" and all its specimens?"
+msgstr ""
+
+#: ideascube/library/templates/library/book_detail.html:9
+#: ideascube/library/templates/library/index.html:5
+#: ideascube/mediacenter/templates/mediacenter/index.html:7
+msgid "read"
+msgstr "lire"
+
+#: ideascube/library/templates/library/book_detail.html:13
+msgid "Author"
+msgstr "Auteur"
+
+#: ideascube/library/templates/library/book_detail.html:14
+msgid "Publisher"
+msgstr "Éditeur"
+
+#: ideascube/library/templates/library/book_detail.html:15
+msgid "Serie"
+msgstr ""
+
+#: ideascube/library/templates/library/book_detail.html:18
+msgid "ISBN"
+msgstr "ISBN"
+
+#: ideascube/library/templates/library/book_detail.html:20
+msgid "Section"
+msgstr ""
+
+#: ideascube/library/templates/library/book_detail.html:21
+#: ideascube/templates/ideascube/includes/tag_cloud.html:4
+msgid "Themes"
+msgstr "Thèmes"
+
+#: ideascube/library/templates/library/book_detail.html:29
+msgid "Add a specimen"
+msgstr ""
+
+#: ideascube/library/templates/library/book_detail.html:30
+msgid "Delete this book"
+msgstr "Supprimer ce livre"
+
+#: ideascube/library/templates/library/book_detail.html:31
+msgid "Edit this book"
+msgstr "Éditer ce livre"
+
+#: ideascube/library/templates/library/book_detail.html:34
+msgid "Specimens"
+msgstr "Exemplaires"
+
+#: ideascube/library/templates/library/book_detail.html:36
+msgid "Edit specimen"
+msgstr "Modifier l'exemplaire"
+
+#: ideascube/library/templates/library/book_detail.html:38
+msgid "No specimen for this book."
+msgstr "Pas d'exemplaire de ce livre."
+
+#: ideascube/library/templates/library/book_form.html:6
+msgid "Edit book"
+msgstr "Éditer le livre"
+
+#: ideascube/library/templates/library/book_form.html:8
+msgid "New book"
+msgstr "Nouveau livre"
+
+#: ideascube/library/templates/library/book_form.html:14
+#: ideascube/mediacenter/templates/mediacenter/document_form.html:14
+#: ideascube/monitoring/templates/monitoring/inventory_form.html:14
+#: ideascube/monitoring/templates/monitoring/specimen_form.html:14
+#: ideascube/monitoring/templates/monitoring/stockitem_form.html:14
+msgid "cancel"
+msgstr "annuler"
+
+#: ideascube/library/templates/library/by_tag.html:6
+msgid "library"
+msgstr "bibliothèque"
+
+#: ideascube/library/templates/library/import.html:6
+msgid "Import books notices"
+msgstr ""
+
+#: ideascube/library/templates/library/import.html:15
+msgid "From files"
+msgstr ""
+
+#: ideascube/library/templates/library/import.html:18
+msgid "Load notices from files"
+msgstr ""
+
+#: ideascube/library/templates/library/import.html:21
+msgid "From ISBN"
+msgstr "Depuis ISBN"
+
+#: ideascube/library/templates/library/import.html:22
+msgid "An Internet connection is needed."
+msgstr ""
+
+#: ideascube/library/templates/library/import.html:24
+msgid "Load notices from ISBN"
+msgstr ""
+
+#: ideascube/library/templates/library/index.html:5
+#: ideascube/monitoring/models.py:17 ideascube/monitoring/models.py:61
+#: ideascube/templates/ideascube/includes/cards/library.html:4
+msgid "Library"
+msgstr "Bibliothèque"
+
+#: ideascube/library/templates/library/index.html:10
+msgid "No books yet."
+msgstr "Pas encore de livres."
+
+#: ideascube/library/templates/library/index.html:19
+msgid "Add a book"
+msgstr "Ajouter un livre"
+
+#: ideascube/library/templates/library/index.html:20
+msgid "Import notices"
+msgstr ""
+
+#: ideascube/library/templates/library/specimen_confirm_delete.html:4
+#, python-format
+msgid "Are you sure you want to delete \"%(name)s\"?"
+msgstr "Êtes-vous sûr de vouloir effacer \"%(name)s\"?"
+
+#: ideascube/library/templates/library/specimen_confirm_delete.html:5
+#, python-format
+msgid "This will not delete book \"%(name)s\""
+msgstr "Cela ne supprimera pas le livre \"%(name)s\""
+
+#: ideascube/library/templates/library/specimen_form.html:6
+msgid "Edit book specimen"
+msgstr ""
+
+#: ideascube/library/templates/library/specimen_form.html:8
+msgid "New book specimen"
+msgstr "Nouvel exemplaire de livre"
+
+#: ideascube/library/templates/library/specimen_form.html:14
+msgid "Delete specimen"
+msgstr "Supprimer l'exemplaire"
+
+#: ideascube/library/utils.py:91
+msgid "Badly formatted file"
+msgstr "Fichier mal formaté"
+
+#: ideascube/library/views.py:87
+msgid "Unable to process notices."
+msgstr ""
+
+#: ideascube/library/views.py:91
+#, python-brace-format
+msgid "Successfully processed {count} notices."
+msgstr ""
+
+#: ideascube/library/views.py:97
+msgid "No notice processed"
+msgstr ""
+
+#: ideascube/library/views.py:100
+msgid "You need to provide a file."
+msgstr "Vous devez fournir un fichier."
+
+#: ideascube/mediacenter/models.py:41
+msgid "sound"
+msgstr "son"
+
+#: ideascube/mediacenter/models.py:42
+msgid "video"
+msgstr "vidéo"
+
+#: ideascube/mediacenter/models.py:43
+msgid "pdf"
+msgstr "pdf"
+
+#: ideascube/mediacenter/models.py:52
+msgid "original"
+msgstr "original"
+
+#: ideascube/mediacenter/models.py:54
+msgid "preview"
+msgstr "prévisualisation"
+
+#: ideascube/mediacenter/models.py:56
+msgid "credit"
+msgstr "Crédits"
+
+#: ideascube/mediacenter/models.py:57
+msgid "type"
+msgstr ""
+
+#: ideascube/mediacenter/templates/mediacenter/by_tag.html:6
+#: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
+msgid "Medias center"
+msgstr ""
+
+#: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5
+#, python-format
+msgid "Are you sure you want to delete document \"%(document)s\"?"
+msgstr "Êtes-vous sûr de vouloir supprimer le document \"%(document)s\" ?"
+
+#: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:9
+#: ideascube/templates/ideascube/form_confirm_delete.html:10
+msgid "yes"
+msgstr "oui"
+
+#: ideascube/mediacenter/templates/mediacenter/document_detail.html:17
+#: ideascube/mediacenter/templates/mediacenter/oembed.html:11
+msgid "Download document"
+msgstr "Télécharger le document"
+
+#: ideascube/mediacenter/templates/mediacenter/document_detail.html:26
+#: ideascube/monitoring/templates/monitoring/inventory.html:44
+#: ideascube/monitoring/templates/monitoring/stock.html:11
+#: ideascube/templates/ideascube/user_detail.html:13
+msgid "Edit"
+msgstr "Modifier"
+
+#: ideascube/mediacenter/templates/mediacenter/document_detail.html:27
+#: ideascube/templates/ideascube/user_detail.html:14
+msgid "Delete"
+msgstr "Supprimer"
+
+#: ideascube/mediacenter/templates/mediacenter/document_form.html:6
+msgid "Edit document"
+msgstr "Modifier le document"
+
+#: ideascube/mediacenter/templates/mediacenter/document_form.html:8
+msgid "New document"
+msgstr "Nouveau document"
+
+#: ideascube/mediacenter/templates/mediacenter/index.html:7
+msgid "Medias Center"
+msgstr ""
+
+#: ideascube/mediacenter/templates/mediacenter/index.html:12
+msgid "No documents yet."
+msgstr "Aucun document pour le moment."
+
+#: ideascube/mediacenter/templates/mediacenter/index.html:20
+msgid "Add a document"
+msgstr "Ajouter un document"
+
+#: ideascube/mediacenter/templates/mediacenter/index.html:24
+#: ideascube/templates/ideascube/includes/tag_cloud.html:4
+msgid "browse"
+msgstr "parcourir"
+
+#: ideascube/mediacenter/templates/mediacenter/index.html:24
+msgid "by kind"
+msgstr ""
+
+#: ideascube/models.py:59
+msgid "Understood"
+msgstr ""
+
+#: ideascube/models.py:60
+msgid "Written"
+msgstr ""
+
+#: ideascube/models.py:61
+msgid "Spoken"
+msgstr ""
+
+#: ideascube/models.py:62
+msgid "Read"
+msgstr ""
+
+#: ideascube/models.py:66
+msgid "usual name"
+msgstr "nom courant"
+
+#: ideascube/models.py:67
+msgid "full name"
+msgstr "nom complet"
+
+#: ideascube/models.py:68
+msgid "staff status"
+msgstr "membre de l'équipe"
+
+#: ideascube/models.py:69
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+"Permet de définir si l'utilisateur pour accéder aux fonctions "
+"d'administration"
+
+#: ideascube/models.py:142
+msgid "Student"
+msgstr "Étudiant"
+
+#: ideascube/models.py:143
+msgid "Teacher"
+msgstr "Enseignant"
+
+#: ideascube/models.py:144
+msgid "Without profession"
+msgstr "Sans profession"
+
+#: ideascube/models.py:145
+msgid "Profit profession"
+msgstr ""
+
+#: ideascube/models.py:146 ideascube/models.py:178
+#: ideascube/monitoring/models.py:64
+msgid "Other"
+msgstr "Autre"
+
+#: ideascube/models.py:150
+#, python-brace-format
+msgid "Lives with family in {place}"
+msgstr ""
+
+#: ideascube/models.py:152
+#, python-brace-format
+msgid "Lives without family in {place}"
+msgstr ""
+
+#: ideascube/models.py:154
+#, python-brace-format
+msgid "Has family in {place} but lives without"
+msgstr ""
+
+#: ideascube/models.py:159
+msgid "Comitees, representation groups"
+msgstr ""
+
+#: ideascube/models.py:160
+msgid "Music, dance, singing"
+msgstr ""
+
+#: ideascube/models.py:161
+msgid "Other cultural activities"
+msgstr ""
+
+#: ideascube/models.py:162
+msgid "Informatic workshops"
+msgstr ""
+
+#: ideascube/models.py:163
+msgid "Literacy working group"
+msgstr ""
+
+#: ideascube/models.py:164
+msgid "Talking group"
+msgstr ""
+
+#: ideascube/models.py:165
+msgid "Recreational"
+msgstr ""
+
+#: ideascube/models.py:166
+msgid "Volunteering"
+msgstr ""
+
+#: ideascube/models.py:167
+msgid "Psycosocial"
+msgstr ""
+
+#: ideascube/models.py:168
+msgid "Educational"
+msgstr ""
+
+#: ideascube/models.py:169
+msgid "Sport"
+msgstr "Sport"
+
+#: ideascube/models.py:173
+msgid "Seen the Box"
+msgstr "A vu la Box"
+
+#: ideascube/models.py:174
+msgid "Has been informed by partner organization"
+msgstr "A été informé par une organisation partenaire"
+
+#: ideascube/models.py:175
+msgid "Has been informed by other organization"
+msgstr "A été informé par une autre organisation"
+
+#: ideascube/models.py:176
+msgid "Word of mouth"
+msgstr "Bouche-à-oreilles"
+
+#: ideascube/models.py:177
+msgid "Poster campaign"
+msgstr ""
+
+#: ideascube/models.py:182
+msgid "Primary"
+msgstr "Primaire"
+
+#: ideascube/models.py:183
+msgid "Secondary"
+msgstr "Secondaire"
+
+#: ideascube/models.py:184
+msgid "Professional"
+msgstr "Professionnel"
+
+#: ideascube/models.py:185
+msgid "Higher education"
+msgstr ""
+
+#: ideascube/models.py:189
+msgid "Couple"
+msgstr "En couple"
+
+#: ideascube/models.py:190
+msgid "Single"
+msgstr "Célibataire"
+
+#: ideascube/models.py:191
+msgid "Widowed"
+msgstr "Devenu veuf"
+
+#: ideascube/models.py:195
+msgid "Undefined"
+msgstr ""
+
+#: ideascube/models.py:196
+msgid "Male"
+msgstr ""
+
+#: ideascube/models.py:197
+msgid "Female"
+msgstr ""
+
+#: ideascube/models.py:200
+msgid "Latin written name"
+msgstr ""
+
+#: ideascube/models.py:204
+msgid "Birth year"
+msgstr "Année de naissance"
+
+#: ideascube/models.py:206
+msgid "Gender"
+msgstr ""
+
+#: ideascube/models.py:208
+msgid "Country of origin"
+msgstr "Pays d'origine"
+
+#: ideascube/models.py:209
+msgid "City of origin"
+msgstr "Ville d'origine"
+
+#: ideascube/models.py:210
+msgid "ID card number"
+msgstr "Numéro de carte d'identité"
+
+#: ideascube/models.py:213
+msgid "Number of children under 12"
+msgstr "Nombre d'enfants en dessous de 12 ans"
+
+#: ideascube/models.py:216
+msgid "Number of children under 18"
+msgstr "Nombre d'enfants en dessous de 18 ans"
+
+#: ideascube/models.py:219
+msgid "Number of children above 18"
+msgstr "Nombre d'enfants au dessus de 18 ans"
+
+#: ideascube/models.py:222
+msgid "School level"
+msgstr "Niveau scolaire"
+
+#: ideascube/models.py:225
+msgid "Marital situation"
+msgstr "Situation maritale"
+
+#: ideascube/models.py:228
+msgid "Ideas Box awareness"
+msgstr ""
+
+#: ideascube/models.py:231
+msgid "Refugee ID"
+msgstr ""
+
+#: ideascube/models.py:232
+msgid "Camp entry date"
+msgstr "Date d'entrée dans le camp"
+
+#: ideascube/models.py:235
+msgid "Current occupation"
+msgstr "Profession actuelle"
+
+#: ideascube/models.py:238
+msgid "Occupation in the country of origin"
+msgstr "Profession dans le pays d'origine"
+
+#: ideascube/models.py:242
+msgid "Family status"
+msgstr "Situation familiale"
+
+#: ideascube/models.py:245
+msgid "Sent to school in the country of origin (if under 18)"
+msgstr ""
+
+#: ideascube/models.py:248
+msgid "Activities in the camp"
+msgstr "Activités dans le camp"
+
+#: ideascube/models.py:252
+msgid "Address in the camp"
+msgstr ""
+
+#: ideascube/models.py:256
+msgid "English knowledge"
+msgstr "Connaissance de l'Anglais"
+
+#: ideascube/models.py:259
+msgid "Arabic knowledge"
+msgstr "Connaissance de l'Arabe"
+
+#: ideascube/models.py:262
+msgid "Kirundi knowledge"
+msgstr "Connaissance du Kirundi"
+
+#: ideascube/models.py:265
+msgid "French knowledge"
+msgstr "Connaissance du Français"
+
+#: ideascube/models.py:268
+msgid "Swahili knowledge"
+msgstr "Connaissance du Swahili"
+
+#: ideascube/monitoring/forms.py:17
+msgid "Enter user serials"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:22
+msgid "Enter a activity name if missing on the list"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:24
+msgid "Partner involved in activity"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:33
+msgid "Missing module name"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:71
+msgid "Enter a bar code"
+msgstr "Entrer un code-barre"
+
+#: ideascube/monitoring/forms.py:79 ideascube/monitoring/forms.py:106
+#, python-brace-format
+msgid "Bar code {barcode} not found"
+msgstr "Code-barre {barcode} non trouvé"
+
+#: ideascube/monitoring/forms.py:91 ideascube/monitoring/forms.py:127
+msgid "Enter an item barcode"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:93
+msgid "Enter a user serial"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:100
+#, python-brace-format
+msgid "Item with barcode {barcode} is already loaned."
+msgstr ""
+
+#: ideascube/monitoring/forms.py:116
+#, python-brace-format
+msgid "Serial {serial} not found"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:134
+#, python-brace-format
+msgid "Item with barcode {barcode} is not loaned."
+msgstr ""
+
+#: ideascube/monitoring/models.py:16 ideascube/monitoring/models.py:60
+msgid "Cinema"
+msgstr "Cinéma"
+
+#: ideascube/monitoring/models.py:18 ideascube/monitoring/models.py:62
+msgid "Multimedia"
+msgstr ""
+
+#: ideascube/monitoring/models.py:26
+msgid "entry"
+msgstr ""
+
+#: ideascube/monitoring/models.py:27
+msgid "entries"
+msgstr ""
+
+#: ideascube/monitoring/models.py:39
+msgid "date"
+msgstr "date"
+
+#: ideascube/monitoring/models.py:40 ideascube/monitoring/models.py:90
+msgid "comments"
+msgstr "commentaires"
+
+#: ideascube/monitoring/models.py:63
+msgid "Administration"
+msgstr "Administration"
+
+#: ideascube/monitoring/models.py:67
+msgid "name"
+msgstr ""
+
+#: ideascube/monitoring/models.py:68
+msgid "description"
+msgstr ""
+
+#: ideascube/monitoring/models.py:84
+#, fuzzy
+#| msgid "Enter a bar code"
+msgid "ideascube bar code"
+msgstr "Entrer un code-barre"
+
+#: ideascube/monitoring/models.py:86
+msgid "Serial number"
+msgstr "Numéro de série"
+
+#: ideascube/monitoring/models.py:118
+#: ideascube/monitoring/templates/monitoring/loan.html:24
+msgid "Due date"
+msgstr ""
+
+#: ideascube/monitoring/models.py:119
+msgid "Return time"
+msgstr ""
+
+#: ideascube/monitoring/models.py:121
+#: ideascube/monitoring/templates/monitoring/loan.html:25
+msgid "Comments"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/entry.html:14
+msgid "Specific activity (optional)"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/entry.html:17
+msgid "Partner (optional)"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/entry.html:20
+msgid "To the cinema module"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/entry.html:21
+msgid "To the library module"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/entry.html:22
+msgid "To the digital module"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/entry.html:27
+msgid "Module"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/entry.html:28
+msgid "Member"
+msgstr "Membre"
+
+#: ideascube/monitoring/templates/monitoring/entry.html:29
+msgid "When"
+msgstr "Quand"
+
+#: ideascube/monitoring/templates/monitoring/entry.html:38
+#, python-format
+msgid "%(time)s ago"
+msgstr "Il y a %(time)s"
+
+#: ideascube/monitoring/templates/monitoring/entry.html:48
+#: ideascube/monitoring/templates/monitoring/entry.html:51
+#: ideascube/monitoring/templates/monitoring/loan.html:49
+#: ideascube/monitoring/templates/monitoring/loan.html:55
+msgid "Export"
+msgstr "Exporter"
+
+#: ideascube/monitoring/templates/monitoring/inventory.html:20
+#: ideascube/monitoring/templates/monitoring/stock.html:9
+msgid "count"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/inventory.html:20
+msgid "barcode"
+msgstr "Code-barre"
+
+#: ideascube/monitoring/templates/monitoring/inventory.html:20
+msgid "status"
+msgstr "statut"
+
+#: ideascube/monitoring/templates/monitoring/inventory.html:36
+#: ideascube/monitoring/templates/monitoring/stock.html:16
+msgid "Stock is empty for this module."
+msgstr "Le stock est vide pour ce module"
+
+#: ideascube/monitoring/templates/monitoring/inventory.html:45
+msgid "Export in CSV"
+msgstr "Exporter en CSV"
+
+#: ideascube/monitoring/templates/monitoring/inventory.html:46
+msgid "Manage stock"
+msgstr "Gérer le stock"
+
+#: ideascube/monitoring/templates/monitoring/inventory_confirm_delete.html:4
+#, python-format
+msgid "Are you sure you want to delete the inventory of %(date)s?"
+msgstr "Êtes-vous sûr de vouloir supprimer l'inventaire de %(date)s ?"
+
+#: ideascube/monitoring/templates/monitoring/inventory_form.html:6
+#, python-format
+msgid "Edit inventory from %(date)s"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/inventory_form.html:8
+#: ideascube/monitoring/templates/monitoring/stock.html:25
+msgid "Start new inventory"
+msgstr "Commencer un nouvel inventaire"
+
+#: ideascube/monitoring/templates/monitoring/inventory_form.html:15
+#: ideascube/monitoring/templates/monitoring/specimen_form.html:15
+#: ideascube/monitoring/templates/monitoring/stockitem_form.html:15
+msgid "delete"
+msgstr "supprimer"
+
+#: ideascube/monitoring/templates/monitoring/loan.html:10
+msgid "Loan"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/loan.html:16
+#: ideascube/monitoring/templates/monitoring/loan.html:46
+msgid "Validate"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/loan.html:19
+msgid "Ongoing loans"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/loan.html:22
+msgid "Item"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/loan.html:23
+msgid "User"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/loan.html:26
+msgid "By"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/loan.html:40
+msgid "Return"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/specimen_confirm_delete.html:4
+#, python-format
+msgid ""
+"Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s"
+"\"?"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/specimen_form.html:6
+#, python-format
+msgid "Edit specimen of %(item)s"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/specimen_form.html:8
+msgid "Add new specimen"
+msgstr "Ajouter un nouvel exemplaire"
+
+#: ideascube/monitoring/templates/monitoring/stock.html:9
+msgid "Reference"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/stock.html:9
+msgid "Actions"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/stock.html:11
+msgid "Total:"
+msgstr "Total :"
+
+#: ideascube/monitoring/templates/monitoring/stock.html:11
+msgid "Add new specimen of this item"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/stock.html:13
+msgid "Edit this specimen"
+msgstr "Modifier cet exemplaire"
+
+#: ideascube/monitoring/templates/monitoring/stock.html:24
+msgid "Add new stock item"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/stock.html:28
+msgid "Inventories"
+msgstr "Inventaires"
+
+#: ideascube/monitoring/templates/monitoring/stock.html:32
+msgid "No inventory yet."
+msgstr "Aucun inventaire pour le moment."
+
+#: ideascube/monitoring/templates/monitoring/stock.html:32
+msgid "Start one now"
+msgstr "En commencer un maintenant"
+
+#: ideascube/monitoring/templates/monitoring/stockitem_confirm_delete.html:4
+#, python-format
+msgid "Are you sure you want to delete the stockitem \"%(item)s\"?"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/stockitem_form.html:6
+msgid "Edit item"
+msgstr ""
+
+#: ideascube/monitoring/templates/monitoring/stockitem_form.html:8
+msgid "Add new item"
+msgstr ""
+
+#: ideascube/monitoring/views.py:42
+#, python-brace-format
+msgid "No user found with serial {serial}"
+msgstr ""
+
+#: ideascube/monitoring/views.py:50
+#, python-brace-format
+msgid "Created {count} entries"
+msgstr ""
+
+#: ideascube/monitoring/views.py:54
+msgid "No entry created."
+msgstr ""
+
+#: ideascube/monitoring/views.py:76
+msgid "Error while processing entries export"
+msgstr ""
+
+#: ideascube/monitoring/views.py:263
+#, python-brace-format
+msgid "Specimen {specimen} has been added to {inventory} inventory"
+msgstr ""
+
+#: ideascube/monitoring/views.py:270
+#, python-brace-format
+msgid "Specimen {specimen} not found or already done."
+msgstr ""
+
+#: ideascube/monitoring/views.py:348
+#, python-brace-format
+msgid "Item {item} has been loaned to {user}"
+msgstr ""
+
+#: ideascube/monitoring/views.py:359
+#, python-brace-format
+msgid "Item {item} has been returned"
+msgstr ""
+
+#: ideascube/monitoring/views.py:363
+msgid "Item not found"
+msgstr ""
+
+#: ideascube/monitoring/views.py:380
+msgid "Error while processing loans export"
+msgstr ""
+
+#: ideascube/search/templates/search/box.html:6
+#: ideascube/search/templates/search/box.html:7
+msgid "search"
+msgstr "rechercher"
+
+#: ideascube/search/templates/search/search.html:9
+msgid "Search in the box"
+msgstr "Rechercher dans la box"
+
+#: ideascube/search/templates/search/search.html:16
+#, python-format
+msgid "No result for \"%(query)s\"."
+msgstr "Aucun résultat pour \"%(query)s\"."
+
+#: ideascube/serveradmin/backup.py:36
+#, fuzzy, python-brace-format
+#| msgid "backup name must end with .zip"
+msgid "backup name must end with one of {extensions}"
+msgstr "Le nom d'une sauvegarde doit terminer par .zip "
+
+#: ideascube/serveradmin/backup.py:103
+msgid "Unkown format for file {}"
+msgstr ""
+
+#: ideascube/serveradmin/backup.py:138
+msgid "Not a zip file"
+msgstr "Ce n'est pas un fichier zip"
+
+#: ideascube/serveradmin/backup.py:140
+#, fuzzy
+#| msgid "Not a zip file"
+msgid "Not a tar file"
+msgstr "Ce n'est pas un fichier zip"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:5
+msgid "Manage server backups"
+msgstr "Gérer les sauvegardes du serveur"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:8
+msgid "Backup"
+msgstr "Sauvegarder"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:9
+msgid "Backup now"
+msgstr "Sauvegarder maintenant"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:11
+msgid "Restore"
+msgstr "Restaurer"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:13
+msgid "Select"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:13
+msgid "Source"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:13
+msgid "Version"
+msgstr "Version"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:13
+msgid "Date"
+msgstr "Date"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:13
+msgid "Size"
+msgstr "Taille"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:13
+msgid "Format"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:25
+msgid "Download selected"
+msgstr "Télécharger la sélection"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:26
+msgid "Restore selected"
+msgstr "Restaurer la sélection"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:26
+#: ideascube/serveradmin/templates/serveradmin/backup.html:27
+msgid "Sure?"
+msgstr "Sûr?"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:27
+msgid "Delete selected"
+msgstr "Supprimer la sélection"
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:29
+msgid "Upload"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:31
+#, python-brace-format
+msgid ""
+"File must be a zip, and file name must be in the form {source}_{version}"
+"_{date}.zip; eg.: musasa_0.1.0_201501231405.zip"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/backup.html:32
+msgid "Upload backup file"
+msgstr "Télécharger un fichier de sauvegarde"
+
+#: ideascube/serveradmin/templates/serveradmin/battery.html:5
+msgid "Battery monitoring"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/battery.html:9
+msgid "Capacity"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/index.html:7
+#, python-format
+msgid "Current version: %(version)s"
+msgstr "Version actuelle : %(version)s"
+
+#: ideascube/serveradmin/templates/serveradmin/index.html:9
+#: ideascube/serveradmin/templates/serveradmin/services.html:6
+msgid "Manage services"
+msgstr "Gérer les services"
+
+#: ideascube/serveradmin/templates/serveradmin/index.html:10
+msgid "Restart server"
+msgstr "Redémarrer le serveur"
+
+#: ideascube/serveradmin/templates/serveradmin/index.html:11
+msgid "Manage backups"
+msgstr "Gérer les sauvegardes"
+
+#: ideascube/serveradmin/templates/serveradmin/index.html:12
+msgid "Monitor battery"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/packages.html:5
+msgid "Manage packages"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/packages.html:6
+msgid "Available Ideascube packages"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/packages.html:10
+msgid "Suggest"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/packages.html:14
+msgid "System packages out of date"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/power.html:5
+msgid "Stop or restart the server"
+msgstr "Arrêter ou redémarrer le serveur"
+
+#: ideascube/serveradmin/templates/serveradmin/power.html:8
+#: ideascube/serveradmin/templates/serveradmin/service_form.html:13
+msgid "Stop"
+msgstr "Arrêter"
+
+#: ideascube/serveradmin/templates/serveradmin/power.html:9
+#: ideascube/serveradmin/templates/serveradmin/service_form.html:12
+msgid "Restart"
+msgstr "Redémarrer"
+
+#: ideascube/serveradmin/templates/serveradmin/service_form.html:15
+msgid "Start"
+msgstr "Commencer"
+
+#: ideascube/serveradmin/views.py:64
+#, python-brace-format
+msgid "Succesfully created backup {filename}"
+msgstr "Sauvegarde créée avec succès {filename}"
+
+#: ideascube/serveradmin/views.py:74
+msgid "Unable to load file:"
+msgstr "Impossible de charger le fichier :"
+
+#: ideascube/serveradmin/views.py:78
+#, python-brace-format
+msgid "File {name} has been loaded."
+msgstr "Le fichier {name} a été chargé."
+
+#: ideascube/serveradmin/views.py:83
+msgid "No file found to upload."
+msgstr "Aucun fichier à télécharger trouvé."
+
+#: ideascube/serveradmin/views.py:89
+#, python-brace-format
+msgid "Succesfully deleted backup {filename}"
+msgstr "Sauvegarde {filename} restaurée avec succès"
+
+#: ideascube/serveradmin/views.py:94
+#, python-brace-format
+msgid "Succesfully restored backup {filename}"
+msgstr "Sauvegarde {filename} restaurée avec succès"
+
+#: ideascube/templates/ideascube/includes/blog_card.html:4
+msgid "LAST POSTS"
+msgstr "DERNIERS POSTS"
+
+#: ideascube/templates/ideascube/includes/blog_card.html:5
+#: ideascube/templates/ideascube/includes/book_card.html:5
+msgid "by"
+msgstr "par"
+
+#: ideascube/templates/ideascube/includes/book_card.html:4
+msgid "one book at random"
+msgstr "un livre au hasard"
+
+#: ideascube/templates/ideascube/includes/cards/blog.html:4
+msgid "Blog"
+msgstr "Blog"
+
+#: ideascube/templates/ideascube/includes/cards/blog.html:5
+msgid "Browse blog posts."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/khanacademy.html:3
+msgid "Khan Academy"
+msgstr "Khan Academy"
+
+#: ideascube/templates/ideascube/includes/cards/khanacademy.html:4
+msgid "Learn with videos and exercises."
+msgstr "Apprendre grâce à des vidéos et des exercices "
+
+#: ideascube/templates/ideascube/includes/cards/library.html:5
+#, fuzzy
+#| msgid "No books yet."
+msgid "Browse books."
+msgstr "Pas encore de livres."
+
+#: ideascube/templates/ideascube/includes/cards/mediacenter.html:5
+msgid "Browse videos, sounds, images, pdf…"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/wikipedia.html:3
+msgid "wikipedia"
+msgstr "Wikipédia"
+
+#: ideascube/templates/ideascube/includes/cards/wikipedia.html:4
+msgid "Browse the free encyclopedia."
+msgstr "Parcourir l'encyclopédie libre"
+
+#: ideascube/templates/ideascube/includes/document_card.html:4
+msgid "medias center"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/footer.html:20
+msgid "Change"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/header.html:7
+#, python-format
+msgid "log out from %(user)s"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/header.html:9
+msgid "log in"
+msgstr "Connexion"
+
+#: ideascube/templates/ideascube/pagination.html:5
+msgid "previous"
+msgstr "précédent"
+
+#: ideascube/templates/ideascube/pagination.html:8
+#, python-format
+msgid "Page %(current)s of %(total)s."
+msgstr "Page %(current)s sur %(total)s."
+
+#: ideascube/templates/ideascube/pagination.html:11
+msgid "next"
+msgstr "suivant"
+
+#: ideascube/templates/ideascube/set_password.html:5
+#, python-format
+msgid "Set %(user)s password"
+msgstr ""
+
+#: ideascube/templates/ideascube/user_confirm_delete.html:4
+#, python-format
+msgid "Are you sure you want to delete user \"%(user_obj)s\"?"
+msgstr "Êtes-vous sûr de vouloir effacer l'utilisateur  \"%(user_obj)s\"?"
+
+#: ideascube/templates/ideascube/user_detail.html:15
+msgid "Set password"
+msgstr ""
+
+#: ideascube/templates/ideascube/user_detail.html:16
+msgid "Remove staff status"
+msgstr ""
+
+#: ideascube/templates/ideascube/user_detail.html:16
+msgid "Add staff status"
+msgstr ""
+
+#: ideascube/templates/ideascube/user_form.html:6
+msgid "Edit user"
+msgstr "Éditer l'utilisateur"
+
+#: ideascube/templates/ideascube/user_form.html:8
+msgid "New User"
+msgstr "Nouvel utilsateur"
+
+#: ideascube/templates/ideascube/user_list.html:8
+msgid "Name"
+msgstr "Nom"
+
+#: ideascube/templates/ideascube/user_list.html:27
+msgid "Add user"
+msgstr "Ajouter un utilisateur"
+
+#: ideascube/templates/ideascube/user_list.html:28
+msgid "Export all users"
+msgstr "Exporter tous les utilisateurs"
+
+#: ideascube/templates/registration/login.html:11
+msgid "Log in"
+msgstr "Connexion"
+
+#: ideascube/views.py:139
+#, python-brace-format
+msgid "Password has been set for {user}"
+msgstr "Le mot de passe a été modifié pour {user}"
+
+#~ msgid "Box Administration"
+#~ msgstr "Administration de la box"
+
+#~ msgid "Manage members"
+#~ msgstr "Gérer les membres"
+
+#~ msgid "Server Administration"
+#~ msgstr "Administration du serveur"
+
+#~ msgid "Backup / restore"
+#~ msgstr "Sauvegarder / restaurer"
+
+#~ msgid "log out"
+#~ msgstr "se déconnecter"

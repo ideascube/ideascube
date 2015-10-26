@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from codecs import open  # To use a consistent encoding
 from os import path
 
-import ideastube
+import ideascube
 
 here = path.abspath(path.dirname(__file__))
 
@@ -13,12 +13,12 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 # Doc: http://pythonhosted.org/setuptools/setuptools.html#including-data-files.
 setup(
-    name='ideastube',
-    version=ideastube.__version__,
+    name='ideascube',
+    version=ideascube.__version__,
     description=('This Django repository is the main application of the Ideas '
                  'Box server.'),
     long_description=long_description,
-    url='https://github.com/ideastube/ideastube',
+    url='https://github.com/ideascube/ideascube',
     author='BSF IT Team',
     author_email='it@bibliosansfrontieres.org',
     license='MIT',

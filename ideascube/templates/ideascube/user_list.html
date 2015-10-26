@@ -1,0 +1,30 @@
+{% extends 'two-third-third.html' %}
+{% load i18n ideascube_tags %}
+
+{% block twothird %}
+    <table>
+        <caption>{% trans "Users" %} ({{ user_list.count }})</caption>
+        <tr>
+            <th>{% trans 'Name' %}</th>
+            {% for field in USERS_LIST_EXTRA_FIELDS %}
+                <th>{{ view.model|field_verbose_name:field }}</th>
+            {% endfor %}
+        </tr>
+    {% for user in user_list  %}
+        <tr>
+            <td><a href="{% url 'user_detail' pk=user.pk %}">{{ user }}{% if user.is_staff %}{% fa 'shield' 'fa-fw' %}{% endif %}</a></td>
+            {% for field in USERS_LIST_EXTRA_FIELDS %}
+                <td>{{ user|getattr:field }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+    {% include "ideascube/pagination.html" %}
+{% endblock twothird %}
+{% block third %}
+    {% include 'search/box.html' with action='.' %}
+    <ul class="card tinted admin">
+        <li>{% fa 'user-plus' 'fa-fw' %} <a href="{% url 'user_create' %}">{% trans "Add user" %}</a></li>
+        <li>{% fa 'table' 'fa-fw' %} <a href="{% url 'user_export' %}">{% trans "Export all users" %}</a></li>
+    </ul>
+{% endblock third %}

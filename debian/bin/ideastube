@@ -1,5 +1,5 @@
 #!/bin/bash
-NAME=ideastube
+NAME=ideascube
 DJANGO_SETTINGS_MODULE="$NAME.settings"
 DEBUG=
 STORAGE_ROOT="/var/$NAME"

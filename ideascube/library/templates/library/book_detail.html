@@ -1,0 +1,43 @@
+{% extends 'two-third-third.html' %}
+{% load i18n ideascube_tags %}
+{% block twothird %}
+    <div class="row mwide twide">
+        <div class="col third">
+            <h5><a href="{% url 'library:index' %}">&lt; {% trans 'View all books' %}</a></h5>
+            {% if book.cover %}<img src="{{ book.cover.url }}" class="cover" />{% endif %}
+        </div>
+        <div class="col two-third book-detail">
+            <h4 class="flow"><span class="theme read">{% trans "read" %}</span></h4>
+            <h2>{{ book }}</h2>
+            {% if book.subtitle %}<h3>{{ book.subtitle }}</h3>{% endif %}
+            <hr />
+            <p class="flow"><strong>{% trans "Author" %}</strong><span>{{ book.authors }}</span></p>
+            <p class="flow"><strong>{% trans "Publisher" %}</strong> <span>{{ book.publisher|default:'—' }}</span></p>
+            {% if book.serie %}<p class="flow"><strong>{% trans "Serie" %}</strong> <span>{{ book.serie }}</span></p>{% endif %}
+            <hr />
+            <p><strong>{% trans "Language" %}</strong> {{ book.get_lang_display }}</p>
+            <p><strong>{% trans "ISBN" %}</strong> {{ book.isbn|default:'—' }}</p>
+            <hr />
+            {% if book.section %}<p class="flow"><strong>{% trans "Section" %}</strong> <span>{{ book.get_section_display }}</span></p>{% endif %}
+            <p>{{ book.summary }}</p>
+        </div>
+    </div>
+{% endblock twothird %}
+{% block third %}
+    {% if user.is_staff %}
+    <ul class="card tinted admin">
+        <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:specimen_create' book_pk=book.pk %}">{% trans "Add a specimen" %}</a></li>
+        <li>{% fa 'trash' 'fa-fw' %} <a href="{% url 'library:book_delete' pk=book.pk %}">{% trans "Delete this book" %}</a></li>
+        <li>{% fa 'pencil' 'fa-fw' %} <a href="{% url 'library:book_update' pk=book.pk %}">{% trans "Edit this book" %}</a></li>
+    </ul>
+    <ul class="card tinted">
+        <h4>{% trans "Specimens" %}</h4>
+        {% for specimen in book.specimens.all %}
+            <li>{% if specimen.is_digital %}Digital specimen{% else %}{{ specimen.serial}}{% endif %} <a href="{% url 'library:specimen_update' pk=specimen.pk %}" title="{% trans 'Edit specimen' %}">{% fa 'pencil' 'fa-fw' %}</a></li>
+        {% empty %}
+            {% trans "No specimen for this book." %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% tag_cloud url="library:by_tag" model=view.model tags=book.tags.all %}
+{% endblock third %}

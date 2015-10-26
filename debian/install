@@ -1,4 +1,4 @@
-debian/nginx/ideastube /etc/nginx/sites-available
-debian/uwsgi/ideastube.ini /etc/uwsgi/apps-available
-debian/uwsgi/uwsgi_params /var/ideastube
-debian/bin/ideastube /usr/bin
+debian/nginx/ideascube /etc/nginx/sites-available
+debian/uwsgi/ideascube.ini /etc/uwsgi/apps-available
+debian/uwsgi/uwsgi_params /var/ideascube
+debian/bin/ideascube /usr/bin

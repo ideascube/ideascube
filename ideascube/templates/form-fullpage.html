@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load i18n ideascube_tags %}
+
+{% block extra_head %}
+    {% include 'ideascube/includes/form_statics.html' %}
+{% endblock extra_head %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data" id="{% block form_id %}model_form{% endblock %}">
+        <div class="row">
+                <div class="col two-third">
+                    {% block heading %}{% endblock heading %}
+                    {% csrf_token %}
+                    {% block form %}
+                        {% for field in form %}
+                            {% form_field field %}
+                        {% endfor %}
+                    {% endblock form %}
+                </div>
+                <div class="col third">
+                    {% block col %}{% endblock col %}
+                </div>
+        </div>
+    </form>
+{% endblock content %}

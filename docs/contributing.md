@@ -1,6 +1,6 @@
-# Contributing to ideastube
+# Contributing to ideascube
 
-Do you like to make the ideastube project better? Welcome! This document
+Do you like to make the ideascube project better? Welcome! This document
 will try to provide guidelines about what and how you can help.
 
 
@@ -9,33 +9,33 @@ will try to provide guidelines about what and how you can help.
 If you have any question, problem or idea, feel free to get in touch with
 project's maintainers:
 
-* Chat using #ideastube channel on Freenode. If you are not familiar with
+* Chat using #ideascube channel on Freenode. If you are not familiar with
   [IRC](https://en.wikipedia.org/wiki/Internet_Relay_Chat), you can try
-  this simple [online chat application](https://kiwiirc.com/client/irc.freenode.net/?nick=new-user|?#ideastube):
+  this simple [online chat application](https://kiwiirc.com/client/irc.freenode.net/?nick=new-user|?#ideascube):
   just click "Start" then chat!
 
 * Ask questions, report issues or propose ideas as
-  [tickets](https://github.com/ideastue/ideastube/issues).
+  [tickets](https://github.com/ideastue/ideascube/issues).
 
 Here are online resources you may find useful to contribute to the project:
 
 * Homepage: http://www.ideas-box.org/
-* Code repository: https://github.com/ideastube/ideastube
+* Code repository: https://github.com/ideascube/ideascube
 * Issues, questions and feature requests:
-  https://github.com/ideastube/ideastube/issues
-* Continuous integration: https://travis-ci.org/ideastube/ideastube
-* Documentation: https://github.com/ideastube/ideastube/blob/master/docs/index.md
+  https://github.com/ideascube/ideascube/issues
+* Continuous integration: https://travis-ci.org/ideascube/ideascube
+* Documentation: https://github.com/ideascube/ideascube/blob/master/docs/index.md
 
 
 ## How can I give a hand?
 
 * Join the brainstorming: report or comment issues; edit wiki; join IRC chan
-* Review [pull requests](https://github.com/ideastube/ideastube/pulls)
-* Take an [issue](https://github.com/ideastube/ideastube/issues) and code :)
+* Review [pull requests](https://github.com/ideascube/ideascube/pulls)
+* Take an [issue](https://github.com/ideascube/ideascube/issues) and code :)
 * What about a sprint?
 
 
-## Install ideastube for development
+## Install ideascube for development
 
 ### Setup system
 
@@ -52,17 +52,17 @@ On a Debian-based system, you may use:
 ### Download the souce code
 
 Get project's source code from
-[project's code repository](https://github.com/ideastube/ideastube)
+[project's code repository](https://github.com/ideascube/ideascube)
 (you may use your own fork):
 
-    git clone git@github.com:ideastube/ideastube.git
-    cd ideastube/
+    git clone git@github.com:ideascube/ideascube.git
+    cd ideascube/
 
 ### Setup project
 
-Create a virtualenv (we name it `ideastube` here but the name is up to you):
+Create a virtualenv (we name it `ideascube` here but the name is up to you):
 
-    mkvirtualenv ideastube
+    mkvirtualenv ideascube
 
 Install python dependencies:
 

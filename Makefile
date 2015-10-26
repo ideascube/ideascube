@@ -16,10 +16,10 @@ pull_translations:
 compile_translations:
 	python manage.py compilemessages
 clean:
-	-mv builds/ideastube_* builds/old
+	-mv builds/ideascube_* builds/old
 build:
-	mkdir -p builds && dpkg-buildpackage -us -uc -Ibuilds && mv ../ideastube_* builds/
+	mkdir -p builds && dpkg-buildpackage -us -uc -Ibuilds && mv ../ideascube_* builds/
 install:
 	sudo dpkg -i builds/*.deb
 uninstall:
-	sudo dpkg -r ideastube
+	sudo dpkg -r ideascube

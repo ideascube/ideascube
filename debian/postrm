@@ -7,7 +7,7 @@ case "$1" in
     *)
         # on removal we should clean project directory
         if [ -d /var/lib/$DPKG_MAINTSCRIPT_PACKAGE ]; then
-            echo "Removing ideastube project directory"
+            echo "Removing ideascube project directory"
             rm -rf /var/lib/$DPKG_MAINTSCRIPT_PACKAGE
         fi
     ;;

@@ -1,0 +1,21 @@
+{% extends 'two-third-third.html' %}
+{% load i18n ideascube_tags %}
+
+{% block twothird %}
+    {% block blog_title %}
+    <h2><a href="{% url 'blog:index' %}" class="theme create">{% trans 'Blog' %}</a></h2>
+    {% endblock blog_title %}
+    {% for content in content_list  %}
+        {% include 'blog/content_card.html' %}
+        <hr />
+    {% endfor %}
+    {% include "ideascube/pagination.html" %}
+{% endblock twothird %}
+{% block third %}
+    {% if user.is_staff %}
+        <div class="card tinted admin">
+            {% fa 'plus' 'fa-fw' %} <a href="{% url 'blog:content_create' %}">{% trans "Add content" %}</a>
+        </div>
+    {% endif %}
+    {% tag_cloud url="blog:by_tag" model=view.model %}
+{% endblock third %}

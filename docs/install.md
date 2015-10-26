@@ -1,7 +1,7 @@
 # Installation
 
 **Here are instructions to run a production environment**, i.e. tasks to
-deploy, run and use an ideastube server.
+deploy, run and use an ideascube server.
 
 **If you want to setup a development environment**, as an example in order to
 contribute to the project, please see [Contributor guide](contributing.md).
@@ -15,9 +15,9 @@ Install system dependencies:
 
     sudo apt-get install python-pip python-virtualenv virtualenvwrapper
 
-Create a virtualenv (we name it `ideastube` here but the name is up to you):
+Create a virtualenv (we name it `ideascube` here but the name is up to you):
 
-    mkvirtualenv ideastube
+    mkvirtualenv ideascube
 
 Install python dependencies:
 
@@ -36,4 +36,4 @@ Then install the `.deb`:
 
 Create an administrator:
 
-    sudo ideastube createsuperuser
+    sudo ideascube createsuperuser

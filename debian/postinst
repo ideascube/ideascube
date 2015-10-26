@@ -1,5 +1,5 @@
 #!/bin/bash
-NAME=ideastube
+NAME=ideascube
 case "$1" in
     configure)
         # Create elasticsearch group if not existing
@@ -24,9 +24,9 @@ case "$1" in
         chown $NAME:$NAME /var/$NAME
         chown $NAME:$NAME /var/$NAME/main
         echo "Running migration"
-        sudo -u $NAME /usr/bin/ideastube migrate --noinput -v 1
+        sudo -u $NAME /usr/bin/ideascube migrate --noinput -v 1
         echo "Running collectstatic"
-        sudo -u $NAME /usr/bin/ideastube collectstatic --noinput -v 1
+        sudo -u $NAME /usr/bin/ideascube collectstatic --noinput -v 1
         # Nginx
         echo "Linking Nginx VHost"
         ln -fs /etc/nginx/sites-available/$NAME /etc/nginx/sites-enabled/$NAME

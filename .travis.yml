@@ -11,7 +11,7 @@ after_success:
 notifications:
     irc:
         channels:
-            - "irc.freenode.net#ideastube"
+            - "irc.freenode.net#ideascube"
         on_success: change
         on_failure: always
     email: false
