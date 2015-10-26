@@ -17,7 +17,7 @@ LANGUAGE_CODE = 'fr'
 TIME_ZONE = None
 
 # Ideas Box specifics
-STORAGE_ROOT = '/media/hdd/ideasServer/storage' 
+STORAGE_ROOT = '/media/hdd/ideastube/storage' 
 
 IDEASTUBE_NAME = 'BSF Campus'
 
