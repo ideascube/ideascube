@@ -245,7 +245,6 @@ ID.endswith = function (str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
 };
 
-
 ID.stopEnterKey = function (name) {
     var el = document.querySelector('[name="' + name + '"]');
     if (!el) return;
@@ -253,4 +252,16 @@ ID.stopEnterKey = function (name) {
         if (e.keyCode === 13) e.preventDefault();
     };
     el.addEventListener('keydown', stop, false);
+};
+
+ID.confirmClick = function (selector) {
+    var el = document.querySelector(selector);
+    if (!el) return;
+    var ask = function (e) {
+        if (!confirm(gettext('Are you sure?'))) {
+            e.preventDefault();
+            return false;
+        }
+    };
+    el.addEventListener('click', ask, false);
 };

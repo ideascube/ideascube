@@ -9,3 +9,11 @@
     <input type="submit" name="restart" value="{% trans 'Restart' %}">
 </form>
 {% endblock twothird %}
+
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        ID.confirmClick('[name="stop"]');
+        ID.confirmClick('[name="restart"]');
+    </script>
+{% endblock extra_foot %}

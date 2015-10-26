@@ -23,8 +23,8 @@
     {% endfor %}
     </table>
     <input type="submit" name="do_download" value="{% trans 'Download selected' %}">
-    <input type="submit" name="do_restore" value="{% trans 'Restore selected' %}" onclick="if (!confirm('{% trans "Sure?" %}')) return false;" class="warning">
-    <input type="submit" name="do_delete" value="{% trans 'Delete selected' %}" onclick="if (!confirm('{% trans "Sure?" %}')) return false;" class="warning">
+    <input type="submit" name="do_restore" value="{% trans 'Restore selected' %}" class="warning">
+    <input type="submit" name="do_delete" value="{% trans 'Delete selected' %}" class="warning">
     <hr>
     <h3 id="upload">{% trans 'Upload' %}</h3>
     <input type="file" name="upload">
@@ -32,3 +32,10 @@
     <input type="submit" name="do_upload" value="{% trans 'Upload backup file' %}">
 </form>
 {% endblock twothird %}
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        ID.confirmClick('[name="do_restore"]');
+        ID.confirmClick('[name="do_delete"]');
+    </script>
+{% endblock extra_foot %}
