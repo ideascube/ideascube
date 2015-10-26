@@ -66,7 +66,7 @@ Create a virtualenv (we name it `ideastube` here but the name is up to you):
 
 Install python dependencies:
 
-    make devinstall
+    make develop
 
 Run the initial database migration::
 
