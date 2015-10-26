@@ -1,6 +1,6 @@
 test:
 	py.test
-devinstall:
+develop:
 	pip install -r requirements-dev.txt
 doc:
 	mkdocs serve
