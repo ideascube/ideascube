@@ -3,7 +3,7 @@ python:
   - "2.7"
 sudo: false
 install:
-- make devinstall
+- make develop
 - pip install python-coveralls
 script: make test
 after_success:
