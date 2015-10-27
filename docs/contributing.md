@@ -15,7 +15,7 @@ project's maintainers:
   just click "Start" then chat!
 
 * Ask questions, report issues or propose ideas as
-  [tickets](https://github.com/ideastue/ideascube/issues).
+  [tickets](https://github.com/ideascube/ideascube/issues).
 
 Here are online resources you may find useful to contribute to the project:
 
@@ -47,7 +47,7 @@ Project's typical development environment requires:
 
 On a Debian-based system, you may use:
 
-    sudo apt-get install python-pip python-virtualenv virtualenvwrapper python-dev libjpeg-dev libxml2-dev libxslt1-dev
+    sudo apt-get install python-pip python-virtualenv virtualenvwrapper python-dev libjpeg-dev libxml2-dev libxslt1-dev zlib1g-dev build-essential
 
 ### Download the souce code
 
