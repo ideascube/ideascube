@@ -31,8 +31,8 @@ class Command(BaseCommand):
     def skip(self, msg, metadata):
             self.stderr.write(u'⚠ Skipping. {}.'.format(msg.decode('utf-8')))
             for key, value in metadata.items():
-                self.stdout.write(u'- {}: {}'.format(key,
-                                                     value.decode('utf-8')))
+                value = value.decode('utf-8') if value else ''
+                self.stdout.write(u'- {}: {}'.format(key, value))
             self.stdout.write('-' * 20)
 
     def load(self, path):
