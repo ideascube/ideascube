@@ -32,3 +32,16 @@ finally:
     USER_DATA_FIELDS = []
     for section, fields in USER_FORM_FIELDS:  # noqa
         USER_DATA_FIELDS.extend(fields)
+
+    # Allow server settings to only define STORAGE_ROOT without needing to
+    # redefine all ROOTS like settings.
+    BACKUPED_ROOT = ldict.get('BACKUPED_ROOT') or os.path.join(STORAGE_ROOT, 'main')  # noqa
+    MEDIA_ROOT = ldict.get('MEDIA_ROOT') or os.path.join(BACKUPED_ROOT, 'media')  # noqa
+    STATIC_ROOT = ldict.get('STATIC_ROOT') or os.path.join(STORAGE_ROOT, 'static')  # noqa
+    if not getattr(ldict, 'DATABASES', None):
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': os.path.join(BACKUPED_ROOT, 'default.sqlite'),
+            }
+        }

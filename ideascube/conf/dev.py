@@ -1,5 +1,5 @@
 from .base import *  # noqa
 try:
-    os.makedirs(BACKUPED_ROOT)
+    os.makedirs(os.path.join(STORAGE_ROOT, 'main'))
 except OSError:
     pass

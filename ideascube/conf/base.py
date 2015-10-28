@@ -125,10 +125,11 @@ MEDIA_URL = '/media/'
 STORAGE_ROOT = os.environ.get('STORAGE_ROOT',
                               os.path.join(BASE_DIR, 'storage'))
 
-BACKUPED_ROOT = os.path.join(STORAGE_ROOT, 'main')
-
-MEDIA_ROOT = os.path.join(BACKUPED_ROOT, 'media')
-STATIC_ROOT = os.path.join(STORAGE_ROOT, 'static')
+# Loaded relatively to STORAGE_ROOT on settings.py
+BACKUPED_ROOT = None
+MEDIA_ROOT = None
+STATIC_ROOT = None
+DATABASES = None
 
 AUTH_USER_MODEL = 'ideascube.User'
 IDEASCUBE_NAME = 'debugbox'
@@ -236,13 +237,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BACKUPED_ROOT, 'default.sqlite'),
-    }
-}
 
 SERVICES = [
     {'name': 'ideascube', 'description': _('Ideascube web server')},
