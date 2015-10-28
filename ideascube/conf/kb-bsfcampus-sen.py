@@ -19,7 +19,7 @@ TIME_ZONE = None
 # Ideas Box specifics
 STORAGE_ROOT = '/media/hdd/ideascube/storage' 
 
-IDEASCUBE_NAME = 'BSF Campus'
+IDEASCUBE_NAME = 'BSF Campus SÉNÉGAL'
 
 DOMAIN = 'koombook.lan'
 
