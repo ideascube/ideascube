@@ -2,6 +2,7 @@
 NAME=ideascube
 DJANGO_SETTINGS_MODULE="$NAME.settings"
 DEBUG=
+IDEASCUBE_ID=
 STORAGE_ROOT="/var/$NAME"
 
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
@@ -9,5 +10,6 @@ STORAGE_ROOT="/var/$NAME"
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 export DEBUG=$DEBUG
 export STORAGE_ROOT=$STORAGE_ROOT
+export IDEASCUBE_ID=$IDEASCUBE_ID
 
 /usr/share/python/$NAME/bin/django-admin "$@"
