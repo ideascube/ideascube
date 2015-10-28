@@ -41,7 +41,30 @@ def test_login_page_should_return_form_in_GET_mode(app):
     assert app.get(reverse('login'), status=200)
 
 
-def test_login_page_should_log_in_user_if_POST_data_is_correct(client, user):
+def test_home_page_should_redirect_to_welcome_staff_if_no_staff(app, user):
+    response = app.get(reverse('index')).follow()
+    assert response.status_code == 200
+    assert response.forms['model_form']
+
+
+def test_home_page_should_redirect_to_welcome_staff_if_staff_exists(staffapp):
+    response = staffapp.get(reverse('welcome_staff'))
+    assert response.status_code == 302
+
+
+def test_welcome_page_should_create_staff_user_on_POST(app):
+    form = app.get(reverse('welcome_staff')).forms['model_form']
+    form['serial'] = 'myuser'
+    form['password'] = 'password'
+    form['password_confirm'] = 'password'
+    form.submit().follow()
+    user = user_model.objects.last()
+    assert user.is_staff
+
+
+def test_login_page_should_log_in_user_if_POST_data_is_correct(client, user,
+                                                               staffuser):
+    # Loading staffuser fixture so we don't fail into welcome_staff page.
     response = client.post(reverse('login'), {
         'username': user.serial,
         'password': 'password'

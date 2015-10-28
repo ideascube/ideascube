@@ -8,7 +8,7 @@ from urlparse import urlparse
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.forms import SetPasswordForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.validators import URLValidator, ValidationError
@@ -25,12 +25,14 @@ from ideascube.decorators import staff_member_required
 from ideascube.library.models import Book
 from ideascube.mediacenter.models import Document
 
-from .forms import UserForm
+from .forms import UserForm, CreateStaffForm
 
 user_model = get_user_model()
 
 
 def index(request):
+    if not user_model.objects.filter(is_staff=True).exists():
+        return HttpResponseRedirect(reverse_lazy('welcome_staff'))
     content = Content.objects.published().order_by('published_at').first()
     random_book = Book.objects.available().order_by('?').first()
     random_doc = Document.objects.order_by('?').first()
@@ -42,6 +44,25 @@ def index(request):
         'domain': settings.DOMAIN,
     }
     return render(request, 'index.html', context)
+
+
+def welcome_staff(request):
+    """Allow to create a staff user if None exists yet."""
+    if user_model.objects.filter(is_staff=True).exists():
+        return HttpResponseRedirect('/')
+    if request.method == 'POST':
+        form = CreateStaffForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user = authenticate(serial=user.serial,
+                                password=request.POST['password'])
+            login(request, user)
+            msg = _('Welcome to {}, {}!').format(settings.IDEASCUBE_NAME, user)
+            messages.add_message(request, messages.SUCCESS, msg)
+            return HttpResponseRedirect('/')
+    else:
+        form = CreateStaffForm()
+    return render(request, 'ideascube/welcome_staff.html', {'form': form})
 
 
 class ByTag(ListView):
