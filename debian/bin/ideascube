@@ -1,12 +1,17 @@
 #!/bin/bash
 NAME=ideascube
+
+# Set defaults.
 DJANGO_SETTINGS_MODULE="$NAME.settings"
 DEBUG=
-IDEASCUBE_ID=
-STORAGE_ROOT="/var/$NAME"
+IDEASCUBE_ID=${IDEASCUBE_ID:-""}
+STORAGE_ROOT=${STORAGE_ROOT:-"/var/$NAME"}
 
+# Override with /etc/defautl/ideasube that may have
+# been customized by user.
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
 
+# Export them so django-admin can access them.
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 export DEBUG=$DEBUG
 export STORAGE_ROOT=$STORAGE_ROOT

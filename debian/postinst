@@ -1,5 +1,6 @@
 #!/bin/bash
 NAME=ideascube
+
 case "$1" in
     configure)
         # Create elasticsearch group if not existing
