@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 
 from django import template
@@ -105,3 +106,18 @@ def model(obj):
 @register.filter(name='min')
 def do_min(left, right):
     return min(left, right)
+
+
+@register.filter()
+def smart_truncate(s, length=100, suffix=u'…'):
+    if len(s) > length:
+        s = s[:length+1-len(suffix)]
+        if ' ' in s:
+            s = u' '.join(s.split(u' ')[0:-1])
+        else:
+            s = s[:-1]
+        # We don't want to add a punctuation after another punctuation.
+        while not s[-1].isalnum():
+            s = s[:-1]
+        s = s + suffix
+    return s

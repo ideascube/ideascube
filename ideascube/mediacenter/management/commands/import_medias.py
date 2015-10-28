@@ -11,6 +11,7 @@ from django.core.management.base import BaseCommand
 from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.forms import DocumentForm
 from ideascube.mediacenter.utils import guess_kind_from_content_type
+from ideascube.templatetags.ideascube_tags import smart_truncate
 
 
 class Command(BaseCommand):
@@ -61,6 +62,8 @@ class Command(BaseCommand):
         title = metadata.get('title')
         if not title:
             return self.skip('Missing title', metadata)
+        title = smart_truncate(title)
+        metadata['title'] = title
 
         if not metadata.get('lang'):
             metadata['lang'] = settings.LANGUAGE_CODE

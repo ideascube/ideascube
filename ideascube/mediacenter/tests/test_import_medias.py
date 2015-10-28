@@ -42,12 +42,21 @@ def test_should_import_medias():
     'image,my title,my summary,BSF,unknownpath.mp4',
 ])
 def test_should_skip_if_missing_required_metadata(row):
-    print('pouet')
     assert not Document.objects.count()
     metadata = ('kind,title,summary,credits,path\n' + row)
     write_metadata(metadata)
     call_command('import_medias', CSV_PATH)
     assert not Document.objects.count()
+
+
+def test_should_cut_too_long_title():
+    assert not Document.objects.count()
+    metadata = ('kind,title,summary,credits,path\n'
+                'image,This is a very long title with much much more than one hundrer chars so it should be cut to be imported,my summary,BSF,an-image.jpg')  # noqa
+    write_metadata(metadata)
+    call_command('import_medias', CSV_PATH)
+    doc = Document.objects.last()
+    assert doc.title.startswith('This is a very long title with')
 
 
 def test_should_not_reimport_if_already_existing():

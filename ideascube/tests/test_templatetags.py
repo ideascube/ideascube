@@ -1,11 +1,14 @@
+# -*- coding: utf-8 -*-
 import pytest
 
-from ideascube.blog.tests.factories import ContentFactory
-from ideascube.library.tests.factories import BookFactory
 from ideascube.blog.models import Content
+from ideascube.blog.tests.factories import ContentFactory
 from ideascube.library.models import Book
+from ideascube.library.tests.factories import BookFactory
 
-from ..templatetags.ideascube_tags import theme_slug, remove_i18n, tag_cloud, fa, do_min
+from ..templatetags.ideascube_tags import (do_min, fa, remove_i18n,
+                                           smart_truncate, tag_cloud,
+                                           theme_slug)
 
 pytestmark = pytest.mark.django_db
 
@@ -67,3 +70,29 @@ def test_tag_cloud_should_be_filtered_by_model_if_given():
 def test_do_min(left, right, expected):
     assert do_min(left, right) == expected
     assert do_min(right, left) == expected
+
+
+@pytest.mark.parametrize('given,expected,length,suffix', [
+    [u'Ceci est une longue phrase qui pourrait éventuellement servir de titre à billet de blog mais est vraiment beaucoup trop longue',  # noqa
+     u'Ceci est une longue phrase qui pourrait éventuellement servir de titre à billet de blog mais est…', None, None],  # noqa
+    ['A short sentence', 'A short sentence', None, None],
+    ['A short sentence', u'A short…', 10, None],
+    ['A short sentence', u'A short.', 10, '.'],
+    ['A short sentence', u'A short', 10, ''],
+    [u"أكثر من خمسين لغة،", u"أكثر من خمسين لغة،", None, None],
+    [u"أكثر من خمسين لغة،", u"أكثر…", 5, None],
+    ["I'm 17 chars long", "I'm 17 chars long", 17, None],
+    ["I've a space at 13", u"I've a space…", 13, None],
+    ["I've a space at 13", u"I've a space…", 14, None],
+    ["I've a space at 13", u"I've a…", 12, None],
+    ['Anticonstitutionnellement', u'Anticon…', 8, None],
+    ["I've a comma, at 13", u"I've a comma…", 14, None],
+    ["", u"", None, None],
+])
+def test_smart_struncate(given, expected, length, suffix):
+    kwargs = {}
+    if length is not None:
+        kwargs['length'] = length
+    if suffix is not None:
+        kwargs['suffix'] = suffix
+    assert smart_truncate(given, **kwargs) == expected
