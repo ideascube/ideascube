@@ -64,6 +64,14 @@ class AvailableWifiNetwork(object):
     def __str__(self):
         return 'Available Wi-Fi network: "%s"' % (self.ssid)
 
+    def connect(self):
+        if self._connection is not None:
+            NetworkManager.ActivateConnection(
+                self._connection._connection, self._device, "/")
+
+        else:
+            raise WifiError("Can't connect to a new network yet")
+
     @property
     def connected(self):
         return self._connection and self._connection.connected or False

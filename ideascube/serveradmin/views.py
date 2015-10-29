@@ -115,7 +115,7 @@ def battery(request):
 
 
 @staff_member_required
-def wifi(request):
+def wifi(request, ssid=''):
     try:
         enable_wifi()
         wifi_list = AvailableWifiNetwork.all()
@@ -124,6 +124,19 @@ def wifi(request):
         messages.error(request, e)
         return render(request, 'serveradmin/wifi.html')
 
+    if ssid:
+        try:
+            network = wifi_list[ssid]
+            network.connect()
+            messages.success(
+                request, _('Connected to {ssid}').format(ssid=ssid))
+
+        except KeyError:
+            messages.error(
+                request, _('No such network: {ssid}').format(ssid=ssid))
+
+        except WifiError as e:
+            messages.error(request, e)
 
     return render(
         request, 'serveradmin/wifi.html', {'wifi_list': wifi_list.values()})

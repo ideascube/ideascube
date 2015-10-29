@@ -6,7 +6,7 @@
 {% for wifi in wifi_list %}
 {% if forloop.first %}<ul class="wifi-list">{% endif %}
     <li>
-        <a class="wifi-network">
+        <a class="wifi-network" data-ssid="{{ wifi.ssid }}" data-known="{{ wifi.known }}">
             {{ wifi.ssid }}
             {% if wifi.connected %}
             <span><i class="fa fa-check"></i></span>
@@ -23,5 +23,9 @@
 {% empty %}
 <p>{% trans 'No Wi-Fi available' %}</p>
 {% endfor %}
+
+<script type="text/javascript">
+    ID.initWifiList('.wifi-network', "{% url 'server:wifi' %}");
+</script>
 
 {% endblock twothird %}

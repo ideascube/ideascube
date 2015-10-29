@@ -131,6 +131,68 @@ def test_list_wifi_networks_with_other_connected(mocker):
     assert networks['random open network'].strength == 42
 
 
+def test_connect_to_known_open_network(mocker):
+    from ideascube.serveradmin.wifi import AvailableWifiNetwork
+
+    def activate_connection(connection, device, path):
+        NM.ActiveConnections.append(
+            NMActiveConnection(ssid=connection.ssid, is_secure=False))
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActivateConnection.side_effect = activate_connection
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='random open network', is_secure=False),
+        ]
+
+    networks = AvailableWifiNetwork.all()
+    assert networks['random open network'].connected is False
+    assert networks['random open network'].known is True
+    assert networks['random open network'].secure is False
+    assert networks['random open network'].ssid == 'random open network'
+    assert NM.ActivateConnection.call_count == 0
+    assert NMSettings.AddConnection.call_count == 0
+
+    networks['random open network'].connect()
+    assert NM.ActivateConnection.call_count == 1
+    assert NMSettings.AddConnection.call_count == 0
+    assert networks['random open network'].connected is True
+
+
+def test_connect_to_known_wpa_network(mocker):
+    from ideascube.serveradmin.wifi import AvailableWifiNetwork
+
+    def activate_connection(connection, device, path):
+        NM.ActiveConnections.append(
+            NMActiveConnection(ssid=connection.ssid))
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActivateConnection.side_effect = activate_connection
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='my home network'),
+        ]
+
+    networks = AvailableWifiNetwork.all()
+    assert networks['my home network'].connected is False
+    assert networks['my home network'].known is True
+    assert networks['my home network'].secure is True
+    assert networks['my home network'].ssid == 'my home network'
+    assert NM.ActivateConnection.call_count == 0
+
+    networks['my home network'].connect()
+    assert NM.ActivateConnection.call_count == 1
+    assert networks['my home network'].connected is True
+
+
 def test_list_known_wifi_connections(mocker):
     from ideascube.serveradmin.wifi import KnownWifiConnection
 

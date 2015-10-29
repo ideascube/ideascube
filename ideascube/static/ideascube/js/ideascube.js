@@ -265,3 +265,18 @@ ID.confirmClick = function (selector) {
     };
     el.addEventListener('click', ask, false);
 };
+
+
+ID.initWifiList = function (item_selector, urlroot) {
+    var elements = document.querySelectorAll(item_selector);
+
+    for (var i = 0; i < elements.length; ++i) {
+        var element = elements[i];
+        var known = element.getAttribute('data-known') === 'True';
+
+        if (known) {
+            var ssid = element.getAttribute('data-ssid');
+            element.setAttribute('href', urlroot + ssid);
+        }
+    }
+};

@@ -10,7 +10,7 @@ from django.core.files.base import ContentFile
 
 from ..backup import Backup
 from .test_backup import BACKUPS_ROOT, DATA_ROOT, BACKUPED_ROOT
-from . import NMDevice
+from . import NMActiveConnection, NMConnection, NMDevice
 
 pytestmark = pytest.mark.django_db
 
@@ -215,3 +215,67 @@ def test_staff_lists_wifi_networks(mocker, staffapp):
     assert u'No Wi-Fi available' not in res.unicode_body
     assert u'my home network' in res.unicode_body
     assert u'random open network' in res.unicode_body
+
+
+def test_staff_connects_to_known_open_network(mocker, staffapp):
+    def activate_connection(connection, device, path):
+        NM.ActiveConnections.append(
+            NMActiveConnection(ssid=connection.ssid))
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActivateConnection.side_effect = activate_connection
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='random open network'),
+        ]
+
+    res = staffapp.get(reverse(
+        "server:wifi", kwargs={'ssid': 'random open network'}), status=200)
+    assert u'No Wi-Fi available' not in res.unicode_body
+    assert u"Connected to random open network" in res.unicode_body
+
+
+def test_staff_connects_to_known_wpa_network(mocker, staffapp):
+    def activate_connection(connection, device, path):
+        NM.ActiveConnections.append(
+            NMActiveConnection(ssid=connection.ssid))
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActivateConnection.side_effect = activate_connection
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='my home network'),
+        ]
+
+    res = staffapp.get(reverse(
+        "server:wifi", kwargs={'ssid': 'my home network'}), status=200)
+    assert u'No Wi-Fi available' not in res.unicode_body
+    assert u"Connected to my home network" in res.unicode_body
+
+
+def test_staff_connects_to_non_existing_network(mocker, staffapp):
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='my home network'),
+        ]
+
+    res = staffapp.get(reverse(
+        "server:wifi", kwargs={'ssid': 'no such network'}), status=200)
+    assert u'No wifi available' not in res.unicode_body
+    assert u"No such network: no such network" in res.unicode_body
