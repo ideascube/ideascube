@@ -19,7 +19,7 @@ TIME_ZONE = None
 # Ideas Box specifics
 STORAGE_ROOT = '/media/hdd/ideascube/storage' 
 
-IDEASCUBE_NAME = 'BSF Campus CAMEROUN'
+IDEASCUBE_NAME = 'Coeur de Forêt'
 
 DOMAIN = 'koombook.lan'
 
@@ -38,16 +38,26 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'wikipedia',
     },
     {
-        'id': 'khanacademy',
+        'category': 'create',
+        'url': 'http://appinventor.koombook.lan',
+        'title': 'App Inventor',
+        'description': 'Créer vos propres applications Android',
+        'img': 'img/app-inventor.jpeg',
     },
-    # {
-    #     'category': 'learn',
-    #     'url': 'http://mydomain.fr',
-    #     'title': 'The title of my custom card',
-    #     'description': 'The description of my custom card',
-    #     'img': '/img/wikipedia.png',
-    #     'fa': 'fax',
-    # },
+    {
+        'category': 'read',
+        'url': 'http://vikidia.koombook.lan',
+        'title': 'Vikidia',
+        'description': 'Parcourir l\'encyclopedie libre pour les jeunes',
+        'img': '/img/Vikidia.png',
+    },
+    {
+        'category': 'learn',
+        'url': 'http://cpassorcier.koombook.lan',
+        'title': 'C\'est pas sorcier',
+        'description': 'Le magazine de vulgarisation scientifique ',
+        'img': '/img/cpassorcier.png',
+    },
 ]
 
 IDEASCUBE_BODY_ID = 'koombook'

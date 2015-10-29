@@ -40,14 +40,62 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'khanacademy',
     },
-    # {
-    #     'category': 'learn',
-    #     'url': 'http://mydomain.fr',
-    #     'title': 'The title of my custom card',
-    #     'description': 'The description of my custom card',
-    #     'img': '/img/wikipedia.png',
-    #     'fa': 'fax',
-    # },
+    {
+        'category': 'read',
+        'url': 'http://vikidia.koombook.lan',
+        'title': 'Vikidia',
+        'description': 'Parcourir l\'encyclopedie libre pour les jeunes',
+        'img': 'Vikidia.png',
+    },
+    {
+        'category': 'learn',
+        'url': 'http://cpassorcier.koombook.lan',
+        'title': 'C\'est pas sorcier',
+        'description': 'Le magazine de vulgarisation scientifique ',
+        'img': '/img/cpassorcier.png',
+    },
+        {
+        'category': 'read',
+        'url': 'http://wikisource.koombook.lan',
+        'title': 'Wikisource',
+        'description': 'Bibliothèque de textes libres et gratuits',
+        'img': '/img/wikisource.png',
+    },
+    {
+        'category': 'learn',
+        'url': 'http://bsfcampus.koombook.lan',
+        'title': 'Bsf Campus',
+        'description': 'Renforcer les capacités des bibliothèques',
+        'img': '/img/bsfcampus.png',
+    },
+    {
+        'category': 'read',
+        'url': 'http://gutenberg.koombook.lan',
+        'title': 'Projet Gutenberg',
+        'description': 'Livre numérique à lire en ligne ou a télécharger',
+        'img': '/img/gutenberg.jpeg',
+    },
+    {
+        'category': 'learn',
+        'url': 'http://ted.koombook.lan',
+        'title': 'TED Vidéos',
+        'description': 'Une série vidéo de conférences organisées ',
+        'img': '/img/ted.jpg',
+    },
+    {
+        'category': 'learn',
+        'url': 'http://ubuntudoc.koombook.lan',
+        'title': 'Ubuntu documentation',
+        'description': 'La documentation du célèbre système d\'exploitation Ubuntu',
+        'img': '/img/ubuntudoc.jpeg',
+    },
+    {
+        'category': 'create',
+        'url': 'http://software.koombook.lan',
+        'title': 'Logiciels Windows',
+        'description': 'télécharger des applications Windows libres et gratuites',
+        'img': '/img/windows.jpeg',
+    },
 ]
 
 IDEASCUBE_BODY_ID = 'koombook'
