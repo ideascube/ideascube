@@ -289,6 +289,43 @@ def test_staff_connects_to_known_wpa_network(mocker, staffapp):
     assert u"Connected to my home network" in res.unicode_body
 
 
+def test_staff_connects_to_new_wpa_network(mocker, staffapp):
+    def add_connection(settings):
+        ssid = settings['802-11-wireless']['ssid']
+        connection = NMConnection(True, ssid=ssid)
+
+        NMSettings.ListConnections.side_effect = lambda: [connection]
+        NM.ActiveConnections.append(NMActiveConnection(ssid=connection.ssid))
+
+        return connection
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.AddConnection.side_effect = add_connection
+    NMSettings.ListConnections.side_effect = lambda: []
+
+    res = staffapp.post(reverse(
+        "server:wifi", kwargs={'ssid': 'my home network'}),
+        params={'csrfmiddlewaretoken': staffapp.cookies['csrftoken']},
+        status=200)
+    assert u'A key is required to connect to this network' in res.unicode_body
+    assert NMSettings.AddConnection.call_count == 0
+
+    res = staffapp.post(reverse(
+        "server:wifi", kwargs={'ssid': 'my home network'}),
+        params={
+            'wifi_key': 'some wifi key',
+            'csrfmiddlewaretoken': staffapp.cookies['csrftoken'],
+            },
+        status=200)
+    assert u"Connected to my home network" in res.unicode_body
+    assert NMSettings.AddConnection.call_count == 1
+
+
 def test_staff_connects_to_non_existing_network(mocker, staffapp):
     NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
     NM.ActiveConnections = []
@@ -303,5 +340,5 @@ def test_staff_connects_to_non_existing_network(mocker, staffapp):
 
     res = staffapp.get(reverse(
         "server:wifi", kwargs={'ssid': 'no such network'}), status=200)
-    assert u'No wifi available' not in res.unicode_body
+    assert u'No Wi-Fi available' not in res.unicode_body
     assert u"No such network: no such network" in res.unicode_body

@@ -65,7 +65,7 @@ class AvailableWifiNetwork(object):
     def __str__(self):
         return 'Available Wi-Fi network: "%s"' % (self.ssid)
 
-    def _new_connection(self):
+    def _new_connection(self, wifi_key=None):
         settings = {
             'connection': {
                 'autoconnect': True,
@@ -85,15 +85,27 @@ class AvailableWifiNetwork(object):
                 }
             }
 
+        if self.secure:
+            if not wifi_key:
+                raise WifiError(
+                    _("A key is required to connect to this network"))
+
+            settings.update({
+                '802-11-wireless-security': {
+                    'auth-alg': 'open',
+                    'key-mgmt': 'wpa-psk',
+                    'psk': wifi_key,
+                    }})
+
         return KnownWifiConnection(NMSettings.AddConnection(settings))
 
-    def connect(self):
+    def connect(self, wifi_key=None):
         if self._connection is not None:
             NetworkManager.ActivateConnection(
                 self._connection._connection, self._device, "/")
 
         else:
-            self._connection = self._new_connection()
+            self._connection = self._new_connection(wifi_key=wifi_key)
 
     @property
     def connected(self):

@@ -127,7 +127,8 @@ def wifi(request, ssid=''):
     if ssid:
         try:
             network = wifi_list[ssid]
-            network.connect()
+            wifi_key = request.POST.get('wifi_key', '')
+            network.connect(wifi_key=wifi_key)
             messages.success(
                 request, _('Connected to {ssid}').format(ssid=ssid))
 

@@ -24,8 +24,23 @@
 <p>{% trans 'No Wi-Fi available' %}</p>
 {% endfor %}
 
+<div id="passphrase-popup" class="overlay">
+    <div class="popup">
+        <h2>{% trans 'Authentication required' %}</h2>
+        <a class="close" href="#">&times;</a>
+        <div class="content">
+            <p>{% trans 'An encryption key is required to access this network.' %}</p>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input type="password" id="wifi_key" name="wifi_key" autocomplete="off" />
+                <input type="submit" value="{% trans 'Connect' %}" />
+            </form>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
-    ID.initWifiList('.wifi-network', "{% url 'server:wifi' %}");
+    ID.initWifiList('.wifi-network', '#passphrase-popup', "{% url 'server:wifi' %}");
 </script>
 
 {% endblock twothird %}

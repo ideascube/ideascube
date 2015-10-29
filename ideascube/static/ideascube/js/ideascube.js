@@ -267,7 +267,7 @@ ID.confirmClick = function (selector) {
 };
 
 
-ID.initWifiList = function (item_selector, urlroot) {
+ID.initWifiList = function (item_selector, popup_selector, urlroot) {
     var elements = document.querySelectorAll(item_selector);
 
     for (var i = 0; i < elements.length; ++i) {
@@ -278,6 +278,14 @@ ID.initWifiList = function (item_selector, urlroot) {
         if (known || !secure) {
             var ssid = element.getAttribute('data-ssid');
             element.setAttribute('href', urlroot + ssid);
+        } else {
+            element.setAttribute('href', popup_selector);
+
+            element.addEventListener('click', function (evt) {
+                var ssid = this.getAttribute('data-ssid');
+                var form = document.querySelector(popup_selector + ' form');
+                form.setAttribute('action', urlroot + ssid);
+            }.bind(element), true);
         }
     }
 };
