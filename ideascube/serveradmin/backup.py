@@ -11,21 +11,22 @@ from django.utils.translation import ugettext as _
 from ideascube import __version__
 
 
-def make_name():
+def make_name(format=None):
     """Return backup formatted file name."""
+    format = format or Backup.FORMAT
     basename = '-'.join([
         settings.IDEASCUBE_ID,
         __version__,
         datetime.now().strftime(Backup.DATE_FORMAT)
     ])
-    return '{}{}'.format(basename, Backup.FORMAT_TO_EXTENSION[Backup.FORMAT])
+    return '{}{}'.format(basename, Backup.FORMAT_TO_EXTENSION[format])
 
 
 class Backup(object):
 
     FORMAT = settings.BACKUP_FORMAT
-    SUPPORTED_FORMATS = ('zip', 'tar', 'bztar', 'gztar')
-    SUPPORTED_EXTENSIONS = ('.zip', '.tar', '.bz2', '.gz')
+    SUPPORTED_FORMATS = ('zip', 'bztar', 'gztar', 'tar')
+    SUPPORTED_EXTENSIONS = ('.zip', '.tar.bz2', '.tar.gz', '.tar')
     FORMAT_TO_EXTENSION = dict(zip(SUPPORTED_FORMATS, SUPPORTED_EXTENSIONS))
     EXTENSION_TO_FORMAT = dict(zip(SUPPORTED_EXTENSIONS, SUPPORTED_FORMATS))
     DATE_FORMAT = "%Y%m%d%H%M"
@@ -74,7 +75,7 @@ class Backup(object):
         """Make a backup of the server data."""
         return shutil.make_archive(
             base_name=os.path.join(Backup.ROOT, self.basename),  # W/o ext.
-            format=self.FORMAT,
+            format=self.format,
             root_dir=settings.BACKUPED_ROOT,
             base_dir='./'
         )
@@ -109,8 +110,8 @@ class Backup(object):
             pass
 
     @classmethod
-    def create(cls):
-        name = make_name()
+    def create(cls, format=None):
+        name = make_name(format)
         backup = Backup(name)
         backup.save()
         return backup

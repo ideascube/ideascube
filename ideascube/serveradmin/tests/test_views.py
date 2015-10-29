@@ -92,7 +92,7 @@ def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
     monkeypatch.setattr('ideascube.serveradmin.backup.make_name',
-                        lambda: filename)
+                        lambda f: filename)
     proof_file = os.path.join(settings.BACKUPED_ROOT, 'backup.me')
     open(proof_file, mode='w')
     form = staffapp.get(reverse('server:backup')).forms['backup']
