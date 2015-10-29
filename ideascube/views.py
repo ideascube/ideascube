@@ -57,7 +57,8 @@ def welcome_staff(request):
             user = authenticate(serial=user.serial,
                                 password=request.POST['password'])
             login(request, user)
-            msg = _('Welcome to {}, {}!').format(settings.IDEASCUBE_NAME, user)
+            msg = _(u'Welcome to {}, {}!').format(settings.IDEASCUBE_NAME,
+                                                  user)
             messages.add_message(request, messages.SUCCESS, msg)
             return HttpResponseRedirect('/')
     else:

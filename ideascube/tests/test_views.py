@@ -62,6 +62,16 @@ def test_welcome_page_should_create_staff_user_on_POST(app):
     assert user.is_staff
 
 
+def test_welcome_page_should_create_staff_user_with_unicode(app):
+    form = app.get(reverse('welcome_staff')).forms['model_form']
+    name = u'كتبه'
+    form['serial'] = name
+    form['password'] = 'password'
+    form['password_confirm'] = 'password'
+    response = form.submit().follow().follow()
+    response.mustcontain(name)
+
+
 def test_login_page_should_log_in_user_if_POST_data_is_correct(client, user,
                                                                staffuser):
     # Loading staffuser fixture so we don't fail into welcome_staff page.
