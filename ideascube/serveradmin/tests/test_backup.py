@@ -70,7 +70,7 @@ def test_create_zipfile(monkeypatch, settings):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
     monkeypatch.setattr('ideascube.serveradmin.backup.make_name',
-                        lambda: filename)
+                        lambda f: filename)
     proof_file = os.path.join(settings.BACKUPED_ROOT, 'backup.me')
     open(proof_file, mode='w')
     Backup.create()
@@ -104,7 +104,7 @@ def test_create_tarfile(monkeypatch, settings, format, extension):
                         BACKUPS_ROOT)
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.FORMAT', format)
     monkeypatch.setattr('ideascube.serveradmin.backup.make_name',
-                        lambda: filename)
+                        lambda f: filename)
     proof_file = os.path.join(settings.BACKUPED_ROOT, 'backup.me')
     open(proof_file, mode='w')
     Backup.create()

@@ -19,13 +19,16 @@ class Command(BaseCommand):
         parser.add_argument('reference', nargs='?',
                             help='Backup name or file path to be used for '
                             '"add", "delete" or "restore" action.')
-        parser.add_argument('--noinput', '--no-input',
-                            action='store_false', dest='interactive',
-                            default=True,
-                            help='Tells Django to NOT prompt the user for '
-                                 'input of any kind.')
+        parser.add_argument('--format', default=None,
+                            help='Backup file format. Possible values: {}'
+                                 'Default: {}'.format(Backup.SUPPORTED_FORMATS,
+                                                      Backup.FORMAT))
 
     def handle(self, *args, **options):
+        format = options['format']
+        if format and format not in Backup.SUPPORTED_FORMATS:
+            self.stderr.write('Unsupported format: {}'.format(format))
+            sys.exit(1)
         action = options['action']
         reference = options['reference']
         interactive = options.get('interactive')
@@ -34,7 +37,7 @@ class Command(BaseCommand):
             for backup in Backup.list():
                 self.stdout.write(str(backup))
         elif action == 'create':
-            backup = Backup.create()
+            backup = Backup.create(format=options['format'])
             self.stdout.write('Succesfully created backup {}'.format(backup))
         elif action == 'add':
             if not reference:
