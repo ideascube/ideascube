@@ -496,10 +496,37 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
     text-decoration: none;
 }
 .card.khanacademy {
-    background-image: url('./img/khanacademy.png');
+    background-image: url('./img/cards/khanacademy.png');
 }
 .card.wikipedia {
-    background-image: url('./img/wikipedia.png');
+    background-image: url('./img/cards/wikipedia.png');
+}
+.card.wikisource {
+    background-image: url('./img/cards/wikisource.png');
+}
+.card.appinventor {
+    background-image: url('./img/cards/appinventor.jpeg');
+}
+.card.bsfcampus {
+    background-image: url('./img/cards/bsfcampus.png');
+}
+.card.cpassorcier {
+    background-image: url('./img/cards/cpassorcier.png');
+}
+.card.gutenberg {
+    background-image: url('./img/cards/gutenberg.jpeg');
+}
+.card.ted {
+    background-image: url('./img/cards/ted.jpg');
+}
+.card.ubuntudoc {
+    background-image: url('./img/cards/ubuntudoc.jpeg');
+}
+.card.vikidia {
+    background-image: url('./img/cards/vikidia.png');
+}
+.card.software {
+    background-image: url('./img/cards/windows.jpeg');
 }
 .grid .card.blog {
     background-image: url('./img/blog.png');

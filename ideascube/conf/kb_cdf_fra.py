@@ -38,26 +38,15 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'wikipedia',
     },
     {
-        'category': 'create',
-        'url': 'http://appinventor.koombook.lan',
-        'title': 'App Inventor',
-        'description': 'Créer vos propres applications Android',
-        'img': 'img/app-inventor.jpeg',
+        'id': 'vikidia',
     },
     {
-        'category': 'read',
-        'url': 'http://vikidia.koombook.lan',
-        'title': 'Vikidia',
-        'description': 'Parcourir l\'encyclopedie libre pour les jeunes',
-        'img': '/img/Vikidia.png',
+        'id': 'appinventor',
     },
     {
-        'category': 'learn',
-        'url': 'http://cpassorcier.koombook.lan',
-        'title': 'C\'est pas sorcier',
-        'description': 'Le magazine de vulgarisation scientifique ',
-        'img': '/img/cpassorcier.png',
+        'id': 'cpassorcier',
     },
+    
 ]
 
 IDEASCUBE_BODY_ID = 'koombook'
