@@ -163,6 +163,43 @@ def test_connect_to_known_open_network(mocker):
     assert networks['random open network'].connected is True
 
 
+def test_connect_to_new_open_network(mocker):
+    from ideascube.serveradmin.wifi import AvailableWifiNetwork
+
+    def add_connection(settings):
+        ssid = settings['802-11-wireless']['ssid']
+        connection = NMConnection(True, ssid=ssid, is_secure=False)
+
+        NMSettings.ListConnections.side_effect = lambda: [connection]
+        NM.ActiveConnections.append(
+            NMActiveConnection(ssid=connection.ssid, is_secure=False))
+
+        return connection
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.AddConnection.side_effect = add_connection
+    NMSettings.ListConnections.side_effect = lambda: []
+
+    networks = AvailableWifiNetwork.all()
+    assert networks['random open network'].connected is False
+    assert networks['random open network'].known is False
+    assert networks['random open network'].secure is False
+    assert networks['random open network'].ssid == 'random open network'
+    assert NM.ActivateConnection.call_count == 0
+    assert NMSettings.AddConnection.call_count == 0
+
+    networks['random open network'].connect()
+    assert NM.ActivateConnection.call_count == 0
+    assert NMSettings.AddConnection.call_count == 1
+
+    assert networks['random open network'].connected is True
+    assert networks['random open network'].known is True
+
+
 def test_connect_to_known_wpa_network(mocker):
     from ideascube.serveradmin.wifi import AvailableWifiNetwork
 

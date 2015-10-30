@@ -6,7 +6,7 @@
 {% for wifi in wifi_list %}
 {% if forloop.first %}<ul class="wifi-list">{% endif %}
     <li>
-        <a class="wifi-network" data-ssid="{{ wifi.ssid }}" data-known="{{ wifi.known }}">
+        <a class="wifi-network" data-ssid="{{ wifi.ssid }}" data-known="{{ wifi.known }}" data-secure="{{ wifi.secure }}">
             {{ wifi.ssid }}
             {% if wifi.connected %}
             <span><i class="fa fa-check"></i></span>

@@ -273,8 +273,9 @@ ID.initWifiList = function (item_selector, urlroot) {
     for (var i = 0; i < elements.length; ++i) {
         var element = elements[i];
         var known = element.getAttribute('data-known') === 'True';
+        var secure = element.getAttribute('data-secure') === 'True';
 
-        if (known) {
+        if (known || !secure) {
             var ssid = element.getAttribute('data-ssid');
             element.setAttribute('href', urlroot + ssid);
         }

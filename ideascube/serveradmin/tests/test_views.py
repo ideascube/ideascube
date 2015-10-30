@@ -240,6 +240,32 @@ def test_staff_connects_to_known_open_network(mocker, staffapp):
     assert u"Connected to random open network" in res.unicode_body
 
 
+def test_staff_connects_to_new_open_network(mocker, staffapp):
+    def add_connection(settings):
+        ssid = settings['802-11-wireless']['ssid']
+        connection = NMConnection(True, ssid=ssid)
+
+        NMSettings.ListConnections.side_effect = lambda: [connection]
+        NM.ActiveConnections.append(NMActiveConnection(ssid=connection.ssid))
+
+        return connection
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.AddConnection.side_effect = add_connection
+    NMSettings.ListConnections.side_effect = lambda: []
+
+    res = staffapp.get(reverse(
+        "server:wifi", kwargs={'ssid': 'random open network'}), status=200)
+    assert u'No Wi-Fi available' not in res.unicode_body
+    assert u"Connected to random open network" in res.unicode_body
+    assert NMSettings.AddConnection.call_count == 1
+
+
 def test_staff_connects_to_known_wpa_network(mocker, staffapp):
     def activate_connection(connection, device, path):
         NM.ActiveConnections.append(

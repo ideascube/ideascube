@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from itertools import groupby
 from operator import attrgetter
+from uuid import uuid4
 
 from django.utils.translation import ugettext as _
 
@@ -64,13 +65,35 @@ class AvailableWifiNetwork(object):
     def __str__(self):
         return 'Available Wi-Fi network: "%s"' % (self.ssid)
 
+    def _new_connection(self):
+        settings = {
+            'connection': {
+                'autoconnect': True,
+                'id': self.ssid,
+                'type': '802-11-wireless',
+                'uuid': str(uuid4()),
+                },
+            '802-11-wireless': {
+                'mode': 'infrastructure',
+                'ssid': self.ssid,
+                },
+            'ipv4': {
+                'method': 'auto'
+                },
+            'ipv6': {
+                'method': 'auto'
+                }
+            }
+
+        return KnownWifiConnection(NMSettings.AddConnection(settings))
+
     def connect(self):
         if self._connection is not None:
             NetworkManager.ActivateConnection(
                 self._connection._connection, self._device, "/")
 
         else:
-            raise WifiError("Can't connect to a new network yet")
+            self._connection = self._new_connection()
 
     @property
     def connected(self):
