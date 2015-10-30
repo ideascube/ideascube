@@ -1,5 +1,7 @@
 test:
 	py.test
+testcov:
+	py.test --cov=ideascube/ --cov-report=term-missing
 develop:
 	pip install -r requirements-dev.txt
 doc:
