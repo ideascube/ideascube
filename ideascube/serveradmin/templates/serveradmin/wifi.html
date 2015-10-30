@@ -19,6 +19,7 @@
     </li>
 {% if forloop.last %}
 </ul>
+<p><a href="{% url 'server:wifi_history' %}">{% trans 'History' %}</a></p>
 {% endif %}
 {% empty %}
 <p>{% trans 'No Wi-Fi available' %}</p>

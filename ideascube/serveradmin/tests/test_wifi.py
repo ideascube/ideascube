@@ -332,6 +332,40 @@ def test_list_known_wifi_connections_with_one_connected(mocker):
     assert connections['random open network'].ssid == 'random open network'
 
 
+def test_forget_wifi_connection(mocker):
+    from ideascube.serveradmin.wifi import KnownWifiConnection
+
+    def delete_connection(connection):
+        current = NMSettings.ListConnections()
+        current = [c for c in current if c.ssid != connection.ssid]
+        NMSettings.ListConnections.side_effect = lambda: current
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActiveConnections = [NMActiveConnection(ssid='my home network')]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='random open network', is_secure=False),
+        NMConnection(
+            True, ssid='my home network', delete_func=delete_connection),
+        ]
+
+    connections = KnownWifiConnection.all()
+    assert list(connections.keys()) == [
+        'my home network', 'random open network']
+    assert connections['my home network'].ssid == 'my home network'
+    assert connections['my home network'].secure is True
+    assert connections['my home network'].connected is True
+
+    connections['my home network'].forget()
+
+    connections = KnownWifiConnection.all()
+    assert list(connections.keys()) == ['random open network']
+    assert connections['random open network'].ssid == 'random open network'
+
+
 def test_enable_wifi(mocker):
     from ideascube.serveradmin.wifi import enable_wifi
 

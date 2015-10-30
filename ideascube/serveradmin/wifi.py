@@ -148,6 +148,9 @@ class KnownWifiConnection(object):
     def __str__(self):
         return 'Known Wi-Fi connection: "%s"' % (self.ssid)
 
+    def forget(self):
+        self._connection.Delete()
+
     @property
     def connected(self):
         for active_connection in NetworkManager.ActiveConnections:

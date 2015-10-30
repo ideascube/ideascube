@@ -1,0 +1,28 @@
+{% extends 'serveradmin/index.html' %}
+{% load i18n %}
+
+{% block twothird %}
+<h2>{% trans 'Wi-Fi History' %}</h2>
+{% for wifi in wifi_list %}
+{% if forloop.first %}
+<form method="POST" action="{% url 'server:wifi_history' %}" id="wifi_history">
+    {% csrf_token %}
+    <fieldset class="wifi-list" name="ssids">
+{% endif %}
+        <label class="wifi-network" for="{{ wifi.ssid }}">
+            <input type="checkbox" id="{{ wifi.ssid }}" name="{{ wifi.ssid }}" />
+            {{ wifi.ssid }}
+            {% if wifi.connected %}
+            <span><i class="fa fa-check"></i></span>
+            {% endif %}
+        </label>
+{% if forloop.last %}
+    </fieldset>
+    <input type="submit" value="{% trans 'Forget Selected' %}" />
+</form>
+{% endif %}
+{% empty %}
+<p>{% trans 'No known Wi-Fi networks' %}</p>
+{% endfor %}
+
+{% endblock twothird %}

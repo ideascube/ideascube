@@ -11,7 +11,8 @@ from ideascube.decorators import staff_member_required
 
 from .backup import Backup
 from .utils import call_service
-from .wifi import AvailableWifiNetwork, enable_wifi, WifiError
+from .wifi import (
+    AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError)
 
 
 @staff_member_required
@@ -141,3 +142,28 @@ def wifi(request, ssid=''):
 
     return render(
         request, 'serveradmin/wifi.html', {'wifi_list': wifi_list.values()})
+
+
+@staff_member_required
+def wifi_history(request):
+    try:
+        enable_wifi()
+        wifi_list = KnownWifiConnection.all()
+
+    except WifiError as e:
+        messages.error(request, e)
+        return render(request, 'serveradmin/wifi_history.html')
+
+    for ssid, checked in request.POST.items():
+        if checked.lower() in ('on', 'true'):
+            try:
+                connection = wifi_list.pop(ssid)
+                connection.forget()
+
+            except KeyError:
+                # Someone tried to forget a connection we don't know.
+                continue
+
+    return render(
+        request, 'serveradmin/wifi_history.html',
+        {'wifi_list': wifi_list.values()})
