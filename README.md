@@ -10,6 +10,13 @@ More details about the server in the [overview](https://github.com/ideascube/ide
 
 [ideascube is free software, published under the terms of MIT license](https://github.com/ideascube/ideascube/LICENSE.md).
 
+## Try it
+You can try it using docker:
+
+- Install docker (www.docker.com)
+- Launch `docker run -p 8000:8000 -d ygravrand/ideascube`
+- Go to `http://localhost:8000`
+
 ## How can I give a hand?
 
 Welcome! There are many ways you can help. See details in
