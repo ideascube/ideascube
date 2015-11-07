@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideasbox.lan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-25 06:56+0000\n"
+"POT-Creation-Date: 2015-11-07 11:44+0000\n"
 "PO-Revision-Date: 2015-02-28 18:52+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/ideasboxlan/"
@@ -19,114 +19,118 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ideascube/static/ideascube/js/ideascube.js:231
+#: ideascube/static/ideascube/js/ideascube.js:230
 msgid "Previous Month"
 msgstr "Mois précédent"
 
-#: ideascube/static/ideascube/js/ideascube.js:232
+#: ideascube/static/ideascube/js/ideascube.js:231
 msgid "Next Month"
 msgstr "Mois suivant"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "January"
 msgstr "Janvier"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "February"
 msgstr "Février"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "March"
 msgstr "Mars"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "April"
 msgstr "Avril"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "May"
 msgstr "Mai"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "June"
 msgstr "Juin"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "July"
 msgstr "Juillet"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "August"
 msgstr "Août"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "September"
 msgstr "Septembre"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "October"
 msgstr "Octobre"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "November"
 msgstr "Novembre"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "December"
 msgstr "Décembre"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Sunday"
 msgstr "Dimanche"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Monday"
 msgstr "Lundi"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Wednesday"
 msgstr "Mercred"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Thursday"
 msgstr "Jeudi"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Friday"
 msgstr "Vendredi"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Saturday"
 msgstr "Samedi"
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Sun"
 msgstr "Dim."
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Mon"
 msgstr "Lun."
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Tue"
 msgstr "Mar."
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Wed"
 msgstr "Mer."
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Thu"
 msgstr "Jeu."
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Fri"
 msgstr "Ven."
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Sat"
 msgstr "Sam."
+
+#: ideascube/static/ideascube/js/ideascube.js:261
+msgid "Are you sure?"
+msgstr ""

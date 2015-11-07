@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideasbox.lan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-25 06:56+0000\n"
+"POT-Creation-Date: 2015-11-07 11:44+0000\n"
 "PO-Revision-Date: 2015-03-25 13:27+0000\n"
 "Last-Translator: narjis naji areff ihloh <nano_naji@yahoo.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/ideasboxlan/"
@@ -20,114 +20,118 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: ideascube/static/ideascube/js/ideascube.js:231
+#: ideascube/static/ideascube/js/ideascube.js:230
 msgid "Previous Month"
 msgstr "الشهر السابق "
 
-#: ideascube/static/ideascube/js/ideascube.js:232
+#: ideascube/static/ideascube/js/ideascube.js:231
 msgid "Next Month"
 msgstr "الشهر التالي "
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "January"
 msgstr "يناير"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "February"
 msgstr "فبراير"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "March"
 msgstr "مارس"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "April"
 msgstr "ابريل"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "May"
 msgstr "ايار"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "June"
 msgstr "حزيران"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "July"
 msgstr "تموز"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "August"
 msgstr "اب"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "September"
 msgstr "ايلول"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "October"
 msgstr "اكتوبر"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "November"
 msgstr "نوفمبر"
 
-#: ideascube/static/ideascube/js/ideascube.js:233
+#: ideascube/static/ideascube/js/ideascube.js:232
 msgid "December"
 msgstr "ديسمبر"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Sunday"
 msgstr "الأحد"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Monday"
 msgstr "الأثنين"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Tuesday"
 msgstr "الثلاثاء"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Wednesday"
 msgstr "الأربعاء"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Thursday"
 msgstr "الخميس"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Friday"
 msgstr "الجمعة"
 
-#: ideascube/static/ideascube/js/ideascube.js:234
+#: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Saturday"
 msgstr "السبت"
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Sun"
 msgstr "الأحد"
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Mon"
 msgstr "الأثنين"
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Tue"
 msgstr "الثلاثاء"
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Wed"
 msgstr "الأربعاء"
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Thu"
 msgstr "الخميس"
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Fri"
 msgstr "الجمعة"
 
-#: ideascube/static/ideascube/js/ideascube.js:235
+#: ideascube/static/ideascube/js/ideascube.js:234
 msgid "Sat"
 msgstr "السبت"
+
+#: ideascube/static/ideascube/js/ideascube.js:261
+msgid "Are you sure?"
+msgstr ""

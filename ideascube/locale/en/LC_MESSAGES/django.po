@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-25 06:56+0000\n"
+"POT-Creation-Date: 2015-11-07 11:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,21 +61,32 @@ msgid "Status"
 msgstr ""
 
 #: ideascube/blog/models.py:59 ideascube/library/models.py:48
-#: ideascube/library/templates/library/book_detail.html:17
+#: ideascube/library/templates/library/book_detail.html:18
 #: ideascube/mediacenter/models.py:50
 msgid "Language"
 msgstr ""
 
 #: ideascube/blog/templates/blog/by_tag.html:6
+#: ideascube/blog/templates/blog/content_detail.html:6
+msgid "View all posts"
+msgstr ""
+
+#: ideascube/blog/templates/blog/by_tag.html:7
 msgid "blog"
 msgstr ""
 
-#: ideascube/blog/templates/blog/by_tag.html:6
-#: ideascube/library/templates/library/by_tag.html:6
-#: ideascube/mediacenter/templates/mediacenter/by_tag.html:6
+#: ideascube/blog/templates/blog/by_tag.html:7
+#: ideascube/library/templates/library/by_tag.html:7
+#: ideascube/mediacenter/templates/mediacenter/by_tag.html:7
 #: ideascube/templates/ideascube/by_tag.html:5
 #, python-format
 msgid "Browse theme \"%(theme)s\""
+msgstr ""
+
+#: ideascube/blog/templates/blog/content_detail.html:7
+#: ideascube/blog/templates/blog/index.html:6
+#: ideascube/templates/ideascube/includes/cards/blog.html:4
+msgid "Blog"
 msgstr ""
 
 #: ideascube/blog/templates/blog/content_form.html:12
@@ -109,7 +120,7 @@ msgstr ""
 msgid "Type your text here…"
 msgstr ""
 
-#: ideascube/blog/templates/blog/index.html:14
+#: ideascube/blog/templates/blog/index.html:17
 msgid "Add content"
 msgstr ""
 
@@ -129,7 +140,7 @@ msgstr ""
 msgid "Origin"
 msgstr ""
 
-#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:154
+#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:155
 #: ideascube/conf/mapoon.py:18
 msgid "Language skills"
 msgstr ""
@@ -246,84 +257,84 @@ msgstr ""
 msgid "World Mental Health Day"
 msgstr ""
 
-#: ideascube/conf/base.py:135
+#: ideascube/conf/base.py:136
 msgid "the camp"
 msgstr ""
 
-#: ideascube/conf/base.py:153
+#: ideascube/conf/base.py:154
 msgid "Basic informations"
 msgstr ""
 
-#: ideascube/conf/base.py:165 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:166 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr ""
 
-#: ideascube/conf/base.py:166
+#: ideascube/conf/base.py:167
 msgid "Create, remove or modify users."
 msgstr ""
 
-#: ideascube/conf/base.py:173
+#: ideascube/conf/base.py:174
 msgid "Entries"
 msgstr ""
 
-#: ideascube/conf/base.py:174
+#: ideascube/conf/base.py:175
 msgid "Manage user entries."
 msgstr ""
 
-#: ideascube/conf/base.py:181
+#: ideascube/conf/base.py:182
 #: ideascube/monitoring/templates/monitoring/stock.html:5
 msgid "Stock"
 msgstr ""
 
-#: ideascube/conf/base.py:182
+#: ideascube/conf/base.py:183
 msgid "Manage stock."
 msgstr ""
 
-#: ideascube/conf/base.py:189
+#: ideascube/conf/base.py:190
 msgid "Loans"
 msgstr ""
 
-#: ideascube/conf/base.py:190
+#: ideascube/conf/base.py:191
 msgid "Manage loans."
 msgstr ""
 
-#: ideascube/conf/base.py:197
+#: ideascube/conf/base.py:198
 msgid "Stop/Restart"
 msgstr ""
 
-#: ideascube/conf/base.py:198
+#: ideascube/conf/base.py:199
 msgid "Stop or restart the server."
 msgstr ""
 
-#: ideascube/conf/base.py:205
+#: ideascube/conf/base.py:206
 msgid "Backups"
 msgstr ""
 
-#: ideascube/conf/base.py:206
+#: ideascube/conf/base.py:207
 msgid "Create, restore, download, upload backups."
 msgstr ""
 
-#: ideascube/conf/base.py:248
+#: ideascube/conf/base.py:242
 msgid "Ideascube web server"
 msgstr ""
 
-#: ideascube/conf/base.py:249
+#: ideascube/conf/base.py:243
 msgid "Global proxy"
 msgstr ""
 
-#: ideascube/conf/base.py:252
+#: ideascube/conf/base.py:246
 msgid "Daemon which provides KhanAcademy on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:256
+#: ideascube/conf/base.py:250
 msgid "Daemon which provides Wikipedia on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:257
+#: ideascube/conf/base.py:251
 msgid "Net time protocol"
 msgstr ""
 
-#: ideascube/conf/base.py:259
+#: ideascube/conf/base.py:253
 msgid "Daemon used for distant connexion to server"
 msgstr ""
 
@@ -333,6 +344,25 @@ msgstr ""
 
 #: ideascube/conf/mapoon.py:17
 msgid "In the town"
+msgstr ""
+
+#: ideascube/forms.py:22
+msgid "Username"
+msgstr ""
+
+#: ideascube/forms.py:24
+msgid "Password"
+msgstr ""
+
+#: ideascube/forms.py:25
+msgid ""
+"To create a strong password, forget about passwords, and think rather about "
+"a passphrase. For instance: \"The boat is flowing on the water\" is a strong "
+"and easy to remember passphrase. Now choose your own passphrase!"
+msgstr ""
+
+#: ideascube/forms.py:33
+msgid "Confirm password"
 msgstr ""
 
 #: ideascube/library/forms.py:23
@@ -445,35 +475,35 @@ msgid ""
 "Are you sure you want to delete book \"%(book)s\" and all its specimens?"
 msgstr ""
 
-#: ideascube/library/templates/library/book_detail.html:9
+#: ideascube/library/templates/library/book_detail.html:6
+#: ideascube/library/templates/library/by_tag.html:6
+msgid "View all books"
+msgstr ""
+
+#: ideascube/library/templates/library/book_detail.html:10
 #: ideascube/library/templates/library/index.html:5
 #: ideascube/mediacenter/templates/mediacenter/index.html:7
 msgid "read"
 msgstr ""
 
-#: ideascube/library/templates/library/book_detail.html:13
+#: ideascube/library/templates/library/book_detail.html:14
 msgid "Author"
 msgstr ""
 
-#: ideascube/library/templates/library/book_detail.html:14
+#: ideascube/library/templates/library/book_detail.html:15
 msgid "Publisher"
 msgstr ""
 
-#: ideascube/library/templates/library/book_detail.html:15
+#: ideascube/library/templates/library/book_detail.html:16
 msgid "Serie"
 msgstr ""
 
-#: ideascube/library/templates/library/book_detail.html:18
+#: ideascube/library/templates/library/book_detail.html:19
 msgid "ISBN"
 msgstr ""
 
-#: ideascube/library/templates/library/book_detail.html:20
-msgid "Section"
-msgstr ""
-
 #: ideascube/library/templates/library/book_detail.html:21
-#: ideascube/templates/ideascube/includes/tag_cloud.html:4
-msgid "Themes"
+msgid "Section"
 msgstr ""
 
 #: ideascube/library/templates/library/book_detail.html:29
@@ -516,7 +546,7 @@ msgstr ""
 msgid "cancel"
 msgstr ""
 
-#: ideascube/library/templates/library/by_tag.html:6
+#: ideascube/library/templates/library/by_tag.html:7
 msgid "library"
 msgstr ""
 
@@ -634,6 +664,11 @@ msgid "type"
 msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/by_tag.html:6
+#: ideascube/mediacenter/templates/mediacenter/document_detail.html:6
+msgid "View all medias"
+msgstr ""
+
+#: ideascube/mediacenter/templates/mediacenter/by_tag.html:7
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "Medias center"
 msgstr ""
@@ -1317,20 +1352,20 @@ msgstr ""
 msgid "No result for \"%(query)s\"."
 msgstr ""
 
-#: ideascube/serveradmin/backup.py:36
+#: ideascube/serveradmin/backup.py:37
 #, python-brace-format
 msgid "backup name must end with one of {extensions}"
 msgstr ""
 
-#: ideascube/serveradmin/backup.py:103
+#: ideascube/serveradmin/backup.py:104
 msgid "Unkown format for file {}"
 msgstr ""
 
-#: ideascube/serveradmin/backup.py:138
+#: ideascube/serveradmin/backup.py:139
 msgid "Not a zip file"
 msgstr ""
 
-#: ideascube/serveradmin/backup.py:140
+#: ideascube/serveradmin/backup.py:141
 msgid "Not a tar file"
 msgstr ""
 
@@ -1348,10 +1383,6 @@ msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:11
 msgid "Restore"
-msgstr ""
-
-#: ideascube/serveradmin/templates/serveradmin/backup.html:13
-msgid "Select"
 msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
@@ -1382,11 +1413,6 @@ msgstr ""
 msgid "Restore selected"
 msgstr ""
 
-#: ideascube/serveradmin/templates/serveradmin/backup.html:26
-#: ideascube/serveradmin/templates/serveradmin/backup.html:27
-msgid "Sure?"
-msgstr ""
-
 #: ideascube/serveradmin/templates/serveradmin/backup.html:27
 msgid "Delete selected"
 msgstr ""
@@ -1398,8 +1424,8 @@ msgstr ""
 #: ideascube/serveradmin/templates/serveradmin/backup.html:31
 #, python-brace-format
 msgid ""
-"File must be a zip, and file name must be in the form {source}_{version}"
-"_{date}.zip; eg.: musasa_0.1.0_201501231405.zip"
+"File must be a zip, and file name must be in the form {source}-{version}-"
+"{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
 msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:32
@@ -1414,42 +1440,40 @@ msgstr ""
 msgid "Capacity"
 msgstr ""
 
-#: ideascube/serveradmin/templates/serveradmin/index.html:7
-#, python-format
-msgid "Current version: %(version)s"
+#: ideascube/serveradmin/templates/serveradmin/index.html:11
+msgid "Server info"
 msgstr ""
 
-#: ideascube/serveradmin/templates/serveradmin/index.html:9
+#: ideascube/serveradmin/templates/serveradmin/index.html:13
+#, python-format
+msgid "Version: %(version)s"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/index.html:14
+#, python-format
+msgid "ID: %(id)s"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/index.html:15
+#, python-format
+msgid "Hostname: %(name)s"
+msgstr ""
+
+#: ideascube/serveradmin/templates/serveradmin/index.html:19
 #: ideascube/serveradmin/templates/serveradmin/services.html:6
 msgid "Manage services"
 msgstr ""
 
-#: ideascube/serveradmin/templates/serveradmin/index.html:10
+#: ideascube/serveradmin/templates/serveradmin/index.html:20
 msgid "Restart server"
 msgstr ""
 
-#: ideascube/serveradmin/templates/serveradmin/index.html:11
+#: ideascube/serveradmin/templates/serveradmin/index.html:21
 msgid "Manage backups"
 msgstr ""
 
-#: ideascube/serveradmin/templates/serveradmin/index.html:12
+#: ideascube/serveradmin/templates/serveradmin/index.html:22
 msgid "Monitor battery"
-msgstr ""
-
-#: ideascube/serveradmin/templates/serveradmin/packages.html:5
-msgid "Manage packages"
-msgstr ""
-
-#: ideascube/serveradmin/templates/serveradmin/packages.html:6
-msgid "Available Ideascube packages"
-msgstr ""
-
-#: ideascube/serveradmin/templates/serveradmin/packages.html:10
-msgid "Suggest"
-msgstr ""
-
-#: ideascube/serveradmin/templates/serveradmin/packages.html:14
-msgid "System packages out of date"
 msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/power.html:5
@@ -1511,12 +1535,40 @@ msgstr ""
 msgid "one book at random"
 msgstr ""
 
-#: ideascube/templates/ideascube/includes/cards/blog.html:4
-msgid "Blog"
+#: ideascube/templates/ideascube/includes/cards/appinventor.html:3
+msgid "App Inventor"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/appinventor.html:4
+msgid "Create your own apps for Android."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/blog.html:5
 msgid "Browse blog posts."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/bsfcampus.html:3
+msgid "BSF Campus"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/bsfcampus.html:4
+msgid "Renforcer les capacités des bibliothèques."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/cpassorcier.html:3
+msgid "C'est pas sorcier"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/cpassorcier.html:4
+msgid "Le magazine de vulgarisation scientifique."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/gutenberg.html:3
+msgid "Gutenberg project"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/gutenberg.html:4
+msgid "Read and download e-books."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:3
@@ -1535,12 +1587,52 @@ msgstr ""
 msgid "Browse videos, sounds, images, pdf…"
 msgstr ""
 
+#: ideascube/templates/ideascube/includes/cards/software.html:3
+msgid "Free software"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/software.html:4
+msgid "Free software for windows."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/ted.html:3
+msgid "Ted Talks"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/ted.html:4
+msgid "Set of videos conference on innovation."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/ubuntudoc.html:3
+msgid "Ubuntu documentation"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/ubuntudoc.html:4
+msgid "La documentation du célèbre système d'exploitation Ubuntu."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/vikidia.html:3
+msgid "Vikidia"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/vikidia.html:4
+msgid "Parcourir l'encyclopedie libre pour les jeunes."
+msgstr ""
+
 #: ideascube/templates/ideascube/includes/cards/wikipedia.html:3
 msgid "wikipedia"
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/wikipedia.html:4
 msgid "Browse the free encyclopedia."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/wikisource.html:3
+msgid "Wikisource"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/wikisource.html:4
+msgid "Bibliothèque de textes libres et gratuits."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/document_card.html:4
@@ -1558,6 +1650,10 @@ msgstr ""
 
 #: ideascube/templates/ideascube/includes/header.html:9
 msgid "log in"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/tag_cloud.html:4
+msgid "Themes"
 msgstr ""
 
 #: ideascube/templates/ideascube/pagination.html:5
@@ -1615,11 +1711,27 @@ msgstr ""
 msgid "Export all users"
 msgstr ""
 
+#: ideascube/templates/ideascube/welcome_staff.html:5
+#, python-format
+msgid "Welcome to %(server_name)s"
+msgstr ""
+
+#: ideascube/templates/ideascube/welcome_staff.html:6
+msgid ""
+"To enjoy this digital library, you must first create a username and a "
+"password. These will allow you to administrate the server. Make sure to "
+"remember both the username AND password!"
+msgstr ""
+
 #: ideascube/templates/registration/login.html:11
 msgid "Log in"
 msgstr ""
 
-#: ideascube/views.py:139
+#: ideascube/views.py:60
+msgid "Welcome to {}, {}!"
+msgstr ""
+
+#: ideascube/views.py:161
 #, python-brace-format
 msgid "Password has been set for {user}"
 msgstr ""
