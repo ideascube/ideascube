@@ -11,16 +11,17 @@ def test_load_from_moccam_csv(monkeypatch):
     with open('ideascube/library/tests/data/moccam.csv') as f:
         notices = list(load_from_moccam_csv(f.read()))
         assert len(notices) == 2
-        assert notices[0]['title'] == 'Les Enchanteurs'
-        assert notices[0]['authors'] == 'Romain Gary'
-        assert notices[0]['cover'] == 'xxx'
-        assert notices[0]['publisher'] == 'Gallimard'
-        assert notices[0]['summary'].startswith('Le narrateur')
+        notice, cover = notices[0]
+        assert notice['title'] == 'Les Enchanteurs'
+        assert notice['authors'] == 'Romain Gary'
+        assert notice['publisher'] == 'Gallimard'
+        assert notice['summary'].startswith('Le narrateur')
+        assert cover == 'xxx'
 
 
 def test_load_unimarc(monkeypatch):
     with open('ideascube/library/tests/data/marc.dat') as f:
-        notices = list(load_unimarc(f.read()))
+        notices = [notice for notice, cover in load_unimarc(f.read())]
         assert len(notices) == 20
         assert notices[0]['title'] == 'The pragmatic programmer : from journeyman to master /'  # noqa
         assert notices[0]['authors'] == 'Hunt, Andrew, 1964-'

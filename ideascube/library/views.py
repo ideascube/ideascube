@@ -5,14 +5,14 @@ from zipfile import ZipFile
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   ListView, UpdateView, View)
 
-from ideascube.mixins import ByTagListView, CSVExportMixin
 from ideascube.decorators import staff_member_required
+from ideascube.mixins import ByTagListView, CSVExportMixin
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
@@ -20,7 +20,6 @@ from .models import Book, BookSpecimen
 
 class Index(ListView):
     model = Book
-    queryset = Book.objects.available()
     template_name = 'library/index.html'
     paginate_by = 10
 
@@ -31,10 +30,14 @@ class Index(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        if query:
-            return self.model.objects.search(query)
+        if self.request.user.is_authenticated() and self.request.user.is_staff:
+            qs = Book.objects.all()
         else:
-            return super(Index, self).get_queryset().order_by('-modified_at')
+            qs = Book.objects.available()
+        if query:
+            return qs.search(query)
+        else:
+            return qs.order_by('-modified_at')
 
 index = Index.as_view()
 
@@ -88,8 +91,8 @@ class BookImport(FormView):
         if handler:
             try:
                 notices = handler()
-            except ValueError:
-                msg = _('Unable to process notices.')
+            except (ValueError, AssertionError) as e:
+                msg = _(u'Unable to process notices: {}'.format(unicode(e)))
                 messages.add_message(self.request, messages.ERROR, msg)
             else:
                 if notices:
@@ -143,6 +146,8 @@ specimen_delete = staff_member_required(SpecimenDelete.as_view())
 class BookExport(CSVExportMixin, View):
 
     prefix = 'notices'
+    fields = ['isbn', 'authors', 'serie', 'title', 'subtitle', 'summary',
+              'publisher', 'section', 'lang', 'cover', 'tags']
 
     def get(self, *args, **kwargs):
         out = StringIO()
@@ -163,14 +168,15 @@ class BookExport(CSVExportMixin, View):
         return Book.objects.all()
 
     def get_headers(self):
-        self.fields = ['isbn', 'authors', 'serie', 'title', 'subtitle',
-                       'summary', 'publisher', 'section', 'lang', 'cover']
         return self.fields
 
     def get_row(self, book):
         row = {}
         for name in self.fields:
-            value = getattr(book, name, None) or ''
+            if name == 'tags':
+                value = ','.join(book.tags.names())
+            else:
+                value = getattr(book, name, None) or ''
             value = unicode(value).encode('utf-8')
             row[name] = value
         if book.cover:

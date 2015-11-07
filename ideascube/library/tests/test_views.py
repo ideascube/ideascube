@@ -207,6 +207,7 @@ def test_import_from_isbn(staffapp, monkeypatch):
 
 
 def test_import_from_files(staffapp, monkeypatch):
+    assert Book.objects.count() == 0
     monkeypatch.setattr('ideascube.library.utils.read_url', lambda x: None)
     form = staffapp.get(reverse('library:book_import')).forms['import']
     form['from_files'] = Upload('ideascube/library/tests/data/moccam.csv')
@@ -243,6 +244,32 @@ def test_import_from_files_load_cover_if_exists(staffapp, monkeypatch):
     assert Book.objects.count() == 2
     assert Book.objects.last().cover
     assert open(Book.objects.last().cover.path).read() == open(image).read()
+
+
+def test_import_from_ideascube_export(staffapp, monkeypatch):
+    expected = {
+        'isbn': '123456',
+        'authors': 'Marcel Pagnol',
+        'serie': "L'Eau des collines",
+        'title': 'Jean de Florette',
+        'summary': u"Les Bastides Blanches, c'était une paroisse de cent cinquante habitants, perchée sur la proue de l'un des derniers contreforts du massif de l'Étoile, à deux lieues d'Aubagne… Une route de terre y conduisait par une montée si abrupte que de loin elle paraissait verticale : mais du côté des collines il n'en sortait qu'un chemin muletier d'où partaient quelques sentiers qui menaient au ciel.",  # noqa
+        'publisher': u'Éditions de Provence',
+        'lang': 'fr',
+    }
+    BookFactory(**expected)
+    resp = staffapp.get(reverse('library:book_export'))
+    Book.objects.all().delete()
+    form = staffapp.get(reverse('library:book_import')).forms['import']
+    form['files_format'] = 'ideascube'
+    form['from_files'] = Upload('archive.zip', resp.content,
+                                'application/zip')
+    response = form.submit()
+    response.follow()
+    assert Book.objects.count()
+    book = Book.objects.last()
+    for name, value in expected.items():
+        assert getattr(book, name) == value
+    assert book.cover
 
 
 def test_by_tag_page_should_be_filtered_by_tag(app):
@@ -357,7 +384,7 @@ def test_export_book_notices(staffapp, monkeypatch):
     assert len(archive.namelist()) == 3
     csv_content = archive.open('myfilename.csv').read().decode('utf-8')
     assert csv_content.startswith('isbn,authors,serie,title,subtitle,summary,'
-                                  'publisher,section,lang,cover\r\n')
+                                  'publisher,section,lang,cover,tags\r\n')
     assert "my book title" in csv_content
     assert cover_name in csv_content
     assert name_utf8 in csv_content

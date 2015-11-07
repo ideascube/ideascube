@@ -2,7 +2,6 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
 from taggit.managers import TaggableManager
 
 from ideascube.models import TimeStampedModel

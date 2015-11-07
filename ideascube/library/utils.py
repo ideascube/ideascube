@@ -3,6 +3,7 @@ import json
 import os
 import urllib
 import urllib2
+import zipfile
 
 from django.core.files.base import ContentFile
 from django.utils.translation import ugettext as _
@@ -13,6 +14,7 @@ OPENLIBRARY_API_URL = 'https://openlibrary.org/api/books?'
 
 def to_unicode(text):
     """Do its best to return an unicode string."""
+    text = text or ''
     if isinstance(text, unicode):
         return text
     else:
@@ -85,6 +87,8 @@ def load_from_moccam_csv(content):
         'isbn', 'title', 'authors', 'publisher', 'collection', 'year', 'price',
         'summary', 'small_cover', 'cover'
     ]
+    if hasattr(content, 'read'):
+        content = content.read()
     content = content.split('\n')
     rows = csv.DictReader(content, fieldnames=FIELDS, delimiter='\t')
     if rows.restkey or rows.restval:
@@ -99,25 +103,27 @@ def load_from_moccam_csv(content):
             authors = authors.split(', ')
             authors.reverse()  # They are in the form "Gary, Romain".
             authors = ' '.join(authors)
-        yield {
+        notice = {
             'isbn': row['isbn'],
             # Moccam sucks in many ways, including encoding.
             'title': to_unicode(row['title']),
             'authors': to_unicode(authors),
             'publisher': to_unicode(row['publisher']),
-            'summary': to_unicode(row['summary']),
-            'cover': cover
+            'summary': to_unicode(row['summary'])
         }
+        yield notice, cover
 
 
 def load_unimarc(content):
     """Handle UNIMARC import.
     http://marc-must-die.info/index.php/Main_Page"""
+    if hasattr(content, 'read'):
+        content = content.read()
     reader = MARCReader(content, to_unicode=True)
     for row in reader:
         if not row.title():
             continue
-        yield {
+        notice = {
             'isbn': row.isbn(),
             'title': row.title(),
             'authors': row.author() or '',
@@ -125,3 +131,41 @@ def load_unimarc(content):
             'summary': '\n'.join([unicode(d)
                                   for d in row.physicaldescription()]),
         }
+        yield notice, None
+
+
+def load_from_zip(zip, name):
+    return zip.open(name).read()
+
+
+def load_from_ideascube(content):
+    assert zipfile.is_zipfile(content), _('Not a zip file')
+    archive = zipfile.ZipFile(content)
+    csv_filename = None
+    for name in archive.namelist():
+        if name.endswith('.csv'):
+            csv_filename = name
+            break
+    assert csv_filename, _('Missing CSV file in zip')
+    csv_content = load_from_zip(archive, csv_filename)
+    rows = csv.DictReader(csv_content.splitlines())
+    for row in rows:
+        cover_filename = row.get('cover')
+        if cover_filename:
+            cover = ContentFile(load_from_zip(archive, cover_filename),
+                                name=cover_filename)
+        else:
+            cover = None
+        notice = {
+            'isbn': row.get('isbn'),
+            'authors': to_unicode(row.get('authors')),
+            'serie': to_unicode(row.get('serie')),
+            'title': to_unicode(row.get('title')),
+            'subtitle': to_unicode(row.get('subtitle')),
+            'summary': to_unicode(row.get('summary')),
+            'publisher': to_unicode(row.get('publisher')),
+            'section': to_unicode(row.get('section')),
+            'lang': to_unicode(row.get('lang')),
+            'tags': to_unicode(row.get('tags')),
+        }
+        yield notice, cover
