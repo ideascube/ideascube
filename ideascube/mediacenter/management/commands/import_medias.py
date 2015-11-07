@@ -24,15 +24,17 @@ class Command(BaseCommand):
         parser.add_argument('--update', action='store_true', default=False,
                             help='Update instance when document with same '
                                  'title and kind is found in db.')
+        parser.add_argument('--encoding', default='utf-8',
+                            help='Define csv encoding.')
 
     def abort(self, msg):
         self.stderr.write(msg)
         sys.exit(1)
 
     def skip(self, msg, metadata):
-            self.stderr.write(u'⚠ Skipping. {}.'.format(msg.decode('utf-8')))
+            self.stderr.write(u'⚠ Skipping. {}.'.format(msg.decode(self.encoding)))  # noqa
             for key, value in metadata.items():
-                value = value.decode('utf-8') if value else ''
+                value = value.decode(self.encoding) if value else ''
                 self.stdout.write(u'- {}: {}'.format(key, value))
             self.stdout.write('-' * 20)
 
@@ -51,6 +53,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         path = os.path.abspath(options['path'])
         self.update = options['update']
+        self.encoding = options['encoding']
         if not os.path.exists(path):
             self.abort('Path does not exist: {}'.format(path))
         self.ROOT = os.path.dirname(path)
@@ -84,7 +87,8 @@ class Command(BaseCommand):
 
         path = os.path.join(self.ROOT, original)
         if not os.path.exists(path):
-            return self.skip('Path not found: {}'.format(path), metadata)
+            return self.skip('Path not found: {}'.format(path),
+                             metadata)
         with open(path, 'rb') as f:
             original = SimpleUploadedFile(original, f.read(),
                                           content_type=content_type)
