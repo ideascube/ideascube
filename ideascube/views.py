@@ -1,9 +1,6 @@
-import csv
 import mimetypes
 import socket
-import StringIO
 import urllib2
-from datetime import datetime
 from urlparse import urlparse
 
 from django.conf import settings
@@ -26,6 +23,7 @@ from ideascube.library.models import Book
 from ideascube.mediacenter.models import Document
 
 from .forms import UserForm, CreateStaffForm
+from .mixins import CSVExportMixin
 
 user_model = get_user_model()
 
@@ -166,41 +164,6 @@ class SetPassword(FormView):
         return reverse_lazy('user_detail', kwargs=self.kwargs)
 
 set_password = staff_member_required(SetPassword.as_view())
-
-
-class CSVExportMixin(object):
-
-    prefix = 'idb'
-
-    def render_to_csv(self):
-        out = StringIO.StringIO()
-        headers = self.get_headers()
-        writer = csv.DictWriter(out, headers)
-        writer.writeheader()
-        for item in self.get_items():
-            row = self.get_row(item)
-            writer.writerow(row)
-        out.seek(0)
-        response = HttpResponse(out.read())
-        filename = self.get_filename()
-        attachment = 'attachment; filename="{name}.csv"'.format(name=filename)
-        response['Content-Disposition'] = attachment
-        response['Content-Type'] = 'text/csv'
-        return response
-
-    def get_item(self):
-        raise NotImplementedError('CSVExportMixin needs a get_items method')
-
-    def get_headers(self):
-        raise NotImplementedError('CSVExportMixin needs a get_headers method')
-
-    def get_filename(self):
-        filename = "_".join([
-            self.prefix,
-            settings.IDEASCUBE_ID,
-            str(datetime.now())
-        ])
-        return filename
 
 
 class UserExport(CSVExportMixin, View):

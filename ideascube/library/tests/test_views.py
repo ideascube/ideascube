@@ -1,9 +1,13 @@
+# -*- coding: utf-8 -*-
+import zipfile
+
 import pytest
 from django.core.urlresolvers import reverse
+from django.core.files.base import ContentFile
 from webtest import Upload
 
 from ..models import Book, BookSpecimen
-from ..views import ByTag, Index
+from ..views import ByTag, Index, BookExport
 from .factories import BookFactory, BookSpecimenFactory
 
 pytestmark = pytest.mark.django_db
@@ -327,3 +331,33 @@ def test_when_only_serial_is_set_specimen_is_created_as_not_digital(staffapp,
     form.submit()
     assert book.specimens.count()
     assert not BookSpecimen.objects.last().is_digital
+
+
+def test_anonymous_cannot_export_book_notices(app):
+    assert app.get(reverse('library:book_export'), status=302)
+
+
+def test_non_staff_cannot_export_book_notices(loggedapp):
+    assert loggedapp.get(reverse('library:book_export'), status=302)
+
+
+def test_export_book_notices(staffapp, monkeypatch):
+    book1 = BookFactory(isbn="123456", title="my book title")
+    name_utf8 = u'النبي (كتاب)'
+    BookFactory(isbn="654321", title=name_utf8)
+    monkeypatch.setattr(BookExport, 'get_filename', lambda s: 'myfilename')
+    resp = staffapp.get(reverse('library:book_export'))
+    assert 'myfilename.zip' in resp['Content-Disposition']
+    content = ContentFile(resp.content)
+    assert zipfile.is_zipfile(content)
+    archive = zipfile.ZipFile(content)
+    cover_name = '{}.jpg'.format(book1.pk)
+    assert cover_name in archive.namelist()
+    assert 'myfilename.csv' in archive.namelist()
+    assert len(archive.namelist()) == 3
+    csv_content = archive.open('myfilename.csv').read().decode('utf-8')
+    assert csv_content.startswith('isbn,authors,serie,title,subtitle,summary,'
+                                  'publisher,section,lang,cover\r\n')
+    assert "my book title" in csv_content
+    assert cover_name in csv_content
+    assert name_utf8 in csv_content

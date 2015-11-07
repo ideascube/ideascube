@@ -1,12 +1,17 @@
+import os
+from StringIO import StringIO
+from zipfile import ZipFile
+
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
-                                  ListView, UpdateView)
+                                  ListView, UpdateView, View)
 
-from ideascube.mixins import ByTagListView
+from ideascube.mixins import ByTagListView, CSVExportMixin
 from ideascube.decorators import staff_member_required
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
@@ -133,3 +138,46 @@ class SpecimenDelete(DeleteView):
         return self.object.get_absolute_url()
 
 specimen_delete = staff_member_required(SpecimenDelete.as_view())
+
+
+class BookExport(CSVExportMixin, View):
+
+    prefix = 'notices'
+
+    def get(self, *args, **kwargs):
+        out = StringIO()
+        self.zip = ZipFile(out, "a")
+        csv = self.to_csv()
+        self.zip.writestr("{}.csv".format(self.get_filename()), csv)
+        self.zip.close()
+        response = HttpResponse()
+        filename = self.get_filename()
+        attachment = 'attachment; filename="{name}.zip"'.format(name=filename)
+        response['Content-Disposition'] = attachment
+        response['Content-Type'] = 'application/zip'
+        out.seek(0)
+        response.write(out.read())
+        return response
+
+    def get_items(self):
+        return Book.objects.all()
+
+    def get_headers(self):
+        self.fields = ['isbn', 'authors', 'serie', 'title', 'subtitle',
+                       'summary', 'publisher', 'section', 'lang', 'cover']
+        return self.fields
+
+    def get_row(self, book):
+        row = {}
+        for name in self.fields:
+            value = getattr(book, name, None) or ''
+            value = unicode(value).encode('utf-8')
+            row[name] = value
+        if book.cover:
+            path, ext = os.path.splitext(book.cover.name)
+            filename = '{}{}'.format(book.pk, ext)
+            row['cover'] = filename
+            self.zip.writestr(filename, book.cover.read())
+        return row
+
+book_export = staff_member_required(BookExport.as_view())

@@ -15,9 +15,12 @@
 {% block third %}
     {% url 'library:index' as library_index %}
     {% include 'search/box.html' with action=library_index %}
-    <ul class="card tinted admin">
-        <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a></li>
-        <li>{% fa 'upload' 'fa-fw' %} <a href="{% url 'library:book_import' %}">{% trans "Import notices" %}</a></li>
-    </ul>
+    {% if user.is_staff %}
+        <ul class="card tinted admin">
+            <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a></li>
+            <li>{% fa 'upload' 'fa-fw' %} <a href="{% url 'library:book_import' %}">{% trans "Import notices" %}</a></li>
+            <li>{% fa 'download' 'fa-fw' %} <a href="{% url 'library:book_export' %}">{% trans "Export notices" %}</a></li>
+        </ul>
+    {% endif %}
     {% tag_cloud url="library:by_tag" model=view.model %}
 {% endblock third %}
