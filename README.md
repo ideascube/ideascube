@@ -13,9 +13,17 @@ More details about the server in the [overview](https://github.com/ideascube/ide
 ## Try it
 You can try it using docker:
 
+On a Linux box:
+
 - Install docker (www.docker.com)
-- Launch `docker run -p 8000:8000 -d ygravrand/ideascube`
+- launch `docker run -p 8000:8000 -d ideascube/ideascube`
 - Go to `http://localhost:8000`
+
+On Windows or MacOS:
+
+- Install Kitematic (www.kitematic.com)
+- Search for `ìdeascube/ideascube` image and click on `Create`
+- Click on the icon next to `Web preview` to open your web browser
 
 ## How can I give a hand?
 
