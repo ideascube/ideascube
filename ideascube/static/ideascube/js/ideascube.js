@@ -1,5 +1,5 @@
 /*global Minislate document window Pikaday console gettext*/
-/* eslint new-cap:0, strict:0, quotes:[2, "simple"] global-strict:0, no-underscore-dangle:0, curly:0, consistent-return:0, no-new:0, no-console:0*/
+/* eslint new-cap:0, strict:0, quotes:[2, "single"] global-strict:0, no-underscore-dangle:0, curly:0, consistent-return:0, no-new:0, no-console:0*/
 'use strict';
 
 ID.http = {
