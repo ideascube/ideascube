@@ -10,6 +10,7 @@ from django.core.files.base import ContentFile
 
 from ..backup import Backup
 from .test_backup import BACKUPS_ROOT, DATA_ROOT, BACKUPED_ROOT
+from . import NMDevice
 
 pytestmark = pytest.mark.django_db
 
@@ -30,6 +31,7 @@ class FakePopen(object):
     ("power"),
     ("backup"),
     ("battery"),
+    ("wifi"),
 ])
 def test_anonymous_user_should_not_access_server(app, page):
     response = app.get(reverse("server:" + page), status=302)
@@ -41,6 +43,7 @@ def test_anonymous_user_should_not_access_server(app, page):
     ("power"),
     ("backup"),
     ("battery"),
+    ("wifi"),
 ])
 def test_normals_user_should_not_access_server(loggedapp, page):
     response = loggedapp.get(reverse("server:" + page), status=302)
@@ -187,3 +190,28 @@ def test_upload_button_do_not_create_backup_with_bad_file_name(staffapp,
 def test_staff_user_should_access_battery_management(monkeypatch, staffapp):
     monkeypatch.setattr("subprocess.Popen", FakePopen)
     assert staffapp.get(reverse("server:battery"), status=200)
+
+
+def test_staff_accesses_wifi_without_wireless(mocker, staffapp):
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.WirelessHardwareEnabled = False
+
+    res = staffapp.get(reverse("server:wifi"), status=200)
+    assert u'Wi-Fi hardware is disabled' in res.unicode_body
+    assert u'No Wi-Fi available' in res.unicode_body
+
+
+def test_staff_lists_wifi_networks(mocker, staffapp):
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: []
+
+    res = staffapp.get(reverse("server:wifi"), status=200)
+    assert u'Wi-Fi hardware is disabled' not in res.unicode_body
+    assert u'Wi-Fi is disabled' not in res.unicode_body
+    assert u'No Wi-Fi available' not in res.unicode_body
+    assert u'my home network' in res.unicode_body
+    assert u'random open network' in res.unicode_body

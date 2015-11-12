@@ -1,0 +1,27 @@
+{% extends 'serveradmin/index.html' %}
+{% load i18n %}
+
+{% block twothird %}
+<h2>{% trans "Manage Wi-Fi" %}</h2>
+{% for wifi in wifi_list %}
+{% if forloop.first %}<ul class="wifi-list">{% endif %}
+    <li>
+        <a class="wifi-network">
+            {{ wifi.ssid }}
+            {% if wifi.connected %}
+            <span><i class="fa fa-check"></i></span>
+            {% endif %}
+            <span class="right">{{ wifi.strength }}%</span>
+            {% if wifi.secure %}
+            <span class="right"><i class="fa fa-lock"></i></span>
+            {% endif %}
+        </a>
+    </li>
+{% if forloop.last %}
+</ul>
+{% endif %}
+{% empty %}
+<p>{% trans 'No Wi-Fi available' %}</p>
+{% endfor %}
+
+{% endblock twothird %}

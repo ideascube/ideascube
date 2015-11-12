@@ -11,6 +11,7 @@ from ideascube.decorators import staff_member_required
 
 from .backup import Backup
 from .utils import call_service
+from .wifi import AvailableWifiNetwork, enable_wifi, WifiError
 
 
 @staff_member_required
@@ -111,3 +112,18 @@ def backup(request):
 def battery(request):
     return render(request, 'serveradmin/battery.html',
                   {'batteries': batinfo.batteries()})
+
+
+@staff_member_required
+def wifi(request):
+    try:
+        enable_wifi()
+        wifi_list = AvailableWifiNetwork.all()
+
+    except WifiError as e:
+        messages.error(request, e)
+        return render(request, 'serveradmin/wifi.html')
+
+
+    return render(
+        request, 'serveradmin/wifi.html', {'wifi_list': wifi_list.values()})
