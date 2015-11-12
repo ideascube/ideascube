@@ -4,6 +4,133 @@ import pytest
 from . import NMActiveConnection, NMConnection, NMDevice
 
 
+def test_list_wifi_networks(mocker):
+    from ideascube.serveradmin.wifi import AvailableWifiNetwork
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.Devices = [NMDevice(True)]
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: []
+
+    networks = AvailableWifiNetwork.all()
+    assert list(networks.keys()) == ['my home network', 'random open network']
+
+    assert str(networks['my home network']) == (
+        'Available Wi-Fi network: "my home network"')
+    assert networks['my home network'].connected is False
+    assert networks['my home network'].known is False
+    assert networks['my home network'].secure is True
+    assert networks['my home network'].ssid == 'my home network'
+    assert networks['my home network'].strength == 99
+
+    assert str(networks['random open network']) == (
+        'Available Wi-Fi network: "random open network"')
+    assert networks['random open network'].connected is False
+    assert networks['random open network'].known is False
+    assert networks['random open network'].secure is False
+    assert networks['random open network'].ssid == 'random open network'
+    assert networks['random open network'].strength == 42
+
+
+def test_list_wifi_networks_with_one_known(mocker):
+    from ideascube.serveradmin.wifi import AvailableWifiNetwork
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.Devices = [NMDevice(True)]
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='my home network'),
+        ]
+
+    networks = AvailableWifiNetwork.all()
+    assert list(networks.keys()) == ['my home network', 'random open network']
+
+    assert str(networks['my home network']) == (
+        'Available Wi-Fi network: "my home network"')
+    assert networks['my home network'].connected is False
+    assert networks['my home network'].known is True
+    assert networks['my home network'].secure is True
+    assert networks['my home network'].ssid == 'my home network'
+    assert networks['my home network'].strength == 99
+
+    assert str(networks['random open network']) == (
+        'Available Wi-Fi network: "random open network"')
+    assert networks['random open network'].connected is False
+    assert networks['random open network'].known is False
+    assert networks['random open network'].secure is False
+    assert networks['random open network'].ssid == 'random open network'
+    assert networks['random open network'].strength == 42
+
+
+def test_list_wifi_networks_with_one_connected(mocker):
+    from ideascube.serveradmin.wifi import AvailableWifiNetwork
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActiveConnections = [NMActiveConnection(ssid='my home network')]
+    NM.Devices = [NMDevice(True)]
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='my home network'),
+        ]
+
+    networks = AvailableWifiNetwork.all()
+    assert list(networks.keys()) == ['my home network', 'random open network']
+
+    assert str(networks['my home network']) == (
+        'Available Wi-Fi network: "my home network"')
+    assert networks['my home network'].connected is True
+    assert networks['my home network'].known is True
+    assert networks['my home network'].secure is True
+    assert networks['my home network'].ssid == 'my home network'
+    assert networks['my home network'].strength == 99
+
+    assert str(networks['random open network']) == (
+        'Available Wi-Fi network: "random open network"')
+    assert networks['random open network'].connected is False
+    assert networks['random open network'].known is False
+    assert networks['random open network'].secure is False
+    assert networks['random open network'].ssid == 'random open network'
+    assert networks['random open network'].strength == 42
+
+
+def test_list_wifi_networks_with_other_connected(mocker):
+    from ideascube.serveradmin.wifi import AvailableWifiNetwork
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActiveConnections = [NMActiveConnection(ssid='my office network')]
+    NM.Devices = [NMDevice(True)]
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='my home network'),
+        ]
+
+    networks = AvailableWifiNetwork.all()
+    assert list(networks.keys()) == ['my home network', 'random open network']
+
+    assert str(networks['my home network']) == (
+        'Available Wi-Fi network: "my home network"')
+    assert networks['my home network'].connected is False
+    assert networks['my home network'].known is True
+    assert networks['my home network'].secure is True
+    assert networks['my home network'].ssid == 'my home network'
+    assert networks['my home network'].strength == 99
+
+    assert str(networks['random open network']) == (
+        'Available Wi-Fi network: "random open network"')
+    assert networks['random open network'].connected is False
+    assert networks['random open network'].known is False
+    assert networks['random open network'].secure is False
+    assert networks['random open network'].ssid == 'random open network'
+    assert networks['random open network'].strength == 42
+
+
 def test_list_known_wifi_connections(mocker):
     from ideascube.serveradmin.wifi import KnownWifiConnection
 

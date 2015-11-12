@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from itertools import groupby
 from operator import attrgetter
 
 from django.utils.translation import ugettext as _
@@ -27,6 +28,61 @@ except Exception as e:
     # Hardcode this one, it is a constant anyway in the NetworkManager module,
     # and hardcoding it allows the tests to run no matter what.
     NM_DEVICE_TYPE_WIFI = 2
+
+
+class AvailableWifiNetwork(object):
+    @classmethod
+    def all(cls):
+        result = []
+
+        known_connections = KnownWifiConnection.all()
+
+        device = get_wifi_device()
+        aps = device.SpecificDevice().GetAllAccessPoints()
+        aps.sort(key=attrgetter('Frequency'), reverse=True)
+        aps.sort(key=attrgetter('Ssid'))
+
+        for ssid, grouper in groupby(aps, attrgetter('Ssid')):
+            if ssid:
+                # There often are more than one network for a given SSID (for
+                # example at 2.4 and 5GHz), so we keep only the one with the
+                # highest frequency.
+                ap = next(grouper)
+                result.append(cls(ap, device, known_connections))
+
+        return OrderedDict(
+            [(n.ssid, n) for n in sorted(
+                result, key=attrgetter('strength'), reverse=True)])
+
+    def __init__(self, access_point, device, known_connections=None):
+        self._access_point = access_point
+        self._device = device
+
+        known_connections = known_connections or {}
+        self._connection = known_connections.get(self.ssid, None)
+
+    def __str__(self):
+        return 'Available Wi-Fi network: "%s"' % (self.ssid)
+
+    @property
+    def connected(self):
+        return self._connection and self._connection.connected or False
+
+    @property
+    def known(self):
+        return self._connection is not None
+
+    @property
+    def secure(self):
+        return self._access_point.WpaFlags != 0
+
+    @property
+    def ssid(self):
+        return self._access_point.Ssid
+
+    @property
+    def strength(self):
+        return self._access_point.Strength
 
 
 class KnownWifiConnection(object):

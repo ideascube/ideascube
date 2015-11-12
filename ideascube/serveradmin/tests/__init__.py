@@ -7,6 +7,14 @@ except Exception:
     NM_DEVICE_TYPE_WIFI = 2
 
 
+class NMAccessPoint(object):
+    def __init__(self, ssid, strength, wpa_flags):
+        self.Ssid = ssid
+        self.Strength = strength
+        self.WpaFlags = wpa_flags
+        self.Frequency = 5000
+
+
 class NMActiveConnection(object):
     def __init__(self, ssid='', is_secure=True):
         self.Connection = NMConnection(True, ssid=ssid, is_secure=is_secure)
@@ -38,3 +46,14 @@ class NMDevice(object):
         self.DeviceType = (
             NM_DEVICE_TYPE_WIFI if is_wifi else NM_DEVICE_TYPE_ETHERNET)
         self.Managed = True
+
+    def SpecificDevice(self):
+        return NMSpecificDevice()
+
+
+class NMSpecificDevice(object):
+    def GetAllAccessPoints(self):
+        return [
+            NMAccessPoint('random open network', 42, 0),
+            NMAccessPoint('', 2, 332),
+            NMAccessPoint('my home network', 99, 332)]
