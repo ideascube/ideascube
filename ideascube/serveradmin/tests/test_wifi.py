@@ -1,7 +1,7 @@
 from mock import MagicMock
 import pytest
 
-from . import NMActiveConnection, NMConnection
+from . import NMActiveConnection, NMConnection, NMDevice
 
 
 def test_list_known_wifi_connections(mocker):
@@ -99,3 +99,33 @@ def test_wifi_cannot_be_enabled(mocker):
 
     with pytest.raises(WifiError):
         enable_wifi()
+
+
+def test_get_wifi_device(mocker):
+    from ideascube.serveradmin.wifi import get_wifi_device, NM_DEVICE_TYPE_WIFI
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.Devices = [NMDevice(False), NMDevice(True)]
+
+    device = get_wifi_device()
+    assert device.DeviceType == NM_DEVICE_TYPE_WIFI
+
+
+def test_get_no_wifi_device(mocker):
+    from ideascube.serveradmin.wifi import get_wifi_device, WifiError
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.Devices = [NMDevice(False)]
+
+    with pytest.raises(WifiError):
+        get_wifi_device()
+
+
+def test_get_multiple_wifi_devices(mocker):
+    from ideascube.serveradmin.wifi import get_wifi_device, WifiError
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.Devices = [NMDevice(True), NMDevice(True)]
+
+    with pytest.raises(WifiError):
+        get_wifi_device()

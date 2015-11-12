@@ -13,6 +13,7 @@ try:
     from NetworkManager import (
         NetworkManager,
         Settings as NMSettings,
+        NM_DEVICE_TYPE_WIFI,
         )
 
 except Exception as e:
@@ -22,6 +23,10 @@ except Exception as e:
     # easily if they didn't exist here.
     NetworkManager = None
     NMSettings = None
+
+    # Hardcode this one, it is a constant anyway in the NetworkManager module,
+    # and hardcoding it allows the tests to run no matter what.
+    NM_DEVICE_TYPE_WIFI = 2
 
 
 class KnownWifiConnection(object):
@@ -79,3 +84,20 @@ def enable_wifi():
     except:
         # This will fail if NetworkManager is None, i.e we couldn't import it
         raise WifiError(_("Wi-Fi is disabled"))
+
+
+def get_wifi_device():
+    devices = []
+
+    for device in NetworkManager.Devices:
+        if device.Managed and device.DeviceType == NM_DEVICE_TYPE_WIFI:
+            devices.append(device)
+
+    if not devices:
+        raise WifiError(_("No Wi-Fi device was found"))
+
+    if len(devices) > 1:
+        raise WifiError(
+            _("Found more than one Wi-Fi device, this is not supported"))
+
+    return devices[0]
