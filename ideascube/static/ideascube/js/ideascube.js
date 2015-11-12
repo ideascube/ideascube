@@ -1,5 +1,5 @@
 /*global Minislate document window Pikaday console gettext*/
-/* eslint new-cap:0, strict:0, quotes:[2, "simple"] global-strict:0, no-underscore-dangle:0, curly:0, consistent-return:0, no-new:0, no-console:0*/
+/* eslint new-cap:0, strict:0, quotes:[2, "single"] global-strict:0, no-underscore-dangle:0, curly:0, consistent-return:0, no-new:0, no-console:0, space-before-function-paren:[2, "always"] */
 'use strict';
 
 ID.http = {
@@ -8,7 +8,7 @@ ID.http = {
         var xhr = new window.XMLHttpRequest();
         xhr.open(settings.verb, settings.uri, true);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 settings.callback.call(settings.context || xhr, xhr.status, xhr.responseText, xhr);
             }
@@ -17,7 +17,7 @@ ID.http = {
         return xhr;
     },
 
-    get: function(uri, options) {
+    get: function (uri, options) {
         options.verb = 'GET';
         options.uri = uri;
         return ID.http._ajax(options);
@@ -34,20 +34,20 @@ ID.http = {
 };
 
 ID.OembedDialog = Minislate.Class(Minislate.controls.Dialog, {
-    show: function(node) {
+    show: function (node) {
         var control = this.control,
             editor = this.toolbar.editor,
             selection = Minislate.rangy.saveSelection(), input;
 
-       editor.showDialog(function() {
+       editor.showDialog(function () {
             input.focus();
         });
 
         input = this.addTextField('URL: ', {
-            escape: function() {
+            escape: function () {
                 editor.restoreSelection(selection);
             },
-            enter: function(evt) {
+            enter: function (evt) {
                 editor.restoreSelection(selection);
                 control.saveOembed(node, evt.target.value);
             }
@@ -55,7 +55,7 @@ ID.OembedDialog = Minislate.Class(Minislate.controls.Dialog, {
 
         this.addButton('Save', {
             fontAwesomeID: 'check',
-            click: function(evt) {
+            click: function (evt) {
                 evt.stopImmediatePropagation();
                 editor.restoreSelection(selection);
                 control.saveOembed(node, input.value);
@@ -66,7 +66,7 @@ ID.OembedDialog = Minislate.Class(Minislate.controls.Dialog, {
             input.value = node.getAttribute('data-url');
             this.addButton('Remove', {
                 fontAwesomeID: 'times',
-                click: function(evt) {
+                click: function (evt) {
                     evt.stopImmediatePropagation();
                     editor.restoreSelection(selection);
                     control.saveOembed(node, null);
@@ -106,15 +106,15 @@ ID.Oembed = Minislate.Class(Minislate.controls.Button, {
         return node && !node.textContent;
     },
 
-    isHighlighted: function() {
+    isHighlighted: function () {
         return !!this.getContainer();
     },
 
-    isVisible: function() {
+    isVisible: function () {
         return !!this.getContainer() || this.isEmptyNode();
     },
 
-    click: function() {
+    click: function () {
         (new ID.OembedDialog(this)).show(this.getContainer());
     },
 
@@ -125,7 +125,7 @@ ID.Oembed = Minislate.Class(Minislate.controls.Button, {
         }
     },
 
-    saveOembed: function(node, url) {
+    saveOembed: function (node, url) {
         var editor = this.toolbar.editor,
             range = editor.getRange();
 
@@ -176,7 +176,7 @@ ID.Oembed = Minislate.Class(Minislate.controls.Button, {
 });
 
 ID.editor = Minislate.Class(Minislate.Editor, {
-    init: function() {
+    init: function () {
         Minislate.Editor.prototype.init.apply(this, arguments);
 
         this.toolbar.addControl(Minislate.controls.Menu, 'blocks', {
