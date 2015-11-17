@@ -83,6 +83,25 @@ class FakeProxy(object):
             % (self.name, self.object_path, method, interface))
 
 
+class FakePopen(object):
+    returncode = 0
+
+    def __init__(self, cmd, stdout=None, stderr=None):
+        self.cmd = cmd
+        self.stdout = stdout()
+        self.stderr = stderr()
+
+    def communicate(self):
+        if self.returncode and self.stderr is not None:
+            self.stderr.write(u'Oh Noes!')
+
+        return self.stdout.getvalue(), self.stderr.getvalue()
+
+
+class FailingPopen(FakePopen):
+    returncode = 1
+
+
 class NMAccessPoint(object):
     def __init__(self, ssid, strength, wpa_flags):
         self.Ssid = ssid

@@ -1,3 +1,4 @@
+import subprocess
 import string
 
 import dbus
@@ -21,6 +22,17 @@ class Manager(object):
             service_id = service_name
 
         return self._get_unit(service_id)
+
+    def activate(self, unit_id):
+        systemctl('enable', unit_id)
+        systemctl('start', unit_id)
+
+    def deactivate(self, unit_id):
+        systemctl('disable', unit_id)
+        systemctl('stop', unit_id)
+
+    def restart(self, unit_id):
+        systemctl('restart', unit_id)
 
 
 class Unit(object):
@@ -59,9 +71,30 @@ class NoSuchUnit(Exception):
     pass
 
 
+class UnitManagementError(Exception):
+    pass
+
+
 def dbus_to_python(obj):
     if isinstance(obj, dbus.String):
         return str(obj)
 
     # Add support for other DBus types as we need them
     raise ValueError("Can't handle value: %r" % obj)
+
+
+def systemctl(action, unit):
+    # TODO: Move that to the systemd dbus API if we can rely on systemd >= 216
+    cmd = ['pkexec', 'systemctl', action, unit]
+
+    proc = subprocess.Popen(
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    _, err = proc.communicate()
+
+    if proc.returncode:
+        msg = ["Could not %s %s" % (action, unit)]
+
+        if err:
+            msg.append(err.strip())
+
+        raise UnitManagementError(': '.join(msg))
