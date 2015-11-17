@@ -11,6 +11,8 @@ from ideascube.decorators import staff_member_required
 
 from .backup import Backup
 from .utils import call_service
+from .wifi import (
+    AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError)
 
 
 @staff_member_required
@@ -111,3 +113,57 @@ def backup(request):
 def battery(request):
     return render(request, 'serveradmin/battery.html',
                   {'batteries': batinfo.batteries()})
+
+
+@staff_member_required
+def wifi(request, ssid=''):
+    try:
+        enable_wifi()
+        wifi_list = AvailableWifiNetwork.all()
+
+    except WifiError as e:
+        messages.error(request, e)
+        return render(request, 'serveradmin/wifi.html')
+
+    if ssid:
+        try:
+            network = wifi_list[ssid]
+            wifi_key = request.POST.get('wifi_key', '')
+            network.connect(wifi_key=wifi_key)
+            messages.success(
+                request, _('Connected to {ssid}').format(ssid=ssid))
+
+        except KeyError:
+            messages.error(
+                request, _('No such network: {ssid}').format(ssid=ssid))
+
+        except WifiError as e:
+            messages.error(request, e)
+
+    return render(
+        request, 'serveradmin/wifi.html', {'wifi_list': wifi_list.values()})
+
+
+@staff_member_required
+def wifi_history(request):
+    try:
+        enable_wifi()
+        wifi_list = KnownWifiConnection.all()
+
+    except WifiError as e:
+        messages.error(request, e)
+        return render(request, 'serveradmin/wifi_history.html')
+
+    for ssid, checked in request.POST.items():
+        if checked.lower() in ('on', 'true'):
+            try:
+                connection = wifi_list.pop(ssid)
+                connection.forget()
+
+            except KeyError:
+                # Someone tried to forget a connection we don't know.
+                continue
+
+    return render(
+        request, 'serveradmin/wifi_history.html',
+        {'wifi_list': wifi_list.values()})

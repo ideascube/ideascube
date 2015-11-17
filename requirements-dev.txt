@@ -7,5 +7,6 @@ pyquery==1.2.9
 pytest==2.8.2
 pytest-cov==2.2.0
 pytest-django==2.9.1
+pytest-mock==0.8.1
 transifex-client==0.10
 WebTest==2.0.20

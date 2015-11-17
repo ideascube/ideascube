@@ -207,6 +207,14 @@ STAFF_HOME_CARDS = [
         'description': _('Create, restore, download, upload backups.'),
         'fa': 'life-ring',
     },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'server:wifi',
+        'title': _('Wi-Fi'),
+        'description': _('Manage Wi-Fi connections.'),
+        'fa': 'wifi',
+    },
 ]
 
 HOME_CARDS = STAFF_HOME_CARDS + [

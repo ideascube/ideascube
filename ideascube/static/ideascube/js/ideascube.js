@@ -265,3 +265,27 @@ ID.confirmClick = function (selector) {
     };
     el.addEventListener('click', ask, false);
 };
+
+
+ID.initWifiList = function (item_selector, popup_selector, urlroot) {
+    var elements = document.querySelectorAll(item_selector);
+
+    for (var i = 0; i < elements.length; ++i) {
+        var element = elements[i];
+        var known = element.getAttribute('data-known') === 'True';
+        var secure = element.getAttribute('data-secure') === 'True';
+
+        if (known || !secure) {
+            var ssid = element.getAttribute('data-ssid');
+            element.setAttribute('href', urlroot + ssid);
+        } else {
+            element.setAttribute('href', popup_selector);
+
+            element.addEventListener('click', function (evt) {
+                var ssid = this.getAttribute('data-ssid');
+                var form = document.querySelector(popup_selector + ' form');
+                form.setAttribute('action', urlroot + ssid);
+            }.bind(element), true);
+        }
+    }
+};

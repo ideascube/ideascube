@@ -5,4 +5,19 @@ django-select-multiple-field==0.4.1
 django-taggit==0.17.3
 Pillow==3.0.0
 pymarc==3.0.4
+python-networkmanager==1.0.1
 Unidecode==0.4.18
+
+# Upstream dbus-python is not pip-installable:
+#     https://bugs.freedesktop.org/show_bug.cgi?id=55439
+#
+# So there is a fork on Github that **only** makes it pipi-installable:
+#     https://github.com/posborne/dbus-python
+#
+# But that's for the master branch... which we can't use, because our Travis
+# CI base is Ubuntu 12.04, which has DBus 1.4.18, and dbus-python master
+# requires DBus >= 1.6.
+#
+# So we forked the forked, backporting the pip-related patches to the 1.1.1
+# branch, and we use that here.
+git+https://github.com/bochecha/dbus-python.git@pipified-1.1.1#egg=dbus

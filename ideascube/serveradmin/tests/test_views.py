@@ -2,7 +2,7 @@ import os
 import zipfile
 
 import pytest
-from webtest.forms import Upload
+from webtest.forms import Checkbox, Upload
 from mock import MagicMock
 
 from django.core.urlresolvers import reverse
@@ -10,6 +10,7 @@ from django.core.files.base import ContentFile
 
 from ..backup import Backup
 from .test_backup import BACKUPS_ROOT, DATA_ROOT, BACKUPED_ROOT
+from . import NMActiveConnection, NMConnection, NMDevice
 
 pytestmark = pytest.mark.django_db
 
@@ -30,6 +31,8 @@ class FakePopen(object):
     ("power"),
     ("backup"),
     ("battery"),
+    ("wifi"),
+    ("wifi_history"),
 ])
 def test_anonymous_user_should_not_access_server(app, page):
     response = app.get(reverse("server:" + page), status=302)
@@ -41,6 +44,8 @@ def test_anonymous_user_should_not_access_server(app, page):
     ("power"),
     ("backup"),
     ("battery"),
+    ("wifi"),
+    ("wifi_history"),
 ])
 def test_normals_user_should_not_access_server(loggedapp, page):
     response = loggedapp.get(reverse("server:" + page), status=302)
@@ -187,3 +192,267 @@ def test_upload_button_do_not_create_backup_with_bad_file_name(staffapp,
 def test_staff_user_should_access_battery_management(monkeypatch, staffapp):
     monkeypatch.setattr("subprocess.Popen", FakePopen)
     assert staffapp.get(reverse("server:battery"), status=200)
+
+
+def test_staff_accesses_wifi_without_wireless(mocker, staffapp):
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.WirelessHardwareEnabled = False
+
+    res = staffapp.get(reverse("server:wifi"), status=200)
+    assert u'Wi-Fi hardware is disabled' in res.unicode_body
+    assert u'No Wi-Fi available' in res.unicode_body
+
+
+def test_staff_lists_wifi_networks(mocker, staffapp):
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: []
+
+    res = staffapp.get(reverse("server:wifi"), status=200)
+    assert u'Wi-Fi hardware is disabled' not in res.unicode_body
+    assert u'Wi-Fi is disabled' not in res.unicode_body
+    assert u'No Wi-Fi available' not in res.unicode_body
+    assert u'my home network' in res.unicode_body
+    assert u'random open network' in res.unicode_body
+
+
+def test_staff_connects_to_known_open_network(mocker, staffapp):
+    def activate_connection(connection, device, path):
+        NM.ActiveConnections.append(
+            NMActiveConnection(ssid=connection.ssid))
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActivateConnection.side_effect = activate_connection
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='random open network'),
+        ]
+
+    res = staffapp.get(reverse(
+        "server:wifi", kwargs={'ssid': 'random open network'}), status=200)
+    assert u'No Wi-Fi available' not in res.unicode_body
+    assert u"Connected to random open network" in res.unicode_body
+
+
+def test_staff_connects_to_new_open_network(mocker, staffapp):
+    def add_connection(settings):
+        ssid = settings['802-11-wireless']['ssid']
+        connection = NMConnection(True, ssid=ssid)
+
+        NMSettings.ListConnections.side_effect = lambda: [connection]
+        NM.ActiveConnections.append(NMActiveConnection(ssid=connection.ssid))
+
+        return connection
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.AddConnection.side_effect = add_connection
+    NMSettings.ListConnections.side_effect = lambda: []
+
+    res = staffapp.get(reverse(
+        "server:wifi", kwargs={'ssid': 'random open network'}), status=200)
+    assert u'No Wi-Fi available' not in res.unicode_body
+    assert u"Connected to random open network" in res.unicode_body
+    assert NMSettings.AddConnection.call_count == 1
+
+
+def test_staff_connects_to_known_wpa_network(mocker, staffapp):
+    def activate_connection(connection, device, path):
+        NM.ActiveConnections.append(
+            NMActiveConnection(ssid=connection.ssid))
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActivateConnection.side_effect = activate_connection
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='my home network'),
+        ]
+
+    res = staffapp.get(reverse(
+        "server:wifi", kwargs={'ssid': 'my home network'}), status=200)
+    assert u'No Wi-Fi available' not in res.unicode_body
+    assert u"Connected to my home network" in res.unicode_body
+
+
+def test_staff_connects_to_new_wpa_network(mocker, staffapp):
+    def add_connection(settings):
+        ssid = settings['802-11-wireless']['ssid']
+        connection = NMConnection(True, ssid=ssid)
+
+        NMSettings.ListConnections.side_effect = lambda: [connection]
+        NM.ActiveConnections.append(NMActiveConnection(ssid=connection.ssid))
+
+        return connection
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.AddConnection.side_effect = add_connection
+    NMSettings.ListConnections.side_effect = lambda: []
+
+    res = staffapp.post(reverse(
+        "server:wifi", kwargs={'ssid': 'my home network'}),
+        params={'csrfmiddlewaretoken': staffapp.cookies['csrftoken']},
+        status=200)
+    assert u'A key is required to connect to this network' in res.unicode_body
+    assert NMSettings.AddConnection.call_count == 0
+
+    res = staffapp.post(reverse(
+        "server:wifi", kwargs={'ssid': 'my home network'}),
+        params={
+            'wifi_key': 'some wifi key',
+            'csrfmiddlewaretoken': staffapp.cookies['csrftoken'],
+            },
+        status=200)
+    assert u"Connected to my home network" in res.unicode_body
+    assert NMSettings.AddConnection.call_count == 1
+
+
+def test_staff_connects_to_non_existing_network(mocker, staffapp):
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.ActiveConnections = []
+    NM.Devices = [NMDevice(True)]
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='my home network'),
+        ]
+
+    res = staffapp.get(reverse(
+        "server:wifi", kwargs={'ssid': 'no such network'}), status=200)
+    assert u'No Wi-Fi available' not in res.unicode_body
+    assert u"No such network: no such network" in res.unicode_body
+
+
+def test_staff_accesses_wifi_history_without_wireless(mocker, staffapp):
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.WirelessHardwareEnabled = False
+
+    res = staffapp.get(reverse("server:wifi_history"), status=200)
+    print(res.unicode_body)
+    assert u'Wi-Fi hardware is disabled' in res.unicode_body
+    assert u'No known Wi-Fi networks' in res.unicode_body
+
+
+def test_staff_accesses_wifi_history(mocker, staffapp):
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='random open network', is_secure=False),
+        NMConnection(True, ssid='my home network'),
+        ]
+
+    res = staffapp.get(reverse("server:wifi_history"), status=200)
+    assert u'Wi-Fi hardware is disabled' not in res.unicode_body
+    assert u'No known Wi-Fi networks' not in res.unicode_body
+    assert u'my home network' in res.unicode_body
+    assert u'random open network' in res.unicode_body
+
+
+def test_staff_forgets_wifi_connection(mocker, staffapp):
+    def delete_connection(connection):
+        current = NMSettings.ListConnections()
+        current = [c for c in current if c.ssid != connection.ssid]
+        NMSettings.ListConnections.side_effect = lambda: current
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='random open network', is_secure=False),
+        NMConnection(
+            True, ssid='my home network', delete_func=delete_connection),
+        ]
+
+    form = staffapp.get(reverse('server:wifi_history')).forms['wifi_history']
+    form['my home network'].checked = True
+    res = form.submit()
+
+    assert res.status_int == 200
+    assert u'Wi-Fi hardware is disabled' not in res.unicode_body
+    assert u'No known Wi-Fi networks' not in res.unicode_body
+    assert u'my home network' not in res.unicode_body
+    assert u'random open network' in res.unicode_body
+
+
+def test_staff_forgets_all_wifi_connections(mocker, staffapp):
+    def delete_connection(connection):
+        current = NMSettings.ListConnections()
+        current = [c for c in current if c.ssid != connection.ssid]
+        NMSettings.ListConnections.side_effect = lambda: current
+
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(
+            True, ssid='random open network', is_secure=False,
+            delete_func=delete_connection),
+        NMConnection(
+            True, ssid='my home network', delete_func=delete_connection),
+        ]
+
+    form = staffapp.get(reverse('server:wifi_history')).forms['wifi_history']
+    form['my home network'].checked = True
+    form['random open network'].checked = True
+    res = form.submit()
+
+    assert res.status_int == 200
+    assert u'No known Wi-Fi networks' in res.unicode_body
+    assert u'my home network' not in res.unicode_body
+    assert u'random open network' not in res.unicode_body
+
+
+def test_staff_forgets_non_existing_connection(mocker, staffapp):
+    NM = mocker.patch('ideascube.serveradmin.wifi.NetworkManager')
+    NM.WirelessHardwareEnabled = True
+
+    NMSettings = mocker.patch('ideascube.serveradmin.wifi.NMSettings')
+    NMSettings.ListConnections.side_effect = lambda: [
+        NMConnection(False),
+        NMConnection(True, ssid='random open network', is_secure=False),
+        NMConnection(True, ssid='my home network'),
+        ]
+
+    name = 'no such network'
+    form = staffapp.get(reverse('server:wifi_history')).forms['wifi_history']
+    new_checkbox = Checkbox(form, 'input', name, None, True, id=name)
+    form.fields[name] = new_checkbox
+    form.field_order.append((name, new_checkbox))
+    form.fields[name].checked = True
+    res = form.submit()
+
+    assert res.status_int == 200
+    assert u'Wi-Fi hardware is disabled' not in res.unicode_body
+    assert u'No known Wi-Fi networks' not in res.unicode_body
+    assert u'my home network' in res.unicode_body
+    assert u'random open network' in res.unicode_body

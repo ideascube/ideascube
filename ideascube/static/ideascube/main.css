@@ -666,6 +666,52 @@ span.error {
     content: ' ♬';
 }
 
+.right {
+    float: right;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+.popup {
+  margin: 250px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 35%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+
 
 /* ************************************************* */
 /* ******************** HOME *********************** */
@@ -735,6 +781,25 @@ img.cover {
 .services .status-error h3 span,
 .services .status-off h3 span {
     color: #C0392B;
+}
+
+.wifi-list {
+    border: 1px solid #ddd;
+    padding: 0;
+    margin: 0;
+}
+.wifi-network {
+    text-decoration: none;
+    display: block;
+    padding: 1em;
+    border-bottom: 1px dotted #ddd;
+}
+.wifi-network:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+.wifi-network span {
+    margin: auto 1em;
 }
 
 
