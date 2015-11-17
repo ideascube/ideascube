@@ -12,6 +12,16 @@ from dbus import String
 # This simulates DBus services, their methods and properties
 FAKE_DBUS = {
     'org.freedesktop.systemd1': {
+        '/org/freedesktop/systemd1': {
+            'org.freedesktop.systemd1.Manager': {
+                'methods': {
+                    'LoadUnit': {
+                        'foobar.service': '/org/freedesktop/systemd1/unit/foobar_2eservice',
+                        'NetworkManager.service': '/org/freedesktop/systemd1/unit/NetworkManager_2eservice',
+                    },
+                },
+            },
+        },
         '/org/freedesktop/systemd1/unit/foobar_2eservice': {
             'org.freedesktop.systemd1.Unit': {
                 'properties': {
@@ -63,6 +73,9 @@ class FakeProxy(object):
 
         if method in ('Get', 'GetAll'):
             return funcmaker(self.fake_dbus[interface]['properties'])
+
+        elif method == 'LoadUnit':
+            return funcmaker(self.fake_dbus[interface]['methods'][method])
 
         raise ValueError(
             "Can't handle this:\n"

@@ -1,4 +1,26 @@
+import string
+
 import dbus
+
+
+class Manager(object):
+    def __init__(self):
+        proxy = dbus.SystemBus().get_object(
+            'org.freedesktop.systemd1', '/org/freedesktop/systemd1')
+        self._manager = dbus.Interface(
+            proxy, dbus_interface='org.freedesktop.systemd1.Manager')
+
+    def _get_unit(self, unit_id):
+        return Unit(self._manager.LoadUnit(unit_id))
+
+    def get_service(self, service_name):
+        if not service_name.endswith('.service'):
+            service_id = "%s.service" % service_name
+
+        else:
+            service_id = service_name
+
+        return self._get_unit(service_id)
 
 
 class Unit(object):
