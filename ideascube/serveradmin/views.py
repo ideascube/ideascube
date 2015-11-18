@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _
 from ideascube.decorators import staff_member_required
 
 from .backup import Backup
-from .utils import call_service
+from .systemd import Manager, NoSuchUnit, UnitManagementError
 from .wifi import (
     AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError)
 
@@ -18,33 +18,39 @@ from .wifi import (
 @staff_member_required
 def services(request):
     services = settings.SERVICES
-    service_action = 'status'
-    if request.POST:
-        active_service = request.POST['name']
-        if 'start' in request.POST:
-            service_action = 'start'
-        elif 'stop' in request.POST:
-            service_action = 'stop'
-        elif 'restart' in request.POST:
-            service_action = 'restart'
-    else:
-        active_service = None
+    manager = Manager()
+    to_manage = request.POST.get('name')
 
     for service in services:
-        if active_service == service['name']:
-            service['action'] = service_action
-        else:
-            service['action'] = 'status'
-        # The way to run the action may be overrided in the service definition
-        # in the settings.
-        caller = '{action}_caller'.format(**service)
-        if caller in service:
-            status = service[caller](service)
-        else:
-            status = call_service(service)
-        service['error'] = status.get('error')
-        service['status'] = status.get('status')
-    return render(request, 'serveradmin/services.html', {'services': services})
+        # Reset these, otherwise the values are cached from a previous run.
+        service['status'] = False
+        service['error'] = None
+
+        name = service['name']
+
+        try:
+            service_unit = manager.get_service(service['name'])
+
+            if name == to_manage:
+                if 'start' in request.POST:
+                    manager.activate(service_unit.Id)
+
+                elif 'stop' in request.POST:
+                    manager.deactivate(service_unit.Id)
+
+                elif 'restart' in request.POST:
+                    manager.restart(service_unit.Id)
+
+            service['status'] = service_unit.active
+
+        except NoSuchUnit:
+            service['error'] = 'Not installed'
+
+        except UnitManagementError as e:
+            messages.error(request, e)
+
+    return render(
+        request, 'serveradmin/services.html', {'services': services})
 
 
 @staff_member_required

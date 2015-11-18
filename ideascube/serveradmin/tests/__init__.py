@@ -18,6 +18,7 @@ FAKE_DBUS = {
                     'LoadUnit': {
                         'foobar.service': '/org/freedesktop/systemd1/unit/foobar_2eservice',
                         'NetworkManager.service': '/org/freedesktop/systemd1/unit/NetworkManager_2eservice',
+                        'nginx.service': '/org/freedesktop/systemd1/unit/nginx_2eservice',
                     },
                 },
             },
@@ -28,6 +29,17 @@ FAKE_DBUS = {
                     'org.freedesktop.systemd1.Unit': {
                         'Id': String('foobar.service'),
                         'LoadState': String('not-found'),
+                    },
+                },
+            },
+        },
+        '/org/freedesktop/systemd1/unit/nginx_2eservice': {
+            'org.freedesktop.systemd1.Unit': {
+                'properties': {
+                    'org.freedesktop.systemd1.Unit': {
+                        'ActiveState': String('inactive'),
+                        'Id': String('nginx.service'),
+                        'LoadState': String('loaded'),
                     },
                 },
             },
