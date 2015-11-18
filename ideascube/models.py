@@ -62,6 +62,11 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         ('r', _('Read')),
     )
 
+    PRIVATE_DATA = (
+        'short_name',
+        'full_name',
+    )
+
     serial = models.CharField(max_length=40, unique=True)
     short_name = models.CharField(_('usual name'), max_length=30, blank=True)
     full_name = models.CharField(_('full name'), max_length=100, blank=True)

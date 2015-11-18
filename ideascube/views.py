@@ -175,7 +175,8 @@ class UserExport(CSVExportMixin, View):
         return user_model.objects.all()
 
     def get_headers(self):
-        self.fields = user_model.get_data_fields()
+        fields = user_model.get_data_fields()
+        self.fields = [f for f in fields if f.name not in user_model.PRIVATE_DATA]
         return [unicode(f.verbose_name).encode('utf-8') for f in self.fields]
 
     def get_row(self, user):
