@@ -25,7 +25,7 @@ DOMAIN = 'koombook.lan'
 
 BACKUP_FORMAT = 'gztar'
 
-STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS if c['url'] in ['user_list', 'server:power', 'server:backup']]
+STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS if c['url'] in ['user_list', 'server:power', 'server:backup', 'server:wifi']]
 
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
