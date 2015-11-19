@@ -10,20 +10,11 @@ from django.core.files.base import ContentFile
 
 from ..backup import Backup
 from .test_backup import BACKUPS_ROOT, DATA_ROOT, BACKUPED_ROOT
-from . import NMActiveConnection, NMConnection, NMDevice
+from . import (
+    FakePopen, NMActiveConnection, NMConnection,
+    NMDevice)
 
 pytestmark = pytest.mark.django_db
-
-
-class FakePopen(object):
-    def __init__(self, *args, **kwargs):
-        self.returncode = 0
-
-    def communicate(self):
-        return "", ""
-
-    def wait(self):
-        pass
 
 
 @pytest.mark.parametrize("page", [
