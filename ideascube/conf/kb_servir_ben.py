@@ -35,9 +35,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'mediacenter',
     },
     {
-        'id': 'bsfcampus',
-    },
-    {
         'id': 'wikipedia',
     },
     {
