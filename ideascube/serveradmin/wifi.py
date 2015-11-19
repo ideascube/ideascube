@@ -3,6 +3,8 @@ from itertools import groupby
 from operator import attrgetter
 from uuid import uuid4
 
+from dbus import DBusException
+
 from django.utils.translation import ugettext as _
 
 try:
@@ -97,7 +99,20 @@ class AvailableWifiNetwork(object):
                     'psk': wifi_key,
                     }})
 
-        return KnownWifiConnection(NMSettings.AddConnection(settings))
+        try:
+            return KnownWifiConnection(NMSettings.AddConnection(settings))
+
+        except DBusException as e:
+            excname = e.get_dbus_name()
+            name = 'org.freedesktop.NetworkManager.Settings.InvalidProperty'
+
+            excmsg = e.get_dbus_message()
+            keyprop = '802-11-wireless-security.psk:'
+
+            if excname == name and excmsg.startswith(keyprop):
+                raise WifiError(_('Invalid Wi-Fi key'))
+
+            raise
 
     def connect(self, wifi_key=None):
         if self._connection is not None:

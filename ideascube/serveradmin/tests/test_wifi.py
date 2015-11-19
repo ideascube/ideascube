@@ -1,3 +1,4 @@
+from dbus import DBusException
 from mock import MagicMock
 import pytest
 
@@ -234,6 +235,14 @@ def test_connect_to_new_wpa_network(mocker):
     from ideascube.serveradmin.wifi import AvailableWifiNetwork, WifiError
 
     def add_connection(settings):
+        key = settings['802-11-wireless-security']['psk']
+
+        if key != 'the right key':
+            raise DBusException(
+                '802-11-wireless-security.psk: invalid value',
+                name='org.freedesktop.NetworkManager.Settings.InvalidProperty'
+                )
+
         ssid = settings['802-11-wireless']['ssid']
         connection = NMConnection(True, ssid=ssid)
 
@@ -264,12 +273,18 @@ def test_connect_to_new_wpa_network(mocker):
     assert NM.ActivateConnection.call_count == 0
     assert NMSettings.AddConnection.call_count == 0
 
-    networks['my home network'].connect('some wifi key')
+    with pytest.raises(WifiError):
+        networks['my home network'].connect('the wrong key')
+
+    assert NM.ActivateConnection.call_count == 0
+    assert NMSettings.AddConnection.call_count == 1
+
+    networks['my home network'].connect('the right key')
     assert networks['my home network'].connected is True
     assert networks['my home network'].known is True
 
     assert NM.ActivateConnection.call_count == 0
-    assert NMSettings.AddConnection.call_count == 1
+    assert NMSettings.AddConnection.call_count == 2
 
 
 def test_list_known_wifi_connections(mocker):
