@@ -329,27 +329,22 @@ def test_export_users_should_return_csv_with_users(staffapp, settings):
     user1 = UserFactory(short_name="user1", full_name="I'm user1")
     user2 = UserFactory(short_name="user2", full_name=u"I'm user2 with é")
     resp = staffapp.get(reverse('user_export'), status=200)
-    resp.mustcontain('created at')
-    resp.mustcontain('full name')
-    resp.mustcontain('serial')
-    resp.mustcontain('usual name')
-    resp.mustcontain(user1.short_name)
-    resp.mustcontain(user1.full_name)
-    resp.mustcontain(user2.short_name)
-    resp.mustcontain(user2.full_name)
+    resp.mustcontain(
+        'serial', user1.serial, user2.serial, no=[
+            'usual name', user1.short_name, user2.short_name,
+            'full_name', user1.full_name, user2.full_name,
+            ])
 
 
 def test_export_users_should_be_ok_in_arabic(staffapp, settings):
     translation.activate('ar')
-    user1 = UserFactory(short_name="user1", full_name=u"جبران خليل جبران")
-    user2 = UserFactory(short_name="user2", full_name=u"النبي (كتاب)")
+    user1 = UserFactory(serial=u"جبران خليل جبران")
+    user2 = UserFactory(serial=u"النبي (كتاب)")
     resp = staffapp.get(reverse('user_export'), status=200)
-    field, _, _, _ = user_model._meta.get_field_by_name('full_name')
+    field, _, _, _ = user_model._meta.get_field_by_name('serial')
     resp.mustcontain(unicode(field.verbose_name))
-    resp.mustcontain(user1.short_name)
-    resp.mustcontain(user1.full_name)
-    resp.mustcontain(user2.short_name)
-    resp.mustcontain(user2.full_name)
+    resp.mustcontain(user1.serial)
+    resp.mustcontain(user2.serial)
     translation.deactivate()
 
 
