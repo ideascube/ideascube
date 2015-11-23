@@ -50,7 +50,7 @@ ENTRY_ACTIVITY_CHOICES = [
 ]
 # Ideas Box specifics
 
-IDEASCUBE_NAME = 'Institut Français Burundi'
+IDEASCUBE_NAME = 'Amman'
 
 
 STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS if c['url'] in ['user_list', 'server:backup']]
