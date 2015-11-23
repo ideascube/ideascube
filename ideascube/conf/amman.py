@@ -48,3 +48,34 @@ ENTRY_ACTIVITY_CHOICES = [
     ("Training of Trainers", _("Training of Trainers")),
     ("World Mental Health Day", _("World Mental Health Day")),
 ]
+# Ideas Box specifics
+
+IDEASCUBE_NAME = 'Institut Français Burundi'
+
+
+STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS if c['url'] in ['user_list', 'server:backup']]
+
+HOME_CARDS = STAFF_HOME_CARDS + [
+    {
+        'id': 'blog',
+    },
+    {
+        'id': 'mediacenter',
+    },
+    {
+        'id': 'wikipedia',
+    },
+    {
+        'id': 'khanacademy',
+    },
+    {
+        'id': 'vikidia',
+    },
+    {
+        'id': 'appinventor',
+    },
+    {
+        'id': 'gutenberg',
+    },
+]
+
