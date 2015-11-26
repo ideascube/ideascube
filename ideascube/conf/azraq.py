@@ -57,6 +57,9 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'mediacenter',
     },
     {
+        'id': 'library',
+    },
+    {
         'id': 'wikipedia',
     },
     {
