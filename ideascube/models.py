@@ -62,10 +62,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         ('r', _('Read')),
     )
 
-    PRIVATE_DATA = (
-        'short_name',
-        'full_name',
-    )
+    PRIVATE_DATA = ('short_name', 'full_name', 'email', 'phone')
 
     serial = models.CharField(max_length=40, unique=True)
     short_name = models.CharField(_('usual name'), max_length=30, blank=True)
@@ -205,34 +202,29 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     latin_name = models.CharField(_('Latin written name'),
                                   max_length=200, blank=True)
 
-    birth_year = models.PositiveSmallIntegerField(
-        _('Birth year'), blank=True, null=True)
-    gender = models.CharField(
-        _('Gender'), choices=GENDER_CHOICES, blank=True,
-        max_length=32)
+    birth_year = models.PositiveSmallIntegerField(_('Birth year'), blank=True,
+                                                  null=True)
+    gender = models.CharField(_('Gender'), choices=GENDER_CHOICES, blank=True,
+                              max_length=32)
     country = CountryField(_('Country of origin'), max_length=100, blank=True)
     city = models.CharField(_('City of origin'), max_length=100, blank=True)
     id_card_number = models.CharField(_('ID card number'), max_length=50,
                                       blank=True)
     children_under_12 = models.PositiveSmallIntegerField(
-        _('Number of children under 12'),
-        blank=True, null=True)
+                        ('Number of children under 12'), blank=True, null=True)
     children_under_18 = models.PositiveSmallIntegerField(
-        _('Number of children under 18'),
-        blank=True, null=True)
+        _('Number of children under 18'), blank=True, null=True)
     children_above_18 = models.PositiveSmallIntegerField(
-        _('Number of children above 18'),
-        blank=True, null=True)
+        _('Number of children above 18'), blank=True, null=True)
     school_level = models.CharField(
-        _('School level'), choices=SCHOOL_LEVEL_CHOICES, blank=True,
-        max_length=32)
+                _('School level'), choices=SCHOOL_LEVEL_CHOICES, blank=True,
+                max_length=32)
     marital_status = models.CharField(
         _('Marital situation'), choices=MARITAL_STATUS_CHOICES, blank=True,
         max_length=32)
     box_awareness = models.CharField(
         _('Ideas Box awareness'), choices=BOX_AWARENESS_CHOICES, blank=True,
         max_length=32)
-
     refugee_id = models.CharField(_('Refugee ID'), max_length=100, blank=True)
     camp_entry_date = models.DateField(_('Camp entry date'), blank=True,
                                        null=True)
@@ -256,6 +248,11 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         blank=True)
     camp_address = models.CharField(_('Address in the camp'),
                                     max_length=200, blank=True)
+    phone = models.CharField(
+                    _('Phone number (use comma to register more than one)'),
+                    max_length=200, blank=True, null=True)
+    email = models.EmailField(_('Email address (optional)'), null=True,
+                              blank=True)
 
     en_level = CommaSeparatedCharField(
         _('English knowledge'), choices=LANG_KNOWLEDGE_CHOICES,

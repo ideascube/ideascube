@@ -109,6 +109,8 @@ def deindex(sender, instance, **kwargs):
 
 @receiver(connection_created)
 def add_rank_function(sender, connection, **kwargs):
+    if connection.alias == 'burundi':
+        return
     connection.connection.create_function("rank", 1, rank)
 
 

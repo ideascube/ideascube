@@ -4,4 +4,5 @@ omit =
     ideascube/tests/*
     ideascube/wsgi.py
     ideascube/management/commands/dummydata.py
+    ideascube/management/commands/import_legacy.py
     ideascube/conf/*
