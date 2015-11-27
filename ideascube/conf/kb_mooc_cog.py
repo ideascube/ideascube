@@ -37,6 +37,9 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'wikipedia',
     },
+    {
+        'id': 'bsfcampus',
+    },
 ]
 
 IDEASCUBE_BODY_ID = 'koombook'
