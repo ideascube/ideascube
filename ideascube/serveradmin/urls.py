@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^battery/$', views.battery, name='battery'),
     url(r'^wifi/(?P<ssid>.+)?$', views.wifi, name='wifi'),
     url(r'^wifi_history/$', views.wifi_history, name='wifi_history'),
+    url(r'^hotspot/$', views.wpa_config, name='wpa_config'),
 ]

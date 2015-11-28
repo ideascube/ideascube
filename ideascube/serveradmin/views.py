@@ -11,8 +11,9 @@ from ideascube.decorators import staff_member_required
 
 from .backup import Backup
 from .utils import call_service
+from .forms import WPAConfigForm
 from .wifi import (
-    AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError)
+    AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError, WPAConfig)
 
 
 @staff_member_required
@@ -167,3 +168,26 @@ def wifi_history(request):
     return render(
         request, 'serveradmin/wifi_history.html',
         {'wifi_list': wifi_list.values()})
+
+
+@staff_member_required
+def wpa_config(request):
+    config = WPAConfig()
+    initial={'passphrase': config.get_passphrase(),
+             'enable': config.is_enable}
+    form = WPAConfigForm(request.POST or initial)
+    if request.POST and form.is_valid():
+        passphrase = form.cleaned_data['passphrase']
+        enable = form.cleaned_data['enable']
+        if passphrase:
+            config.change_passphrase(passphrase)
+        if enable:
+            config.enable()
+            message = _('Hotspot is now enabled with passphrase {0}').format(passphrase)
+        else:
+            config.disable()
+            message = _('Hotspot is now disabled')
+        messages.success(request, message)
+    return render(
+        request, 'serveradmin/wpa_config.html',
+        {'form': form})
