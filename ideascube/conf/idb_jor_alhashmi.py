@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Al-Hamshi box in Jordan"""
+"""Al-Hashmi box in Jordan"""
 from .azraq import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
