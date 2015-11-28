@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Azraq box in Jordan"""
-from .base import *  # noqa
+from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
 IDEASCUBE_NAME = u"مخيم الأزرق"
@@ -49,6 +49,7 @@ ENTRY_ACTIVITY_CHOICES = [
     ("World Mental Health Day", _("World Mental Health Day")),
 ]
 
+# We need to install the other apps on this server.
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'blog',
@@ -64,11 +65,5 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'khanacademy',
-    },
-    {
-        'id': 'vikidia',
-    },
-    {
-        'id': 'gutenberg',
     },
 ]

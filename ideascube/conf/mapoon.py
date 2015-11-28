@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Mapoon box in Australia"""
-from .base import *  # noqa
+from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
 IDEASCUBE_NAME = u"Mapoon"

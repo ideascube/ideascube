@@ -1,15 +1,17 @@
-# -*- coding: utf-8 -*-
-"""KoomBook conf"""
-from .kb import *  # noqa
+from .base import *  # noqa
 
-LANGUAGE_CODE = 'fr'
-IDEASCUBE_NAME = 'Institut Français Burundi'
+STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS
+                    if c['url'] not in ['server:power', 'server:wifi']]
+
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'blog',
     },
     {
         'id': 'mediacenter',
+    },
+    {
+        'id': 'library',
     },
     {
         'id': 'wikipedia',
@@ -19,9 +21,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'vikidia',
-    },
-    {
-        'id': 'appinventor',
     },
     {
         'id': 'gutenberg',

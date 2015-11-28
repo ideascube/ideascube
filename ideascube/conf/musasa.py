@@ -1,3 +1,3 @@
 """Musasa box in Burundi"""
-from .base import *  # noqa
+from .idb import *  # noqa
 IDEASCUBE_NAME = "Musasa"
