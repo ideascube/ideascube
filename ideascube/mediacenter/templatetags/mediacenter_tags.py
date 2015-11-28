@@ -13,13 +13,6 @@ def preview_url(inst):
     elif inst.kind == inst.IMAGE:
         return inst.original.url
     else:
-        if inst.kind == inst.VIDEO:
-            return static('mediacenter/default_video.png')
-        elif inst.kind == inst.PDF:
-            return static('mediacenter/default_pdf.png')
-        elif inst.kind == inst.TEXT:
-            return static('mediacenter/default_text.png')
-        elif inst.kind == inst.AUDIO:
-            return static('mediacenter/default_sound.png')
-        else:
+        if inst.kind == inst.OTHER:
             return static('mediacenter/document.svg')
+        return static('mediacenter/default_{}.png'.format(inst.kind))
