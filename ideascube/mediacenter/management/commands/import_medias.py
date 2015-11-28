@@ -14,6 +14,13 @@ from ideascube.mediacenter.utils import guess_kind_from_content_type
 from ideascube.templatetags.ideascube_tags import smart_truncate
 
 
+def UnicodeDictReader(utf8_data, encoding='utf-8', **kwargs):
+        csv_reader = csv.DictReader(utf8_data, **kwargs)
+        for row in csv_reader:
+            yield {key.decode(encoding): value.decode(encoding)
+                   for key, value in row.iteritems()}
+
+
 class Command(BaseCommand):
     help = ('Batch import medias from CSV metadata. CSV file must contain '
             'columns "title", "summary", "path", "credits". Optional columns '
@@ -32,11 +39,11 @@ class Command(BaseCommand):
         sys.exit(1)
 
     def skip(self, msg, metadata):
-            self.stderr.write(u'⚠ Skipping. {}.'.format(msg.decode(self.encoding)))  # noqa
-            for key, value in metadata.items():
-                value = value.decode(self.encoding) if value else ''
-                self.stdout.write(u'- {}: {}'.format(key, value))
-            self.stdout.write('-' * 20)
+        self.stderr.write(u'⚠ Skipping. {}.'.format(msg))
+        for key, value in metadata.items():
+            value = value if value else ''
+            self.stdout.write(u'- {}: {}'.format(key, value))
+        self.stdout.write('-' * 20)
 
     def load(self, path):
         with open(path, 'r') as f:
@@ -47,8 +54,9 @@ class Command(BaseCommand):
                 dialect = csv.unix_dialect()
             f.seek(0)
             content = f.read()
-            return csv.DictReader(content.splitlines(),
-                                  dialect=dialect)
+            return UnicodeDictReader(content.splitlines(),
+                                     encoding=self.encoding,
+                                     dialect=dialect)
 
     def handle(self, *args, **options):
         path = os.path.abspath(options['path'])
@@ -87,7 +95,7 @@ class Command(BaseCommand):
 
         path = os.path.join(self.ROOT, original)
         if not os.path.exists(path):
-            return self.skip('Path not found: {}'.format(path),
+            return self.skip(u'Path not found: {}'.format(path),
                              metadata)
         with open(path, 'rb') as f:
             original = SimpleUploadedFile(original, f.read(),
