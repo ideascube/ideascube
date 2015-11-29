@@ -47,7 +47,7 @@ Project's typical development environment requires:
 
 On a Debian-based system, you may use:
 
-    sudo apt-get install python-pip python-virtualenv virtualenvwrapper python-dev libjpeg-dev libxml2-dev libxslt1-dev zlib1g-dev build-essential libdbus-glib-1-dev
+    sudo apt-get install python-pip python-virtualenv virtualenvwrapper python-dev libjpeg-dev libxml2-dev libxslt1-dev zlib1g-dev build-essential autoconf automake libtool libdbus-glib-1-dev
 
 ### Download the souce code
 
