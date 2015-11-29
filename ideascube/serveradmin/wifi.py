@@ -3,11 +3,11 @@ from itertools import groupby
 from operator import attrgetter
 from uuid import uuid4
 
-from dbus import DBusException
-
 from django.utils.translation import ugettext as _
 
 try:
+    from dbus import DBusException
+
     # The NetworkManager module tries to connect to the NetworkManager daemon
     # right when we import it.
     #
