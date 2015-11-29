@@ -13,6 +13,4 @@ def preview_url(inst):
     elif inst.kind == inst.IMAGE:
         return inst.original.url
     else:
-        if inst.kind == inst.OTHER:
-            return static('mediacenter/document.svg')
         return static('mediacenter/default_{}.png'.format(inst.kind))
