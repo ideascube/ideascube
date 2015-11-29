@@ -252,7 +252,6 @@ SERVICES = [
     {
         'name': 'kalite',
         'description': _('Daemon which provides KhanAcademy on lan'),
-        'status_caller': lambda x: {'status': False} if subprocess.call(['pgrep', 'kalite', '-f']) else {'status': True}  # noqa
     },
     {'name': 'kiwix',
         'description': _('Daemon which provides Wikipedia on lan')},

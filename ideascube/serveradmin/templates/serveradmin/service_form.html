@@ -1,10 +1,10 @@
 {% load i18n %}
 
 <div class="status-{% if service.error %}error{% else %}{% if service.status %}on{% else %}off{% endif %}{% endif %}">
-    <form name="services" method="POST">
+    <form id="service-{{ service.name }}" method="POST">
         {% csrf_token %}
         <input type="hidden" name="name" value="{{ service.name }}">
-        <h3>{{ service.name }} <span>{% if service.status %}running{% else %}not running{% endif %}</span></h2>
+        <h3>{{ service.name }} <span>{% if service.status %}running{% else %}not running{% endif %}</span></h3>
         <p>{{ service.description }}</p>
         {% if service.error %}
             <div class="error">{{ service.error }}</div>
@@ -14,6 +14,5 @@
         {% else %}
             <input type="submit" name="start" value="{% trans 'Start' %}">
         {% endif %}
-        <span>{{ service.sum }}</span>
     </form>
 </div>

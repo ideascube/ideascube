@@ -6,6 +6,113 @@ except Exception:
     NM_DEVICE_TYPE_ETHERNET = 1
     NM_DEVICE_TYPE_WIFI = 2
 
+from dbus import String
+
+
+# This simulates DBus services, their methods and properties
+FAKE_DBUS = {
+    'org.freedesktop.systemd1': {
+        '/org/freedesktop/systemd1': {
+            'org.freedesktop.systemd1.Manager': {
+                'methods': {
+                    'LoadUnit': {
+                        'foobar.service': '/org/freedesktop/systemd1/unit/foobar_2eservice',
+                        'NetworkManager.service': '/org/freedesktop/systemd1/unit/NetworkManager_2eservice',
+                        'nginx.service': '/org/freedesktop/systemd1/unit/nginx_2eservice',
+                    },
+                },
+            },
+        },
+        '/org/freedesktop/systemd1/unit/foobar_2eservice': {
+            'org.freedesktop.systemd1.Unit': {
+                'properties': {
+                    'org.freedesktop.systemd1.Unit': {
+                        'Id': String('foobar.service'),
+                        'LoadState': String('not-found'),
+                    },
+                },
+            },
+        },
+        '/org/freedesktop/systemd1/unit/nginx_2eservice': {
+            'org.freedesktop.systemd1.Unit': {
+                'properties': {
+                    'org.freedesktop.systemd1.Unit': {
+                        'ActiveState': String('inactive'),
+                        'Id': String('nginx.service'),
+                        'LoadState': String('loaded'),
+                    },
+                },
+            },
+        },
+        '/org/freedesktop/systemd1/unit/NetworkManager_2eservice': {
+            'org.freedesktop.systemd1.Unit': {
+                'properties': {
+                    'org.freedesktop.systemd1.Unit': {
+                        'ActiveState': String('active'),
+                        'Id': String('NetworkManager.service'),
+                        'LoadState': String('loaded'),
+                    },
+                },
+            },
+        },
+    },
+}
+
+
+class FakeBus(object):
+    def get_object(self, name, object_path):
+        return FakeProxy(name, object_path)
+
+
+class FakeProxy(object):
+    def __init__(self, name, object_path):
+        self.name = name
+        self.object_path = object_path
+
+        self.fake_dbus = FAKE_DBUS[self.name][self.object_path]
+
+    def get_dbus_method(self, method, interface):
+        def funcmaker(values):
+            def func(*args, **_):
+                value = values
+
+                for arg in args:
+                    value = value[arg]
+
+                return value
+
+            return func
+
+        if method in ('Get', 'GetAll'):
+            return funcmaker(self.fake_dbus[interface]['properties'])
+
+        elif method == 'LoadUnit':
+            return funcmaker(self.fake_dbus[interface]['methods'][method])
+
+        raise ValueError(
+            "Can't handle this:\n"
+            " name: %s\n object path: %s\n method: %s\n interface: %s\n"
+            % (self.name, self.object_path, method, interface))
+
+
+class FakePopen(object):
+    returncode = 0
+
+    def __init__(self, cmd, stdout=None, stderr=None):
+        self.cmd = cmd
+        self.stdout = stdout()
+        self.stderr = stderr()
+
+    def communicate(self):
+        if self.returncode and self.stderr is not None:
+            self.stderr.write(u'Oh Noes!')
+
+        return self.stdout.getvalue(), self.stderr.getvalue()
+
+
+class FailingPopen(FakePopen):
+    returncode = 1
+
 
 class NMAccessPoint(object):
     def __init__(self, ssid, strength, wpa_flags):
