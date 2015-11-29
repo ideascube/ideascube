@@ -3,6 +3,8 @@ from subprocess import call
 import batinfo
 from django.conf import settings
 from django.contrib import messages
+from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponseRedirect
 from django.http import StreamingHttpResponse
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
@@ -172,22 +174,39 @@ def wifi_history(request):
 
 @staff_member_required
 def wpa_config(request):
-    config = WPAConfig()
-    initial={'passphrase': config.get_passphrase(),
-             'enable': config.is_enable}
+    try:
+        config = WPAConfig()
+    except IOError as e:
+        # Handle file not found / permission denied
+        messages.error(request, 'Hotspot configuration not found.')
+        messages.error(request, e)
+        return render(
+            request, 'serveradmin/wpa_config.html',
+            {'form': None})
+
+    initial = {'passphrase': config.get_passphrase(),
+               'enable': config.is_enabled}
     form = WPAConfigForm(request.POST or initial)
     if request.POST and form.is_valid():
         passphrase = form.cleaned_data['passphrase']
         enable = form.cleaned_data['enable']
         if passphrase:
             config.change_passphrase(passphrase)
-        if enable:
-            config.enable()
-            message = _('Hotspot is now enabled with passphrase {0}').format(passphrase)
-        else:
-            config.disable()
-            message = _('Hotspot is now disabled')
-        messages.success(request, message)
+        try:
+            if enable:
+                config.enable()
+                messages.success(request, _(
+                    'Hotspot is now enabled with passphrase {0}.'
+                ).format(passphrase))
+            else:
+                config.disable()
+                messages.success(request, _('Hotspot is now disabled.'))
+        except IOError as e:
+            # file is not writeable
+            messages.error(request, _(
+                'We are not able to change hotspot configuration.'))
+            messages.error(request, e)
+        return HttpResponseRedirect(reverse_lazy('server:wpa_config'))
     return render(
         request, 'serveradmin/wpa_config.html',
         {'form': form})

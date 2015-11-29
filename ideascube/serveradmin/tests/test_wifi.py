@@ -446,3 +446,27 @@ def test_get_multiple_wifi_devices(mocker):
 
     with pytest.raises(WifiError):
         get_wifi_device()
+
+
+def test_wpa_config(wpa_config):
+    print(wpa_config.configfile)
+    assert wpa_config.is_enabled is True
+    assert wpa_config.get_passphrase() == 'pwa'
+
+    wpa_config.change_passphrase('newsecret')
+    wpa_config.enable()
+    wpa_config.load()
+
+    assert wpa_config.is_enabled is True
+    assert wpa_config.get_passphrase() == 'newsecret'
+
+    wpa_config.disable()
+    wpa_config.load()
+
+    assert wpa_config.is_enabled is False
+    assert wpa_config.get_passphrase() == 'newsecret'
+
+
+def test_wpa_config_file_missing(wpa_config):
+    wpa_config.configfile = '/xyz/missing'
+    pytest.raises(IOError, wpa_config.load)

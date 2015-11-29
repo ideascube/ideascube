@@ -4,11 +4,12 @@
 {% block twothird %}
 <h2>{% trans "Manage hotspot configuration" %}</h2>
 
-<form action="." method="POST">
+{% if form %}
+<form id="wpa_config" action="." method="POST">
   {% csrf_token %}
   {{ form.as_p }}
   <input type="submit" name="update_wpa_config" value="{% trans 'Update hotspot configuration' %}">
-
 </form>
+{% endif %}
 
 {% endblock twothird %}

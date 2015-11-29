@@ -4,6 +4,7 @@ import zipfile
 import pytest
 from webtest.forms import Checkbox, Upload
 from mock import MagicMock
+from mock import patch
 
 from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
@@ -456,3 +457,52 @@ def test_staff_forgets_non_existing_connection(mocker, staffapp):
     assert u'No known Wi-Fi networks' not in res.unicode_body
     assert u'my home network' in res.unicode_body
     assert u'random open network' in res.unicode_body
+
+
+def test_wpa_config(staffapp, wpa_config):
+    resp = staffapp.get(reverse('server:wpa_config'))
+    form = resp.forms['wpa_config']
+    assert form['enable'].checked is True
+    assert form['passphrase'].value == 'pwa'
+
+    form['passphrase'] = 'newsecret'
+    resp = form.submit()
+    resp = resp.follow()
+
+    resp.mustcontain('Hotspot is now enabled with passphrase newsecret.')
+    form = resp.forms['wpa_config']
+    assert form['enable'].checked is True
+    assert form['passphrase'].value == 'newsecret'
+    form['enable'] = False
+    resp = form.submit()
+    resp = resp.follow()
+
+    resp.mustcontain('Hotspot is now disabled.')
+    form = resp.forms['wpa_config']
+    assert form['enable'].checked is False
+    assert form['passphrase'].value == 'newsecret'
+
+
+def test_wpa_config_file_missing(staffapp, wpa_config):
+    wpa_config.__class__.configfile = '/xyz/missing'
+    resp = staffapp.get(reverse('server:wpa_config'))
+    resp.mustcontain('Hotspot configuration not found.')
+
+
+def test_wpa_config_password_required(staffapp, wpa_config):
+    resp = staffapp.get(reverse('server:wpa_config'))
+    form = resp.forms['wpa_config']
+    form['passphrase'] = ''
+    resp = form.submit()
+    resp.mustcontain('This field is required.')
+
+
+def test_wpa_config_file_not_writeable(staffapp, wpa_config):
+    resp = staffapp.get(reverse('server:wpa_config'))
+    form = resp.forms['wpa_config']
+    patcher = patch('ideascube.serveradmin.views.WPAConfig.save',
+                    side_effect=IOError('Permission denied'))
+    patcher.start()
+    resp = form.submit().follow()
+    resp.mustcontain('We are not able to change hotspot configuration.')
+    patcher.stop()
