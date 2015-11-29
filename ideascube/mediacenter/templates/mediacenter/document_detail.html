@@ -1,6 +1,6 @@
 {% extends 'two-third-third.html' %}
 
-{% load i18n static ideascube_tags %}
+{% load i18n static ideascube_tags mediacenter_tags %}
 
 {% block twothird %}
     <h5><a href="{% url 'mediacenter:index' %}">&lt; {% trans 'View all medias' %}</a></h5>
@@ -14,7 +14,7 @@
     {% else %}
         <div>
             <a href="{{ document.original.url }}">
-                <img src="{% static 'mediacenter/document.svg' %}" /><br />{% trans 'Download document' %}
+                <img src="{{ document|preview_url }}" /><br />{% trans 'Download document' %}
             </a>
         </div>
     {% endif %}

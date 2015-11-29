@@ -1,4 +1,4 @@
-{% load static i18n %}
+{% load static i18n mediacenter_tags %}
 {% if document.kind == document.IMAGE %}
     <img src="{{ document.original.url }}" />
     <p>{{ document.summary }} - {{ document.credits }}</p>
@@ -8,6 +8,6 @@
     </video>
 {% else %}
     <a href="{{ document.original.url }}">
-        <img src="{% static 'mediacenter/document.svg' %}" /><br />{% trans 'Download document' %}
+        <img src="{{ document|preview_url }}" /><br />{% trans 'Download document' %}
     </a>
 {% endif %}
