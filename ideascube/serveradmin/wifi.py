@@ -218,3 +218,66 @@ def get_wifi_device():
             _("Found more than one Wi-Fi device, this is not supported"))
 
     return devices[0]
+
+
+class WPAConfig(object):
+
+    configfile = '/etc/hostapd/hostapd.conf'
+    options = {
+         'wpa': '2',
+         'wpa_passphrase': '',
+         'wpa_key_mgmt': 'WPA-PSK',
+         'wpa_pairwise': 'TKIP',
+         'rsn_pairwise': 'CCMP',
+    }
+
+    def __init__(self):
+        self.load()
+
+    def load(self):
+        self.is_enabled = False
+        # read data from config
+        with open(self.configfile) as fd:
+            self.data = fd.readlines()
+        # update options with current passphrase and check if WPA is enable
+        for line in self.data:
+            if '=' in line and 'wpa_passphrase' in line:
+                self.is_enabled = not line.startswith('#')
+                line = line.strip('# ')
+                passphrase = line.split('=', 1)[1].strip()
+                self.options['wpa_passphrase'] = passphrase
+
+    def save(self):
+        """save data to configfile"""
+        with open(self.configfile, 'w') as fd:
+            fd.write('\n'.join(self.data))
+        # FIXME: we need to restart hostapd
+
+    def update(self, comment=False):
+        """update data with current options"""
+        comment = comment is True and '# ' or ''
+        for i, line in enumerate(self.data):
+            new_line = line.strip()
+            if '=' in line:
+                option = line.strip('# ').split('=')[0].strip()
+                if option in self.options:
+                    new_line = comment + option + '=' + self.options[option]
+            self.data[i] = new_line
+
+    def get_passphrase(self):
+        """get current passphrase"""
+        return self.options['wpa_passphrase']
+
+    def change_passphrase(self, passphrase):
+        """update passphrase and enable WPA"""
+        self.options['wpa_passphrase'] = passphrase
+
+    def disable(self):
+        """disable WPA (openbar)"""
+        self.update(comment=True)
+        self.save()
+
+    def enable(self):
+        """disable WPA (openbar)"""
+        self.update(comment=False)
+        self.save()
