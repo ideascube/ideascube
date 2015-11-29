@@ -1,11 +1,14 @@
 from subprocess import call
 
 import batinfo
+import os
+import requests
 from django.conf import settings
 from django.contrib import messages
 from django.http import StreamingHttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
+from kinto_client import Client
 
 from ideascube.decorators import staff_member_required
 
@@ -167,3 +170,41 @@ def wifi_history(request):
     return render(
         request, 'serveradmin/wifi_history.html',
         {'wifi_list': wifi_list.values()})
+
+
+@staff_member_required
+def packages(request):
+    # XXX: Should have a local Kinto cache.
+    client = Client(server_url='http://kinto.bsf-intranet.org/v1',
+                    bucket='ideascube', collection='packages')
+    packages = client.get_records()
+
+    return render(
+        request, 'serveradmin/packages.html',
+        {'packages': packages})
+
+
+@staff_member_required
+def package_detail(request, package_id):
+    client = Client(server_url='http://kinto.bsf-intranet.org/v1',
+                    bucket='ideascube', collection='packages')
+    # XXX: Should use the local Kinto cache.
+    package = client.get_record(package_id)
+
+    # XXX: Should be done asynchroneously.
+    def download_file(url, path=None):
+        local_filename = url.split('/')[-1]
+
+        if path:
+            local_filename = os.path.join(path, local_filename)
+        # NOTE the stream=True parameter
+        r = requests.get(url, stream=True)
+        with open(local_filename, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024):
+                if chunk:  # filter out keep-alive new chunks
+                    f.write(chunk)
+        return local_filename
+
+    download_file(package['data']['url'], '/tmp')
+
+    return redirect('library:index')

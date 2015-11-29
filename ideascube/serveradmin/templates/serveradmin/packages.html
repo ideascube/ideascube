@@ -1,0 +1,20 @@
+{% extends 'serveradmin/index.html' %}
+{% load i18n %}
+
+{% block twothird %}
+<h2>{% trans "Install new packages" %}</h2>
+{% for package in packages %}
+{% if forloop.first %}<ul class="packages-list">{% endif %}
+    <li>
+        <a class="package-detail" href="{% url 'server:package_detail' package.id %}">
+            {{ package.title }}
+        </a>
+        <small>{{ package.tags|join:', ' }}</small>
+    </li>
+{% if forloop.last %}
+</ul>
+{% endif %}
+{% empty %}
+<p>{% trans 'No packages yet.' %}</p>
+{% endfor %}
+{% endblock twothird %}
