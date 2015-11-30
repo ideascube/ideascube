@@ -510,6 +510,9 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card.bsfcampus {
     background-image: url('./img/cards/bsfcampus.png');
 }
+.card.koombookedu {
+    background-image: url('./img/cards/koombookedu.png');
+}
 .card.cpassorcier {
     background-image: url('./img/cards/cpassorcier.png');
 }

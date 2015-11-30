@@ -6,15 +6,9 @@ LANGUAGE_CODE = 'fr'
 IDEASCUBE_NAME = 'UNIVERSITE RDC'
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
-        'id': 'blog',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
         'id': 'wikipedia',
     },
     {
-        'id': 'bsfcampus',
+        'id': 'koombookedu',
     },
 ]
