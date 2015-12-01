@@ -1,3 +1,9 @@
+ideascube (0.6.0-1) unstable; urgency=low
+  * services are now using systemd (https://github.com/ideascube/ideascube/pull/213)
+  * conf is factorized (https://github.com/ideascube/ideascube/pull/217)
+  * upgraded django-taggit to 0.17.5
+  * added conf for Ethiopian boxes and new Jordan one
+
 ideascube (0.5.0-1) unstable; urgency=low
 
   * wifi management [#197](https://github.com/ideascube/ideascube/pull/197)
