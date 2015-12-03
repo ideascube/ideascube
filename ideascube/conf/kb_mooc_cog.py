@@ -11,7 +11,4 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'wikipedia',
     },
-    {
-        'id': 'khanacademy',
-    },
 ]
