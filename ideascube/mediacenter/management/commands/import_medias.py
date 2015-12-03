@@ -33,6 +33,8 @@ class Command(BaseCommand):
                                  'title and kind is found in db.')
         parser.add_argument('--encoding', default='utf-8',
                             help='Define csv encoding.')
+        parser.add_argument('--dry-run', action='store_true',
+                            help='Only check data, do not save.')
 
     def abort(self, msg):
         self.stderr.write(msg)
@@ -63,6 +65,7 @@ class Command(BaseCommand):
         path = os.path.abspath(options['path'])
         self.update = options['update']
         self.encoding = options['encoding']
+        self.dry_run = options['dry_run']
         if not os.path.exists(path):
             self.abort('Path does not exist: {}'.format(path))
         self.ROOT = os.path.dirname(path)
@@ -115,8 +118,12 @@ class Command(BaseCommand):
         form = DocumentForm(data=metadata, files=files, instance=instance)
 
         if form.is_valid():
-            doc = form.save()
-            self.stdout.write(u'✔ Uploaded media {}'.format(doc))
+            if self.dry_run:
+                self.stdout.write(u'✔ Metadata valid {}'.format(
+                                                            metadata['title']))
+            else:
+                doc = form.save()
+                self.stdout.write(u'✔ Uploaded media {}'.format(doc))
         else:
             for field, error in form.errors.items():
                 self.skip('{}: {}'.format(field, error.as_text()), metadata)
