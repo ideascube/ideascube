@@ -38,11 +38,12 @@ class Command(BaseCommand):
         self.stderr.write(msg)
         sys.exit(1)
 
-    def skip(self, msg, metadata):
+    def skip(self, msg, metadata=None):
         self.stderr.write(u'⚠ Skipping. {}.'.format(msg))
-        for key, value in metadata.items():
-            value = value if value else ''
-            self.stdout.write(u'- {}: {}'.format(key, value))
+        if metadata:
+            for key, value in metadata.items():
+                value = value if value else ''
+                self.stdout.write(u'- {}: {}'.format(key, value))
         self.stdout.write('-' * 20)
 
     def load(self, path):
@@ -90,8 +91,8 @@ class Command(BaseCommand):
 
         instance = Document.objects.filter(title=title, kind=kind).last()
         if instance and not self.update:
-            return self.skip('Document exists. Use --update to reimport data',
-                             metadata)
+            return self.skip(u'Document "{}" exists. Use --update to reimport '
+                             u'data'.format(title))
 
         path = os.path.join(self.ROOT, original)
         if not os.path.exists(path):
