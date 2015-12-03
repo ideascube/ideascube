@@ -115,6 +115,18 @@ EXTRA_LANG_INFO = {
         'name': 'Bambara',
         'code': 'bm',
         'name_local': 'Bambara'
+    },
+    'am': {
+        'bidi': False,
+        'name': 'Amharic',
+        'code': 'am',
+        'name_local': u'አማርኛ'
+    },
+    'so': {
+        'bidi': False,
+        'name': 'Somali',
+        'code': 'am',
+        'name_local': u'Af-Soomaali'
     }
 }
 
