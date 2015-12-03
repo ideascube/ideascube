@@ -5,7 +5,7 @@ import os
 import sys
 
 from django.conf import settings
-from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files import File
 from django.core.management.base import BaseCommand
 
 from ideascube.mediacenter.models import Document
@@ -38,11 +38,12 @@ class Command(BaseCommand):
         self.stderr.write(msg)
         sys.exit(1)
 
-    def skip(self, msg, metadata):
+    def skip(self, msg, metadata=None):
         self.stderr.write(u'⚠ Skipping. {}.'.format(msg))
-        for key, value in metadata.items():
-            value = value if value else ''
-            self.stdout.write(u'- {}: {}'.format(key, value))
+        if metadata:
+            for key, value in metadata.items():
+                value = value if value else ''
+                self.stdout.write(u'- {}: {}'.format(key, value))
         self.stdout.write('-' * 20)
 
     def load(self, path):
@@ -90,23 +91,26 @@ class Command(BaseCommand):
 
         instance = Document.objects.filter(title=title, kind=kind).last()
         if instance and not self.update:
-            return self.skip('Document exists. Use --update to reimport data',
-                             metadata)
+            return self.skip(u'Document "{}" exists. Use --update to reimport '
+                             u'data'.format(title))
 
         path = os.path.join(self.ROOT, original)
         if not os.path.exists(path):
             return self.skip(u'Path not found: {}'.format(path),
                              metadata)
         with open(path, 'rb') as f:
-            original = SimpleUploadedFile(original, f.read(),
-                                          content_type=content_type)
+            original = File(f, name=original)
 
-        preview = metadata.get('preview')
-        if preview:
-            path = os.path.join(self.ROOT, preview)
-            with open(path, 'rb') as f:
-                preview = SimpleUploadedFile(preview, f.read())
+            preview = metadata.get('preview')
+            if preview:
+                path = os.path.join(self.ROOT, preview)
+                with open(path, 'rb') as f:
+                    preview = File(f, name=preview)
+                    self.save(metadata, original, instance, preview)
+            else:
+                self.save(metadata, original, instance)
 
+    def save(self, metadata, original, instance, preview=None):
         files = dict(original=original, preview=preview)
         form = DocumentForm(data=metadata, files=files, instance=instance)
 
