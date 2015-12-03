@@ -102,6 +102,8 @@ AVAILABLE_LANGUAGES = (
     ('en', 'English'),
     ('fr', u'Français'),
     ('ar', u'العربية'),
+    ('am', u'አማርኛ'),
+    ('so', u'Af-Soomaali'),
 )
 
 SUPPORTED_LANGUAGES = os.environ.get('SUPPORTED_LANGUAGES', 'fr en ar').split()
