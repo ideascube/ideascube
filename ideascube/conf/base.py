@@ -104,13 +104,31 @@ AVAILABLE_LANGUAGES = (
     ('ar', u'العربية'),
     ('am', u'አማርኛ'),
     ('so', u'Af-Soomaali'),
+    ('sw', u'Swahili'),
+    ('bm', u'Bambara'),
 )
 
-SUPPORTED_LANGUAGES = os.environ.get('SUPPORTED_LANGUAGES', 'fr en ar').split()
-LANGUAGES = []
-for code, label in AVAILABLE_LANGUAGES:
-    if code in SUPPORTED_LANGUAGES:
-        LANGUAGES.append((code, label))
+# Those will be added to django.locale.LANG_INFO.
+EXTRA_LANG_INFO = {
+    'bm': {
+        'bidi': False,
+        'name': 'Bambara',
+        'code': 'bm',
+        'name_local': 'Bambara'
+    },
+    'am': {
+        'bidi': False,
+        'name': 'Amharic',
+        'code': 'am',
+        'name_local': u'አማርኛ'
+    },
+    'so': {
+        'bidi': False,
+        'name': 'Somali',
+        'code': 'am',
+        'name_local': u'Af-Soomaali'
+    }
+}
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'ideascube', 'locale'),

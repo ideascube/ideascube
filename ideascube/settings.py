@@ -43,5 +43,13 @@ finally:
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
                 'NAME': os.path.join(BACKUPED_ROOT, 'default.sqlite'),
-            }
+            },
         }
+    LANGUAGES = []
+    # Allow to override AVAILABLE_LANGUAGES in box settings, without needing
+    # to override also LANGUAGES.
+    for code, label in ldict.get('AVAILABLE_LANGUAGES'):
+        LANGUAGES.append((code, label))
+    # Some languages are missing from Django.
+    from django.conf.locale import LANG_INFO
+    LANG_INFO.update(EXTRA_LANG_INFO)  # noqa
