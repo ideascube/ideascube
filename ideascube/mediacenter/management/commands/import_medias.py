@@ -5,7 +5,7 @@ import os
 import sys
 
 from django.conf import settings
-from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files import File
 from django.core.management.base import BaseCommand
 
 from ideascube.mediacenter.models import Document
@@ -98,15 +98,18 @@ class Command(BaseCommand):
             return self.skip(u'Path not found: {}'.format(path),
                              metadata)
         with open(path, 'rb') as f:
-            original = SimpleUploadedFile(original, f.read(),
-                                          content_type=content_type)
+            original = File(f, name=original)
 
-        preview = metadata.get('preview')
-        if preview:
-            path = os.path.join(self.ROOT, preview)
-            with open(path, 'rb') as f:
-                preview = SimpleUploadedFile(preview, f.read())
+            preview = metadata.get('preview')
+            if preview:
+                path = os.path.join(self.ROOT, preview)
+                with open(path, 'rb') as f:
+                    preview = File(f, name=preview)
+                    self.save(metadata, original, instance, preview)
+            else:
+                self.save(metadata, original, instance)
 
+    def save(self, metadata, original, instance, preview=None):
         files = dict(original=original, preview=preview)
         form = DocumentForm(data=metadata, files=files, instance=instance)
 
