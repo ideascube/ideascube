@@ -11,20 +11,15 @@ contribute to the project, please see [Contributor guide](contributing.md).
 
 You need python 2.7 installed.
 
-Install system dependencies:
+First follow install process for [development](contributing.md).
 
-    sudo apt-get install python-pip python-virtualenv virtualenvwrapper
+Install system build dependencies:
 
-Create a virtualenv (we name it `ideascube` here but the name is up to you):
+    sudo apt-get install dh-virtualenv debhelper
 
-    mkvirtualenv ideascube
+Install test dependencies:
 
-Install python dependencies:
-
-    make install  # for production
-
-
-## Project setup
+    make develop
 
 First, build the `.deb`:
 
