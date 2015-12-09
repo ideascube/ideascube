@@ -32,6 +32,7 @@ def test_should_import_medias():
     video = Document.objects.get(title='my video')
     assert video.summary == 'my video summary'
     assert video.kind == Document.VIDEO
+    assert Document.objects.search('summary').count() == 3
 
 
 @pytest.mark.parametrize('row', [
