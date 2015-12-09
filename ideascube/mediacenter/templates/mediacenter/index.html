@@ -20,6 +20,8 @@
             {% fa 'plus' 'fa-fw' %} <a href="{% url 'mediacenter:document_create' %}">{% trans "Add a document" %}</a>
         </div>
     {% endif %}
+    {% url 'mediacenter:index' as index %}
+    {% include 'search/box.html' with action=index %}
     <div class="card tinted">
         <h4><span class="theme read">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
         {% for kind, label in view.model.KIND_CHOICES %}

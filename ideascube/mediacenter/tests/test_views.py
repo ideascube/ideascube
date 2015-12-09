@@ -29,6 +29,16 @@ def test_index_page_is_paginated(app, monkeypatch):
     response = app.get(reverse('mediacenter:index') + '?page=3', status=404)
 
 
+def test_index_page_should_have_search_box(app, video):
+    DocumentFactory(title="I'm a scorpion")
+    response = app.get(reverse('mediacenter:index'), status=200)
+    form = response.forms['search']
+    form['q'] = "scorpion"
+    response = form.submit()
+    assert "scorpion" in response.content
+    assert video.title not in response.content
+
+
 def test_everyone_should_access_image_detail_page(app, image):
     assert app.get(reverse('mediacenter:document_detail',
                            kwargs={'pk': image.pk}), status=200)

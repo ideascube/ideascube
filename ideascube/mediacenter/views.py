@@ -36,6 +36,19 @@ class Index(KindMixin, ListView):
     model = Document
     template_name = 'mediacenter/index.html'
     paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs)
+        context['q'] = self.request.GET.get('q', '')
+        return context
+
+    def get_queryset(self):
+        qs = super(Index, self).get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            return qs.search(query)
+        return qs
+
 index = Index.as_view()
 
 
