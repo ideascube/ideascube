@@ -94,7 +94,6 @@ class AvailableWifiNetwork(object):
 
             settings.update({
                 '802-11-wireless-security': {
-                    'auth-alg': 'open',
                     'key-mgmt': 'wpa-psk',
                     'psk': wifi_key,
                     }})
