@@ -131,7 +131,8 @@ class AvailableWifiNetwork(object):
 
     @property
     def secure(self):
-        return self._access_point.WpaFlags != 0
+        return bool(
+            self._access_point.WpaFlags or self._access_point.RsnFlags)
 
     @property
     def ssid(self):
