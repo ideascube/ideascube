@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-05 12:49+0000\n"
+"POT-Creation-Date: 2015-12-09 14:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -770,12 +770,12 @@ msgstr ""
 msgid "Add a document"
 msgstr ""
 
-#: ideascube/mediacenter/templates/mediacenter/index.html:24
+#: ideascube/mediacenter/templates/mediacenter/index.html:26
 #: ideascube/templates/ideascube/includes/tag_cloud.html:4
 msgid "browse"
 msgstr ""
 
-#: ideascube/mediacenter/templates/mediacenter/index.html:24
+#: ideascube/mediacenter/templates/mediacenter/index.html:26
 msgid "by kind"
 msgstr ""
 
@@ -1746,7 +1746,7 @@ msgid "Vikidia"
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/vikidia.html:4
-msgid "Parcourir l'encyclopedie libre pour les jeunes."
+msgid "Browse the encyclopedia for children."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/wikipedia.html:3

@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Florian HESLOUIN <splite@zimdeo.fr>, 2015
 # kent1 <kent1@arscenic.info>, 2015
@@ -11,15 +11,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-05 12:43+0000\n"
-"PO-Revision-Date: 2015-10-21 10:13+0000\n"
-"Last-Translator: Florian HESLOUIN <splite@zimdeo.fr>\n"
-"Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/"
-"fr/)\n"
-"Language: fr\n"
+"POT-Creation-Date: 2015-12-09 14:49+0000\n"
+"PO-Revision-Date: 2015-12-09 14:50+0000\n"
+"Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
+"Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ideascube/blog/models.py:44
@@ -73,10 +72,8 @@ msgstr "Langue"
 
 #: ideascube/blog/templates/blog/by_tag.html:6
 #: ideascube/blog/templates/blog/content_detail.html:6
-#, fuzzy
-#| msgid "New post"
 msgid "View all posts"
-msgstr "Créer un billet"
+msgstr ""
 
 #: ideascube/blog/templates/blog/by_tag.html:7
 msgid "blog"
@@ -294,16 +291,12 @@ msgid "Create, remove or modify users."
 msgstr ""
 
 #: ideascube/conf/base.py:194
-#, fuzzy
-#| msgid "Inventories"
 msgid "Entries"
-msgstr "Inventaires"
+msgstr ""
 
 #: ideascube/conf/base.py:195
-#, fuzzy
-#| msgid "Manage services"
 msgid "Manage user entries."
-msgstr "Gérer les services"
+msgstr ""
 
 #: ideascube/conf/base.py:202
 #: ideascube/monitoring/templates/monitoring/stock.html:5
@@ -311,38 +304,28 @@ msgid "Stock"
 msgstr "Stock"
 
 #: ideascube/conf/base.py:203
-#, fuzzy
-#| msgid "Manage stock"
 msgid "Manage stock."
-msgstr "Gérer le stock"
+msgstr ""
 
 #: ideascube/conf/base.py:210
 msgid "Loans"
 msgstr ""
 
 #: ideascube/conf/base.py:211
-#, fuzzy
-#| msgid "Manage backups"
 msgid "Manage loans."
-msgstr "Gérer les sauvegardes"
+msgstr ""
 
 #: ideascube/conf/base.py:218
-#, fuzzy
-#| msgid "Restart"
 msgid "Stop/Restart"
-msgstr "Redémarrer"
+msgstr ""
 
 #: ideascube/conf/base.py:219
-#, fuzzy
-#| msgid "Stop or restart the server"
 msgid "Stop or restart the server."
-msgstr "Arrêter ou redémarrer le serveur"
+msgstr ""
 
 #: ideascube/conf/base.py:226
-#, fuzzy
-#| msgid "Backup"
 msgid "Backups"
-msgstr "Sauvegarder"
+msgstr ""
 
 #: ideascube/conf/base.py:227
 msgid "Create, restore, download, upload backups."
@@ -357,10 +340,8 @@ msgid "Manage Wi-Fi connections."
 msgstr ""
 
 #: ideascube/conf/base.py:270
-#, fuzzy
-#| msgid "Ideasbox web server"
 msgid "Ideascube web server"
-msgstr "Serveur Ideasbox"
+msgstr ""
 
 #: ideascube/conf/base.py:271
 msgid "Global proxy"
@@ -395,10 +376,8 @@ msgid "the community"
 msgstr ""
 
 #: ideascube/forms.py:22
-#, fuzzy
-#| msgid "Users"
 msgid "Username"
-msgstr "Utilisateurs"
+msgstr ""
 
 #: ideascube/forms.py:24
 msgid "Password"
@@ -407,8 +386,8 @@ msgstr ""
 #: ideascube/forms.py:25
 msgid ""
 "To create a strong password, forget about passwords, and think rather about "
-"a passphrase. For instance: \"The boat is flowing on the water\" is a strong "
-"and easy to remember passphrase. Now choose your own passphrase!"
+"a passphrase. For instance: \"The boat is flowing on the water\" is a strong"
+" and easy to remember passphrase. Now choose your own passphrase!"
 msgstr ""
 
 #: ideascube/forms.py:33
@@ -428,10 +407,8 @@ msgid "CSV from \"Mocam-en-ligne\""
 msgstr ""
 
 #: ideascube/library/forms.py:57
-#, fuzzy
-#| msgid "Ideasbox web server"
 msgid "Ideascube ZIP"
-msgstr "Serveur Ideasbox"
+msgstr ""
 
 #: ideascube/library/forms.py:75
 msgid "Unknown file format"
@@ -535,16 +512,13 @@ msgstr ""
 
 #: ideascube/library/templates/library/book_confirm_delete.html:4
 #, python-format
-msgid ""
-"Are you sure you want to delete book \"%(book)s\" and all its specimens?"
+msgid "Are you sure you want to delete book \"%(book)s\" and all its specimens?"
 msgstr ""
 
 #: ideascube/library/templates/library/book_detail.html:6
 #: ideascube/library/templates/library/by_tag.html:6
-#, fuzzy
-#| msgid "New book"
 msgid "View all books"
-msgstr "Nouveau livre"
+msgstr ""
 
 #: ideascube/library/templates/library/book_detail.html:10
 #: ideascube/library/templates/library/index.html:5
@@ -659,10 +633,8 @@ msgid "Import notices"
 msgstr ""
 
 #: ideascube/library/templates/library/index.html:22
-#, fuzzy
-#| msgid "Export all users"
 msgid "Export notices"
-msgstr "Exporter tous les utilisateurs"
+msgstr ""
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:4
 #, python-format
@@ -699,10 +671,8 @@ msgid "Missing CSV file in zip"
 msgstr ""
 
 #: ideascube/library/views.py:95
-#, fuzzy
-#| msgid "Unable to load file:"
 msgid "Unable to process notices: {}"
-msgstr "Impossible de charger le fichier :"
+msgstr ""
 
 #: ideascube/library/views.py:99
 #, python-brace-format
@@ -802,12 +772,12 @@ msgstr "Aucun document pour le moment."
 msgid "Add a document"
 msgstr "Ajouter un document"
 
-#: ideascube/mediacenter/templates/mediacenter/index.html:24
+#: ideascube/mediacenter/templates/mediacenter/index.html:26
 #: ideascube/templates/ideascube/includes/tag_cloud.html:4
 msgid "browse"
 msgstr "parcourir"
 
-#: ideascube/mediacenter/templates/mediacenter/index.html:24
+#: ideascube/mediacenter/templates/mediacenter/index.html:26
 msgid "by kind"
 msgstr ""
 
@@ -841,9 +811,7 @@ msgstr "membre de l'équipe"
 
 #: ideascube/models.py:71
 msgid "Designates whether the user can log into this admin site."
-msgstr ""
-"Permet de définir si l'utilisateur pour accéder aux fonctions "
-"d'administration"
+msgstr "Permet de définir si l'utilisateur pour accéder aux fonctions d'administration"
 
 #: ideascube/models.py:144
 msgid "Student"
@@ -1174,10 +1142,8 @@ msgid "description"
 msgstr ""
 
 #: ideascube/monitoring/models.py:84
-#, fuzzy
-#| msgid "Enter a bar code"
 msgid "ideascube bar code"
-msgstr "Entrer un code-barre"
+msgstr ""
 
 #: ideascube/monitoring/models.py:86
 msgid "Serial number"
@@ -1319,9 +1285,7 @@ msgstr ""
 
 #: ideascube/monitoring/templates/monitoring/specimen_confirm_delete.html:4
 #, python-format
-msgid ""
-"Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s"
-"\"?"
+msgid "Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s\"?"
 msgstr ""
 
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:6
@@ -1443,20 +1407,17 @@ msgid "No result for \"%(query)s\"."
 msgstr "Aucun résultat pour \"%(query)s\"."
 
 #: ideascube/serveradmin/backup.py:37
-#, fuzzy, python-brace-format
-#| msgid "backup name must end with .zip"
+#, python-brace-format
 msgid "backup name must end with one of {extensions}"
-msgstr "Le nom d'une sauvegarde doit terminer par .zip "
+msgstr ""
 
 #: ideascube/serveradmin/backup.py:104
 msgid "Unkown format for file {}"
 msgstr ""
 
 #: ideascube/serveradmin/backup.py:141
-#, fuzzy
-#| msgid "Not a zip file"
 msgid "Not a tar file"
-msgstr "Ce n'est pas un fichier zip"
+msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:5
 msgid "Manage server backups"
@@ -1513,8 +1474,8 @@ msgstr ""
 #: ideascube/serveradmin/templates/serveradmin/backup.html:31
 #, python-brace-format
 msgid ""
-"File must be a zip, and file name must be in the form {source}-{version}-"
-"{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
+"File must be a zip, and file name must be in the form "
+"{source}-{version}-{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
 msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:32
@@ -1530,16 +1491,13 @@ msgid "Capacity"
 msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:11
-#, fuzzy
-#| msgid "Server Administration"
 msgid "Server info"
-msgstr "Administration du serveur"
+msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:13
-#, fuzzy, python-format
-#| msgid "Current version: %(version)s"
+#, python-format
 msgid "Version: %(version)s"
-msgstr "Version actuelle : %(version)s"
+msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:14
 #, python-format
@@ -1616,10 +1574,8 @@ msgid "Wi-Fi History"
 msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/wifi_history.html:21
-#, fuzzy
-#| msgid "Restore selected"
 msgid "Forget Selected"
-msgstr "Restaurer la sélection"
+msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/wifi_history.html:25
 msgid "No known Wi-Fi networks"
@@ -1701,10 +1657,8 @@ msgid "one book at random"
 msgstr "un livre au hasard"
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:3
-#, fuzzy
-#| msgid "Inventories"
 msgid "App Inventor"
-msgstr "Inventaires"
+msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:4
 msgid "Create your own apps for Android."
@@ -1756,10 +1710,8 @@ msgid ""
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/library.html:5
-#, fuzzy
-#| msgid "No books yet."
 msgid "Browse books."
-msgstr "Pas encore de livres."
+msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:5
 msgid "Browse videos, sounds, images, pdf…"
@@ -1782,10 +1734,8 @@ msgid "Set of videos conference on innovation."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/ubuntudoc.html:3
-#, fuzzy
-#| msgid "Current occupation"
 msgid "Ubuntu documentation"
-msgstr "Profession actuelle"
+msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/ubuntudoc.html:4
 msgid "La documentation du célèbre système d'exploitation Ubuntu."
@@ -1796,7 +1746,7 @@ msgid "Vikidia"
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/vikidia.html:4
-msgid "Parcourir l'encyclopedie libre pour les jeunes."
+msgid "Browse the encyclopedia for children."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/wikipedia.html:3
@@ -1860,10 +1810,8 @@ msgid "Are you sure you want to delete user \"%(user_obj)s\"?"
 msgstr "Êtes-vous sûr de vouloir effacer l'utilisateur  \"%(user_obj)s\"?"
 
 #: ideascube/templates/ideascube/user_detail.html:5
-#, fuzzy
-#| msgid "New post"
 msgid "View all users"
-msgstr "Créer un billet"
+msgstr ""
 
 #: ideascube/templates/ideascube/user_detail.html:16
 msgid "Set password"
@@ -1922,21 +1870,3 @@ msgstr ""
 #, python-brace-format
 msgid "Password has been set for {user}"
 msgstr "Le mot de passe a été modifié pour {user}"
-
-#~ msgid "Number of children under 12"
-#~ msgstr "Nombre d'enfants en dessous de 12 ans"
-
-#~ msgid "Sure?"
-#~ msgstr "Sûr?"
-
-#~ msgid "Box Administration"
-#~ msgstr "Administration de la box"
-
-#~ msgid "Manage members"
-#~ msgstr "Gérer les membres"
-
-#~ msgid "Backup / restore"
-#~ msgstr "Sauvegarder / restaurer"
-
-#~ msgid "log out"
-#~ msgstr "se déconnecter"
