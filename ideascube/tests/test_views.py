@@ -302,7 +302,9 @@ def test_staff_can_access_set_password_page(staffapp, user):
 def test_staff_can_set_password(staffapp, client, user):
     old_password = user.password
     url = reverse('user_set_password', kwargs={'pk': user.pk})
-    form = staffapp.get(url).forms['set_password']
+    response = staffapp.get(url)
+    response.mustcontain(str(user))
+    form = response.forms['set_password']
     password = 'thisisanewpassword'
     form['new_password1'] = password
     form['new_password2'] = password
