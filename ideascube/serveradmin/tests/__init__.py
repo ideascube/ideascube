@@ -119,6 +119,7 @@ class NMAccessPoint(object):
         self.Ssid = ssid
         self.Strength = strength
         self.WpaFlags = wpa_flags
+        self.RsnFlags = wpa_flags
         self.Frequency = 5000
 
 
