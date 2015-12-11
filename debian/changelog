@@ -1,3 +1,19 @@
+ideascube (0.7.0-dev) unstable; urgency=low
+
+  * Added Somali, Amharic, Kirundi, Bambara and Swahili supported languages
+  * Added command for importing data from mysql of legacy ideasbox servers (Burundi)
+  * added "phone" and "email" fields to User model (migrate needed)
+  * added --dry-run option to import_medias command
+  * optimized file import on import_medias command
+  * added "all users" and "new user" action to user detail page
+  * optimized build process (upgraded pip to use cache and added wheel option)
+  * added search form in media center home page
+  * fixed WPA2 network connection (cf #231)
+  * fixed bad username displayed in set_password view header
+  * added "show password" button near login password field (cf #236)
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Sat, 5 Dec 2015 11:25:27 +0100
+
 ideascube (0.6.0-1) unstable; urgency=low
 
   * services are now using systemd (https://github.com/ideascube/ideascube/pull/213)
