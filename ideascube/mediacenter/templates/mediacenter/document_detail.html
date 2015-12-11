@@ -11,14 +11,11 @@
         <video controls width="100%">
             <source src="{{ document.original.url }}">
         </video>
-    {% else %}
-        <div>
-            <a href="{{ document.original.url }}">
-                <img src="{{ document|preview_url }}" /><br />{% trans 'Download document' %}
-            </a>
-        </div>
     {% endif %}
     <div class="text">{{ document.summary }}</div>
+    <div>
+        <a class="button" href="{{ document.original.url }}"><span class="fa fa-download fa-fw"></span> {% trans 'Download document' %}</a>
+    </div>
 {% endblock twothird %}
 {% block third %}
     {% if user.is_staff %}
