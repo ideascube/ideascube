@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""Library Without Borders box in Detroit, USA"""
+"""Ideaxbox in Calais Bibliothèque, France"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
-IDEASCUBE_NAME = u"Library Whitout Border Detroit"
+IDEASCUBE_NAME = u"CALAIS BIBLIOTHEQUE"
 IDEASCUBE_PLACE_NAME = _("city")
-COUNTRIES_FIRST = ['US']
+COUNTRIES_FIRST = ['FR']
 TIME_ZONE = None
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'fr'
 LOAN_DURATION = 14
 MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'user_id', 'birth_year', 'gender']
 USER_FORM_FIELDS = (
@@ -17,7 +17,6 @@ USER_FORM_FIELDS = (
     (_('In the town'), ['current_occupation', 'school_level']),
     (_('Language skills'), ['en_level']),
 )
-
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'blog',
@@ -37,4 +36,8 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'gutenberg',
     },
+    {
+        'id': 'vikidia',
+    },
 ]
+
