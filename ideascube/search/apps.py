@@ -5,7 +5,8 @@ from .utils import create_index_table
 
 
 def create_index(sender, **kwargs):
-    create_index_table()
+    if isinstance(sender, SearchConfig):
+        create_index_table(force=False)
 
 
 class SearchConfig(AppConfig):

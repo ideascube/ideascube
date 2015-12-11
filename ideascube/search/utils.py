@@ -3,11 +3,15 @@ import struct
 from django.db import connection
 
 
-def create_index_table():
+def create_index_table(force=True):
     cursor = connection.cursor()
-    cursor.execute("DROP TABLE IF EXISTS idx")
-    cursor.execute("CREATE VIRTUAL TABLE idx using "
-                   "FTS4(id, model, model_id, public, text)")
+    cursor.execute("SELECT count(*) FROM sqlite_master "
+                   "WHERE type='table' AND name='idx';")
+    count = cursor.fetchone()[0]
+    if not count or force:
+        cursor.execute("DROP TABLE IF EXISTS idx")
+        cursor.execute("CREATE VIRTUAL TABLE idx using "
+                       "FTS4(id, model, model_id, public, text)")
 
 
 def rank(match_info):
