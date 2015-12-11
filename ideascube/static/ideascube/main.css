@@ -317,6 +317,21 @@ html[dir="rtl"] label.required:after {
     font-size: 11px;
     border-radius: 0 2px;
 }
+input[type="text"].showable-password,
+input[type="password"].showable-password {
+    display: inline-block;
+    margin: 0;
+    padding-right: 30px;
+}
+.show-password {
+    display: inline-block;
+    width: 25px;
+    line-height: 50px;
+    vertical-align: middle;
+    margin-left: -25px;
+    cursor: pointer;
+}
+
 
 
 /* ************************************************* */

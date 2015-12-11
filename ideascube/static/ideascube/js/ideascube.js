@@ -289,3 +289,26 @@ ID.initWifiList = function (item_selector, popup_selector, urlroot) {
         }
     }
 };
+
+
+ID.viewablePassword = function () {
+    var el = document.querySelector('input[type="password"]');
+    if (!el) return;
+    var wrapper = document.createElement('div'),
+        button = document.createElement('i'),
+        form = el.form;
+    el.parentNode.insertBefore(wrapper, el);
+    wrapper.appendChild(el);
+    el.className = el.className + ' showable-password';
+    button.className = 'fa fa-eye show-password';
+    wrapper.appendChild(button);
+    var show = function (e) {
+        el.type = 'text';
+        window.setTimeout(hide, 1000);
+    };
+    var hide = function (e) {
+        el.type = 'password';
+    };
+    button.addEventListener('click', show, false);
+    form.addEventListener('submit', hide, false);
+};

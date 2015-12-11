@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block extra_head %}
+    {% include 'ideascube/includes/form_statics.html' %}
+{% endblock extra_head %}
 
 {% block content %}
     <div class="row">
@@ -9,6 +12,13 @@
             {{ form }}
             <input type="hidden" name="next" value="{{ next }}" />
             <input type="submit" value="{% trans 'Log in' %}" />
+
         </form>
     </div>
 {% endblock content %}
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        ID.viewablePassword();
+    </script>
+{% endblock extra_foot %}
