@@ -14,6 +14,7 @@ ideascube (0.7.0-dev) unstable; urgency=low
   * prevent migrate command to delete search index (cf #234)
   * always display download button in document page (fix #238)
   * add a "add stock item" link in each module header
+  * fix missing power management home card for ideasbox
 
  -- Yohan Boniface <hi@yohanboniface.me>  Sat, 5 Dec 2015 11:25:27 +0100
 
