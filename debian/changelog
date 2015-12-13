@@ -1,4 +1,4 @@
-ideascube (0.7.0-dev) unstable; urgency=low
+ideascube (0.7.0-1) unstable; urgency=low
 
   * Added Somali, Amharic, Kirundi, Bambara and Swahili supported languages
   * Added command for importing data from mysql of legacy ideasbox servers (Burundi)
