@@ -85,3 +85,7 @@ class Document(SearchMixin, TimeStampedModel):
     def index_strings(self):
         return (self.title, self.summary, self.credits,
                 u' '.join(self.tags.names()))
+
+    @property
+    def slug(self):
+        return self.get_kind_display()

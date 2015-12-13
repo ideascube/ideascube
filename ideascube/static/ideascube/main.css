@@ -632,6 +632,9 @@ html[dir='rtl'] .card.book img {
 .read {
     background-color: #87D37C;
 }
+.discover {
+    background-color: #87D37C;
+}
 .create {
     background-color: #D2527F;
 }
@@ -850,6 +853,14 @@ html[dir='rtl'] .search input[type='submit'] {
 }
 .search .results {
     margin-top: 40px;
+}
+.search .results li {
+    margin-bottom: 5px;
+}
+.search .results li span {
+    min-width: 50px;
+    display: inline-block;
+    text-align: center;
 }
 .search .main {
     justify-content: center;
