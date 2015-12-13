@@ -122,3 +122,11 @@ def smart_truncate(s, length=100, suffix=u'…'):
             s = s[:-1]
         s = s + suffix
     return s
+
+
+@register.simple_tag
+def paginate(request, **kwargs):
+    get = request.GET.copy()
+    for key, value in kwargs.iteritems():
+        get[key] = value
+    return '?{}'.format(get.urlencode())

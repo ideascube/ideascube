@@ -16,6 +16,7 @@ ideascube (0.7.0-dev) unstable; urgency=low
   * add a "add stock item" link in each module header
   * fix missing power management home card for ideasbox
   * fix bad slug theme for document in global search
+  * fix pagination reseting querystring (cf #241)
 
  -- Yohan Boniface <hi@yohanboniface.me>  Sat, 5 Dec 2015 11:25:27 +0100
 
