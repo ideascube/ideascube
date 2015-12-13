@@ -5,7 +5,7 @@
     <h2>{% trans "Stock" %}</h2>
     {% for module in stock %}
         <table class="stock {{ module.key }}">
-            <caption>{% trans module.name %}</caption>
+            <caption>{% trans module.name %} <a href="{% url 'monitoring:stockitem_create' %}?module={{ module.key }}"><i class="fa fa-plus"></i> {% trans "Add stock item" %}</a></caption>
             <tr><th>{% trans 'Reference' %}</th><th>{% trans 'count' %}</th><th>{% trans 'Actions' %}</th></tr>
         {% for item in module.objects  %}
             <tr class="stockitem" id="stockitem-{{ item.pk }}"><td>{{ item }} <em>{{ item.description }}</em></td><td>{% trans 'Total:' %} {{ item.specimens.count }}</td><td class="actions"><a href="{% url 'monitoring:stockitem_update' pk=item.pk %}" title="{% trans 'Edit' %}">{% fa 'pencil-square' %}</a> <a href="{% url 'monitoring:specimen_create' item_pk=item.pk %}" title="{% trans 'Add new specimen of this item' %}">{% fa 'plus-square' %}</a></td></tr>
@@ -21,8 +21,8 @@
 {% endblock twothird %}
 {% block third %}
     <ul class="card tinted admin">
-        <li>{% fa 'archive' 'fa-fw' %} <a href="{% url 'monitoring:stockitem_create' %}">{% trans "Add new stock item" %}</a></li>
-        <li>{% fa 'bars' 'fa-fw' %} <a href="{% url 'monitoring:inventory_create' %}">{% trans "Start new inventory" %}</a></li>
+        <li>{% fa 'archive' 'fa-fw' %} <a href="{% url 'monitoring:stockitem_create' %}">{% trans "Add stock item" %}</a></li>
+        <li>{% fa 'bars' 'fa-fw' %} <a href="{% url 'monitoring:inventory_create' %}">{% trans "Start inventory" %}</a></li>
     </ul>
     <div class="card tinted admin">
         <h4>{% trans 'Inventories' %}</h4>

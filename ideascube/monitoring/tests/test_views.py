@@ -109,6 +109,13 @@ def test_staff_can_create_stockitem(staffapp):
     assert StockItem.objects.count()
 
 
+def test_stockitem_create_view_should_accept_module_parameter(staffapp):
+    url = '{}?module={}'.format(reverse('monitoring:stockitem_create'),
+                                StockItem.CINEMA)
+    form = staffapp.get(url).forms['model_form']
+    assert form['module'].value == StockItem.CINEMA
+
+
 def test_staff_can_update_stockitem(staffapp):
     item = StockItemFactory(module=StockItem.DIGITAL)
     url = reverse('monitoring:stockitem_update', kwargs={'pk': item.pk})

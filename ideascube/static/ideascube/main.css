@@ -938,6 +938,17 @@ table.stock caption {
     text-transform: uppercase;
     padding: 5px 0;
     background-color: #444;
+    position: relative;
+}
+table.stock caption a {
+    color: #fff;
+    position: absolute;
+    right: 10px;
+    text-transform: none;
+}
+html[dir='rtl'] table.stock caption a {
+    left: 10px;
+    right: auto;
 }
 table.stock th {
     background-color: #999;
