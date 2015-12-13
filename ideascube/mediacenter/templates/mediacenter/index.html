@@ -4,7 +4,7 @@
 {% block body_class %}mediacenter{% endblock %}
 
 {% block twothird %}
-    {% block content_title %}<h2><span class="theme read">{% trans "read" %}</span> {% trans "Medias Center" %}</h2>{% endblock %}
+    {% block content_title %}<h2><span class="theme discover">{% trans "discover" %}</span> {% trans "Medias Center" %}</h2>{% endblock %}
     <div class="grid document-list">
         {% for document in document_list  %}
             {% include "mediacenter/document_card.html" %}
@@ -23,7 +23,7 @@
     {% url 'mediacenter:index' as index %}
     {% include 'search/box.html' with action=index %}
     <div class="card tinted">
-        <h4><span class="theme read">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
+        <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
         {% for kind, label in view.model.KIND_CHOICES %}
             <a href="?kind={{ kind }}">{{ label }}</a>
             {% if not forloop.last %}⚫{% endif  %}

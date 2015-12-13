@@ -4,7 +4,7 @@
 
 {% block twothird %}
     <h5><a href="{% url 'mediacenter:index' %}">&lt; {% trans 'View all medias' %}</a></h5>
-    <h2><span class="theme read">{{ document.slug }}</span> {{ document }}</h2>
+    <h2><span class="theme discover">{{ document.slug }}</span> {{ document }}</h2>
     {% if document.kind == document.IMAGE %}
         <img src="{{ document.original.url }}" />
     {% elif document.kind == document.VIDEO %}
