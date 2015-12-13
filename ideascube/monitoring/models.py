@@ -92,6 +92,9 @@ class Specimen(models.Model):
     def get_absolute_url(self):
         return self.item.get_absolute_url()
 
+    class Meta:
+        ordering = ('barcode', )
+
 
 class InventorySpecimen(models.Model):
     inventory = models.ForeignKey(Inventory)
