@@ -5,6 +5,8 @@ from ideascube.blog.models import Content
 from ideascube.blog.tests.factories import ContentFactory
 from ideascube.library.models import Book
 from ideascube.library.tests.factories import BookFactory
+from ideascube.mediacenter.models import Document
+from ideascube.mediacenter.tests.factories import DocumentFactory
 
 from ..templatetags.ideascube_tags import (do_min, fa, remove_i18n,
                                            smart_truncate, tag_cloud,
@@ -21,6 +23,11 @@ def test_theme_slug_for_content():
 def test_theme_slug_for_book():
     book = BookFactory()
     assert theme_slug(book) == '<span class="theme read">book</span>'
+
+
+def test_theme_slug_for_document():
+    book = DocumentFactory(kind=Document.IMAGE)
+    assert theme_slug(book) == '<span class="theme discover">image</span>'
 
 
 def test_theme_slug_can_be_overrided():

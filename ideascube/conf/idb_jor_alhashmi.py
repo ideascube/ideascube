@@ -3,7 +3,7 @@
 from .azraq import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
-IDEASCUBE_NAME = u"مخيم الأزرق"
+IDEASCUBE_NAME = u"صندوق عمان"
 USER_FORM_FIELDS = (
     ('Ideasbox', ['serial', 'box_awareness']),
     (_('Personal informations'), ['refugee_id', 'short_name', 'full_name', 'latin_name', 'birth_year', 'gender']),  # noqa

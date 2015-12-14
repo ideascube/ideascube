@@ -4,21 +4,18 @@
 
 {% block twothird %}
     <h5><a href="{% url 'mediacenter:index' %}">&lt; {% trans 'View all medias' %}</a></h5>
-    <h2><span class="theme read">{{ document.get_kind_display }}</span> {{ document }}</h2>
+    <h2><span class="theme discover">{{ document.slug }}</span> {{ document }}</h2>
     {% if document.kind == document.IMAGE %}
         <img src="{{ document.original.url }}" />
     {% elif document.kind == document.VIDEO %}
         <video controls width="100%">
             <source src="{{ document.original.url }}">
         </video>
-    {% else %}
-        <div>
-            <a href="{{ document.original.url }}">
-                <img src="{{ document|preview_url }}" /><br />{% trans 'Download document' %}
-            </a>
-        </div>
     {% endif %}
     <div class="text">{{ document.summary }}</div>
+    <div>
+        <a class="button" href="{{ document.original.url }}"><span class="fa fa-download fa-fw"></span> {% trans 'Download document' %}</a>
+    </div>
 {% endblock twothird %}
 {% block third %}
     {% if user.is_staff %}

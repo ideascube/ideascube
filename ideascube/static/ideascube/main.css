@@ -630,6 +630,9 @@ html[dir='rtl'] .card.book img {
     background-color: #19B5FE;
 }
 .read {
+    background-color: #F89406;
+}
+.discover {
     background-color: #87D37C;
 }
 .create {
@@ -851,6 +854,14 @@ html[dir='rtl'] .search input[type='submit'] {
 .search .results {
     margin-top: 40px;
 }
+.search .results li {
+    margin-bottom: 5px;
+}
+.search .results li span {
+    min-width: 50px;
+    display: inline-block;
+    text-align: center;
+}
 .search .main {
     justify-content: center;
 }
@@ -938,6 +949,17 @@ table.stock caption {
     text-transform: uppercase;
     padding: 5px 0;
     background-color: #444;
+    position: relative;
+}
+table.stock caption a {
+    color: #fff;
+    position: absolute;
+    right: 10px;
+    text-transform: none;
+}
+html[dir='rtl'] table.stock caption a {
+    left: 10px;
+    right: auto;
 }
 table.stock th {
     background-color: #999;

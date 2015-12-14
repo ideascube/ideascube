@@ -202,6 +202,12 @@ stockitem_update = staff_member_required(StockItemUpdate.as_view())
 class StockItemCreate(CreateView):
     model = StockItem
     fields = '__all__'
+
+    def get_initial(self):
+        initial = super(StockItemCreate, self).get_initial()
+        initial['module'] = self.request.GET.get('module')
+        return initial
+
 stockitem_create = staff_member_required(StockItemCreate.as_view())
 
 

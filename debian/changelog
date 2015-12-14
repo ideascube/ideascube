@@ -1,4 +1,4 @@
-ideascube (0.7.0-dev) unstable; urgency=low
+ideascube (0.7.0-1) unstable; urgency=low
 
   * Added Somali, Amharic, Kirundi, Bambara and Swahili supported languages
   * Added command for importing data from mysql of legacy ideasbox servers (Burundi)
@@ -12,6 +12,11 @@ ideascube (0.7.0-dev) unstable; urgency=low
   * fixed bad username displayed in set_password view header
   * added "show password" button near login password field (cf #236)
   * prevent migrate command to delete search index (cf #234)
+  * always display download button in document page (fix #238)
+  * add a "add stock item" link in each module header
+  * fix missing power management home card for ideasbox
+  * fix bad slug theme for document in global search
+  * fix pagination reseting querystring (cf #241)
 
  -- Yohan Boniface <hi@yohanboniface.me>  Sat, 5 Dec 2015 11:25:27 +0100
 

@@ -35,7 +35,7 @@ class KindMixin(object):
 class Index(KindMixin, ListView):
     model = Document
     template_name = 'mediacenter/index.html'
-    paginate_by = 10
+    paginate_by = 24
 
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)

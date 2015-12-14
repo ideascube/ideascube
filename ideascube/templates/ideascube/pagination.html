@@ -1,14 +1,14 @@
-{% load i18n %}
+{% load i18n ideascube_tags %}
 {% if is_paginated %}
     <div class="pagination">
         {% if page_obj.has_previous %}
-            <a href="{{ base_url }}?page={{ page_obj.previous_page_number }}" class="previous">{% trans "previous" %}</a>
+            <a href="{% paginate view.request page=page_obj.previous_page_number %}" class="previous">{% trans "previous" %}</a>
         {% endif %}
         <span class="current">
             {% blocktrans with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}.{% endblocktrans %}
         </span>
         {% if page_obj.has_next %}
-            <a href="{{ base_url }}?page={{ page_obj.next_page_number }}" class="next">{% trans "next" %}</a>
+            <a href="{% paginate view.request page=page_obj.next_page_number %}" class="next">{% trans "next" %}</a>
         {% endif %}
     </div>
 {% endif %}

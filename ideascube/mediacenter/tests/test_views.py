@@ -29,6 +29,16 @@ def test_index_page_is_paginated(app, monkeypatch):
     response = app.get(reverse('mediacenter:index') + '?page=3', status=404)
 
 
+def test_pagination_should_keep_querystring(app, monkeypatch):
+    monkeypatch.setattr(Index, 'paginate_by', 2)
+    DocumentFactory.create_batch(size=4, kind=Document.IMAGE)
+    url = '{}?kind=image'.format(reverse('mediacenter:index'))
+    response = app.get(url)
+    link = response.pyquery.find('.next')
+    assert link
+    assert 'kind=image' in link[0].attrib['href']
+
+
 def test_index_page_should_have_search_box(app, video):
     DocumentFactory(title="I'm a scorpion")
     response = app.get(reverse('mediacenter:index'), status=200)

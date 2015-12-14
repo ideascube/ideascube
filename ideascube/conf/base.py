@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import os
-import subprocess
 
 from django.utils.translation import ugettext_lazy as _
 
