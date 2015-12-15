@@ -12,19 +12,7 @@ USER_FORM_FIELDS = (
     (_('National residents'), ['id_card_number']),
 )
 
-HOME_CARDS = STAFF_HOME_CARDS + [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'wikipedia',
-    },
-    {
-        'id': 'khanacademy',
-    },
+HOME_CARDS = HOME_CARDS + [
     {
         'id': 'vikidia',
     },
