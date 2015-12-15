@@ -11,9 +11,6 @@ USER_FORM_FIELDS = (
     (_('Language skills'), ['rn_level', 'sw_level', 'fr_level']),
     (_('National residents'), ['id_card_number']),
 )
-STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS
-                    if c['url'] in ['user_list', 'server:power',
-                                    'server:backup']]
 
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
