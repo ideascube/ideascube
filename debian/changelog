@@ -1,8 +1,14 @@
+ideascube (0.7.2-dev) unstable; urgency=low
+
+  * Read all file for sniffing dialect in import_medias (fix #45)
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Sat, 15 Dec 2015 19:15:27 +0100
+
 ideascube (0.7.1-1) unstable; urgency=low
 
   * Burundi ideasbox configuration changes
 
- -- Yohan Boniface <hi@yohanboniface.me>  Sat, 5 Dec 2015 11:25:27 +0100
+ -- Yohan Boniface <hi@yohanboniface.me>  Sat, 15 Dec 2015 11:25:27 +0100
 
 ideascube (0.7.0-1) unstable; urgency=low
 
