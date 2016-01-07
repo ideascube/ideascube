@@ -50,8 +50,11 @@ class Document(SearchMixin, TimeStampedModel):
     lang = models.CharField(_('Language'), max_length=10, blank=True,
                             choices=settings.LANGUAGES)
     original = models.FileField(_('original'),
-                                upload_to='mediacenter/document')
-    preview = models.ImageField(_('preview'), upload_to='mediacenter/preview',
+                                upload_to='mediacenter/document',
+                                max_length=10240)
+    preview = models.ImageField(_('preview'),
+                                upload_to='mediacenter/preview',
+                                max_length=10240,
                                 blank=True)
     credits = models.CharField(_('credit'), max_length=300)
     kind = models.CharField(_('type'), max_length=5, choices=KIND_CHOICES,
