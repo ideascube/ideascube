@@ -1,5 +1,6 @@
 ideascube (0.7.2-dev) unstable; urgency=low
 
+  * Relax size requirements on original, preview fields (migrate needed)
   * Read all file for sniffing dialect in import_medias (fix #45)
 
  -- Yohan Boniface <hi@yohanboniface.me>  Sat, 15 Dec 2015 19:15:27 +0100

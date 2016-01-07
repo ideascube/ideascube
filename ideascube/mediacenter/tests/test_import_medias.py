@@ -99,6 +99,21 @@ def test_should_guess_kind_from_path():
     assert video.kind == Document.VIDEO
 
 
+def test_long_path():
+    assert not Document.objects.count()
+    prefix = 'A' * 100
+    long_path = prefix + '.mp4'
+    long_preview = prefix + 'an-image.jpg'
+    metadata = ('title,summary,credits,path,preview\n'
+                'my video,my video summary,BSF,'
+                + long_path + ',' + long_preview + '\n')
+    write_metadata(metadata)
+    call_command('import_medias', CSV_PATH)
+    assert Document.objects.count() == 1
+    video = Document.objects.get(title='my video')
+    assert video.kind == Document.VIDEO
+
+
 def test_should_add_preview_if_given():
     assert not Document.objects.count()
     metadata = ('title,summary,credits,path,preview\n'
