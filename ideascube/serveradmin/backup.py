@@ -38,6 +38,8 @@ class Backup(object):
             raise ValueError(msg.format(extensions=self.SUPPORTED_EXTENSIONS))
         self.name = name
         self.parse_name()
+        if not os.path.exists(Backup.ROOT):
+            os.makedirs(Backup.ROOT)
 
     def __str__(self):
         return self.name

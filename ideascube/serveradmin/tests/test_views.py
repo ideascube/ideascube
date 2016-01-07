@@ -1,5 +1,6 @@
 from io import StringIO
 import os
+import shutil
 import zipfile
 
 import pytest
@@ -241,6 +242,8 @@ def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
         os.makedirs(BACKUPED_ROOT)
     except OSError:
         pass
+    if os.path.exists(BACKUPS_ROOT):
+        shutil.rmtree(BACKUPS_ROOT)
     filename = 'edoardo-0.0.0-201501231405.zip'
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
@@ -303,6 +306,8 @@ def test_upload_button_create_new_backup_with_uploaded_file(staffapp,
                                                             monkeypatch):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
+    if os.path.exists(BACKUPS_ROOT):
+        shutil.rmtree(BACKUPS_ROOT)
     backup_name = 'musasa-0.1.0-201501241620.zip'
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
