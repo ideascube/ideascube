@@ -37,7 +37,7 @@ class Authors(models.Model):
         managed = False
         db_table = 'authors'
 
-    def __unicode__(self):
+    def __str__(self):
         return u' '.join([utf8(self.author_rejete), utf8(self.author_name)])
 
 
@@ -82,7 +82,7 @@ class Empr(models.Model):
         managed = False
         db_table = 'empr'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.full_name
         return u'{} {}'.format(utf8(self.empr_prenom), utf8(self.empr_nom))
 
@@ -462,7 +462,7 @@ class Notices(models.Model):
         managed = False
         db_table = 'notices'
 
-    def __unicode__(self):
+    def __str__(self):
         return utf8(self.title)
 
     @property

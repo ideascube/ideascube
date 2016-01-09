@@ -77,7 +77,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     class Meta:
         ordering = ["-modified_at"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.get_full_name() or self.serial
 
     def get_absolute_url(self):
@@ -135,7 +135,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
 
     @property
     def index_strings(self):
-        return (unicode(getattr(self, name, ''))
+        return (str(getattr(self, name, ''))
                 for name in settings.USER_INDEX_FIELDS)
 
     index_public = False  # Searchable only by staff.

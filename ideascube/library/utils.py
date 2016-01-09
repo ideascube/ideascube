@@ -1,8 +1,8 @@
 import csv
 import json
 import os
-import urllib
-import urllib2
+from urllib.parse import urlencode
+from urllib.request import urlopen
 import zipfile
 
 from django.core.files.base import ContentFile
@@ -15,7 +15,7 @@ OPENLIBRARY_API_URL = 'https://openlibrary.org/api/books?'
 def to_unicode(text):
     """Do its best to return an unicode string."""
     text = text or ''
-    if isinstance(text, unicode):
+    if isinstance(text, str):
         return text
     else:
         try:
@@ -34,7 +34,7 @@ def fetch_from_openlibrary(isbn):
     }
     key = 'ISBN:{isbn}'.format(isbn=isbn)
     args['bibkeys'] = key
-    query = urllib.urlencode(args)
+    query = urlencode(args)
     url = '{base}{query}'.format(base=OPENLIBRARY_API_URL, query=query)
     content = read_url(url)
     try:
@@ -65,7 +65,7 @@ def fetch_from_openlibrary(isbn):
 
 def read_url(url):
     try:
-        response = urllib2.urlopen(url)
+        response = urlopen(url)
         return response.read()
     except:
         # Catch all, we don't want to fail in any way.
@@ -88,7 +88,7 @@ def load_from_moccam_csv(content):
         'summary', 'small_cover', 'cover'
     ]
     if hasattr(content, 'read'):
-        content = content.read()
+        content = content.read().decode()
     content = content.split('\n')
     rows = csv.DictReader(content, fieldnames=FIELDS, delimiter='\t')
     if rows.restkey or rows.restval:
@@ -118,8 +118,8 @@ def load_unimarc(content):
     """Handle UNIMARC import.
     http://marc-must-die.info/index.php/Main_Page"""
     if hasattr(content, 'read'):
-        content = content.read()
-    reader = MARCReader(content, to_unicode=True)
+        content = content.read().decode()
+    reader = MARCReader(content.encode(), to_unicode=True)
     for row in reader:
         if not row.title():
             continue
@@ -128,7 +128,7 @@ def load_unimarc(content):
             'title': row.title(),
             'authors': row.author() or '',
             'publisher': row.publisher() or '',
-            'summary': '\n'.join([unicode(d)
+            'summary': '\n'.join([str(d)
                                   for d in row.physicaldescription()]),
         }
         yield notice, None

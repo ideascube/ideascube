@@ -71,8 +71,9 @@ def test_export_entry_should_return_csv_with_entries(staffapp, settings):
     EntryFactory.create_batch(3)
     settings.MONITORING_ENTRY_EXPORT_FIELDS = []
     resp = staffapp.get(reverse('monitoring:export_entry'), status=200)
-    assert resp.content.startswith("module,date,activity,partner\r\ncinema,")
-    assert resp.content.count("cinema") == 3
+    content = resp.content.decode()
+    assert content.startswith("module,date,activity,partner\r\ncinema,")
+    assert content.count("cinema") == 3
 
 
 def test_anonymous_should_not_access_stock_page(app):
@@ -210,7 +211,7 @@ def test_can_export_inventory(staffapp):
     InventorySpecimen.objects.create(inventory=inventory, specimen=specimen)
     url = reverse('monitoring:inventory_export', kwargs={'pk': inventory.pk})
     resp = staffapp.get(url, status=200)
-    assert resp.content.startswith("module,name,description,barcode,serial,count,comments,status\r\ncinema,an item")  # noqa
+    assert resp.content.decode().startswith("module,name,description,barcode,serial,count,comments,status\r\ncinema,an item")  # noqa
 
 
 def test_export_inventory_should_be_ok_in_arabic(staffapp, settings):
@@ -400,7 +401,7 @@ def test_can_export_loan(staffapp):
     LoanFactory(specimen=specimen)
     url = reverse('monitoring:export_loan')
     resp = staffapp.get(url, status=200)
-    assert resp.content.startswith("item,barcode,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa
+    assert resp.content.decode().startswith("item,barcode,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa
 
 
 def test_export_loan_should_be_ok_in_arabic(staffapp):
@@ -409,6 +410,6 @@ def test_export_loan_should_be_ok_in_arabic(staffapp):
     loan = LoanFactory(specimen=specimen, comments=u"النبي (كتاب)")
     url = reverse('monitoring:export_loan')
     resp = staffapp.get(url, status=200)
-    assert resp.content.startswith("item,barcode,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa
+    assert resp.content.decode().startswith("item,barcode,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa
     resp.mustcontain(loan.comments)
     translation.deactivate()

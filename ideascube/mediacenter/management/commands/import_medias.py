@@ -17,8 +17,7 @@ from ideascube.templatetags.ideascube_tags import smart_truncate
 def UnicodeDictReader(utf8_data, encoding='utf-8', **kwargs):
     csv_reader = csv.DictReader(utf8_data, **kwargs)
     for row in csv_reader:
-        yield {key.decode(encoding): value.decode(encoding)
-               for key, value in row.iteritems() if key}
+        yield {key: value for key, value in row.items() if key}
 
 
 class Command(BaseCommand):

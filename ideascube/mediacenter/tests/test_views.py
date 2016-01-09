@@ -12,7 +12,7 @@ pytestmark = pytest.mark.django_db
 
 def test_anonymous_should_access_index_page(app, video):
     response = app.get(reverse('mediacenter:index'), status=200)
-    assert video.title in response.content
+    assert video.title in response.content.decode()
 
 
 def test_index_page_is_paginated(app, monkeypatch):
@@ -45,8 +45,8 @@ def test_index_page_should_have_search_box(app, video):
     form = response.forms['search']
     form['q'] = "scorpion"
     response = form.submit()
-    assert "scorpion" in response.content
-    assert video.title not in response.content
+    assert "scorpion" in response.content.decode()
+    assert video.title not in response.content.decode()
 
 
 def test_everyone_should_access_image_detail_page(app, image):
@@ -111,7 +111,7 @@ def test_can_create_document(staffapp):
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
-    form['original'] = Upload('image.jpg', 'xxxxxx', 'image/jpeg')
+    form['original'] = Upload('image.jpg', b'xxxxxx', 'image/jpeg')
     form.submit().follow()
     assert Document.objects.count() == 1
 
@@ -123,7 +123,7 @@ def test_can_create_document_without_lang(staffapp):
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
-    form['original'] = Upload('image.jpg', 'xxxxxx', 'image/jpeg')
+    form['original'] = Upload('image.jpg', b'xxxxxx', 'image/jpeg')
     form['lang'] = ''
     form.submit().follow()
     assert Document.objects.count() == 1
@@ -136,7 +136,7 @@ def test_content_type_should_have_priority_over_extension(staffapp):
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
-    form['original'] = Upload('audio.mp3', 'xxxxxx', 'image/jpeg')
+    form['original'] = Upload('audio.mp3', b'xxxxxx', 'image/jpeg')
     form.submit().follow()
     assert Document.objects.first().kind == Document.IMAGE
 
@@ -148,7 +148,7 @@ def test_uploading_without_content_type_should_be_ok(staffapp):
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
-    form['original'] = Upload('audio.mp3', 'xxxxxx')
+    form['original'] = Upload('audio.mp3', b'xxxxxx')
     form.submit().follow()
     assert Document.objects.count() == 1
 
@@ -159,9 +159,9 @@ def test_oembed_should_return_video_oembed_extract(app, video):
         media=reverse('mediacenter:document_detail', kwargs={'pk': video.pk})
         )
     resp = app.get(url, extra_environ={'SERVER_NAME': 'testserver'})
-    assert 'video' in resp.content
-    assert 'source' in resp.content
-    assert video.original.url in resp.content
+    assert 'video' in resp.content.decode()
+    assert 'source' in resp.content.decode()
+    assert video.original.url in resp.content.decode()
 
 
 def test_oembed_should_return_image_oembed_extract(app, image):
@@ -170,9 +170,9 @@ def test_oembed_should_return_image_oembed_extract(app, image):
         media=reverse('mediacenter:document_detail', kwargs={'pk': image.pk})
         )
     resp = app.get(url, extra_environ={'SERVER_NAME': 'testserver'})
-    assert 'img' in resp.content
-    assert 'src' in resp.content
-    assert image.original.url in resp.content
+    assert 'img' in resp.content.decode()
+    assert 'src' in resp.content.decode()
+    assert image.original.url in resp.content.decode()
 
 
 def test_oembed_should_return_pdf_oembed_extract(app, pdf):
@@ -181,15 +181,15 @@ def test_oembed_should_return_pdf_oembed_extract(app, pdf):
         media=reverse('mediacenter:document_detail', kwargs={'pk': pdf.pk})
         )
     resp = app.get(url, extra_environ={'SERVER_NAME': 'testserver'})
-    assert pdf.original.url in resp.content
+    assert pdf.original.url in resp.content.decode()
 
 
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = DocumentFactory(tags=['plane'])
     boat = DocumentFactory(tags=['boat'])
     response = app.get(reverse('mediacenter:by_tag', kwargs={'tag': 'plane'}))
-    assert plane.title in response.content
-    assert boat.title not in response.content
+    assert plane.title in response.content.decode()
+    assert boat.title not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):
@@ -213,12 +213,12 @@ def test_can_create_document_with_tags(staffapp):
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
-    form['original'] = Upload('image.jpg', 'xxxxxx', 'image/jpeg')
+    form['original'] = Upload('image.jpg', b'xxxxxx', 'image/jpeg')
     form['tags'] = 'tag1, tag2'
     form.submit().follow()
     doc = Document.objects.last()
     assert doc.tags.count() == 2
-    assert doc.tags.first().name == 'tag1'
+    assert 'tag1' in [t.name for t in doc.tags.all()]
 
 
 def test_can_update_document_tags(staffapp, pdf):
@@ -229,4 +229,4 @@ def test_can_update_document_tags(staffapp, pdf):
     form.submit().follow()
     doc = Document.objects.get(pk=pdf.pk)
     assert doc.tags.count() == 2
-    assert doc.tags.first().name == 'tag1'
+    assert 'tag1' in [t.name for t in doc.tags.all()]

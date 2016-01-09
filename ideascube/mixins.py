@@ -1,5 +1,5 @@
 import csv
-import StringIO
+from io import StringIO
 from datetime import datetime
 
 from django.conf import settings
@@ -28,7 +28,7 @@ class CSVExportMixin(object):
     prefix = 'ideascube'
 
     def to_csv(self):
-        out = StringIO.StringIO()
+        out = StringIO()
         headers = self.get_headers()
         writer = csv.DictWriter(out, headers)
         writer.writeheader()

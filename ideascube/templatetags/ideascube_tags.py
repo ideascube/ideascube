@@ -127,6 +127,6 @@ def smart_truncate(s, length=100, suffix=u'…'):
 @register.simple_tag
 def paginate(request, **kwargs):
     get = request.GET.copy()
-    for key, value in kwargs.iteritems():
+    for key, value in kwargs.items():
         get[key] = value
     return '?{}'.format(get.urlencode())

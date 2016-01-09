@@ -45,4 +45,4 @@ def test_fetch_from_openlibrary(monkeypatch):
     u'éééé'
 ])
 def test_to_unicode(string):
-    assert isinstance(to_unicode(string), unicode)
+    assert isinstance(to_unicode(string), str)

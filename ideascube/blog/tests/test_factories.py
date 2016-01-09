@@ -8,7 +8,7 @@ pytestmark = pytest.mark.django_db
 def test_it_should_create_a_default_content_from_factory():
     content = ContentFactory()
     assert content.pk is not None
-    assert unicode(content)
+    assert str(content)
 
 
 def test_it_should_override_fields_passed_to_factory():

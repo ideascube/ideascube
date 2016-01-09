@@ -15,6 +15,6 @@ class CommaSeparatedCharField(SelectMultipleField):
         def _get_FIELD_display(instance):
             choices = dict(self.choices)
             values = getattr(instance, self.attname)
-            return ", ".join(unicode(choices.get(c, c)) for c in values if c)
+            return ", ".join(str(choices.get(c, c)) for c in values if c)
 
         setattr(cls, 'get_%s_display' % self.name, _get_FIELD_display)

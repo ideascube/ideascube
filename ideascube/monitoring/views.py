@@ -401,7 +401,7 @@ class ExportLoan(CSVExportMixin, View):
 
     def get_row(self, entry):
         return {
-            'item': unicode(entry.specimen.item).encode('utf-8'),
+            'item': str(entry.specimen.item).encode('utf-8'),
             'barcode': entry.specimen.barcode,
             'user': entry.user.serial.encode('utf-8'),
             'loaned at': entry.created_at,

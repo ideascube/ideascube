@@ -19,8 +19,8 @@ def test_anonymous_should_access_index_page(app):
 
 def test_only_books_with_specimen_should_be_in_index(app, book, specimen):
     response = app.get(reverse('library:index'))
-    assert specimen.book.title in response.content
-    assert book.title not in response.content
+    assert specimen.book.title in response.content.decode()
+    assert book.title not in response.content.decode()
 
 
 def test_index_page_is_paginated(app, monkeypatch):
@@ -276,8 +276,8 @@ def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = BookSpecimenFactory(book__tags=['plane'])
     boat = BookSpecimenFactory(book__tags=['boat'])
     response = app.get(reverse('library:by_tag', kwargs={'tag': 'plane'}))
-    assert plane.book.title in response.content
-    assert boat.book.title not in response.content
+    assert plane.book.title in response.content.decode()
+    assert boat.book.title not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):

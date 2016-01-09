@@ -80,7 +80,7 @@ def backup(request):
                     backup = Backup.load(file_)
                 except Exception as e:
                     msg = _('Unable to load file:')
-                    msg = "{msg} {error}".format(msg=msg, error=e.message)
+                    msg = "{msg} {error}".format(msg=msg, error=str(e))
                     messages.add_message(request, messages.ERROR, msg)
                 else:
                     msg = _('File {name} has been loaded.').format(

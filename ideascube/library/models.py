@@ -55,7 +55,7 @@ class Book(SearchMixin, TimeStampedModel):
     class Meta:
         ordering = ['title']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):
@@ -81,7 +81,7 @@ class BookSpecimen(TimeStampedModel):
     def is_digital(self):
         return bool(self.file)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.is_digital:
             # serial is null for digital specimens.
             return u'Digital specimen of "{0}"'.format(self.book)
