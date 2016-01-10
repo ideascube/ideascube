@@ -123,6 +123,22 @@ class AvailableWifiNetwork(object):
         else:
             self._connection = self._new_connection(wifi_key=wifi_key)
 
+        # FIXME: We should be able to do better than this, maybe with DBus
+        # signals? Maybe the PropertiesChanged signal on the active
+        # connection?
+        attempt = 1
+        import time
+
+        while attempt < 7:
+            if self.connected:
+                return
+
+            time.sleep(1)
+            attempt += 1
+
+        self._connection.forget()
+        raise WifiError(_('Failed to connect to %s') % self.ssid)
+
     @property
     def connected(self):
         return self._connection and self._connection.connected or False
