@@ -340,13 +340,13 @@ def test_export_users_should_return_csv_with_users(staffapp, settings):
 
 def test_export_users_should_be_ok_in_arabic(staffapp, settings):
     translation.activate('ar')
-    user1 = UserFactory(serial=u"جبران خليل جبران")
-    user2 = UserFactory(serial=u"النبي (كتاب)")
+    user1 = UserFactory(serial="جبران خليل جبران")
+    user2 = UserFactory(serial="النبي (كتاب)")
     resp = staffapp.get(reverse('user_export'), status=200)
     field, _, _, _ = user_model._meta.get_field_by_name('serial')
     resp.mustcontain(str(field.verbose_name))
-    resp.mustcontain(user1.serial.encode())
-    resp.mustcontain(user2.serial.encode())
+    resp.mustcontain(user1.serial)
+    resp.mustcontain(user2.serial)
     translation.deactivate()
 
 

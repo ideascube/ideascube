@@ -178,7 +178,7 @@ class UserExport(CSVExportMixin, View):
     def get_headers(self):
         fields = user_model.get_data_fields()
         self.fields = [f for f in fields if f.name not in user_model.PRIVATE_DATA]
-        return [str(f.verbose_name).encode('utf-8') for f in self.fields]
+        return [str(f.verbose_name) for f in self.fields]
 
     def get_row(self, user):
         data_fields = user.data_fields
@@ -187,8 +187,8 @@ class UserExport(CSVExportMixin, View):
             value = data_fields[field.name]['value']
             if value is None:
                 value = ''
-            value = str(value).encode('utf-8')
-            row[str(field.verbose_name).encode('utf-8')] = value
+            value = str(value)
+            row[str(field.verbose_name)] = value
         return row
 user_export = staff_member_required(UserExport.as_view())
 

@@ -147,7 +147,7 @@ def load_from_ideascube(content):
             csv_filename = name
             break
     assert csv_filename, _('Missing CSV file in zip')
-    csv_content = load_from_zip(archive, csv_filename)
+    csv_content = load_from_zip(archive, csv_filename).decode('utf-8')
     rows = csv.DictReader(csv_content.splitlines())
     for row in rows:
         cover_filename = row.get('cover')

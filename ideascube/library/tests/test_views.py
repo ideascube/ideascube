@@ -235,7 +235,7 @@ def test_import_from_files_load_cover_if_exists(staffapp, monkeypatch):
     image = 'ideascube/tests/data/the-prophet.jpg'
     monkeypatch.setattr(
         'ideascube.library.utils.read_url',
-        lambda x: open(image).read()
+        lambda x: open(image, 'rb').read()
     )
     form = staffapp.get(reverse('library:book_import')).forms['import']
     form['from_files'] = Upload('ideascube/library/tests/data/moccam.csv')
@@ -243,7 +243,7 @@ def test_import_from_files_load_cover_if_exists(staffapp, monkeypatch):
     response.follow()
     assert Book.objects.count() == 2
     assert Book.objects.last().cover
-    assert open(Book.objects.last().cover.path).read() == open(image).read()
+    assert open(Book.objects.last().cover.path, 'rb').read() == open(image, 'rb').read()
 
 
 def test_import_from_ideascube_export(staffapp, monkeypatch):

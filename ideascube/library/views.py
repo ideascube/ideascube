@@ -1,5 +1,5 @@
 import os
-from io import StringIO
+from io import BytesIO
 from zipfile import ZipFile
 
 from django.conf import settings
@@ -150,7 +150,7 @@ class BookExport(CSVExportMixin, View):
               'publisher', 'section', 'lang', 'cover', 'tags']
 
     def get(self, *args, **kwargs):
-        out = StringIO()
+        out = BytesIO()
         self.zip = ZipFile(out, "a")
         csv = self.to_csv()
         self.zip.writestr("{}.csv".format(self.get_filename()), csv)
@@ -177,7 +177,10 @@ class BookExport(CSVExportMixin, View):
                 value = ','.join(book.tags.names())
             else:
                 value = getattr(book, name, None) or ''
-            value = str(value).encode('utf-8')
+
+            if not isinstance(value, str):
+                value = str(value)
+
             row[name] = value
         if book.cover:
             path, ext = os.path.splitext(book.cover.name)
