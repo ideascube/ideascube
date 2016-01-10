@@ -17,6 +17,7 @@ try:
     from NetworkManager import (
         NetworkManager,
         Settings as NMSettings,
+        NM_ACTIVE_CONNECTION_STATE_ACTIVATED,
         NM_DEVICE_TYPE_WIFI,
         )
 
@@ -30,6 +31,7 @@ except Exception as e:
 
     # Hardcode this one, it is a constant anyway in the NetworkManager module,
     # and hardcoding it allows the tests to run no matter what.
+    NM_ACTIVE_CONNECTION_STATE_ACTIVATED = 2
     NM_DEVICE_TYPE_WIFI = 2
 
 
@@ -171,7 +173,8 @@ class KnownWifiConnection(object):
         for active_connection in NetworkManager.ActiveConnections:
             if (active_connection.Connection.GetSettings()
                     == self._connection.GetSettings()):
-                return True
+                if active_connection.State == NM_ACTIVE_CONNECTION_STATE_ACTIVATED:
+                    return True
 
         return False
 

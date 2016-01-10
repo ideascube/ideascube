@@ -1,10 +1,14 @@
 try:
-    from NetworkManager import NM_DEVICE_TYPE_ETHERNET, NM_DEVICE_TYPE_WIFI
+    from NetworkManager import (
+        NM_DEVICE_TYPE_ETHERNET, NM_DEVICE_TYPE_WIFI,
+        NM_ACTIVE_CONNECTION_STATE_ACTIVATED,
+        )
 
 except Exception:
     # Use hard-coded values for the tests, these are constants anyway
     NM_DEVICE_TYPE_ETHERNET = 1
     NM_DEVICE_TYPE_WIFI = 2
+    NM_ACTIVE_CONNECTION_STATE_ACTIVATED = 2
 
 from dbus import String
 
@@ -126,6 +130,7 @@ class NMAccessPoint(object):
 class NMActiveConnection(object):
     def __init__(self, ssid='', is_secure=True):
         self.Connection = NMConnection(True, ssid=ssid, is_secure=is_secure)
+        self.State = NM_ACTIVE_CONNECTION_STATE_ACTIVATED
 
 
 class NMConnection(object):
