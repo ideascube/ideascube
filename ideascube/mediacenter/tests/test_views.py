@@ -218,7 +218,7 @@ def test_can_create_document_with_tags(staffapp):
     form.submit().follow()
     doc = Document.objects.last()
     assert doc.tags.count() == 2
-    assert 'tag1' in [t.name for t in doc.tags.all()]
+    assert doc.tags.first().name == 'tag1'
 
 
 def test_can_update_document_tags(staffapp, pdf):
@@ -229,4 +229,4 @@ def test_can_update_document_tags(staffapp, pdf):
     form.submit().follow()
     doc = Document.objects.get(pk=pdf.pk)
     assert doc.tags.count() == 2
-    assert 'tag1' in [t.name for t in doc.tags.all()]
+    assert doc.tags.first().name == 'tag1'

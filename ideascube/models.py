@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
+from taggit.managers import _TaggableManager
 
 from ideascube.search.models import SearchMixin, SearchableQuerySet
 
@@ -269,3 +270,9 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     sw_level = CommaSeparatedCharField(
         _('Swahili knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
+
+
+class SortedTaggableManager(_TaggableManager):
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        return qs.order_by('name')

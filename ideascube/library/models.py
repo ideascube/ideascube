@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from taggit.managers import TaggableManager
 
-from ideascube.models import TimeStampedModel
+from ideascube.models import SortedTaggableManager, TimeStampedModel
 from ideascube.search.models import SearchableQuerySet, SearchMixin
 
 
@@ -50,7 +50,7 @@ class Book(SearchMixin, TimeStampedModel):
                               blank=True)
 
     objects = BookQuerySet.as_manager()
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True, manager=SortedTaggableManager)
 
     class Meta:
         ordering = ['title']

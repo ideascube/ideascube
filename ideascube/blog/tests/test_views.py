@@ -225,7 +225,7 @@ def test_can_create_content_with_tags(staffapp):
     form.submit().follow()
     content = Content.objects.last()
     assert content.tags.count() == 2
-    assert 'tag1' in [t.name for t in content.tags.all()]
+    assert content.tags.first().name == 'tag1'
 
 
 def test_can_update_content_tags(staffapp, published):
@@ -236,4 +236,4 @@ def test_can_update_content_tags(staffapp, published):
     form.submit().follow()
     content = Content.objects.get(pk=published.pk)
     assert content.tags.count() == 2
-    assert 'tag1' in [t.name for t in content.tags.all()]
+    assert content.tags.first().name == 'tag1'
