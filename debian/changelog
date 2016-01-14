@@ -1,5 +1,7 @@
 ideascube (0.7.2~dev) unstable; urgency=low
 
+  * Allow to see the wifi password while typing (fix #253)
+  * Workaround for bad password entered  (fix #254)
   * Ensure backup root exists (fix #244)
   * Relax size requirements on original, preview fields (migrate needed)
   * Do not fail if CSV has an inconsistent number of columns (fix #258)
