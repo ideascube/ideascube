@@ -6,11 +6,13 @@ from django.contrib import messages
 from django.http import StreamingHttpResponse
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
+import yaml
 
 from ideascube.decorators import staff_member_required
 
 from .backup import Backup
 from .systemd import Manager, NoSuchUnit, UnitManagementError
+from .catalog import Catalog
 from .wifi import (
     AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError)
 
@@ -173,3 +175,16 @@ def wifi_history(request):
     return render(
         request, 'serveradmin/wifi_history.html',
         {'wifi_list': wifi_list.values()})
+
+
+@staff_member_required
+def catalog(request):
+    catalog = Catalog()
+    return render(request, 'serveradmin/catalog.html', {'catalog': catalog})
+
+
+@staff_member_required
+def install_package(request, id):
+    catalog = Catalog()
+    catalog.install(id)
+    return render(request, 'serveradmin/catalog.html', {'catalog': catalog})
