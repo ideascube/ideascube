@@ -1,5 +1,6 @@
-ideascube (0.7.2~dev) unstable; urgency=low
+ideascube (0.8.0~rc1) unstable; urgency=low
 
+  * Switch to python 3
   * Allow to see the wifi password while typing (fix #253)
   * Workaround for bad password entered  (fix #254)
   * Ensure backup root exists (fix #244)
