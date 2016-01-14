@@ -9,7 +9,36 @@ contribute to the project, please see [Contributor guide](contributing.md).
 
 ## System setup
 
-You need python 2.7 installed.
+You need python 3.0 installed.
+
+## Installation using ideascube repository (prefered)
+
+Install software-properties-common
+
+    sudo apt-get install software-properties-common
+
+Install ideascube's repository
+
+    sudo apt-add-repository 'deb http://repos.ideascube.org/debian/ jessie/'
+
+Update your index
+
+    sudo apt-get update
+
+Upgrade your index
+
+    sudo apt-get upgrade
+
+Install ideascube
+
+    sudo apt-get install ideascube
+
+Create an administrator:
+
+    sudo ideascube createsuperuser
+    
+
+## Installation using the build process
 
 First follow install process for [development](contributing.md).
 
