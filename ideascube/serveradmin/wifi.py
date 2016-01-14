@@ -17,6 +17,7 @@ try:
     from NetworkManager import (
         NetworkManager,
         Settings as NMSettings,
+        NM_ACTIVE_CONNECTION_STATE_ACTIVATED,
         NM_DEVICE_TYPE_WIFI,
         )
 
@@ -30,6 +31,7 @@ except Exception as e:
 
     # Hardcode this one, it is a constant anyway in the NetworkManager module,
     # and hardcoding it allows the tests to run no matter what.
+    NM_ACTIVE_CONNECTION_STATE_ACTIVATED = 2
     NM_DEVICE_TYPE_WIFI = 2
 
 
@@ -121,6 +123,22 @@ class AvailableWifiNetwork(object):
         else:
             self._connection = self._new_connection(wifi_key=wifi_key)
 
+        # FIXME: We should be able to do better than this, maybe with DBus
+        # signals? Maybe the PropertiesChanged signal on the active
+        # connection?
+        attempt = 1
+        import time
+
+        while attempt < 7:
+            if self.connected:
+                return
+
+            time.sleep(1)
+            attempt += 1
+
+        self._connection.forget()
+        raise WifiError(_('Failed to connect to %s') % self.ssid)
+
     @property
     def connected(self):
         return self._connection and self._connection.connected or False
@@ -171,7 +189,8 @@ class KnownWifiConnection(object):
         for active_connection in NetworkManager.ActiveConnections:
             if (active_connection.Connection.GetSettings()
                     == self._connection.GetSettings()):
-                return True
+                if active_connection.State == NM_ACTIVE_CONNECTION_STATE_ACTIVATED:
+                    return True
 
         return False
 
