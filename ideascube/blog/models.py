@@ -7,7 +7,7 @@ from taggit.managers import TaggableManager
 from taggit.models import TagBase
 from unidecode import unidecode
 
-from ideascube.models import TimeStampedModel
+from ideascube.models import SortedTaggableManager, TimeStampedModel
 from ideascube.search.models import SearchableQuerySet, SearchMixin
 
 
@@ -61,20 +61,20 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
                             default=settings.LANGUAGE_CODE)
 
     objects = ContentQuerySet.as_manager()
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True, manager=SortedTaggableManager)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('blog:content_detail', kwargs={'pk': self.pk})
 
     def get_author_display(self):
-        return self.author_text or unicode(self.author)
+        return self.author_text or str(self.author)
 
     @property
     def index_strings(self):
-        return (self.title, self.text, self.author_text, unicode(self.author),
+        return (self.title, self.text, self.author_text, str(self.author),
                 u' '.join(self.tags.names()))
 
     @property

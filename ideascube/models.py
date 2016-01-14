@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
+from taggit.managers import _TaggableManager
 
 from ideascube.search.models import SearchMixin, SearchableQuerySet
 
@@ -77,7 +78,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     class Meta:
         ordering = ["-modified_at"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.get_full_name() or self.serial
 
     def get_absolute_url(self):
@@ -135,7 +136,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
 
     @property
     def index_strings(self):
-        return (unicode(getattr(self, name, ''))
+        return (str(getattr(self, name, ''))
                 for name in settings.USER_INDEX_FIELDS)
 
     index_public = False  # Searchable only by staff.
@@ -269,3 +270,9 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     sw_level = CommaSeparatedCharField(
         _('Swahili knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
+
+
+class SortedTaggableManager(_TaggableManager):
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        return qs.order_by('name')

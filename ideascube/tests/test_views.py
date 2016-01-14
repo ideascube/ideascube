@@ -64,12 +64,12 @@ def test_welcome_page_should_create_staff_user_on_POST(app):
 
 def test_welcome_page_should_create_staff_user_with_unicode(app):
     form = app.get(reverse('welcome_staff')).forms['model_form']
-    name = u'كتبه'
+    name = 'كتبه'
     form['serial'] = name
     form['password'] = 'password'
     form['password_confirm'] = 'password'
     response = form.submit().follow().follow()
-    response.mustcontain(name)
+    response.mustcontain(name.encode())
 
 
 def test_login_page_should_log_in_user_if_POST_data_is_correct(client, user,
@@ -116,7 +116,7 @@ def test_non_staff_should_not_access_user_list_page(loggedapp):
 
 def test_user_list_page_should_be_accessible_to_staff(staffapp, user):
     response = staffapp.get(reverse('user_list'), status=200)
-    response.mustcontain(unicode(user))
+    response.mustcontain(str(user))
 
 
 def test_user_list_page_is_paginated(staffapp, monkeypatch):
@@ -137,7 +137,7 @@ def test_user_list_page_should_be_searchable(staffapp):
     user1 = UserFactory(full_name="user1")
     user2 = UserFactory(full_name="user2")
     response = staffapp.get(reverse('user_list') + '?q=user1')
-    response.mustcontain(unicode(user1), no=unicode(user2))
+    response.mustcontain(str(user1), no=str(user2))
 
 
 def test_user_detail_page_should_not_be_accessible_to_anonymous(app, user):
@@ -152,7 +152,7 @@ def test_non_staff_should_not_access_user_detail_page(loggedapp, user):
 
 def test_user_detail_page_should_be_accessible_to_staff(staffapp, user):
     response = staffapp.get(reverse('user_detail', kwargs={'pk': user.pk}))
-    response.mustcontain(unicode(user))
+    response.mustcontain(str(user))
 
 
 def test_user_create_page_should_not_be_accessible_to_anonymous(app):
@@ -340,11 +340,11 @@ def test_export_users_should_return_csv_with_users(staffapp, settings):
 
 def test_export_users_should_be_ok_in_arabic(staffapp, settings):
     translation.activate('ar')
-    user1 = UserFactory(serial=u"جبران خليل جبران")
-    user2 = UserFactory(serial=u"النبي (كتاب)")
+    user1 = UserFactory(serial="جبران خليل جبران")
+    user2 = UserFactory(serial="النبي (كتاب)")
     resp = staffapp.get(reverse('user_export'), status=200)
     field, _, _, _ = user_model._meta.get_field_by_name('serial')
-    resp.mustcontain(unicode(field.verbose_name))
+    resp.mustcontain(str(field.verbose_name))
     resp.mustcontain(user1.serial)
     resp.mustcontain(user2.serial)
     translation.deactivate()
@@ -407,7 +407,7 @@ def test_valid_proxy_request(app):
     environ = {'SERVER_NAME': 'testserver'}
     response = app.get(url, params, headers, environ)
     assert response.status_code == 200
-    assert 'Example Domain' in response.content
+    assert 'Example Domain' in response.content.decode()
     assert "Vary" not in response.headers
 
 
@@ -417,10 +417,10 @@ def test_by_tag_page_should_be_filtered_by_tag(app):
     plane2 = BookSpecimenFactory(book__tags=['plane'])
     boat2 = BookSpecimenFactory(book__tags=['boat'])
     response = app.get(reverse('by_tag', kwargs={'tag': 'plane'}))
-    assert plane.title in response.content
-    assert plane2.book.title in response.content
-    assert boat.title not in response.content
-    assert boat2.book.title not in response.content
+    assert plane.title in response.content.decode()
+    assert plane2.book.title in response.content.decode()
+    assert boat.title not in response.content.decode()
+    assert boat2.book.title not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):

@@ -1,7 +1,8 @@
 import mimetypes
 import socket
-import urllib2
-from urlparse import urlparse
+from urllib.parse import urlparse
+from urllib.request import Request, build_opener
+from urllib.error import HTTPError
 
 from django.conf import settings
 from django.contrib import messages
@@ -177,7 +178,7 @@ class UserExport(CSVExportMixin, View):
     def get_headers(self):
         fields = user_model.get_data_fields()
         self.fields = [f for f in fields if f.name not in user_model.PRIVATE_DATA]
-        return [unicode(f.verbose_name).encode('utf-8') for f in self.fields]
+        return [str(f.verbose_name) for f in self.fields]
 
     def get_row(self, user):
         data_fields = user.data_fields
@@ -186,8 +187,8 @@ class UserExport(CSVExportMixin, View):
             value = data_fields[field.name]['value']
             if value is None:
                 value = ''
-            value = unicode(value).encode('utf-8')
-            row[unicode(field.verbose_name).encode('utf-8')] = value
+            value = str(value)
+            row[str(field.verbose_name)] = value
         return row
 user_export = staff_member_required(UserExport.as_view())
 
@@ -230,17 +231,16 @@ class AjaxProxy(View):
         headers = {
             'User-Agent': 'ideascube +http://ideas-box.org'
         }
-        request = urllib2.Request(url, headers=headers)
-        opener = urllib2.build_opener()
+        request = Request(url, headers=headers)
+        opener = build_opener()
         try:
             proxied_request = opener.open(request)
-        except urllib2.HTTPError as e:
+        except HTTPError as e:
             return HttpResponse(e.msg, status=e.code,
                                 content_type='text/plain')
         else:
             status_code = proxied_request.code
-            mimetype = (proxied_request.headers.typeheader
-                        or mimetypes.guess_type(url))
+            mimetype = proxied_request.headers.get('Content-Type') or mimetypes.guess_type(url)  # noqa
             content = proxied_request.read()
             # Quick hack to prevent Django from adding a Vary: Cookie header
             self.request.session.accessed = False

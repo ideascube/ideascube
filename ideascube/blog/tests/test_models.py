@@ -14,4 +14,4 @@ def test_get_author_display_should_return_author_text(published):
 def test_get_author_display_should_return_author_if_no_author_text(user):
     content = ContentFactory(author=user)
     content.author_text = ''
-    assert content.get_author_display() == unicode(user)
+    assert content.get_author_display() == str(user)

@@ -7,7 +7,7 @@ class UserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
-        for name, field in self.fields.iteritems():
+        for name, field in self.fields.items():
             if isinstance(field, forms.DateField):
                 # Force date format on load, so date picker doesn't mess it up
                 # because of i10n.

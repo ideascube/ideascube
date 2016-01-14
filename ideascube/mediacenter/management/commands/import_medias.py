@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import codecs
 import csv
 import mimetypes
 import os
@@ -12,13 +13,6 @@ from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.forms import DocumentForm
 from ideascube.mediacenter.utils import guess_kind_from_content_type
 from ideascube.templatetags.ideascube_tags import smart_truncate
-
-
-def UnicodeDictReader(utf8_data, encoding='utf-8', **kwargs):
-    csv_reader = csv.DictReader(utf8_data, **kwargs)
-    for row in csv_reader:
-        yield {key.decode(encoding): value.decode(encoding)
-               for key, value in row.iteritems() if key}
 
 
 class Command(BaseCommand):
@@ -49,17 +43,13 @@ class Command(BaseCommand):
         self.stdout.write('-' * 20)
 
     def load(self, path):
-        with open(path, 'r') as f:
-            extract = f.read()
+        with codecs.open(path, 'r', encoding=self.encoding) as f:
+            content = f.read()
             try:
-                dialect = csv.Sniffer().sniff(extract)
+                dialect = csv.Sniffer().sniff(content)
             except csv.Error:
                 dialect = csv.unix_dialect()
-            f.seek(0)
-            content = f.read()
-            return UnicodeDictReader(content.splitlines(),
-                                     encoding=self.encoding,
-                                     dialect=dialect)
+            return csv.DictReader(content.splitlines(), dialect=dialect)
 
     def handle(self, *args, **options):
         path = os.path.abspath(options['path'])

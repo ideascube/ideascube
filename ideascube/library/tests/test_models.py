@@ -77,4 +77,4 @@ def test_is_not_digital_after_removing_file():
 def test_unicode_returns_digital_specimen_of_book():
     book = BookFactory()
     specimen = BookSpecimenFactory(book=book, is_digital=True)
-    assert unicode(specimen).startswith(u'Digital specimen of')
+    assert str(specimen).startswith(u'Digital specimen of')

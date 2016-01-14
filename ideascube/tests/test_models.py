@@ -41,7 +41,7 @@ def test_user_data_fields_should_return_labels_and_values():
     user = User(short_name='my name', ar_level=['u', 's'])
     fields = user.data_fields
     assert 'is_staff' not in fields
-    assert fields['short_name']['value'] == 'my name'
-    assert fields['short_name']['label'] == 'usual name'
-    assert fields['ar_level']['value'] == 'Understood, Spoken'
-    assert unicode(fields['ar_level']['label']) == 'Arabic knowledge'
+    assert str(fields['short_name']['value']) == 'my name'
+    assert str(fields['short_name']['label']) == 'usual name'
+    assert str(fields['ar_level']['value']) == 'Understood, Spoken'
+    assert str(fields['ar_level']['label']) == 'Arabic knowledge'

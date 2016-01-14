@@ -19,8 +19,8 @@ def test_anonymous_should_access_index_page(app):
 
 def test_only_books_with_specimen_should_be_in_index(app, book, specimen):
     response = app.get(reverse('library:index'))
-    assert specimen.book.title in response.content
-    assert book.title not in response.content
+    assert specimen.book.title in response.content.decode()
+    assert book.title not in response.content.decode()
 
 
 def test_index_page_is_paginated(app, monkeypatch):
@@ -235,7 +235,7 @@ def test_import_from_files_load_cover_if_exists(staffapp, monkeypatch):
     image = 'ideascube/tests/data/the-prophet.jpg'
     monkeypatch.setattr(
         'ideascube.library.utils.read_url',
-        lambda x: open(image).read()
+        lambda x: open(image, 'rb').read()
     )
     form = staffapp.get(reverse('library:book_import')).forms['import']
     form['from_files'] = Upload('ideascube/library/tests/data/moccam.csv')
@@ -243,7 +243,7 @@ def test_import_from_files_load_cover_if_exists(staffapp, monkeypatch):
     response.follow()
     assert Book.objects.count() == 2
     assert Book.objects.last().cover
-    assert open(Book.objects.last().cover.path).read() == open(image).read()
+    assert open(Book.objects.last().cover.path, 'rb').read() == open(image, 'rb').read()
 
 
 def test_import_from_ideascube_export(staffapp, monkeypatch):
@@ -276,8 +276,8 @@ def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = BookSpecimenFactory(book__tags=['plane'])
     boat = BookSpecimenFactory(book__tags=['boat'])
     response = app.get(reverse('library:by_tag', kwargs={'tag': 'plane'}))
-    assert plane.book.title in response.content
-    assert boat.book.title not in response.content
+    assert plane.book.title in response.content.decode()
+    assert boat.book.title not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):

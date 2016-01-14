@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from taggit.managers import TaggableManager
 
-from ideascube.models import TimeStampedModel
+from ideascube.models import SortedTaggableManager, TimeStampedModel
 from ideascube.search.models import SearchableQuerySet, SearchMixin
 
 
@@ -50,12 +50,12 @@ class Book(SearchMixin, TimeStampedModel):
                               blank=True)
 
     objects = BookQuerySet.as_manager()
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True, manager=SortedTaggableManager)
 
     class Meta:
         ordering = ['title']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):
@@ -81,7 +81,7 @@ class BookSpecimen(TimeStampedModel):
     def is_digital(self):
         return bool(self.file)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.is_digital:
             # serial is null for digital specimens.
             return u'Digital specimen of "{0}"'.format(self.book)

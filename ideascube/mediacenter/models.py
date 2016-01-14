@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from taggit.managers import TaggableManager
 
-from ideascube.models import TimeStampedModel
+from ideascube.models import SortedTaggableManager, TimeStampedModel
 from ideascube.search.models import SearchableQuerySet, SearchMixin
 from .utils import guess_kind_from_filename
 
@@ -61,12 +61,12 @@ class Document(SearchMixin, TimeStampedModel):
                             default=OTHER)
 
     objects = DocumentQuerySet.as_manager()
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True, manager=SortedTaggableManager)
 
     class Meta:
         ordering = ["-modified_at", ]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):

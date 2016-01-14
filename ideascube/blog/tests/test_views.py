@@ -19,10 +19,10 @@ def test_anonymous_should_access_index_page(app):
 def test_only_published_should_be_in_index(app, published, draft, deleted,
                                            published_in_the_future):
     response = app.get(reverse('blog:index'))
-    assert published.title in response.content
-    assert draft.title not in response.content
-    assert deleted.title not in response.content
-    assert published_in_the_future.title not in response.content
+    assert published.title in response.content.decode()
+    assert draft.title not in response.content.decode()
+    assert deleted.title not in response.content.decode()
+    assert published_in_the_future.title not in response.content.decode()
 
 
 def test_index_page_is_paginated(app, monkeypatch):
@@ -193,8 +193,8 @@ def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = ContentFactory(status=Content.PUBLISHED, tags=['plane'])
     boat = ContentFactory(status=Content.PUBLISHED, tags=['boat'])
     response = app.get(reverse('blog:by_tag', kwargs={'tag': 'plane'}))
-    assert plane.title in response.content
-    assert boat.title not in response.content
+    assert plane.title in response.content.decode()
+    assert boat.title not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):

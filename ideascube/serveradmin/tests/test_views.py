@@ -327,7 +327,7 @@ def test_upload_button_do_not_create_backup_with_non_zip_file(staffapp,
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
     form = staffapp.get(reverse('server:backup')).forms['backup']
-    form['upload'] = Upload(backup_name, 'xxx')
+    form['upload'] = Upload(backup_name, b'xxx')
     resp = form.submit('do_upload')
     assert resp.status_code == 200
     assert not os.path.exists(backup_path)

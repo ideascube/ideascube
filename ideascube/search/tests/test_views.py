@@ -14,7 +14,7 @@ def test_search_view_should_show_results(app):
     form = app.get(reverse('search:search')).forms['search']
     form['q'] = 'test'
     page = form.submit()
-    assert content.title in page.content
+    assert content.title in page.content.decode()
 
 
 def test_search_view_should_not_return_draft_content_to_anonymous(app):
@@ -22,7 +22,7 @@ def test_search_view_should_not_return_draft_content_to_anonymous(app):
     form = app.get(reverse('search:search')).forms['search']
     form['q'] = 'test'
     page = form.submit()
-    assert content.title not in page.content
+    assert content.title not in page.content.decode()
 
 
 def test_search_view_should_not_return_deleted_content_to_anonymous(app):
@@ -30,7 +30,7 @@ def test_search_view_should_not_return_deleted_content_to_anonymous(app):
     form = app.get(reverse('search:search')).forms['search']
     form['q'] = 'test'
     page = form.submit()
-    assert content.title not in page.content
+    assert content.title not in page.content.decode()
 
 
 def test_search_view_should_not_return_draft_content_to_logged_user(loggedapp):
@@ -38,7 +38,7 @@ def test_search_view_should_not_return_draft_content_to_logged_user(loggedapp):
     form = loggedapp.get(reverse('search:search')).forms['search']
     form['q'] = 'test'
     page = form.submit()
-    assert content.title not in page.content
+    assert content.title not in page.content.decode()
 
 
 def test_search_view_should_not_return_deleted_to_logged_user(loggedapp):
@@ -46,7 +46,7 @@ def test_search_view_should_not_return_deleted_to_logged_user(loggedapp):
     form = loggedapp.get(reverse('search:search')).forms['search']
     form['q'] = 'test'
     page = form.submit()
-    assert content.title not in page.content
+    assert content.title not in page.content.decode()
 
 
 def test_search_view_should_return_draft_content_to_staff_user(staffapp):
@@ -54,7 +54,7 @@ def test_search_view_should_return_draft_content_to_staff_user(staffapp):
     form = staffapp.get(reverse('search:search')).forms['search']
     form['q'] = 'test'
     page = form.submit()
-    assert content.title in page.content
+    assert content.title in page.content.decode()
 
 
 def test_search_view_should_not_return_deleted_to_staff_user(staffapp):
@@ -62,7 +62,7 @@ def test_search_view_should_not_return_deleted_to_staff_user(staffapp):
     form = staffapp.get(reverse('search:search')).forms['search']
     form['q'] = 'test'
     page = form.submit()
-    assert content.title in page.content
+    assert content.title in page.content.decode()
 
 
 def test_search_view_should_return_mixed_content(app):
@@ -71,5 +71,5 @@ def test_search_view_should_return_mixed_content(app):
     form = app.get(reverse('search:search')).forms['search']
     form['q'] = 'test'
     page = form.submit()
-    assert content.title in page.content
-    assert book.title in page.content
+    assert content.title in page.content.decode()
+    assert book.title in page.content.decode()

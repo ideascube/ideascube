@@ -174,12 +174,12 @@ class InventoryExport(CSVExportMixin, DetailView):
     def get_row(self, specimen):
         return {
             'module': specimen.item.module,
-            'name': specimen.item.name.encode('utf-8'),
-            'description': specimen.item.description.encode('utf-8'),
+            'name': specimen.item.name,
+            'description': specimen.item.description,
             'barcode': specimen.barcode,
             'serial': specimen.serial,
             'count': specimen.count,
-            'comments': specimen.comments.encode('utf-8'),
+            'comments': specimen.comments,
             'status': specimen.count if specimen in self.object else 'ko'
         }
 
@@ -401,13 +401,13 @@ class ExportLoan(CSVExportMixin, View):
 
     def get_row(self, entry):
         return {
-            'item': unicode(entry.specimen.item).encode('utf-8'),
+            'item': str(entry.specimen.item),
             'barcode': entry.specimen.barcode,
-            'user': entry.user.serial.encode('utf-8'),
+            'user': entry.user.serial,
             'loaned at': entry.created_at,
             'due date': entry.due_date,
             'returned at': entry.returned_at,
-            'comments': entry.comments.encode('utf-8')
+            'comments': entry.comments
         }
 
 export_loan = staff_member_required(ExportLoan.as_view())
