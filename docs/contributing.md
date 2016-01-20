@@ -41,14 +41,14 @@ Here are online resources you may find useful to contribute to the project:
 
 Project's typical development environment requires:
 
-* [Python 2.7](https://www.python.org/)
+* [Python 3.4 and above](https://www.python.org/)
 * [Git](http://git-scm.com/)
 * JPEG development headers (for Pillow).
 
 On a Debian-based system, you may use:
 
-    sudo apt-get install python-pip python-virtualenv virtualenvwrapper python-dev libjpeg-dev libxml2-dev libxslt1-dev zlib1g-dev build-essential autoconf automake libtool libdbus-glib-1-dev
-    sudo apt-get build-dep python-dbus
+    sudo apt-get install python3-pip python-virtualenv virtualenvwrapper python3-dev libjpeg-dev libxml2-dev libxslt1-dev zlib1g-dev build-essential autoconf automake libtool libdbus-glib-1-dev git
+    sudo apt-get build-dep python3-dbus
 
 ### Download the souce code
 
@@ -71,7 +71,7 @@ Install python dependencies:
 
 Run the initial database migration::
 
-    python manage.py migrate
+    python3 manage.py migrate
 
 To populate the database with some initial dummy data, you can run the command::
 
@@ -81,7 +81,7 @@ To populate the database with some initial dummy data, you can run the command::
 
 Run the server:
 
-    python manage.py runserver
+    python3 manage.py runserver
 
 Check it works:
 
