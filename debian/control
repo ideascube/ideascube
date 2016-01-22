@@ -15,5 +15,5 @@ Standards-Version: 3.9.5
 Package: ideascube
 Architecture: any
 Pre-Depends: dpkg (>= 1.16.1), python3-minimal, ${misc:Pre-Depends}
-Depends: nginx, uwsgi, uwsgi-plugin-python3, libpam-systemd, ${python3:Depends}, ${misc:Depends}
+Depends: nginx, uwsgi, uwsgi-plugin-python3, libpam-systemd, network-manager, policykit-1, ${python3:Depends}, ${misc:Depends}
 Description: Ideascube media server
