@@ -6,3 +6,5 @@ extras/polkit-debian/ideascube-networkmanager.pkla /var/lib/polkit-1/localauthor
 extras/polkit-debian/ideascube-systemd.pkla /var/lib/polkit-1/localauthority/20-org.d
 extras/polkit-debian/org.bsf.ideascube.policy /usr/share/polkit-1/actions
 extras/pam/ideascube /etc/pam.d
+extras/uwsgi/uwsgi.service /lib/systemd/system
+extras/uwsgi/ideascube.conf /lib/systemd/system/uwsgi.service.d
