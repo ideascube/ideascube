@@ -3,14 +3,14 @@ NAME=ideascube
 
 case "$1" in
     configure)
-        # Create elasticsearch group if not existing
+        # Create ideascube group if not existing
         if ! getent group "$NAME" > /dev/null 2>&1 ; then
             echo -n "Creating $NAME group..."
             addgroup --quiet --system "$NAME"
             echo " OK"
         fi
 
-        # Create elasticsearch user if not existing
+        # Create ideascube user if not existing
         if ! id $NAME > /dev/null 2>&1 ; then
             echo -n "Creating $NAME user..."
             adduser --quiet \
