@@ -1,0 +1,6 @@
+[Allow ideascube to manage units]
+Identity=unix-user:ideascube
+Action=org.bsf.ideascube.pkexec.systemctl
+ResultActive=yes
+ResultInactive=yes
+ResultAny=yes

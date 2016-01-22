@@ -1,0 +1,20 @@
+[Allow ideascube to control the network]
+Identity=unix-user:ideascube
+Action=org.freedesktop.NetworkManager.network-control
+ResultActive=yes
+ResultInactive=yes
+ResultAny=yes
+
+[Allow ideascube to enable/disable the Wi-Fi]
+Identity=unix-user:ideascube
+Action=org.freedesktop.NetworkManager.enable-disable-wifi
+ResultActive=yes
+ResultInactive=yes
+ResultAny=yes
+
+[Allow ideascube to manage system-level connections]
+Identity=unix-user:ideascube
+Action=org.freedesktop.NetworkManager.settings.modify.system
+ResultActive=yes
+ResultInactive=yes
+ResultAny=yes

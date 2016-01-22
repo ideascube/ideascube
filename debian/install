@@ -2,3 +2,6 @@ extras/nginx/ideascube /etc/nginx/sites-available
 extras/uwsgi/ideascube.ini /etc/uwsgi/apps-available
 extras/uwsgi/uwsgi_params /var/ideascube
 extras/bin/ideascube /usr/bin
+extras/polkit-debian/ideascube-networkmanager.pkla /var/lib/polkit-1/localauthority/20-org.d
+extras/polkit-debian/ideascube-systemd.pkla /var/lib/polkit-1/localauthority/20-org.d
+extras/polkit-debian/org.bsf.ideascube.policy /usr/share/polkit-1/actions
