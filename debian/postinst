@@ -31,14 +31,11 @@ case "$1" in
         # Nginx
         echo "Linking Nginx VHost"
         ln -fs /etc/nginx/sites-available/$NAME /etc/nginx/sites-enabled/$NAME
-        echo "Restarting Nginx"
-        systemctl daemon-reload
-        systemctl restart nginx.service
         echo "Linking uWSGI app"
         ln -fs /etc/uwsgi/apps-available/$NAME.ini /etc/uwsgi/apps-enabled/$NAME.ini
-        echo "Restarting uWSGI"
+        echo "Restarting Nginx and uWSGI"
         systemctl daemon-reload
-        systemctl restart uwsgi.service
+        systemctl restart nginx.service uwsgi.service
         ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
