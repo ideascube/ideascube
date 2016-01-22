@@ -20,4 +20,4 @@ Unidecode==0.4.18
 #
 # So we forked the forked, backporting the pip-related patches to the 1.1.1
 # branch, and we use that here.
-git+https://github.com/ideascube/dbus-python.git@pipified-1.1.1#egg=dbus
+git+https://github.com/ideascube/dbus-python.git@pipified-1.1.1#egg=dbus-python

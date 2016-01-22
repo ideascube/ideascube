@@ -44,11 +44,7 @@ First follow install process for [development](contributing.md).
 
 Install system build dependencies:
 
-    sudo apt-get install dh-virtualenv debhelper
-
-Install test dependencies:
-
-    make develop
+    sudo apt-get install dh-virtualenv debhelper python3-dev libjpeg-dev zlib1g-dev libxml2-dev libxslt1-dev libdbus-glib-1-dev autoconf automake libtool
 
 First, build the `.deb`:
 

@@ -1,0 +1,2 @@
+auth sufficient pam_rootok.so
+session required pam_systemd.so
