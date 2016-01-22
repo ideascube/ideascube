@@ -38,6 +38,7 @@ case "$1" in
         echo "Restarting Nginx and uWSGI"
         systemctl daemon-reload
         systemctl restart nginx.service uwsgi.service
+        systemctl enable uwsgi.service
         ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
