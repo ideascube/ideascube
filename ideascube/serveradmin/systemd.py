@@ -95,6 +95,6 @@ def systemctl(action, unit):
         msg = ["Could not %s %s" % (action, unit)]
 
         if err:
-            msg.append(err.strip())
+            msg.append(err.strip().decode())
 
         raise UnitManagementError(': '.join(msg))

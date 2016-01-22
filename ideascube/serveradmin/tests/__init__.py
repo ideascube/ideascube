@@ -109,7 +109,7 @@ class FakePopen(object):
 
     def communicate(self):
         if self.returncode and self.stderr is not None:
-            self.stderr.write(u'Oh Noes!')
+            self.stderr.write(b'Oh Noes!')
 
         return self.stdout.getvalue(), self.stderr.getvalue()
 
