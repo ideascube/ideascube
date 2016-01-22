@@ -1,4 +1,4 @@
-from io import StringIO
+from io import BytesIO
 
 import pytest
 
@@ -44,7 +44,7 @@ def test_activate_service(mocker):
     mocker.patch(
         'ideascube.serveradmin.systemd.subprocess.Popen', side_effect=FakePopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     manager = Manager()
     manager.activate('NetworkManager.service')
@@ -59,7 +59,7 @@ def test_failed_to_activate_service(mocker):
         'ideascube.serveradmin.systemd.subprocess.Popen',
         side_effect=FailingPopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     manager = Manager()
 
@@ -78,7 +78,7 @@ def test_deactivate_service(mocker):
     mocker.patch(
         'ideascube.serveradmin.systemd.subprocess.Popen', side_effect=FakePopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     manager = Manager()
     manager.deactivate('NetworkManager.service')
@@ -93,7 +93,7 @@ def test_failed_to_deactivate_service(mocker):
         'ideascube.serveradmin.systemd.subprocess.Popen',
         side_effect=FailingPopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     manager = Manager()
 
@@ -112,7 +112,7 @@ def test_restart_service(mocker):
     mocker.patch(
         'ideascube.serveradmin.systemd.subprocess.Popen', side_effect=FakePopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     manager = Manager()
     manager.restart('NetworkManager.service')

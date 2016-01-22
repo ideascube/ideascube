@@ -1,4 +1,4 @@
-from io import StringIO
+from io import BytesIO
 import os
 import shutil
 import zipfile
@@ -112,7 +112,7 @@ def test_staff_activates_service(mocker, staffapp, settings):
         'ideascube.serveradmin.systemd.subprocess.Popen',
         side_effect=FakePopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     settings.SERVICES = [{'name': 'nginx'}]
 
@@ -131,7 +131,7 @@ def test_staff_fails_to_activate_service(mocker, staffapp, settings):
         'ideascube.serveradmin.systemd.subprocess.Popen',
         side_effect=FailingPopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     settings.SERVICES = [{'name': 'nginx'}]
 
@@ -150,7 +150,7 @@ def test_staff_deactivates_service(mocker, staffapp, settings):
         'ideascube.serveradmin.systemd.subprocess.Popen',
         side_effect=FakePopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     settings.SERVICES = [{'name': 'NetworkManager'}]
 
@@ -169,7 +169,7 @@ def test_staff_fails_to_deactivate_service(mocker, staffapp, settings):
         'ideascube.serveradmin.systemd.subprocess.Popen',
         side_effect=FailingPopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     settings.SERVICES = [{'name': 'NetworkManager'}]
 
@@ -188,7 +188,7 @@ def test_staff_restarts_service(mocker, staffapp, settings):
         'ideascube.serveradmin.systemd.subprocess.Popen',
         side_effect=FakePopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     settings.SERVICES = [{'name': 'NetworkManager'}]
 
@@ -207,7 +207,7 @@ def test_staff_fails_to_restart_service(mocker, staffapp, settings):
         'ideascube.serveradmin.systemd.subprocess.Popen',
         side_effect=FailingPopen)
     mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=StringIO)
+        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
 
     settings.SERVICES = [{'name': 'NetworkManager'}]
 
