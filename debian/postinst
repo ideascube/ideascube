@@ -33,6 +33,8 @@ case "$1" in
         ln -fs /etc/nginx/sites-available/$NAME /etc/nginx/sites-enabled/$NAME
         echo "Linking uWSGI app"
         ln -fs /etc/uwsgi/apps-available/$NAME.ini /etc/uwsgi/apps-enabled/$NAME.ini
+        echo "Setting permissions on the uWSGI log folder"
+        chown -R $NAME:$NAME /var/log/uwsgi
         echo "Restarting Nginx and uWSGI"
         systemctl daemon-reload
         systemctl restart nginx.service uwsgi.service
