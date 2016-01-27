@@ -47,7 +47,8 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
     )
 
     title = models.CharField(_('title'), max_length=100)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               on_delete=models.PROTECT)
     author_text = models.CharField(_('author text'), max_length=300,
                                    blank=True)
     summary = models.CharField(_('summary'), max_length=300)

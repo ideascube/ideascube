@@ -237,3 +237,14 @@ def test_can_update_content_tags(staffapp, published):
     content = Content.objects.get(pk=published.pk)
     assert content.tags.count() == 2
     assert content.tags.first().name == 'tag1'
+
+
+def test_staff_user_cannot_delete_user_linked_to_blog_content(staffapp,
+                                                              published):
+    assert len(Content.objects.all()) == 1
+    url = reverse('user_delete', kwargs={'pk': published.author.pk})
+    form = staffapp.get(url).forms['delete_form']
+    resp = form.submit()
+    assert resp.status_code == 302
+    assert resp['Location'].endswith(published.author.get_absolute_url())
+    assert len(Content.objects.all()) == 1

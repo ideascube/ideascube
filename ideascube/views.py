@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.forms import SetPasswordForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.validators import URLValidator, ValidationError
+from django.db import IntegrityError
 from django.http import (HttpResponse, HttpResponseBadRequest,
                          HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, render
@@ -133,6 +134,14 @@ class UserDelete(DeleteView):
     template_name = 'ideascube/user_confirm_delete.html'
     context_object_name = 'user_obj'
     success_url = reverse_lazy('user_list')
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            return super().delete(request, *args, **kwargs)
+        except IntegrityError as e:
+            messages.add_message(request, messages.ERROR, e.args[0])
+            return HttpResponseRedirect(self.object.get_absolute_url())
+
 user_delete = staff_member_required(UserDelete.as_view())
 
 
