@@ -14,12 +14,6 @@ USER_FORM_FIELDS = (
 
 HOME_CARDS = HOME_CARDS + [
     {
-        'id': 'vikidia',
-    },
-    {
-        'id': 'gutenberg',
-    },
-    {
         'id': 'cpassorcier',
     },
     {
