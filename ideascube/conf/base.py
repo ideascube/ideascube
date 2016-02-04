@@ -105,6 +105,7 @@ AVAILABLE_LANGUAGES = (
     ('so', u'Af-Soomaali'),
     ('sw', u'Swahili'),
     ('bm', u'Bambara'),
+    ('fa', u'Persian'),
 )
 
 # Those will be added to django.locale.LANG_INFO.
