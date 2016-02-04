@@ -261,6 +261,9 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     ar_level = CommaSeparatedCharField(
         _('Arabic knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
+    fa_level = CommaSeparatedCharField(
+        _('Persian knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
     rn_level = CommaSeparatedCharField(
         _('Kirundi knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
