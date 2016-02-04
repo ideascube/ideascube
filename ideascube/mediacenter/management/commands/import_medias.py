@@ -13,6 +13,7 @@ from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.forms import DocumentForm
 from ideascube.mediacenter.utils import guess_kind_from_content_type
 from ideascube.templatetags.ideascube_tags import smart_truncate
+from ideascube.management.utils import Reporter
 
 
 class Command(BaseCommand):
@@ -34,14 +35,6 @@ class Command(BaseCommand):
         self.stderr.write(msg)
         sys.exit(1)
 
-    def skip(self, msg, metadata=None):
-        self.stderr.write(u'⚠ Skipping. {}.'.format(msg))
-        if metadata:
-            for key, value in metadata.items():
-                value = value if value else ''
-                self.stdout.write(u'- {}: {}'.format(key, value))
-        self.stdout.write('-' * 20)
-
     def load(self, path):
         with codecs.open(path, 'r', encoding=self.encoding) as f:
             content = f.read()
@@ -56,17 +49,21 @@ class Command(BaseCommand):
         self.update = options['update']
         self.encoding = options['encoding']
         self.dry_run = options['dry_run']
+        self.report = Reporter(options['verbosity'])
         if not os.path.exists(path):
             self.abort('Path does not exist: {}'.format(path))
         self.ROOT = os.path.dirname(path)
         rows = self.load(path)
         for row in rows:
             self.add(row)
+        print(self.report)
+        if self.report.has_errors():
+            sys.exit(1)
 
     def add(self, metadata):
         title = metadata.get('title')
         if not title:
-            return self.skip('Missing title', metadata)
+            return self.report.error('Missing title', metadata)
         title = smart_truncate(title)
         metadata['title'] = title
 
@@ -75,7 +72,7 @@ class Command(BaseCommand):
 
         original = metadata.get('path')
         if not original:
-            return self.skip('Missing path', metadata)
+            return self.report.error('Missing path', metadata)
         kind = metadata.get('kind')
         content_type, encoding = mimetypes.guess_type(original)
         if not kind or not hasattr(Document, kind.upper()):
@@ -84,13 +81,12 @@ class Command(BaseCommand):
 
         instance = Document.objects.filter(title=title, kind=kind).last()
         if instance and not self.update:
-            return self.skip(u'Document "{}" exists. Use --update to reimport '
-                             u'data'.format(title))
+            return self.report.warning('Document exists (Use --update for '
+                                       'reimport)', title)
 
         path = os.path.join(self.ROOT, original)
         if not os.path.exists(path):
-            return self.skip(u'Path not found: {}'.format(path),
-                             metadata)
+            return self.report.error(u'Path not found', path)
         with open(path, 'rb') as f:
             original = File(f, name=original)
 
@@ -109,11 +105,11 @@ class Command(BaseCommand):
 
         if form.is_valid():
             if self.dry_run:
-                self.stdout.write(u'✔ Metadata valid {}'.format(
-                                                            metadata['title']))
+                self.report.notice('Metadata valid', metadata['title'])
             else:
                 doc = form.save()
-                self.stdout.write(u'✔ Uploaded media {}'.format(doc))
+                self.report.notice('Uploaded media', str(doc))
         else:
             for field, error in form.errors.items():
-                self.skip('{}: {}'.format(field, error.as_text()), metadata)
+                self.report.error('{}: {}'.format(field, error.as_text()),
+                                  metadata)
