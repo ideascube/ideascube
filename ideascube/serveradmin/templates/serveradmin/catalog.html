@@ -1,0 +1,27 @@
+{% extends 'serveradmin/index.html' %}
+{% load i18n %}
+
+{% block twothird %}
+<h2>{% trans 'Catalog' %}</h2>
+<h3>{% trans 'Applications' %}</h3>
+<ul class="grid">
+{% for id, package in catalog.apps.items %}
+    <li class="card tinted">
+        <h5>{{ package.name }}</h5><a href="#" class="button">install</a>
+    </li>
+{% endfor %}
+</ul>
+<hr />
+<h3>{% trans 'Content' %}</h3>
+<ul class="grid">
+{% for id, package in catalog.content.items %}
+    <li class="card tinted">
+        <h5>{{ package.name }}</h5>
+        <div>Depens on {{ package.dependencies }}</div>
+        <div>Tags {{ package.tags }}</div>
+        <a href="{% url 'server:install_package' package.id %}" class="button">install</a>
+   </li>
+{% endfor %}
+</ul>
+
+{% endblock twothird %}

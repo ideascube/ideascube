@@ -1,0 +1,4 @@
+install:
+    command:
+    - mv {package.download_path} {app.dir}/data/{package.id}.zim
+    - kiwix-manage {app.dir}/library/library.xml add {app.dir}/data/{package.id}.zim -i={app.dir}/{{ kiwixProject }}/data/index/{{ item.index }}
