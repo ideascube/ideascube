@@ -46,7 +46,8 @@ def test_should_skip_if_missing_required_metadata(row):
     assert not Document.objects.count()
     metadata = ('kind,title,summary,credits,path\n' + row)
     write_metadata(metadata)
-    call_command('import_medias', CSV_PATH)
+    with pytest.raises(SystemExit):
+        call_command('import_medias', CSV_PATH)
     assert not Document.objects.count()
 
 
