@@ -54,11 +54,19 @@ class Catalog(object):
         resumable.urlretrieve(package.url, path) # TODO: sha256sum
         return path
 
+    def _get_from(self, id, source):
+        metadata = source[id]
+
+        if metadata['type'] == 'content':
+            return Content(id, metadata, self)
+        else:
+            raise ValueError('Unsupported package type: {}'.format(metadata['type']))
+
     def get_installed(self, id):
-        return Content(id, self.source['installed'][id], self)
+        return self._get_from(id, self.source['installed'])
 
     def get_available(self, id):
-        return Content(id, self.source['current'][id], self)
+        return self._get_from(id, self.source['current'])
 
     def empty_cache(self):
         shutil.rmtree(self.PACKAGE_CACHE)
@@ -102,9 +110,9 @@ class Catalog(object):
         self._persist_cache()
 
     def upgrade(self, ids=None):
-        if ids is None:
+        if not ids:
             # Update all
-            ids = [p['id'] for p in self.source['installed']]
+            ids = self.source['installed'].keys()
 
         app = Kiwix()
 
@@ -215,14 +223,3 @@ class Kiwix(object):
     def update(self, package):
         package.remove(self)
         package.install(self)
-
-
-import sys
-catalog = Catalog(['./ideascube/serveradmin/tests/data/catalog.yml'])
-catalog.update()
-
-action = sys.argv[1]
-packageids = sys.argv[2:]
-
-print("%s-ing %s" % (action, packageids))
-getattr(catalog, action)(packageids)
