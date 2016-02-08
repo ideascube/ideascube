@@ -1,29 +1,29 @@
 current:
-- id: kiwix
-  type: app
-  name: Zim Server
-  url: apt://kiwix-server
-  mimetypes:
-  - application/zim
-  endpoints:
-  - search: /search
-  - install: /install
-- id: wikipedia.en
-  name: English Wikipedia
-  tags:
-  - wikipedia
-  - encyclopedia
-  dependencies: kiwix
-  mimetype: application/zim
-  url: https://gist.githubusercontent.com/yohanboniface/cf8322533cff5262d12d/raw/ce336cfef57fba13843fb59618b0e381caa8e469/pouet.txt
-  lang: en
-  type: content
-- id: wikipedia.fr
-  name: Wikipedia en français
-  tags:
-  - wikipedia
-  - encyclopedia
-  mimetype: application/zim
-  url: https://gist.githubusercontent.com/yohanboniface/cf8322533cff5262d12d/raw/ce336cfef57fba13843fb59618b0e381caa8e469/pouet.txt
-  lang: fr
-  type: content
+  kiwix:
+    type: app
+    name: Zim Server
+    url: apt://kiwix-server
+    mimetypes:
+    - application/zim
+    endpoints:
+    - search: /search
+    - install: /install
+  wikipedia.en:
+    name: English Wikipedia
+    tags:
+    - wikipedia
+    - encyclopedia
+    dependencies: kiwix
+    mimetype: application/zim
+    url: http://download.kiwix.org/portable/wikipedia/kiwix-0.9+wikipedia_tum_all_nopic_2015-08.zip
+    lang: en
+    type: content
+  wikipedia.fr:
+    name: Wikipedia en français
+    tags:
+    - wikipedia
+    - encyclopedia
+    mimetype: application/zim
+    url: https://gist.githubusercontent.com/yohanboniface/cf8322533cff5262d12d/raw/ce336cfef57fba13843fb59618b0e381caa8e469/pouet.txt
+    lang: fr
+    type: content
