@@ -37,6 +37,33 @@ class Remote:
             f.write(yaml.safe_dump(d, default_flow_style=False))
 
 
+class Package:
+    def __init__(self, id, metadata):
+        self.id = id
+        self._metadata = metadata
+
+    def __eq__(self, other):
+        return self.id == other.id and self._metadata == other._metadata
+
+    def __getattr__(self, name):
+        try:
+            return self._metadata[name]
+
+        except KeyError:
+            raise AttributeError(name)
+
+    @property
+    def version(self):
+        # 0 has the advantage of always being "smaller" than any other version
+        return self._metadata.get('version', '0')
+
+    def install(self, download_path, install_dir):
+        raise NotImplementedError('Subclasses must implement this method')
+
+    def remove(self, install_dir):
+        raise NotImplementedError('Subclasses must implement this method')
+
+
 class Catalog:
     def __init__(self):
         self._cache_base_dir = settings.CATALOG_CACHE_BASE_DIR

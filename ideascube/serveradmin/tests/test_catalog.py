@@ -102,6 +102,56 @@ def test_remote_to_file(tmpdir):
         'url: http://foo.fr/catalog.yml']
 
 
+def test_package():
+    from ideascube.serveradmin.catalog import Package
+
+    p = Package('wikipedia.fr', {
+        'name': 'Wikipédia en français', 'version': '2015-08'})
+    assert p.id == 'wikipedia.fr'
+    assert p.name == 'Wikipédia en français'
+    assert p.version == '2015-08'
+
+    with pytest.raises(AttributeError):
+        print(p.no_such_attribute)
+
+    with pytest.raises(NotImplementedError):
+        p.install('some-path', 'some-other-path')
+
+    with pytest.raises(NotImplementedError):
+        p.remove('some-path')
+
+
+def test_package_without_version():
+    from ideascube.serveradmin.catalog import Package
+
+    p = Package('wikipedia.fr', {'name': 'Wikipédia en français'})
+    assert p.id == 'wikipedia.fr'
+    assert p.name == 'Wikipédia en français'
+    assert p.version == '0'
+
+
+def test_package_equality():
+    from ideascube.serveradmin.catalog import Package
+
+    p1 = Package('wikipedia.fr', {
+        'name': 'Wikipédia en français', 'version': '2015-08',
+        'type': 'zippedzim'})
+    p2 = Package('wikipedia.en', {
+        'name': 'Wikipédia en français', 'version': '2015-08',
+        'type': 'zippedzim'})
+    assert p1 != p2
+
+    p3 = Package('wikipedia.fr', {
+        'name': 'Wikipédia en français', 'version': '2015-09',
+        'type': 'zippedzim'})
+    assert p1 != p3
+
+    p4 = Package('wikipedia.fr', {
+        'name': 'Wikipédia en français', 'type': 'zippedzim',
+        'version': '2015-08'})
+    assert p1 == p4
+
+
 def test_catalog_no_remote(tmpdir, settings):
     from ideascube.serveradmin.catalog import Catalog
 
