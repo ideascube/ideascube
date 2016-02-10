@@ -1,3 +1,5 @@
+import shutil
+
 import pytest
 
 
@@ -40,6 +42,13 @@ def input_file(tmpdir, request):
         path.write('url: {url}'.format(**request.param), mode='a')
 
     return {'path': path.strpath, 'input': request.param}
+
+
+def fake_urlretrieve(url, path, reporthook=None):
+    assert url.startswith('file://')
+
+    src = url[7:]
+    shutil.copyfile(src, path)
 
 
 def test_remote_from_file(input_file):
@@ -178,3 +187,53 @@ def test_catalog_remove_remote(tmpdir, settings):
         c.remove_remote(params['id'])
 
     assert params['id'] in exc.exconly()
+
+
+def test_catalog_update_cache(tmpdir, settings, monkeypatch):
+    from ideascube.serveradmin.catalog import Catalog
+
+    monkeypatch.setattr(
+        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n  foovideos:\n    name: Videos from Foo')
+
+    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
+    c = Catalog()
+    assert c._catalog == {'installed': {}, 'available': {}}
+
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    assert c._catalog == {
+        'installed': {},
+        'available': {'foovideos': {'name': 'Videos from Foo'}}}
+
+    c = Catalog()
+    assert c._catalog == {
+        'installed': {},
+        'available': {'foovideos': {'name': 'Videos from Foo'}}}
+
+
+def test_catalog_clear_cache(tmpdir, settings, monkeypatch):
+    from ideascube.serveradmin.catalog import Catalog
+
+    monkeypatch.setattr(
+        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n  foovideos:\n    name: Videos from Foo')
+
+    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    assert c._catalog != {'installed': {}, 'available': {}}
+
+    c.clear_cache()
+    assert c._catalog == {'installed': {}, 'available': {}}

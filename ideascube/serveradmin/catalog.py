@@ -1,8 +1,11 @@
 from glob import glob
 from operator import attrgetter
 import os
+import sys
+import tempfile
 
 from django.conf import settings
+from resumable import urlretrieve
 import yaml
 
 
@@ -41,6 +44,70 @@ class Catalog:
 
         self._cache_remote_dir = os.path.join(self._cache_base_dir, 'remotes')
         self._load_remotes()
+
+        self._cache_catalog = os.path.join(self._cache_base_dir, 'catalog.yml')
+        self._load_cache()
+
+    def _progress(self, msg, i, chunk_size, remote_size):
+        percent_done = (i + 1) * chunk_size / remote_size
+
+        if percent_done > 1.0:
+            percent_done = 1.0
+
+        length = 79 - len(msg) - 2 - 1 - 6
+        done_chars = int(percent_done * length)
+        remain_chars = length - done_chars
+        percent_done = int(percent_done * 1000) / 10
+
+        p = '\r{}: {}{} {}%'.format(
+            msg, "█" * done_chars, " " * remain_chars, percent_done)
+        sys.stdout.write(p)
+
+        if percent_done == 100.0:
+            sys.stdout.write('\n')
+
+        sys.stdout.flush()
+
+    # -- Manage local cache ---------------------------------------------------
+    def _load_cache(self):
+        if os.path.exists(self._cache_catalog):
+            with open(self._cache_catalog, 'r') as f:
+                self._catalog = yaml.safe_load(f.read())
+
+        else:
+            self._catalog = {'installed': {}, 'available': {}}
+            self._persist_cache()
+
+    def _persist_cache(self):
+        with open(self._cache_catalog, 'w') as f:
+            f.write(yaml.safe_dump(self._catalog, default_flow_style=False))
+
+    def update_cache(self):
+        self._catalog['available'] = {}
+
+        for remote in self._remotes.values():
+            # TODO: Get resumable.urlretrieve to accept a file-like object?
+            fd, tmppath = tempfile.mkstemp()
+            os.close(fd)
+
+            def _progress(*args):
+                self._progress(' {}'.format(remote.name), *args)
+
+            # TODO: Verify the download with sha256sum? Crypto signature?
+            urlretrieve(remote.url, tmppath, reporthook=_progress)
+
+            with open(tmppath, 'r') as f:
+                catalog = yaml.safe_load(f.read())
+                # TODO: Handle content which was removed from the remote source
+                self._catalog['available'].update(catalog['all'])
+
+            os.unlink(tmppath)
+
+        self._persist_cache()
+
+    def clear_cache(self):
+        self._catalog['available'] = {}
+        self._persist_cache()
 
     # -- Manage remote sources ------------------------------------------------
     def _load_remotes(self):
