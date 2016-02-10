@@ -24,6 +24,7 @@ case "$1" in
         fi
         chown $NAME:$NAME /var/$NAME
         chown $NAME:$NAME /var/$NAME/main
+        chown $NAME:$NAME /var/cache/$NAME
         echo "Running migration"
         sudo -u $NAME /usr/bin/ideascube migrate --noinput -v 1
         echo "Running collectstatic"

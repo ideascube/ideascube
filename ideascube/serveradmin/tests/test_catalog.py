@@ -91,3 +91,90 @@ def test_remote_to_file(tmpdir):
     assert lines == [
         'id: foo', 'name: Content provided by Foo',
         'url: http://foo.fr/catalog.yml']
+
+
+def test_catalog_no_remote(tmpdir, settings):
+    from ideascube.serveradmin.catalog import Catalog
+
+    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
+    c = Catalog()
+    assert c.list_remotes() == []
+    assert tmpdir.join('remotes').check(dir=True)
+    assert tmpdir.join('remotes').listdir() == []
+
+
+def test_catalog_existing_remote(tmpdir, settings):
+    from ideascube.serveradmin.catalog import Catalog
+
+    params = {
+        'id': 'foo', 'name': 'Content provided by Foo',
+        'url': 'http://foo.fr/catalog.yml'}
+
+    tmpdir.mkdir('remotes').join('foo.yml').write(
+        'id: {id}\nname: {name}\nurl: {url}'.format(**params))
+
+    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
+    c = Catalog()
+    remotes = c.list_remotes()
+    assert len(remotes) == 1
+
+    remote = remotes[0]
+    assert remote.id == params['id']
+    assert remote.name == params['name']
+    assert remote.url == params['url']
+
+
+def test_catalog_add_remotes(tmpdir, settings):
+    from ideascube.serveradmin.catalog import Catalog
+
+    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
+    c = Catalog()
+    c.add_remote('foo', 'Content provided by Foo', 'http://foo.fr/catalog.yml')
+    remotes = c.list_remotes()
+    assert len(remotes) == 1
+
+    remote = remotes[0]
+    assert remote.id == 'foo'
+    assert remote.name == 'Content provided by Foo'
+    assert remote.url == 'http://foo.fr/catalog.yml'
+
+    c.add_remote('bar', 'Content provided by Bar', 'http://bar.fr/catalog.yml')
+    remotes = c.list_remotes()
+    assert len(remotes) == 2
+
+    remote = remotes[0]
+    assert remote.id == 'bar'
+    assert remote.name == 'Content provided by Bar'
+    assert remote.url == 'http://bar.fr/catalog.yml'
+
+    remote = remotes[1]
+    assert remote.id == 'foo'
+    assert remote.name == 'Content provided by Foo'
+    assert remote.url == 'http://foo.fr/catalog.yml'
+
+    with pytest.raises(ValueError) as exc:
+        c.add_remote('foo', 'Content by Foo', 'http://foo.fr/catalog.yml')
+
+    assert 'foo' in exc.exconly()
+
+
+def test_catalog_remove_remote(tmpdir, settings):
+    from ideascube.serveradmin.catalog import Catalog
+
+    params = {
+        'id': 'foo', 'name': 'Content provided by Foo',
+        'url': 'http://foo.fr/catalog.yml'}
+
+    tmpdir.mkdir('remotes').join('foo.yml').write(
+        'id: {id}\nname: {name}\nurl: {url}'.format(**params))
+
+    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
+    c = Catalog()
+    c.remove_remote(params['id'])
+    remotes = c.list_remotes()
+    assert len(remotes) == 0
+
+    with pytest.raises(ValueError) as exc:
+        c.remove_remote(params['id'])
+
+    assert params['id'] in exc.exconly()
