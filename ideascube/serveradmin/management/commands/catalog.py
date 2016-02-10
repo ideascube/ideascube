@@ -13,6 +13,18 @@ class Command(BaseCommand):
             title='Commands', dest='cmd', metavar='',
             parser_class=argparse.ArgumentParser)
 
+        # -- Manage local cache -----------------------------------------------
+        cache = subs.add_parser('cache', help='Manage cache')
+
+        cachesubs = cache.add_subparsers(title='Commands', dest='cachecmd')
+        cachesubs.required = True
+
+        update = cachesubs.add_parser('update', help='Update the local cache')
+        update.set_defaults(func=self.update_cache)
+
+        clear = cachesubs.add_parser('clear', help='Clear the local cache')
+        clear.set_defaults(func=self.clear_cache)
+
         # -- Manage remote sources --------------------------------------------
         remote = subs.add_parser('remotes', help='Manage remote sources')
 
@@ -41,6 +53,13 @@ class Command(BaseCommand):
 
         self.catalog = Catalog()
         options['func'](options)
+
+    # -- Manage local cache ---------------------------------------------------
+    def update_cache(self, options):
+        self.catalog.update_cache()
+
+    def clear_cache(self, options):
+        self.catalog.clear_cache()
 
     # -- Manage remote sources ------------------------------------------------
     def list_remotes(self, options):
