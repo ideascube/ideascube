@@ -1,8 +1,10 @@
 from glob import glob
 from operator import attrgetter
 import os
+import shutil
 import sys
 import tempfile
+import zipfile
 
 from django.conf import settings
 from resumable import urlretrieve
@@ -87,6 +89,34 @@ class Package(metaclass=MetaRegistry):
 
 class ZippedZim(Package):
     typename = 'zipped-zim'
+
+    def install(self, download_path, install_dir):
+        if not zipfile.is_zipfile(download_path):
+            os.unlink(download_path)
+            raise InvalidFile('{} is not a zip file'.format(download_path))
+
+        with zipfile.ZipFile(download_path, "r") as z:
+            names = z.namelist()
+            names = filter(lambda n: n.startswith('data/'), names)
+            z.extractall(install_dir, members=names)
+
+        zimname = os.path.basename(self.url).split('+', 1)[-1][:-4] + '.zim'
+        datadir = os.path.join(install_dir, 'data')
+
+        for path in glob(os.path.join(datadir, '*', '{}*'.format(zimname))):
+            new = path.replace(zimname, '{0.id}.zim'.format(self))
+            os.rename(path, new)
+
+    def remove(self, install_dir):
+        zimname = '{0.id}.zim*'.format(self)
+        datadir = os.path.join(install_dir, 'data')
+
+        for path in glob(os.path.join(datadir, '*', zimname)):
+            try:
+                os.unlink(path)
+
+            except IsADirectoryError:
+                shutil.rmtree(path)
 
 
 class Catalog:

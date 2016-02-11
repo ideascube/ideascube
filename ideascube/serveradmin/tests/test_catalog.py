@@ -44,6 +44,20 @@ def input_file(tmpdir, request):
     return {'path': path.strpath, 'input': request.param}
 
 
+@pytest.fixture
+def zippedzim_path(testdatadir, tmpdir):
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = tmpdir.mkdir('packages').join('wikipedia.tum-2015-08')
+    zippedzim.copy(path)
+
+    return path
+
+
+@pytest.fixture
+def install_dir(tmpdir):
+    return tmpdir.mkdir('install')
+
+
 def fake_urlretrieve(url, path, reporthook=None):
     assert url.startswith('file://')
 
@@ -170,6 +184,70 @@ def test_package_registry():
         pass
 
     assert NotRegisteredPackage not in Package.registered_types.values()
+
+
+def test_install_zippedzim(zippedzim_path, install_dir):
+    from ideascube.serveradmin.catalog import ZippedZim
+
+    p = ZippedZim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    p.install(zippedzim_path.strpath, install_dir.strpath)
+
+    data = install_dir.join('data')
+    assert data.check(dir=True)
+
+    content = data.join('content')
+    assert content.check(dir=True)
+    assert content.join('{}.zim'.format(p.id)).check(file=True)
+
+    lib = data.join('library')
+    assert lib.check(dir=True)
+    assert lib.join('{}.zim.xml'.format(p.id)).check(file=True)
+
+    index = data.join('index')
+    assert index.check(dir=True)
+    assert index.join('{}.zim.idx'.format(p.id)).check(dir=True)
+
+
+def test_install_invalid_zippedzim(tmpdir, testdatadir, install_dir):
+    from ideascube.serveradmin.catalog import ZippedZim, InvalidFile
+
+    src = testdatadir.join('backup', 'musasa-0.1.0-201501241620.tar')
+    path = tmpdir.mkdir('packages').join('wikipedia.tum-2015-08')
+    src.copy(path)
+
+    p = ZippedZim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+
+    with pytest.raises(InvalidFile) as exc:
+        p.install(path.strpath, install_dir.strpath)
+
+    assert 'not a zip file' in exc.exconly()
+
+
+def test_remove_zippedzim(zippedzim_path, install_dir):
+    from ideascube.serveradmin.catalog import ZippedZim
+
+    p = ZippedZim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    p.install(zippedzim_path.strpath, install_dir.strpath)
+
+    p.remove(install_dir.strpath)
+
+    data = install_dir.join('data')
+    assert data.check(dir=True)
+
+    content = data.join('content')
+    assert content.check(dir=True)
+    assert content.join('{}.zim'.format(p.id)).check(exists=False)
+
+    lib = data.join('library')
+    assert lib.check(dir=True)
+    assert lib.join('{}.zim.xml'.format(p.id)).check(exists=False)
+
+    index = data.join('index')
+    assert index.check(dir=True)
+    assert index.join('{}.zim.idx'.format(p.id)).check(exists=False)
 
 
 def test_catalog_no_remote(tmpdir, settings):
