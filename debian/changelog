@@ -1,3 +1,10 @@
+ideascube (0.8.2) unstable; urgency=low
+
+  * Added de, ti, it, ur, ps, el languages (cf #285)
+  * Added missing default icon for epub content type (cf #282)
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Sat, 11 Feb 2016 17:51:00 +0100
+
 ideascube (0.8.1) unstable; urgency=low
 
   * Added "epub" content type in media center (cf #282)
