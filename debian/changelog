@@ -1,3 +1,13 @@
+ideascube (0.8.1) unstable; urgency=low
+
+  * Added "epub" content type in media center (cf #282)
+  * More granular reporting on import_medias command (cf #275 #276)
+  * Update Greece Ideasbox config files
+  * Added RCA Koombook config files
+  * Added Persian support
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Sat, 11 Feb 2016 16:51:00 +0100
+
 ideascube (0.8.0) unstable; urgency=low
 
   * Fixed blogs being deleted when deleting author (cf #261)
