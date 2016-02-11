@@ -106,6 +106,13 @@ class Command(BaseCommand):
 
     # -- Manage content -------------------------------------------------------
     def list_packages(self, options):
+        if not len(self.catalog.list_remotes()):
+            print(
+                "No remote sources configured, you won't see any available "
+                "package.")
+            print("Add a remote source with:\n")
+            print("    {} remotes add ID NAME URL\n".format(self.parser.prog))
+
         fmt = ' {0.id:20}  {0.version:10}  {0.size:5}  {0.name}'
 
         if options['filter'] in ('all', 'installed'):
