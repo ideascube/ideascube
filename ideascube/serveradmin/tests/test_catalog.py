@@ -250,6 +250,105 @@ def test_remove_zippedzim(zippedzim_path, install_dir):
     assert index.join('{}.zim.idx'.format(p.id)).check(exists=False)
 
 
+def test_handler(tmpdir, settings):
+    from ideascube.serveradmin.catalog import Handler
+
+    # This is required to test the constructor of the base package
+    Handler.typename = 'tests_only'
+
+    settings.CATALOG_TESTS_ONLY_INSTALL_DIR = tmpdir.strpath
+    h = Handler()
+    assert h._install_dir == tmpdir.strpath
+
+    with pytest.raises(NotImplementedError):
+        h.commit()
+
+    # Don't forget to delete that class attribute, or it impacts other tests
+    del(Handler.typename)
+
+
+def test_handler_registry():
+    from ideascube.serveradmin.catalog import Handler
+
+    # Ensure the base type itself is not added to the registry
+    assert Handler not in Handler.registered_types.values()
+
+    # Register a new handler type, make sure it gets added to the registry
+    class RegisteredHandler(Handler):
+        typename = 'tests-only'
+
+    assert Handler.registered_types['tests-only'] == RegisteredHandler
+
+    # Define a new handler type without a typename attribute, make sure it
+    # does **not** get added to the registry
+    class NotRegisteredHandler(Handler):
+        pass
+
+    assert NotRegisteredHandler not in Handler.registered_types.values()
+
+
+def test_kiwix_handler(tmpdir, settings):
+    from ideascube.serveradmin.catalog import Kiwix
+
+    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
+    h = Kiwix()
+    assert h._install_dir == tmpdir.strpath
+
+
+def test_kiwix_installs_zippedzim(tmpdir, settings, zippedzim_path):
+    from ideascube.serveradmin.catalog import Kiwix, ZippedZim
+
+    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
+
+    p = ZippedZim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    h = Kiwix()
+    h.install(p, zippedzim_path.strpath)
+
+    data = tmpdir.join('data')
+    assert data.check(dir=True)
+
+    content = data.join('content')
+    assert content.check(dir=True)
+    assert content.join('{}.zim'.format(p.id)).check(file=True)
+
+    lib = data.join('library')
+    assert lib.check(dir=True)
+    assert lib.join('{}.zim.xml'.format(p.id)).check(file=True)
+
+    index = data.join('index')
+    assert index.check(dir=True)
+    assert index.join('{}.zim.idx'.format(p.id)).check(dir=True)
+
+
+def test_kiwix_removes_zippedzim(tmpdir, settings, zippedzim_path):
+    from ideascube.serveradmin.catalog import Kiwix, ZippedZim
+
+    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
+
+    p = ZippedZim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    h = Kiwix()
+    h.install(p, zippedzim_path.strpath)
+
+    h.remove(p)
+
+    data = tmpdir.join('data')
+    assert data.check(dir=True)
+
+    content = data.join('content')
+    assert content.check(dir=True)
+    assert content.join('{}.zim'.format(p.id)).check(exists=False)
+
+    lib = data.join('library')
+    assert lib.check(dir=True)
+    assert lib.join('{}.zim.xml'.format(p.id)).check(exists=False)
+
+    index = data.join('index')
+    assert index.check(dir=True)
+    assert index.join('{}.zim.idx'.format(p.id)).check(exists=False)
+
+
 def test_catalog_no_remote(tmpdir, settings):
     from ideascube.serveradmin.catalog import Catalog
 

@@ -119,6 +119,27 @@ class ZippedZim(Package):
                 shutil.rmtree(path)
 
 
+class Handler(metaclass=MetaRegistry):
+    registered_types = {}
+
+    def __init__(self):
+        settingname = 'CATALOG_{}_INSTALL_DIR'.format(self.typename.upper())
+        self._install_dir = getattr(settings, settingname)
+
+    def install(self, package, download_path):
+        package.install(download_path, self._install_dir)
+
+    def remove(self, package):
+        package.remove(self._install_dir)
+
+    def commit(self):
+        raise NotImplementedError('Subclasses must implement this method')
+
+
+class Kiwix(Handler):
+    typename = 'kiwix'
+
+
 class Catalog:
     def __init__(self):
         self._cache_base_dir = settings.CATALOG_CACHE_BASE_DIR
