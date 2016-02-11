@@ -4,12 +4,19 @@ import re
 import socket
 import sys
 
+from django.utils.termcolors import colorize
+
+
+def log(s):
+    sys.stdout.write(colorize(s, fg='cyan') + '\n')
+
+
 # The normal scenario is that we use the hostname, but let's make it
 # overridable, this is useful for dev and debugging.
 IDEASCUBE_HOSTNAME = socket.gethostname()  # Store it for later use.
 IDEASCUBE_ID = os.environ.get('IDEASCUBE_ID', IDEASCUBE_HOSTNAME)
 IDEASCUBE_ID = re.sub('[^\w_]', '', IDEASCUBE_ID)
-sys.stdout.write('IDEASCUBE_ID={}\n'.format(IDEASCUBE_ID))
+log('IDEASCUBE_ID={}'.format(IDEASCUBE_ID))
 
 # Every box will have some edge specific needs, such as a specific user model,
 # we manage this with per box settings, but we want those specific settings
@@ -19,12 +26,12 @@ try:
     sub = importlib.import_module(".conf." + IDEASCUBE_ID, package="ideascube")
 except Exception as e:
     if not isinstance(e, ImportError):
-        print(e)
+        sys.stderr.write(e)
     from .conf import dev as sub
 finally:
     # Make it available as a settings, to be able to display it in the admin.
     SETTINGS_MODULE = sub.__name__
-    sys.stdout.write('Importing settings from %s\n' % SETTINGS_MODULE)
+    log('Importing settings from %s\n' % SETTINGS_MODULE)
     ldict = locals()
     for k in sub.__dict__:
         if k.isupper() and not k.startswith('__') or not k.endswith('__'):
