@@ -349,6 +349,60 @@ def test_kiwix_removes_zippedzim(tmpdir, settings, zippedzim_path):
     assert index.join('{}.zim.idx'.format(p.id)).check(exists=False)
 
 
+def test_kiwix_commits_after_install(tmpdir, settings, zippedzim_path, mocker):
+    from ideascube.serveradmin.catalog import Kiwix, ZippedZim
+
+    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
+    manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    p = ZippedZim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    h = Kiwix()
+    h.install(p, zippedzim_path.strpath)
+    h.commit()
+
+    library = tmpdir.join('library.xml')
+    assert library.check(exists=True)
+
+    with library.open(mode='r') as f:
+        libdata = f.read()
+
+        assert 'path="data/content/wikipedia.tum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+
+    manager().get_service.assert_called_once_with('kiwix-server')
+    manager().restart.assert_called_once()
+
+
+def test_kiwix_commits_after_remove(tmpdir, settings, zippedzim_path, mocker):
+    from ideascube.serveradmin.catalog import Kiwix, ZippedZim
+    from ideascube.serveradmin.systemd import NoSuchUnit
+
+    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
+    manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    manager().get_service.side_effect = NoSuchUnit
+
+    p = ZippedZim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    h = Kiwix()
+    h.install(p, zippedzim_path.strpath)
+    h.commit()
+
+    assert manager().get_service.call_count == 1
+    manager().restart.assert_not_called()
+
+    h.remove(p)
+    h.commit()
+
+    library = tmpdir.join('library.xml')
+    assert library.check(exists=True)
+    assert library.read_text('utf-8') == (
+        "<?xml version='1.0' encoding='utf-8'?>\n<library/>")
+
+    assert manager().get_service.call_count == 2
+    manager().restart.assert_not_called()
+
+
 def test_catalog_no_remote(tmpdir, settings):
     from ideascube.serveradmin.catalog import Catalog
 

@@ -7,8 +7,11 @@ import tempfile
 import zipfile
 
 from django.conf import settings
+from lxml import etree
 from resumable import urlretrieve
 import yaml
+
+from .systemd import Manager as SystemManager, NoSuchUnit
 
 
 class InvalidFile(Exception):
@@ -138,6 +141,44 @@ class Handler(metaclass=MetaRegistry):
 
 class Kiwix(Handler):
     typename = 'kiwix'
+
+    def commit(self):
+        sys.stdout.write('Rebuilding the Kiwix library\n')
+        library = etree.Element('library')
+        libdir = os.path.join(self._install_dir, 'data', 'library')
+
+        for libpath in glob(os.path.join(libdir, '*.xml')):
+            zimname = os.path.basename(libpath)[:-4]
+
+            with open(libpath, 'r') as f:
+                et = etree.parse(f)
+                books = et.findall('book')
+
+                # Messing with the path gets complicated otherwise
+                # TODO: Can we assume this is always true for stuff distributed
+                #       by kiwix?
+                assert len(books) == 1
+
+                book = books[0]
+                book.set('path', 'data/content/%s' % zimname)
+                book.set('indexPath', 'data/index/%s.idx' % zimname)
+
+                library.append(book)
+
+        with open(os.path.join(self._install_dir, 'library.xml'), 'wb') as f:
+            f.write(etree.tostring(
+                library, xml_declaration=True, encoding='utf-8'))
+
+        try:
+            manager = SystemManager()
+            kiwix = manager.get_service('kiwix-server')
+
+        except NoSuchUnit:
+            # Kiwix is not installed, give up
+            pass
+
+        else:
+            manager.restart(kiwix.Id)
 
 
 class Catalog:
