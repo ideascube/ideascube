@@ -32,6 +32,7 @@ class Document(SearchMixin, TimeStampedModel):
     IMAGE = 'image'
     VIDEO = 'video'
     PDF = 'pdf'
+    EPUB = 'epub'
     TEXT = 'text'
     AUDIO = 'audio'
     OTHER = 'other'
@@ -42,6 +43,7 @@ class Document(SearchMixin, TimeStampedModel):
         (VIDEO, _('video')),
         (PDF, _('pdf')),
         (TEXT, _('text')),
+        (EPUB, _('epub')),
         (OTHER, _('other')),
     )
 
