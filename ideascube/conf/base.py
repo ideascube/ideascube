@@ -98,29 +98,47 @@ USE_L10N = True
 USE_TZ = True
 
 AVAILABLE_LANGUAGES = (
+    ('am', 'አማርኛ'),
+    ('ar', 'العربية'),
+    ('bm', 'Bambara'),
+    ('de', 'Deutsch'),
+    ('el', 'Ελληνικά'),
     ('en', 'English'),
-    ('fr', u'Français'),
-    ('ar', u'العربية'),
-    ('am', u'አማርኛ'),
-    ('so', u'Af-Soomaali'),
-    ('sw', u'Swahili'),
-    ('bm', u'Bambara'),
-    ('fa', u'Persian'),
+    ('fa', 'فارسی'),
+    ('fr', 'Français'),
+    ('it', 'Italiano'),
+    ('ps', 'پښتو'),
+    ('so', 'Af-Soomaali'),
+    ('sw', 'Swahili'),
+    ('ti', 'ትግርኛ'),
+    ('ur', 'اردو'),
 )
 
 # Those will be added to django.locale.LANG_INFO.
 EXTRA_LANG_INFO = {
+    'am': {
+        'bidi': False,
+        'name': 'Amharic',
+        'code': 'am',
+        'name_local': u'አማርኛ'
+    },
     'bm': {
         'bidi': False,
         'name': 'Bambara',
         'code': 'bm',
         'name_local': 'Bambara'
     },
-    'am': {
+    'ti': {
         'bidi': False,
-        'name': 'Amharic',
-        'code': 'am',
-        'name_local': u'አማርኛ'
+        'name': 'Tigrinya',
+        'code': 'bm',
+        'name_local': 'ትግርኛ'
+    },
+    'ps': {
+        'bidi': True,
+        'name': 'Pashto',
+        'code': 'ps',
+        'name_local': 'پښتو'
     },
     'so': {
         'bidi': False,
