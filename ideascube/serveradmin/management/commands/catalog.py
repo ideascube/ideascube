@@ -75,9 +75,13 @@ class Command(BaseCommand):
         except ValueError as e:
             raise CommandError(e)
 
+        self.catalog.update_cache()
+
     def remove_remote(self, options):
         try:
             self.catalog.remove_remote(options['id'])
 
         except ValueError as e:
             raise CommandError(e)
+
+        self.catalog.update_cache()
