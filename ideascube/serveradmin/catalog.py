@@ -445,6 +445,9 @@ class Catalog:
         with open(self._cache_catalog, 'w') as f:
             f.write(yaml.safe_dump(self._catalog, default_flow_style=False))
 
+    def add_package_cache(self, path):
+        self._package_caches.append(os.path.abspath(path))
+
     def update_cache(self):
         self._catalog['available'] = {}
 

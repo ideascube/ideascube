@@ -23,6 +23,13 @@ class Command(BaseCommand):
             'ids', nargs='*', metavar='ID', default=['*'],
             help='Optional package ids (or globs)')
 
+        package_cache = argparse.ArgumentParser(
+            'package_cache', add_help=False)
+        package_cache.add_argument(
+            '--package-cache', action='append', metavar='PATH', default=[],
+            help='The path to an existing directory where downloaded packages'
+                 ' can be found, in addition to the default package cache')
+
         # -- Manage content ---------------------------------------------------
         list = subs.add_parser(
             'list', parents=[optional_ids], help='List packages')
@@ -43,7 +50,7 @@ class Command(BaseCommand):
         list.set_defaults(filter='all', func=self.list_packages)
 
         install = subs.add_parser(
-            'install', parents=[required_ids],
+            'install', parents=[package_cache, required_ids],
             help='Install packages')
         install.set_defaults(func=self.install_packages)
 
@@ -53,7 +60,7 @@ class Command(BaseCommand):
 
         upgrade = subs.add_parser(
             'upgrade', aliases=['update'],
-            parents=[optional_ids], help='Upgrade packages')
+            parents=[package_cache, optional_ids], help='Upgrade packages')
         upgrade.set_defaults(func=self.upgrade_packages)
 
         # -- Manage local cache -----------------------------------------------
@@ -129,6 +136,10 @@ class Command(BaseCommand):
                     print(fmt.format(pkg))
 
     def install_packages(self, options):
+        if options['package_cache'] is not None:
+            for path in options['package_cache']:
+                self.catalog.add_package_cache(path)
+
         try:
             self.catalog.install_packages(options['ids'])
 
@@ -143,6 +154,10 @@ class Command(BaseCommand):
             raise CommandError('No such package: {}'.format(e))
 
     def upgrade_packages(self, options):
+        if options['package_cache'] is not None:
+            for path in options['package_cache']:
+                self.catalog.add_package_cache(path)
+
         try:
             self.catalog.upgrade_packages(options['ids'])
 
