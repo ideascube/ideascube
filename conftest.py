@@ -44,3 +44,11 @@ def staffapp(app, staffuser):
     form.submit().follow()
     setattr(app, 'user', staffuser)  # for later use, if needed
     return app
+
+
+@pytest.fixture()
+def testdatadir(request):
+    datadir = request.fspath.dirpath().join('data')
+
+    assert datadir.check(dir=True)
+    return datadir
