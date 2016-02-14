@@ -71,6 +71,9 @@ class Document(SearchMixin, TimeStampedModel):
     def __str__(self):
         return self.title
 
+    def __repr__(self):
+        return '<{}: {}>'.format(self.kind, str(self))
+
     def get_absolute_url(self):
         return reverse('mediacenter:document_detail', kwargs={'pk': self.pk})
 
