@@ -285,15 +285,16 @@ HOME_CARDS = STAFF_HOME_CARDS + [
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 SERVICES = [
-    {'name': 'ideascube', 'description': _('Ideascube web server')},
+    {'name': 'uwsgi', 'description': _('Python web server')},
     {'name': 'nginx', 'description': _('Global proxy')},
     {
         'name': 'kalite',
         'description': _('Daemon which provides KhanAcademy on lan'),
     },
-    {'name': 'kiwix',
+    {'name': 'wikipedia',
         'description': _('Daemon which provides Wikipedia on lan')},
-    {'name': 'ntp', 'description': _('Net time protocol')},
+    {'name': 'gutenberg',
+        'description': _('Daemon which provides Gutenberg on lan')},
     {'name': 'ssh',
         'description': _('Daemon used for distant connexion to server')},
 ]
