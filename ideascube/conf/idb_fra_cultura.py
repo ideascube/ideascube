@@ -21,9 +21,6 @@ HOME_CARDS = HOME_CARDS + [
         'id': 'wikisource',
     },
     {
-        'id': 'software',
-    },
-    {
         'id': 'ted',
     },
     {
