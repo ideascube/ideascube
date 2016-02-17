@@ -1,3 +1,11 @@
+ideascube (0.8.3) unstable; urgency=low
+
+  * Upgraded dependencies
+  * Added Cultura conf
+  * Removed useless services from default services list
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Sat, 17 Feb 2016 19:25:00 +0100
+
 ideascube (0.8.2) unstable; urgency=low
 
   * Added de, ti, it, ur, ps, el languages (cf #285)
