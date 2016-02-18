@@ -1,6 +1,7 @@
-import shutil
+from hashlib import sha256
 
 import pytest
+from resumable import DownloadCheck, DownloadError
 
 
 @pytest.fixture(
@@ -58,11 +59,28 @@ def install_dir(tmpdir):
     return tmpdir.mkdir('install')
 
 
-def fake_urlretrieve(url, path, reporthook=None):
+# This is starting to look a lot like adding file:// support to
+# resumable.urlretrieve...
+# TODO: Do they want it upstream?
+def fake_urlretrieve(url, path, reporthook=None, sha256sum=None):
     assert url.startswith('file://')
 
     src = url[7:]
-    shutil.copyfile(src, path)
+
+    with open(src, 'rb') as in_, open(path, 'a+b') as out:
+        out.seek(0)
+        already = len(out.read())
+
+        in_.seek(already)
+        out.seek(already)
+        out.write(in_.read())
+
+    if sha256sum is not None:
+        with open(path, 'rb') as f:
+            checksum = sha256(f.read()).hexdigest()
+
+        if sha256sum != checksum:
+            raise DownloadError(DownloadCheck.checksum_mismatch)
 
 
 def test_remote_from_file(input_file):
@@ -538,3 +556,462 @@ def test_catalog_clear_cache(tmpdir, settings, monkeypatch):
 
     c.clear_cache()
     assert c._catalog == {'installed': {}, 'available': {}}
+
+
+def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    cachedir = tmpdir.mkdir('cache')
+    installdir = tmpdir.mkdir('kiwix')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+
+    library = installdir.join('library.xml')
+    assert library.check(exists=True)
+
+    with library.open(mode='r') as f:
+        libdata = f.read()
+
+        assert 'path="data/content/wikipedia.tum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+
+
+def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    cachedir = tmpdir.mkdir('cache')
+    installdir = tmpdir.mkdir('kiwix')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    spy_urlretrieve = mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+
+    # Once to download the remote catalog.yml, once to download the package
+    assert spy_urlretrieve.call_count == 2
+
+    c.install_packages(['wikipedia.tum'])
+
+    assert spy_urlretrieve.call_count == 2
+
+
+def test_catalog_install_package_already_downloaded(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    cachedir = tmpdir.mkdir('cache')
+    packagesdir = cachedir.mkdir('packages')
+    installdir = tmpdir.mkdir('kiwix')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(packagesdir.join('wikipedia.tum-2015-08'))
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    spy_urlretrieve = mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+
+    library = installdir.join('library.xml')
+    assert library.check(exists=True)
+
+    with library.open(mode='r') as f:
+        libdata = f.read()
+
+        assert 'path="data/content/wikipedia.tum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+
+    # Once to download the remote catalog.yml
+    assert spy_urlretrieve.call_count == 1
+
+
+def test_catalog_install_package_partially_downloaded(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    cachedir = tmpdir.mkdir('cache')
+    packagesdir = cachedir.mkdir('packages')
+    installdir = tmpdir.mkdir('kiwix')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    # Partially download the package
+    packagesdir.join('wikipedia.tum-2015-08').write_binary(
+        zippedzim.read_binary()[:100])
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+
+    library = installdir.join('library.xml')
+    assert library.check(exists=True)
+
+    with library.open(mode='r') as f:
+        libdata = f.read()
+
+        assert 'path="data/content/wikipedia.tum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+
+
+def test_catalog_install_package_partially_downloaded_but_corrupted(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    cachedir = tmpdir.mkdir('cache')
+    packagesdir = cachedir.mkdir('packages')
+    installdir = tmpdir.mkdir('kiwix')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    # Partially download the package
+    packagesdir.join('wikipedia.tum-2015-08').write_binary(
+        b'corrupt download')
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+
+    library = installdir.join('library.xml')
+    assert library.check(exists=True)
+
+    with library.open(mode='r') as f:
+        libdata = f.read()
+
+        assert 'path="data/content/wikipedia.tum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+
+
+def test_catalog_install_package_does_not_exist(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog, NoSuchPackage
+
+    cachedir = tmpdir.mkdir('cache')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    with pytest.raises(NoSuchPackage):
+        c.install_packages(['nosuchpackage'])
+
+
+def test_catalog_install_package_with_missing_type(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog, InvalidPackageMetadata
+
+    cachedir = tmpdir.mkdir('cache')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    with pytest.raises(InvalidPackageMetadata):
+        c.install_packages(['wikipedia.tum'])
+
+
+def test_catalog_install_package_with_unknown_type(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog, InvalidPackageType
+
+    cachedir = tmpdir.mkdir('cache')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: something-not-supported\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    with pytest.raises(InvalidPackageType):
+        c.install_packages(['wikipedia.tum'])
+
+
+def test_catalog_install_package_with_missing_handler(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog, InvalidPackageMetadata
+
+    cachedir = tmpdir.mkdir('cache')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    with pytest.raises(InvalidPackageMetadata):
+        c.install_packages(['wikipedia.tum'])
+
+
+def test_catalog_install_package_with_unknown_handler(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog, InvalidHandlerType
+
+    cachedir = tmpdir.mkdir('cache')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: something-not-supported\n')
+
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    with pytest.raises(InvalidHandlerType):
+        c.install_packages(['wikipedia.tum'])

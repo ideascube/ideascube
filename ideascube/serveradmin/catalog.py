@@ -1,4 +1,5 @@
 from glob import glob
+from hashlib import sha256
 from operator import attrgetter
 import os
 import shutil
@@ -8,13 +9,29 @@ import zipfile
 
 from django.conf import settings
 from lxml import etree
-from resumable import urlretrieve
+from resumable import DownloadCheck, DownloadError, urlretrieve
 import yaml
 
 from .systemd import Manager as SystemManager, NoSuchUnit
 
 
 class InvalidFile(Exception):
+    pass
+
+
+class InvalidPackageMetadata(Exception):
+    pass
+
+
+class InvalidPackageType(Exception):
+    pass
+
+
+class NoSuchPackage(Exception):
+    pass
+
+
+class InvalidHandlerType(Exception):
     pass
 
 
@@ -190,6 +207,9 @@ class Catalog:
         self._load_remotes()
 
         self._cache_catalog = os.path.join(self._cache_base_dir, 'catalog.yml')
+        self._local_package_cache = os.path.join(
+            self._cache_base_dir, 'packages')
+
         self._load_cache()
 
     def _progress(self, msg, i, chunk_size, remote_size):
@@ -212,6 +232,126 @@ class Catalog:
 
         sys.stdout.flush()
 
+    # -- Manage packages ------------------------------------------------------
+    def _get_package(self, id, source):
+        try:
+            metadata = source[id]
+
+        except KeyError:
+            raise NoSuchPackage(id)
+
+        try:
+            type = metadata['type']
+
+        except KeyError:
+            raise InvalidPackageMetadata('Packages must have a type')
+
+        try:
+            return Package.registered_types[type](id, metadata)
+
+        except KeyError:
+            raise InvalidPackageType(type)
+
+    def _get_packages(self, ids, source):
+        pkgs = []
+
+        for id in ids:
+            try:
+                pkgs.append(self._get_package(id, source))
+
+            except NoSuchPackage as e:
+                raise e
+
+        return pkgs
+
+    def _get_handler(self, package):
+        try:
+            handlertype = package.handler
+
+        except AttributeError:
+            raise InvalidPackageMetadata('Packages must have a handler')
+
+        try:
+            return Handler.registered_types[handlertype]()
+
+        except KeyError:
+            raise InvalidHandlerType(handlertype)
+
+    def _verify_sha256(self, path, sha256sum):
+        sha = sha256()
+
+        with open(path, 'rb') as f:
+            while True:
+                data = f.read(8388608)
+
+                if not data:
+                    break
+
+                sha.update(data)
+
+        return sha.hexdigest() == sha256sum
+
+    def _fetch_package(self, package):
+        def _progress(*args):
+            self._progress(' {}'.format(package.id), *args)
+
+        filename = '{0.id}-{0.version}'.format(package)
+
+        for cache in self._package_caches:
+            path = os.path.join(cache, filename)
+
+            if os.path.isfile(path):
+                if self._verify_sha256(path, package.sha256sum):
+                    return path
+
+                try:
+                    # This might be an incomplete download, try finishing it
+                    urlretrieve(
+                        package.url, path, sha256sum=package.sha256sum,
+                        reporthook=_progress)
+                    return path
+
+                except DownloadError as e:
+                    # File was too busted, could not finish the download
+                    if e.args[0] is DownloadCheck.checksum_mismatch:
+                        msg = 'Downloaded file has invalid checksum\n'
+
+                    else:
+                        msg = 'Error downloading the file: {}\n'.format(e)
+
+                    sys.stderr.write(msg)
+                    sys.stderr.flush()
+                    os.unlink(path)
+
+        path = os.path.join(self._local_package_cache, filename)
+        urlretrieve(
+            package.url, path, sha256sum=package.sha256sum,
+            reporthook=_progress)
+
+        return path
+
+    def install_packages(self, ids):
+        used_handlers = {}
+
+        for pkg in self._get_packages(ids, self._catalog['available']):
+            if pkg.id in self._catalog['installed']:
+                sys.stderr.write('{0.id} is already installed\n'.format(pkg))
+                sys.stderr.flush()
+                continue
+
+            download_path = self._fetch_package(pkg)
+            handler = self._get_handler(pkg)
+            sys.stdout.write('Installing {0.id}\n'.format(pkg))
+            handler.install(pkg, download_path)
+            used_handlers[handler.__class__.__name__] = handler
+            self._catalog['installed'][pkg.id] = (
+                self._catalog['available'][pkg.id])
+
+        for handler in used_handlers.values():
+            handler.commit()
+
+        self._persist_cache()
+
     # -- Manage local cache ---------------------------------------------------
     def _load_cache(self):
         if os.path.exists(self._cache_catalog):
@@ -221,6 +361,9 @@ class Catalog:
         else:
             self._catalog = {'installed': {}, 'available': {}}
             self._persist_cache()
+
+        self._package_caches = [self._local_package_cache]
+        os.makedirs(self._local_package_cache, exist_ok=True)
 
     def _persist_cache(self):
         with open(self._cache_catalog, 'w') as f:
@@ -250,6 +393,9 @@ class Catalog:
         self._persist_cache()
 
     def clear_cache(self):
+        shutil.rmtree(self._local_package_cache)
+        os.mkdir(self._local_package_cache)
+
         self._catalog['available'] = {}
         self._persist_cache()
 
