@@ -367,6 +367,37 @@ class Catalog:
 
         self._persist_cache()
 
+    def upgrade_packages(self, ids):
+        used_handlers = {}
+
+        for ipkg in self._get_packages(ids, self._catalog['installed']):
+            upkg = self._get_package(ipkg.id, self._catalog['available'])
+
+            if ipkg == upkg:
+                sys.stderr.write(
+                    '{0.id} has no update available\n'.format(ipkg))
+                sys.stderr.flush()
+                continue
+
+            download_path = self._fetch_package(upkg)
+            ihandler = self._get_handler(ipkg)
+            uhandler = self._get_handler(upkg)
+            sys.stdout.write('Upgrading {0.id}\n'.format(ipkg))
+
+            ihandler.remove(ipkg)
+            used_handlers[ihandler.__class__.__name__] = ihandler
+
+            uhandler.install(upkg, download_path)
+            used_handlers[uhandler.__class__.__name__] = uhandler
+
+            self._catalog['installed'][ipkg.id] = (
+                self._catalog['available'][upkg.id])
+
+        for handler in used_handlers.values():
+            handler.commit()
+
+        self._persist_cache()
+
     # -- Manage local cache ---------------------------------------------------
     def _load_cache(self):
         if os.path.exists(self._cache_catalog):
