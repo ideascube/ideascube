@@ -1198,3 +1198,159 @@ def test_catalog_update_package_already_latest(
     out, err = capsys.readouterr()
     assert out.strip() == ''
     assert err.strip() == 'wikipedia.tum has no update available'
+
+
+def test_catalog_list_available_packages(tmpdir, settings, monkeypatch):
+    from ideascube.serveradmin.catalog import Catalog, ZippedZim
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  foovideos:\n')
+        f.write('    name: Videos from Foo\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    version: 1.0.0\n')
+        f.write('    size: 1GB\n')
+
+    monkeypatch.setattr(
+        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    pkgs = c.list_available(['nosuchpackage'])
+    assert len(pkgs) == 0
+
+    pkgs = c.list_available(['foovideos'])
+    assert len(pkgs) == 1
+    pkg = pkgs[0]
+    assert pkg.id == 'foovideos'
+    assert pkg.name == 'Videos from Foo'
+    assert pkg.version == '1.0.0'
+    assert pkg.size == '1GB'
+    assert isinstance(pkg, ZippedZim)
+
+
+def test_catalog_list_installed_packages(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog, ZippedZim
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    cachedir = tmpdir.mkdir('cache')
+    installdir = tmpdir.mkdir('kiwix')
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+
+    pkgs = c.list_installed(['nosuchpackage'])
+    assert len(pkgs) == 0
+
+    pkgs = c.list_installed(['wikipedia.tum'])
+    assert len(pkgs) == 1
+    pkg = pkgs[0]
+    assert pkg.id == 'wikipedia.tum'
+    assert pkg.version == '2015-08'
+    assert pkg.size == '200KB'
+    assert isinstance(pkg, ZippedZim)
+
+
+def test_catalog_list_upgradable_packages(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog, ZippedZim
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    cachedir = tmpdir.mkdir('cache')
+    installdir = tmpdir.mkdir('kiwix')
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+    assert c.list_upgradable(['*']) == []
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
+    path = tmpdir.join('source').join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-09\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+
+    c.update_cache()
+    pkgs = c.list_upgradable(['nosuchpackage'])
+    assert len(pkgs) == 0
+
+    pkgs = c.list_upgradable(['wikipedia.tum'])
+    assert len(pkgs) == 1
+    pkg = pkgs[0]
+    assert pkg.id == 'wikipedia.tum'
+    assert pkg.version == '2015-09'
+    assert pkg.size == '200KB'
+    assert isinstance(pkg, ZippedZim)

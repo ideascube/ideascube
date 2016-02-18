@@ -252,7 +252,7 @@ class Catalog:
         except KeyError:
             raise InvalidPackageType(type)
 
-    def _get_packages(self, ids, source):
+    def _get_packages(self, ids, source, fail_if_no_match=True):
         pkgs = []
 
         for id in ids:
@@ -260,7 +260,8 @@ class Catalog:
                 pkgs.append(self._get_package(id, source))
 
             except NoSuchPackage as e:
-                raise e
+                if fail_if_no_match:
+                    raise e
 
         return pkgs
 
@@ -329,6 +330,28 @@ class Catalog:
             reporthook=_progress)
 
         return path
+
+    def list_installed(self, ids):
+        pkgs = self._get_packages(
+            ids, self._catalog['installed'], fail_if_no_match=False)
+        return sorted(pkgs, key=attrgetter('id'))
+
+    def list_available(self, ids):
+        pkgs = self._get_packages(
+            ids, self._catalog['available'], fail_if_no_match=False)
+        return sorted(pkgs, key=attrgetter('id'))
+
+    def list_upgradable(self, ids):
+        pkgs = []
+
+        for ipkg in self._get_packages(
+                ids, self._catalog['installed'], fail_if_no_match=False):
+            upkg = self._get_package(ipkg.id, self._catalog['available'])
+
+            if ipkg != upkg:
+                pkgs.append(upkg)
+
+        return sorted(pkgs, key=attrgetter('id'))
 
     def install_packages(self, ids):
         used_handlers = {}
