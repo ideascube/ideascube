@@ -1,3 +1,4 @@
+from fnmatch import fnmatch
 from glob import glob
 from hashlib import sha256
 from operator import attrgetter
@@ -252,16 +253,22 @@ class Catalog:
         except KeyError:
             raise InvalidPackageType(type)
 
-    def _get_packages(self, ids, source, fail_if_no_match=True):
+    def _get_packages(self, id_patterns, source, fail_if_no_match=True):
         pkgs = []
 
-        for id in ids:
-            try:
-                pkgs.append(self._get_package(id, source))
+        for id_pattern in id_patterns:
+            if '*' in id_pattern:
+                for id in source:
+                    if fnmatch(id, id_pattern):
+                        pkgs.append(self._get_package(id, source))
 
-            except NoSuchPackage as e:
-                if fail_if_no_match:
-                    raise e
+            else:
+                try:
+                    pkgs.append(self._get_package(id_pattern, source))
+
+                except NoSuchPackage as e:
+                    if fail_if_no_match:
+                        raise e
 
         return pkgs
 
