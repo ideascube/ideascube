@@ -352,6 +352,21 @@ class Catalog:
 
         self._persist_cache()
 
+    def remove_packages(self, ids):
+        used_handlers = {}
+
+        for pkg in self._get_packages(ids, self._catalog['installed']):
+            handler = self._get_handler(pkg)
+            sys.stdout.write('Removing {0.id}\n'.format(pkg))
+            handler.remove(pkg)
+            used_handlers[handler.__class__.__name__] = handler
+            del(self._catalog['installed'][pkg.id])
+
+        for handler in used_handlers.values():
+            handler.commit()
+
+        self._persist_cache()
+
     # -- Manage local cache ---------------------------------------------------
     def _load_cache(self):
         if os.path.exists(self._cache_catalog):

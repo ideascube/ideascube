@@ -1015,3 +1015,49 @@ def test_catalog_install_package_with_unknown_handler(
 
     with pytest.raises(InvalidHandlerType):
         c.install_packages(['wikipedia.tum'])
+
+
+def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    cachedir = tmpdir.mkdir('cache')
+    installdir = tmpdir.mkdir('kiwix')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+    c.remove_packages(['wikipedia.tum'])
+
+    library = installdir.join('library.xml')
+    assert library.check(exists=True)
+    assert library.read_text('utf-8') == (
+        "<?xml version='1.0' encoding='utf-8'?>\n<library/>")
