@@ -152,6 +152,26 @@ def test_package_equality():
     assert p1 == p4
 
 
+def test_package_registry():
+    from ideascube.serveradmin.catalog import Package
+
+    # Ensure the base type itself is not added to the registry
+    assert Package not in Package.registered_types.values()
+
+    # Register a new package type, make sure it gets added to the registry
+    class RegisteredPackage(Package):
+        typename = 'tests-only'
+
+    assert Package.registered_types['tests-only'] == RegisteredPackage
+
+    # Define a new package type without a typename attribute, make sure it
+    # does **not** get added to the registry
+    class NotRegisteredPackage(Package):
+        pass
+
+    assert NotRegisteredPackage not in Package.registered_types.values()
+
+
 def test_catalog_no_remote(tmpdir, settings):
     from ideascube.serveradmin.catalog import Catalog
 

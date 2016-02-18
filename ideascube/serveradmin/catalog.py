@@ -37,7 +37,28 @@ class Remote:
             f.write(yaml.safe_dump(d, default_flow_style=False))
 
 
-class Package:
+class MetaRegistry(type):
+    def __new__(mcs, name, bases, attrs, **kwargs):
+        cls = super().__new__(mcs, name, bases, attrs)
+
+        try:
+            baseclass = bases[0]
+            baseclass.registered_types[cls.typename] = cls
+
+        except IndexError:
+            # This is the base class, don't register it (bases was empty)
+            pass
+
+        except AttributeError:
+            # The class doesn't have a 'typename' attribute, don't register it
+            pass
+
+        return cls
+
+
+class Package(metaclass=MetaRegistry):
+    registered_types = {}
+
     def __init__(self, id, metadata):
         self.id = id
         self._metadata = metadata
@@ -62,6 +83,10 @@ class Package:
 
     def remove(self, install_dir):
         raise NotImplementedError('Subclasses must implement this method')
+
+
+class ZippedZim(Package):
+    typename = 'zipped-zim'
 
 
 class Catalog:
