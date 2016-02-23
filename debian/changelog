@@ -1,3 +1,9 @@
+ideascube (0.8.4) unstable; urgency=low
+
+  * Added TV5 Monde Burundi koombook conf file
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 23 Feb 2016 14:11:00 +0100
+
 ideascube (0.8.3) unstable; urgency=low
 
   * Upgraded dependencies
