@@ -137,6 +137,7 @@ class AvailableWifiNetwork(object):
             attempt += 1
 
         self._connection.forget()
+        self._connection = None
         raise WifiError(_('Failed to connect to %s') % self.ssid)
 
     @property
