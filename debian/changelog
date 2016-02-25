@@ -1,3 +1,9 @@
+ideascube (0.8.5) unstable; urgency=low
+
+  * Fixed error after wifi failing to connect (cf #299)
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 25 Feb 2016 17:24:00 +0100
+
 ideascube (0.8.4) unstable; urgency=low
 
   * Added TV5 Monde Burundi koombook conf file
