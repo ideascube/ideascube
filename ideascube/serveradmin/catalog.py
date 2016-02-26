@@ -60,6 +60,65 @@ class Remote:
             f.write(yaml.safe_dump(d, default_flow_style=False))
 
 
+class Handler:
+
+    def __init__(self):
+        default = os.path.join(settings.STORAGE_ROOT, self.typename)
+        settingname = 'CATALOG_{}_INSTALL_DIR'.format(self.typename.upper())
+        self._install_dir = getattr(settings, settingname, default)
+
+    def install(self, package, download_path):
+        package.install(download_path, self._install_dir)
+
+    def remove(self, package):
+        package.remove(self._install_dir)
+
+    def commit(self):
+        raise NotImplementedError('Subclasses must implement this method')
+
+
+class Kiwix(Handler):
+    typename = 'kiwix'
+
+    def commit(self, removed=None, installed=None):
+        sys.stdout.write('Rebuilding the Kiwix library\n')
+        library = etree.Element('library')
+        libdir = os.path.join(self._install_dir, 'data', 'library')
+
+        for libpath in glob(os.path.join(libdir, '*.xml')):
+            zimname = os.path.basename(libpath)[:-4]
+
+            with open(libpath, 'r') as f:
+                et = etree.parse(f)
+                books = et.findall('book')
+
+                # Messing with the path gets complicated otherwise
+                # TODO: Can we assume this is always true for stuff distributed
+                #       by kiwix?
+                assert len(books) == 1
+
+                book = books[0]
+                book.set('path', 'data/content/%s' % zimname)
+                book.set('indexPath', 'data/index/%s.idx' % zimname)
+
+                library.append(book)
+
+        with open(os.path.join(self._install_dir, 'library.xml'), 'wb') as f:
+            f.write(etree.tostring(
+                library, xml_declaration=True, encoding='utf-8'))
+
+        try:
+            manager = SystemManager()
+            kiwix = manager.get_service('kiwix-serve')
+
+        except NoSuchUnit:
+            # Kiwix is not installed, give up
+            pass
+
+        else:
+            manager.restart(kiwix.Id)
+
+
 class MetaRegistry(type):
     def __new__(mcs, name, bases, attrs, **kwargs):
         cls = super().__new__(mcs, name, bases, attrs)
@@ -110,6 +169,7 @@ class Package(metaclass=MetaRegistry):
 
 class ZippedZim(Package):
     typename = 'zipped-zim'
+    handler = Kiwix
 
     def install(self, download_path, install_dir):
         if not zipfile.is_zipfile(download_path):
@@ -138,65 +198,6 @@ class ZippedZim(Package):
 
             except IsADirectoryError:
                 shutil.rmtree(path)
-
-
-class Handler(metaclass=MetaRegistry):
-    registered_types = {}
-
-    def __init__(self):
-        settingname = 'CATALOG_{}_INSTALL_DIR'.format(self.typename.upper())
-        self._install_dir = getattr(settings, settingname)
-
-    def install(self, package, download_path):
-        package.install(download_path, self._install_dir)
-
-    def remove(self, package):
-        package.remove(self._install_dir)
-
-    def commit(self):
-        raise NotImplementedError('Subclasses must implement this method')
-
-
-class Kiwix(Handler):
-    typename = 'kiwix'
-
-    def commit(self):
-        sys.stdout.write('Rebuilding the Kiwix library\n')
-        library = etree.Element('library')
-        libdir = os.path.join(self._install_dir, 'data', 'library')
-
-        for libpath in glob(os.path.join(libdir, '*.xml')):
-            zimname = os.path.basename(libpath)[:-4]
-
-            with open(libpath, 'r') as f:
-                et = etree.parse(f)
-                books = et.findall('book')
-
-                # Messing with the path gets complicated otherwise
-                # TODO: Can we assume this is always true for stuff distributed
-                #       by kiwix?
-                assert len(books) == 1
-
-                book = books[0]
-                book.set('path', 'data/content/%s' % zimname)
-                book.set('indexPath', 'data/index/%s.idx' % zimname)
-
-                library.append(book)
-
-        with open(os.path.join(self._install_dir, 'library.xml'), 'wb') as f:
-            f.write(etree.tostring(
-                library, xml_declaration=True, encoding='utf-8'))
-
-        try:
-            manager = SystemManager()
-            kiwix = manager.get_service('kiwix-server')
-
-        except NoSuchUnit:
-            # Kiwix is not installed, give up
-            pass
-
-        else:
-            manager.restart(kiwix.Id)
 
 
 class Catalog:
@@ -273,17 +274,7 @@ class Catalog:
         return pkgs
 
     def _get_handler(self, package):
-        try:
-            handlertype = package.handler
-
-        except AttributeError:
-            raise InvalidPackageMetadata('Packages must have a handler')
-
-        try:
-            return Handler.registered_types[handlertype]()
-
-        except KeyError:
-            raise InvalidHandlerType(handlertype)
+        return package.handler()
 
     def _verify_sha256(self, path, sha256sum):
         sha = sha256()

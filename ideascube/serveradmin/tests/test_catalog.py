@@ -285,26 +285,6 @@ def test_handler(tmpdir, settings):
     del(Handler.typename)
 
 
-def test_handler_registry():
-    from ideascube.serveradmin.catalog import Handler
-
-    # Ensure the base type itself is not added to the registry
-    assert Handler not in Handler.registered_types.values()
-
-    # Register a new handler type, make sure it gets added to the registry
-    class RegisteredHandler(Handler):
-        typename = 'tests-only'
-
-    assert Handler.registered_types['tests-only'] == RegisteredHandler
-
-    # Define a new handler type without a typename attribute, make sure it
-    # does **not** get added to the registry
-    class NotRegisteredHandler(Handler):
-        pass
-
-    assert NotRegisteredHandler not in Handler.registered_types.values()
-
-
 def test_kiwix_handler(tmpdir, settings):
     from ideascube.serveradmin.catalog import Kiwix
 
@@ -1039,85 +1019,6 @@ def test_catalog_install_package_with_unknown_type(
     c.update_cache()
 
     with pytest.raises(InvalidPackageType):
-        c.install_packages(['wikipedia.tum'])
-
-
-def test_catalog_install_package_with_missing_handler(
-        tmpdir, settings, testdatadir, mocker):
-    from ideascube.serveradmin.catalog import Catalog, InvalidPackageMetadata
-
-    cachedir = tmpdir.mkdir('cache')
-    sourcedir = tmpdir.mkdir('source')
-
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
-    zippedzim.copy(path)
-
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
-
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-
-    c = Catalog()
-    c.add_remote(
-        'foo', 'Content from Foo',
-        'file://{}'.format(remote_catalog_file.strpath))
-    c.update_cache()
-
-    with pytest.raises(InvalidPackageMetadata):
-        c.install_packages(['wikipedia.tum'])
-
-
-def test_catalog_install_package_with_unknown_handler(
-        tmpdir, settings, testdatadir, mocker):
-    from ideascube.serveradmin.catalog import Catalog, InvalidHandlerType
-
-    cachedir = tmpdir.mkdir('cache')
-    sourcedir = tmpdir.mkdir('source')
-
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
-    zippedzim.copy(path)
-
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
-        f.write('    handler: something-not-supported\n')
-
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-
-    c = Catalog()
-    c.add_remote(
-        'foo', 'Content from Foo',
-        'file://{}'.format(remote_catalog_file.strpath))
-    c.update_cache()
-
-    with pytest.raises(InvalidHandlerType):
         c.install_packages(['wikipedia.tum'])
 
 
