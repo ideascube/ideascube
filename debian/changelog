@@ -1,3 +1,10 @@
+ideascube (0.8.6) unstable; urgency=low
+
+  * Removed STORAGE_ROOT from koombook config, now managed via symlink (cf #300)
+  * Increased tries to connect to wifi (cf #301)
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 26 Feb 2016 12:03:00 +0100
+
 ideascube (0.8.5) unstable; urgency=low
 
   * Fixed error after wifi failing to connect (cf #299)
