@@ -129,7 +129,7 @@ class AvailableWifiNetwork(object):
         attempt = 1
         import time
 
-        while attempt < 7:
+        while attempt < 12:
             if self.connected:
                 return
 
