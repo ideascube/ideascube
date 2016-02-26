@@ -3,6 +3,7 @@ from glob import glob
 from hashlib import sha256
 from operator import attrgetter
 import os
+from pathlib import Path
 import shutil
 import sys
 import tempfile
@@ -63,24 +64,45 @@ class Remote:
 class Handler:
 
     def __init__(self):
-        default = os.path.join(settings.STORAGE_ROOT, self.typename)
-        settingname = 'CATALOG_{}_INSTALL_DIR'.format(self.typename.upper())
-        self._install_dir = getattr(settings, settingname, default)
+        default = os.path.join(settings.STORAGE_ROOT, self.name)
+        setting = 'CATALOG_{}_INSTALL_DIR'.format(self.name.upper())
+        self._install_dir = getattr(settings, setting, default)
+        self._installed = []
+        self._removed = []
+
+    @property
+    def name(self):
+        return self.__class__.__name__.lower()
 
     def install(self, package, download_path):
         package.install(download_path, self._install_dir)
+        self._installed.append(package)
 
     def remove(self, package):
         package.remove(self._install_dir)
+        self._removed.append(package)
 
     def commit(self):
-        raise NotImplementedError('Subclasses must implement this method')
+        self._installed = []
+        self._removed = []
+
+    def restart_service(self, name):
+        sys.stdout.write('Restarting service "{}"\n'.format(name))
+        try:
+            manager = SystemManager()
+            service = manager.get_service(name)
+
+        except NoSuchUnit:
+            # Service is not installed, give up.
+            pass
+
+        else:
+            manager.restart(service.Id)
 
 
 class Kiwix(Handler):
-    typename = 'kiwix'
 
-    def commit(self, removed=None, installed=None):
+    def commit(self):
         sys.stdout.write('Rebuilding the Kiwix library\n')
         library = etree.Element('library')
         libdir = os.path.join(self._install_dir, 'data', 'library')
@@ -107,16 +129,48 @@ class Kiwix(Handler):
             f.write(etree.tostring(
                 library, xml_declaration=True, encoding='utf-8'))
 
-        try:
-            manager = SystemManager()
-            kiwix = manager.get_service('kiwix-serve')
+        self.restart_service('kiwix-server')
+        super().commit()
 
-        except NoSuchUnit:
-            # Kiwix is not installed, give up
+
+class Nginx(Handler):
+    template = """
+server {{
+    listen   80;
+    server_name {server_name};
+    root {root};
+    index index.html;
+}}
+"""
+    root = '/etc/nginx/'
+
+    def commit(self):
+        for pkg in self._removed:
+            self.unregister_site(pkg)
+        for pkg in self._installed:
+            self.register_site(pkg)
+        self.restart_service('nginx')
+        super().commit()
+
+    def register_site(self, package):
+        available = Path(self.root, 'sites-available', package.id)
+        enabled = Path(self.root, 'sites-enabled', package.id)
+        server_name = '{subdomain}.{domain}'.format(subdomain=package.id,
+                                                    domain=settings.DOMAIN)
+        root = package.get_root_dir(self._install_dir)
+        with available.open('w') as f:
+            f.write(self.template.format(server_name=server_name, root=root))
+        try:
+            enabled.symlink_to(available)
+        except FileExistsError:
             pass
 
-        else:
-            manager.restart(kiwix.Id)
+    def unregister_site(self, package):
+        try:
+            Path(self.root, 'sites-available', package.id).unlink()
+            Path(self.root, 'sites-enabled', package.id).unlink()
+        except FileNotFoundError as e:
+            sys.stderr.write(str(e))
 
 
 class MetaRegistry(type):
@@ -166,15 +220,18 @@ class Package(metaclass=MetaRegistry):
     def remove(self, install_dir):
         raise NotImplementedError('Subclasses must implement this method')
 
+    def assert_is_zipfile(self, path):
+        if not zipfile.is_zipfile(path):
+            os.unlink(path)
+            raise InvalidFile('{} is not a zip file'.format(path))
+
 
 class ZippedZim(Package):
     typename = 'zipped-zim'
     handler = Kiwix
 
     def install(self, download_path, install_dir):
-        if not zipfile.is_zipfile(download_path):
-            os.unlink(download_path)
-            raise InvalidFile('{} is not a zip file'.format(download_path))
+        self.assert_is_zipfile(download_path)
 
         with zipfile.ZipFile(download_path, "r") as z:
             names = z.namelist()
@@ -198,6 +255,26 @@ class ZippedZim(Package):
 
             except IsADirectoryError:
                 shutil.rmtree(path)
+
+
+class StaticSite(Package):
+    typename = 'static-site'
+    handler = Nginx
+
+    def get_root_dir(self, install_dir):
+        return os.path.join(install_dir, self.id)
+
+    def install(self, download_path, install_dir):
+        self.assert_is_zipfile(download_path)
+
+        with zipfile.ZipFile(download_path, "r") as z:
+            z.extractall(self.get_root_dir(install_dir))
+
+    def remove(self, install_dir):
+        try:
+            shutil.rmtree(self.get_root_dir(install_dir))
+        except FileNotFoundError as e:
+            sys.stderr.write(str(e))
 
 
 class Catalog:
@@ -425,7 +502,8 @@ class Catalog:
             with open(self._cache_catalog, 'r') as f:
                 self._catalog = yaml.safe_load(f.read())
 
-        else:
+        # yaml.safe_load returns None for an empty file.
+        if not getattr(self, '_catalog', None):
             self._catalog = {'installed': {}, 'available': {}}
             self._persist_cache()
 

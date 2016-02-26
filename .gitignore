@@ -16,3 +16,4 @@ debian/ideascube.triggers
 .coverage
 builds/
 .pybuild/
+htmlcov/

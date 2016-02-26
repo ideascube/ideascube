@@ -1,3 +1,4 @@
+import os
 from hashlib import sha256
 
 import pytest
@@ -51,6 +52,14 @@ def zippedzim_path(testdatadir, tmpdir):
     path = tmpdir.mkdir('packages').join('wikipedia.tum-2015-08')
     zippedzim.copy(path)
 
+    return path
+
+
+@pytest.fixture
+def staticsite_path(testdatadir, tmpdir):
+    zipfile = testdatadir.join('catalog', 'w2eu-2016-02-26')
+    path = tmpdir.mkdir('packages').join('w2eu-2016-02-26')
+    zipfile.copy(path)
     return path
 
 
@@ -268,28 +277,39 @@ def test_remove_zippedzim(zippedzim_path, install_dir):
     assert index.join('{}.zim.idx'.format(p.id)).check(exists=False)
 
 
+def test_install_staticsite(staticsite_path, install_dir):
+    from ideascube.serveradmin.catalog import StaticSite
+
+    p = StaticSite('w2eu', {
+        'url': 'https://foo.fr/w2eu-2016-02-26.zim'})
+    p.install(staticsite_path.strpath, install_dir.strpath)
+
+    root = install_dir.join('w2eu')
+    assert root.check(dir=True)
+
+    index = root.join('index.html')
+    with index.open() as f:
+        assert 'static content' in f.read()
+
+
+def test_remove_staticsite(staticsite_path, install_dir):
+    from ideascube.serveradmin.catalog import StaticSite
+
+    p = StaticSite('w2eu', {
+        'url': 'https://foo.fr/w2eu-2016-02-26.zim'})
+    p.install(staticsite_path.strpath, install_dir.strpath)
+
+    p.remove(install_dir.strpath)
+
+    root = install_dir.join('w2eu')
+    assert root.check(exists=False)
+
+
 def test_handler(tmpdir, settings):
     from ideascube.serveradmin.catalog import Handler
 
-    # This is required to test the constructor of the base package
-    Handler.typename = 'tests_only'
-
-    settings.CATALOG_TESTS_ONLY_INSTALL_DIR = tmpdir.strpath
+    settings.CATALOG_HANDLER_INSTALL_DIR = tmpdir.strpath
     h = Handler()
-    assert h._install_dir == tmpdir.strpath
-
-    with pytest.raises(NotImplementedError):
-        h.commit()
-
-    # Don't forget to delete that class attribute, or it impacts other tests
-    del(Handler.typename)
-
-
-def test_kiwix_handler(tmpdir, settings):
-    from ideascube.serveradmin.catalog import Kiwix
-
-    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
-    h = Kiwix()
     assert h._install_dir == tmpdir.strpath
 
 
@@ -396,6 +416,102 @@ def test_kiwix_commits_after_remove(tmpdir, settings, zippedzim_path, mocker):
     assert library.check(exists=True)
     assert library.read_text('utf-8') == (
         "<?xml version='1.0' encoding='utf-8'?>\n<library/>")
+
+    assert manager().get_service.call_count == 2
+    manager().restart.assert_not_called()
+
+
+def test_nginx_installs_zippedzim(tmpdir, settings, staticsite_path):
+    from ideascube.serveradmin.catalog import Nginx, StaticSite
+
+    settings.CATALOG_NGINX_INSTALL_DIR = tmpdir.strpath
+    Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
+
+    p = StaticSite('w2eu', {
+        'url': 'https://foo.fr/w2eu-2016-02-26.zim'})
+    h = Nginx()
+    h.install(p, staticsite_path.strpath)
+
+    root = tmpdir.join('w2eu')
+    assert root.check(dir=True)
+
+    index = root.join('index.html')
+    with index.open() as f:
+        assert 'static content' in f.read()
+
+
+def test_nginx_removes_zippedzim(tmpdir, settings, staticsite_path):
+    from ideascube.serveradmin.catalog import Nginx, StaticSite
+
+    settings.CATALOG_NGINX_INSTALL_DIR = tmpdir.strpath
+    Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
+
+    p = StaticSite('w2eu', {
+        'url': 'https://foo.fr/w2eu-2016-02-26.zim'})
+    h = Nginx()
+    h.install(p, staticsite_path.strpath)
+
+    h.remove(p)
+
+    root = tmpdir.join('w2eu')
+    assert root.check(exists=False)
+
+
+def test_nginx_commits_after_install(tmpdir, settings, staticsite_path,
+                                     mocker, monkeypatch):
+    from ideascube.serveradmin.catalog import Nginx, StaticSite
+
+    settings.CATALOG_NGINX_INSTALL_DIR = tmpdir.strpath
+    monkeypatch.setattr(Nginx, 'root', tmpdir.strpath)
+    os.mkdir(tmpdir.join('sites-available').strpath)
+    os.mkdir(tmpdir.join('sites-enabled').strpath)
+    manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    p = StaticSite('w2eu', {
+        'url': 'https://foo.fr/w2eu-2016-02-26.zim'})
+    h = Nginx()
+    h.install(p, staticsite_path.strpath)
+    h.commit()
+
+    conffile = tmpdir.join('sites-available', 'w2eu')
+    with conffile.open() as f:
+        assert 'server_name w2eu.' in f.read()
+    symlink = tmpdir.join('sites-enabled', 'w2eu')
+    assert symlink.check(exists=True)
+    assert symlink.realpath() == conffile
+
+    manager().get_service.assert_called_once_with('nginx')
+    manager().restart.assert_called_once()
+
+
+def test_nginx_commits_after_remove(tmpdir, settings, staticsite_path,
+                                    mocker, monkeypatch):
+    from ideascube.serveradmin.catalog import Nginx, StaticSite
+    from ideascube.serveradmin.systemd import NoSuchUnit
+
+    settings.CATALOG_NGINX_INSTALL_DIR = tmpdir.strpath
+    monkeypatch.setattr(Nginx, 'root', tmpdir.strpath)
+    os.mkdir(tmpdir.join('sites-available').strpath)
+    os.mkdir(tmpdir.join('sites-enabled').strpath)
+    manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    manager().get_service.side_effect = NoSuchUnit
+
+    p = StaticSite('w2eu', {
+        'url': 'https://foo.fr/w2eu-2016-02-26.zim'})
+    h = Nginx()
+    h.install(p, staticsite_path.strpath)
+    h.commit()
+
+    assert manager().get_service.call_count == 1
+    manager().restart.assert_not_called()
+
+    h.remove(p)
+    h.commit()
+
+    conffile = tmpdir.join('sites-available', 'w2eu')
+    assert conffile.check(exists=False)
+    symlink = tmpdir.join('sites-enabled', 'w2eu')
+    assert symlink.check(exists=False)
 
     assert manager().get_service.call_count == 2
     manager().restart.assert_not_called()
