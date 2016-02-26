@@ -2,7 +2,6 @@ from .base import *  # noqa
 
 ALLOWED_HOSTS = ['.koombook.lan.', 'localhost', '127.0.0.1']
 TIME_ZONE = None
-STORAGE_ROOT = '/media/hdd/ideascube/storage'
 DOMAIN = 'koombook.lan'
 BACKUP_FORMAT = 'gztar'
 IDEASCUBE_BODY_ID = 'koombook'
