@@ -34,4 +34,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'gutenberg',
     },
+    {
+        'id': 'w2eu',
+    },
 ]

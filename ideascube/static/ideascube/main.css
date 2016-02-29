@@ -555,6 +555,10 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .grid .card.mediacenter {
     background-image: url('./img/mediacenter.png');
 }
+.card.w2eu {
+    background-image: url('./img/cards/w2eu.jpg');
+    padding-right: 100px;
+}
 .card img {
     max-width: 150px;
     float: left;
