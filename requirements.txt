@@ -8,6 +8,7 @@ mypy-lang
 Pillow==3.1.1
 pymarc==3.1.1
 python-networkmanager==1.0.1
+PyYAML==3.11
 resumable-urlretrieve
 Unidecode==0.4.19
 
