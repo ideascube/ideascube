@@ -3,6 +3,7 @@ from glob import glob
 from hashlib import sha256
 from operator import attrgetter
 import os
+from pathlib import Path
 import shutil
 import sys
 import tempfile
@@ -60,6 +61,118 @@ class Remote:
             f.write(yaml.safe_dump(d, default_flow_style=False))
 
 
+class Handler:
+
+    def __init__(self):
+        default = os.path.join(settings.STORAGE_ROOT, self.name)
+        setting = 'CATALOG_{}_INSTALL_DIR'.format(self.name.upper())
+        self._install_dir = getattr(settings, setting, default)
+        self._installed = []
+        self._removed = []
+
+    @property
+    def name(self):
+        return self.__class__.__name__.lower()
+
+    def install(self, package, download_path):
+        package.install(download_path, self._install_dir)
+        self._installed.append(package)
+
+    def remove(self, package):
+        package.remove(self._install_dir)
+        self._removed.append(package)
+
+    def commit(self):
+        self._installed = []
+        self._removed = []
+
+    def restart_service(self, name):
+        sys.stdout.write('Restarting service "{}"\n'.format(name))
+        try:
+            manager = SystemManager()
+            service = manager.get_service(name)
+
+        except NoSuchUnit:
+            # Service is not installed, give up.
+            pass
+
+        else:
+            manager.restart(service.Id)
+
+
+class Kiwix(Handler):
+
+    def commit(self):
+        sys.stdout.write('Rebuilding the Kiwix library\n')
+        library = etree.Element('library')
+        libdir = os.path.join(self._install_dir, 'data', 'library')
+
+        for libpath in glob(os.path.join(libdir, '*.xml')):
+            zimname = os.path.basename(libpath)[:-4]
+
+            with open(libpath, 'r') as f:
+                et = etree.parse(f)
+                books = et.findall('book')
+
+                # Messing with the path gets complicated otherwise
+                # TODO: Can we assume this is always true for stuff distributed
+                #       by kiwix?
+                assert len(books) == 1
+
+                book = books[0]
+                book.set('path', 'data/content/%s' % zimname)
+                book.set('indexPath', 'data/index/%s.idx' % zimname)
+
+                library.append(book)
+
+        with open(os.path.join(self._install_dir, 'library.xml'), 'wb') as f:
+            f.write(etree.tostring(
+                library, xml_declaration=True, encoding='utf-8'))
+
+        self.restart_service('kiwix-server')
+        super().commit()
+
+
+class Nginx(Handler):
+    template = """
+server {{
+    listen   80;
+    server_name {server_name};
+    root {root};
+    index index.html;
+}}
+"""
+    root = '/etc/nginx/'
+
+    def commit(self):
+        for pkg in self._removed:
+            self.unregister_site(pkg)
+        for pkg in self._installed:
+            self.register_site(pkg)
+        self.restart_service('nginx')
+        super().commit()
+
+    def register_site(self, package):
+        available = Path(self.root, 'sites-available', package.id)
+        enabled = Path(self.root, 'sites-enabled', package.id)
+        server_name = '{subdomain}.{domain}'.format(subdomain=package.id,
+                                                    domain=settings.DOMAIN)
+        root = package.get_root_dir(self._install_dir)
+        with available.open('w') as f:
+            f.write(self.template.format(server_name=server_name, root=root))
+        try:
+            enabled.symlink_to(available)
+        except FileExistsError:
+            pass
+
+    def unregister_site(self, package):
+        try:
+            Path(self.root, 'sites-available', package.id).unlink()
+            Path(self.root, 'sites-enabled', package.id).unlink()
+        except FileNotFoundError as e:
+            sys.stderr.write(str(e))
+
+
 class MetaRegistry(type):
     def __new__(mcs, name, bases, attrs, **kwargs):
         cls = super().__new__(mcs, name, bases, attrs)
@@ -107,14 +220,18 @@ class Package(metaclass=MetaRegistry):
     def remove(self, install_dir):
         raise NotImplementedError('Subclasses must implement this method')
 
+    def assert_is_zipfile(self, path):
+        if not zipfile.is_zipfile(path):
+            os.unlink(path)
+            raise InvalidFile('{} is not a zip file'.format(path))
+
 
 class ZippedZim(Package):
     typename = 'zipped-zim'
+    handler = Kiwix
 
     def install(self, download_path, install_dir):
-        if not zipfile.is_zipfile(download_path):
-            os.unlink(download_path)
-            raise InvalidFile('{} is not a zip file'.format(download_path))
+        self.assert_is_zipfile(download_path)
 
         with zipfile.ZipFile(download_path, "r") as z:
             names = z.namelist()
@@ -140,63 +257,24 @@ class ZippedZim(Package):
                 shutil.rmtree(path)
 
 
-class Handler(metaclass=MetaRegistry):
-    registered_types = {}
+class StaticSite(Package):
+    typename = 'static-site'
+    handler = Nginx
 
-    def __init__(self):
-        settingname = 'CATALOG_{}_INSTALL_DIR'.format(self.typename.upper())
-        self._install_dir = getattr(settings, settingname)
+    def get_root_dir(self, install_dir):
+        return os.path.join(install_dir, self.id)
 
-    def install(self, package, download_path):
-        package.install(download_path, self._install_dir)
+    def install(self, download_path, install_dir):
+        self.assert_is_zipfile(download_path)
 
-    def remove(self, package):
-        package.remove(self._install_dir)
+        with zipfile.ZipFile(download_path, "r") as z:
+            z.extractall(self.get_root_dir(install_dir))
 
-    def commit(self):
-        raise NotImplementedError('Subclasses must implement this method')
-
-
-class Kiwix(Handler):
-    typename = 'kiwix'
-
-    def commit(self):
-        sys.stdout.write('Rebuilding the Kiwix library\n')
-        library = etree.Element('library')
-        libdir = os.path.join(self._install_dir, 'data', 'library')
-
-        for libpath in glob(os.path.join(libdir, '*.xml')):
-            zimname = os.path.basename(libpath)[:-4]
-
-            with open(libpath, 'r') as f:
-                et = etree.parse(f)
-                books = et.findall('book')
-
-                # Messing with the path gets complicated otherwise
-                # TODO: Can we assume this is always true for stuff distributed
-                #       by kiwix?
-                assert len(books) == 1
-
-                book = books[0]
-                book.set('path', 'data/content/%s' % zimname)
-                book.set('indexPath', 'data/index/%s.idx' % zimname)
-
-                library.append(book)
-
-        with open(os.path.join(self._install_dir, 'library.xml'), 'wb') as f:
-            f.write(etree.tostring(
-                library, xml_declaration=True, encoding='utf-8'))
-
+    def remove(self, install_dir):
         try:
-            manager = SystemManager()
-            kiwix = manager.get_service('kiwix-server')
-
-        except NoSuchUnit:
-            # Kiwix is not installed, give up
-            pass
-
-        else:
-            manager.restart(kiwix.Id)
+            shutil.rmtree(self.get_root_dir(install_dir))
+        except FileNotFoundError as e:
+            sys.stderr.write(str(e))
 
 
 class Catalog:
@@ -273,17 +351,7 @@ class Catalog:
         return pkgs
 
     def _get_handler(self, package):
-        try:
-            handlertype = package.handler
-
-        except AttributeError:
-            raise InvalidPackageMetadata('Packages must have a handler')
-
-        try:
-            return Handler.registered_types[handlertype]()
-
-        except KeyError:
-            raise InvalidHandlerType(handlertype)
+        return package.handler()
 
     def _verify_sha256(self, path, sha256sum):
         sha = sha256()
@@ -434,7 +502,8 @@ class Catalog:
             with open(self._cache_catalog, 'r') as f:
                 self._catalog = yaml.safe_load(f.read())
 
-        else:
+        # yaml.safe_load returns None for an empty file.
+        if not getattr(self, '_catalog', None):
             self._catalog = {'installed': {}, 'available': {}}
             self._persist_cache()
 
