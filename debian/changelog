@@ -1,3 +1,12 @@
+ideascube (0.9.0~rc1) unstable; urgency=low
+
+  * Added packages manager from command line (cf #281)
+  * Added basic tags management command line (cf #289)
+  * Added card for w2eu static website
+  * Added conf for Kytabu Koombook
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 29 Feb 2016 16:21:00 +0100
+
 ideascube (0.8.6) unstable; urgency=low
 
   * Removed STORAGE_ROOT from koombook config, now managed via symlink (cf #300)
