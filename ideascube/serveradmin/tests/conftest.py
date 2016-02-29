@@ -2,7 +2,7 @@ import pytest
 
 from ..backup import Backup
 
-DATA_ROOT = 'ideascube/serveradmin/tests/data'
+DATA_ROOT = 'ideascube/serveradmin/tests/data/backup'
 
 
 @pytest.fixture

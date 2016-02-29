@@ -9,7 +9,7 @@ from django.core.files.base import ContentFile
 from ..backup import Backup
 
 BACKUPS_ROOT = 'ideascube/serveradmin/tests/backups'
-DATA_ROOT = 'ideascube/serveradmin/tests/data'
+DATA_ROOT = 'ideascube/serveradmin/tests/data/backup'
 BACKUPED_ROOT = 'ideascube/serveradmin/tests/backuped'
 
 
