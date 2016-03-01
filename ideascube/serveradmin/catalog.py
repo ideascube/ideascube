@@ -91,11 +91,9 @@ class Handler:
         try:
             manager = SystemManager()
             service = manager.get_service(name)
-
         except NoSuchUnit:
             # Service is not installed, give up.
-            pass
-
+            sys.stderr.write('No service named "{}"\n'.format(name))
         else:
             manager.restart(service.Id)
 
