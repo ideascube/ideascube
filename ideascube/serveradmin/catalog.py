@@ -161,7 +161,10 @@ server {{
         try:
             enabled.symlink_to(available)
         except FileExistsError:
-            pass
+            if enabled.realpath() != available.realpath():
+                # Can we delete it? Even if it's not a symlink?
+                # Let's prevent install for now.
+                raise
 
     def unregister_site(self, package):
         try:
