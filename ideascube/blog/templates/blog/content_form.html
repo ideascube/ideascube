@@ -25,7 +25,7 @@
                 </div>
                 <div class="col two-third">
                     <h3>{% trans 'Content' %}</h3>
-                    <div data-editable-for="text" placeholder="{% trans 'Type your text here…' %}">{{ content.text|safe }}</div>
+                    <div data-editable-for="text" placeholder="{% trans 'Type your text here…' %}">{{ form.text.value|default:''|safe }}</div>
                 </div>
         </div>
     </form>

@@ -248,3 +248,13 @@ def test_staff_user_cannot_delete_user_linked_to_blog_content(staffapp,
     assert resp.status_code == 302
     assert resp['Location'].endswith(published.author.get_absolute_url())
     assert len(Content.objects.all()) == 1
+
+
+def test_staff_text_is_kept_on_invalid_form(staffapp, published):
+    url = reverse('blog:content_update', kwargs={'pk': published.pk})
+    form = staffapp.get(url).forms['model_form']
+    text = "this is my new text"
+    form['text'] = text
+    form['summary'] = ''  # Make form invalid.
+    response = form.submit()
+    assert response.pyquery.find('[data-editable-for="text"]').text() == text
