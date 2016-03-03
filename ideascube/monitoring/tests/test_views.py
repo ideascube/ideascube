@@ -225,7 +225,7 @@ def test_export_inventory_should_be_ok_in_arabic(staffapp, settings):
     translation.deactivate()
 
 
-def test_staff_can_create_inventoryspeciment_by_barcode(staffapp):
+def test_staff_can_create_inventoryspecimen_by_barcode(staffapp):
     inventory = InventoryFactory()
     specimen = SpecimenFactory()
     assert not InventorySpecimen.objects.filter(inventory=inventory,
@@ -238,7 +238,20 @@ def test_staff_can_create_inventoryspeciment_by_barcode(staffapp):
                                          specimen=specimen)
 
 
-def test_cant_create_inventoryspeciment_by_barcode_twice(staffapp):
+def test_inventoryspecimen_by_barcode_should_clean_barcode_input(staffapp):
+    inventory = InventoryFactory()
+    specimen = SpecimenFactory(barcode='1987654')
+    assert not InventorySpecimen.objects.filter(inventory=inventory,
+                                                specimen=specimen)
+    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = '19.87654'
+    form.submit().follow()
+    assert InventorySpecimen.objects.get(inventory=inventory,
+                                         specimen=specimen)
+
+
+def test_cant_create_inventoryspecimen_by_barcode_twice(staffapp):
     inventory = InventoryFactory()
     specimen = SpecimenFactory()
     assert not InventorySpecimen.objects.filter(inventory=inventory,
@@ -254,7 +267,7 @@ def test_cant_create_inventoryspeciment_by_barcode_twice(staffapp):
                                             specimen=specimen).count() == 1
 
 
-def test_staff_can_create_inventoryspeciment_by_click_on_add_link(staffapp):
+def test_staff_can_create_inventoryspecimen_by_click_on_add_link(staffapp):
     inventory = InventoryFactory()
     specimen = SpecimenFactory(count=3)
     assert not InventorySpecimen.objects.filter(inventory=inventory,
@@ -272,7 +285,7 @@ def test_staff_can_create_inventoryspeciment_by_click_on_add_link(staffapp):
                                          specimen=specimen).count == 3
 
 
-def test_staff_can_remove_inventoryspeciment_by_click_on_remove_link(staffapp):
+def test_staff_can_remove_inventoryspecimen_by_click_on_remove_link(staffapp):
     inventory = InventoryFactory()
     specimen = SpecimenFactory()
     InventorySpecimen.objects.create(inventory=inventory,
@@ -288,7 +301,7 @@ def test_staff_can_remove_inventoryspeciment_by_click_on_remove_link(staffapp):
                                                 specimen=specimen)
 
 
-def test_can_increase_inventoryspeciment_by_click_on_increase_link(staffapp):
+def test_can_increase_inventoryspecimen_by_click_on_increase_link(staffapp):
     inventory = InventoryFactory()
     specimen = SpecimenFactory()
     m2m = InventorySpecimen.objects.create(inventory=inventory,
@@ -303,7 +316,7 @@ def test_can_increase_inventoryspeciment_by_click_on_increase_link(staffapp):
                                          specimen=specimen).count == 3
 
 
-def test_can_decrease_inventoryspeciment_by_click_on_decrease_link(staffapp):
+def test_can_decrease_inventoryspecimen_by_click_on_decrease_link(staffapp):
     inventory = InventoryFactory()
     specimen = SpecimenFactory()
     m2m = InventorySpecimen.objects.create(inventory=inventory,

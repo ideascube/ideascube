@@ -11,6 +11,13 @@ from .models import Entry, InventorySpecimen, Loan, Specimen
 user_model = get_user_model()
 
 
+def clean_barcode(barcode):
+    # Keep only integers and letters, and make sure empty values are mapped
+    # to None, not empty string (we need NULL values in db, not empty
+    # strings, for uniqueness constraints).
+    return re.sub(r'\W', '', barcode) or None
+
+
 class EntryForm(forms.Form):
 
     serials = forms.CharField(widget=forms.Textarea(attrs={
@@ -54,10 +61,7 @@ class ExportLoanForm(forms.Form):
 class SpecimenForm(forms.ModelForm):
 
     def clean_barcode(self):
-        # Keep only integers and letters, and make sure empty values are mapped
-        # to None, not empty string (we need NULL values in db, not empty
-        # strings, for uniqueness constraints).
-        return re.sub(r'\W', '', self.cleaned_data['barcode']) or None
+        return clean_barcode(self.cleaned_data['barcode'])
 
     class Meta:
         model = Specimen
@@ -71,7 +75,7 @@ class InventorySpecimenForm(forms.ModelForm):
                                'placeholder': _('Enter a bar code')}))
 
     def clean_specimen(self):
-        barcode = self.cleaned_data['specimen']
+        barcode = clean_barcode(self.cleaned_data['specimen'])
         try:
             specimen = Specimen.objects.get(barcode=barcode)
         except Specimen.DoesNotExist:
