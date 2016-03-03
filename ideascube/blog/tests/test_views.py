@@ -250,7 +250,7 @@ def test_staff_user_cannot_delete_user_linked_to_blog_content(staffapp,
     assert len(Content.objects.all()) == 1
 
 
-def test_staff_text_is_kept_on_invalid_form(staffapp, published):
+def test_text_is_kept_on_invalid_form(staffapp, published):
     url = reverse('blog:content_update', kwargs={'pk': published.pk})
     form = staffapp.get(url).forms['model_form']
     text = "this is my new text"
