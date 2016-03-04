@@ -10,6 +10,7 @@ import tempfile
 import zipfile
 
 from django.conf import settings
+from django.template.defaultfilters import filesizeformat
 from lxml import etree
 from resumable import DownloadCheck, DownloadError, urlretrieve
 import yaml
@@ -214,6 +215,12 @@ class Package(metaclass=MetaRegistry):
     def version(self):
         # 0 has the advantage of always being "smaller" than any other version
         return self._metadata.get('version', '0')
+
+    @property
+    def filesize(self):
+        if isinstance(self.size, int):
+            return filesizeformat(self.size)
+        return self.size
 
     def install(self, download_path, install_dir):
         raise NotImplementedError('Subclasses must implement this method')

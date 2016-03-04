@@ -193,6 +193,20 @@ def test_package_equality():
     assert p1 == p4
 
 
+def test_filesize_should_render_int_size_as_human_friendly():
+    from ideascube.serveradmin.catalog import Package
+
+    p = Package('wikipedia.fr', {'name': 'Wikipédia', 'size': 287325597})
+    assert p.filesize == '274.0 MB'
+
+
+def test_filesize_should_render_str_size_as_is():
+    from ideascube.serveradmin.catalog import Package
+
+    p = Package('wikipedia.fr', {'name': 'Wikipédia', 'size': '1.7 GB'})
+    assert p.filesize == '1.7 GB'
+
+
 def test_package_registry():
     from ideascube.serveradmin.catalog import Package
 
