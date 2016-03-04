@@ -1,0 +1,5 @@
+{% load i18n %}
+<div class="card tinted maps">
+    <h4 class="flow"><span class="theme discover">{% trans 'discover' %}</span><span>{% trans "maps" %}</span></h4>
+    <p>{% for name, subdomain in card.maps %}<a href="http://{{ subdomain }}.{{ domain }}">{{ name }}</a>{% if not forloop.last %} ▪ {% endif %}{% endfor %}</p>
+</div>

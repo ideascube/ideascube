@@ -37,4 +37,12 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'w2eu',
     },
+    {
+        'id': 'maps',
+        'maps': [
+            ('World', 'world.map'),
+            ('Athens', 'athens.map'),
+            ('Lesvos', 'lesvos.map'),
+        ]
+    }
 ]

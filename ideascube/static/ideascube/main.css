@@ -559,6 +559,10 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
     background-image: url('./img/cards/w2eu.jpg');
     padding-right: 100px;
 }
+.card.maps {
+    background-image: url('./img/cards/maps.png');
+    padding-right: 100px;
+}
 .card img {
     max-width: 150px;
     float: left;

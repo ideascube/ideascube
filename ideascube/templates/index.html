@@ -9,7 +9,7 @@
                 {% if not card.is_staff or user.is_staff %}
                     {% if card.id %}
                         {% with 'ideascube/includes/cards/'|add:card.id|add:'.html' as template %}
-                            {% include template with domain=domain %}
+                            {% include template with domain=domain card=card %}
                         {% endwith %}
                     {% else %}
                         {% include 'ideascube/includes/cards/custom.html' with domain=domain card=card %}
