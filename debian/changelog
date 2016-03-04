@@ -1,11 +1,15 @@
-ideascube (0.9.0~rc3) unstable; urgency=low
+ideascube (0.9.0) unstable; urgency=low
 
   * Added packages manager from command line (cf #281)
   * Added basic tags management command line (cf #289)
   * Added card for w2eu static website
   * Added conf for Kytabu Koombook
+  * Added "maps" home card
+  * Fixed inventory form not cleaning barcode serial (cf #317)
+  * Fixed blog content being lost on invalid form (cf #313)
+  * Updated i18n
 
- -- Yohan Boniface <hi@yohanboniface.me>  Tue, 29 Feb 2016 16:21:00 +0100
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 4 Mar 2016 10:52:00 +0100
 
 ideascube (0.8.6) unstable; urgency=low
 
