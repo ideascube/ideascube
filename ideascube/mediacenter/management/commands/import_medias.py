@@ -8,12 +8,18 @@ import sys
 from django.conf import settings
 from django.core.files import File
 from django.core.management.base import BaseCommand
+from progressist import ProgressBar
 
 from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.forms import DocumentForm
 from ideascube.mediacenter.utils import guess_kind_from_content_type
 from ideascube.templatetags.ideascube_tags import smart_truncate
 from ideascube.management.utils import Reporter
+
+
+class Bar(ProgressBar):
+    template = 'Import: {percent} |{animation}| {done}/{total} | ETA: {eta}'
+    done_char = '⬛'
 
 
 class Command(BaseCommand):
@@ -53,8 +59,9 @@ class Command(BaseCommand):
         if not os.path.exists(path):
             self.abort('Path does not exist: {}'.format(path))
         self.ROOT = os.path.dirname(path)
-        rows = self.load(path)
-        for row in rows:
+        rows = list(self.load(path))
+        bar = Bar(total=sum(1 for i in rows))
+        for row in bar.iter(rows):
             self.add(row)
         print(self.report)
         if self.report.has_errors():
