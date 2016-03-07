@@ -12,6 +12,7 @@ import zipfile
 from django.conf import settings
 from django.template.defaultfilters import filesizeformat
 from lxml import etree
+from progressist import ProgressBar
 from resumable import DownloadCheck, DownloadError, urlretrieve
 import yaml
 
@@ -285,6 +286,12 @@ class StaticSite(Package):
             sys.stderr.write(str(e))
 
 
+class Bar(ProgressBar):
+    template = ('Download: {percent} |{animation}| {done:B}/{total:B} '
+                '({speed:B}/s) | ETA: {eta}')
+    done_char = '⬛'
+
+
 class Catalog:
     def __init__(self):
         self._cache_base_dir = settings.CATALOG_CACHE_BASE_DIR
@@ -298,26 +305,10 @@ class Catalog:
             self._cache_base_dir, 'packages')
 
         self._load_cache()
+        self._bar = Bar()
 
     def _progress(self, msg, i, chunk_size, remote_size):
-        percent_done = (i + 1) * chunk_size / remote_size
-
-        if percent_done > 1.0:
-            percent_done = 1.0
-
-        length = 79 - len(msg) - 2 - 1 - 6
-        done_chars = int(percent_done * length)
-        remain_chars = length - done_chars
-        percent_done = int(percent_done * 1000) / 10
-
-        p = '\r{}: {}{} {}%'.format(
-            msg, "█" * done_chars, " " * remain_chars, percent_done)
-        sys.stdout.write(p)
-
-        if percent_done == 100.0:
-            sys.stdout.write('\n')
-
-        sys.stdout.flush()
+        self._bar.update(done=(i + 1) * chunk_size, total=remote_size)
 
     # -- Manage packages ------------------------------------------------------
     def _get_package(self, id, source):
