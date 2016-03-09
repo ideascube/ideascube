@@ -21,8 +21,9 @@ On a Linux box:
 
 On Windows or MacOS:
 
-- Install Kitematic (www.kitematic.com)
-- Search for `ìdeascube/ideascube` image and click on `Create`
+- Install Docker Toolbox (https://www.docker.com/products/docker-toolbox)
+- Launch Kitematic which should have been installed
+- Search for ``ideascube`` image and click on `Create`
 - Click on the icon next to `Web preview` to open your web browser
 
 ## How can I give a hand?
