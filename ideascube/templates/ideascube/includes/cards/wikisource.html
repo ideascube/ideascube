@@ -1,6 +1,5 @@
 {% load i18n %}
-<div class="card tinted wikisource">
-    <h4 class="flow"><span class="theme read">read</span> <span>{% trans "Wikisource" %}</span></h4>
-    <p>{% trans "The Free Library." %}</p>
-    {% include 'ideascube/includes/cards/_lang_list.html' with languages=card.languages name="Wikisource" %}
-</div>
+{% trans "Wikisource" as name %}
+{% trans "read" as theme %}
+{% trans "The free library." as description %}
+{% include 'ideascube/includes/cards/_kiwix.html' with card=card class="wikisource" theme_class="read" name=name description=description theme=theme %}

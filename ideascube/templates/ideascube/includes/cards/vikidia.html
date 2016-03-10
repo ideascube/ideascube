@@ -1,6 +1,5 @@
 {% load i18n %}
-<div class="card tinted vikidia">
-    <h4 class="flow"><span class="theme discover">{% trans 'discover' %}</span><span>{% trans "vikidia" %}</span></h4>
-    <p>{% trans "Browse the encyclopedia for children." %}</p>
-    {% include 'ideascube/includes/cards/_lang_list.html' with languages=card.languages %}
-</div>
+{% trans "Vikidia" as name %}
+{% trans "discover" as theme %}
+{% trans "Browse the encyclopedia for children." as description %}
+{% include 'ideascube/includes/cards/_kiwix.html' with card=card class="vikidia" theme_class="discover" name=name description=description theme=theme %}
