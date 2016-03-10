@@ -28,16 +28,15 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'mediacenter',
     },
     {
-        'id': 'wikipedia',
+        'id': 'wikipedia.old',
     },
     {
         'id': 'khanacademy',
     },
     {
-        'id': 'gutenberg',
+        'id': 'gutenberg.old',
     },
     {
-        'id': 'vikidia',
+        'id': 'vikidia.old',
     },
 ]
-

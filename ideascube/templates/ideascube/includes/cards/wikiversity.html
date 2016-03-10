@@ -1,0 +1,6 @@
+{% load i18n %}
+<div class="card tinted wikiversity">
+    <h4 class="flow"><span class="theme learn">learn</span> <span>{% trans "Wikiversity" %}</span></h4>
+    <p>{% trans "The free dictionary." %}</p>
+    {% include 'ideascube/includes/cards/_lang_list.html' with languages=card.languages name="Wikiversity" %}
+</div>

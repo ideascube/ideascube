@@ -5,7 +5,7 @@ from ideascube import __version__
 
 def settings(request):
     keys = ['IDEASCUBE_NAME', 'IDEASCUBE_BODY_ID', 'IDEASCUBE_ID',
-            'IDEASCUBE_HOSTNAME']
+            'IDEASCUBE_HOSTNAME', 'LANG_INFO']
     return {k: getattr(djsettings, k) for k in keys}
 
 

@@ -20,30 +20,30 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'bsfcampus',
     },
     {
-        'id': 'wikipedia',
+        'id': 'wikipedia.old',
     },
     {
         'id': 'khanacademy',
     },
     {
-        'id': 'wikisource',
+        'id': 'wikisource.old',
     },
     {
-        'id': 'vikidia',
+        'id': 'vikidia.old',
     },
     {
-        'id': 'gutenberg',
+        'id': 'gutenberg.old',
     },
     {
-        'id': 'cpassorcier',
+        'id': 'cpassorcier.old',
     },
     {
-        'id': 'ted',
+        'id': 'ted.old',
     },
     {
         'id': 'software',
     },
     {
-        'id': 'ubuntudoc',
+        'id': 'ubuntudoc.old',
     },
 ]

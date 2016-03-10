@@ -12,18 +12,18 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'mediacenter',
     },
     {
-        'id': 'wikipedia',
+        'id': 'wikipedia.old',
     },
     {
         'id': 'khanacademy',
     },
     {
-        'id': 'vikidia',
+        'id': 'vikidia.old',
     },
     {
         'id': 'appinventor',
     },
     {
-        'id': 'gutenberg',
+        'id': 'gutenberg.old',
     },
 ]

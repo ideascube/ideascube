@@ -12,7 +12,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'mediacenter',
     },
     {
-        'id': 'gutenberg',
+        'id': 'gutenberg.old',
     },
     {
         'id': 'khanacademy',
