@@ -108,6 +108,7 @@ AVAILABLE_LANGUAGES = (
     ('fr', 'Français'),
     ('it', 'Italiano'),
     ('ps', 'پښتو'),
+    ('rn', 'Kirundi'),
     ('so', 'Af-Soomaali'),
     ('sw', 'Swahili'),
     ('ti', 'ትግርኛ'),
@@ -139,6 +140,12 @@ EXTRA_LANG_INFO = {
         'name': 'Pashto',
         'code': 'ps',
         'name_local': 'پښتو'
+    },
+    'rn': {
+        'bidi': False,
+        'name': 'Kirundi',
+        'code': 'rn',
+        'name_local': 'kirundi'
     },
     'so': {
         'bidi': False,
