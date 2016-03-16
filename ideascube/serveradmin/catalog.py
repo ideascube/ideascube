@@ -442,11 +442,10 @@ class Catalog:
             used_handlers[handler.__class__.__name__] = handler
             self._catalog['installed'][pkg.id] = (
                 self._catalog['available'][pkg.id])
+            self._persist_cache()
 
         for handler in used_handlers.values():
             handler.commit()
-
-        self._persist_cache()
 
     def remove_packages(self, ids):
         used_handlers = {}
@@ -457,11 +456,10 @@ class Catalog:
             handler.remove(pkg)
             used_handlers[handler.__class__.__name__] = handler
             del(self._catalog['installed'][pkg.id])
+            self._persist_cache()
 
         for handler in used_handlers.values():
             handler.commit()
-
-        self._persist_cache()
 
     def upgrade_packages(self, ids):
         used_handlers = {}
@@ -486,11 +484,10 @@ class Catalog:
 
             self._catalog['installed'][ipkg.id] = (
                 self._catalog['available'][upkg.id])
+            self._persist_cache()
 
         for handler in used_handlers.values():
             handler.commit()
-
-        self._persist_cache()
 
     # -- Manage local cache ---------------------------------------------------
     def _load_cache(self):
