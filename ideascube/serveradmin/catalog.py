@@ -20,6 +20,14 @@ from .systemd import Manager as SystemManager, NoSuchUnit
 from ..utils import printerr
 
 
+def rm(path):
+    try:
+        os.unlink(path)
+
+    except IsADirectoryError:
+        shutil.rmtree(path)
+
+
 class InvalidFile(Exception):
     pass
 
@@ -253,6 +261,8 @@ class ZippedZim(Package):
 
         for path in glob(os.path.join(datadir, '*', '{}*'.format(zimname))):
             new = path.replace(zimname, '{0.id}.zim'.format(self))
+            if Path(new).exists():
+                rm(new)
             os.rename(path, new)
 
     def remove(self, install_dir):
@@ -260,11 +270,7 @@ class ZippedZim(Package):
         datadir = os.path.join(install_dir, 'data')
 
         for path in glob(os.path.join(datadir, '*', zimname)):
-            try:
-                os.unlink(path)
-
-            except IsADirectoryError:
-                shutil.rmtree(path)
+            rm(path)
 
 
 class StaticSite(Package):
@@ -429,16 +435,30 @@ class Catalog:
 
     def install_packages(self, ids):
         used_handlers = {}
+        downloaded = []
 
         for pkg in self._get_packages(ids, self._catalog['available']):
             if pkg.id in self._catalog['installed']:
                 printerr('{0.id} is already installed'.format(pkg))
                 continue
 
-            download_path = self._fetch_package(pkg)
+            try:
+                download_path = self._fetch_package(pkg)
+            except DownloadError as e:
+                printerr("Failed downloading {0.id}".format(pkg))
+                printerr(e)
+            else:
+                downloaded.append((pkg, download_path))
+
+        for pkg, download_path in downloaded:
             handler = self._get_handler(pkg)
             print('Installing {0.id}'.format(pkg))
-            handler.install(pkg, download_path)
+            try:
+                handler.install(pkg, download_path)
+            except Exception as e:
+                printerr("Failed installing {0.id}".format(pkg))
+                printerr(e)
+                continue
             used_handlers[handler.__class__.__name__] = handler
             self._catalog['installed'][pkg.id] = (
                 self._catalog['available'][pkg.id])
@@ -453,7 +473,12 @@ class Catalog:
         for pkg in self._get_packages(ids, self._catalog['installed']):
             handler = self._get_handler(pkg)
             print('Removing {0.id}'.format(pkg))
-            handler.remove(pkg)
+            try:
+                handler.remove(pkg)
+            except Exception as e:
+                printerr("Failed removing {0.id}".format(pkg))
+                printerr(e)
+                continue
             used_handlers[handler.__class__.__name__] = handler
             del(self._catalog['installed'][pkg.id])
             self._persist_cache()
@@ -463,6 +488,7 @@ class Catalog:
 
     def upgrade_packages(self, ids):
         used_handlers = {}
+        downloaded = []
 
         for ipkg in self._get_packages(ids, self._catalog['installed']):
             upkg = self._get_package(ipkg.id, self._catalog['available'])
@@ -471,15 +497,33 @@ class Catalog:
                 printerr('{0.id} has no update available'.format(ipkg))
                 continue
 
-            download_path = self._fetch_package(upkg)
+            try:
+                download_path = self._fetch_package(upkg)
+            except DownloadError as e:
+                printerr("Failed downloading {0.id}".format(upkg))
+                printerr(e)
+            else:
+                downloaded.append((ipkg, upkg, download_path))
+
+        for ipkg, upkg, download_path in downloaded:
             ihandler = self._get_handler(ipkg)
             uhandler = self._get_handler(upkg)
             print('Upgrading {0.id}'.format(ipkg))
 
-            ihandler.remove(ipkg)
+            try:
+                ihandler.remove(ipkg)
+            except Exception as e:
+                printerr("Failed removing {0.id}".format(ipkg))
+                printerr(e)
+                continue
             used_handlers[ihandler.__class__.__name__] = ihandler
 
-            uhandler.install(upkg, download_path)
+            try:
+                uhandler.install(upkg, download_path)
+            except Exception as e:
+                printerr("Failed installing {0.id}\n".format(upkg))
+                printerr(e)
+                continue
             used_handlers[uhandler.__class__.__name__] = uhandler
 
             self._catalog['installed'][ipkg.id] = (
