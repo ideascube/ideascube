@@ -353,6 +353,22 @@ def test_kiwix_installs_zippedzim(tmpdir, settings, zippedzim_path):
     assert index.join('{}.zim.idx'.format(p.id)).check(dir=True)
 
 
+def test_kiwix_does_not_fail_if_files_already_exist(tmpdir, settings,
+                                                    zippedzim_path):
+    from ideascube.serveradmin.catalog import Kiwix, ZippedZim
+
+    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
+
+    p = ZippedZim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    h = Kiwix()
+    h.install(p, zippedzim_path.strpath)
+    h.install(p, zippedzim_path.strpath)
+
+    data = tmpdir.join('data')
+    assert data.check(dir=True)
+
+
 def test_kiwix_removes_zippedzim(tmpdir, settings, zippedzim_path):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
 
