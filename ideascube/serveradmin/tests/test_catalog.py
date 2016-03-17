@@ -829,6 +829,65 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
     assert spy_urlretrieve.call_count == 2
 
 
+def test_catalog_install_does_not_stop_on_failure(tmpdir, settings,
+                                                  testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    cachedir = tmpdir.mkdir('cache')
+    installdir = tmpdir.mkdir('kiwix')
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('  wikipedia.fr:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    mocker.patch('ideascube.serveradmin.catalog.urlretrieve',
+                 side_effect=fake_urlretrieve)
+
+    def fake_install(package, download_path):
+        if package.id == 'wikipedia.tum':
+            raise OSError
+
+    spy_install = mocker.patch(
+        'ideascube.serveradmin.catalog.Kiwix.install',
+        side_effect=fake_install)
+
+    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
+    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum', 'wikipedia.fr'])
+
+    assert spy_install.call_count == 2
+    assert 'wikipedia.tum' not in c._catalog['installed']
+    assert 'wikipedia.fr' in c._catalog['installed']
+
+
 def test_catalog_install_package_already_downloaded(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
