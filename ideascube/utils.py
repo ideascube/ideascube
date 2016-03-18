@@ -1,4 +1,7 @@
 
+import sys
+
+__all__ = ['classproperty', 'printerr']
 
 class classproperty(property):
     """
@@ -12,7 +15,6 @@ class classproperty(property):
 # If we use partial we keep a ref to the original sys.stderr and output is not
 # captured.
 def printerr(*args, **kwargs):
-    import sys
     kwargs['file'] = sys.stderr
     kwargs['flush'] = True
     return print(*args, **kwargs)
