@@ -104,6 +104,20 @@ def test_staff_can_edit_document(staffapp, video):
     assert Document.objects.get(pk=video.pk).title == title
 
 
+def test_staff_detail_page_has_no_edit_delete_link_package_id(staffapp):
+    document = DocumentFactory(package_id="foo")
+    response = staffapp.get(reverse('mediacenter:document_detail',
+                                    kwargs={'pk': document.pk}), status=200)
+    assert "Document installed by a package." in response.content.decode()
+
+
+def test_staff_detail_page_has_edit_delete_link_no_package_id(staffapp):
+    document = DocumentFactory(package_id="")
+    response = staffapp.get(reverse('mediacenter:document_detail',
+                                    kwargs={'pk': document.pk}), status=200)
+    assert "Document installed by a package." not in response.content.decode()
+
+
 def test_can_create_document(staffapp):
     assert not Document.objects.count()
     url = reverse('mediacenter:document_create')

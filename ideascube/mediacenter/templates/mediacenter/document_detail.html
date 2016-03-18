@@ -19,10 +19,16 @@
 {% endblock twothird %}
 {% block third %}
     {% if user.is_staff %}
-        <ul class="card tinted admin">
-            <li>{% fa 'pencil' 'fa-fw' %}<a href="{% url 'mediacenter:document_update' pk=document.pk %}">{% trans 'Edit' %}</a></li>
-            <li>{% fa 'trash' 'fa-fw' %}<a href="{% url 'mediacenter:document_delete' pk=document.pk %}">{% trans 'Delete' %}</a></li>
-        </ul>
+        {% if document.package_id %}
+            <span class="card admin">
+               {% trans 'Document installed by a package. Cannot edit or delete this document.' %}
+            </span>
+        {% else %}
+            <ul class="card tinted admin">
+                <li>{% fa 'pencil' 'fa-fw' %}<a href="{% url 'mediacenter:document_update' pk=document.pk %}">{% trans 'Edit' %}</a></li>
+                <li>{% fa 'trash' 'fa-fw' %}<a href="{% url 'mediacenter:document_delete' pk=document.pk %}">{% trans 'Delete' %}</a></li>
+            </ul>
+        {% endif %}
     {% endif %}
     {% tag_cloud url="mediacenter:by_tag" model=view.model tags=document.tags.all %}
 {% endblock third %}

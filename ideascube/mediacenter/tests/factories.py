@@ -11,6 +11,7 @@ class DocumentFactory(factory.django.DjangoModelFactory):
     lang = settings.LANGUAGE_CODE
     original = factory.django.FileField()
     credits = "Document credits"
+    package_id = ""
 
     @factory.post_generation
     def tags(self, create, extracted, **kwargs):
