@@ -38,6 +38,8 @@ def setup_dirs(monkeypatch, tmpdir, settings):
         install_root.mkdir('handler').strpath)
     settings.CATALOG_KIWIX_INSTALL_DIR = (
         install_root.mkdir('kiwix').strpath)
+    settings.CATALOG_MEDIACENTER_INSTALL_DIR = (
+        install_root.mkdir('mediacenter').strpath)
     settings.CATALOG_NGINX_INSTALL_DIR = (
         install_root.mkdir('nginx').strpath)
 
