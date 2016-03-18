@@ -1,8 +1,6 @@
 
 import sys
 
-__all__ = ['classproperty', 'printerr']
-
 class classproperty(property):
     """
     Use it to decorate a classmethod to make it a "class property".
