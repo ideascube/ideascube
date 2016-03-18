@@ -5,7 +5,6 @@ from operator import attrgetter
 import os
 from pathlib import Path
 import shutil
-import sys
 import tempfile
 import zipfile
 
@@ -18,13 +17,7 @@ import yaml
 
 from .systemd import Manager as SystemManager, NoSuchUnit
 
-# We do not use functool.partial cause we want to mock stderr for unittest
-# If we use partial we keep a ref to the original sys.stderr and output is not
-# captured.
-def printerr(*args, **kwords):
-    kwords['file'] = sys.stderr
-    kwords['flush'] = True
-    return print(*args, **kwords)
+from ..utils import printerr
 
 
 class InvalidFile(Exception):
