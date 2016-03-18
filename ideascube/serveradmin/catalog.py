@@ -5,7 +5,6 @@ from operator import attrgetter
 import os
 from pathlib import Path
 import shutil
-import sys
 import tempfile
 import zipfile
 
@@ -17,6 +16,8 @@ from resumable import DownloadCheck, DownloadError, urlretrieve
 import yaml
 
 from .systemd import Manager as SystemManager, NoSuchUnit
+
+from ..utils import printerr
 
 
 class InvalidFile(Exception):
@@ -89,13 +90,13 @@ class Handler:
         self._removed = []
 
     def restart_service(self, name):
-        sys.stdout.write('Restarting service "{}"\n'.format(name))
+        print('Restarting service', name)
         try:
             manager = SystemManager()
             service = manager.get_service(name)
         except NoSuchUnit:
             # Service is not installed, give up.
-            sys.stderr.write('No service named "{}"\n'.format(name))
+            printerr('No service named', name)
         else:
             manager.restart(service.Id)
 
@@ -103,7 +104,7 @@ class Handler:
 class Kiwix(Handler):
 
     def commit(self):
-        sys.stdout.write('Rebuilding the Kiwix library\n')
+        print('Rebuilding the Kiwix library')
         library = etree.Element('library')
         libdir = os.path.join(self._install_dir, 'data', 'library')
 
@@ -173,7 +174,7 @@ server {{
             Path(self.root, 'sites-available', package.id).unlink()
             Path(self.root, 'sites-enabled', package.id).unlink()
         except FileNotFoundError as e:
-            sys.stderr.write(str(e))
+            printerr(e)
 
 
 class MetaRegistry(type):
@@ -283,7 +284,7 @@ class StaticSite(Package):
         try:
             shutil.rmtree(self.get_root_dir(install_dir))
         except FileNotFoundError as e:
-            sys.stderr.write(str(e))
+            printerr(e)
 
 
 class Bar(ProgressBar):
@@ -389,13 +390,12 @@ class Catalog:
                 except DownloadError as e:
                     # File was too busted, could not finish the download
                     if e.args[0] is DownloadCheck.checksum_mismatch:
-                        msg = 'Downloaded file has invalid checksum\n'
+                        msg = 'Downloaded file has invalid checksum'
 
                     else:
-                        msg = 'Error downloading the file: {}\n'.format(e)
+                        msg = 'Error downloading the file: {}'.format(e)
 
-                    sys.stderr.write(msg)
-                    sys.stderr.flush()
+                    printerr(msg)
                     os.unlink(path)
 
         path = os.path.join(self._local_package_cache, filename)
@@ -432,13 +432,12 @@ class Catalog:
 
         for pkg in self._get_packages(ids, self._catalog['available']):
             if pkg.id in self._catalog['installed']:
-                sys.stderr.write('{0.id} is already installed\n'.format(pkg))
-                sys.stderr.flush()
+                printerr('{0.id} is already installed'.format(pkg))
                 continue
 
             download_path = self._fetch_package(pkg)
             handler = self._get_handler(pkg)
-            sys.stdout.write('Installing {0.id}\n'.format(pkg))
+            print('Installing {0.id}'.format(pkg))
             handler.install(pkg, download_path)
             used_handlers[handler.__class__.__name__] = handler
             self._catalog['installed'][pkg.id] = (
@@ -454,7 +453,7 @@ class Catalog:
 
         for pkg in self._get_packages(ids, self._catalog['installed']):
             handler = self._get_handler(pkg)
-            sys.stdout.write('Removing {0.id}\n'.format(pkg))
+            print('Removing {0.id}'.format(pkg))
             handler.remove(pkg)
             used_handlers[handler.__class__.__name__] = handler
             del(self._catalog['installed'][pkg.id])
@@ -471,15 +470,13 @@ class Catalog:
             upkg = self._get_package(ipkg.id, self._catalog['available'])
 
             if ipkg == upkg:
-                sys.stderr.write(
-                    '{0.id} has no update available\n'.format(ipkg))
-                sys.stderr.flush()
+                printerr('{0.id} has no update available'.format(ipkg))
                 continue
 
             download_path = self._fetch_package(upkg)
             ihandler = self._get_handler(ipkg)
             uhandler = self._get_handler(upkg)
-            sys.stdout.write('Upgrading {0.id}\n'.format(ipkg))
+            print('Upgrading {0.id}'.format(ipkg))
 
             ihandler.remove(ipkg)
             used_handlers[ihandler.__class__.__name__] = ihandler
