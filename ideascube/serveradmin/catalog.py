@@ -319,8 +319,10 @@ class ZippedMedia(SimpleZipPackage):
             try:
                 self._install_media(media, root)
             except:
-                # What to do here ? revert/stop/continue ?
-                raise # easiest solution
+                # This can lead to installed package with uninstall media.
+                # We sould handle this somehow.
+                printerr("Cannot install media {} from package {}".format(media['title'], self.id))
+                continue
 
     def _install_media(self, media_info, install_dir):
         # Ensure that mandatory fields are set.
