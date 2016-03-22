@@ -5,14 +5,15 @@
 # Translators:
 # Florian HESLOUIN <splite@zimdeo.fr>, 2015
 # Quentin Drouet <kent1@arscenic.info>, 2015
+# Romain Berthier <romain.berthier@bibliosansfrontieres.org>, 2016
 # Yoann Vincent <yovincent.21@gmail.com>, 2014
-# yohanboniface <yohanboniface@free.fr>, 2014-2015
+# yohanboniface <yohanboniface@free.fr>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-03 04:37+0000\n"
-"PO-Revision-Date: 2016-03-03 04:39+0000\n"
+"POT-Creation-Date: 2016-03-22 15:35+0000\n"
+"PO-Revision-Date: 2016-03-22 15:54+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +35,7 @@ msgid "deleted"
 msgstr "supprimé"
 
 #: ideascube/blog/models.py:49 ideascube/library/models.py:41
-#: ideascube/mediacenter/models.py:50
+#: ideascube/mediacenter/models.py:52
 msgid "title"
 msgstr "titre"
 
@@ -43,15 +44,15 @@ msgid "author text"
 msgstr "auteurs vrac"
 
 #: ideascube/blog/models.py:54 ideascube/library/models.py:43
-#: ideascube/mediacenter/models.py:51
+#: ideascube/mediacenter/models.py:53
 msgid "summary"
 msgstr "résumé"
 
-#: ideascube/blog/models.py:55 ideascube/mediacenter/models.py:41
+#: ideascube/blog/models.py:55 ideascube/mediacenter/models.py:42
 msgid "image"
 msgstr "image"
 
-#: ideascube/blog/models.py:56 ideascube/mediacenter/models.py:45
+#: ideascube/blog/models.py:56 ideascube/mediacenter/models.py:46
 msgid "text"
 msgstr "texte"
 
@@ -66,7 +67,7 @@ msgstr "statut"
 
 #: ideascube/blog/models.py:60 ideascube/library/models.py:47
 #: ideascube/library/templates/library/book_detail.html:18
-#: ideascube/mediacenter/models.py:52
+#: ideascube/mediacenter/models.py:54
 msgid "Language"
 msgstr "Langue"
 
@@ -154,7 +155,7 @@ msgstr "Dans le camp"
 msgid "Origin"
 msgstr "Origine"
 
-#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:193
+#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:200
 #: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_eth_bokolmanyo.py:18
 #: ideascube/conf/idb_fra_aurore.py:18 ideascube/conf/idb_fra_calais.py:18
 #: ideascube/conf/idb_grc_eleonas.py:15 ideascube/conf/idb_jor_alhashmi.py:12
@@ -170,19 +171,19 @@ msgstr "Résidents"
 
 #: ideascube/conf/azraq.py:23
 msgid "16 Days of Activism"
-msgstr ""
+msgstr "16 Days of Activism"
 
 #: ideascube/conf/azraq.py:24
 msgid "AMANI Campaign"
-msgstr ""
+msgstr "AMANI Campaign"
 
 #: ideascube/conf/azraq.py:25
 msgid "Anger Management Training"
-msgstr ""
+msgstr "Anger Management Training"
 
 #: ideascube/conf/azraq.py:26
 msgid "Basic Computer Training"
-msgstr ""
+msgstr "Apprentissage informatique"
 
 #: ideascube/conf/azraq.py:27
 msgid "Beauty Training"
@@ -190,11 +191,11 @@ msgstr ""
 
 #: ideascube/conf/azraq.py:28
 msgid "Book Club"
-msgstr ""
+msgstr "Club livres"
 
 #: ideascube/conf/azraq.py:29
 msgid "Conflict Resolution Training"
-msgstr ""
+msgstr "Formation à la résolution de conflit"
 
 #: ideascube/conf/azraq.py:30
 msgid "Coping Skills and Mechanisms Training"
@@ -202,7 +203,7 @@ msgstr ""
 
 #: ideascube/conf/azraq.py:31
 msgid "EDRAAK"
-msgstr ""
+msgstr "EDRAAK"
 
 #: ideascube/conf/azraq.py:32
 msgid "Emotional intelligence Training"
@@ -276,92 +277,92 @@ msgstr ""
 msgid "World Mental Health Day"
 msgstr ""
 
-#: ideascube/conf/base.py:174
+#: ideascube/conf/base.py:181
 msgid "the camp"
 msgstr "le camp"
 
-#: ideascube/conf/base.py:192
+#: ideascube/conf/base.py:199
 msgid "Basic informations"
 msgstr ""
 
-#: ideascube/conf/base.py:204 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:211 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: ideascube/conf/base.py:205
+#: ideascube/conf/base.py:212
 msgid "Create, remove or modify users."
 msgstr "Créer, supprimer et modifier les utilisateurs."
 
-#: ideascube/conf/base.py:212
+#: ideascube/conf/base.py:219
 msgid "Entries"
 msgstr "Entrées"
 
-#: ideascube/conf/base.py:213
+#: ideascube/conf/base.py:220
 msgid "Manage user entries."
 msgstr "Gérer les entrées"
 
-#: ideascube/conf/base.py:220
+#: ideascube/conf/base.py:227
 #: ideascube/monitoring/templates/monitoring/stock.html:5
 msgid "Stock"
 msgstr "Stock"
 
-#: ideascube/conf/base.py:221
+#: ideascube/conf/base.py:228
 msgid "Manage stock."
 msgstr "Gérer le stock"
 
-#: ideascube/conf/base.py:228
+#: ideascube/conf/base.py:235
 msgid "Loans"
 msgstr "Prêts"
 
-#: ideascube/conf/base.py:229
+#: ideascube/conf/base.py:236
 msgid "Manage loans."
 msgstr "Gérer les prêts"
 
-#: ideascube/conf/base.py:236
+#: ideascube/conf/base.py:243
 msgid "Stop/Restart"
 msgstr "Stopper/redémarrer"
 
-#: ideascube/conf/base.py:237
+#: ideascube/conf/base.py:244
 msgid "Stop or restart the server."
 msgstr "Stopper ou redémarrer le serveur"
 
-#: ideascube/conf/base.py:244
+#: ideascube/conf/base.py:251
 msgid "Backups"
 msgstr "Sauvegardes"
 
-#: ideascube/conf/base.py:245
+#: ideascube/conf/base.py:252
 msgid "Create, restore, download, upload backups."
 msgstr "Créer, restaurer, télécharger, uploader des sauvegardes."
 
-#: ideascube/conf/base.py:252
+#: ideascube/conf/base.py:259
 msgid "Wi-Fi"
 msgstr "Wifi"
 
-#: ideascube/conf/base.py:253
+#: ideascube/conf/base.py:260
 msgid "Manage Wi-Fi connections."
 msgstr "Gérer les connexions wifi"
 
-#: ideascube/conf/base.py:288
+#: ideascube/conf/base.py:295
 msgid "Python web server"
 msgstr ""
 
-#: ideascube/conf/base.py:289
+#: ideascube/conf/base.py:296
 msgid "Global proxy"
 msgstr "Proxy"
 
-#: ideascube/conf/base.py:292
+#: ideascube/conf/base.py:299
 msgid "Daemon which provides KhanAcademy on lan"
 msgstr "Service pour lancer la Khan Academy"
 
-#: ideascube/conf/base.py:295
+#: ideascube/conf/base.py:302
 msgid "Daemon which provides Wikipedia on lan"
 msgstr "Service permettant d'avoir Wikipedia en local"
 
-#: ideascube/conf/base.py:297
+#: ideascube/conf/base.py:304
 msgid "Daemon which provides Gutenberg on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:299
+#: ideascube/conf/base.py:306
 msgid "Daemon used for distant connexion to server"
 msgstr "Daemon utilisé pour la connexion distante au serveur"
 
@@ -378,7 +379,7 @@ msgstr "Dans la ville"
 
 #: ideascube/conf/idb_grc_eleonas.py:7
 msgid "camp"
-msgstr ""
+msgstr "camp"
 
 #: ideascube/conf/mapoon.py:7
 msgid "the community"
@@ -475,7 +476,7 @@ msgstr "Adultes - Comics"
 msgid "game"
 msgstr "jeux"
 
-#: ideascube/library/models.py:34 ideascube/mediacenter/models.py:47
+#: ideascube/library/models.py:34 ideascube/mediacenter/models.py:49
 msgid "other"
 msgstr "autre"
 
@@ -531,6 +532,8 @@ msgstr "Voir tous les livres"
 
 #: ideascube/library/templates/library/book_detail.html:10
 #: ideascube/library/templates/library/index.html:5
+#: ideascube/templates/ideascube/includes/cards/wikibooks.html:3
+#: ideascube/templates/ideascube/includes/cards/wikisource.html:3
 msgid "read"
 msgstr "lire"
 
@@ -695,35 +698,39 @@ msgstr "Aucune notice importée"
 msgid "You need to provide a file."
 msgstr "Vous devez fournir un fichier."
 
-#: ideascube/mediacenter/models.py:42
+#: ideascube/mediacenter/models.py:43
 msgid "sound"
 msgstr "son"
 
-#: ideascube/mediacenter/models.py:43
+#: ideascube/mediacenter/models.py:44
 msgid "video"
 msgstr "vidéo"
 
-#: ideascube/mediacenter/models.py:44
+#: ideascube/mediacenter/models.py:45
 msgid "pdf"
 msgstr "pdf"
 
-#: ideascube/mediacenter/models.py:46
+#: ideascube/mediacenter/models.py:47
 msgid "epub"
-msgstr ""
+msgstr "epub"
 
-#: ideascube/mediacenter/models.py:54
+#: ideascube/mediacenter/models.py:48
+msgid "app"
+msgstr "app"
+
+#: ideascube/mediacenter/models.py:56
 msgid "original"
 msgstr "original"
 
-#: ideascube/mediacenter/models.py:57
+#: ideascube/mediacenter/models.py:59
 msgid "preview"
 msgstr "prévisualisation"
 
-#: ideascube/mediacenter/models.py:61
+#: ideascube/mediacenter/models.py:63
 msgid "credit"
 msgstr "Crédits"
 
-#: ideascube/mediacenter/models.py:62
+#: ideascube/mediacenter/models.py:64
 msgid "type"
 msgstr "type"
 
@@ -773,11 +780,15 @@ msgid "New document"
 msgstr "Nouveau document"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:7
+#: ideascube/templates/ideascube/includes/cards/maps.html:3
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 #: ideascube/templates/ideascube/includes/cards/vikidia.html:3
+#: ideascube/templates/ideascube/includes/cards/vikidia.old.html:3
 #: ideascube/templates/ideascube/includes/cards/wikipedia.html:3
+#: ideascube/templates/ideascube/includes/cards/wikipedia.old.html:3
+#: ideascube/templates/ideascube/includes/cards/wikivoyage.html:3
 msgid "discover"
-msgstr ""
+msgstr "découvrir"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:7
 msgid "Medias Center"
@@ -846,7 +857,7 @@ msgstr "Sans profession"
 
 #: ideascube/models.py:148
 msgid "Profit profession"
-msgstr ""
+msgstr "Connaissance du persan"
 
 #: ideascube/models.py:149 ideascube/models.py:181
 #: ideascube/monitoring/models.py:64
@@ -1080,50 +1091,50 @@ msgstr "Connaissance du Français"
 msgid "Swahili knowledge"
 msgstr "Connaissance du Swahili"
 
-#: ideascube/monitoring/forms.py:17
+#: ideascube/monitoring/forms.py:24
 msgid "Enter user serials"
 msgstr "Entrer les serials d'utilisateurs"
 
-#: ideascube/monitoring/forms.py:22
+#: ideascube/monitoring/forms.py:29
 msgid "Enter a activity name if missing on the list"
 msgstr "Entrez un nom d'activité si absent de la liste"
 
-#: ideascube/monitoring/forms.py:24
+#: ideascube/monitoring/forms.py:31
 msgid "Partner involved in activity"
 msgstr "Partenaire impliqué dans l'activité"
 
-#: ideascube/monitoring/forms.py:33
+#: ideascube/monitoring/forms.py:40
 msgid "Missing module name"
 msgstr "Nom du module manquant"
 
-#: ideascube/monitoring/forms.py:71
+#: ideascube/monitoring/forms.py:75
 msgid "Enter a bar code"
 msgstr "Entrer un code-barre"
 
-#: ideascube/monitoring/forms.py:79 ideascube/monitoring/forms.py:106
+#: ideascube/monitoring/forms.py:83 ideascube/monitoring/forms.py:110
 #, python-brace-format
 msgid "Bar code {barcode} not found"
 msgstr "Code-barre {barcode} non trouvé"
 
-#: ideascube/monitoring/forms.py:91 ideascube/monitoring/forms.py:127
+#: ideascube/monitoring/forms.py:95 ideascube/monitoring/forms.py:131
 msgid "Enter an item barcode"
 msgstr "Entrer un code-barre d'item"
 
-#: ideascube/monitoring/forms.py:93
+#: ideascube/monitoring/forms.py:97
 msgid "Enter a user serial"
 msgstr "Entrer un serial d'utilisateur"
 
-#: ideascube/monitoring/forms.py:100
+#: ideascube/monitoring/forms.py:104
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
 msgstr "L'item avec le code-barre {barcode} est déjà prété."
 
-#: ideascube/monitoring/forms.py:116
+#: ideascube/monitoring/forms.py:120
 #, python-brace-format
 msgid "Serial {serial} not found"
 msgstr "Serial {serial} non trouvé"
 
-#: ideascube/monitoring/forms.py:134
+#: ideascube/monitoring/forms.py:138
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
 msgstr "L'item avec le code-barre {barcode} n'est pas prété."
@@ -1346,7 +1357,7 @@ msgstr "Modifier cet exemplaire"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:25
 msgid "Start inventory"
-msgstr ""
+msgstr "Commencer un inventaire"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:28
 msgid "Inventories"
@@ -1657,7 +1668,7 @@ msgstr "Clé wifi invalide"
 #: ideascube/serveradmin/wifi.py:141
 #, python-format
 msgid "Failed to connect to %s"
-msgstr ""
+msgstr "Impossible de se connecter à %s"
 
 #: ideascube/serveradmin/wifi.py:214
 msgid "Wi-Fi hardware is disabled"
@@ -1688,6 +1699,11 @@ msgstr "par"
 msgid "one book at random"
 msgstr "un livre au hasard"
 
+#: ideascube/templates/ideascube/includes/cards/_lang_list.html:5
+#, python-format
+msgid "Go to %(name)s"
+msgstr "Aller à %(name)s"
+
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:3
 msgid "App Inventor"
 msgstr "App Inventor"
@@ -1700,6 +1716,10 @@ msgstr "Créez votre propre application pour Android."
 msgid "Browse blog posts."
 msgstr "Parcourir les posts de blog"
 
+#: ideascube/templates/ideascube/includes/cards/blog.html:6
+msgid "Go to the blog"
+msgstr ""
+
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:3
 msgid "BSF Campus"
 msgstr "BSF Campus"
@@ -1708,21 +1728,33 @@ msgstr "BSF Campus"
 msgid "Renforcer les capacités des bibliothèques."
 msgstr "Renforcer les capacités des bibliothèques."
 
-#: ideascube/templates/ideascube/includes/cards/cpassorcier.html:3
+#: ideascube/templates/ideascube/includes/cards/cest-pas-sorcier.html:3
+#: ideascube/templates/ideascube/includes/cards/cpassorcier.old.html:3
 msgid "C'est pas sorcier"
 msgstr "C'est pas sorcier"
 
-#: ideascube/templates/ideascube/includes/cards/cpassorcier.html:4
+#: ideascube/templates/ideascube/includes/cards/cest-pas-sorcier.html:4
+#: ideascube/templates/ideascube/includes/cards/cpassorcier.old.html:4
 msgid "Le magazine de vulgarisation scientifique."
 msgstr "Le magazine de vulgarisation scientifique."
 
+#: ideascube/templates/ideascube/includes/cards/cest-pas-sorcier.html:5
+msgid "Go to C'est pas sorcier"
+msgstr "Aller à C'est pas sorcier"
+
 #: ideascube/templates/ideascube/includes/cards/gutenberg.html:3
+#: ideascube/templates/ideascube/includes/cards/gutenberg.old.html:3
 msgid "Gutenberg project"
 msgstr "Projet Gutenberg"
 
 #: ideascube/templates/ideascube/includes/cards/gutenberg.html:4
+#: ideascube/templates/ideascube/includes/cards/gutenberg.old.html:4
 msgid "Read and download e-books."
 msgstr "Lire et télécharger des e-books."
+
+#: ideascube/templates/ideascube/includes/cards/gutenberg.html:5
+msgid "Go to Gutenberg"
+msgstr "Aller à Gutenberg"
 
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:3
 msgid "Khan Academy"
@@ -1731,6 +1763,10 @@ msgstr "Khan Academy"
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:4
 msgid "Learn with videos and exercises."
 msgstr "Apprendre grâce à des vidéos et des exercices "
+
+#: ideascube/templates/ideascube/includes/cards/khanacademy.html:5
+msgid "Go to Khan Academy"
+msgstr "Aller à la Khan Academy"
 
 #: ideascube/templates/ideascube/includes/cards/koombookedu.html:3
 msgid "KoomBook EDU"
@@ -1745,9 +1781,21 @@ msgstr "Plateforme d'e-learning ouverte aux <br /> étudiants et aux professeurs
 msgid "Browse books."
 msgstr "Parcourir les livres."
 
+#: ideascube/templates/ideascube/includes/cards/maps.html:3
+msgid "maps"
+msgstr "cartes"
+
+#: ideascube/templates/ideascube/includes/cards/maps.html:4
+msgid "Browse maps of the area."
+msgstr "Visualiser les cartes."
+
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:5
 msgid "Browse videos, sounds, images, pdf…"
 msgstr "Parcourir les vidéos, sons, images, pdf..."
+
+#: ideascube/templates/ideascube/includes/cards/mediacenter.html:6
+msgid "Go to the medias center"
+msgstr "Aller au Medias Center"
 
 #: ideascube/templates/ideascube/includes/cards/software.html:3
 msgid "Free software"
@@ -1758,32 +1806,49 @@ msgid "Free software for windows."
 msgstr "Logiciel libre pour windows"
 
 #: ideascube/templates/ideascube/includes/cards/ted.html:3
+#: ideascube/templates/ideascube/includes/cards/ted.old.html:3
 msgid "Ted Talks"
 msgstr "Ted Talks"
 
 #: ideascube/templates/ideascube/includes/cards/ted.html:4
+#: ideascube/templates/ideascube/includes/cards/ted.old.html:4
 msgid "Set of videos conference on innovation."
 msgstr "Ensemble de conférences vidéo portant sur l'innovation"
 
 #: ideascube/templates/ideascube/includes/cards/ubuntudoc.html:3
+#: ideascube/templates/ideascube/includes/cards/ubuntudoc.old.html:3
 msgid "Ubuntu documentation"
 msgstr "Documentation d'Ubuntu"
 
-#: ideascube/templates/ideascube/includes/cards/ubuntudoc.html:4
+#: ideascube/templates/ideascube/includes/cards/ubuntudoc.html:5
+msgid "Go to Ubuntu documentation"
+msgstr "Aller à la documentation Ubuntu"
+
+#: ideascube/templates/ideascube/includes/cards/ubuntudoc.old.html:4
 msgid "La documentation du célèbre système d'exploitation Ubuntu."
 msgstr "La documentation du célèbre système d'exploitation Ubuntu."
 
-#: ideascube/templates/ideascube/includes/cards/vikidia.html:3
+#: ideascube/templates/ideascube/includes/cards/universcience.html:3
+msgid "Universcience"
+msgstr "Universcience"
+
+#: ideascube/templates/ideascube/includes/cards/universcience.html:5
+msgid "Go to Universcience"
+msgstr "Aller à Universcience"
+
+#: ideascube/templates/ideascube/includes/cards/vikidia.html:2
+#: ideascube/templates/ideascube/includes/cards/vikidia.old.html:3
 msgid "Vikidia"
 msgstr "Vikidia"
 
 #: ideascube/templates/ideascube/includes/cards/vikidia.html:4
+#: ideascube/templates/ideascube/includes/cards/vikidia.old.html:4
 msgid "Browse the encyclopedia for children."
 msgstr "Parcourir l'encyclopédie pour enfants."
 
 #: ideascube/templates/ideascube/includes/cards/w2eu.html:3
 msgid "info"
-msgstr ""
+msgstr "info"
 
 #: ideascube/templates/ideascube/includes/cards/w2eu.html:3
 msgid "w2eu"
@@ -1793,21 +1858,68 @@ msgstr ""
 msgid "Independent information for refugees and migrants coming to Europe."
 msgstr ""
 
-#: ideascube/templates/ideascube/includes/cards/wikipedia.html:3
-msgid "wikipedia"
-msgstr "Wikipédia"
+#: ideascube/templates/ideascube/includes/cards/wikibooks.html:2
+msgid "Wikibooks"
+msgstr "Wikibooks"
+
+#: ideascube/templates/ideascube/includes/cards/wikibooks.html:4
+msgid "Open books for an open world."
+msgstr "Des livres libres pour un monde libre."
+
+#: ideascube/templates/ideascube/includes/cards/wikipedia.html:2
+msgid "Wikipedia"
+msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/wikipedia.html:4
+#: ideascube/templates/ideascube/includes/cards/wikipedia.old.html:4
 msgid "Browse the free encyclopedia."
 msgstr "Parcourir l'encyclopédie libre"
 
-#: ideascube/templates/ideascube/includes/cards/wikisource.html:3
+#: ideascube/templates/ideascube/includes/cards/wikipedia.old.html:3
+msgid "wikipedia"
+msgstr "Wikipédia"
+
+#: ideascube/templates/ideascube/includes/cards/wikisource.html:2
+#: ideascube/templates/ideascube/includes/cards/wikisource.old.html:3
 msgid "Wikisource"
 msgstr "Wikisource"
 
 #: ideascube/templates/ideascube/includes/cards/wikisource.html:4
+msgid "The free library."
+msgstr "La bibliothèque libre."
+
+#: ideascube/templates/ideascube/includes/cards/wikisource.old.html:4
 msgid "Bibliothèque de textes libres et gratuits."
 msgstr "Bibliothèque de textes libres et gratuits."
+
+#: ideascube/templates/ideascube/includes/cards/wikiversity.html:2
+msgid "Wikiversity"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/wikiversity.html:3
+#: ideascube/templates/ideascube/includes/cards/wiktionary.html:3
+msgid "learn"
+msgstr "apprendre"
+
+#: ideascube/templates/ideascube/includes/cards/wikiversity.html:4
+msgid "Open learning community."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/wikivoyage.html:2
+msgid "Wikivoyage"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/wikivoyage.html:4
+msgid "The free worldwide travel guide."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/wiktionary.html:2
+msgid "Wiktionary"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/wiktionary.html:4
+msgid "The free dictionary."
+msgstr "Le dictionnaire libre."
 
 #: ideascube/templates/ideascube/includes/document_card.html:4
 msgid "medias center"
