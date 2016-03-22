@@ -562,6 +562,9 @@ def test_nginx_commits_after_remove(tmpdir, settings, staticsite_path,
     assert manager().get_service.call_count == 2
     manager().restart.assert_not_called()
 
+pytestmark = pytest.mark.django_db
+from ideascube.mediacenter.models import Document
+
 def test_mediacenter_installs_zippedmedia(tmpdir, settings, zippedmedia_path):
     from ideascube.serveradmin.catalog import MediaCenter, ZippedMedia
 
@@ -579,6 +582,13 @@ def test_mediacenter_installs_zippedmedia(tmpdir, settings, zippedmedia_path):
     manifest = root.join('manifest.yml')
     assert manifest.exists()
 
+    assert Document.objects.count() == 3
+    video = Document.objects.get(title='my video')
+    assert video.summary == 'my video summary'
+    assert video.kind == Document.VIDEO
+    assert Document.objects.search('summary').count() == 3
+    assert Document.objects.filter(package_id='test-media').count() == 3
+
 
 def test_mediacenter_removes_zippedmedia(tmpdir, settings, zippedmedia_path):
     from ideascube.serveradmin.catalog import MediaCenter, ZippedMedia
@@ -591,55 +601,13 @@ def test_mediacenter_removes_zippedmedia(tmpdir, settings, zippedmedia_path):
     h = MediaCenter()
     h.install(p, zippedmedia_path.strpath)
 
-    h.remove(p)
-
-    root = tmpdir.join('test-media')
-    assert root.check(exists=False)
-
-pytestmark = pytest.mark.django_db
-from ideascube.mediacenter.models import Document
-
-def test_mediacenter_commits_after_install(tmpdir, settings, zippedmedia_path,
-                                     mocker, monkeypatch):
-    from ideascube.serveradmin.catalog import MediaCenter, ZippedMedia
-
-    settings.CATALOG_MEDIACENTER_INSTALL_DIR = tmpdir.strpath
-    monkeypatch.setattr(MediaCenter, 'root', tmpdir.strpath)
-
-    p = ZippedMedia('test-media', {
-        'url': 'https://foo.fr/test-media.zip'})
-    h = MediaCenter()
-    h.install(p, zippedmedia_path.strpath)
-    h.commit()
-
-    assert Document.objects.count() == 3
-    video = Document.objects.get(title='my video')
-    assert video.summary == 'my video summary'
-    assert video.kind == Document.VIDEO
-    assert Document.objects.search('summary').count() == 3
-    assert Document.objects.filter(package_id='test-media').count() == 3
-
-
-def test_mediacenter_commits_after_remove(tmpdir, settings, zippedmedia_path,
-                                    mocker, monkeypatch):
-    from ideascube.serveradmin.catalog import MediaCenter, ZippedMedia
-
-    settings.CATALOG_MEDIACENTER_INSTALL_DIR = tmpdir.strpath
-    monkeypatch.setattr(MediaCenter, 'root', tmpdir.strpath)
-
-    p = ZippedMedia('test-media', {
-        'url': 'https://foo.fr/test-media.zip'})
-    h = MediaCenter()
-    h.install(p, zippedmedia_path.strpath)
-    h.commit()
-    
     assert Document.objects.count() == 3
 
     h.remove(p)
-    h.commit()
 
     assert Document.objects.count() == 0
-
+    root = tmpdir.join('test-media')
+    assert root.check(exists=False)
 
 
 def test_catalog_no_remote(tmpdir, settings):

@@ -186,96 +186,7 @@ server {{
             printerr(e)
 
 class MediaCenter(Handler):
-    def commit(self):
-        for pkg in self._removed:
-            self.remove_pkg(pkg)
-        for pkg in self._installed:
-            self.install_pkg(pkg)
-        super().commit()
-
-    def _install_media(self, media_info, install_dir, package_id):
-        #ensure that mandatory fields are set
-        for entry in ('title', 'summary', 'path', 'credits'):
-            if entry not in media_info:
-                raise InvalidPackageContent('Missing {} in {}'.format(entry, media_info))
-
-        files = {'original': None, 'preview': None}
-
-        title = smart_truncate(media_info['title'])
-
-        lang = media_info.get('lang', settings.LANGUAGE_CODE)
-
-        kind = media_info.get('kind')
-        if not kind or not hasattr(Document, kind.upper()):
-            content_type, _ = mimetypes.guess_type(original)
-            kind = guess_kind_from_content_type(content_type) or Document.OTHER
-
-        instance = Document.objects.filter(title=title, kind=kind).last()
-        if instance:
-            raise InvalidPackageContent('Document {} already exists'.format(title))
-
-        metadata = {
-            'title'      : title,
-            'summary'    : media_info['summary'],
-            'credits'    : media_info['credits'],
-            'tags'       : media_info.get('tags'),
-            'lang'       : lang,
-            'kind'       : kind,
-            'package_id' : package_id
-        }
-
-        o, p = None, None
-        try:
-            original = media_info['path']
-            try:
-                o = Path(install_dir, original).open('rb')
-                files['original'] = File(o, name=original)
-            except OSError as e:
-                raise InvalidPackageContent('Cannot open path {}. Error is {}'.format(path, e))
-
-            if 'preview' in media_info:
-                preview = media_info['preview']
-                try:
-                    p = Path(install_dir, preview).open('rb')
-                    files['preview'] = File(p, name=preview)
-                except OSError:
-                    pass
-
-            self._save_media(metadata, files)
-        finally:
-            # close opened file whatever happen
-            [f.close() for f in (o, p) if f]
-
-    def _save_media(self, metadata, files):
-        form = DocumentForm(data=metadata, files=files, instance=None)
-
-        if form.is_valid():
-            doc = form.save()
-            print("Media", doc, "has been added to database.")
-        else:
-            lerr = ["Some values are not valid :"]
-            for field, error in form.errors.items():
-                lerr.append(" - {}: {}".format(field, error.as_text()))
-            raise InvalidPackageContent("\n".join(lerr))
-
-    def install_pkg(self, pkg):
-        print('Adding medias to mediacenter database.')
-        root = pkg.get_root_dir(self._install_dir)
-        manifestfile = Path(root, 'manifest.yml')
-        with manifestfile.open('r') as m:
-            manifest = yaml.safe_load(m.read())
-
-        for media in manifest['medias']:
-            try:
-                self._install_media(media, root, pkg.id)
-            except:
-                # What to do here ? revert/stop/continue ?
-                raise # easiest solution
-
-    def remove_pkg(self, pkg):
-        #Easy part here. Just delete document from package
-        Document.objects.filter(package_id = pkg.id).delete()
-
+    pass
 
 class MetaRegistry(type):
     def __new__(mcs, name, bases, attrs, **kwargs):
@@ -390,6 +301,91 @@ class StaticSite(SimpleZipPackage):
 class ZippedMedia(SimpleZipPackage):
     typename = 'zipped-media'
     handler = MediaCenter
+
+    def remove(self, install_dir):
+        # Easy part here. Just delete documents from the package.
+        Document.objects.filter(package_id=self.id).delete()
+        super().remove(install_dir)
+
+    def install(self, download_path, install_dir):
+        super().install(download_path, install_dir)
+        print('Adding medias to mediacenter database.')
+        root = self.get_root_dir(install_dir)
+        manifestfile = Path(root, 'manifest.yml')
+        with manifestfile.open('r') as m:
+            manifest = yaml.safe_load(m.read())
+
+        for media in manifest['medias']:
+            try:
+                self._install_media(media, root)
+            except:
+                # What to do here ? revert/stop/continue ?
+                raise # easiest solution
+
+    def _install_media(self, media_info, install_dir):
+        # Ensure that mandatory fields are set.
+        for entry in ('title', 'summary', 'path', 'credits'):
+            if entry not in media_info:
+                raise InvalidPackageContent('Missing {} in {}'.format(entry, media_info))
+
+        files = {'original': None, 'preview': None}
+
+        title = smart_truncate(media_info['title'])
+
+        lang = media_info.get('lang', settings.LANGUAGE_CODE)
+
+        kind = media_info.get('kind')
+        if not kind or not hasattr(Document, kind.upper()):
+            content_type, _ = mimetypes.guess_type(original)
+            kind = guess_kind_from_content_type(content_type) or Document.OTHER
+
+        instance = Document.objects.filter(title=title, kind=kind).last()
+        if instance:
+            raise InvalidPackageContent('Document {} already exists'.format(title))
+
+        metadata = {
+            'title'      : title,
+            'summary'    : media_info['summary'],
+            'credits'    : media_info['credits'],
+            'tags'       : media_info.get('tags'),
+            'lang'       : lang,
+            'kind'       : kind,
+            'package_id' : self.id
+        }
+
+        o, p = None, None
+        try:
+            original = media_info['path']
+            try:
+                o = Path(install_dir, original).open('rb')
+                files['original'] = File(o, name=original)
+            except OSError as e:
+                raise InvalidPackageContent('Cannot open path {}. Error is {}'.format(path, e))
+
+            if 'preview' in media_info:
+                preview = media_info['preview']
+                try:
+                    p = Path(install_dir, preview).open('rb')
+                    files['preview'] = File(p, name=preview)
+                except OSError:
+                    pass
+
+            self._save_media(metadata, files)
+        finally:
+            # Close opened files whatever happen.
+            [f.close() for f in (o, p) if f]
+
+    def _save_media(self, metadata, files):
+        form = DocumentForm(data=metadata, files=files, instance=None)
+
+        if form.is_valid():
+            doc = form.save()
+            print("Media", doc, "has been added to database.")
+        else:
+            lerr = ["Some values are not valid :"]
+            for field, error in form.errors.items():
+                lerr.append(" - {}: {}".format(field, error.as_text()))
+            raise InvalidPackageContent("\n".join(lerr))
 
 
 class Bar(ProgressBar):
