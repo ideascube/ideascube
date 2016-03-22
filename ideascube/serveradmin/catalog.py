@@ -261,9 +261,11 @@ class ZippedZim(Package):
 
         for path in glob(os.path.join(datadir, '*', '{}*'.format(zimname))):
             new = path.replace(zimname, '{0.id}.zim'.format(self))
-            if Path(new).exists():
+            try:
+                os.rename(path, new)
+            except OSError:
                 rm(new)
-            os.rename(path, new)
+                os.rename(path, new)
 
     def remove(self, install_dir):
         zimname = '{0.id}.zim*'.format(self)
