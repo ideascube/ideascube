@@ -1,3 +1,16 @@
+ideascube (0.9.1) unstable; urgency=low
+
+  * Adapted Kiwix cards for package manager (cf #281)
+  * Fixed "log in" link not tracking source page (cf #332)
+  * Added Document kind "app" for various applications (cf #309)
+  * Added progressist for package manager progress bar
+  * Added progress bar in import_medias management command (cf #286)
+  * Added Kirundi language
+  * Display package manager sizes as human readable
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 22 Mar 2016 17:03:00 +0100
+
+
 ideascube (0.9.0) unstable; urgency=low
 
   * Added packages manager from command line (cf #281)
