@@ -35,7 +35,7 @@ class Document(SearchMixin, TimeStampedModel):
     EPUB = 'epub'
     TEXT = 'text'
     AUDIO = 'audio'
-    SOFTWARE = 'software'
+    APP = 'app'
     OTHER = 'other'
 
     KIND_CHOICES = (
@@ -45,7 +45,7 @@ class Document(SearchMixin, TimeStampedModel):
         (PDF, _('pdf')),
         (TEXT, _('text')),
         (EPUB, _('epub')),
-        (SOFTWARE, _('software')),
+        (APP, _('app')),
         (OTHER, _('other')),
     )
 

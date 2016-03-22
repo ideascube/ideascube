@@ -116,6 +116,20 @@ def test_can_create_document(staffapp):
     assert Document.objects.count() == 1
 
 
+def test_can_create_app_document(staffapp):
+    assert not Document.objects.count()
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
+    form['title'] = 'my document title'
+    form['summary'] = 'my document summary'
+    form['credits'] = 'my document credits'
+    form['kind'] = Document.APP
+    form['original'] = Upload('soft.exe', b'xxxxxx',
+                              'application/x-msdos-program')
+    form.submit().follow()
+    assert Document.objects.count() == 1
+
+
 def test_can_create_document_without_lang(staffapp):
     assert not Document.objects.count()
     url = reverse('mediacenter:document_create')
