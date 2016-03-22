@@ -325,35 +325,26 @@ class ZippedMedia(SimpleZipPackage):
                 continue
 
     def _install_media(self, media_info, install_dir):
-        # Ensure that mandatory fields are set.
-        for entry in ('title', 'summary', 'path', 'credits'):
-            if entry not in media_info:
-                raise InvalidPackageContent('Missing {} in {}'.format(entry, media_info))
-
         files = {'original': None, 'preview': None}
 
-        title = smart_truncate(media_info['title'])
+        try:
+            media_info['title'] = title = smart_truncate(media_info['title'])
+        except KeyError:
+            raise InvalidPackageContent('Missing {} in {}'.format(entry, media_info))
 
-        lang = media_info.get('lang', settings.LANGUAGE_CODE)
+        if not 'lang' in media_info:
+            media_info['lang'] = settings.LANGUAGE_CODE
 
         kind = media_info.get('kind')
         if not kind or not hasattr(Document, kind.upper()):
             content_type, _ = mimetypes.guess_type(original)
-            kind = guess_kind_from_content_type(content_type) or Document.OTHER
+            media_info['kind'] = guess_kind_from_content_type(content_type) or Document.OTHER
 
         instance = Document.objects.filter(title=title, kind=kind).last()
         if instance:
             raise InvalidPackageContent('Document {} already exists'.format(title))
 
-        metadata = {
-            'title'      : title,
-            'summary'    : media_info['summary'],
-            'credits'    : media_info['credits'],
-            'tags'       : media_info.get('tags'),
-            'lang'       : lang,
-            'kind'       : kind,
-            'package_id' : self.id
-        }
+        media_info['package_id'] = self.id
 
         o, p = None, None
         try:
@@ -372,7 +363,7 @@ class ZippedMedia(SimpleZipPackage):
                 except OSError:
                     pass
 
-            self._save_media(metadata, files)
+            self._save_media(media_info, files)
         finally:
             # Close opened files whatever happen.
             [f.close() for f in (o, p) if f]
