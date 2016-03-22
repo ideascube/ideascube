@@ -21,7 +21,10 @@
     {% if user.is_staff %}
         {% if document.package_id %}
             <span class="card admin">
-               {% trans 'Document installed by a package. Cannot edit or delete this document.' %}
+               {% trans 'Cannot edit or delete this document.' %}
+               {% trans 'It is installed by the' %}
+               {{ document.package_id }}
+               {% trans 'package.' %}
             </span>
         {% else %}
             <ul class="card tinted admin">
