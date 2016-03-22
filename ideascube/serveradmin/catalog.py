@@ -228,9 +228,10 @@ class Package(metaclass=MetaRegistry):
 
     @property
     def filesize(self):
-        if isinstance(self.size, int):
-            return filesizeformat(self.size)
-        return self.size
+        try:
+            return filesizeformat(int(self.size))
+        except ValueError:
+            return self.size
 
     def install(self, download_path, install_dir):
         raise NotImplementedError('Subclasses must implement this method')
