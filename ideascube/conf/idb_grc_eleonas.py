@@ -27,12 +27,14 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'wikipedia',
+        'languages': ['ps', 'ar', 'en', 'ur', 'fa']
     },
     {
         'id': 'khanacademy',
     },
     {
         'id': 'gutenberg',
+        'lang': 'mul',
     },
     {
         'id': 'w2eu',

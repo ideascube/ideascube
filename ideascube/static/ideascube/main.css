@@ -519,6 +519,18 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card.wikisource {
     background-image: url('./img/cards/wikisource.png');
 }
+.card.wikibooks {
+    background-image: url('./img/cards/wikibooks.png');
+}
+.card.wikivoyage {
+    background-image: url('./img/cards/wikivoyage.png');
+}
+.card.wiktionary {
+    background-image: url('./img/cards/wiktionary.png');
+}
+.card.wikiversity {
+    background-image: url('./img/cards/wikiversity.png');
+}
 .card.appinventor {
     background-image: url('./img/cards/appinventor.jpeg');
 }
@@ -530,15 +542,21 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 }
 .card.cpassorcier {
     background-image: url('./img/cards/cpassorcier.png');
+    background-position: top 10px right 5px;
 }
 .card.gutenberg {
     background-image: url('./img/cards/gutenberg.jpeg');
 }
 .card.ted {
-    background-image: url('./img/cards/ted.jpg');
+    background-image: url('./img/cards/ted.png');
+    background-position: top 24px right 5px;
 }
 .card.ubuntudoc {
     background-image: url('./img/cards/ubuntudoc.jpeg');
+    padding-right: 100px;
+}
+.card.universcience {
+    background-image: url('./img/cards/universcience.png');
 }
 .card.vikidia {
     background-image: url('./img/cards/vikidia.png');
@@ -584,7 +602,7 @@ html[dir='rtl'] .card img {
     border: 1px solid #eee;
     border-radius: 2px;
     background-repeat: no-repeat;
-    background-position: center right;
+    background-position: center right 5px;
 }
 html[dir='rtl'] .tinted {
     background-position: center left;
@@ -633,6 +651,15 @@ html[dir='rtl'] .card.book img {
     color: #fff;
     padding: 0 5px;
     text-decoration: none;
+}
+.subnav {
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+    padding-right: 5px;
+}
+.subnav:before {
+    content: '▪';
+    padding-right: 5px;
 }
 .learn {
     background-color: #19B5FE;

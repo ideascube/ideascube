@@ -9,6 +9,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'koombookedu',
     },
     {
-        'id': 'wikipedia',
+        'id': 'wikipedia.old',
     },
 ]
