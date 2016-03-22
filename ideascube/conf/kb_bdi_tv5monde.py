@@ -23,7 +23,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'khanacademy',
     },
     {
-        'id': 'cpassorcier',
+        'id': 'cest-pas-sorcier',
     },
     {
         'id': 'wikisource',
