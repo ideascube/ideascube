@@ -106,6 +106,17 @@ def test_login_page_should_not_log_in_user_with_incorrect_POST(client, user):
     assert not response.context['user'].is_authenticated()
 
 
+def test_login_from_link_should_redirect_to_previous(app, user, staffuser):
+    # Loading staffuser fixture so we don't fail into welcome_staff page.
+    mediacenter = app.get(reverse('mediacenter:index'))
+    login = mediacenter.click('log in')
+    form = login.forms['login']
+    form['username'] = user.serial
+    form['password'] = 'password'
+    resp = form.submit()
+    assert resp['Location'].endswith(reverse('mediacenter:index'))
+
+
 def test_user_list_page_should_not_be_accessible_to_anonymous(app):
     assert app.get(reverse('user_list'), status=302)
 

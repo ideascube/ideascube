@@ -6,7 +6,7 @@
       {% if user.is_authenticated %}
         <a href="{% url 'logout' %}" id="logout">{% blocktrans with user=user %}log out from {{ user }}{% endblocktrans %}{% if user.is_staff %} <i class="fa fa-user-secret"></i>{% endif %}</a></li>
       {% else %}
-        <a href="{% url 'login' %}" class="mwide tthird">{% trans "log in" %}</a>
+        <a href="{% url 'login' %}?next={{ request.path }}" class="mwide tthird">{% trans "log in" %}</a>
       {% endif %}
     </section>
 </header>
