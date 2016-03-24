@@ -28,14 +28,14 @@
     <div class="card tinted">
         <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
         {% for kind, label in view.model.KIND_CHOICES %}
-            <a href="{% add_get kind=kind %}">{{ label }}</a>
+            <a href="{% add_qs kind=kind %}">{{ label }}</a>
             {% if not forloop.last %}⚫{% endif  %}
         {% endfor %}
     </div>
     <div class="card tinted">
         <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by lang' %}</h4>
         {% for lang, label in LANGUAGES %}
-            <a href="{% add_get lang=lang %}">{{ label }}</a>
+            <a href="{% add_qs lang=lang %}">{{ label }}</a>
             {% if not forloop.last %}⚫{% endif  %}
         {% endfor %}
     </div>

@@ -5,7 +5,7 @@
     {% for tag in tags %}
         {% if tag.slug %}
             {% if use_get %}
-                <a href="{% url url %}{% add_get tags=tag.slug %}">
+                <a href="{% url url %}{% add_qs tags=tag.slug %}">
             {% else %}
                 <a href="{% url url tag=tag.slug %}">
             {% endif %}

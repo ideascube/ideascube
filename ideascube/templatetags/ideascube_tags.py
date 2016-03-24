@@ -132,34 +132,18 @@ def paginate(request, **kwargs):
     return '?{}'.format(get.urlencode())
 
 
-class AddGetParameter(template.Node):
-    def __init__(self, values):
-        self.values = values
-
-    def render(self, context):
-        req = template.resolve_variable('request',context)
-        params = req.GET.copy()
-        for key, value in self.values.items():
-            if key.endswith('s'):
-                for v in value:
-                    v = template.Variable(v).resolve(context)
+@register.simple_tag(takes_context=True)
+def add_qs(context, **kwargs):
+    req = template.resolve_variable('request',context)
+    params = req.GET.copy()
+    for key, value in kwargs.items():
+        if key.endswith('s'):
+            for v in value.split(','):
+                if v not in params.getlist(key):
                     params.appendlist(key, v)
-            else:
-                params[key] = template.Variable(value).resolve(context)
-        return '?%s' %  params.urlencode()
-
-
-@register.tag()
-def add_get(parser, token):
-    contents = token.split_contents()[1]
-    pairs = contents.split(',')
-
-    values = {}
-    for pair in pairs:
-        k, v = pair.split('=', 1)
-        if k.endswith('s'):
-            values.setdefault(k, []).append(v)
         else:
-            values[k] = v
+            params[key] = value
+    return '?%s' %  params.urlencode()
 
-    return AddGetParameter(values)
+
+
