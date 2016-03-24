@@ -16,22 +16,6 @@ from ideascube.decorators import staff_member_required
 from .models import Document
 from .forms import DocumentForm
 
-
-class KindMixin(object):
-
-    def get_queryset(self):
-        qs = super(KindMixin, self).get_queryset()
-        kind = self.request.GET.get('kind')
-        if kind:
-            qs = qs.filter(kind=kind)
-        return qs
-
-    def get_context_data(self, **kwargs):
-        context = super(KindMixin, self).get_context_data(**kwargs)
-        context['kind'] = self.request.GET.get('kind')
-        return context
-
-
 class Index(ListView):
     model = Document
     template_name = 'mediacenter/index.html'
@@ -57,13 +41,6 @@ class Index(ListView):
         return qs
 
 index = Index.as_view()
-
-
-class ByTag(KindMixin, ByTagListView):
-    model = Document
-    template_name = 'mediacenter/by_tag.html'
-    paginate_by = 10
-by_tag = ByTag.as_view()
 
 
 class DocumentDetail(DetailView):

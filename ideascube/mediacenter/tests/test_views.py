@@ -3,7 +3,7 @@ import pytest
 from django.core.urlresolvers import reverse
 from webtest import Upload
 
-from ..views import Index, ByTag
+from ..views import Index
 from ..models import Document
 from .factories import DocumentFactory
 
@@ -201,16 +201,16 @@ def test_oembed_should_return_pdf_oembed_extract(app, pdf):
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = DocumentFactory(tags=['plane'])
     boat = DocumentFactory(tags=['boat'])
-    response = app.get(reverse('mediacenter:by_tag', kwargs={'tag': 'plane'}))
+    response = app.get(reverse('mediacenter:index'), {'tags': 'plane'})
     assert plane.title in response.content.decode()
     assert boat.title not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):
-    monkeypatch.setattr(ByTag, 'paginate_by', 2)
+    monkeypatch.setattr(Index, 'paginate_by', 2)
     DocumentFactory.create_batch(size=4, tags=['plane'])
-    url = reverse('mediacenter:by_tag', kwargs={'tag': 'plane'})
-    response = app.get(url)
+    url = reverse('mediacenter:index')
+    response = app.get(url, {'tags':'plane'})
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
