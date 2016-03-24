@@ -21,6 +21,24 @@ class SearchField(models.Field):
 SearchField.register_lookup(Match)
 
 
+class TagMatch(models.Lookup):
+    lookup_name = 'match'
+
+    def as_sql(self, qn, connection):
+        lhs, lhs_params = self.process_lhs(qn, connection)
+        rhs, rhs_params = self.process_rhs(qn, connection)
+        params = lhs_params + rhs_params
+        params = params[0]
+        out = '({0} LIKE {1})'.format(lhs, rhs)
+        out = ' AND '.join([out]*len(params))
+        out = '({})'.format(out)
+        return out, ['%|{}|%'.format(p) for p in params]
+
+
+class SearchTagField(models.Field):
+    pass
+SearchTagField.register_lookup(TagMatch)
+
 class SearchQuerySet(models.QuerySet):
     def order_by_relevancy(self):
         extra = {'relevancy': 'rank(matchinfo(idx))'}
@@ -34,6 +52,9 @@ class Search(models.Model):
     model_id = models.IntegerField()
     public = models.BooleanField(default=True)
     text = SearchField()
+    lang = models.Field()
+    kind = models.Field()
+    tags = SearchTagField()
 
     objects = SearchQuerySet.as_manager()
 
@@ -64,6 +85,18 @@ class SearchMixin(models.Model):
         return []
 
     @property
+    def index_lang(self):
+        return None
+
+    @property
+    def index_kind(self):
+        return None
+
+    @property
+    def index_tags(self):
+        return []
+
+    @property
     def index_public(self):
         return True
 
@@ -74,7 +107,14 @@ class SearchMixin(models.Model):
         if not self.is_indexable():
             return
         text = u" ".join([s for s in self.index_strings if s])
-        defaults = dict(text=text, public=self.index_public)
+        tags = u"|{}|".format(u"|".join(self.index_tags))
+        defaults = {
+          'text':text,
+          'public':self.index_public,
+          'lang': self.index_lang,
+          'kind': self.index_kind,
+          'tags': tags
+        }
         Search.objects.update_or_create(
             model=self.__class__.__name__,
             model_id=self.pk,
@@ -88,10 +128,17 @@ class SearchMixin(models.Model):
 
 
 class SearchableQuerySet(object):
-    def search(self, query, **kwargs):
-        kwargs['text__match'] = query
+    def search(self, query=None, kind=None, lang=None, tags=[], **kwargs):
         kwargs['model'] = self.model.__name__
-        ids = Search.ids(**kwargs)
+        if query:
+            kwargs['text__match'] = query
+        if kind:
+            kwargs['kind'] = kind
+        if lang:
+            kwargs['lang'] = lang
+        if tags:
+            kwargs['tags__match'] = tags
+        ids = Search.ids(**kwargs).distinct()
         return self.filter(pk__in=ids)
 
 
