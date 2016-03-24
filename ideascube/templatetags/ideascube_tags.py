@@ -6,6 +6,8 @@ from django.db.models import Count
 from django.db.models.fields import FieldDoesNotExist
 from django.utils.safestring import mark_safe
 from django.utils.translation.trans_real import language_code_prefix_re
+from django.utils.datastructures import MultiValueDict
+from django.http import QueryDict
 
 from taggit.models import Tag, ContentType
 
@@ -134,7 +136,7 @@ def paginate(request, **kwargs):
 
 @register.simple_tag(takes_context=True)
 def add_qs(context, **kwargs):
-    req = template.resolve_variable('request',context)
+    req = template.resolve_variable('request', context)
     params = req.GET.copy()
     for key, value in kwargs.items():
         if key.endswith('s'):
@@ -146,4 +148,21 @@ def add_qs(context, **kwargs):
     return '?%s' %  params.urlencode()
 
 
-
+@register.simple_tag(takes_context=True)
+def remove_qs(context, **kwargs):
+    req = template.resolve_variable('request', context)
+    existing = dict(req.GET.copy())
+    for key, value in kwargs.items():
+        if key.endswith('s'):
+            for v in value.split(','):
+                try:
+                    existing[key].remove(v)
+                except KeyError:
+                    pass
+        else:
+            existing[key].remove(value)
+        if not existing[key]:
+            del existing[key]
+    params = QueryDict(mutable=True)
+    params.update(MultiValueDict(existing))
+    return '?%s' %  params.urlencode()

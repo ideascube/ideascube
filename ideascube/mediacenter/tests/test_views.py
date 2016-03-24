@@ -78,6 +78,35 @@ def test_tags_link_should_update_querystring(app):
     assert {'lang':['en'], 'tags':['tag1', 'tag2']} == response.request.GET.dict_of_lists()
 
 
+def test_remove_filter_should_be_present(app):
+    response = app.get(reverse('mediacenter:index'), {'lang': 'en', 'q': 'foo', 'tags':['tag1', 'tag2'], 'kind': 'video'})
+
+    links = response.pyquery('a').filter(lambda i, elem: "filter English" in (elem.text or '') )
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),links[0].attrib['href']), status=200)
+    assert {'q': ['foo'], 'tags':['tag1', 'tag2'], 'kind': ['video']} == resp.request.GET.dict_of_lists()
+
+    links = response.pyquery('a').filter(lambda i, elem: "filter foo" in (elem.text or '') )
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),links[0].attrib['href']), status=200)
+    assert {'lang': ['en'], 'tags':['tag1', 'tag2'], 'kind': ['video']} == resp.request.GET.dict_of_lists()
+
+    links = response.pyquery('a').filter(lambda i, elem: "filter tag1" in (elem.text or '') )
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),links[0].attrib['href']), status=200)
+    assert {'lang': ['en'], 'q': ['foo'], 'tags':['tag2'], 'kind': ['video']} == resp.request.GET.dict_of_lists()
+
+    links = response.pyquery('a').filter(lambda i, elem: "filter tag2" in (elem.text or '') )
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),links[0].attrib['href']), status=200)
+    assert {'lang': ['en'], 'q': ['foo'], 'tags':['tag1'], 'kind': ['video']} == resp.request.GET.dict_of_lists()
+
+    links = response.pyquery('a').filter(lambda i, elem: "filter video" in (elem.text or '') )
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),links[0].attrib['href']), status=200)
+    assert {'lang': ['en'], 'q': ['foo'], 'tags':['tag1', 'tag2']} == resp.request.GET.dict_of_lists()
+
+
 def test_index_page_should_have_search_box(app, video):
     DocumentFactory(title="I'm a scorpion")
     response = app.get(reverse('mediacenter:index'), status=200)
