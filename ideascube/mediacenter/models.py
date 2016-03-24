@@ -61,7 +61,9 @@ class Document(SearchMixin, TimeStampedModel):
                                 max_length=10240,
                                 blank=True)
     credits = models.CharField(_('credit'), max_length=300)
-    kind = models.CharField(_('type'), max_length=5, choices=KIND_CHOICES.items(),
+    kind = models.CharField(_('type'),
+                            max_length=5,
+                            choices=KIND_CHOICES.items(),
                             default=OTHER)
 
     objects = DocumentQuerySet.as_manager()

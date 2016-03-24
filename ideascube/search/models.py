@@ -43,6 +43,7 @@ class SearchTagField(models.Field):
     pass
 SearchTagField.register_lookup(TagMatch)
 
+
 class SearchQuerySet(models.QuerySet):
     def order_by_relevancy(self):
         extra = {'relevancy': 'rank(matchinfo(idx))'}
@@ -113,11 +114,11 @@ class SearchMixin(models.Model):
         text = u" ".join([s for s in self.index_strings if s])
         tags = u"|{}|".format(u"|".join(self.index_tags))
         defaults = {
-          'text':text,
-          'public':self.index_public,
-          'lang': self.index_lang,
-          'kind': self.index_kind,
-          'tags': tags
+            'text': text,
+            'public': self.index_public,
+            'lang': self.index_lang,
+            'kind': self.index_kind,
+            'tags': tags
         }
         Search.objects.update_or_create(
             model=self.__class__.__name__,

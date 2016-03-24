@@ -10,11 +10,11 @@ from django.template.loader import render_to_string
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
-from ideascube.mixins import ByTagListView
 from ideascube.decorators import staff_member_required
 
 from .models import Document
 from .forms import DocumentForm
+
 
 class Index(ListView):
     model = Document
@@ -26,7 +26,8 @@ class Index(ListView):
         for key in ('q', 'kind', 'lang'):
             context[key] = self.request.GET.get(key)
         context['tags'] = self.request.GET.getlist('tags')
-        default_values = {k:context[k] for k in ('kind', 'lang', 'tags') if context[k]}
+        default_values = {k: context[k] for k in ('kind', 'lang', 'tags')
+                          if context[k]}
         context['default_values'] = default_values
         return context
 

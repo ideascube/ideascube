@@ -11,7 +11,8 @@ def create_index_table(force=True):
     if not count or force:
         cursor.execute("DROP TABLE IF EXISTS idx")
         cursor.execute("CREATE VIRTUAL TABLE idx using "
-                       "FTS4(id, model, model_id, public, text, lang, kind, tags)")
+                       "FTS4(id, model, model_id, public, text, lang, "
+                       "kind, tags)")
 
 
 def rank(match_info):
