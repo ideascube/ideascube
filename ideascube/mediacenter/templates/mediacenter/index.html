@@ -21,13 +21,23 @@
         </div>
     {% endif %}
     {% url 'mediacenter:index' as index %}
+    <div class="card tinted">
+        <a href="{% url 'mediacenter:index' %}">{% trans "Reset filter" %}</a>
+    </div>
     {% include 'search/box.html' with action=index %}
     <div class="card tinted">
         <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
         {% for kind, label in view.model.KIND_CHOICES %}
-            <a href="?kind={{ kind }}">{{ label }}</a>
+            <a href="{% add_get kind=kind %}">{{ label }}</a>
             {% if not forloop.last %}⚫{% endif  %}
         {% endfor %}
     </div>
-    {% tag_cloud url='mediacenter:by_tag' model=view.model %}
+    <div class="card tinted">
+        <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by lang' %}</h4>
+        {% for lang, label in LANGUAGES %}
+            <a href="{% add_get lang=lang %}">{{ label }}</a>
+            {% if not forloop.last %}⚫{% endif  %}
+        {% endfor %}
+    </div>
+    {% tag_cloud url='mediacenter:index' model=view.model use_get=True %}
 {% endblock third %}

@@ -97,5 +97,17 @@ class Document(SearchMixin, TimeStampedModel):
                 u' '.join(self.tags.names()))
 
     @property
+    def index_lang(self):
+        return self.lang
+
+    @property
+    def index_kind(self):
+        return self.kind
+
+    @property
+    def index_tags(self):
+        return self.tags.slugs()
+
+    @property
     def slug(self):
         return self.get_kind_display()

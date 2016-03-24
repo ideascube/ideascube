@@ -32,21 +32,28 @@ class KindMixin(object):
         return context
 
 
-class Index(KindMixin, ListView):
+class Index(ListView):
     model = Document
     template_name = 'mediacenter/index.html'
     paginate_by = 24
 
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
-        context['q'] = self.request.GET.get('q', '')
+        for key in ('q', 'kind', 'lang'):
+            context[key] = self.request.GET.get(key)
+        context['tags'] = self.request.GET.getlist('tags')
+        default_values = {k:context[k] for k in ('kind', 'lang', 'tags') if context[k]}
+        context['default_values'] = default_values
         return context
 
     def get_queryset(self):
         qs = super(Index, self).get_queryset()
         query = self.request.GET.get('q')
-        if query:
-            return qs.search(query)
+        kind = self.request.GET.get('kind')
+        lang = self.request.GET.get('lang')
+        tags = self.request.GET.getlist('tags')
+        if query or kind or lang or tags:
+            return qs.search(query=query, lang=lang, kind=kind, tags=tags)
         return qs
 
 index = Index.as_view()
