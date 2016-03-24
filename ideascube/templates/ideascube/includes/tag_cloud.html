@@ -1,10 +1,15 @@
-{% load i18n %}
+{% load i18n ideascube_tags %}
 {% spaceless %}
 <div class="card tinted">
     <h4><span class="theme learn">{% trans "browse" %}</span> {% trans "Themes" %}</h4>
     {% for tag in tags %}
         {% if tag.slug %}
-            <a href="{% url url tag=tag.slug %}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+            {% if use_get %}
+                <a href="{% url url %}{% add_get tag=tag.slug %}">
+            {% else %}
+                <a href="{% url url tag=tag.slug %}">
+            {% endif %}
+            {{ tag }}</a>{% if not forloop.last %},{% endif %}
         {% endif %}
     {% endfor %}
 </div>

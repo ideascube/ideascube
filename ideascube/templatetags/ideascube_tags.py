@@ -56,8 +56,8 @@ def fa(fa_id, extra_class=''):
     return tpl.format(id=fa_id, extra=extra_class)
 
 
-@register.inclusion_tag('ideascube/includes/tag_cloud.html')
-def tag_cloud(url, model=None, limit=20, tags=None):
+@register.inclusion_tag('ideascube/includes/tag_cloud.html', takes_context=True)
+def tag_cloud(context, url, model=None, limit=20, tags=None, use_get=False):
     if not tags:
         qs = Tag.objects.all()
         if model:
@@ -65,7 +65,7 @@ def tag_cloud(url, model=None, limit=20, tags=None):
             qs = qs.filter(taggit_taggeditem_items__content_type=content_type)
         qs = qs.annotate(count=Count('taggit_taggeditem_items__id'))
         tags = qs.order_by('-count', 'slug')[:limit]
-    return {'tags': tags, 'url': url}
+    return {'tags': tags, 'url': url, 'use_get': use_get, 'request':context.request}
 
 
 @register.filter(name='getattr')
@@ -130,3 +130,36 @@ def paginate(request, **kwargs):
     for key, value in kwargs.items():
         get[key] = value
     return '?{}'.format(get.urlencode())
+
+
+class AddGetParameter(template.Node):
+    def __init__(self, values):
+        self.values = values
+
+    def render(self, context):
+        req = template.resolve_variable('request',context)
+        params = req.GET.copy()
+        for key, value in self.values.items():
+            if key.endswith('s'):
+                for v in value:
+                    v = template.Variable(v).resolve(context)
+                    params.appendlist(key, v)
+            else:
+                params[key] = template.Variable(value).resolve(context)
+        return '?%s' %  params.urlencode()
+
+
+@register.tag()
+def add_get(parser, token):
+    contents = token.split_contents()[1]
+    pairs = contents.split(',')
+
+    values = {}
+    for pair in pairs:
+        k, v = pair.split('=', 1)
+        if k.endswith('s'):
+            values.setdefault(k, []).append(v)
+        else:
+            values[k] = v
+
+    return AddGetParameter(values)
