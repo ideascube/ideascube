@@ -27,7 +27,7 @@
     {% include 'search/box.html' with action=index %}
     <div class="card tinted">
         <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
-        {% for kind, label in view.model.KIND_CHOICES %}
+        {% for kind, label in view.model.KIND_CHOICES.items %}
             <a href="{% add_qs kind=kind %}">{{ label }}</a>
             {% if not forloop.last %}⚫{% endif  %}
         {% endfor %}
