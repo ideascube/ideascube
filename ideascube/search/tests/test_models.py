@@ -51,6 +51,16 @@ def test_search_Document_on_tag():
     assert document_no_tag not in Search.search(tags__match=["bar"])
 
 
+def test_search_Document_on_no_tag():
+    assert Document.objects.count() == 0
+    document = DocumentFactory(tags=["foo"])
+    document_no_tag = DocumentFactory()
+    assert Document.objects.count() == 2
+
+    assert document not in Search.search(tags__match=[])
+    assert document_no_tag in Search.search(tags__match=[])
+
+
 def test_search_Document_multiple_tag():
     doc_foo = DocumentFactory(tags=["foo"])
     doc_bar = DocumentFactory(tags=["bar"])

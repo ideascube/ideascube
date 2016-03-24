@@ -29,6 +29,10 @@ class TagMatch(models.Lookup):
         rhs, rhs_params = self.process_rhs(qn, connection)
         params = lhs_params + rhs_params
         params = params[0]
+        if not params:
+            # Not tags to match to.
+            # Search for stuff with no tag
+            params = ['']
         out = '({0} LIKE {1})'.format(lhs, rhs)
         out = ' AND '.join([out]*len(params))
         out = '({})'.format(out)
