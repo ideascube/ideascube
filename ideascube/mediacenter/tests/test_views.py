@@ -32,11 +32,50 @@ def test_index_page_is_paginated(app, monkeypatch):
 def test_pagination_should_keep_querystring(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
     DocumentFactory.create_batch(size=4, kind=Document.IMAGE)
-    url = '{}?kind=image'.format(reverse('mediacenter:index'))
-    response = app.get(url)
+    response = app.get(reverse('mediacenter:index'), {'kind':'image'})
     link = response.pyquery.find('.next')
     assert link
     assert 'kind=image' in link[0].attrib['href']
+
+
+def test_search_box_should_update_querystring(app):
+    response = app.get(reverse('mediacenter:index'), {'kind': 'image', 'q': 'bar'})
+    form = response.forms['search']
+    form['q'] = "foo"
+    response = form.submit()
+    assert {'kind':'image', 'q':'foo'} == response.request.GET
+
+
+def test_kind_link_should_update_querystring(app):
+    response = app.get(reverse('mediacenter:index'), {'kind': 'image', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    response = app.get("{}{}".format(reverse('mediacenter:index'), links[0].attrib['href']), status=200)
+    assert {'kind':'pdf', 'q':'bar'} == response.request.GET
+
+
+def test_lang_link_should_update_querystring(app):
+    response = app.get(reverse('mediacenter:index'), {'lang': 'en', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
+    response = app.get("{}{}".format(reverse('mediacenter:index'), links[0].attrib['href']), status=200)
+    assert {'lang':'fr', 'q':'bar'} == response.request.GET
+
+
+def test_tags_link_should_update_querystring(app):
+    DocumentFactory(lang='en', tags=['tag1', 'tag2', 'tag3'])
+    response = app.get(reverse('mediacenter:index'), {'lang': 'en'})
+
+    links = response.pyquery('a').filter(lambda i, elem: (elem.text or '').strip() == 'tag1' )
+    response = app.get(links[0].attrib['href'], status=200)
+    assert {'lang':'en', 'tags':'tag1'} == response.request.GET
+
+    links = response.pyquery('a').filter(lambda i, elem: (elem.text or '').strip() == 'tag2' )
+    response = app.get(links[0].attrib['href'], status=200)
+    assert {'lang':['en'], 'tags':['tag1', 'tag2']} == response.request.GET.dict_of_lists()
+
+    # Do it a second time. Only one 'tag2' should be present
+    links = response.pyquery('a').filter(lambda i, elem: (elem.text or '').strip() == 'tag2' )
+    response = app.get(links[0].attrib['href'], status=200)
+    assert {'lang':['en'], 'tags':['tag1', 'tag2']} == response.request.GET.dict_of_lists()
 
 
 def test_index_page_should_have_search_box(app, video):
