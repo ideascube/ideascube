@@ -36,7 +36,7 @@ class Index(ListView):
         kind = self.request.GET.get('kind')
         lang = self.request.GET.get('lang')
         tags = self.request.GET.getlist('tags')
-        if query or kind or lang or tags:
+        if any((query, kind, lang, tags)):
             return qs.search(query=query, lang=lang, kind=kind, tags=tags)
         return qs
 

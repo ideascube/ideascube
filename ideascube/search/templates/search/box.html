@@ -4,11 +4,9 @@
 <div class="card tinted search">
     <form action="{% if action %}{{ action }}{% else %}{% url "search:search" %}{% endif %}" id="search">
         <input name="q" type="text" placeholder="{% trans 'search' %}" value="{{ q }}" />
-        {% if default_values %}
-            {% for key, value in default_values.items %}
-                <input name="{{ key }}" type="hidden" value="{{ value }}" />
-            {% endfor %}
-        {% endif %}
+        {% for key, value in default_values.items %}
+            <input name="{{ key }}" type="hidden" value="{{ value }}" />
+        {% endfor %}
         <input type="submit" value="{% trans 'search' %}" />
     </form>
 </div>
