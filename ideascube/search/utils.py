@@ -1,18 +1,31 @@
 import struct
 
-from django.db import connection
+from django.db import connections
 
 
 def create_index_table(force=True):
-    cursor = connection.cursor()
-    cursor.execute("SELECT count(*) FROM sqlite_master "
-                   "WHERE type='table' AND name='idx';")
-    count = cursor.fetchone()[0]
+    cursor_transient = connections['transient'].cursor()
+    cursor_transient.execute("SELECT count(*) FROM sqlite_master "
+                             "WHERE type='table' AND name='idx';")
+    count = cursor_transient.fetchone()[0]
     if not count or force:
-        cursor.execute("DROP TABLE IF EXISTS idx")
-        cursor.execute("CREATE VIRTUAL TABLE idx using "
-                       "FTS4(id, model, model_id, public, text, lang, "
-                       "kind, tags)")
+        cursor_transient.execute("DROP TABLE IF EXISTS idx")
+        cursor_transient.execute("CREATE VIRTUAL TABLE idx using "
+                                 "FTS4(id, model, model_id, public, text, "
+                                 "lang, kind, tags)")
+
+
+def reindex_content(*args, **kwargs):
+    from ideascube.search.models import SEARCHABLE
+    create_index_table(force=True)
+    indexed = {}
+    for model in SEARCHABLE.values():
+        count = 0
+        for inst in model.objects.all():
+            inst.index()
+            count += 1
+        indexed[model.__name__] = count
+    return indexed
 
 
 def rank(match_info):

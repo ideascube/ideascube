@@ -52,6 +52,7 @@ class SearchQuerySet(models.QuerySet):
 
 class Search(models.Model):
     """Model that handle the search."""
+    _dbname = 'transient'
     rowid = models.IntegerField(primary_key=True)
     model = models.CharField(max_length=64)
     model_id = models.IntegerField()
@@ -144,6 +145,9 @@ class SearchableQuerySet(object):
         if tags:
             kwargs['tags__match'] = tags
         ids = Search.ids(**kwargs).distinct()
+        # Force the execution of the request here
+        # as we can request on several db in the same time.
+        ids = list(ids)
         return self.filter(pk__in=ids)
 
 

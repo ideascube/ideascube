@@ -113,6 +113,7 @@ def test_search_box_should_update_querystring(app):
     assert {'kind': 'image', 'q': 'foo'} == response.request.GET
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_kind_link_should_be_displayed(app):
     response = app.get(reverse('mediacenter:index'))
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
@@ -124,6 +125,7 @@ def test_kind_link_should_be_displayed(app):
     assert len(links) == 1
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_lang_link_should_be_displayed(app):
     response = app.get(reverse('mediacenter:index'))
     links = response.pyquery('a').filter(lambda i, el: el.text == 'français')
@@ -135,6 +137,7 @@ def test_lang_link_should_be_displayed(app):
     assert len(links) == 1
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_kind_link_should_be_displayed_depending_other_filters(app):
     DocumentFactory(kind='pdf', title='foo')
     DocumentFactory(kind='image', title='bar')
@@ -152,6 +155,7 @@ def test_kind_link_should_be_displayed_depending_other_filters(app):
     assert len(links) == 1
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_lang_link_should_be_displayed_depending_other_filters(app):
     DocumentFactory(lang='en', title='foo')
     DocumentFactory(lang='fr', title='bar')
@@ -272,6 +276,7 @@ def test_remove_filter_should_be_present(app):
         resp.request.GET.dict_of_lists()
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_index_page_should_have_search_box(app, video):
     DocumentFactory(title="I'm a scorpion")
     response = app.get(reverse('mediacenter:index'), status=200)
@@ -484,6 +489,7 @@ def test_changing_filter_reset_page_parameter(app, monkeypatch):
     assert 'page' not in find("a.flatlist:contains('English')")[0].attrib['href']  # noqa
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_can_create_document_with_tags(staffapp):
     url = reverse('mediacenter:document_create')
     form = staffapp.get(url).forms['model_form']
@@ -498,6 +504,7 @@ def test_can_create_document_with_tags(staffapp):
     assert doc.tags.first().name == 'tag1'
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_tags_are_indexed_on_document_creation(staffapp):
     assert Search.objects.filter(tags__match=['tag1']).count() == 0
     url = reverse('mediacenter:document_create')
@@ -511,6 +518,7 @@ def test_tags_are_indexed_on_document_creation(staffapp):
     assert Search.objects.filter(tags__match=['tag1']).count() == 1
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_can_update_document_tags(staffapp, pdf):
     assert pdf.tags.count() == 0
     url = reverse('mediacenter:document_update', kwargs={'pk': pdf.pk})

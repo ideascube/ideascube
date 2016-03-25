@@ -11,10 +11,12 @@ from ..models import Search
 pytestmark = pytest.mark.django_db
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_nothing_is_indexed_without_any_fixture():
     assert Search.objects.count() == 0
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_searchable_model_is_indexed():
     assert Content.objects.count() == 0
     content = ContentFactory(title="music")
@@ -22,6 +24,7 @@ def test_searchable_model_is_indexed():
     assert content in Search.search(text__match="music")
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_Document_on_lang():
     assert Document.objects.count() == 0
     document = DocumentFactory(lang="FR")
@@ -30,6 +33,7 @@ def test_search_Document_on_lang():
     assert document not in Search.search(lang="EN")
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_Document_on_kind():
     assert Document.objects.count() == 0
     document = DocumentFactory(kind="video")
@@ -38,6 +42,7 @@ def test_search_Document_on_kind():
     assert document not in Search.search(kind="pdf")
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_Document_on_tag():
     assert Document.objects.count() == 0
     document = DocumentFactory(tags=["foo"])
@@ -51,6 +56,7 @@ def test_search_Document_on_tag():
     assert document_no_tag not in Search.search(tags__match=["bar"])
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_Document_on_no_tag():
     assert Document.objects.count() == 0
     document = DocumentFactory(tags=["foo"])
@@ -61,6 +67,7 @@ def test_search_Document_on_no_tag():
     assert document_no_tag in Search.search(tags__match=[])
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_Document_multiple_tag():
     doc_foo = DocumentFactory(tags=["foo"])
     doc_bar = DocumentFactory(tags=["bar"])
@@ -89,6 +96,7 @@ def test_search_Document_multiple_tag():
         assert d not in Search.search(tags__match=["foo", "bar"])
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_more_relevant_should_come_first():
     second = ContentFactory(title="About music and music")
     third = ContentFactory(title="About music")
@@ -99,11 +107,13 @@ def test_more_relevant_should_come_first():
     assert third == list(Search.search(text__match="music"))[2]
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_ids_only_returns_ids():
     content = ContentFactory(title="music")
     assert content.pk in Search.ids(text__match="music")
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_we_can_search_on_non_fts_fields_only():
     content = ContentFactory(title="music")
     assert content in Search.search(public=False)

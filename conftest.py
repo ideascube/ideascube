@@ -5,6 +5,12 @@ import os
 from django.core.urlresolvers import reverse
 
 from ideascube.tests.factories import UserFactory
+from ideascube.search.utils import create_index_table
+
+
+@pytest.fixture()
+def cleansearch():
+    create_index_table(force=True)
 
 
 @pytest.fixture()
