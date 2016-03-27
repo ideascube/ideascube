@@ -17,7 +17,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'gutenberg',
-        'lang': 'mul',
+        'lang': 'fr',
     },
     {
         'id': 'khanacademy',
@@ -48,10 +48,10 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'ted',
         'sessions': [
-            ('tedxgeneva-2014.fr', 'Geneva 2014'),
-            ('tedxlausanne-2012.fr', 'Lausanne 2012'),
-            ('tedxlausanne-2013.fr', 'Lausanne 2013'),
-            ('tedxlausanne-2014.fr', 'Lausanne 2014'),
+            ('tedxgeneva2014.fr', 'Geneva 2014'),
+            ('tedxlausanne2012.fr', 'Lausanne 2012'),
+            ('tedxlausanne2013.fr', 'Lausanne 2013'),
+            ('tedxlausanne2014.fr', 'Lausanne 2014'),
         ]
     },
     {
