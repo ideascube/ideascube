@@ -5,6 +5,8 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
+from ideascube.fields import LangSelect
+
 from .models import Book, BookSpecimen
 from .utils import (fetch_from_openlibrary, load_from_ideascube,
                     load_from_moccam_csv, load_unimarc)
@@ -44,6 +46,9 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = '__all__'
+        widgets = {
+            'lang': LangSelect
+        }
 
 
 class ImportForm(forms.Form):

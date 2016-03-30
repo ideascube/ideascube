@@ -1,5 +1,7 @@
 from django import forms
 
+from ideascube.fields import LangSelect
+
 from .models import Content
 
 
@@ -10,6 +12,7 @@ class ContentForm(forms.ModelForm):
         widgets = {
             # We need a normalized date string for JS datepicker, so we take
             # control over the format to bypass L10N.
-            "published_at": forms.DateInput(format='%Y-%m-%d')
+            "published_at": forms.DateInput(format='%Y-%m-%d'),
+            "lang": LangSelect,
         }
         fields = "__all__"
