@@ -19,4 +19,11 @@ HOME_CARDS = HOME_CARDS + [
     {
         'id': 'ted.old',
     },
+    {
+        'id': 'maps',
+        'maps': [
+            (_('World'), 'world.map'),
+            ('Burundi', 'burundi.map'),
+        ]
+    },
 ]
