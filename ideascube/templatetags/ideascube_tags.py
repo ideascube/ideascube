@@ -53,7 +53,7 @@ def fa(fa_id, extra_class=''):
     tpl = '<span class="fa fa-{id}{extra}"></span>'
     if extra_class:
         extra_class = ' ' + extra_class
-    return tpl.format(id=fa_id, extra=extra_class)
+    return mark_safe(tpl.format(id=fa_id, extra=extra_class))
 
 
 @register.inclusion_tag('ideascube/includes/tag_cloud.html')
