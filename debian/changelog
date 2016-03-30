@@ -1,3 +1,12 @@
+ideascube (0.9.2) unstable; urgency=low
+
+  * Upgraded to Django 1.9 (cf #256)
+  * Add lang code in lang select (fix #321)
+  * Specify CATALOG_CACHE_BASE_DIR for koombooks
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 30 Mar 2016 17:23:00 +0100
+
+
 ideascube (0.9.1) unstable; urgency=low
 
   * Adapted Kiwix cards for package manager (cf #281)
