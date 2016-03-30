@@ -8,7 +8,7 @@ from django.views.decorators.cache import cache_page
 
 from . import views
 
-urlpatterns = i18n_patterns('',
+urlpatterns = i18n_patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('ideascube.blog.urls', namespace="blog")),
     url(r'^library/', include('ideascube.library.urls', namespace="library")),
