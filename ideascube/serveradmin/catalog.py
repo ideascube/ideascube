@@ -1,3 +1,4 @@
+from datetime import timedelta
 from fnmatch import fnmatch
 from glob import glob
 from hashlib import sha256
@@ -300,6 +301,7 @@ class Bar(ProgressBar):
     template = ('Download: {percent} |{animation}| {done:B}/{total:B} '
                 '({speed:B}/s) | ETA: {eta}')
     done_char = '⬛'
+    throttle = timedelta(seconds=1)
 
 
 class Catalog:
