@@ -143,6 +143,13 @@ def test_can_create_document_without_lang(staffapp):
     assert Document.objects.count() == 1
 
 
+def test_document_form_lang_select_contains_lang_code(staffapp):
+    assert not Document.objects.count()
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
+    assert ('fr', False, 'Français (fr)') in form['lang'].options
+
+
 def test_content_type_should_have_priority_over_extension(staffapp):
     assert not Document.objects.count()
     url = reverse('mediacenter:document_create')
