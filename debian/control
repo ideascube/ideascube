@@ -33,4 +33,5 @@ Depends:
   policykit-1,
   ${python3:Depends},
   ${misc:Depends},
+  ${shlibs:Depends},
 Description: Ideascube media server
