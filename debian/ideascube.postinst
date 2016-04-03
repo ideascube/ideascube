@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 NAME=ideascube
 
 case "$1" in
