@@ -1,4 +1,8 @@
 #!/bin/sh
+
+
+set -e
+
 case "$1" in
     upgrade)
         # Do nothing
