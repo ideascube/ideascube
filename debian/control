@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 9), dh-virtualenv (>= 0.10),
   libxml2-dev, libxslt1-dev,
 # For dbus-python
   git, libdbus-glib-1-dev, autoconf, automake, libtool
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 
 Package: ideascube
 Architecture: any
