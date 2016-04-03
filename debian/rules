@@ -4,4 +4,4 @@
 	dh $@ --with python-virtualenv --buildsystem pybuild
 
 override_dh_virtualenv:
-	dh_virtualenv --python /usr/bin/python3.4 --extra-pip-arg='--no-use-wheel'
+	dh_virtualenv --python /usr/bin/python3 --extra-pip-arg='--no-use-wheel'
