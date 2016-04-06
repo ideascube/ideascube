@@ -1,2 +1,2 @@
-/var/ideascube/main
-/var/cache/ideascube/
+var/ideascube/main
+var/cache/ideascube
