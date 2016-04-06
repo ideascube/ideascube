@@ -1,41 +1,41 @@
 #!/bin/sh
-NAME=ideascube
+
 
 case "$1" in
     configure)
         # Create ideascube group if not existing
-        if ! getent group "$NAME" > /dev/null 2>&1 ; then
-            echo -n "Creating $NAME group..."
-            addgroup --quiet --system "$NAME"
+        if ! getent group "$DPKG_MAINTSCRIPT_PACKAGE" > /dev/null 2>&1 ; then
+            echo -n "Creating $DPKG_MAINTSCRIPT_PACKAGE group..."
+            addgroup --quiet --system "$DPKG_MAINTSCRIPT_PACKAGE"
             echo " OK"
         fi
 
         # Create ideascube user if not existing
-        if ! id $NAME > /dev/null 2>&1 ; then
-            echo -n "Creating $NAME user..."
+        if ! id $DPKG_MAINTSCRIPT_PACKAGE > /dev/null 2>&1 ; then
+            echo -n "Creating $DPKG_MAINTSCRIPT_PACKAGE user..."
             adduser --quiet \
                     --system \
                     --no-create-home \
-                    --ingroup "$NAME" \
+                    --ingroup "$DPKG_MAINTSCRIPT_PACKAGE" \
                     --disabled-password \
                     --shell /bin/false \
-                    "$NAME"
+                    "$DPKG_MAINTSCRIPT_PACKAGE"
             echo " OK"
         fi
-        chown $NAME:$NAME /var/$NAME
-        chown $NAME:$NAME /var/$NAME/main
-        chown $NAME:$NAME /var/cache/$NAME
+        chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE
+        chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE/main
+        chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/cache/$DPKG_MAINTSCRIPT_PACKAGE
         echo "Running migration"
-        sudo -u $NAME /usr/bin/ideascube migrate --noinput -v 1
+        sudo -u $DPKG_MAINTSCRIPT_PACKAGE /usr/bin/ideascube migrate --noinput -v 1
         echo "Running collectstatic"
-        sudo -u $NAME /usr/bin/ideascube collectstatic --noinput -v 1
+        sudo -u $DPKG_MAINTSCRIPT_PACKAGE /usr/bin/ideascube collectstatic --noinput -v 1
         # Nginx
         echo "Linking Nginx VHost"
-        ln -fs /etc/nginx/sites-available/$NAME /etc/nginx/sites-enabled/$NAME
+        ln -fs /etc/nginx/sites-available/$DPKG_MAINTSCRIPT_PACKAGE /etc/nginx/sites-enabled/$DPKG_MAINTSCRIPT_PACKAGE
         echo "Linking uWSGI app"
-        ln -fs /etc/uwsgi/apps-available/$NAME.ini /etc/uwsgi/apps-enabled/$NAME.ini
+        ln -fs /etc/uwsgi/apps-available/$DPKG_MAINTSCRIPT_PACKAGE.ini /etc/uwsgi/apps-enabled/$DPKG_MAINTSCRIPT_PACKAGE.ini
         echo "Setting permissions on the uWSGI log folder"
-        chown -R $NAME:$NAME /var/log/uwsgi
+        chown -R $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/log/uwsgi
         echo "Restarting Nginx and uWSGI"
         systemctl daemon-reload
         systemctl restart nginx.service uwsgi.service
