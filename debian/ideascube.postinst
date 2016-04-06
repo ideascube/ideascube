@@ -30,10 +30,7 @@ case "$1" in
         ln -fs /etc/nginx/sites-available/$DPKG_MAINTSCRIPT_PACKAGE /etc/nginx/sites-enabled/$DPKG_MAINTSCRIPT_PACKAGE
         echo "Linking uWSGI app"
         ln -fs /etc/uwsgi/apps-available/$DPKG_MAINTSCRIPT_PACKAGE.ini /etc/uwsgi/apps-enabled/$DPKG_MAINTSCRIPT_PACKAGE.ini
-        echo "Setting permissions on the uWSGI log folder"
-        chown -R $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/log/uwsgi
         echo "Restarting Nginx and uWSGI"
-        systemctl daemon-reload
         systemctl restart nginx.service uwsgi.service
         systemctl enable uwsgi.service
         ;;
