@@ -7,7 +7,7 @@ from django.core.files.base import ContentFile
 from webtest import Upload
 
 from ..models import Book, BookSpecimen
-from ..views import ByTag, Index, BookExport
+from ..views import Index, BookExport
 from .factories import BookFactory, BookSpecimenFactory
 
 pytestmark = pytest.mark.django_db
@@ -275,16 +275,16 @@ def test_import_from_ideascube_export(staffapp, monkeypatch):
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = BookSpecimenFactory(book__tags=['plane'])
     boat = BookSpecimenFactory(book__tags=['boat'])
-    response = app.get(reverse('library:by_tag', kwargs={'tag': 'plane'}))
+    response = app.get(reverse('library:index'), {'tags': 'plane'})
     assert plane.book.title in response.content.decode()
     assert boat.book.title not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):
-    monkeypatch.setattr(ByTag, 'paginate_by', 2)
+    monkeypatch.setattr(Index, 'paginate_by', 2)
     BookSpecimenFactory.create_batch(size=4, book__tags=['plane'])
-    url = reverse('library:by_tag', kwargs={'tag': 'plane'})
-    response = app.get(url)
+    url = reverse('library:index')
+    response = app.get(url, {'tags': 'plane'})
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')

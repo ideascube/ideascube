@@ -81,3 +81,7 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
     @property
     def index_public(self):
         return self.status == self.PUBLISHED
+
+    @property
+    def index_tags(self):
+        return self.tags.slugs()

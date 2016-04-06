@@ -26,30 +26,23 @@ class Index(ListView):
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
         context['q'] = self.request.GET.get('q', '')
+        context['tags'] = self.request.GET.getlist('tags')
+        context['default_values'] = {'tags':context['tags']}
         return context
 
     def get_queryset(self):
         query = self.request.GET.get('q')
+        tags = self.request.GET.getlist('tags')
         if self.request.user.is_authenticated() and self.request.user.is_staff:
             qs = Book.objects.all()
         else:
             qs = Book.objects.available()
-        if query:
-            return qs.search(query)
+        if query or tags:
+            return qs.search(query=query, tags=tags)
         else:
             return qs.order_by('-modified_at')
 
 index = Index.as_view()
-
-
-class ByTag(ByTagListView):
-    model = Book
-    queryset = Book.objects.available()
-    template_name = 'library/by_tag.html'
-    paginate_by = 10
-
-by_tag = ByTag.as_view()
-
 
 class BookDetail(DetailView):
     model = Book

@@ -70,8 +70,14 @@ class ByTag(ListView):
     template_name = 'ideascube/by_tag.html'
     paginate_by = 20
 
+    def get_context_data(self, **kwargs):
+        context = super(ByTag, self).get_context_data(**kwargs)
+        context['tags'] = self.request.GET.getlist('tags')
+        return context
+
     def get_queryset(self):
-        return TaggedItem.objects.filter(tag__slug=self.kwargs['tag'])
+        tags = self.request.GET.getlist('tags')
+        return TaggedItem.objects.filter(tag__name__in=tags).distinct()
 
 by_tag = ByTag.as_view()
 

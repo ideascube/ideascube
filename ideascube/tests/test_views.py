@@ -427,7 +427,7 @@ def test_by_tag_page_should_be_filtered_by_tag(app):
     boat = ContentFactory(status=Content.PUBLISHED, tags=['boat'])
     plane2 = BookSpecimenFactory(book__tags=['plane'])
     boat2 = BookSpecimenFactory(book__tags=['boat'])
-    response = app.get(reverse('by_tag', kwargs={'tag': 'plane'}))
+    response = app.get(reverse('by_tag'), {'tags': 'plane'})
     assert plane.title in response.content.decode()
     assert plane2.book.title in response.content.decode()
     assert boat.title not in response.content.decode()
@@ -439,16 +439,17 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     ContentFactory.create_batch(size=2, status=Content.PUBLISHED,
                                 tags=['plane'])
     BookSpecimenFactory.create_batch(size=2, book__tags=['plane'])
-    url = reverse('by_tag', kwargs={'tag': 'plane'})
+    url = reverse('by_tag')
+    url = url+"?tags=plane"
     response = app.get(url)
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(url + '?page=2')
+    response = app.get(url + '&page=2')
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    response = app.get(url + '?page=3', status=404)
+    response = app.get(url + '&page=3', status=404)
 
 
 def test_javascript_returns_ID_and_settings(app, settings):

@@ -13,16 +13,20 @@ class Index(ListView):
     template_name = 'blog/index.html'
     paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs)
+        context['tags'] = self.request.GET.getlist('tags')
+        context['default_values'] = {'tags': context['tags']}
+        return context
+
+    def get_queryset(self):
+        qs = super(Index, self).get_queryset()
+        tags = self.request.GET.getlist('tags')
+        if tags:
+            return qs.search(tags=tags)
+        return qs
+
 index = Index.as_view()
-
-
-class ByTag(ByTagListView):
-    model = Content
-    queryset = Content.objects.published()
-    template_name = 'blog/by_tag.html'
-    paginate_by = 10
-
-by_tag = ByTag.as_view()
 
 
 class ContentDetail(DetailView):

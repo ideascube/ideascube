@@ -14,5 +14,5 @@
             {% fa 'pencil' 'fa-fw' %}<a href="{% url 'blog:content_update' pk=content.pk %}">Edit</a>
         </div>
     {% endif %}
-    {% tag_cloud url="blog:by_tag" model=view.model tags=content.tags.all %}
+    {% tag_cloud url="blog:index" model=view.model tags=content.tags.all %}
 {% endblock third %}

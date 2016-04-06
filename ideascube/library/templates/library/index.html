@@ -22,5 +22,5 @@
             <li>{% fa 'download' 'fa-fw' %} <a href="{% url 'library:book_export' %}">{% trans "Export notices" %}</a></li>
         </ul>
     {% endif %}
-    {% tag_cloud url="library:by_tag" model=view.model %}
+    {% tag_cloud url="library:index" model=view.model %}
 {% endblock third %}

@@ -39,5 +39,5 @@
         {% endfor %}
     </ul>
     {% endif %}
-    {% tag_cloud url="library:by_tag" model=view.model tags=book.tags.all %}
+    {% tag_cloud url="library:index" model=view.model tags=book.tags.all %}
 {% endblock third %}

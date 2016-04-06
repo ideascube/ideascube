@@ -59,7 +59,7 @@ def fa(fa_id, extra_class=''):
 
 
 @register.inclusion_tag('ideascube/includes/tag_cloud.html', takes_context=True)
-def tag_cloud(context, url, model=None, limit=20, tags=None, use_get=False):
+def tag_cloud(context, url, model=None, limit=20, tags=None):
     if not tags:
         qs = Tag.objects.all()
         if model:
@@ -67,7 +67,7 @@ def tag_cloud(context, url, model=None, limit=20, tags=None, use_get=False):
             qs = qs.filter(taggit_taggeditem_items__content_type=content_type)
         qs = qs.annotate(count=Count('taggit_taggeditem_items__id'))
         tags = qs.order_by('-count', 'slug')[:limit]
-    return {'tags': tags, 'url': url, 'use_get': use_get, 'request':context.request}
+    return {'tags': tags, 'url': url, 'request':context.request}
 
 
 @register.filter(name='getattr')

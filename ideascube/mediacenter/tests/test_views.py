@@ -313,16 +313,18 @@ def test_by_tag_page_should_be_filtered_by_tag(app):
 def test_by_tag_page_is_paginated(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
     DocumentFactory.create_batch(size=4, tags=['plane'])
+    DocumentFactory.create_batch(size=2)
     url = reverse('mediacenter:index')
     response = app.get(url, {'tags': 'plane'})
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(url + '?page=2')
+    response = app.get(url + '?tags=plane&page=2')
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    response = app.get(url + '?page=3', status=404)
+    app.get(url + '?tags=plane&page=3', status=404)
+    app.get(url + '?page=3', status=200)
 
 
 def test_can_create_document_with_tags(staffapp):
