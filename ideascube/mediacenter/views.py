@@ -29,6 +29,10 @@ class Index(ListView):
         default_values = {k: context[k] for k in ('kind', 'lang', 'tags')
                           if context[k]}
         context['default_values'] = default_values
+        context['NON_EMPTY_KINDS'] = [
+            (kind, label) for kind, label in Document.KIND_CHOICES
+            if len(Document.objects.filter(kind=kind))
+            ]
         return context
 
     def get_queryset(self):

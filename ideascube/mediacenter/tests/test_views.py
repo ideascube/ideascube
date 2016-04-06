@@ -38,6 +38,20 @@ def test_pagination_should_keep_querystring(app, monkeypatch):
     assert 'kind=image' in link[0].attrib['href']
 
 
+def test_only_kind_with_content_should_appear(app, pdf, image):
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 1
+
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'image')
+    assert len(links) == 1
+
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'video')
+    assert len(links) == 0
+
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'audio')
+    assert len(links) == 0
+
 def test_search_box_should_update_querystring(app):
     response = app.get(reverse('mediacenter:index'),
                        {'kind': 'image', 'q': 'bar'})
@@ -47,7 +61,7 @@ def test_search_box_should_update_querystring(app):
     assert {'kind': 'image', 'q': 'foo'} == response.request.GET
 
 
-def test_kind_link_should_update_querystring(app):
+def test_kind_link_should_update_querystring(app, pdf):
     response = app.get(reverse('mediacenter:index'),
                        {'kind': 'image', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
