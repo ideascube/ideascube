@@ -17,9 +17,11 @@ case "$1" in
                     "$DPKG_MAINTSCRIPT_PACKAGE"
             echo " OK"
         fi
-        chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE
+
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE/main
+        chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE/static
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/cache/$DPKG_MAINTSCRIPT_PACKAGE
+
         echo "Running migration"
         sudo -u $DPKG_MAINTSCRIPT_PACKAGE /usr/bin/ideascube migrate --noinput -v 1 --database=default
         sudo -u $DPKG_MAINTSCRIPT_PACKAGE /usr/bin/ideascube migrate --noinput -v 1 --database=transient
