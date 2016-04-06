@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@ --with python-virtualenv --buildsystem pybuild
+	dh $@ --with python3,python-virtualenv --buildsystem pybuild
 
 override_dh_virtualenv:
 	dh_virtualenv --python /usr/bin/python3 --extra-pip-arg='--no-use-wheel'
