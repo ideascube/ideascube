@@ -4,15 +4,11 @@
 set -e
 
 case "$1" in
-    upgrade)
-        # Do nothing
-    ;;
-
-    *)
+    remove)
         # on removal we should clean project directory
         echo "Removing ideascube project directory"
         rm -rf /var/lib/$DPKG_MAINTSCRIPT_PACKAGE
-    ;;
+        ;;
 esac
 
 #DEBHELPER#
