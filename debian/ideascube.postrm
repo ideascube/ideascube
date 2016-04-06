@@ -5,8 +5,6 @@ set -e
 
 case "$1" in
     remove)
-        # on removal we should clean project directory
-        echo "Removing ideascube project directory"
         rm -rf /var/$DPKG_MAINTSCRIPT_PACKAGE/static || :
 
         rm -f /etc/nginx/sites-enabled/$DPKG_MAINTSCRIPT_PACKAGE
