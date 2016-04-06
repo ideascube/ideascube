@@ -31,7 +31,7 @@
             {% endif %}
             {# Well... lookup in a dict or lookup in a list of tuples, what is the best ? #}
             {% if kind %}
-                <li><a href="{% remove_qs kind=kind %}">{% trans "Remove filter" %} {{ view.model.KIND_CHOICES|getitem:kind }}</a></li>
+                <li><a href="{% remove_qs kind=kind %}">{% trans "Remove filter" %} {{ view.model.KIND_DICT|getitem:kind }}</a></li>
             {% endif %}
             {% if lang %}
                 {% with LANG_INFO|getitem:lang as lang_info %}
@@ -47,7 +47,7 @@
     {% include 'search/box.html' with action=index %}
     <div class="card tinted">
         <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
-        {% for kind, label in view.model.KIND_CHOICES.items %}
+        {% for kind, label in view.model.KIND_CHOICES %}
             <a href="{% add_qs kind=kind %}">{{ label }}</a>
             {% if not forloop.last %}⚫{% endif  %}
         {% endfor %}

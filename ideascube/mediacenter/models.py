@@ -38,16 +38,18 @@ class Document(SearchMixin, TimeStampedModel):
     APP = 'app'
     OTHER = 'other'
 
-    KIND_CHOICES = {
-        IMAGE: _('image'),
-        AUDIO: _('sound'),
-        VIDEO: _('video'),
-        PDF: _('pdf'),
-        TEXT: _('text'),
-        EPUB: _('epub'),
-        APP: _('app'),
-        OTHER: _('other'),
-    }
+    KIND_CHOICES = (
+        (IMAGE, _('image')),
+        (AUDIO, _('sound')),
+        (VIDEO, _('video')),
+        (PDF, _('pdf')),
+        (TEXT, _('text')),
+        (EPUB, _('epub')),
+        (APP, _('app')),
+        (OTHER, _('other')),
+    )
+
+    KIND_DICT = dict(KIND_CHOICES)
 
     title = models.CharField(_('title'), max_length=100)
     summary = models.TextField(_('summary'))
@@ -63,7 +65,7 @@ class Document(SearchMixin, TimeStampedModel):
     credits = models.CharField(_('credit'), max_length=300)
     kind = models.CharField(_('type'),
                             max_length=5,
-                            choices=KIND_CHOICES.items(),
+                            choices=KIND_CHOICES,
                             default=OTHER)
 
     objects = DocumentQuerySet.as_manager()
