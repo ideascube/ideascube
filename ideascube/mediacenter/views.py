@@ -29,9 +29,13 @@ class Index(ListView):
         default_values = {k: context[k] for k in ('kind', 'lang', 'tags')
                           if context[k]}
         context['default_values'] = default_values
-        context['NON_EMPTY_KINDS'] = [
+        context['not_empty_kinds'] = [
             (kind, label) for kind, label in Document.KIND_CHOICES
             if len(Document.objects.filter(kind=kind))
+            ]
+        context['not_empty_langs'] = [
+            (lang, label) for lang, label in settings.LANGUAGES
+            if len(Document.objects.filter(lang=lang))
             ]
         return context
 
