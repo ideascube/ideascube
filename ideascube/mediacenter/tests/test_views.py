@@ -61,7 +61,7 @@ def test_search_box_should_update_querystring(app):
     assert {'kind': 'image', 'q': 'foo'} == response.request.GET
 
 
-def test_kind_link_should_update_querystring(app, pdf):
+def test_kind_link_should_update_querystring(app, pdf, image):
     response = app.get(reverse('mediacenter:index'),
                        {'kind': 'image', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
@@ -72,6 +72,8 @@ def test_kind_link_should_update_querystring(app, pdf):
 
 
 def test_lang_link_should_update_querystring(app):
+    DocumentFactory(lang='fr')
+    DocumentFactory(lang='en')
     response = app.get(reverse('mediacenter:index'), {'lang': 'en', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
     response = app.get("{}{}".format(reverse('mediacenter:index'),
