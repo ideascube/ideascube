@@ -60,6 +60,35 @@ def test_search_box_should_update_querystring(app):
     response = form.submit()
     assert {'kind': 'image', 'q': 'foo'} == response.request.GET
 
+def test_kind_link_should_no_be_displayed_if_no_several_kinds(app):
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 0
+
+    DocumentFactory(kind='pdf')
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 0
+
+    DocumentFactory(kind='image')
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 1
+
+def test_lang_link_should_no_be_displayed_if_no_several_langs(app):
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
+    assert len(links) == 0
+
+    DocumentFactory(lang='fr')
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
+    assert len(links) == 0
+
+    DocumentFactory(lang='en')
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
+    assert len(links) == 1
 
 def test_kind_link_should_update_querystring(app, pdf, image):
     response = app.get(reverse('mediacenter:index'),
