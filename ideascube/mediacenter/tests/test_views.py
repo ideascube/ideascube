@@ -115,20 +115,23 @@ def test_tags_link_should_update_querystring(app):
     DocumentFactory(lang='en', tags=['tag1', 'tag2', 'tag3'])
     response = app.get(reverse('mediacenter:index'), {'lang': 'en'})
 
-    links = response.pyquery('a').filter(
+    links = response.pyquery('.card a').filter(
         lambda i, elem: (elem.text or '').strip() == 'tag1')
+    print(links[0].attrib['href'])
     response = app.get(links[0].attrib['href'], status=200)
     assert {'lang': 'en', 'tags': 'tag1'} == response.request.GET
 
-    links = response.pyquery('a').filter(
+    links = response.pyquery('.card a').filter(
         lambda i, elem: (elem.text or '').strip() == 'tag2')
+    print(links[0].attrib['href'])
     response = app.get(links[0].attrib['href'], status=200)
     assert {'lang': ['en'], 'tags': ['tag1', 'tag2']} == \
         response.request.GET.dict_of_lists()
 
     # Do it a second time. Only one 'tag2' should be present
-    links = response.pyquery('a').filter(
+    links = response.pyquery('.card a').filter(
         lambda i, elem: (elem.text or '').strip() == 'tag2')
+    print(links[0].attrib['href'])
     response = app.get(links[0].attrib['href'], status=200)
     assert {'lang': ['en'], 'tags': ['tag1', 'tag2']} == \
         response.request.GET.dict_of_lists()
@@ -142,8 +145,8 @@ def test_remove_filter_should_be_present(app):
                         'kind': 'video'
                        })
 
-    links = response.pyquery('a').filter(
-        lambda i, elem: "filter English" in (elem.text or ''))
+    links = response.pyquery('.filter-card a').filter(
+        lambda i, elem: "English" in (elem.text or ''))
     assert links
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
                                  links[0].attrib['href']),
@@ -151,8 +154,8 @@ def test_remove_filter_should_be_present(app):
     assert {'q': ['foo'], 'tags': ['tag1', 'tag2'], 'kind': ['video']} == \
         resp.request.GET.dict_of_lists()
 
-    links = response.pyquery('a').filter(
-        lambda i, elem: "filter foo" in (elem.text or ''))
+    links = response.pyquery('.filter-card a').filter(
+        lambda i, elem: "foo" in (elem.text or ''))
     assert links
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
                                  links[0].attrib['href']),
@@ -160,8 +163,8 @@ def test_remove_filter_should_be_present(app):
     assert {'lang': ['en'], 'tags': ['tag1', 'tag2'], 'kind': ['video']} == \
         resp.request.GET.dict_of_lists()
 
-    links = response.pyquery('a').filter(
-        lambda i, elem: "filter tag1" in (elem.text or ''))
+    links = response.pyquery('.filter-card a').filter(
+        lambda i, elem: "tag1" in (elem.text or ''))
     assert links
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
                                  links[0].attrib['href']),
@@ -169,8 +172,8 @@ def test_remove_filter_should_be_present(app):
     assert {'lang': ['en'], 'q': ['foo'], 'tags': ['tag2'], 'kind': ['video']} \
         == resp.request.GET.dict_of_lists()
 
-    links = response.pyquery('a').filter(
-        lambda i, elem: "filter tag2" in (elem.text or ''))
+    links = response.pyquery('.filter-card a').filter(
+        lambda i, elem: "tag2" in (elem.text or ''))
     assert links
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
                                  links[0].attrib['href']),
@@ -178,8 +181,8 @@ def test_remove_filter_should_be_present(app):
     assert {'lang': ['en'], 'q': ['foo'], 'tags': ['tag1'], 'kind': ['video']} \
         == resp.request.GET.dict_of_lists()
 
-    links = response.pyquery('a').filter(
-        lambda i, elem: "filter video" in (elem.text or ''))
+    links = response.pyquery('.filter-card a').filter(
+        lambda i, elem: "video" in (elem.text or ''))
     assert links
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
                                  links[0].attrib['href']),

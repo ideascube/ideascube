@@ -14,6 +14,7 @@
 {% endblock twothird %}
 {% block third %}
     {% url 'library:index' as library_index %}
+    {% include 'search/filter_cloud.html' with action=index %}
     {% include 'search/box.html' with action=library_index %}
     {% if user.is_staff %}
         <ul class="card tinted admin">

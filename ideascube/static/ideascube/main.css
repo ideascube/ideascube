@@ -901,6 +901,23 @@ html[dir='rtl'] .search input[type='submit'] {
     justify-content: center;
 }
 
+.filter-card {
+    border: 1px solid #efefef;
+    padding: 5px;
+}
+
+.filter-card li {
+    display:inline;
+    border: 1px solid #AAA;
+    border-radius: 2px;
+    background: #DDD;
+    padding: 0 2px;
+    margin: 0 5px;
+}
+
+.filter-card li a {
+    text-decoration: none;
+}
 
 /* ************************************************* */
 /* **************** MEDIAS CENTER ****************** */

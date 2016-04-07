@@ -21,29 +21,7 @@
         </div>
     {% endif %}
     {% url 'mediacenter:index' as index %}
-    {% if q or kind or lang or tags %}
-        <div class="card tinted">
-            <h4>{% trans "Filters" %}</h4>
-            <ul>
-                <li><a href="{% url 'mediacenter:index' %}">{% trans "Remove all filters" %}</a></li>
-            {% if q %}
-                <li><a href="{% remove_qs q=q %}">{% trans "Remove filter" %} {{ q }}</a></li>
-            {% endif %}
-            {# Well... lookup in a dict or lookup in a list of tuples, what is the best ? #}
-            {% if kind %}
-                <li><a href="{% remove_qs kind=kind %}">{% trans "Remove filter" %} {{ view.model.KIND_DICT|getitem:kind }}</a></li>
-            {% endif %}
-            {% if lang %}
-                {% with LANG_INFO|getitem:lang as lang_info %}
-                <li><a href="{% remove_qs lang=lang %}">{% trans "Remove filter" %} {{ lang_info.name }}</a></li>
-                {% endwith %}
-            {% endif %}
-            {% for t in tags %}
-                <li><a href="{% remove_qs tags=t %}">{% trans "Remove filter" %} {{ t }}</a></li>
-            {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
+    {% include 'search/filter_cloud.html' with action=index %}
     {% include 'search/box.html' with action=index %}
     {% if not_empty_kinds|length > 1 %}
     <div class="card tinted">
