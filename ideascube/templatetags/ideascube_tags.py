@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 
 from django import template
@@ -58,7 +57,8 @@ def fa(fa_id, extra_class=''):
     return mark_safe(tpl.format(id=fa_id, extra=extra_class))
 
 
-@register.inclusion_tag('ideascube/includes/tag_cloud.html', takes_context=True)
+@register.inclusion_tag('ideascube/includes/tag_cloud.html',
+                        takes_context=True)
 def tag_cloud(context, url, model=None, limit=20, tags=None):
     if not tags:
         qs = Tag.objects.all()
@@ -67,7 +67,7 @@ def tag_cloud(context, url, model=None, limit=20, tags=None):
             qs = qs.filter(taggit_taggeditem_items__content_type=content_type)
         qs = qs.annotate(count=Count('taggit_taggeditem_items__id'))
         tags = qs.order_by('-count', 'slug')[:limit]
-    return {'tags': tags, 'url': url, 'request':context.request}
+    return {'tags': tags, 'url': url, 'request': context.request}
 
 
 @register.filter(name='getattr')
@@ -145,7 +145,7 @@ def add_qs(context, **kwargs):
                     params.appendlist(key, v)
         else:
             params[key] = value
-    return '?%s' %  params.urlencode()
+    return '?%s' % params.urlencode()
 
 
 @register.simple_tag(takes_context=True)
@@ -165,4 +165,4 @@ def remove_qs(context, **kwargs):
             del existing[key]
     params = QueryDict(mutable=True)
     params.update(MultiValueDict(existing))
-    return '?%s' %  params.urlencode()
+    return '?%s' % params.urlencode()
