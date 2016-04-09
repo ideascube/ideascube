@@ -419,7 +419,7 @@ def test_kiwix_commits_after_install(tmpdir, settings, zippedzim_path, mocker):
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
 
     manager().get_service.assert_called_once_with('kiwix-server')
-    manager().restart.assert_called_once()
+    manager().restart.call_count == 1
 
 
 def test_kiwix_commits_after_remove(tmpdir, settings, zippedzim_path, mocker):
@@ -511,7 +511,7 @@ def test_nginx_commits_after_install(tmpdir, settings, staticsite_path,
     assert symlink.realpath() == conffile
 
     manager().get_service.assert_called_once_with('nginx')
-    manager().restart.assert_called_once()
+    manager().restart.call_count == 1
 
 
 def test_nginx_commits_after_remove(tmpdir, settings, staticsite_path,
