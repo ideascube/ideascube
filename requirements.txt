@@ -1,9 +1,9 @@
 batinfo==0.3
-Django==1.8.10
+Django==1.9.4
 django-countries==3.4.1
 django-select-multiple-field==0.4.2
-django-taggit==0.18.0
-lxml==3.5.0
+django-taggit==0.18.1
+lxml==3.6.0
 mypy-lang
 Pillow==3.1.1
 progressist

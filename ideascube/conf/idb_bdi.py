@@ -14,9 +14,16 @@ USER_FORM_FIELDS = (
 
 HOME_CARDS = HOME_CARDS + [
     {
-        'id': 'cpassorcier',
+        'id': 'cpassorcier.old',
     },
     {
-        'id': 'ted',
+        'id': 'ted.old',
+    },
+    {
+        'id': 'maps',
+        'maps': [
+            (_('World'), 'world.map'),
+            ('Burundi', 'burundi.map'),
+        ]
     },
 ]

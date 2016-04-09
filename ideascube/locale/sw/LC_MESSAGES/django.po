@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-22 15:35+0000\n"
+"POT-Creation-Date: 2016-03-30 14:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Origin"
 msgstr ""
 
-#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:200
+#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:207
 #: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_eth_bokolmanyo.py:18
 #: ideascube/conf/idb_fra_aurore.py:18 ideascube/conf/idb_fra_calais.py:18
 #: ideascube/conf/idb_grc_eleonas.py:15 ideascube/conf/idb_jor_alhashmi.py:12
@@ -273,93 +273,97 @@ msgstr ""
 msgid "World Mental Health Day"
 msgstr ""
 
-#: ideascube/conf/base.py:181
+#: ideascube/conf/base.py:188
 msgid "the camp"
 msgstr ""
 
-#: ideascube/conf/base.py:199
+#: ideascube/conf/base.py:206
 msgid "Basic informations"
 msgstr ""
 
-#: ideascube/conf/base.py:211 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:218 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr ""
 
-#: ideascube/conf/base.py:212
+#: ideascube/conf/base.py:219
 msgid "Create, remove or modify users."
 msgstr ""
 
-#: ideascube/conf/base.py:219
+#: ideascube/conf/base.py:226
 msgid "Entries"
 msgstr ""
 
-#: ideascube/conf/base.py:220
+#: ideascube/conf/base.py:227
 msgid "Manage user entries."
 msgstr ""
 
-#: ideascube/conf/base.py:227
+#: ideascube/conf/base.py:234
 #: ideascube/monitoring/templates/monitoring/stock.html:5
 msgid "Stock"
 msgstr ""
 
-#: ideascube/conf/base.py:228
+#: ideascube/conf/base.py:235
 msgid "Manage stock."
 msgstr ""
 
-#: ideascube/conf/base.py:235
+#: ideascube/conf/base.py:242
 msgid "Loans"
 msgstr ""
 
-#: ideascube/conf/base.py:236
+#: ideascube/conf/base.py:243
 msgid "Manage loans."
 msgstr ""
 
-#: ideascube/conf/base.py:243
+#: ideascube/conf/base.py:250
 msgid "Stop/Restart"
 msgstr ""
 
-#: ideascube/conf/base.py:244
+#: ideascube/conf/base.py:251
 msgid "Stop or restart the server."
 msgstr ""
 
-#: ideascube/conf/base.py:251
+#: ideascube/conf/base.py:258
 msgid "Backups"
 msgstr ""
 
-#: ideascube/conf/base.py:252
+#: ideascube/conf/base.py:259
 msgid "Create, restore, download, upload backups."
 msgstr ""
 
-#: ideascube/conf/base.py:259
+#: ideascube/conf/base.py:266
 msgid "Wi-Fi"
 msgstr ""
 
-#: ideascube/conf/base.py:260
+#: ideascube/conf/base.py:267
 msgid "Manage Wi-Fi connections."
 msgstr ""
 
-#: ideascube/conf/base.py:295
+#: ideascube/conf/base.py:302
 msgid "Python web server"
 msgstr ""
 
-#: ideascube/conf/base.py:296
+#: ideascube/conf/base.py:303
 msgid "Global proxy"
 msgstr ""
 
-#: ideascube/conf/base.py:299
+#: ideascube/conf/base.py:306
 msgid "Daemon which provides KhanAcademy on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:302
+#: ideascube/conf/base.py:309
 msgid "Daemon which provides Wikipedia on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:304
+#: ideascube/conf/base.py:311
 msgid "Daemon which provides Gutenberg on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:306
+#: ideascube/conf/base.py:313
 msgid "Daemon used for distant connexion to server"
+msgstr ""
+
+#: ideascube/conf/idb_bdi.py:25
+msgid "World"
 msgstr ""
 
 #: ideascube/conf/idb_fra_aurore.py:7 ideascube/conf/idb_fra_calais.py:7

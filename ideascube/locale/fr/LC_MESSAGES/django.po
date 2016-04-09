@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-22 15:35+0000\n"
-"PO-Revision-Date: 2016-03-22 15:54+0000\n"
+"POT-Creation-Date: 2016-03-30 14:48+0000\n"
+"PO-Revision-Date: 2016-03-30 14:54+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -155,7 +155,7 @@ msgstr "Dans le camp"
 msgid "Origin"
 msgstr "Origine"
 
-#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:200
+#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:207
 #: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_eth_bokolmanyo.py:18
 #: ideascube/conf/idb_fra_aurore.py:18 ideascube/conf/idb_fra_calais.py:18
 #: ideascube/conf/idb_grc_eleonas.py:15 ideascube/conf/idb_jor_alhashmi.py:12
@@ -277,94 +277,98 @@ msgstr ""
 msgid "World Mental Health Day"
 msgstr ""
 
-#: ideascube/conf/base.py:181
+#: ideascube/conf/base.py:188
 msgid "the camp"
 msgstr "le camp"
 
-#: ideascube/conf/base.py:199
+#: ideascube/conf/base.py:206
 msgid "Basic informations"
 msgstr ""
 
-#: ideascube/conf/base.py:211 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:218 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: ideascube/conf/base.py:212
+#: ideascube/conf/base.py:219
 msgid "Create, remove or modify users."
 msgstr "Créer, supprimer et modifier les utilisateurs."
 
-#: ideascube/conf/base.py:219
+#: ideascube/conf/base.py:226
 msgid "Entries"
 msgstr "Entrées"
 
-#: ideascube/conf/base.py:220
+#: ideascube/conf/base.py:227
 msgid "Manage user entries."
 msgstr "Gérer les entrées"
 
-#: ideascube/conf/base.py:227
+#: ideascube/conf/base.py:234
 #: ideascube/monitoring/templates/monitoring/stock.html:5
 msgid "Stock"
 msgstr "Stock"
 
-#: ideascube/conf/base.py:228
+#: ideascube/conf/base.py:235
 msgid "Manage stock."
 msgstr "Gérer le stock"
 
-#: ideascube/conf/base.py:235
+#: ideascube/conf/base.py:242
 msgid "Loans"
 msgstr "Prêts"
 
-#: ideascube/conf/base.py:236
+#: ideascube/conf/base.py:243
 msgid "Manage loans."
 msgstr "Gérer les prêts"
 
-#: ideascube/conf/base.py:243
+#: ideascube/conf/base.py:250
 msgid "Stop/Restart"
 msgstr "Stopper/redémarrer"
 
-#: ideascube/conf/base.py:244
+#: ideascube/conf/base.py:251
 msgid "Stop or restart the server."
 msgstr "Stopper ou redémarrer le serveur"
 
-#: ideascube/conf/base.py:251
+#: ideascube/conf/base.py:258
 msgid "Backups"
 msgstr "Sauvegardes"
 
-#: ideascube/conf/base.py:252
+#: ideascube/conf/base.py:259
 msgid "Create, restore, download, upload backups."
 msgstr "Créer, restaurer, télécharger, uploader des sauvegardes."
 
-#: ideascube/conf/base.py:259
+#: ideascube/conf/base.py:266
 msgid "Wi-Fi"
 msgstr "Wifi"
 
-#: ideascube/conf/base.py:260
+#: ideascube/conf/base.py:267
 msgid "Manage Wi-Fi connections."
 msgstr "Gérer les connexions wifi"
 
-#: ideascube/conf/base.py:295
+#: ideascube/conf/base.py:302
 msgid "Python web server"
 msgstr ""
 
-#: ideascube/conf/base.py:296
+#: ideascube/conf/base.py:303
 msgid "Global proxy"
 msgstr "Proxy"
 
-#: ideascube/conf/base.py:299
+#: ideascube/conf/base.py:306
 msgid "Daemon which provides KhanAcademy on lan"
 msgstr "Service pour lancer la Khan Academy"
 
-#: ideascube/conf/base.py:302
+#: ideascube/conf/base.py:309
 msgid "Daemon which provides Wikipedia on lan"
 msgstr "Service permettant d'avoir Wikipedia en local"
 
-#: ideascube/conf/base.py:304
+#: ideascube/conf/base.py:311
 msgid "Daemon which provides Gutenberg on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:306
+#: ideascube/conf/base.py:313
 msgid "Daemon used for distant connexion to server"
 msgstr "Daemon utilisé pour la connexion distante au serveur"
+
+#: ideascube/conf/idb_bdi.py:25
+msgid "World"
+msgstr "Monde"
 
 #: ideascube/conf/idb_fra_aurore.py:7 ideascube/conf/idb_fra_calais.py:7
 #: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_lwb_detroit_usa.py:7
@@ -877,11 +881,11 @@ msgstr "Vit sans sa famille à {place}"
 #: ideascube/models.py:157
 #, python-brace-format
 msgid "Has family in {place} but lives without"
-msgstr ""
+msgstr "A de la famille dans {place} mais n'habite pas avec"
 
 #: ideascube/models.py:162
 msgid "Comitees, representation groups"
-msgstr ""
+msgstr "Comités, groupes de représenation"
 
 #: ideascube/models.py:163
 msgid "Music, dance, singing"
@@ -893,15 +897,15 @@ msgstr "Autre activité culturelle"
 
 #: ideascube/models.py:165
 msgid "Informatic workshops"
-msgstr ""
+msgstr "Ateliers d'informatique"
 
 #: ideascube/models.py:166
 msgid "Literacy working group"
-msgstr ""
+msgstr "Groupe de lecture"
 
 #: ideascube/models.py:167
 msgid "Talking group"
-msgstr ""
+msgstr "Groupes de parole"
 
 #: ideascube/models.py:168
 msgid "Recreational"
@@ -941,7 +945,7 @@ msgstr "Bouche-à-oreilles"
 
 #: ideascube/models.py:180
 msgid "Poster campaign"
-msgstr ""
+msgstr "Affichage"
 
 #: ideascube/models.py:185
 msgid "Primary"
@@ -1049,7 +1053,7 @@ msgstr "Situation familiale"
 
 #: ideascube/models.py:243
 msgid "Sent to school in the country of origin (if under 18)"
-msgstr ""
+msgstr "Allait à l'école dans le pays d'origine (pour les mineurs)"
 
 #: ideascube/models.py:246
 msgid "Activities in the camp"
@@ -1077,7 +1081,7 @@ msgstr "Connaissance de l'Arabe"
 
 #: ideascube/models.py:265
 msgid "Persian knowledge"
-msgstr ""
+msgstr "Connaissance du persan"
 
 #: ideascube/models.py:268
 msgid "Kirundi knowledge"
@@ -1333,7 +1337,7 @@ msgstr "Ajouter un nouvel exemplaire"
 #: ideascube/monitoring/templates/monitoring/stock.html:8
 #: ideascube/monitoring/templates/monitoring/stock.html:24
 msgid "Add stock item"
-msgstr ""
+msgstr "Ajouter un objet dans le stock"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:9
 msgid "Reference"
@@ -1420,7 +1424,7 @@ msgstr "L'item {item} a été prêté à {user}"
 #: ideascube/monitoring/views.py:365
 #, python-brace-format
 msgid "Item {item} has been returned"
-msgstr ""
+msgstr "L'objet {item} a été rendu"
 
 #: ideascube/monitoring/views.py:369
 msgid "Item not found"
@@ -1718,7 +1722,7 @@ msgstr "Parcourir les posts de blog"
 
 #: ideascube/templates/ideascube/includes/cards/blog.html:6
 msgid "Go to the blog"
-msgstr ""
+msgstr "Aller au blog"
 
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:3
 msgid "BSF Campus"
@@ -1852,7 +1856,7 @@ msgstr "info"
 
 #: ideascube/templates/ideascube/includes/cards/w2eu.html:3
 msgid "w2eu"
-msgstr ""
+msgstr "w2eu"
 
 #: ideascube/templates/ideascube/includes/cards/w2eu.html:4
 msgid "Independent information for refugees and migrants coming to Europe."

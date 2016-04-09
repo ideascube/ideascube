@@ -1,3 +1,5 @@
+from django import forms
+
 from select_multiple_field.models import SelectMultipleField
 
 
@@ -18,3 +20,12 @@ class CommaSeparatedCharField(SelectMultipleField):
             return ", ".join(str(choices.get(c, c)) for c in values if c)
 
         setattr(cls, 'get_%s_display' % self.name, _get_FIELD_display)
+
+
+class LangSelect(forms.Select):
+
+    def render_option(self, selected_choices, option_value, option_label):
+        if option_value:
+            option_label = '{} ({})'.format(option_label, option_value)
+        return super().render_option(selected_choices, option_value,
+                                     option_label)

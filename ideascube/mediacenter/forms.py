@@ -1,5 +1,7 @@
 from django import forms
 
+from ideascube.fields import LangSelect
+
 from .models import Document
 from .utils import guess_kind_from_content_type
 
@@ -9,6 +11,9 @@ class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
         fields = '__all__'
+        widgets = {
+            'lang': LangSelect,
+        }
 
     def save(self, commit=True):
         document = super(DocumentForm, self).save(commit=False)
