@@ -145,7 +145,7 @@ def test_remove_filter_should_be_present(app):
                         'kind': 'video'
                        })
 
-    links = response.pyquery('.filter-card a').filter(
+    links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "English" in (elem.text or ''))
     assert links
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
@@ -154,7 +154,7 @@ def test_remove_filter_should_be_present(app):
     assert {'q': ['foo'], 'tags': ['tag1', 'tag2'], 'kind': ['video']} == \
         resp.request.GET.dict_of_lists()
 
-    links = response.pyquery('.filter-card a').filter(
+    links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "foo" in (elem.text or ''))
     assert links
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
@@ -163,7 +163,7 @@ def test_remove_filter_should_be_present(app):
     assert {'lang': ['en'], 'tags': ['tag1', 'tag2'], 'kind': ['video']} == \
         resp.request.GET.dict_of_lists()
 
-    links = response.pyquery('.filter-card a').filter(
+    links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "tag1" in (elem.text or ''))
     assert links
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
@@ -172,7 +172,7 @@ def test_remove_filter_should_be_present(app):
     assert {'lang': ['en'], 'q': ['foo'], 'tags': ['tag2'], 'kind': ['video']} \
         == resp.request.GET.dict_of_lists()
 
-    links = response.pyquery('.filter-card a').filter(
+    links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "tag2" in (elem.text or ''))
     assert links
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
@@ -181,7 +181,7 @@ def test_remove_filter_should_be_present(app):
     assert {'lang': ['en'], 'q': ['foo'], 'tags': ['tag1'], 'kind': ['video']} \
         == resp.request.GET.dict_of_lists()
 
-    links = response.pyquery('.filter-card a').filter(
+    links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "video" in (elem.text or ''))
     assert links
     resp = app.get("{}{}".format(reverse('mediacenter:index'),

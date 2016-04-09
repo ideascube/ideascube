@@ -900,23 +900,19 @@ html[dir='rtl'] .search input[type='submit'] {
 .search .main {
     justify-content: center;
 }
-
-.filter-card {
-    border: 1px solid #efefef;
-    padding: 5px;
-}
-
-.filter-card li {
-    display:inline;
-    border: 1px solid #AAA;
+.filters.card li {
+    display: inline-block;
+    border: 1px solid #ddd;
     border-radius: 2px;
-    background: #DDD;
-    padding: 0 2px;
-    margin: 0 5px;
+    background: #eee;
+    padding: 2px 3px;
+    margin: 2px;
 }
-
-.filter-card li a {
+.filters.card li a {
     text-decoration: none;
+}
+.filters.card li i.fa {
+    position: initial;
 }
 
 /* ************************************************* */
