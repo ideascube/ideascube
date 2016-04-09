@@ -115,13 +115,13 @@ def test_tags_link_should_update_querystring(app):
     DocumentFactory(lang='en', tags=['tag1', 'tag2', 'tag3'])
     response = app.get(reverse('mediacenter:index'), {'lang': 'en'})
 
-    links = response.pyquery('.card a').filter(
+    links = response.pyquery('.card:not(.filters) a').filter(
         lambda i, elem: (elem.text or '').strip() == 'tag1')
     print(links[0].attrib['href'])
     response = app.get(links[0].attrib['href'], status=200)
     assert {'lang': 'en', 'tags': 'tag1'} == response.request.GET
 
-    links = response.pyquery('.card a').filter(
+    links = response.pyquery('.card:not(.filters) a').filter(
         lambda i, elem: (elem.text or '').strip() == 'tag2')
     print(links[0].attrib['href'])
     response = app.get(links[0].attrib['href'], status=200)
@@ -129,7 +129,7 @@ def test_tags_link_should_update_querystring(app):
         response.request.GET.dict_of_lists()
 
     # Do it a second time. Only one 'tag2' should be present
-    links = response.pyquery('.card a').filter(
+    links = response.pyquery('.card:not(.filters) a').filter(
         lambda i, elem: (elem.text or '').strip() == 'tag2')
     print(links[0].attrib['href'])
     response = app.get(links[0].attrib['href'], status=200)
