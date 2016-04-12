@@ -63,11 +63,4 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'universcience',
         'languages': ['fr']
     },
-    {
-        'id': 'maps',
-        'maps': [
-            (_('World'), 'world.map'),
-            ('Burundi', 'burundi.map'),
-        ]
-    },
 ]
