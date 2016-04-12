@@ -20,7 +20,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'wikipedia',
-        'languages': 'fr',
+        'languages': ['fr'],
     },
     {
         'id': 'cest-pas-sorcier',
