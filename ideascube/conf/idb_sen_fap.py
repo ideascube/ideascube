@@ -60,7 +60,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         ]
     },
     {
-        'id' : 'dirtybiology'
+        'id' : 'dirtybiology',
         'languages': ['fr']
     },
     {
