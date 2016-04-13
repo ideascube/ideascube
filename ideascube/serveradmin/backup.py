@@ -78,12 +78,25 @@ class Backup(object):
         if self.format == 'zip':
             raise ValueError(_("Zip is no more supported to create backup"))
 
-        return shutil.make_archive(
-            base_name=os.path.join(Backup.ROOT, self.basename),  # W/o ext.
-            format=self.format,
-            root_dir=settings.BACKUPED_ROOT,
-            base_dir='./'
-        )
+        base_name = os.path.join(Backup.ROOT, self.basename)
+        base_name = "{}{}".format(base_name,
+                                  self.FORMAT_TO_EXTENSION[self.format])
+        try:
+            mode = 'w'
+            if self.format == 'gztar':
+                mode = 'w:gz'
+            elif self.format == 'bztar':
+                mode = 'w:bz2'
+            archive = tarfile.open(base_name, mode=mode)
+            archive.add(settings.BACKUPED_ROOT,
+                        arcname='./',
+                        recursive=True,
+                        exclude=os.path.islink)
+        except:
+            raise
+        finally:
+            archive.close()
+        return archive
 
     def restore(self):
         """Restore a backup from a backup name."""
