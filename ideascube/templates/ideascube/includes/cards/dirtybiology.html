@@ -1,0 +1,5 @@
+{% load i18n %}
+{% trans "Dirtybiology" as name %}
+{% trans "learn" as theme %}
+{% trans "Videos about science popularization." as description %}
+{% include 'ideascube/includes/cards/_kiwix.html' with card=card class="dirtybiology" theme_class="learn" name=name description=description theme=theme %}
