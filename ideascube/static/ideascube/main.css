@@ -284,7 +284,7 @@ label.strip {
 }
 label.strip + input[type="text"] {
     border-top-right-radius: 0;
-    border-top-left-radius: 0;    
+    border-top-left-radius: 0;
 }
 [contenteditable=true]:empty:before {
     content: attr(placeholder);
@@ -411,7 +411,7 @@ header .menu .dropdown-menu ul {
     text-align: left;
     left: -155px;
     padding: 20%;
-    border: 1px solid #CCCCCC;   
+    border: 1px solid #CCCCCC;
 }
 html[dir='rtl'] header .menu .dropdown-menu ul {
     margin-left: 150px;
@@ -560,6 +560,12 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 }
 .card.vikidia {
     background-image: url('./img/cards/vikidia.png');
+}
+.card.wikistage {
+    background-image: url('./img/cards/wikistage.png');
+}
+.card.dirtybiology {
+    background-image: url('./img/cards/dirtybiology.png');
 }
 .card.software {
     background-image: url('./img/cards/windows.jpeg');
@@ -1166,7 +1172,7 @@ table.stock .actions {
     }
     footer .half {
         margin-left: 10%;
-    }    
+    }
     footer .third {
         width: 60%;
     }
@@ -1208,11 +1214,11 @@ table.stock .actions {
     }
     footer .half {
         margin-left: 30%;
-    }    
+    }
     footer .third {
         width: 50%;
         margin-left: 5%;
-    }    
+    }
 }
 @media screen and (min-width: 1280px) {
     header {
