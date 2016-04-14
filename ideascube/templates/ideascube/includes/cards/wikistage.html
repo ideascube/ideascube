@@ -1,0 +1,5 @@
+{% load i18n %}
+{% trans "Wikistage" as name %}
+{% trans "learn" as theme %}
+{% trans "A platform for learning and debate." as description %}
+{% include 'ideascube/includes/cards/_kiwix.html' with card=card class="wikistage" theme_class="learn" name=name description=description theme=theme %}
