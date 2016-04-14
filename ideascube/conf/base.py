@@ -159,6 +159,12 @@ EXTRA_LANG_INFO = {
         'name': 'Somali',
         'code': 'so',
         'name_local': u'Af-Soomaali'
+    },
+    'wo': {
+        'bidi': False,
+        'name': 'Wolof',
+        'code': 'wo',
+        'name_local': 'wolof'
     }
 }
 
