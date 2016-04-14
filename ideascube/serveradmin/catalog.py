@@ -16,6 +16,12 @@ from progressist import ProgressBar
 from resumable import DownloadCheck, DownloadError, urlretrieve
 import yaml
 
+from ideascube.mediacenter.models import Document
+from ideascube.mediacenter.forms import DocumentForm
+from ideascube.mediacenter.utils import guess_kind_from_content_type
+from ideascube.templatetags.ideascube_tags import smart_truncate
+from django.core.files import File
+
 from .systemd import Manager as SystemManager, NoSuchUnit
 
 from ..utils import printerr
@@ -46,6 +52,9 @@ class NoSuchPackage(Exception):
 
 
 class InvalidHandlerType(Exception):
+    pass
+
+class InvalidPackageContent(Exception):
     pass
 
 
@@ -185,6 +194,8 @@ server {{
         except FileNotFoundError as e:
             printerr(e)
 
+class MediaCenter(Handler):
+    pass
 
 class MetaRegistry(type):
     def __new__(mcs, name, bases, attrs, **kwargs):
@@ -276,11 +287,7 @@ class ZippedZim(Package):
         for path in glob(os.path.join(datadir, '*', zimname)):
             rm(path)
 
-
-class StaticSite(Package):
-    typename = 'static-site'
-    handler = Nginx
-
+class SimpleZipPackage(Package):
     def get_root_dir(self, install_dir):
         return os.path.join(install_dir, self.id)
 
@@ -295,6 +302,93 @@ class StaticSite(Package):
             shutil.rmtree(self.get_root_dir(install_dir))
         except FileNotFoundError as e:
             printerr(e)
+
+class StaticSite(SimpleZipPackage):
+    typename = 'static-site'
+    handler = Nginx
+
+
+class ZippedMedia(SimpleZipPackage):
+    typename = 'zipped-media'
+    handler = MediaCenter
+
+    def remove(self, install_dir):
+        # Easy part here. Just delete documents from the package.
+        Document.objects.filter(package_id=self.id).delete()
+        super().remove(install_dir)
+
+    def install(self, download_path, install_dir):
+        super().install(download_path, install_dir)
+        print('Adding medias to mediacenter database.')
+        root = self.get_root_dir(install_dir)
+        manifestfile = Path(root, 'manifest.yml')
+        with manifestfile.open('r') as m:
+            manifest = yaml.safe_load(m.read())
+
+        for media in manifest['medias']:
+            try:
+                self._install_media(media, root)
+            except:
+                # This can lead to installed package with uninstall media.
+                # We sould handle this somehow.
+                printerr("Cannot install media {} from package {}".format(media['title'], self.id))
+                continue
+
+    def _install_media(self, media_info, install_dir):
+        files = {'original': None, 'preview': None}
+
+        try:
+            media_info['title'] = title = smart_truncate(media_info['title'])
+        except KeyError:
+            raise InvalidPackageContent('Missing {} in {}'.format(entry, media_info))
+
+        if not 'lang' in media_info:
+            media_info['lang'] = settings.LANGUAGE_CODE
+
+        kind = media_info.get('kind')
+        if not kind or not hasattr(Document, kind.upper()):
+            content_type, _ = mimetypes.guess_type(original)
+            media_info['kind'] = guess_kind_from_content_type(content_type) or Document.OTHER
+
+        instance = Document.objects.filter(title=title, kind=kind).last()
+        if instance:
+            raise InvalidPackageContent('Document {} already exists'.format(title))
+
+        media_info['package_id'] = self.id
+
+        o, p = None, None
+        try:
+            original = media_info['path']
+            try:
+                o = Path(install_dir, original).open('rb')
+                files['original'] = File(o, name=original)
+            except OSError as e:
+                raise InvalidPackageContent('Cannot open path {}. Error is {}'.format(path, e))
+
+            if 'preview' in media_info:
+                preview = media_info['preview']
+                try:
+                    p = Path(install_dir, preview).open('rb')
+                    files['preview'] = File(p, name=preview)
+                except OSError:
+                    pass
+
+            self._save_media(media_info, files)
+        finally:
+            # Close opened files whatever happen.
+            [f.close() for f in (o, p) if f]
+
+    def _save_media(self, metadata, files):
+        form = DocumentForm(data=metadata, files=files, instance=None)
+
+        if form.is_valid():
+            doc = form.save()
+            print("Media", doc, "has been added to database.")
+        else:
+            lerr = ["Some values are not valid :"]
+            for field, error in form.errors.items():
+                lerr.append(" - {}: {}".format(field, error.as_text()))
+            raise InvalidPackageContent("\n".join(lerr))
 
 
 class Bar(ProgressBar):
