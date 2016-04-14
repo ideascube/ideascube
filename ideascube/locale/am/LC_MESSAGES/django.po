@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-30 14:48+0000\n"
-"PO-Revision-Date: 2016-03-30 14:51+0000\n"
+"POT-Creation-Date: 2016-04-14 12:40+0000\n"
+"PO-Revision-Date: 2016-04-14 12:41+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: Amharic (http://www.transifex.com/ideascube/ideascube/language/am/)\n"
 "MIME-Version: 1.0\n"
@@ -127,15 +127,19 @@ msgstr ""
 #: ideascube/conf/azraq.py:14 ideascube/conf/idb_bdi.py:7
 #: ideascube/conf/idb_eth_bokolmanyo.py:14 ideascube/conf/idb_fra_aurore.py:15
 #: ideascube/conf/idb_fra_calais.py:15 ideascube/conf/idb_fra_cultura.py:14
-#: ideascube/conf/idb_grc_eleonas.py:13 ideascube/conf/idb_jor_alhashmi.py:9
-#: ideascube/conf/idb_lwb_detroit_usa.py:15 ideascube/conf/mapoon.py:15
+#: ideascube/conf/idb_fra_emmaus.py:15 ideascube/conf/idb_grc_eleonas.py:13
+#: ideascube/conf/idb_jor_alhashmi.py:9
+#: ideascube/conf/idb_lwb_detroit_usa.py:15 ideascube/conf/idb_sen_fap.py:15
+#: ideascube/conf/mapoon.py:15
 msgid "Personal informations"
 msgstr ""
 
 #: ideascube/conf/azraq.py:15 ideascube/conf/idb_bdi.py:8
 #: ideascube/conf/idb_eth_bokolmanyo.py:15 ideascube/conf/idb_fra_aurore.py:16
-#: ideascube/conf/idb_fra_calais.py:16 ideascube/conf/idb_jor_alhashmi.py:10
-#: ideascube/conf/idb_lwb_detroit_usa.py:16 ideascube/conf/mapoon.py:16
+#: ideascube/conf/idb_fra_calais.py:16 ideascube/conf/idb_fra_emmaus.py:16
+#: ideascube/conf/idb_jor_alhashmi.py:10
+#: ideascube/conf/idb_lwb_detroit_usa.py:16 ideascube/conf/idb_sen_fap.py:16
+#: ideascube/conf/mapoon.py:16
 msgid "Family"
 msgstr ""
 
@@ -150,11 +154,13 @@ msgstr ""
 msgid "Origin"
 msgstr ""
 
-#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:207
+#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:213
 #: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_eth_bokolmanyo.py:18
 #: ideascube/conf/idb_fra_aurore.py:18 ideascube/conf/idb_fra_calais.py:18
-#: ideascube/conf/idb_grc_eleonas.py:15 ideascube/conf/idb_jor_alhashmi.py:12
-#: ideascube/conf/idb_lwb_detroit_usa.py:18 ideascube/conf/mapoon.py:18
+#: ideascube/conf/idb_fra_emmaus.py:18 ideascube/conf/idb_grc_eleonas.py:15
+#: ideascube/conf/idb_jor_alhashmi.py:12
+#: ideascube/conf/idb_lwb_detroit_usa.py:18 ideascube/conf/idb_sen_fap.py:18
+#: ideascube/conf/mapoon.py:18
 msgid "Language skills"
 msgstr ""
 
@@ -272,107 +278,110 @@ msgstr ""
 msgid "World Mental Health Day"
 msgstr ""
 
-#: ideascube/conf/base.py:188
+#: ideascube/conf/base.py:194
 msgid "the camp"
 msgstr ""
 
-#: ideascube/conf/base.py:206
+#: ideascube/conf/base.py:212
 msgid "Basic informations"
 msgstr ""
 
-#: ideascube/conf/base.py:218 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:224
+#: ideascube/templates/ideascube/user_list.html.py:6
 msgid "Users"
 msgstr ""
 
-#: ideascube/conf/base.py:219
+#: ideascube/conf/base.py:225
 msgid "Create, remove or modify users."
 msgstr ""
 
-#: ideascube/conf/base.py:226
+#: ideascube/conf/base.py:232
 msgid "Entries"
 msgstr ""
 
-#: ideascube/conf/base.py:227
+#: ideascube/conf/base.py:233
 msgid "Manage user entries."
 msgstr ""
 
-#: ideascube/conf/base.py:234
+#: ideascube/conf/base.py:240
 #: ideascube/monitoring/templates/monitoring/stock.html:5
 msgid "Stock"
 msgstr ""
 
-#: ideascube/conf/base.py:235
+#: ideascube/conf/base.py:241
 msgid "Manage stock."
 msgstr ""
 
-#: ideascube/conf/base.py:242
+#: ideascube/conf/base.py:248
 msgid "Loans"
 msgstr ""
 
-#: ideascube/conf/base.py:243
+#: ideascube/conf/base.py:249
 msgid "Manage loans."
 msgstr ""
 
-#: ideascube/conf/base.py:250
+#: ideascube/conf/base.py:256
 msgid "Stop/Restart"
 msgstr ""
 
-#: ideascube/conf/base.py:251
+#: ideascube/conf/base.py:257
 msgid "Stop or restart the server."
 msgstr ""
 
-#: ideascube/conf/base.py:258
+#: ideascube/conf/base.py:264
 msgid "Backups"
 msgstr ""
 
-#: ideascube/conf/base.py:259
+#: ideascube/conf/base.py:265
 msgid "Create, restore, download, upload backups."
 msgstr ""
 
-#: ideascube/conf/base.py:266
+#: ideascube/conf/base.py:272
 msgid "Wi-Fi"
 msgstr ""
 
-#: ideascube/conf/base.py:267
+#: ideascube/conf/base.py:273
 msgid "Manage Wi-Fi connections."
 msgstr ""
 
-#: ideascube/conf/base.py:302
+#: ideascube/conf/base.py:308
 msgid "Python web server"
 msgstr ""
 
-#: ideascube/conf/base.py:303
+#: ideascube/conf/base.py:309
 msgid "Global proxy"
 msgstr ""
 
-#: ideascube/conf/base.py:306
+#: ideascube/conf/base.py:312
 msgid "Daemon which provides KhanAcademy on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:309
+#: ideascube/conf/base.py:315
 msgid "Daemon which provides Wikipedia on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:311
+#: ideascube/conf/base.py:317
 msgid "Daemon which provides Gutenberg on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:313
+#: ideascube/conf/base.py:319
 msgid "Daemon used for distant connexion to server"
 msgstr ""
 
-#: ideascube/conf/idb_bdi.py:25
+#: ideascube/conf/idb_bdi.py:25 ideascube/conf/idb_sen_fap.py:77
 msgid "World"
 msgstr ""
 
 #: ideascube/conf/idb_fra_aurore.py:7 ideascube/conf/idb_fra_calais.py:7
-#: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_lwb_detroit_usa.py:7
+#: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_fra_emmaus.py:7
+#: ideascube/conf/idb_lwb_detroit_usa.py:7 ideascube/conf/idb_sen_fap.py:7
 msgid "city"
 msgstr ""
 
 #: ideascube/conf/idb_fra_aurore.py:17 ideascube/conf/idb_fra_calais.py:17
-#: ideascube/conf/idb_grc_eleonas.py:14
-#: ideascube/conf/idb_lwb_detroit_usa.py:17 ideascube/conf/mapoon.py:17
+#: ideascube/conf/idb_fra_emmaus.py:17 ideascube/conf/idb_grc_eleonas.py:14
+#: ideascube/conf/idb_lwb_detroit_usa.py:17 ideascube/conf/idb_sen_fap.py:17
+#: ideascube/conf/mapoon.py:17
 msgid "In the town"
 msgstr ""
 
@@ -403,23 +412,23 @@ msgstr ""
 msgid "Confirm password"
 msgstr ""
 
-#: ideascube/library/forms.py:25
+#: ideascube/library/forms.py:27
 msgid "You can't have both a file and a serial"
 msgstr ""
 
-#: ideascube/library/forms.py:27
+#: ideascube/library/forms.py:29
 msgid "You must add a file or a serial"
 msgstr ""
 
-#: ideascube/library/forms.py:55
+#: ideascube/library/forms.py:60
 msgid "CSV from \"Mocam-en-ligne\""
 msgstr ""
 
-#: ideascube/library/forms.py:57
+#: ideascube/library/forms.py:62
 msgid "Ideascube ZIP"
 msgstr ""
 
-#: ideascube/library/forms.py:75
+#: ideascube/library/forms.py:80
 msgid "Unknown file format"
 msgstr ""
 
@@ -1741,6 +1750,21 @@ msgstr ""
 msgid "Go to C'est pas sorcier"
 msgstr ""
 
+#: ideascube/templates/ideascube/includes/cards/dirtybiology.html:2
+msgid "Dirtybiology"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/dirtybiology.html:3
+#: ideascube/templates/ideascube/includes/cards/wikistage.html:3
+#: ideascube/templates/ideascube/includes/cards/wikiversity.html:3
+#: ideascube/templates/ideascube/includes/cards/wiktionary.html:3
+msgid "learn"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/dirtybiology.html:4
+msgid "Videos about science popularization."
+msgstr ""
+
 #: ideascube/templates/ideascube/includes/cards/gutenberg.html:3
 #: ideascube/templates/ideascube/includes/cards/gutenberg.old.html:3
 msgid "Gutenberg project"
@@ -1891,13 +1915,16 @@ msgstr ""
 msgid "Bibliothèque de textes libres et gratuits."
 msgstr ""
 
-#: ideascube/templates/ideascube/includes/cards/wikiversity.html:2
-msgid "Wikiversity"
+#: ideascube/templates/ideascube/includes/cards/wikistage.html:2
+msgid "Wikistage"
 msgstr ""
 
-#: ideascube/templates/ideascube/includes/cards/wikiversity.html:3
-#: ideascube/templates/ideascube/includes/cards/wiktionary.html:3
-msgid "learn"
+#: ideascube/templates/ideascube/includes/cards/wikistage.html:4
+msgid "A platform for learning and debate."
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/cards/wikiversity.html:2
+msgid "Wikiversity"
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/wikiversity.html:4

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-30 14:48+0000\n"
-"PO-Revision-Date: 2016-03-30 14:54+0000\n"
+"POT-Creation-Date: 2016-04-14 12:40+0000\n"
+"PO-Revision-Date: 2016-04-14 12:46+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -132,15 +132,19 @@ msgstr "Ajouter un billet"
 #: ideascube/conf/azraq.py:14 ideascube/conf/idb_bdi.py:7
 #: ideascube/conf/idb_eth_bokolmanyo.py:14 ideascube/conf/idb_fra_aurore.py:15
 #: ideascube/conf/idb_fra_calais.py:15 ideascube/conf/idb_fra_cultura.py:14
-#: ideascube/conf/idb_grc_eleonas.py:13 ideascube/conf/idb_jor_alhashmi.py:9
-#: ideascube/conf/idb_lwb_detroit_usa.py:15 ideascube/conf/mapoon.py:15
+#: ideascube/conf/idb_fra_emmaus.py:15 ideascube/conf/idb_grc_eleonas.py:13
+#: ideascube/conf/idb_jor_alhashmi.py:9
+#: ideascube/conf/idb_lwb_detroit_usa.py:15 ideascube/conf/idb_sen_fap.py:15
+#: ideascube/conf/mapoon.py:15
 msgid "Personal informations"
 msgstr "Informations personnelles"
 
 #: ideascube/conf/azraq.py:15 ideascube/conf/idb_bdi.py:8
 #: ideascube/conf/idb_eth_bokolmanyo.py:15 ideascube/conf/idb_fra_aurore.py:16
-#: ideascube/conf/idb_fra_calais.py:16 ideascube/conf/idb_jor_alhashmi.py:10
-#: ideascube/conf/idb_lwb_detroit_usa.py:16 ideascube/conf/mapoon.py:16
+#: ideascube/conf/idb_fra_calais.py:16 ideascube/conf/idb_fra_emmaus.py:16
+#: ideascube/conf/idb_jor_alhashmi.py:10
+#: ideascube/conf/idb_lwb_detroit_usa.py:16 ideascube/conf/idb_sen_fap.py:16
+#: ideascube/conf/mapoon.py:16
 msgid "Family"
 msgstr "Famille"
 
@@ -155,11 +159,13 @@ msgstr "Dans le camp"
 msgid "Origin"
 msgstr "Origine"
 
-#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:207
+#: ideascube/conf/azraq.py:18 ideascube/conf/base.py:213
 #: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_eth_bokolmanyo.py:18
 #: ideascube/conf/idb_fra_aurore.py:18 ideascube/conf/idb_fra_calais.py:18
-#: ideascube/conf/idb_grc_eleonas.py:15 ideascube/conf/idb_jor_alhashmi.py:12
-#: ideascube/conf/idb_lwb_detroit_usa.py:18 ideascube/conf/mapoon.py:18
+#: ideascube/conf/idb_fra_emmaus.py:18 ideascube/conf/idb_grc_eleonas.py:15
+#: ideascube/conf/idb_jor_alhashmi.py:12
+#: ideascube/conf/idb_lwb_detroit_usa.py:18 ideascube/conf/idb_sen_fap.py:18
+#: ideascube/conf/mapoon.py:18
 msgid "Language skills"
 msgstr "Langues"
 
@@ -277,107 +283,110 @@ msgstr ""
 msgid "World Mental Health Day"
 msgstr ""
 
-#: ideascube/conf/base.py:188
+#: ideascube/conf/base.py:194
 msgid "the camp"
 msgstr "le camp"
 
-#: ideascube/conf/base.py:206
+#: ideascube/conf/base.py:212
 msgid "Basic informations"
-msgstr ""
+msgstr "Infos de base"
 
-#: ideascube/conf/base.py:218 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:224
+#: ideascube/templates/ideascube/user_list.html.py:6
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: ideascube/conf/base.py:219
+#: ideascube/conf/base.py:225
 msgid "Create, remove or modify users."
 msgstr "Créer, supprimer et modifier les utilisateurs."
 
-#: ideascube/conf/base.py:226
+#: ideascube/conf/base.py:232
 msgid "Entries"
 msgstr "Entrées"
 
-#: ideascube/conf/base.py:227
+#: ideascube/conf/base.py:233
 msgid "Manage user entries."
 msgstr "Gérer les entrées"
 
-#: ideascube/conf/base.py:234
+#: ideascube/conf/base.py:240
 #: ideascube/monitoring/templates/monitoring/stock.html:5
 msgid "Stock"
 msgstr "Stock"
 
-#: ideascube/conf/base.py:235
+#: ideascube/conf/base.py:241
 msgid "Manage stock."
 msgstr "Gérer le stock"
 
-#: ideascube/conf/base.py:242
+#: ideascube/conf/base.py:248
 msgid "Loans"
 msgstr "Prêts"
 
-#: ideascube/conf/base.py:243
+#: ideascube/conf/base.py:249
 msgid "Manage loans."
 msgstr "Gérer les prêts"
 
-#: ideascube/conf/base.py:250
+#: ideascube/conf/base.py:256
 msgid "Stop/Restart"
 msgstr "Stopper/redémarrer"
 
-#: ideascube/conf/base.py:251
+#: ideascube/conf/base.py:257
 msgid "Stop or restart the server."
 msgstr "Stopper ou redémarrer le serveur"
 
-#: ideascube/conf/base.py:258
+#: ideascube/conf/base.py:264
 msgid "Backups"
 msgstr "Sauvegardes"
 
-#: ideascube/conf/base.py:259
+#: ideascube/conf/base.py:265
 msgid "Create, restore, download, upload backups."
 msgstr "Créer, restaurer, télécharger, uploader des sauvegardes."
 
-#: ideascube/conf/base.py:266
+#: ideascube/conf/base.py:272
 msgid "Wi-Fi"
 msgstr "Wifi"
 
-#: ideascube/conf/base.py:267
+#: ideascube/conf/base.py:273
 msgid "Manage Wi-Fi connections."
 msgstr "Gérer les connexions wifi"
 
-#: ideascube/conf/base.py:302
+#: ideascube/conf/base.py:308
 msgid "Python web server"
-msgstr ""
+msgstr "Serveur web python."
 
-#: ideascube/conf/base.py:303
+#: ideascube/conf/base.py:309
 msgid "Global proxy"
 msgstr "Proxy"
 
-#: ideascube/conf/base.py:306
+#: ideascube/conf/base.py:312
 msgid "Daemon which provides KhanAcademy on lan"
 msgstr "Service pour lancer la Khan Academy"
 
-#: ideascube/conf/base.py:309
+#: ideascube/conf/base.py:315
 msgid "Daemon which provides Wikipedia on lan"
 msgstr "Service permettant d'avoir Wikipedia en local"
 
-#: ideascube/conf/base.py:311
+#: ideascube/conf/base.py:317
 msgid "Daemon which provides Gutenberg on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:313
+#: ideascube/conf/base.py:319
 msgid "Daemon used for distant connexion to server"
 msgstr "Daemon utilisé pour la connexion distante au serveur"
 
-#: ideascube/conf/idb_bdi.py:25
+#: ideascube/conf/idb_bdi.py:25 ideascube/conf/idb_sen_fap.py:77
 msgid "World"
 msgstr "Monde"
 
 #: ideascube/conf/idb_fra_aurore.py:7 ideascube/conf/idb_fra_calais.py:7
-#: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_lwb_detroit_usa.py:7
+#: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_fra_emmaus.py:7
+#: ideascube/conf/idb_lwb_detroit_usa.py:7 ideascube/conf/idb_sen_fap.py:7
 msgid "city"
 msgstr "ville"
 
 #: ideascube/conf/idb_fra_aurore.py:17 ideascube/conf/idb_fra_calais.py:17
-#: ideascube/conf/idb_grc_eleonas.py:14
-#: ideascube/conf/idb_lwb_detroit_usa.py:17 ideascube/conf/mapoon.py:17
+#: ideascube/conf/idb_fra_emmaus.py:17 ideascube/conf/idb_grc_eleonas.py:14
+#: ideascube/conf/idb_lwb_detroit_usa.py:17 ideascube/conf/idb_sen_fap.py:17
+#: ideascube/conf/mapoon.py:17
 msgid "In the town"
 msgstr "Dans la ville"
 
@@ -408,23 +417,23 @@ msgstr "Pour créer un bon mot de passe, oubliez les mots de passe, et cherchez 
 msgid "Confirm password"
 msgstr "Confirmer le mot de passe"
 
-#: ideascube/library/forms.py:25
+#: ideascube/library/forms.py:27
 msgid "You can't have both a file and a serial"
 msgstr "Il n'est pas possible d'avoir à la fois un fichier et un code-barres"
 
-#: ideascube/library/forms.py:27
+#: ideascube/library/forms.py:29
 msgid "You must add a file or a serial"
 msgstr "Vous devez ajouter un fichier ou un code-barres"
 
-#: ideascube/library/forms.py:55
+#: ideascube/library/forms.py:60
 msgid "CSV from \"Mocam-en-ligne\""
 msgstr "CSV de \"Mocam-en-ligne\""
 
-#: ideascube/library/forms.py:57
+#: ideascube/library/forms.py:62
 msgid "Ideascube ZIP"
 msgstr "Zip Ideascube"
 
-#: ideascube/library/forms.py:75
+#: ideascube/library/forms.py:80
 msgid "Unknown file format"
 msgstr "Format inconnu"
 
@@ -1746,6 +1755,21 @@ msgstr "Le magazine de vulgarisation scientifique."
 msgid "Go to C'est pas sorcier"
 msgstr "Aller à C'est pas sorcier"
 
+#: ideascube/templates/ideascube/includes/cards/dirtybiology.html:2
+msgid "Dirtybiology"
+msgstr "Dirtybiology"
+
+#: ideascube/templates/ideascube/includes/cards/dirtybiology.html:3
+#: ideascube/templates/ideascube/includes/cards/wikistage.html:3
+#: ideascube/templates/ideascube/includes/cards/wikiversity.html:3
+#: ideascube/templates/ideascube/includes/cards/wiktionary.html:3
+msgid "learn"
+msgstr "apprendre"
+
+#: ideascube/templates/ideascube/includes/cards/dirtybiology.html:4
+msgid "Videos about science popularization."
+msgstr "Vidéo de vulgarisation scientifique."
+
 #: ideascube/templates/ideascube/includes/cards/gutenberg.html:3
 #: ideascube/templates/ideascube/includes/cards/gutenberg.old.html:3
 msgid "Gutenberg project"
@@ -1860,7 +1884,7 @@ msgstr "w2eu"
 
 #: ideascube/templates/ideascube/includes/cards/w2eu.html:4
 msgid "Independent information for refugees and migrants coming to Europe."
-msgstr ""
+msgstr "Information indépendante pour les réfugiés et les migrants en Europe."
 
 #: ideascube/templates/ideascube/includes/cards/wikibooks.html:2
 msgid "Wikibooks"
@@ -1872,7 +1896,7 @@ msgstr "Des livres libres pour un monde libre."
 
 #: ideascube/templates/ideascube/includes/cards/wikipedia.html:2
 msgid "Wikipedia"
-msgstr ""
+msgstr "Wikipedia"
 
 #: ideascube/templates/ideascube/includes/cards/wikipedia.html:4
 #: ideascube/templates/ideascube/includes/cards/wikipedia.old.html:4
@@ -1896,30 +1920,33 @@ msgstr "La bibliothèque libre."
 msgid "Bibliothèque de textes libres et gratuits."
 msgstr "Bibliothèque de textes libres et gratuits."
 
+#: ideascube/templates/ideascube/includes/cards/wikistage.html:2
+msgid "Wikistage"
+msgstr "Wikistage"
+
+#: ideascube/templates/ideascube/includes/cards/wikistage.html:4
+msgid "A platform for learning and debate."
+msgstr "Une plateforme pour apprendre et débattre"
+
 #: ideascube/templates/ideascube/includes/cards/wikiversity.html:2
 msgid "Wikiversity"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/wikiversity.html:3
-#: ideascube/templates/ideascube/includes/cards/wiktionary.html:3
-msgid "learn"
-msgstr "apprendre"
+msgstr "Wikiversity"
 
 #: ideascube/templates/ideascube/includes/cards/wikiversity.html:4
 msgid "Open learning community."
-msgstr ""
+msgstr "Communauté libre pour apprendre."
 
 #: ideascube/templates/ideascube/includes/cards/wikivoyage.html:2
 msgid "Wikivoyage"
-msgstr ""
+msgstr "Wikivoyage"
 
 #: ideascube/templates/ideascube/includes/cards/wikivoyage.html:4
 msgid "The free worldwide travel guide."
-msgstr ""
+msgstr "Guide de voyage libre."
 
 #: ideascube/templates/ideascube/includes/cards/wiktionary.html:2
 msgid "Wiktionary"
-msgstr ""
+msgstr "Wiktionary"
 
 #: ideascube/templates/ideascube/includes/cards/wiktionary.html:4
 msgid "The free dictionary."
