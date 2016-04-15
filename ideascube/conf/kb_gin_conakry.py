@@ -23,6 +23,13 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'languages': ['fr'],
     },
     {
+        'id': 'khanacademy',
+    },
+    {
+        'id': 'gutenberg',
+        'lang': 'fr',
+    },
+    {
         'id': 'cest-pas-sorcier',
     },
     {
