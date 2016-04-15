@@ -50,10 +50,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'languages': ['fr']
     },
     {
-        'id': 'wikiversity',
-        'languages': ['fr']
-    },
-    {
         'id': 'ted',
         'sessions': [
             ('tedxgeneva2014.fr', 'Geneva 2014'),
