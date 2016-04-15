@@ -28,6 +28,9 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'mediacenter',
     },
     {
+        'id': 'khanacademy',
+    },
+    {
         'id': 'wikipedia',
         'languages': ['fr', 'wo']
     },
