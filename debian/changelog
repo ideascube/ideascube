@@ -1,8 +1,8 @@
-ideascube (0.9.7) unstable; urgency=low
+ideascube (0.9.8) unstable; urgency=low
 
-  * More conf files and i18n updates
+  * More conf files
 
- -- Yohan Boniface <hi@yohanboniface.me>  Tue, 14 Apr 2016 14:50:00 +0100
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 15 Apr 2016 18:28:00 +0100
 
 
 ideascube (0.9.6) unstable; urgency=low
