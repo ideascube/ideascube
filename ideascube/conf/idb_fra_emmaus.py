@@ -50,10 +50,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'languages': ['fr']
     },
     {
-        'id': 'wikivoyage',
-        'languages': ['fr']
-    },
-    {
         'id': 'wiktionary',
         'languages': ['fr']
     },
