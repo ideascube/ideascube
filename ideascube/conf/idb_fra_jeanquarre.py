@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Ideaxbox for Emmaus, France"""
+"""Ideaxbox for Jean Quarré, France"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
-IDEASCUBE_NAME = u"Jean Carré"
+IDEASCUBE_NAME = u"Jean Quarré"
 IDEASCUBE_PLACE_NAME = _("city")
 COUNTRIES_FIRST = ['FR']
 TIME_ZONE = None
