@@ -547,6 +547,9 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card.gutenberg {
     background-image: url('./img/cards/gutenberg.jpeg');
 }
+.card.clickinfosn {
+    background-image: url('./img/cards/clickinfosn.png');
+}
 .card.ted {
     background-image: url('./img/cards/ted.png');
     background-position: top 24px right 5px;
