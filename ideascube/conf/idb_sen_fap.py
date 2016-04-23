@@ -71,6 +71,9 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'languages': ['fr']
     },
     {
+        'id': 'clickinfosn',
+    },
+    {
         'id': 'maps',
         'maps': [
             (_('World'), 'world.map'),
