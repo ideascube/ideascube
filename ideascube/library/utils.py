@@ -38,7 +38,7 @@ def fetch_from_openlibrary(isbn):
     url = '{base}{query}'.format(base=OPENLIBRARY_API_URL, query=query)
     content = read_url(url)
     try:
-        data = json.loads(content).get(key)
+        data = json.loads(content.decode()).get(key)
     except ValueError:
         return
     if not data:
