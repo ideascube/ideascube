@@ -15,18 +15,10 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'gutenberg',
     },
     {
-        'id': 'wiktionary',
+        'id': 'wikipedia',
     },
     {
-        'id': 'ted',
-        'sessions': [
-            ('tedbusiness.en', 'Business'),
-            ('teddesign.en', 'Design'),
-            ('tedentertainment.en', 'Entertainment'),
-            ('tedglobalissues.en', 'Global Issues'),
-            ('tedscience.en', 'Science'),
-            ('tedtechnology.en', 'Technology'),
-        ]
+        'id': 'wiktionary',
     },
     {
         'id': 'khanacademy',
