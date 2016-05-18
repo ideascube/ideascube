@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Mapoon box in Australia"""
+"""Kowanyama box in Australia"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
-IDEASCUBE_NAME = u"Mapoon"
+IDEASCUBE_NAME = u"Kowanyama"
 IDEASCUBE_PLACE_NAME = _("the community")
 COUNTRIES_FIRST = ['AU']
 TIME_ZONE = 'Australia/Darwin'
