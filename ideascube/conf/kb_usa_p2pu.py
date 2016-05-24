@@ -13,12 +13,15 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'gutenberg',
+        'lang': 'en',
     },
     {
         'id': 'wikipedia',
+        'languages': ['en']
     },
     {
         'id': 'wiktionary',
+        'languages': ['en']
     },
     {
         'id': 'ted',
