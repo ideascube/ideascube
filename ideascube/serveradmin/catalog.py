@@ -116,6 +116,7 @@ class Kiwix(Handler):
         print('Rebuilding the Kiwix library')
         library = etree.Element('library')
         libdir = os.path.join(self._install_dir, 'data', 'library')
+        os.makedirs(libdir, exist_ok=True)
 
         for libpath in glob(os.path.join(libdir, '*.xml')):
             zimname = os.path.basename(libpath)[:-4]
@@ -472,7 +473,7 @@ class Catalog:
         for handler in used_handlers.values():
             handler.commit()
 
-    def remove_packages(self, ids):
+    def remove_packages(self, ids, commit=True):
         used_handlers = {}
 
         for pkg in self._get_packages(ids, self._catalog['installed']):
@@ -488,8 +489,15 @@ class Catalog:
             del(self._catalog['installed'][pkg.id])
             self._persist_cache()
 
+        if not commit:
+            return
+
         for handler in used_handlers.values():
             handler.commit()
+
+    def reinstall_packages(self, ids):
+        self.remove_packages(ids, commit=False)
+        self.install_packages(ids)
 
     def upgrade_packages(self, ids):
         used_handlers = {}
