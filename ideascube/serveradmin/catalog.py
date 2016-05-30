@@ -375,11 +375,6 @@ class ZippedMedia(SimpleZipPackage):
             media_info['kind'] = guess_kind_from_content_type(content_type) \
                 or Document.OTHER
 
-        instance = Document.objects.filter(title=title, kind=kind).last()
-        if instance:
-            raise InvalidPackageContent(
-                'Document {} already exists'.format(title))
-
         media_info['package_id'] = self.id
         media_info['original'] = os.path.join(pseudo_install_dir,
                                               media_info['path'])
