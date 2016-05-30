@@ -1,6 +1,5 @@
 import os
 import tarfile
-import zipfile
 
 import pytest
 
@@ -19,7 +18,7 @@ def test_backup_init_should_raise_with_malformatted_string():
 
 
 def test_underscore_as_separator_should_still_be_supported():
-    Backup('edoardo-0.0.0-201501231405.zip')
+    Backup('edoardo-0.0.0-201501231405.tar.gz')
 
 
 @pytest.mark.parametrize('input,expected', [
@@ -36,9 +35,9 @@ def test_list(monkeypatch, settings):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
     settings.DATETIME_FORMAT = 'Y'
-    filename = 'edoardo-0.0.0-201501231405.zip'
+    filename = 'edoardo-0.0.0-201501231405.tar'
     good = os.path.join(BACKUPS_ROOT, filename)
-    bad = os.path.join(BACKUPS_ROOT, 'donotlistme.zip')
+    bad = os.path.join(BACKUPS_ROOT, 'donotlistme.tar')
     try:
         os.makedirs(BACKUPS_ROOT)
     except OSError:
@@ -51,35 +50,6 @@ def test_list(monkeypatch, settings):
     os.remove(good)
     os.remove(bad)
     os.rmdir(BACKUPS_ROOT)
-
-
-def test_create_zipfile(monkeypatch, settings):
-    settings.BACKUPED_ROOT = BACKUPED_ROOT
-    try:
-        os.makedirs(BACKUPED_ROOT)
-    except OSError:
-        pass
-    filename = 'edoardo-0.0.0-201501231405.zip'
-    filepath = os.path.join(BACKUPS_ROOT, filename)
-    try:
-        # Make sure it doesn't exist before running backup.
-        os.remove(filepath)
-    except OSError:
-        pass
-    monkeypatch.setattr('ideascube.serveradmin.backup.Backup.FORMAT', 'zip')
-    monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
-                        BACKUPS_ROOT)
-    monkeypatch.setattr('ideascube.serveradmin.backup.make_name',
-                        lambda f: filename)
-    proof_file = os.path.join(settings.BACKUPED_ROOT, 'backup.me')
-    open(proof_file, mode='w')
-    Backup.create()
-    assert os.path.exists(filepath)
-    assert zipfile.is_zipfile(filepath)
-    archive = zipfile.ZipFile(filepath)
-    assert 'backup.me' in archive.namelist()
-    os.remove(filepath)
-    os.remove(proof_file)
 
 
 @pytest.mark.parametrize('format,extension', [
@@ -115,6 +85,15 @@ def test_create_tarfile(monkeypatch, settings, format, extension):
     archive.close()
     os.remove(filepath)
     os.remove(proof_file)
+
+
+def test_create_zipfile_must_fail(monkeypatch, tmpdir):
+    monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT', str(tmpdir))
+    monkeypatch.setattr('ideascube.serveradmin.backup.Backup.FORMAT', 'zip')
+    assert len(list(Backup.list())) == 0
+    with pytest.raises(ValueError) as excinfo:
+        Backup.create()
+    assert len(list(Backup.list())) == 0
 
 
 @pytest.mark.parametrize('extension', [
@@ -154,10 +133,16 @@ def test_load(monkeypatch, extension):
     os.remove(backup_path)
 
 
-def test_delete(monkeypatch):
+@pytest.mark.parametrize('extension', [
+    ('.zip'),
+    ('.tar'),
+    ('.tar.gz'),
+    ('.tar.bz2'),
+])
+def test_delete(monkeypatch, extension):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
-    backup_name = 'musasa-0.1.0-201501241620.zip'
+    backup_name = 'musasa-0.1.0-201501241620' + extension
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
     with open(os.path.join(DATA_ROOT, backup_name), mode='rb') as f:
@@ -170,13 +155,13 @@ def test_delete(monkeypatch):
 def test_delete_should_not_fail_if_file_is_missing(monkeypatch):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
-    backup = Backup('doesnotexist-0.1.0-201501241620.zip')
+    backup = Backup('doesnotexist-0.1.0-201501241620.tar')
     backup.delete()
 
 
 def test_load_should_raise_if_file_is_not_a_zip():
     with pytest.raises(ValueError) as excinfo:
-        Backup.load(ContentFile('xxx', name='musasa_0.1.0_201501241620.zip'))
+        Backup.load(ContentFile(b'xxx', name='musasa_0.1.0_201501241620.zip'))
         assert 'Not a zip file' in str(excinfo.value)
 
 
@@ -191,5 +176,5 @@ def test_load_should_raise_if_file_is_not_a_tar():
 
 def test_exists(monkeypatch, settings):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT', DATA_ROOT)
-    assert Backup.exists('musasa-0.1.0-201501241620.zip')
-    assert not Backup.exists('doesnotexist.zip')
+    assert Backup.exists('musasa-0.1.0-201501241620.tar')
+    assert not Backup.exists('doesnotexist.tar')

@@ -1,7 +1,7 @@
 from io import BytesIO
 import os
 import shutil
-import zipfile
+import tarfile
 
 import pytest
 from webtest.forms import Checkbox, Upload
@@ -231,12 +231,12 @@ def test_backup_should_list_available_backups(staffapp, backup):
     form = staffapp.get(reverse('server:backup')).forms['backup']
     radio_options = form.get('backup').options
     assert len(radio_options) == 4
-    assert radio_options[3][0] == backup.name
+    assert radio_options[2][0] == backup.name
 
 
 def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
                                                 settings):
-    monkeypatch.setattr('ideascube.serveradmin.backup.Backup.FORMAT', 'zip')
+    monkeypatch.setattr('ideascube.serveradmin.backup.Backup.FORMAT', 'gztar')
     settings.BACKUPED_ROOT = BACKUPED_ROOT
     try:
         os.makedirs(BACKUPED_ROOT)
@@ -244,7 +244,7 @@ def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
         pass
     if os.path.exists(BACKUPS_ROOT):
         shutil.rmtree(BACKUPS_ROOT)
-    filename = 'edoardo-0.0.0-201501231405.zip'
+    filename = 'edoardo-0.0.0-201501231405.tar.gz'
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
         # Make sure it doesn't exist before running backup.
@@ -260,9 +260,9 @@ def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
     form = staffapp.get(reverse('server:backup')).forms['backup']
     form.submit('do_create')
     assert os.path.exists(filepath)
-    assert zipfile.is_zipfile(filepath)
-    archive = zipfile.ZipFile(filepath)
-    assert 'backup.me' in archive.namelist()
+    assert tarfile.is_tarfile(filepath)
+    archive = tarfile.open(filepath)
+    assert './backup.me' in archive.getnames()
     os.remove(filepath)
     os.remove(proof_file)
 
@@ -282,19 +282,22 @@ def test_restore_button_should_restore(staffapp, monkeypatch, settings,
     os.remove(dbpath)
 
 
-def test_download_button_should_download_zip_file(staffapp, backup):
+def test_download_button_should_download_tar_file(staffapp, backup, tmpdir):
     form = staffapp.get(reverse('server:backup')).forms['backup']
     form['backup'] = backup.name
     resp = form.submit('do_download')
     assert backup.name in resp['Content-Disposition']
-    assert zipfile.is_zipfile(ContentFile(resp.content))
+    archive_name = os.path.join(str(tmpdir), 'backup.tar')
+    with open(archive_name, mode="wb") as f:
+        f.write(resp.content)
+    assert tarfile.is_tarfile(archive_name)
 
 
 def test_delete_button_should_remove_file(staffapp, backup):
     assert len(os.listdir(DATA_ROOT)) == 4
     with open(backup.path, mode='rb') as f:
         other = Backup.load(ContentFile(f.read(),
-                            name='kavumu-0.1.0-201401241620.zip'))
+                            name='kavumu-0.1.0-201401241620.tar.gz'))
     assert len(os.listdir(DATA_ROOT)) == 5
     form = staffapp.get(reverse('server:backup')).forms['backup']
     form['backup'] = other.name
@@ -308,7 +311,7 @@ def test_upload_button_create_new_backup_with_uploaded_file(staffapp,
                         BACKUPS_ROOT)
     if os.path.exists(BACKUPS_ROOT):
         shutil.rmtree(BACKUPS_ROOT)
-    backup_name = 'musasa-0.1.0-201501241620.zip'
+    backup_name = 'musasa-0.1.0-201501241620.tar.gz'
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
     with open(os.path.join(DATA_ROOT, backup_name), mode='rb') as f:
@@ -319,11 +322,11 @@ def test_upload_button_create_new_backup_with_uploaded_file(staffapp,
         os.remove(backup_path)
 
 
-def test_upload_button_do_not_create_backup_with_non_zip_file(staffapp,
+def test_upload_button_do_not_create_backup_with_non_tar_file(staffapp,
                                                               monkeypatch):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
-    backup_name = 'musasa-0.1.0-201501241620.zip'
+    backup_name = 'musasa-0.1.0-201501241620.tar'
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
     form = staffapp.get(reverse('server:backup')).forms['backup']
@@ -337,12 +340,12 @@ def test_upload_button_do_not_create_backup_with_bad_file_name(staffapp,
                                                                monkeypatch):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
-    backup_name = 'musasa-0.1.0-201501241620.zip'
+    backup_name = 'musasa-0.1.0-201501241620.tar'
     backup_path = os.path.join(BACKUPS_ROOT, backup_name)
     assert not os.path.exists(backup_path)
     with open(os.path.join(DATA_ROOT, backup_name), mode='rb') as f:
         form = staffapp.get(reverse('server:backup')).forms['backup']
-        form['upload'] = Upload('badname.zip', f.read())
+        form['upload'] = Upload('badname.tar', f.read())
         resp = form.submit('do_upload')
         assert resp.status_code == 200
         assert not os.path.exists(backup_path)
