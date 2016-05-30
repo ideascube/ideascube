@@ -54,6 +54,11 @@ class Command(BaseCommand):
             help='Install packages')
         install.set_defaults(func=self.install_packages)
 
+        reinstall = subs.add_parser(
+            'reinstall', parents=[package_cache, required_ids],
+            help='Reinstall packages')
+        reinstall.set_defaults(func=self.reinstall_packages)
+
         remove = subs.add_parser(
             'remove', parents=[required_ids], help='Remove packages')
         remove.set_defaults(func=self.remove_packages)
@@ -156,6 +161,13 @@ class Command(BaseCommand):
     def remove_packages(self, options):
         try:
             self.catalog.remove_packages(options['ids'])
+
+        except NoSuchPackage as e:
+            raise CommandError('No such package: {}'.format(e))
+
+    def reinstall_packages(self, options):
+        try:
+            self.catalog.reinstall_packages(oprions['ids'])
 
         except NoSuchPackage as e:
             raise CommandError('No such package: {}'.format(e))
