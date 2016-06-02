@@ -9,45 +9,36 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
+from django.db.models import Count
 
 from ideascube.decorators import staff_member_required
+from ideascube.mixins import FilterableViewMixin
 
 from .models import Document
 from .forms import DocumentForm
 
 
-class Index(ListView):
+class Index(FilterableViewMixin, ListView):
     model = Document
     template_name = 'mediacenter/index.html'
     paginate_by = 24
 
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
-        for key in ('q', 'kind', 'lang'):
-            context[key] = self.request.GET.get(key)
-        context['tags'] = self.request.GET.getlist('tags')
-        default_values = {k: context[k] for k in ('kind', 'lang', 'tags')
-                          if context[k]}
-        context['default_values'] = default_values
+
+        available_kinds = self._search_for_attr_from_context('kind', context)
         context['not_empty_kinds'] = [
             (kind, label) for kind, label in Document.KIND_CHOICES
-            if len(Document.objects.filter(kind=kind))
+            if kind in available_kinds
             ]
+
+        # Do the same for langs
+        available_langs = self._search_for_attr_from_context('lang', context)
         context['not_empty_langs'] = [
             (lang, label) for lang, label in settings.LANGUAGES
-            if len(Document.objects.filter(lang=lang))
+            if lang in available_langs
             ]
         return context
-
-    def get_queryset(self):
-        qs = super(Index, self).get_queryset()
-        query = self.request.GET.get('q')
-        kind = self.request.GET.get('kind')
-        lang = self.request.GET.get('lang')
-        tags = self.request.GET.getlist('tags')
-        if any((query, kind, lang, tags)):
-            return qs.search(query=query, lang=lang, kind=kind, tags=tags)
-        return qs
 
 index = Index.as_view()
 

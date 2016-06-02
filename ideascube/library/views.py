@@ -12,35 +12,22 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   ListView, UpdateView, View)
 
 from ideascube.decorators import staff_member_required
-from ideascube.mixins import ByTagListView, CSVExportMixin
+from ideascube.mixins import FilterableViewMixin, CSVExportMixin
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
 
 
-class Index(ListView):
+class Index(FilterableViewMixin, ListView):
     model = Book
     template_name = 'library/index.html'
     paginate_by = 10
 
-    def get_context_data(self, **kwargs):
-        context = super(Index, self).get_context_data(**kwargs)
-        context['q'] = self.request.GET.get('q', '')
-        context['tags'] = self.request.GET.getlist('tags')
-        context['default_values'] = {'tags':context['tags']}
-        return context
-
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        tags = self.request.GET.getlist('tags')
-        if self.request.user.is_authenticated() and self.request.user.is_staff:
-            qs = Book.objects.all()
-        else:
-            qs = Book.objects.available()
-        if query or tags:
-            return qs.search(query=query, tags=tags)
-        else:
-            return qs.order_by('-modified_at')
+        qs = super(Index, self).get_queryset()
+        if not (self.request.user.is_authenticated() and self.request.user.is_staff):
+            qs = qs.filter(specimens__isnull=False).distinct()
+        return qs.order_by('-modified_at')
 
 index = Index.as_view()
 

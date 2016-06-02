@@ -90,7 +90,44 @@ def test_lang_link_should_no_be_displayed_if_no_several_langs(app):
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
     assert len(links) == 1
 
-def test_kind_link_should_update_querystring(app, pdf, image):
+
+def test_kind_link_should_be_displayed_depending_other_filters(app):
+    DocumentFactory(kind='pdf', title='foo')
+    DocumentFactory(kind='image', title='bar')
+
+    response = app.get(reverse('mediacenter:index'),
+                       {'kind':'image', 'q':'bar'})
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 0
+
+    DocumentFactory(kind='pdf', title='bar')
+
+    response = app.get(reverse('mediacenter:index'),
+                       {'kind':'image', 'q':'bar'})
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 1
+
+
+def test_lang_link_should_be_displayed_depending_other_filters(app):
+    DocumentFactory(lang='en', title='foo')
+    DocumentFactory(lang='fr', title='bar')
+
+    response = app.get(reverse('mediacenter:index'),
+                       {'lang':'fr', 'q':'bar'})
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'English')
+    assert len(links) == 0
+
+    DocumentFactory(lang='en', title='bar')
+
+    response = app.get(reverse('mediacenter:index'),
+                       {'lang':'fr', 'q':'bar'})
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'English')
+    assert len(links) == 1
+
+
+def test_kind_link_should_update_querystring(app):
+    DocumentFactory(kind='image', title='bar')
+    DocumentFactory(kind='pdf', title='bar')
     response = app.get(reverse('mediacenter:index'),
                        {'kind': 'image', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
@@ -101,8 +138,8 @@ def test_kind_link_should_update_querystring(app, pdf, image):
 
 
 def test_lang_link_should_update_querystring(app):
-    DocumentFactory(lang='fr')
-    DocumentFactory(lang='en')
+    DocumentFactory(lang='fr', title='bar')
+    DocumentFactory(lang='en', title='bar')
     response = app.get(reverse('mediacenter:index'), {'lang': 'en', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
     response = app.get("{}{}".format(reverse('mediacenter:index'),
