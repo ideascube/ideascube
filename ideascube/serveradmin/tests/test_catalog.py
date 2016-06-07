@@ -579,7 +579,7 @@ def test_catalog_existing_remote(tmpdir, settings):
 
 
 def test_catalog_add_remotes(tmpdir, settings):
-    from ideascube.serveradmin.catalog import Catalog
+    from ideascube.serveradmin.catalog import Catalog, ExistingRemoteError
 
     settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
     c = Catalog()
@@ -606,7 +606,7 @@ def test_catalog_add_remotes(tmpdir, settings):
     assert remote.name == 'Content provided by Foo'
     assert remote.url == 'http://foo.fr/catalog.yml'
 
-    with pytest.raises(ValueError) as exc:
+    with pytest.raises(ExistingRemoteError) as exc:
         c.add_remote('foo', 'Content by Foo', 'http://foo.fr/catalog.yml')
 
     assert 'foo' in exc.exconly()
