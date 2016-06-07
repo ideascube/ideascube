@@ -2,7 +2,9 @@ import argparse
 
 from django.core.management.base import BaseCommand, CommandError
 
-from ideascube.serveradmin.catalog import Catalog, NoSuchPackage
+from ideascube.serveradmin.catalog import (Catalog,
+                                           NoSuchPackage,
+                                           ExistingRemoteError)
 
 
 class Command(BaseCommand):
@@ -201,10 +203,18 @@ class Command(BaseCommand):
             self.catalog.add_remote(
                 options['id'], options['name'], options['url'])
 
-        except ValueError as e:
-            raise CommandError(e)
+            self.catalog.update_cache()
 
-        self.catalog.update_cache()
+        except ExistingRemoteError as e:
+            if e.remote.url != options['url']:
+                raise CommandError(
+                         ('There already is a "{0.id}" remote'
+                          'and urls differ ({0.url} and {1})'
+                         ).format(e.remote, options['url'])
+                      )
+            # Just print a warning if we try to add the exact same remote twice.
+            print(('Warning: "{}" remote already exists. '
+                   "They have same urls, so let's move forward.").format(id))
 
     def remove_remote(self, options):
         try:

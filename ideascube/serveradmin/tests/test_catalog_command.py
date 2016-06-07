@@ -90,10 +90,16 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch):
 
     old_mtime = tmpdir.join('remotes', 'foo.yml').mtime()
 
+    # Adding the same remote with the same url should not fail.
+    call_command(
+        'catalog', 'remotes', 'add', remote['id'], remote['name'],
+        remote['url'])
+
+    # But should fail with different urls.
     with pytest.raises(CommandError):
         call_command(
             'catalog', 'remotes', 'add', remote['id'], remote['name'],
-            remote['url'])
+            remote['url'] + "bad")
 
     assert tmpdir.join('remotes', 'foo.yml').mtime() == old_mtime
 
