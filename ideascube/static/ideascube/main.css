@@ -550,6 +550,18 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card.clickinfosn {
     background-image: url('./img/cards/clickinfosn.png');
 }
+.card.icd10 {
+    background-image: url('./img/cards/icd10.png');
+}
+.card.lesfondamentaux {
+    background-image: url('./img/cards/lesfondamentaux.png');
+}
+.card.bilconference {
+    background-image: url('./img/cards/bilconference.png');
+}
+.card.mullahpiaz {
+    background-image: url('./img/cards/mullahpiaz.jpg');
+}
 .card.ted {
     background-image: url('./img/cards/ted.png');
     background-position: top 24px right 5px;
