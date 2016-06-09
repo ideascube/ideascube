@@ -166,6 +166,12 @@ EXTRA_LANG_INFO = {
         'code': 'wo',
         'name_local': 'wolof'
     }
+    'ln': {
+        'bidi': False,
+        'name': 'Lingala',
+        'code': 'ln',
+        'name_local': 'lingala'
+    }
 }
 
 LOCALE_PATHS = (
