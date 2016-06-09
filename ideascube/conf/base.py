@@ -165,13 +165,19 @@ EXTRA_LANG_INFO = {
         'name': 'Wolof',
         'code': 'wo',
         'name_local': 'wolof'
-    }
+    },
     'ln': {
         'bidi': False,
         'name': 'Lingala',
         'code': 'ln',
-        'name_local': 'lingala'
-    }
+        'name_local': 'Lingála'
+    },
+    'ku': {
+        'bidi': False,
+        'name': 'Kurdish',
+        'code': 'ku',
+        'name_local': 'Kurdî'
+    },
 }
 
 LOCALE_PATHS = (
