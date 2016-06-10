@@ -3,7 +3,6 @@ from .base import *  # noqa
 ALLOWED_HOSTS = ['.koombook.lan.', 'localhost', '127.0.0.1']
 TIME_ZONE = None
 DOMAIN = 'koombook.lan'
-CATALOG_CACHE_BASE_DIR = '/media/hdd/ideascube_cache/catalog'
 BACKUP_FORMAT = 'gztar'
 IDEASCUBE_BODY_ID = 'koombook'
 STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS
