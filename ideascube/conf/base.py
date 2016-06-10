@@ -178,6 +178,12 @@ EXTRA_LANG_INFO = {
         'code': 'ku',
         'name_local': 'Kurdî'
     },
+    'vi': {
+        'bidi': False,
+        'name': 'Vietnamien',
+        'code': 'vi',
+        'name_local': 'Tiếng Việt'
+    },
 }
 
 LOCALE_PATHS = (
