@@ -104,6 +104,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Languages that will be available in all forms.
 AVAILABLE_LANGUAGES = (
     ('am', 'አማርኛ'),
     ('ar', 'العربية'),
@@ -114,12 +115,15 @@ AVAILABLE_LANGUAGES = (
     ('fa', 'فارسی'),
     ('fr', 'Français'),
     ('it', 'Italiano'),
+    ('ku', 'Kurdî'),
+    ('ln', 'Lingála'),
     ('ps', 'پښتو'),
     ('rn', 'Kirundi'),
     ('so', 'Af-Soomaali'),
     ('sw', 'Swahili'),
     ('ti', 'ትግርኛ'),
     ('ur', 'اردو'),
+    ('vi', 'Tiếng Việt'),
 )
 
 # Those will be added to django.locale.LANG_INFO.
