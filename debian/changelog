@@ -1,3 +1,17 @@
+ideascube (0.9.11) unstable; urgency=low
+
+  * Changed licence from MIT to GNU Affero GPL
+  * Change Mapoon config name to queensland
+  * Various config changes
+  * Removed CATALOG_CACHE_BASE_DIR from Koombook default config
+  * Use new card in Koombook default config
+  * Added Lingala and Kurdish languages
+  * Added cards for Mullah Piaz, les Fondamentaux, ICD 10 and BIL Conference
+  * Added command to reinstall a package already installed
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 10 Jun 2016 11:56:00 +0100
+
+
 ideascube (0.9.10) unstable; urgency=low
 
   * Changed licence from MIT to GNU Affero GPL
