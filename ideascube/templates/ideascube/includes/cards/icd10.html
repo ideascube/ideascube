@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="card tinted icd10">
-        <h4 class="flow"><span class="theme read">read</span> <span><a href="http://icd10.{{ domain }}">{% trans "ICD 10" %}</a></span></h4>
-    <p>{% trans "International Statistical Classification of Diseases and Related Health Problems" %}</p>
-</div>
+{% trans "ICD 10" as name %}
+{% trans "read" as theme %}
+{% trans "International Statistical Classification of Diseases and Related Health Problems" as description %}
+{% include 'ideascube/includes/cards/_kiwix.html' with card=card class="icd10" theme_class="read" name=name description=description theme=theme %}
