@@ -58,23 +58,23 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'wikiversity',
-        'languages': ['fr', 'ar', 'fa']
+        'languages': ['fr', 'ar']
     },
     {
         'id': 'universcience',
         'languages': ['fr']
     },
     {
-        'id': 'lesfondamentaux',
+        'id': 'les-fondamentaux',
+        'languages': ['fr']
     },
     {
-        'id': 'bilconference',
+        'id': 'bil-tunisia',
+        'languages': ['ar']
     },
     {
-        'id': 'icd10',
-    },
-    {
-        'id': 'mullahpiaz',
+        'id': 'mullah-piaz-digest',
+        'languages': ['fa']
     },
     {
         'id': 'w2eu',
