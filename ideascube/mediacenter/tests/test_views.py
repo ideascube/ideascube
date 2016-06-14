@@ -52,6 +52,7 @@ def test_only_kind_with_content_should_appear(app, pdf, image):
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'audio')
     assert len(links) == 0
 
+
 def test_search_box_should_update_querystring(app):
     response = app.get(reverse('mediacenter:index'),
                        {'kind': 'image', 'q': 'bar'})
@@ -59,6 +60,7 @@ def test_search_box_should_update_querystring(app):
     form['q'] = "foo"
     response = form.submit()
     assert {'kind': 'image', 'q': 'foo'} == response.request.GET
+
 
 def test_kind_link_should_no_be_displayed_if_no_several_kinds(app):
     response = app.get(reverse('mediacenter:index'))
@@ -75,19 +77,20 @@ def test_kind_link_should_no_be_displayed_if_no_several_kinds(app):
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
     assert len(links) == 1
 
+
 def test_lang_link_should_no_be_displayed_if_no_several_langs(app):
     response = app.get(reverse('mediacenter:index'))
-    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'Français')
     assert len(links) == 0
 
     DocumentFactory(lang='fr')
     response = app.get(reverse('mediacenter:index'))
-    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'Français')
     assert len(links) == 0
 
     DocumentFactory(lang='en')
     response = app.get(reverse('mediacenter:index'))
-    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'Français')
     assert len(links) == 1
 
 
@@ -96,14 +99,14 @@ def test_kind_link_should_be_displayed_depending_other_filters(app):
     DocumentFactory(kind='image', title='bar')
 
     response = app.get(reverse('mediacenter:index'),
-                       {'kind':'image', 'q':'bar'})
+                       {'kind': 'image', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
     assert len(links) == 0
 
     DocumentFactory(kind='pdf', title='bar')
 
     response = app.get(reverse('mediacenter:index'),
-                       {'kind':'image', 'q':'bar'})
+                       {'kind': 'image', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
     assert len(links) == 1
 
@@ -113,15 +116,15 @@ def test_lang_link_should_be_displayed_depending_other_filters(app):
     DocumentFactory(lang='fr', title='bar')
 
     response = app.get(reverse('mediacenter:index'),
-                       {'lang':'fr', 'q':'bar'})
-    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'English')
+                       {'lang': 'fr', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'English')
     assert len(links) == 0
 
     DocumentFactory(lang='en', title='bar')
 
     response = app.get(reverse('mediacenter:index'),
-                       {'lang':'fr', 'q':'bar'})
-    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'English')
+                       {'lang': 'fr', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'English')
     assert len(links) == 1
 
 
@@ -140,8 +143,9 @@ def test_kind_link_should_update_querystring(app):
 def test_lang_link_should_update_querystring(app):
     DocumentFactory(lang='fr', title='bar')
     DocumentFactory(lang='en', title='bar')
-    response = app.get(reverse('mediacenter:index'), {'lang': 'en', 'q': 'bar'})
-    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'Français')
+    response = app.get(reverse('mediacenter:index'),
+                       {'lang': 'en', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'Français')
     response = app.get("{}{}".format(reverse('mediacenter:index'),
                                      links[0].attrib['href']),
                        status=200)
@@ -179,8 +183,7 @@ def test_remove_filter_should_be_present(app):
                        {'lang': 'en',
                         'q': 'foo',
                         'tags': ['tag1', 'tag2'],
-                        'kind': 'video'
-                       })
+                        'kind': 'video'})
 
     links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "English" in (elem.text or ''))
@@ -206,8 +209,8 @@ def test_remove_filter_should_be_present(app):
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
                                  links[0].attrib['href']),
                    status=200)
-    assert {'lang': ['en'], 'q': ['foo'], 'tags': ['tag2'], 'kind': ['video']} \
-        == resp.request.GET.dict_of_lists()
+    assert resp.request.GET.dict_of_lists() == {
+        'lang': ['en'], 'q': ['foo'], 'tags': ['tag2'], 'kind': ['video']}
 
     links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "tag2" in (elem.text or ''))
@@ -215,8 +218,8 @@ def test_remove_filter_should_be_present(app):
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
                                  links[0].attrib['href']),
                    status=200)
-    assert {'lang': ['en'], 'q': ['foo'], 'tags': ['tag1'], 'kind': ['video']} \
-        == resp.request.GET.dict_of_lists()
+    assert resp.request.GET.dict_of_lists() == {
+        'lang': ['en'], 'q': ['foo'], 'tags': ['tag1'], 'kind': ['video']}
 
     links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "video" in (elem.text or ''))

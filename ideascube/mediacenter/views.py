@@ -9,7 +9,6 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
-from django.db.models import Count
 
 from ideascube.decorators import staff_member_required
 from ideascube.mixins import FilterableViewMixin
@@ -29,15 +28,14 @@ class Index(FilterableViewMixin, ListView):
         available_kinds = self._search_for_attr_from_context('kind', context)
         context['not_empty_kinds'] = [
             (kind, label) for kind, label in Document.KIND_CHOICES
-            if kind in available_kinds
-            ]
+            if kind in available_kinds]
 
         # Do the same for langs
         available_langs = self._search_for_attr_from_context('lang', context)
         context['not_empty_langs'] = [
             (lang, label) for lang, label in settings.LANGUAGES
-            if lang in available_langs
-            ]
+            if lang in available_langs]
+
         return context
 
 index = Index.as_view()
