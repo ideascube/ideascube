@@ -5,20 +5,22 @@ from datetime import datetime
 from django.conf import settings
 from django.http import HttpResponse
 
+from ideascube.search.models import Search
+
 
 class FilterableViewMixin:
 
     def _search_for_attr_from_context(self, attr, context):
-        search_context = {k: context[k] for k in ('q', 'kind', 'lang', 'tags')
-                          if k != attr}
-        try:
-            search_context['query'] = search_context.pop('q')
-        except KeyError:
-            pass
-        existing_attrs = set(self.model.objects
-                                 .search(**search_context)
-                                 .values_list(attr, flat=True))
-        return existing_attrs
+        search = {'model': self.model.__name__}
+        if context.get('q'):
+            search['text__match'] = context['q']
+        if context.get('kind') and attr != 'kind':
+            search['kind'] = context['kind']
+        if context.get('lang') and attr != 'lang':
+            search['lang'] = context['lang']
+        if context.get('tags'):
+            search['tags__match'] = context['tags']
+        return Search.objects.filter(**search).values_list(attr, flat=True)
 
     def get_context_data(self, **kwargs):
         context = super(FilterableViewMixin, self).get_context_data(**kwargs)

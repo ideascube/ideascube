@@ -41,5 +41,5 @@
         {% endfor %}
     </div>
     {% endif %}
-    {% tag_cloud url='mediacenter:index' model=view.model %}
+    {% tag_cloud url='mediacenter:index' model=view.model tags=available_tags %}
 {% endblock third %}

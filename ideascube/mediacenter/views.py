@@ -1,3 +1,4 @@
+from collections import Counter
 import json
 
 from urllib.parse import urlparse
@@ -9,6 +10,7 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
+from taggit.models import Tag
 
 from ideascube.decorators import staff_member_required
 from ideascube.mixins import FilterableViewMixin
@@ -30,12 +32,19 @@ class Index(FilterableViewMixin, ListView):
             (kind, label) for kind, label in Document.KIND_CHOICES
             if kind in available_kinds]
 
-        # Do the same for langs
         available_langs = self._search_for_attr_from_context('lang', context)
         context['available_langs'] = [
             (lang, label) for lang, label in settings.LANGUAGES
             if lang in available_langs]
 
+        all_ = Counter()
+        for slugs in self._search_for_attr_from_context('tags', context):
+            for slug in slugs.strip('|').split('|'):
+                if not slug:
+                    continue
+                all_[slug] += 1
+        common = [slug for slug, count in all_.most_common(20)]
+        context['available_tags'] = Tag.objects.filter(slug__in=common)
         return context
 
 index = Index.as_view()
