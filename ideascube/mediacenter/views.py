@@ -4,6 +4,7 @@ import json
 from urllib.parse import urlparse
 
 from django.conf import settings
+from django.conf.locale import LANG_INFO
 from django.core.urlresolvers import reverse_lazy, resolve, Resolver404
 from django.http import Http404, HttpResponse
 from django.template import RequestContext
@@ -34,8 +35,8 @@ class Index(FilterableViewMixin, ListView):
 
         available_langs = self._search_for_attr_from_context('lang', context)
         context['available_langs'] = [
-            (lang, label) for lang, label in settings.LANGUAGES
-            if lang in available_langs]
+            (lang, LANG_INFO.get(lang, {}).get('name_local', lang))
+            for lang in available_langs]
 
         all_ = Counter()
         for slugs in self._search_for_attr_from_context('tags', context):

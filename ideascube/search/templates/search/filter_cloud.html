@@ -24,7 +24,7 @@
         {% with LANG_INFO|getitem:lang as lang_info %}
           <li>
             <a href="{% remove_qs lang=lang %}">
-              {{ lang_info.name }}
+              {{ lang_info.name_local }}
             <i class="fa fa-close"></i>
             </a>
           </li>

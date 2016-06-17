@@ -76,12 +76,12 @@ def test_kind_link_should_be_displayed(app):
 
 def test_lang_link_should_be_displayed(app):
     response = app.get(reverse('mediacenter:index'))
-    links = response.pyquery('a').filter(lambda i, el: el.text == 'Français')
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'français')
     assert len(links) == 0
 
     DocumentFactory(lang='fr')
     response = app.get(reverse('mediacenter:index'))
-    links = response.pyquery('a').filter(lambda i, el: el.text == 'Français')
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'français')
     assert len(links) == 1
 
 
@@ -136,7 +136,7 @@ def test_lang_link_should_update_querystring(app):
     DocumentFactory(lang='en', title='bar')
     response = app.get(reverse('mediacenter:index'),
                        {'lang': 'en', 'q': 'bar'})
-    links = response.pyquery('a').filter(lambda i, el: el.text == 'Français')
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'français')
     response = app.get("{}{}".format(reverse('mediacenter:index'),
                                      links[0].attrib['href']),
                        status=200)
