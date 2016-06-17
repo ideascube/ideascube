@@ -20,7 +20,7 @@ class FilterableViewMixin:
             search['lang'] = context['lang']
         if context.get('tags'):
             search['tags__match'] = context['tags']
-        return Search.objects.filter(**search).values_list(attr, flat=True)
+        return Search.objects.filter(**search).values_list(attr, flat=True).distinct()
 
     def get_context_data(self, **kwargs):
         context = super(FilterableViewMixin, self).get_context_data(**kwargs)
