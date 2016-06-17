@@ -27,9 +27,11 @@ class FilterableViewMixin:
         for key in ('q', 'kind', 'lang'):
             context[key] = self.request.GET.get(key)
         context['tags'] = self.request.GET.getlist('tags')
-        default_values = {k: context[k] for k in ('kind', 'lang', 'tags')
-                          if context[k]}
-        context['default_values'] = default_values
+        current_filters = [(k, context[k]) for k in ('kind', 'lang')
+                           if context[k]]
+        for tag in context['tags']:
+            current_filters.append(('tags', tag))
+        context['current_filters'] = current_filters
 
         return context
 
