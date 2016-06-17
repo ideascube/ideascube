@@ -26,13 +26,13 @@ class Index(FilterableViewMixin, ListView):
         context = super(Index, self).get_context_data(**kwargs)
 
         available_kinds = self._search_for_attr_from_context('kind', context)
-        context['not_empty_kinds'] = [
+        context['available_kinds'] = [
             (kind, label) for kind, label in Document.KIND_CHOICES
             if kind in available_kinds]
 
         # Do the same for langs
         available_langs = self._search_for_attr_from_context('lang', context)
-        context['not_empty_langs'] = [
+        context['available_langs'] = [
             (lang, label) for lang, label in settings.LANGUAGES
             if lang in available_langs]
 

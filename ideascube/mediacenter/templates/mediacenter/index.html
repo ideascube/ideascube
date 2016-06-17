@@ -23,19 +23,19 @@
     {% url 'mediacenter:index' as index %}
     {% include 'search/filter_cloud.html' with action=index %}
     {% include 'search/box.html' with action=index %}
-    {% if not_empty_kinds|length > 1 %}
+    {% if available_kinds %}
     <div class="card tinted">
         <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
-        {% for kind, label in not_empty_kinds %}
+        {% for kind, label in available_kinds %}
             <a href="{% add_qs kind=kind %}">{{ label }}</a>
             {% if not forloop.last %}⚫{% endif  %}
         {% endfor %}
     </div>
     {% endif %}
-    {% if not_empty_langs|length > 1 %}
+    {% if available_langs %}
     <div class="card tinted">
         <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by lang' %}</h4>
-        {% for lang, label in not_empty_langs %}
+        {% for lang, label in available_langs %}
             <a href="{% add_qs lang=lang %}">{{ label }}</a>
             {% if not forloop.last %}⚫{% endif  %}
         {% endfor %}
