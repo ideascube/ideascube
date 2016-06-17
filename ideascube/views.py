@@ -77,7 +77,7 @@ class ByTag(ListView):
 
     def get_queryset(self):
         tags = self.request.GET.getlist('tags')
-        return TaggedItem.objects.filter(tag__name__in=tags).distinct()
+        return TaggedItem.objects.filter(tag__slug__in=tags).distinct()
 
 by_tag = ByTag.as_view()
 
