@@ -134,17 +134,29 @@ def paginate(request, **kwargs):
     return '?{}'.format(get.urlencode())
 
 
+@register.assignment_tag(takes_context=True)
+def is_in_qs(context, key, value):
+    req = template.resolve_variable('request', context)
+    params = req.GET.copy()
+    return key in params and value in params.getlist(key)
+
+
 @register.simple_tag(takes_context=True)
 def add_qs(context, **kwargs):
     req = template.resolve_variable('request', context)
     params = req.GET.copy()
     for key, value in kwargs.items():
-        if key.endswith('s'):
-            for v in value.split(','):
-                if v not in params.getlist(key):
-                    params.appendlist(key, v)
-        else:
-            params[key] = value
+        if value not in params.getlist(key):
+            params.appendlist(key, value)
+    return '?%s' % params.urlencode()
+
+
+@register.simple_tag(takes_context=True)
+def replace_qs(context, **kwargs):
+    req = template.resolve_variable('request', context)
+    params = req.GET.copy()
+    for key, value in kwargs.items():
+        params[key] = value
     return '?%s' % params.urlencode()
 
 
@@ -153,16 +165,13 @@ def remove_qs(context, **kwargs):
     req = template.resolve_variable('request', context)
     existing = dict(req.GET.copy())
     for key, value in kwargs.items():
-        if key.endswith('s'):
-            for v in value.split(','):
-                try:
-                    existing[key].remove(v)
-                except KeyError:
-                    pass
-        else:
+        try:
             existing[key].remove(value)
-        if not existing[key]:
-            del existing[key]
+        except KeyError:
+            pass
+        else:
+            if not existing[key]:
+                del existing[key]
     params = QueryDict(mutable=True)
     params.update(MultiValueDict(existing))
     return '?%s' % params.urlencode()

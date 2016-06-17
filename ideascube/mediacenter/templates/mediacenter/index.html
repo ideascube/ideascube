@@ -27,8 +27,8 @@
     <div class="card tinted">
         <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
         {% for kind, label in available_kinds %}
-            <a href="{% add_qs kind=kind %}">{{ label }}</a>
-            {% if not forloop.last %}⚫{% endif  %}
+            {% is_in_qs 'kind' kind as in_qs %}
+            <a href="{% replace_qs kind=kind %}" class="flatlist{% if in_qs %} active{% endif %}">{{ label }}</a>
         {% endfor %}
     </div>
     {% endif %}
@@ -36,8 +36,8 @@
     <div class="card tinted">
         <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by lang' %}</h4>
         {% for lang, label in available_langs %}
-            <a href="{% add_qs lang=lang %}">{{ label }}</a>
-            {% if not forloop.last %}⚫{% endif  %}
+            {% is_in_qs 'lang' lang as in_qs %}
+            <a href="{% replace_qs lang=lang %}" class="flatlist{% if in_qs %} active{% endif %}">{{ label }}</a>
         {% endfor %}
     </div>
     {% endif %}
