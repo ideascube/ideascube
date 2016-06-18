@@ -16,7 +16,7 @@ class DocumentForm(forms.ModelForm):
         }
 
     def save(self, commit=True):
-        document = super(DocumentForm, self).save(commit=False)
+        document = super().save(commit=False)
         original = self.cleaned_data['original']
         # When editing a form, original is a FileField, not an UploadedFile,
         # so we don't have content_type.

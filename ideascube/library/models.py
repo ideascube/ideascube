@@ -70,6 +70,10 @@ class Book(SearchMixin, TimeStampedModel):
     def index_tags(self):
         return self.tags.slugs()
 
+    @property
+    def index_lang(self):
+        return self.lang
+
 
 class BookSpecimen(TimeStampedModel):
 

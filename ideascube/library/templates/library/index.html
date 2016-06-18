@@ -13,9 +13,6 @@
     {% include "ideascube/pagination.html" %}
 {% endblock twothird %}
 {% block third %}
-    {% url 'library:index' as library_index %}
-    {% include 'search/filter_cloud.html' with action=index %}
-    {% include 'search/box.html' with action=library_index %}
     {% if user.is_staff %}
         <ul class="card tinted admin">
             <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a></li>
@@ -23,5 +20,9 @@
             <li>{% fa 'download' 'fa-fw' %} <a href="{% url 'library:book_export' %}">{% trans "Export notices" %}</a></li>
         </ul>
     {% endif %}
-    {% tag_cloud url="library:index" model=view.model %}
+    {% url 'library:index' as index %}
+    {% include 'search/filter_cloud.html' with action=index %}
+    {% include 'search/box.html' with action=index %}
+    {% include 'search/filter_by_lang.html' %}
+    {% tag_cloud url="library:index" model=view.model tags=available_tags %}
 {% endblock third %}

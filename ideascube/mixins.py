@@ -1,9 +1,12 @@
+from collections import Counter
 import csv
 from io import StringIO
 from datetime import datetime
 
 from django.conf import settings
+from django.conf.locale import LANG_INFO
 from django.http import HttpResponse
+from taggit.models import Tag
 
 from ideascube.search.models import Search
 
@@ -21,6 +24,22 @@ class FilterableViewMixin:
         if context.get('tags'):
             search['tags__match'] = context['tags']
         return Search.objects.filter(**search).values_list(attr, flat=True).distinct()
+
+    def _set_available_langs(self, context):
+        available_langs = self._search_for_attr_from_context('lang', context)
+        context['available_langs'] = [
+            (lang, LANG_INFO.get(lang, {}).get('name_local', lang))
+            for lang in available_langs]
+
+    def _set_available_tags(self, context):
+        all_ = Counter()
+        for slugs in self._search_for_attr_from_context('tags', context):
+            for slug in slugs.strip('|').split('|'):
+                if not slug:
+                    continue
+                all_[slug] += 1
+        common = [slug for slug, count in all_.most_common(20)]
+        context['available_tags'] = Tag.objects.filter(slug__in=common)
 
     def get_context_data(self, **kwargs):
         context = super(FilterableViewMixin, self).get_context_data(**kwargs)

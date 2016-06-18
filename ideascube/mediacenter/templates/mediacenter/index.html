@@ -23,23 +23,7 @@
     {% url 'mediacenter:index' as index %}
     {% include 'search/filter_cloud.html' with action=index %}
     {% include 'search/box.html' with action=index %}
-    {% if available_kinds %}
-    <div class="card tinted">
-        <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
-        {% for kind, label in available_kinds %}
-            {% is_in_qs 'kind' kind as in_qs %}
-            <a href="{% replace_qs kind=kind %}" class="flatlist{% if in_qs %} active{% endif %}">{{ label }}</a>
-        {% endfor %}
-    </div>
-    {% endif %}
-    {% if available_langs %}
-    <div class="card tinted">
-        <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by lang' %}</h4>
-        {% for lang, label in available_langs %}
-            {% is_in_qs 'lang' lang as in_qs %}
-            <a href="{% replace_qs lang=lang %}" class="flatlist{% if in_qs %} active{% endif %}">{{ label }}</a>
-        {% endfor %}
-    </div>
-    {% endif %}
+    {% include 'search/filter_by_kind.html' %}
+    {% include 'search/filter_by_lang.html' %}
     {% tag_cloud url='mediacenter:index' model=view.model tags=available_tags %}
 {% endblock third %}

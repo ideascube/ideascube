@@ -29,7 +29,14 @@ class Index(FilterableViewMixin, ListView):
             qs = qs.filter(specimens__isnull=False).distinct()
         return qs.order_by('-modified_at')
 
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs)
+        self._set_available_langs(context)
+        self._set_available_tags(context)
+        return context
+
 index = Index.as_view()
+
 
 class BookDetail(DetailView):
     model = Book

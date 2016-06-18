@@ -4,14 +4,12 @@ import json
 from urllib.parse import urlparse
 
 from django.conf import settings
-from django.conf.locale import LANG_INFO
 from django.core.urlresolvers import reverse_lazy, resolve, Resolver404
 from django.http import Http404, HttpResponse
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
-from taggit.models import Tag
 
 from ideascube.decorators import staff_member_required
 from ideascube.mixins import FilterableViewMixin
@@ -25,27 +23,17 @@ class Index(FilterableViewMixin, ListView):
     template_name = 'mediacenter/index.html'
     paginate_by = 24
 
-    def get_context_data(self, **kwargs):
-        context = super(Index, self).get_context_data(**kwargs)
-
+    def _set_available_kinds(self, context):
         available_kinds = self._search_for_attr_from_context('kind', context)
         context['available_kinds'] = [
             (kind, label) for kind, label in Document.KIND_CHOICES
             if kind in available_kinds]
 
-        available_langs = self._search_for_attr_from_context('lang', context)
-        context['available_langs'] = [
-            (lang, LANG_INFO.get(lang, {}).get('name_local', lang))
-            for lang in available_langs]
-
-        all_ = Counter()
-        for slugs in self._search_for_attr_from_context('tags', context):
-            for slug in slugs.strip('|').split('|'):
-                if not slug:
-                    continue
-                all_[slug] += 1
-        common = [slug for slug, count in all_.most_common(20)]
-        context['available_tags'] = Tag.objects.filter(slug__in=common)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self._set_available_kinds(context)
+        self._set_available_langs(context)
+        self._set_available_tags(context)
         return context
 
 index = Index.as_view()

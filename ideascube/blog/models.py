@@ -85,3 +85,7 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
     @property
     def index_tags(self):
         return self.tags.slugs()
+
+    @property
+    def index_lang(self):
+        return self.lang
