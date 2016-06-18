@@ -70,6 +70,14 @@ def tag_cloud(context, url, model=None, limit=20, tags=None):
     return {'tags': tags, 'url': url, 'request': context.request}
 
 
+@register.filter()
+def tag_name(slug):
+    tag = Tag.objects.filter(slug=slug).first()
+    if tag:
+        return tag.name
+    return slug
+
+
 @register.filter(name='getattr')
 def do_getattr(obj, attr):
     return getattr(obj, attr, None)
