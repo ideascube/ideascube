@@ -160,12 +160,12 @@ def test_tags_link_should_update_querystring(app):
     assert {'lang': ['en'], 'tags': ['tag1', 'tag2']} == \
         response.request.GET.dict_of_lists()
 
-    # Do it a second time. Only one 'tag2' should be present
+    # Do it a second time. Only one 'tag1' should be present
     links = response.pyquery('.card:not(.filters) a').filter(
         lambda i, elem: (elem.text or '').strip() == 'tag2')
     print(links[0].attrib['href'])
     response = app.get(links[0].attrib['href'], status=200)
-    assert {'lang': ['en'], 'tags': ['tag1', 'tag2']} == \
+    assert {'lang': ['en'], 'tags': ['tag1']} == \
         response.request.GET.dict_of_lists()
 
 

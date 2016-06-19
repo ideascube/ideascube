@@ -5,7 +5,11 @@
     {% for tag in tags %}
         {% if tag.slug %}
             {% is_in_qs 'tags' tag.slug as in_qs %}
-            <a href="{% url url %}{% add_qs tags=tag.slug %}" class="flatlist{% if in_qs %} active{% endif %}">{{ tag }}</a>
+            {% if in_qs %}
+                <a href="{% url url %}{% remove_qs tags=tag.slug %}" class="flatlist active">{{ tag }}</a>
+            {% else %}
+                <a href="{% url url %}{% add_qs tags=tag.slug %}" class="flatlist">{{ tag }}</a>
+            {% endif %}
         {% endif %}
     {% endfor %}
 </div>

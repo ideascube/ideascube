@@ -4,7 +4,11 @@
     <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by lang' %}</h4>
     {% for lang, label in available_langs %}
         {% is_in_qs 'lang' lang as in_qs %}
-        <a href="{% replace_qs lang=lang %}" class="flatlist{% if in_qs %} active{% endif %}">{{ label }}</a>
+        {% if in_qs %}
+            <a href="{% remove_qs lang=lang %}" class="flatlist active">{{ label }}</a>
+        {% else %}
+            <a href="{% replace_qs lang=lang %}" class="flatlist">{{ label }}</a>
+        {% endif %}
     {% endfor %}
 </div>
 {% endif %}
