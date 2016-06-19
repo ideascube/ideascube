@@ -73,9 +73,7 @@ def tag_cloud(context, url, model=None, limit=20, tags=None):
 @register.filter()
 def tag_name(slug):
     tag = Tag.objects.filter(slug=slug).first()
-    if tag:
-        return tag.name
-    return slug
+    return tag.name if tag else slug
 
 
 @register.filter(name='getattr')

@@ -21,7 +21,7 @@
         </ul>
     {% endif %}
     {% url 'library:index' as index %}
-    {% include 'search/filter_cloud.html' with action=index %}
+    {% include 'search/filter_cloud.html' %}
     {% include 'search/box.html' with action=index %}
     {% include 'search/filter_by_lang.html' %}
     {% tag_cloud url="library:index" model=view.model tags=available_tags %}

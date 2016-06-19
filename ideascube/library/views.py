@@ -24,8 +24,9 @@ class Index(FilterableViewMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        qs = super(Index, self).get_queryset()
-        if not (self.request.user.is_authenticated() and self.request.user.is_staff):
+        qs = super().get_queryset()
+        user = self.request.user
+        if not (user.is_authenticated() and user.is_staff):
             qs = qs.filter(specimens__isnull=False).distinct()
         return qs.order_by('-modified_at')
 
