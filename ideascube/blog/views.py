@@ -14,7 +14,7 @@ class Index(FilterableViewMixin, ListView):
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
-        context = super(Index, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         self._set_available_langs(context)
         self._set_available_tags(context)
         return context
