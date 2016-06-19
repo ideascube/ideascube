@@ -2,9 +2,11 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-from ideascube.search.utils import create_index_table
+from django.core.management import call_command
 
-reindex = lambda *args: create_index_table(force=True)
+
+def reindex(*args):
+    call_command('reindex')
 
 
 class Migration(migrations.Migration):
