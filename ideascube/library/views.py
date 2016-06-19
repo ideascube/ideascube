@@ -12,43 +12,31 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   ListView, UpdateView, View)
 
 from ideascube.decorators import staff_member_required
-from ideascube.mixins import ByTagListView, CSVExportMixin
+from ideascube.mixins import FilterableViewMixin, CSVExportMixin
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
 
 
-class Index(ListView):
+class Index(FilterableViewMixin, ListView):
     model = Book
     template_name = 'library/index.html'
     paginate_by = 10
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        user = self.request.user
+        if not (user.is_authenticated() and user.is_staff):
+            qs = qs.filter(specimens__isnull=False).distinct()
+        return qs.order_by('-modified_at')
+
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
-        context['q'] = self.request.GET.get('q', '')
+        self._set_available_langs(context)
+        self._set_available_tags(context)
         return context
 
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        if self.request.user.is_authenticated() and self.request.user.is_staff:
-            qs = Book.objects.all()
-        else:
-            qs = Book.objects.available()
-        if query:
-            return qs.search(query)
-        else:
-            return qs.order_by('-modified_at')
-
 index = Index.as_view()
-
-
-class ByTag(ByTagListView):
-    model = Book
-    queryset = Book.objects.available()
-    template_name = 'library/by_tag.html'
-    paginate_by = 10
-
-by_tag = ByTag.as_view()
 
 
 class BookDetail(DetailView):

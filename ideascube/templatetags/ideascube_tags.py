@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 
 from django import template
@@ -6,6 +5,8 @@ from django.db.models import Count
 from django.db.models.fields import FieldDoesNotExist
 from django.utils.safestring import mark_safe
 from django.utils.translation.trans_real import language_code_prefix_re
+from django.utils.datastructures import MultiValueDict
+from django.http import QueryDict
 
 from taggit.models import Tag, ContentType
 
@@ -56,8 +57,9 @@ def fa(fa_id, extra_class=''):
     return mark_safe(tpl.format(id=fa_id, extra=extra_class))
 
 
-@register.inclusion_tag('ideascube/includes/tag_cloud.html')
-def tag_cloud(url, model=None, limit=20, tags=None):
+@register.inclusion_tag('ideascube/includes/tag_cloud.html',
+                        takes_context=True)
+def tag_cloud(context, url, model=None, limit=20, tags=None):
     if not tags:
         qs = Tag.objects.all()
         if model:
@@ -65,7 +67,13 @@ def tag_cloud(url, model=None, limit=20, tags=None):
             qs = qs.filter(taggit_taggeditem_items__content_type=content_type)
         qs = qs.annotate(count=Count('taggit_taggeditem_items__id'))
         tags = qs.order_by('-count', 'slug')[:limit]
-    return {'tags': tags, 'url': url}
+    return {'tags': tags, 'url': url, 'request': context.request}
+
+
+@register.filter()
+def tag_name(slug):
+    tag = Tag.objects.filter(slug=slug).first()
+    return tag.name if tag else slug
 
 
 @register.filter(name='getattr')
@@ -130,3 +138,46 @@ def paginate(request, **kwargs):
     for key, value in kwargs.items():
         get[key] = value
     return '?{}'.format(get.urlencode())
+
+
+@register.assignment_tag(takes_context=True)
+def is_in_qs(context, key, value):
+    req = template.resolve_variable('request', context)
+    params = req.GET.copy()
+    return key in params and value in params.getlist(key)
+
+
+@register.simple_tag(takes_context=True)
+def add_qs(context, **kwargs):
+    req = template.resolve_variable('request', context)
+    params = req.GET.copy()
+    for key, value in kwargs.items():
+        if value not in params.getlist(key):
+            params.appendlist(key, value)
+    return '?%s' % params.urlencode()
+
+
+@register.simple_tag(takes_context=True)
+def replace_qs(context, **kwargs):
+    req = template.resolve_variable('request', context)
+    params = req.GET.copy()
+    for key, value in kwargs.items():
+        params[key] = value
+    return '?%s' % params.urlencode()
+
+
+@register.simple_tag(takes_context=True)
+def remove_qs(context, **kwargs):
+    req = template.resolve_variable('request', context)
+    existing = dict(req.GET.copy())
+    for key, value in kwargs.items():
+        try:
+            existing[key].remove(value)
+        except KeyError:
+            pass
+        else:
+            if not existing[key]:
+                del existing[key]
+    params = QueryDict(mutable=True)
+    params.update(MultiValueDict(existing))
+    return '?%s' % params.urlencode()

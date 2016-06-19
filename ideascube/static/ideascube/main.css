@@ -612,6 +612,12 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
     position: absolute;
     right: 10px;
 }
+.card .flatlist.active {
+    font-family: 'fira_sansmedium';
+}
+.card a.flatlist + a.flatlist:before {
+    content: ' • ';
+}
 html[dir='rtl'] .card img {
     float: right;
     margin-left: 10px;
@@ -921,7 +927,20 @@ html[dir='rtl'] .search input[type='submit'] {
 .search .main {
     justify-content: center;
 }
-
+.filters.card li {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    background: #eee;
+    padding: 2px 3px;
+    margin: 2px;
+}
+.filters.card li a {
+    text-decoration: none;
+}
+.filters.card li i.fa {
+    position: initial;
+}
 
 /* ************************************************* */
 /* **************** MEDIAS CENTER ****************** */
@@ -941,6 +960,7 @@ html[dir='rtl'] .search input[type='submit'] {
 .document-list .card h3 {
     height: 3em;
     font-size: 1em;
+    line-height: 1.4em;
 }
 .document-list .card img {
     float: none;

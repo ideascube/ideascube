@@ -37,18 +37,23 @@ class BookSpecimenForm(forms.ModelForm):
 
 class BookForm(forms.ModelForm):
 
-    def clean_isbn(self):
-        # Keep only integers, and make sure empty values are mapped to None,
-        # not empty string (we need NULL values in db, not empty strings, for
-        # uniqueness constraints).
-        return re.sub(r'\D', '', self.cleaned_data['isbn']) or None
-
     class Meta:
         model = Book
         fields = '__all__'
         widgets = {
             'lang': LangSelect
         }
+
+    def clean_isbn(self):
+        # Keep only integers, and make sure empty values are mapped to None,
+        # not empty string (we need NULL values in db, not empty strings, for
+        # uniqueness constraints).
+        return re.sub(r'\D', '', self.cleaned_data['isbn']) or None
+
+    def save(self, commit=True):
+        book = super().save()
+        book.save()  # Index m2m.
+        return book
 
 
 class ImportForm(forms.Form):

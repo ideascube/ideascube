@@ -49,6 +49,8 @@ class Document(SearchMixin, TimeStampedModel):
         (OTHER, _('other')),
     )
 
+    KIND_DICT = dict(KIND_CHOICES)
+
     title = models.CharField(_('title'), max_length=100)
     summary = models.TextField(_('summary'))
     lang = models.CharField(_('Language'), max_length=10, blank=True,
@@ -61,7 +63,9 @@ class Document(SearchMixin, TimeStampedModel):
                                 max_length=10240,
                                 blank=True)
     credits = models.CharField(_('credit'), max_length=300)
-    kind = models.CharField(_('type'), max_length=5, choices=KIND_CHOICES,
+    kind = models.CharField(_('type'),
+                            max_length=5,
+                            choices=KIND_CHOICES,
                             default=OTHER)
 
     objects = DocumentQuerySet.as_manager()
@@ -95,6 +99,18 @@ class Document(SearchMixin, TimeStampedModel):
     def index_strings(self):
         return (self.title, self.summary, self.credits,
                 u' '.join(self.tags.names()))
+
+    @property
+    def index_lang(self):
+        return self.lang
+
+    @property
+    def index_kind(self):
+        return self.kind
+
+    @property
+    def index_tags(self):
+        return self.tags.slugs()
 
     @property
     def slug(self):

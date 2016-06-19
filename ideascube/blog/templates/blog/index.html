@@ -17,5 +17,9 @@
             {% fa 'plus' 'fa-fw' %} <a href="{% url 'blog:content_create' %}">{% trans "Add content" %}</a>
         </div>
     {% endif %}
-    {% tag_cloud url="blog:by_tag" model=view.model %}
+    {% url 'blog:index' as index %}
+    {% include 'search/filter_cloud.html' %}
+    {% include 'search/box.html' with action=index %}
+    {% include 'search/filter_by_lang.html' %}
+    {% tag_cloud url="blog:index" model=view.model tags=available_tags %}
 {% endblock third %}

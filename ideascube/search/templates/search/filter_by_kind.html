@@ -1,0 +1,14 @@
+{% load i18n ideascube_tags %}
+{% if available_kinds %}
+<div class="card tinted">
+    <h4><span class="theme discover">{% trans "browse" %}</span> {% trans 'by kind' %}</h4>
+    {% for kind, label in available_kinds %}
+        {% is_in_qs 'kind' kind as in_qs %}
+        {% if in_qs %}
+            <a href="{% remove_qs kind=kind %}" class="flatlist active">{{ label }}</a>
+        {% else %}
+            <a href="{% replace_qs kind=kind %}" class="flatlist">{{ label }}</a>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}

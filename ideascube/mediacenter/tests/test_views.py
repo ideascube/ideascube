@@ -3,9 +3,10 @@ import pytest
 from django.core.urlresolvers import reverse
 from webtest import Upload
 
-from ..views import Index, ByTag
+from ..views import Index
 from ..models import Document
 from .factories import DocumentFactory
+from ideascube.search.models import Search
 
 pytestmark = pytest.mark.django_db
 
@@ -32,11 +33,193 @@ def test_index_page_is_paginated(app, monkeypatch):
 def test_pagination_should_keep_querystring(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
     DocumentFactory.create_batch(size=4, kind=Document.IMAGE)
-    url = '{}?kind=image'.format(reverse('mediacenter:index'))
-    response = app.get(url)
+    response = app.get(reverse('mediacenter:index'), {'kind': 'image'})
     link = response.pyquery.find('.next')
     assert link
     assert 'kind=image' in link[0].attrib['href']
+
+
+def test_only_kind_with_content_should_appear(app, pdf, image):
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 1
+
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'image')
+    assert len(links) == 1
+
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'video')
+    assert len(links) == 0
+
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'audio')
+    assert len(links) == 0
+
+
+def test_search_box_should_update_querystring(app):
+    response = app.get(reverse('mediacenter:index'),
+                       {'kind': 'image', 'q': 'bar'})
+    form = response.forms['search']
+    form['q'] = "foo"
+    response = form.submit()
+    assert {'kind': 'image', 'q': 'foo'} == response.request.GET
+
+
+def test_kind_link_should_be_displayed(app):
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 0
+
+    DocumentFactory(kind='pdf')
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 1
+
+
+def test_lang_link_should_be_displayed(app):
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'français')
+    assert len(links) == 0
+
+    DocumentFactory(lang='fr')
+    response = app.get(reverse('mediacenter:index'))
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'français')
+    assert len(links) == 1
+
+
+def test_kind_link_should_be_displayed_depending_other_filters(app):
+    DocumentFactory(kind='pdf', title='foo')
+    DocumentFactory(kind='image', title='bar')
+
+    response = app.get(reverse('mediacenter:index'),
+                       {'kind': 'image', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 0
+
+    DocumentFactory(kind='pdf', title='bar')
+
+    response = app.get(reverse('mediacenter:index'),
+                       {'kind': 'image', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    assert len(links) == 1
+
+
+def test_lang_link_should_be_displayed_depending_other_filters(app):
+    DocumentFactory(lang='en', title='foo')
+    DocumentFactory(lang='fr', title='bar')
+
+    response = app.get(reverse('mediacenter:index'),
+                       {'lang': 'fr', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'English')
+    assert len(links) == 0
+
+    DocumentFactory(lang='en', title='bar')
+
+    response = app.get(reverse('mediacenter:index'),
+                       {'lang': 'fr', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'English')
+    assert len(links) == 1
+
+
+def test_kind_link_should_update_querystring(app):
+    DocumentFactory(kind='image', title='bar')
+    DocumentFactory(kind='pdf', title='bar')
+    response = app.get(reverse('mediacenter:index'),
+                       {'kind': 'image', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
+    response = app.get("{}{}".format(reverse('mediacenter:index'),
+                                     links[0].attrib['href']),
+                       status=200)
+    assert {'kind': 'pdf', 'q': 'bar'} == response.request.GET
+
+
+def test_lang_link_should_update_querystring(app):
+    DocumentFactory(lang='fr', title='bar')
+    DocumentFactory(lang='en', title='bar')
+    response = app.get(reverse('mediacenter:index'),
+                       {'lang': 'en', 'q': 'bar'})
+    links = response.pyquery('a').filter(lambda i, el: el.text == 'français')
+    response = app.get("{}{}".format(reverse('mediacenter:index'),
+                                     links[0].attrib['href']),
+                       status=200)
+    assert {'lang': 'fr', 'q': 'bar'} == response.request.GET
+
+
+def test_tags_link_should_update_querystring(app):
+    DocumentFactory(lang='en', tags=['tag1', 'tag2', 'tag3'])
+    response = app.get(reverse('mediacenter:index'), {'lang': 'en'})
+
+    links = response.pyquery('.card:not(.filters) a').filter(
+        lambda i, elem: (elem.text or '').strip() == 'tag1')
+    print(links[0].attrib['href'])
+    response = app.get(links[0].attrib['href'], status=200)
+    assert {'lang': 'en', 'tags': 'tag1'} == response.request.GET
+
+    links = response.pyquery('.card:not(.filters) a').filter(
+        lambda i, elem: (elem.text or '').strip() == 'tag2')
+    print(links[0].attrib['href'])
+    response = app.get(links[0].attrib['href'], status=200)
+    assert {'lang': ['en'], 'tags': ['tag1', 'tag2']} == \
+        response.request.GET.dict_of_lists()
+
+    # Do it a second time. Only one 'tag1' should be present
+    links = response.pyquery('.card:not(.filters) a').filter(
+        lambda i, elem: (elem.text or '').strip() == 'tag2')
+    print(links[0].attrib['href'])
+    response = app.get(links[0].attrib['href'], status=200)
+    assert {'lang': ['en'], 'tags': ['tag1']} == \
+        response.request.GET.dict_of_lists()
+
+
+def test_remove_filter_should_be_present(app):
+    response = app.get(reverse('mediacenter:index'),
+                       {'lang': 'en',
+                        'q': 'foo',
+                        'tags': ['tag1', 'tag2'],
+                        'kind': 'video'})
+
+    links = response.pyquery('.filters.card a').filter(
+        lambda i, elem: "English" in (elem.text or ''))
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),
+                                 links[0].attrib['href']),
+                   status=200)
+    assert {'q': ['foo'], 'tags': ['tag1', 'tag2'], 'kind': ['video']} == \
+        resp.request.GET.dict_of_lists()
+
+    links = response.pyquery('.filters.card a').filter(
+        lambda i, elem: "foo" in (elem.text or ''))
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),
+                                 links[0].attrib['href']),
+                   status=200)
+    assert {'lang': ['en'], 'tags': ['tag1', 'tag2'], 'kind': ['video']} == \
+        resp.request.GET.dict_of_lists()
+
+    links = response.pyquery('.filters.card a').filter(
+        lambda i, elem: "tag1" in (elem.text or ''))
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),
+                                 links[0].attrib['href']),
+                   status=200)
+    assert resp.request.GET.dict_of_lists() == {
+        'lang': ['en'], 'q': ['foo'], 'tags': ['tag2'], 'kind': ['video']}
+
+    links = response.pyquery('.filters.card a').filter(
+        lambda i, elem: "tag2" in (elem.text or ''))
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),
+                                 links[0].attrib['href']),
+                   status=200)
+    assert resp.request.GET.dict_of_lists() == {
+        'lang': ['en'], 'q': ['foo'], 'tags': ['tag1'], 'kind': ['video']}
+
+    links = response.pyquery('.filters.card a').filter(
+        lambda i, elem: "video" in (elem.text or ''))
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),
+                                 links[0].attrib['href']),
+                   status=200)
+    assert {'lang': ['en'], 'q': ['foo'], 'tags': ['tag1', 'tag2']} == \
+        resp.request.GET.dict_of_lists()
 
 
 def test_index_page_should_have_search_box(app, video):
@@ -208,24 +391,26 @@ def test_oembed_should_return_pdf_oembed_extract(app, pdf):
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = DocumentFactory(tags=['plane'])
     boat = DocumentFactory(tags=['boat'])
-    response = app.get(reverse('mediacenter:by_tag', kwargs={'tag': 'plane'}))
+    response = app.get(reverse('mediacenter:index'), {'tags': 'plane'})
     assert plane.title in response.content.decode()
     assert boat.title not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):
-    monkeypatch.setattr(ByTag, 'paginate_by', 2)
+    monkeypatch.setattr(Index, 'paginate_by', 2)
     DocumentFactory.create_batch(size=4, tags=['plane'])
-    url = reverse('mediacenter:by_tag', kwargs={'tag': 'plane'})
-    response = app.get(url)
+    DocumentFactory.create_batch(size=2)
+    url = reverse('mediacenter:index')
+    response = app.get(url, {'tags': 'plane'})
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(url + '?page=2')
+    response = app.get(url + '?tags=plane&page=2')
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    response = app.get(url + '?page=3', status=404)
+    app.get(url + '?tags=plane&page=3', status=404)
+    app.get(url + '?page=3', status=200)
 
 
 def test_can_create_document_with_tags(staffapp):
@@ -240,6 +425,19 @@ def test_can_create_document_with_tags(staffapp):
     doc = Document.objects.last()
     assert doc.tags.count() == 2
     assert doc.tags.first().name == 'tag1'
+
+
+def test_tags_are_indexed_on_document_creation(staffapp):
+    assert Search.objects.filter(tags__match=['tag1']).count() == 0
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
+    form['title'] = 'my document title'
+    form['summary'] = 'my document summary'
+    form['credits'] = 'my document credits'
+    form['original'] = Upload('image.jpg', b'xxxxxx', 'image/jpeg')
+    form['tags'] = 'tag1, tag2'
+    form.submit().follow()
+    assert Search.objects.filter(tags__match=['tag1']).count() == 1
 
 
 def test_can_update_document_tags(staffapp, pdf):

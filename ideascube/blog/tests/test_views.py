@@ -5,7 +5,7 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.utils import translation
 
-from ..views import Index, ByTag
+from ..views import Index
 from ..models import Content
 from .factories import ContentFactory
 
@@ -192,17 +192,17 @@ def test_can_create_content_without_image(staffapp):
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = ContentFactory(status=Content.PUBLISHED, tags=['plane'])
     boat = ContentFactory(status=Content.PUBLISHED, tags=['boat'])
-    response = app.get(reverse('blog:by_tag', kwargs={'tag': 'plane'}))
+    response = app.get(reverse('blog:index'), {'tags': 'plane'})
     assert plane.title in response.content.decode()
     assert boat.title not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):
-    monkeypatch.setattr(ByTag, 'paginate_by', 2)
+    monkeypatch.setattr(Index, 'paginate_by', 2)
     ContentFactory.create_batch(size=4, status=Content.PUBLISHED,
                                 tags=['plane'])
-    url = reverse('blog:by_tag', kwargs={'tag': 'plane'})
-    response = app.get(url)
+    url = reverse('blog:index')
+    response = app.get(url, {'tags': 'plane'})
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')

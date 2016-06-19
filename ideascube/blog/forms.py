@@ -16,3 +16,8 @@ class ContentForm(forms.ModelForm):
             "lang": LangSelect,
         }
         fields = "__all__"
+
+    def save(self, commit=True):
+        content = super().save()
+        content.save()  # Index m2m.
+        return content

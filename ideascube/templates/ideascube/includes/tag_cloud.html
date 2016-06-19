@@ -1,10 +1,15 @@
-{% load i18n %}
+{% load i18n ideascube_tags %}
 {% spaceless %}
 <div class="card tinted">
     <h4><span class="theme learn">{% trans "browse" %}</span> {% trans "Themes" %}</h4>
     {% for tag in tags %}
         {% if tag.slug %}
-            <a href="{% url url tag=tag.slug %}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+            {% is_in_qs 'tags' tag.slug as in_qs %}
+            {% if in_qs %}
+                <a href="{% url url %}{% remove_qs tags=tag.slug %}" class="flatlist active">{{ tag }}</a>
+            {% else %}
+                <a href="{% url url %}{% add_qs tags=tag.slug %}" class="flatlist">{{ tag }}</a>
+            {% endif %}
         {% endif %}
     {% endfor %}
 </div>

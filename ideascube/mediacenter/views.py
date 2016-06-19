@@ -1,3 +1,4 @@
+from collections import Counter
 import json
 
 from urllib.parse import urlparse
@@ -10,53 +11,32 @@ from django.template.loader import render_to_string
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
-from ideascube.mixins import ByTagListView
 from ideascube.decorators import staff_member_required
+from ideascube.mixins import FilterableViewMixin
 
 from .models import Document
 from .forms import DocumentForm
 
 
-class KindMixin(object):
-
-    def get_queryset(self):
-        qs = super(KindMixin, self).get_queryset()
-        kind = self.request.GET.get('kind')
-        if kind:
-            qs = qs.filter(kind=kind)
-        return qs
-
-    def get_context_data(self, **kwargs):
-        context = super(KindMixin, self).get_context_data(**kwargs)
-        context['kind'] = self.request.GET.get('kind')
-        return context
-
-
-class Index(KindMixin, ListView):
+class Index(FilterableViewMixin, ListView):
     model = Document
     template_name = 'mediacenter/index.html'
     paginate_by = 24
 
+    def _set_available_kinds(self, context):
+        available_kinds = self._search_for_attr_from_context('kind', context)
+        context['available_kinds'] = [
+            (kind, label) for kind, label in Document.KIND_CHOICES
+            if kind in available_kinds]
+
     def get_context_data(self, **kwargs):
-        context = super(Index, self).get_context_data(**kwargs)
-        context['q'] = self.request.GET.get('q', '')
+        context = super().get_context_data(**kwargs)
+        self._set_available_kinds(context)
+        self._set_available_langs(context)
+        self._set_available_tags(context)
         return context
 
-    def get_queryset(self):
-        qs = super(Index, self).get_queryset()
-        query = self.request.GET.get('q')
-        if query:
-            return qs.search(query)
-        return qs
-
 index = Index.as_view()
-
-
-class ByTag(KindMixin, ByTagListView):
-    model = Document
-    template_name = 'mediacenter/by_tag.html'
-    paginate_by = 10
-by_tag = ByTag.as_view()
 
 
 class DocumentDetail(DetailView):

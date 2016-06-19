@@ -1,26 +1,69 @@
+from collections import Counter
 import csv
 from io import StringIO
 from datetime import datetime
 
 from django.conf import settings
+from django.conf.locale import LANG_INFO
 from django.http import HttpResponse
-from django.views.generic import ListView
-
 from taggit.models import Tag
 
+from ideascube.search.models import Search
 
-class ByTagListView(ListView):
 
-    def get_queryset(self):
-        qs = super(ByTagListView, self).get_queryset()
-        if 'tag' in self.kwargs:
-            qs = qs.filter(tags__slug__in=[self.kwargs['tag']])
-        return qs
+class FilterableViewMixin:
+
+    def _search_for_attr_from_context(self, attr, context):
+        search = {'model': self.model.__name__}
+        if context.get('q'):
+            search['text__match'] = context['q']
+        if context.get('kind') and attr != 'kind':
+            search['kind'] = context['kind']
+        if context.get('lang') and attr != 'lang':
+            search['lang'] = context['lang']
+        if context.get('tags'):
+            search['tags__match'] = context['tags']
+        return Search.objects.filter(**search).values_list(attr, flat=True).distinct()
+
+    def _set_available_langs(self, context):
+        available_langs = self._search_for_attr_from_context('lang', context)
+        context['available_langs'] = [
+            (lang, LANG_INFO.get(lang, {}).get('name_local', lang))
+            for lang in available_langs]
+
+    def _set_available_tags(self, context):
+        all_ = Counter()
+        for slugs in self._search_for_attr_from_context('tags', context):
+            for slug in slugs.strip('|').split('|'):
+                if not slug:
+                    continue
+                all_[slug] += 1
+        common = [slug for slug, count in all_.most_common(20)]
+        context['available_tags'] = Tag.objects.filter(slug__in=common)
 
     def get_context_data(self, **kwargs):
-        context = super(ByTagListView, self).get_context_data(**kwargs)
-        context['tag'] = Tag.objects.get(slug=self.kwargs.get('tag'))
+        context = super(FilterableViewMixin, self).get_context_data(**kwargs)
+        for key in ('q', 'kind', 'lang'):
+            context[key] = self.request.GET.get(key)
+        context['tags'] = self.request.GET.getlist('tags')
+        current_filters = [(k, context[k]) for k in ('kind', 'lang')
+                           if context[k]]
+        for tag in context['tags']:
+            current_filters.append(('tags', tag))
+        context['current_filters'] = current_filters
+
         return context
+
+    def get_queryset(self):
+        qs = super(FilterableViewMixin, self).get_queryset()
+        query = self.request.GET.get('q')
+        kind = self.request.GET.get('kind')
+        lang = self.request.GET.get('lang')
+        tags = self.request.GET.getlist('tags')
+
+        if any((query, kind, lang, tags)):
+            qs = qs.search(query=query, lang=lang, kind=kind, tags=tags)
+        return qs
 
 
 class CSVExportMixin(object):

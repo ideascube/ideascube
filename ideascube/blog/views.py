@@ -1,28 +1,25 @@
 from django.views.generic import (ListView, DetailView, UpdateView, CreateView)
 
-from ideascube.mixins import ByTagListView
+from ideascube.mixins import FilterableViewMixin
 from ideascube.decorators import staff_member_required
 
 from .forms import ContentForm
 from .models import Content
 
 
-class Index(ListView):
+class Index(FilterableViewMixin, ListView):
     model = Content
     queryset = Content.objects.published()
     template_name = 'blog/index.html'
     paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self._set_available_langs(context)
+        self._set_available_tags(context)
+        return context
+
 index = Index.as_view()
-
-
-class ByTag(ByTagListView):
-    model = Content
-    queryset = Content.objects.published()
-    template_name = 'blog/by_tag.html'
-    paginate_by = 10
-
-by_tag = ByTag.as_view()
 
 
 class ContentDetail(DetailView):

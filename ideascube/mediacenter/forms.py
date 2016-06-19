@@ -16,7 +16,7 @@ class DocumentForm(forms.ModelForm):
         }
 
     def save(self, commit=True):
-        document = super(DocumentForm, self).save(commit=False)
+        document = super().save(commit=False)
         original = self.cleaned_data['original']
         # When editing a form, original is a FileField, not an UploadedFile,
         # so we don't have content_type.
@@ -24,6 +24,9 @@ class DocumentForm(forms.ModelForm):
         kind = guess_kind_from_content_type(content_type)
         if kind:
             document.kind = kind
-        document.save()
+        if not document.id:
+            # m2m need the document to have an id.
+            document.save()
         self.save_m2m()
+        document.save()  # Search index needs m2m to be saved.
         return document
