@@ -48,6 +48,12 @@ class NoSuchPackage(Exception):
 class InvalidHandlerType(Exception):
     pass
 
+class ExistingRemoteError(Exception):
+    def __init__(self, remote):
+        self.remote = remote
+
+    def __str__(self):
+        return "Remote {} already exists".format(self.remote.id)
 
 class Remote:
     def __init__(self, id, name, url):
@@ -611,8 +617,9 @@ class Catalog:
         return sorted(self._remotes.values(), key=attrgetter('id'))
 
     def add_remote(self, id, name, url):
-        if id in self._remotes:
-            raise ValueError('There already is a "{}" remote'.format(id))
+        existing_remote = self._remotes.get(id)
+        if existing_remote:
+            raise ExistingRemoteError(existing_remote)
 
         r = Remote(id, name, url)
         r.to_file(os.path.join(self._cache_remote_dir, '{}.yml'.format(id)))
