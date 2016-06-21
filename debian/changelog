@@ -1,3 +1,12 @@
+ideascube (0.10.0) unstable; urgency=low
+
+  * Refactored search, added filters (#335)
+  * Added conf file for Nicarali
+  * Catalog: do not fail when adding an already existing remote (#358)
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 21 Jun 2016 21:56:00 +0100
+
+
 ideascube (0.9.11) unstable; urgency=low
 
   * Changed licence from MIT to GNU Affero GPL
