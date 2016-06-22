@@ -10,8 +10,10 @@ progressist
 pymarc==3.1.2
 python-networkmanager==1.0.1
 PyYAML==3.11
-resumable-urlretrieve
 Unidecode==0.4.19
+
+# See https://github.com/berdario/resumable-urlretrieve/pull/1
+git+https://github.com/ideascube/resumable-urlretrieve@chunk-sha
 
 # Upstream dbus-python is not pip-installable:
 #     https://bugs.freedesktop.org/show_bug.cgi?id=55439
