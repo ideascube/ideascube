@@ -124,6 +124,7 @@ AVAILABLE_LANGUAGES = (
     ('ti', 'ትግርኛ'),
     ('ur', 'اردو'),
     ('vi', 'Tiếng Việt'),
+    ('es', 'Español'),
 )
 
 # Those will be added to django.locale.LANG_INFO.
@@ -181,6 +182,12 @@ EXTRA_LANG_INFO = {
         'name': 'Kurdish',
         'code': 'ku',
         'name_local': 'Kurdî'
+    },
+    'es': {
+        'bidi': False,
+        'name': 'Spanish',
+        'code': 'es',
+        'name_local': 'Español'
     },
 }
 
