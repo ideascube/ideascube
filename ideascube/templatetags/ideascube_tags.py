@@ -154,6 +154,7 @@ def add_qs(context, **kwargs):
     for key, value in kwargs.items():
         if value not in params.getlist(key):
             params.appendlist(key, value)
+    params.pop('page', None)  # Changing search context, reset page.
     return '?%s' % params.urlencode()
 
 
@@ -163,6 +164,7 @@ def replace_qs(context, **kwargs):
     params = req.GET.copy()
     for key, value in kwargs.items():
         params[key] = value
+    params.pop('page', None)  # Changing search context, reset page.
     return '?%s' % params.urlencode()
 
 
@@ -180,4 +182,5 @@ def remove_qs(context, **kwargs):
                 del existing[key]
     params = QueryDict(mutable=True)
     params.update(MultiValueDict(existing))
+    params.pop('page', None)  # Changing search context, reset page.
     return '?%s' % params.urlencode()
