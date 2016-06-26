@@ -9,7 +9,7 @@ from .models import Content
 
 class Index(FilterableViewMixin, ListView):
     model = Content
-    queryset = Content.objects.published()
+    queryset = Content.objects.published().order_by('-modified_at')
     template_name = 'blog/index.html'
     paginate_by = 10
 
