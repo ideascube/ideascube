@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 import pytest
 
@@ -23,6 +23,23 @@ def test_only_published_should_be_in_index(app, published, draft, deleted,
     assert draft.title not in response.content.decode()
     assert deleted.title not in response.content.decode()
     assert published_in_the_future.title not in response.content.decode()
+
+
+def test_content_are_ordered_by_last_modified(app):
+    content3 = ContentFactory(status=Content.PUBLISHED)
+    content1 = ContentFactory(status=Content.PUBLISHED)
+    content2 = ContentFactory(status=Content.PUBLISHED)
+    Content.objects.filter(pk=content1.pk).update(modified_at=datetime(2016, 6,
+                                                  26, 16, 17))
+    Content.objects.filter(pk=content2.pk).update(modified_at=datetime(2016, 6,
+                                                  26, 16, 16))
+    Content.objects.filter(pk=content3.pk).update(modified_at=datetime(2016, 6,
+                                                  26, 16, 15))
+    response = app.get(reverse('blog:index'))
+    titles = response.pyquery.find('.card.blog h3')
+    assert titles[0].text == content1.title
+    assert titles[1].text == content2.title
+    assert titles[2].text == content3.title
 
 
 def test_index_page_is_paginated(app, monkeypatch):
