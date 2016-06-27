@@ -1,13 +1,25 @@
 from django.views.generic import (ListView, DetailView, UpdateView, CreateView)
+from django.db.models import F
+from django.utils.translation import ugettext_lazy as _
 
-from ideascube.mixins import FilterableViewMixin
+from ideascube.mixins import FilterableViewMixin, OrderableViewMixin
 from ideascube.decorators import staff_member_required
 
 from .forms import ContentForm
 from .models import Content
 
 
-class Index(FilterableViewMixin, ListView):
+class Index(FilterableViewMixin, OrderableViewMixin, ListView):
+
+    ORDERS = [
+        {
+            'key': 'published_at',
+            'label': _('Last published'),
+            'expression': F('published_at'),
+            'sort': 'desc'
+        }
+    ]
+
     model = Content
     queryset = Content.objects.published()
     template_name = 'blog/index.html'

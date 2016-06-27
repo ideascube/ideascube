@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 import pytest
 
@@ -37,6 +37,34 @@ def test_index_page_is_paginated(app, monkeypatch):
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
     response = app.get(reverse('blog:index') + '?page=3', status=404)
+
+
+def test_content_are_ordered_by_last_published_by_default(app):
+    content3 = ContentFactory(status=Content.PUBLISHED,
+                              published_at=datetime(2016, 6, 26, 16, 15))
+    content1 = ContentFactory(status=Content.PUBLISHED,
+                              published_at=datetime(2016, 6, 26, 16, 17))
+    content2 = ContentFactory(status=Content.PUBLISHED,
+                              published_at=datetime(2016, 6, 26, 16, 16))
+    response = app.get(reverse('blog:index'))
+    titles = response.pyquery.find('.card.blog h3')
+    assert titles[0].text == content1.title
+    assert titles[1].text == content2.title
+    assert titles[2].text == content3.title
+
+
+def test_should_take_sort_parameter_into_account(app):
+    content3 = ContentFactory(status=Content.PUBLISHED,
+                              published_at=datetime(2016, 6, 26, 16, 15))
+    content1 = ContentFactory(status=Content.PUBLISHED,
+                              published_at=datetime(2016, 6, 26, 16, 17))
+    content2 = ContentFactory(status=Content.PUBLISHED,
+                              published_at=datetime(2016, 6, 26, 16, 16))
+    response = app.get(reverse('blog:index'), {'sort': 'asc'})
+    titles = response.pyquery.find('.card.blog h3')
+    assert titles[0].text == content3.title
+    assert titles[1].text == content2.title
+    assert titles[2].text == content1.title
 
 
 def test_everyone_should_access_published_content(app, published):
