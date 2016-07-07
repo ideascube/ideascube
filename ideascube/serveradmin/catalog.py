@@ -422,7 +422,8 @@ class Catalog:
         self._local_package_cache = os.path.join(
             self._cache_base_dir, 'packages')
 
-        self._load_cache()
+        self._load_catalog()
+
         self._bar = Bar()
 
     def _progress(self, msg, i, chunk_size, remote_size):
@@ -573,7 +574,7 @@ class Catalog:
             used_handlers[handler.__class__.__name__] = handler
             self._catalog['installed'][pkg.id] = (
                 self._catalog['available'][pkg.id])
-            self._persist_cache()
+            self._persist_catalog()
 
         for handler in used_handlers.values():
             handler.commit()
@@ -592,7 +593,7 @@ class Catalog:
                 continue
             used_handlers[handler.__class__.__name__] = handler
             del(self._catalog['installed'][pkg.id])
-            self._persist_cache()
+            self._persist_catalog()
 
         if not commit:
             return
@@ -646,13 +647,13 @@ class Catalog:
 
             self._catalog['installed'][ipkg.id] = (
                 self._catalog['available'][upkg.id])
-            self._persist_cache()
+            self._persist_catalog()
 
         for handler in used_handlers.values():
             handler.commit()
 
     # -- Manage local cache ---------------------------------------------------
-    def _load_cache(self):
+    def _load_catalog(self):
         if os.path.exists(self._cache_catalog):
             with open(self._cache_catalog, 'r') as f:
                 self._catalog = yaml.safe_load(f.read())
@@ -660,12 +661,12 @@ class Catalog:
         # yaml.safe_load returns None for an empty file.
         if not getattr(self, '_catalog', None):
             self._catalog = {'installed': {}, 'available': {}}
-            self._persist_cache()
+            self._persist_catalog()
 
         self._package_caches = [self._local_package_cache]
         os.makedirs(self._local_package_cache, exist_ok=True)
 
-    def _persist_cache(self):
+    def _persist_catalog(self):
         with open(self._cache_catalog, 'w') as f:
             f.write(yaml.safe_dump(self._catalog, default_flow_style=False))
 
@@ -693,14 +694,14 @@ class Catalog:
 
             os.unlink(tmppath)
 
-        self._persist_cache()
+        self._persist_catalog()
 
     def clear_cache(self):
         shutil.rmtree(self._local_package_cache)
         os.mkdir(self._local_package_cache)
 
         self._catalog['available'] = {}
-        self._persist_cache()
+        self._persist_catalog()
 
     # -- Manage remote sources ------------------------------------------------
     def _load_remotes(self):
