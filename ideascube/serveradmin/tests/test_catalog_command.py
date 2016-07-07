@@ -46,7 +46,7 @@ def test_add_remote(tmpdir, settings, capsys, monkeypatch):
 
     # Ensure the remote has been added
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
-    remotes_dir = catalog_cache_dir.join('remotes')
+    remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).join('remotes')
 
     assert remotes_dir.check(dir=True)
     assert remotes_dir.join('foo.yml').check(file=True)
@@ -57,9 +57,9 @@ def test_add_remote(tmpdir, settings, capsys, monkeypatch):
     # Ensure the cache has been updated
     assert catalog_cache_dir.join('catalog.yml').check(file=True)
 
-    expected = {'installed': {}, 'available': {
+    expected = {
         'foovideos': {'name': 'Videos from Foo'},
-        }}
+        }
 
     with catalog_cache_dir.join('catalog.yml').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
@@ -87,7 +87,7 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch):
         remote['url'])
 
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
-    remotes_dir = catalog_cache_dir.join('remotes')
+    remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).join('remotes')
 
     assert remotes_dir.check(dir=True)
     assert remotes_dir.join('foo.yml').check(file=True)
@@ -128,7 +128,7 @@ def test_remove_remote(tmpdir, settings, capsys, monkeypatch):
 
     # Ensure the remote has been removed
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
-    remotes_dir = catalog_cache_dir.join('remotes')
+    remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).join('remotes')
 
     assert remotes_dir.check(dir=True)
     assert remotes_dir.listdir() == []
@@ -136,7 +136,7 @@ def test_remove_remote(tmpdir, settings, capsys, monkeypatch):
     # Ensure the cache has been updated
     assert catalog_cache_dir.join('catalog.yml').check(file=True)
 
-    expected = {'installed': {}, 'available': {}}
+    expected = {}
 
     with catalog_cache_dir.join('catalog.yml').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
@@ -146,12 +146,12 @@ def test_remove_remote(tmpdir, settings, capsys, monkeypatch):
     assert err.strip() == ''
 
 
-def test_cannot_remove_unexisting_remote(tmpdir):
+def test_cannot_remove_unexisting_remote():
     with pytest.raises(CommandError):
         call_command('catalog', 'remotes', 'remove', 'foo')
 
 
-def test_list_no_remotes(tmpdir, capsys):
+def test_list_no_remotes(capsys):
     call_command('catalog', 'remotes', 'list')
 
     out, err = capsys.readouterr()
@@ -221,7 +221,7 @@ def test_add_then_remove_then_list_remote(tmpdir, capsys, monkeypatch):
 
 
 def test_update_cache_without_remote(tmpdir, settings, capsys):
-    expected = {'installed': {}, 'available': {}}
+    expected = {}
 
     call_command('catalog', 'cache', 'update')
 
@@ -263,9 +263,7 @@ def test_update_cache_with_remote(tmpdir, settings, capsys, monkeypatch):
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     assert catalog_cache_dir.join('catalog.yml').check(file=True)
 
-    expected = {'installed': {}, 'available': {
-        'foovideos': {'name': 'Great videos from Foo'},
-        }}
+    expected = {'foovideos': {'name': 'Great videos from Foo'}}
 
     with catalog_cache_dir.join('catalog.yml').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
@@ -287,7 +285,7 @@ def test_clear_cache(tmpdir, settings, capsys, monkeypatch):
         'id': 'foo', 'name': 'Content from Foo',
         'url': 'file://{}'.format(remote_catalog_file.strpath),
         }
-    expected = {'installed': {}, 'available': {}}
+    expected = {}
 
     call_command(
         'catalog', 'remotes', 'add', remote['id'], remote['name'],
@@ -305,3 +303,73 @@ def test_clear_cache(tmpdir, settings, capsys, monkeypatch):
     out, err = capsys.readouterr()
     assert out.strip() == ''
     assert err.strip() == ''
+
+
+def test_split_cache(tmpdir, settings, monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n  foovideos:\n    name: Videos from Foo')
+    remote = {
+        'id': 'foo', 'name': 'Content from Foo',
+        'url': 'file://{}'.format(remote_catalog_file.strpath),
+        }
+
+    call_command(
+        'catalog', 'remotes', 'add', remote['id'], remote['name'],
+        remote['url'])
+    call_command('catalog', 'cache', 'update')
+
+    # Now write the catalog cache in the old format
+    old_cache = yaml.dump({'installed': {}, 'available': {
+        'foovideos': {'name': 'Videos from Foo'}}})
+
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
+    catalog_storage_dir = Path(settings.CATALOG_STORAGE_ROOT)
+
+    catalog_cache_dir.join('catalog.yml').write(old_cache)
+    catalog_storage_dir.join('installed.yml').remove()
+
+    # And check that it migrates properly
+    call_command('catalog', 'cache', 'update')
+
+    expected = {
+        'foovideos': {'name': 'Videos from Foo'},
+        }
+    assert yaml.safe_load(
+        catalog_cache_dir.join('catalog.yml').read()) == expected
+    assert yaml.safe_load(
+        catalog_storage_dir.join('installed.yml').read()) == {}
+
+
+def test_move_remotes(tmpdir, settings, monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n  foovideos:\n    name: Videos from Foo')
+    remote = {
+        'id': 'foo', 'name': 'Content from Foo',
+        'url': 'file://{}'.format(remote_catalog_file.strpath),
+        }
+
+    call_command(
+        'catalog', 'remotes', 'add', remote['id'], remote['name'],
+        remote['url'])
+
+    # Now move the remotes to the old location
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
+    catalog_storage_dir = Path(settings.CATALOG_STORAGE_ROOT)
+
+    catalog_storage_dir.join('remotes').move(catalog_cache_dir.join('remotes'))
+    assert catalog_cache_dir.join('remotes', 'foo.yml').check(file=True)
+    assert catalog_storage_dir.join('remotes').check(exists=False)
+
+    # And check that it migrates properly
+    call_command('catalog', 'cache', 'update')
+
+    assert catalog_cache_dir.join('remotes').check(exists=False)
+    assert catalog_storage_dir.join('remotes', 'foo.yml').check(file=True)

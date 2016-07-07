@@ -419,8 +419,13 @@ class Catalog:
         self._local_package_cache = os.path.join(self._cache_root, 'packages')
         os.makedirs(self._local_package_cache, exist_ok=True)
 
-        self._cache_remote_dir = os.path.join(self._cache_base_dir, 'remotes')
-        os.makedirs(self._cache_remote_dir, exist_ok=True)
+        self._storage_root = settings.CATALOG_STORAGE_ROOT
+        os.makedirs(self._storage_root, exist_ok=True)
+
+        self._installed_storage = os.path.join(
+            self._storage_root, 'installed.yml')
+        self._remote_storage = os.path.join(self._storage_root, 'remotes')
+        os.makedirs(self._remote_storage, exist_ok=True)
 
         self._load_remotes()
         self._load_catalog()
@@ -668,7 +673,26 @@ class Catalog:
         else:
             # yaml.safe_load returns None for an empty file
             if catalog is not None:
-                self._catalog = catalog
+                if 'available' in catalog and 'installed' in catalog:
+                    # The cache on file is in the old format
+                    # https://github.com/ideascube/ideascube/issues/376
+                    self._catalog = catalog
+
+                else:
+                    self._catalog['available'] = catalog
+
+        try:
+            with open(self._installed_storage, 'r') as f:
+                installed = yaml.safe_load(f.read())
+
+        except FileNotFoundError:
+            # That's ok
+            pass
+
+        else:
+            # yaml.safe_load returns None for an empty file
+            if installed is not None:
+                self._catalog['installed'] = installed
 
         self._persist_catalog()
 
@@ -676,7 +700,12 @@ class Catalog:
 
     def _persist_catalog(self):
         with open(self._catalog_cache, 'w') as f:
-            f.write(yaml.safe_dump(self._catalog, default_flow_style=False))
+            f.write(yaml.safe_dump(
+                self._catalog['available'], default_flow_style=False))
+
+        with open(self._installed_storage, 'w') as f:
+            f.write(yaml.safe_dump(
+                self._catalog['installed'], default_flow_style=False))
 
     def add_package_cache(self, path):
         self._package_caches.append(os.path.abspath(path))
@@ -715,9 +744,23 @@ class Catalog:
     def _load_remotes(self):
         self._remotes = {}
 
-        for path in glob(os.path.join(self._cache_remote_dir, '*.yml')):
+        for path in glob(os.path.join(self._remote_storage, '*.yml')):
             r = Remote.from_file(path)
             self._remotes[r.id] = r
+
+        if self._remotes:
+            return
+
+        # We might have remotes in the old location
+        old_remote_cache = os.path.join(self._cache_root, 'remotes')
+
+        for path in glob(os.path.join(old_remote_cache, '*.yml')):
+            r = Remote.from_file(path)
+            self.add_remote(r.id, r.name, r.url)
+
+        if self._remotes:
+            # So we did have old remotes after all...
+            shutil.rmtree(old_remote_cache)
 
     def list_remotes(self):
         return sorted(self._remotes.values(), key=attrgetter('id'))
@@ -728,7 +771,7 @@ class Catalog:
             raise ExistingRemoteError(remote)
 
         remote = Remote(id, name, url)
-        remote.to_file(os.path.join(self._cache_remote_dir,
+        remote.to_file(os.path.join(self._remote_storage,
                        '{}.yml'.format(id)))
         self._remotes[id] = remote
 
@@ -737,4 +780,4 @@ class Catalog:
             raise ValueError('There is no "{}" remote'.format(id))
 
         del(self._remotes[id])
-        os.unlink(os.path.join(self._cache_remote_dir, '{}.yml'.format(id)))
+        os.unlink(os.path.join(self._remote_storage, '{}.yml'.format(id)))

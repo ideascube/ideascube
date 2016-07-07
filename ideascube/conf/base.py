@@ -340,4 +340,5 @@ SERVICES = [
 SESSION_COOKIE_AGE = 60 * 60  # Members must be logged out after one hour
 BACKUP_FORMAT = 'gztar'  # One of 'tar', 'bztar', 'gztar'
 CATALOG_CACHE_ROOT = '/var/cache/ideascube/catalog'
+CATALOG_STORAGE_ROOT = os.path.join(STORAGE_ROOT, 'catalog')
 TAGGIT_CASE_INSENSITIVE = True
