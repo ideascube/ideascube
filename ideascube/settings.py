@@ -46,6 +46,12 @@ finally:
     BACKUPED_ROOT = ldict.get('BACKUPED_ROOT') or os.path.join(STORAGE_ROOT, 'main')  # noqa
     MEDIA_ROOT = ldict.get('MEDIA_ROOT') or os.path.join(BACKUPED_ROOT, 'media')  # noqa
     STATIC_ROOT = ldict.get('STATIC_ROOT') or os.path.join(STORAGE_ROOT, 'static')  # noqa
+    CATALOG_CACHE_ROOT = (
+        ldict.get('CATALOG_CACHE_ROOT') or '/var/cache/ideascube/catalog')
+    CATALOG_STORAGE_ROOT = (
+        ldict.get('CATALOG_STORAGE_ROOT')
+        or os.path.join(BACKUPED_ROOT, 'catalog'))
+
     if not getattr(ldict, 'DATABASES', None):
         DATABASES = {
             'default': {
