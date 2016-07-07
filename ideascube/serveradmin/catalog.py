@@ -418,7 +418,7 @@ class Catalog:
         self._cache_remote_dir = os.path.join(self._cache_base_dir, 'remotes')
         self._load_remotes()
 
-        self._cache_catalog = os.path.join(self._cache_base_dir, 'catalog.yml')
+        self._catalog_cache = os.path.join(self._cache_base_dir, 'catalog.yml')
         self._local_package_cache = os.path.join(
             self._cache_base_dir, 'packages')
 
@@ -654,8 +654,8 @@ class Catalog:
 
     # -- Manage local cache ---------------------------------------------------
     def _load_catalog(self):
-        if os.path.exists(self._cache_catalog):
-            with open(self._cache_catalog, 'r') as f:
+        if os.path.exists(self._catalog_cache):
+            with open(self._catalog_cache, 'r') as f:
                 self._catalog = yaml.safe_load(f.read())
 
         # yaml.safe_load returns None for an empty file.
@@ -667,7 +667,7 @@ class Catalog:
         os.makedirs(self._local_package_cache, exist_ok=True)
 
     def _persist_catalog(self):
-        with open(self._cache_catalog, 'w') as f:
+        with open(self._catalog_cache, 'w') as f:
             f.write(yaml.safe_dump(self._catalog, default_flow_style=False))
 
     def add_package_cache(self, path):
