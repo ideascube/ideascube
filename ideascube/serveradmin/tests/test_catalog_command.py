@@ -86,7 +86,6 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch):
         'catalog', 'remotes', 'add', remote['id'], remote['name'],
         remote['url'])
 
-    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).join('remotes')
 
     assert remotes_dir.check(dir=True)
@@ -373,3 +372,39 @@ def test_move_remotes(tmpdir, settings, monkeypatch):
 
     assert catalog_cache_dir.join('remotes').check(exists=False)
     assert catalog_storage_dir.join('remotes', 'foo.yml').check(file=True)
+
+
+def test_list_with_unknown_package_must_no_fail(
+    tmpdir, settings, capsys, monkeypatch):
+
+    monkeypatch.setattr(
+        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write('''all:
+  foovideos:
+    name: Videos from Foo
+    type: UNKNOWNTYPE
+    version: 0
+    filesize: 0kb''')
+
+    remote = {
+        'id': 'foo', 'name': 'Content from Foo',
+        'url': 'file://{}'.format(remote_catalog_file.strpath),
+        }
+
+    call_command('catalog', 'remotes', 'add', remote['id'], remote['name'],
+                 remote['url'])
+
+    call_command('catalog', 'list')
+    out, err = capsys.readouterr()
+    assert err.strip() == ''
+    assert out.strip() == ("Warning: Ignoring 1 unsupported package(s)\n"
+                           "Use '--unhandled' for details.")
+
+    call_command('catalog', 'list', '--unhandled')
+    out, err = capsys.readouterr()
+    assert err.strip() == ''
+    assert out.strip() == ('Not handled packages\n'
+                           ' foovideos             0             '
+                           '0kb      UNKNOWNTYPE     Videos from Foo')

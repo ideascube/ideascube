@@ -467,18 +467,31 @@ class Catalog:
         except KeyError:
             raise InvalidPackageType(type)
 
-    def _get_packages(self, id_patterns, source, fail_if_no_match=True):
+    def _get_packages(
+        self, id_patterns, source,
+        fail_if_no_match=True, fail_if_invalid=True):
+
         pkgs = []
 
         for id_pattern in id_patterns:
             if '*' in id_pattern:
                 for id in source:
                     if fnmatch(id, id_pattern):
-                        pkgs.append(self._get_package(id, source))
+                        try:
+                            pkgs.append(self._get_package(id, source))
+                        except InvalidPackageType as e:
+                            if fail_if_invalid:
+                                raise e
 
             else:
                 try:
-                    pkgs.append(self._get_package(id_pattern, source))
+                    try:
+                        pkgs.append(self._get_package(id_pattern, source))
+                    except InvalidPackageType as e:
+                        if fail_if_invalid:
+                            raise e
+                        print("Package {} is present but not handled"
+                              .format(id_pattern))
 
                 except NoSuchPackage as e:
                     if fail_if_no_match:
@@ -543,23 +556,38 @@ class Catalog:
 
     def list_installed(self, ids):
         pkgs = self._get_packages(
-            ids, self._installed, fail_if_no_match=False)
+            ids, self._installed,
+            fail_if_no_match=False, fail_if_invalid=False)
         return sorted(pkgs, key=attrgetter('id'))
 
     def list_available(self, ids):
         pkgs = self._get_packages(
-            ids, self._available, fail_if_no_match=False)
+            ids, self._available,
+            fail_if_no_match=False, fail_if_invalid=False)
         return sorted(pkgs, key=attrgetter('id'))
 
     def list_upgradable(self, ids):
         pkgs = []
 
         for ipkg in self._get_packages(
-                ids, self._installed, fail_if_no_match=False):
+                ids, self._installed,
+                fail_if_no_match=False, fail_if_invalid=False):
             upkg = self._get_package(ipkg.id, self._available)
 
             if ipkg != upkg:
                 pkgs.append(upkg)
+
+        return sorted(pkgs, key=attrgetter('id'))
+
+    def list_nothandled(self, ids):
+        pkgs = []
+        source = dict(self._available)
+        source.update(self._installed)
+        for pkgid, metadata in source.items():
+            try:
+                self._get_package(pkgid, source)
+            except InvalidPackageType:
+                pkgs.append(Package(pkgid, metadata))
 
         return sorted(pkgs, key=attrgetter('id'))
 
