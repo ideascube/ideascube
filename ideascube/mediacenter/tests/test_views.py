@@ -413,6 +413,27 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     app.get(url + '?page=3', status=200)
 
 
+def test_changing_filter_reset_page_parameter(app, monkeypatch):
+    monkeypatch.setattr(Index, 'paginate_by', 2)
+    DocumentFactory.create_batch(size=4, tags=['plane', 'car'],
+                                 kind=Document.PDF)
+    DocumentFactory.create_batch(size=4, tags=['plane'], kind=Document.IMAGE)
+    DocumentFactory.create_batch(size=2)
+    url = reverse('mediacenter:index')
+    response = app.get(url, {'page': 2, 'tags': 'plane', 'kind': 'pdf'})
+    find = response.pyquery.find
+    # Removing 'tags' filter.
+    assert 'page' not in find("a.flatlist:contains('plane')")[0].attrib['href']
+    # Adding new 'tags' filter.
+    assert 'page' not in find("a.flatlist:contains('car')")[0].attrib['href']
+    # Removing 'kind' filter.
+    assert 'page' not in find("a.flatlist:contains('pdf')")[0].attrib['href']
+    # Replacing 'kind' filter.
+    assert 'page' not in find("a.flatlist:contains('image')")[0].attrib['href']
+    # Adding 'lang' filter.
+    assert 'page' not in find("a.flatlist:contains('English')")[0].attrib['href']  # noqa
+
+
 def test_can_create_document_with_tags(staffapp):
     url = reverse('mediacenter:document_create')
     form = staffapp.get(url).forms['model_form']
