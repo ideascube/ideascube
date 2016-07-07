@@ -656,14 +656,22 @@ class Catalog:
 
     # -- Manage local cache ---------------------------------------------------
     def _load_catalog(self):
-        if os.path.exists(self._catalog_cache):
-            with open(self._catalog_cache, 'r') as f:
-                self._catalog = yaml.safe_load(f.read())
+        self._catalog = {'available': {}, 'installed': {}}
 
-        # yaml.safe_load returns None for an empty file.
-        if not getattr(self, '_catalog', None):
-            self._catalog = {'installed': {}, 'available': {}}
-            self._persist_catalog()
+        try:
+            with open(self._catalog_cache, 'r') as f:
+                catalog = yaml.safe_load(f.read())
+
+        except FileNotFoundError:
+            # That's ok
+            pass
+
+        else:
+            # yaml.safe_load returns None for an empty file
+            if catalog is not None:
+                self._catalog = catalog
+
+        self._persist_catalog()
 
         self._package_caches = [self._local_package_cache]
 
