@@ -415,12 +415,14 @@ class Catalog:
         self._cache_root = settings.CATALOG_CACHE_ROOT
         os.makedirs(self._cache_root, exist_ok=True)
 
-        self._cache_remote_dir = os.path.join(self._cache_root, 'remotes')
-        self._load_remotes()
-
         self._catalog_cache = os.path.join(self._cache_root, 'catalog.yml')
         self._local_package_cache = os.path.join(self._cache_root, 'packages')
+        os.makedirs(self._local_package_cache, exist_ok=True)
 
+        self._cache_remote_dir = os.path.join(self._cache_base_dir, 'remotes')
+        os.makedirs(self._cache_remote_dir, exist_ok=True)
+
+        self._load_remotes()
         self._load_catalog()
 
         self._bar = Bar()
@@ -663,7 +665,6 @@ class Catalog:
             self._persist_catalog()
 
         self._package_caches = [self._local_package_cache]
-        os.makedirs(self._local_package_cache, exist_ok=True)
 
     def _persist_catalog(self):
         with open(self._catalog_cache, 'w') as f:
@@ -704,8 +705,6 @@ class Catalog:
 
     # -- Manage remote sources ------------------------------------------------
     def _load_remotes(self):
-        os.makedirs(self._cache_remote_dir, exist_ok=True)
-
         self._remotes = {}
 
         for path in glob(os.path.join(self._cache_remote_dir, '*.yml')):
