@@ -676,7 +676,7 @@ def test_catalog_no_remote(settings):
     c = Catalog()
     assert c.list_remotes() == []
 
-    remotes_dir = Path(settings.CATALOG_CACHE_BASE_DIR).join('remotes')
+    remotes_dir = Path(settings.CATALOG_STORAGE_BASE_DIR).join('remotes')
 
     assert remotes_dir.check(dir=True)
     assert remotes_dir.listdir() == []
@@ -689,7 +689,7 @@ def test_catalog_existing_remote(settings):
         'id': 'foo', 'name': 'Content provided by Foo',
         'url': 'http://foo.fr/catalog.yml'}
 
-    remotes_dir = Path(settings.CATALOG_CACHE_BASE_DIR).mkdir('remotes')
+    remotes_dir = Path(settings.CATALOG_STORAGE_BASE_DIR).mkdir('remotes')
     remotes_dir.join('foo.yml').write(
         'id: {id}\nname: {name}\nurl: {url}'.format(**params))
 
@@ -743,7 +743,7 @@ def test_catalog_remove_remote(settings):
         'id': 'foo', 'name': 'Content provided by Foo',
         'url': 'http://foo.fr/catalog.yml'}
 
-    remotes_dir = Path(settings.CATALOG_CACHE_BASE_DIR).mkdir('remotes')
+    remotes_dir = Path(settings.CATALOG_STORAGE_BASE_DIR).mkdir('remotes')
     remotes_dir.join('foo.yml').write(
         'id: {id}\nname: {name}\nurl: {url}'.format(**params))
 
