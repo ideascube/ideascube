@@ -11,6 +11,35 @@ from taggit.models import Tag
 from ideascube.search.models import Search
 
 
+class OrderableViewMixin:
+
+    ORDERS = []
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.ORDERS:
+            default = self.ORDERS[0]
+            context['order_by'] = (self.request.GET.get('order_by') or
+                                   default['key'])
+            context['sort'] = self.request.GET.get('sort') or default['sort']
+        return context
+
+    def get_ordering(self):
+        if not self.ORDERS:
+            return None
+        key = self.request.GET.get('order_by')
+        for order in self.ORDERS:
+            if order['key'] == key:
+                break
+        else:
+            order = self.ORDERS[0]
+        order_by = order['expression']
+        sort = self.request.GET.get('sort', order['sort'])
+        if sort == 'desc':
+            order_by = order_by.desc()
+        return [order_by]
+
+
 class FilterableViewMixin:
 
     def _search_for_attr_from_context(self, attr, context):
@@ -60,7 +89,6 @@ class FilterableViewMixin:
         kind = self.request.GET.get('kind')
         lang = self.request.GET.get('lang')
         tags = self.request.GET.getlist('tags')
-
         if any((query, kind, lang, tags)):
             qs = qs.search(query=query, lang=lang, kind=kind, tags=tags)
         return qs

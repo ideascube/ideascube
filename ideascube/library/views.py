@@ -5,6 +5,8 @@ from zipfile import ZipFile
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
+from django.db.models import F
+from django.db.models.functions import Lower
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
@@ -12,13 +14,36 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   ListView, UpdateView, View)
 
 from ideascube.decorators import staff_member_required
-from ideascube.mixins import FilterableViewMixin, CSVExportMixin
+from ideascube.mixins import (FilterableViewMixin, CSVExportMixin,
+                              OrderableViewMixin)
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
 
 
-class Index(FilterableViewMixin, ListView):
+class Index(FilterableViewMixin, OrderableViewMixin, ListView):
+
+    ORDERS = [
+        {
+            'key': 'created_at',
+            'label': _('Last added'),
+            'expression': F('created_at'),
+            'sort': 'desc'
+        },
+        {
+            'key': 'title',
+            'label': _('Title'),
+            'expression': Lower('title'),  # Case insensitive.
+            'sort': 'asc'
+        },
+        {
+            'key': 'authors',
+            'label': _('Author'),
+            'expression': Lower('authors'),  # Case insensitive.
+            'sort': 'asc'
+        }
+    ]
+
     model = Book
     template_name = 'library/index.html'
     paginate_by = 10
@@ -28,7 +53,7 @@ class Index(FilterableViewMixin, ListView):
         user = self.request.user
         if not (user.is_authenticated() and user.is_staff):
             qs = qs.filter(specimens__isnull=False).distinct()
-        return qs.order_by('-modified_at')
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)

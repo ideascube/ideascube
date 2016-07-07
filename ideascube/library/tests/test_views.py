@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+from datetime import datetime
 import zipfile
 
 import pytest
@@ -36,6 +36,63 @@ def test_index_page_is_paginated(app, monkeypatch):
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
     response = app.get('{url}?page=3'.format(url=url), status=404)
+
+
+def test_books_are_ordered_by_created_at_by_default(app):
+    book3 = BookFactory()
+    book1 = BookFactory()
+    book2 = BookFactory()
+    BookSpecimenFactory(book=book1)
+    BookSpecimenFactory(book=book2)
+    BookSpecimenFactory(book=book3)
+    # Update without calling save (which would not honour created_at).
+    Book.objects.filter(pk=book1.pk).update(created_at=datetime(2016, 6,
+                                            26, 16, 17))
+    Book.objects.filter(pk=book2.pk).update(created_at=datetime(2016, 6,
+                                            26, 16, 16))
+    Book.objects.filter(pk=book3.pk).update(created_at=datetime(2016, 6,
+                                            26, 16, 15))
+    response = app.get(reverse('library:index'))
+    titles = response.pyquery.find('.book-list h3')
+    assert book1.title in titles[0].text_content()
+    assert book2.title in titles[1].text_content()
+    assert book3.title in titles[2].text_content()
+
+
+def test_should_take_sort_parameter_into_account(app):
+    book3 = BookFactory()
+    book1 = BookFactory()
+    book2 = BookFactory()
+    BookSpecimenFactory(book=book1)
+    BookSpecimenFactory(book=book2)
+    BookSpecimenFactory(book=book3)
+    # Update without calling save (which would not honour created_at).
+    Book.objects.filter(pk=book1.pk).update(created_at=datetime(2016, 6,
+                                            26, 16, 17))
+    Book.objects.filter(pk=book2.pk).update(created_at=datetime(2016, 6,
+                                            26, 16, 16))
+    Book.objects.filter(pk=book3.pk).update(created_at=datetime(2016, 6,
+                                            26, 16, 15))
+    response = app.get(reverse('library:index'), {'sort': 'asc'})
+    titles = response.pyquery.find('.book-list h3')
+    assert book3.title in titles[0].text_content()
+    assert book2.title in titles[1].text_content()
+    assert book1.title in titles[2].text_content()
+
+
+def test_should_take_order_by_parameter_into_account(app):
+    book3 = BookFactory(authors='Corneille')
+    book1 = BookFactory(authors='Antoine de Saint-Exupéry')
+    book2 = BookFactory(authors='Blaise Pascal')
+    BookSpecimenFactory(book=book1)
+    BookSpecimenFactory(book=book2)
+    BookSpecimenFactory(book=book3)
+    response = app.get(reverse('library:index'), {'sort': 'asc',
+                                                  'order_by': 'authors'})
+    titles = response.pyquery.find('.book-list h3')
+    assert book1.title in titles[0].text_content()
+    assert book2.title in titles[1].text_content()
+    assert book3.title in titles[2].text_content()
 
 
 def test_everyone_should_access_book_detail_page(app, book):

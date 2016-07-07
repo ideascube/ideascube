@@ -20,6 +20,7 @@
     {% url 'blog:index' as index %}
     {% include 'search/filter_cloud.html' %}
     {% include 'search/box.html' with action=index %}
+    {% include 'search/order_by.html' %}
     {% include 'search/filter_by_lang.html' %}
     {% tag_cloud url="blog:index" model=view.model tags=available_tags %}
 {% endblock third %}

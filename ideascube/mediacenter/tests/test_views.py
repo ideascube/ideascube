@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pytest
 
 from django.core.urlresolvers import reverse
@@ -52,6 +54,54 @@ def test_only_kind_with_content_should_appear(app, pdf, image):
 
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'audio')
     assert len(links) == 0
+
+
+def test_documents_are_ordered_by_modified_at_by_default(app):
+    doc3 = DocumentFactory()
+    doc1 = DocumentFactory()
+    doc2 = DocumentFactory()
+    # Update without calling save (which would override modified_at).
+    Document.objects.filter(pk=doc1.pk).update(modified_at=datetime(2016, 6,
+                                               26, 16, 17))
+    Document.objects.filter(pk=doc2.pk).update(modified_at=datetime(2016, 6,
+                                               26, 16, 16))
+    Document.objects.filter(pk=doc3.pk).update(modified_at=datetime(2016, 6,
+                                               26, 16, 15))
+    response = app.get(reverse('mediacenter:index'))
+    titles = response.pyquery.find('.document-list h3')
+    assert doc1.title in titles[0].text_content()
+    assert doc2.title in titles[1].text_content()
+    assert doc3.title in titles[2].text_content()
+
+
+def test_should_take_sort_parameter_into_account(app):
+    doc3 = DocumentFactory()
+    doc1 = DocumentFactory()
+    doc2 = DocumentFactory()
+    # Update without calling save (which would override modified_at).
+    Document.objects.filter(pk=doc1.pk).update(modified_at=datetime(2016, 6,
+                                               26, 16, 17))
+    Document.objects.filter(pk=doc2.pk).update(modified_at=datetime(2016, 6,
+                                               26, 16, 16))
+    Document.objects.filter(pk=doc3.pk).update(modified_at=datetime(2016, 6,
+                                               26, 16, 15))
+    response = app.get(reverse('mediacenter:index'), {'sort': 'asc'})
+    titles = response.pyquery.find('.document-list h3')
+    assert doc3.title in titles[0].text_content()
+    assert doc2.title in titles[1].text_content()
+    assert doc1.title in titles[2].text_content()
+
+
+def test_should_take_order_by_parameter_into_account(app):
+    doc3 = DocumentFactory(title='C is the third letter')
+    doc1 = DocumentFactory(title='A is the first letter')
+    doc2 = DocumentFactory(title='b can be lower case')
+    response = app.get(reverse('mediacenter:index'), {'sort': 'asc',
+                                                      'order_by': 'title'})
+    titles = response.pyquery.find('.document-list h3')
+    assert doc1.title in titles[0].text_content()
+    assert doc2.title in titles[1].text_content()
+    assert doc3.title in titles[2].text_content()
 
 
 def test_search_box_should_update_querystring(app):

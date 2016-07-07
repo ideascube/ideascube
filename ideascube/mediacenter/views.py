@@ -1,24 +1,42 @@
-from collections import Counter
 import json
 
 from urllib.parse import urlparse
 
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy, resolve, Resolver404
+from django.db.models import F
+from django.db.models.functions import Lower
 from django.http import Http404, HttpResponse
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
 from ideascube.decorators import staff_member_required
-from ideascube.mixins import FilterableViewMixin
+from ideascube.mixins import FilterableViewMixin, OrderableViewMixin
 
 from .models import Document
 from .forms import DocumentForm
 
 
-class Index(FilterableViewMixin, ListView):
+class Index(FilterableViewMixin, OrderableViewMixin, ListView):
+
+    ORDERS = [
+        {
+            'key': 'modified_at',
+            'label': _('Last modification'),
+            'expression': F('modified_at'),
+            'sort': 'desc'
+        },
+        {
+            'key': 'title',
+            'label': _('Title'),
+            'expression': Lower('title'),  # Case insensitive.
+            'sort': 'asc'
+        }
+    ]
+
     model = Document
     template_name = 'mediacenter/index.html'
     paginate_by = 24

@@ -1,0 +1,17 @@
+{% load i18n ideascube_tags %}
+{% if view.ORDERS %}
+<div class="card tinted">
+    <h4>{% trans "Order by" %}</h4>
+    {% for order in view.ORDERS %}
+        {% if order_by == order.key %}
+            {% if sort == 'asc' %}
+                <a href="{% replace_qs order_by=order.key sort='desc' %}" class="flatlist active">{% fa 'arrow-up' %} {{ order.label }}</a>
+            {% else %}
+                <a href="{% replace_qs order_by=order.key sort='asc' %}" class="flatlist active">{% fa 'arrow-down' %} {{ order.label }}</a>
+            {% endif %}
+        {% else %}
+            <a href="{% replace_qs order_by=order.key sort=order.sort %}" class="flatlist">{{ order.label }}</a>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
