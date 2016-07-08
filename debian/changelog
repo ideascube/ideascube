@@ -1,3 +1,13 @@
+ideascube (0.10.2) unstable; urgency=low
+
+  * Add conf for Sarcelles and Dusseldorf
+  * Added an order_by selector in list pages (#363 #368)
+  * Fixed page not being reset when changing filters in list pages (#364)
+  * Added Spanish in AVAILABLE_LANGUAGES
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 22 Jun 2016 12:12:00 +0100
+
+
 ideascube (0.10.1) unstable; urgency=low
 
   * Use our own fork of resumable-urlretrieve
