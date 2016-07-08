@@ -24,10 +24,10 @@ log('IDEASCUBE_ID={}'.format(IDEASCUBE_ID))
 # local config, and easier to manage code upgrade.
 try:
     sub = importlib.import_module(".conf." + IDEASCUBE_ID, package="ideascube")
-except Exception as e:
-    if not isinstance(e, ImportError):
-        sys.stderr.write(e)
+
+except ImportError:
     from .conf import dev as sub
+
 finally:
     # Make it available as a settings, to be able to display it in the admin.
     SETTINGS_MODULE = sub.__name__
