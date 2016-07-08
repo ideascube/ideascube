@@ -36,10 +36,10 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'gutenberg',
-        'languages': ['fr']
+        'lang': 'fr'
     },
     {
-        'id' : 'dirtybiology',
+        'id': 'dirtybiology',
         'languages': ['fr']
     },
     {
