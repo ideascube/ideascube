@@ -26,7 +26,8 @@ try:
     sub = importlib.import_module(".conf." + IDEASCUBE_ID, package="ideascube")
 
 except ImportError:
-    from .conf import dev as sub
+    # No specific config for this box
+    from .conf import base as sub
 
 finally:
     # Make it available as a settings, to be able to display it in the admin.
