@@ -35,6 +35,18 @@ def rm(path):
         shutil.rmtree(path)
 
 
+def persist_to_file(path, data):
+    """Save catalog data to a local file
+
+    Args:
+        path (str): The path to the file
+        data (object): The structured data to save on disk. The function
+            assumes this data is serializable.
+    """
+    with open(path, 'w') as f:
+        f.write(yaml.safe_dump(data, default_flow_style=False))
+
+
 class InvalidFile(Exception):
     pass
 
@@ -86,9 +98,8 @@ class Remote:
                     'Remote file is missing a {} key: {}'.format(e, path))
 
     def to_file(self, path):
-        with open(path, 'w') as f:
-            d = {'id': self.id, 'name': self.name, 'url': self.url}
-            f.write(yaml.safe_dump(d, default_flow_style=False))
+        d = {'id': self.id, 'name': self.name, 'url': self.url}
+        persist_to_file(path, d)
 
 
 class Handler:
@@ -700,13 +711,8 @@ class Catalog:
         self._package_caches = [self._local_package_cache]
 
     def _persist_catalog(self):
-        with open(self._catalog_cache, 'w') as f:
-            f.write(yaml.safe_dump(
-                self._catalog['available'], default_flow_style=False))
-
-        with open(self._installed_storage, 'w') as f:
-            f.write(yaml.safe_dump(
-                self._catalog['installed'], default_flow_style=False))
+        persist_to_file(self._catalog_cache, self._catalog['available'])
+        persist_to_file(self._installed_storage, self._catalog['installed'])
 
     def add_package_cache(self, path):
         self._package_caches.append(os.path.abspath(path))
