@@ -1,3 +1,11 @@
+ideascube (0.10.3) unstable; urgency=low
+
+  * Fix Dusseldorf conf
+  * Do not fallback on dev settings anymore (#380)
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 11 Jul 2016 22:12:00 +0100
+
+
 ideascube (0.10.2) unstable; urgency=low
 
   * Add conf for Sarcelles and Dusseldorf
