@@ -35,6 +35,20 @@ def rm(path):
         shutil.rmtree(path)
 
 
+def load_from_file(path):
+    """Load catalog data from a local file
+
+    Args:
+        path (str): The path to the file
+
+    Returns:
+        The structured data as read and parsed from the file, None if the file
+        was empty.
+    """
+    with open(path, 'r') as f:
+        return yaml.safe_load(f.read())
+
+
 def persist_to_file(path, data):
     """Save catalog data to a local file
 
@@ -87,15 +101,14 @@ class Remote:
 
     @classmethod
     def from_file(cls, path):
-        with open(path, 'r') as f:
-            d = yaml.safe_load(f.read())
+        d = load_from_file(path)
 
-            try:
-                return cls(d['id'], d['name'], d['url'])
+        try:
+            return cls(d['id'], d['name'], d['url'])
 
-            except KeyError as e:
-                raise InvalidFile(
-                    'Remote file is missing a {} key: {}'.format(e, path))
+        except KeyError as e:
+            raise InvalidFile(
+                'Remote file is missing a {} key: {}'.format(e, path))
 
     def to_file(self, path):
         d = {'id': self.id, 'name': self.name, 'url': self.url}
@@ -675,15 +688,13 @@ class Catalog:
         self._catalog = {'available': {}, 'installed': {}}
 
         try:
-            with open(self._catalog_cache, 'r') as f:
-                catalog = yaml.safe_load(f.read())
+            catalog = load_from_file(self._catalog_cache)
 
         except FileNotFoundError:
             # That's ok
             pass
 
         else:
-            # yaml.safe_load returns None for an empty file
             if catalog is not None:
                 if 'available' in catalog and 'installed' in catalog:
                     # The cache on file is in the old format
@@ -694,15 +705,13 @@ class Catalog:
                     self._catalog['available'] = catalog
 
         try:
-            with open(self._installed_storage, 'r') as f:
-                installed = yaml.safe_load(f.read())
+            installed = load_from_file(self._installed_storage)
 
         except FileNotFoundError:
             # That's ok
             pass
 
         else:
-            # yaml.safe_load returns None for an empty file
             if installed is not None:
                 self._catalog['installed'] = installed
 
@@ -731,10 +740,10 @@ class Catalog:
             # TODO: Verify the download with sha256sum? Crypto signature?
             urlretrieve(remote.url, tmppath, reporthook=_progress)
 
-            with open(tmppath, 'r') as f:
-                catalog = yaml.safe_load(f.read())
-                # TODO: Handle content which was removed from the remote source
-                self._catalog['available'].update(catalog['all'])
+            catalog = load_from_file(tmppath)
+
+            # TODO: Handle content which was removed from the remote source
+            self._catalog['available'].update(catalog['all'])
 
             os.unlink(tmppath)
 
