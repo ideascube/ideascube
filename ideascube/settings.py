@@ -52,7 +52,12 @@ finally:
                 'ENGINE': 'django.db.backends.sqlite3',
                 'NAME': os.path.join(BACKUPED_ROOT, 'default.sqlite'),
             },
+            'transient': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': os.path.join(STORAGE_ROOT, 'transient.sqlite'),
+            }
         }
+    DATABASE_ROUTERS = ['db_router.DatabaseRouter']
     LANGUAGES = []
     # Allow to override AVAILABLE_LANGUAGES in box settings, without needing
     # to override also LANGUAGES.
