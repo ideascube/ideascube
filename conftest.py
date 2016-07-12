@@ -17,26 +17,23 @@ def staffuser():
     return UserFactory(short_name="Hello", password='password', is_staff=True)
 
 
-@pytest.yield_fixture()
-def storage_dir(monkeypatch, tmpdir, settings):
-    """Return a new temporary storage dir.
-    Settings are also modified to point to the directory."""
-    STORAGE_ROOT = settings.STORAGE_ROOT
+@pytest.fixture
+def setup_dirs(monkeypatch, tmpdir, settings):
+    storage_root = tmpdir.mkdir('storage')
+    settings.STORAGE_ROOT = storage_root.strpath
+    settings.BACKUPED_ROOT = storage_root.mkdir('main').strpath
+    settings.MEDIA_ROOT = storage_root.mkdir('main', 'media').strpath
 
-    # Get the paths to changes and their original values.
-    original_paths = (k for k in dir(settings.wrapped_object)
-                      if k.isupper() and not k.startswith('__'))
-    original_paths = (k for k in original_paths
-                      if k.endswith('_ROOT') or k.endswith('_DIR'))
-    original_paths = {k: getattr(settings, k) for k in original_paths}
-    original_paths = {k: v for k, v in original_paths.items() if v}
+    cache_root = tmpdir.mkdir('cache')
+    settings.CATALOG_CACHE_BASE_DIR = cache_root.mkdir('catalog').strpath
 
-    # Update paths replacing STORAGE_ROOT by tmpdir.
-    for k, v in original_paths.items():
-        rel_path = os.path.relpath(v, STORAGE_ROOT)
-        new_temp_path = os.path.join(str(tmpdir), rel_path)
-        os.makedirs(new_temp_path, exist_ok=True)
-        setattr(settings, k, new_temp_path)
+    install_root = tmpdir.mkdir('installs')
+    settings.CATALOG_HANDLER_INSTALL_DIR = (
+        install_root.mkdir('handler').strpath)
+    settings.CATALOG_KIWIX_INSTALL_DIR = (
+        install_root.mkdir('kiwix').strpath)
+    settings.CATALOG_NGINX_INSTALL_DIR = (
+        install_root.mkdir('nginx').strpath)
 
     # Change also the location of the default_storage as this is cached
     # and not updated when settings changed.
@@ -48,8 +45,6 @@ def storage_dir(monkeypatch, tmpdir, settings):
         'django.core.files.storage.default_storage.base_location',
         settings.MEDIA_ROOT
     )
-
-    yield str(tmpdir)
 
 
 @pytest.yield_fixture()

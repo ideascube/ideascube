@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
 
 from ..backup import Backup
-from .test_backup import BACKUPS_ROOT, DATA_ROOT, BACKUPED_ROOT
+from .test_backup import BACKUPS_ROOT, DATA_ROOT
 from . import (
     FakeBus, FakePopen, FailingPopen, NMActiveConnection, NMConnection,
     NMDevice)
@@ -237,11 +237,6 @@ def test_backup_should_list_available_backups(staffapp, backup):
 def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
                                                 settings):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.FORMAT', 'gztar')
-    settings.BACKUPED_ROOT = BACKUPED_ROOT
-    try:
-        os.makedirs(BACKUPED_ROOT)
-    except OSError:
-        pass
     if os.path.exists(BACKUPS_ROOT):
         shutil.rmtree(BACKUPS_ROOT)
     filename = 'edoardo-0.0.0-201501231405.tar.gz'
@@ -270,9 +265,7 @@ def test_backup_button_should_save_a_new_backup(staffapp, monkeypatch,
 def test_restore_button_should_restore(staffapp, monkeypatch, settings,
                                        backup):
     assert len(os.listdir(DATA_ROOT)) == 4  # One by format.
-    TEST_BACKUPED_ROOT = 'ideascube/serveradmin/tests/backuped'
-    settings.BACKUPED_ROOT = TEST_BACKUPED_ROOT
-    dbpath = os.path.join(TEST_BACKUPED_ROOT, 'default.sqlite')
+    dbpath = os.path.join(settings.BACKUPED_ROOT, 'default.sqlite')
     assert not os.path.exists(dbpath)
     form = staffapp.get(reverse('server:backup')).forms['backup']
     form['backup'] = backup.name

@@ -9,7 +9,6 @@ from ..backup import Backup
 
 BACKUPS_ROOT = 'ideascube/serveradmin/tests/backups'
 DATA_ROOT = 'ideascube/serveradmin/tests/data/backup'
-BACKUPED_ROOT = 'ideascube/serveradmin/tests/backuped'
 
 
 def test_backup_init_should_raise_with_malformatted_string():
@@ -55,8 +54,6 @@ def test_list(monkeypatch, settings):
 ])
 @pytest.mark.usefixtures('backup_root')
 def test_create_tarfile(monkeypatch, settings, format, extension):
-    settings.BACKUPED_ROOT = BACKUPED_ROOT
-    os.makedirs(BACKUPED_ROOT, exist_ok=True)
     filename = 'edoardo-0.0.0-201501231405' + extension
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
@@ -102,9 +99,7 @@ def test_create_zipfile_must_fail(monkeypatch, tmpdir):
 ])
 def test_restore(monkeypatch, settings, extension):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT', DATA_ROOT)
-    TEST_BACKUPED_ROOT = 'ideascube/serveradmin/tests/backuped'
-    settings.BACKUPED_ROOT = TEST_BACKUPED_ROOT
-    dbpath = os.path.join(TEST_BACKUPED_ROOT, 'default.sqlite')
+    dbpath = os.path.join(settings.BACKUPED_ROOT, 'default.sqlite')
     assert not os.path.exists(dbpath)
     backup = Backup('musasa-0.1.0-201501241620' + extension)
     assert os.path.exists(backup.path)  # Should be shipped in git.
@@ -176,7 +171,7 @@ def test_load_should_raise_if_file_is_not_a_tar():
     os.remove(bad_file)
 
 
-def test_exists(monkeypatch, settings):
+def test_exists(monkeypatch):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT', DATA_ROOT)
     assert Backup.exists('musasa-0.1.0-201501241620.tar')
     assert not Backup.exists('doesnotexist.tar')

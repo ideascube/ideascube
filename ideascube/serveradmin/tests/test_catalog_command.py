@@ -3,6 +3,8 @@ import shutil
 
 from django.core.management import call_command
 from django.core.management.base import CommandError
+
+from py.path import local as Path
 import pytest
 import yaml
 
@@ -14,7 +16,7 @@ def fake_urlretrieve(url, path, reporthook=None):
     shutil.copyfile(src, path)
 
 
-def test_no_command(tmpdir, settings, capsys):
+def test_no_command(tmpdir, capsys):
     with pytest.raises(SystemExit):
         call_command('catalog')
 
@@ -24,8 +26,6 @@ def test_no_command(tmpdir, settings, capsys):
 
 
 def test_add_remote(tmpdir, settings, capsys, monkeypatch):
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
-
     monkeypatch.setattr(
         'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
@@ -45,20 +45,23 @@ def test_add_remote(tmpdir, settings, capsys, monkeypatch):
         remote['url'])
 
     # Ensure the remote has been added
-    assert tmpdir.join('remotes').check(dir=True)
-    assert tmpdir.join('remotes', 'foo.yml').check(file=True)
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    remotes_dir = catalog_cache_dir.join('remotes')
 
-    with tmpdir.join('remotes', 'foo.yml').open('r') as f:
+    assert remotes_dir.check(dir=True)
+    assert remotes_dir.join('foo.yml').check(file=True)
+
+    with remotes_dir.join('foo.yml').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
 
     # Ensure the cache has been updated
-    assert tmpdir.join('catalog.yml').check(file=True)
+    assert catalog_cache_dir.join('catalog.yml').check(file=True)
 
     expected = {'installed': {}, 'available': {
         'foovideos': {'name': 'Videos from Foo'},
         }}
 
-    with tmpdir.join('catalog.yml').open('r') as f:
+    with catalog_cache_dir.join('catalog.yml').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
 
     out, err = capsys.readouterr()
@@ -67,8 +70,6 @@ def test_add_remote(tmpdir, settings, capsys, monkeypatch):
 
 
 def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch):
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
-
     monkeypatch.setattr(
         'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
@@ -85,10 +86,13 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch):
         'catalog', 'remotes', 'add', remote['id'], remote['name'],
         remote['url'])
 
-    assert tmpdir.join('remotes').check(dir=True)
-    assert tmpdir.join('remotes', 'foo.yml').check(file=True)
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    remotes_dir = catalog_cache_dir.join('remotes')
 
-    old_mtime = tmpdir.join('remotes', 'foo.yml').mtime()
+    assert remotes_dir.check(dir=True)
+    assert remotes_dir.join('foo.yml').check(file=True)
+
+    old_mtime = remotes_dir.join('foo.yml').mtime()
 
     # Adding the same remote with the same url should not fail.
     call_command(
@@ -101,12 +105,10 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch):
             'catalog', 'remotes', 'add', remote['id'], remote['name'],
             remote['url'] + "bad")
 
-    assert tmpdir.join('remotes', 'foo.yml').mtime() == old_mtime
+    assert remotes_dir.join('foo.yml').mtime() == old_mtime
 
 
 def test_remove_remote(tmpdir, settings, capsys, monkeypatch):
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
-
     monkeypatch.setattr(
         'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
@@ -125,15 +127,18 @@ def test_remove_remote(tmpdir, settings, capsys, monkeypatch):
     call_command('catalog', 'remotes', 'remove', remote['id'])
 
     # Ensure the remote has been removed
-    assert tmpdir.join('remotes').check(dir=True)
-    assert tmpdir.join('remotes').listdir() == []
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    remotes_dir = catalog_cache_dir.join('remotes')
+
+    assert remotes_dir.check(dir=True)
+    assert remotes_dir.listdir() == []
 
     # Ensure the cache has been updated
-    assert tmpdir.join('catalog.yml').check(file=True)
+    assert catalog_cache_dir.join('catalog.yml').check(file=True)
 
     expected = {'installed': {}, 'available': {}}
 
-    with tmpdir.join('catalog.yml').open('r') as f:
+    with catalog_cache_dir.join('catalog.yml').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
 
     out, err = capsys.readouterr()
@@ -141,16 +146,12 @@ def test_remove_remote(tmpdir, settings, capsys, monkeypatch):
     assert err.strip() == ''
 
 
-def test_cannot_remove_unexisting_remote(tmpdir, settings):
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
-
+def test_cannot_remove_unexisting_remote(tmpdir):
     with pytest.raises(CommandError):
         call_command('catalog', 'remotes', 'remove', 'foo')
 
 
-def test_list_no_remotes(tmpdir, settings, capsys):
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
-
+def test_list_no_remotes(tmpdir, capsys):
     call_command('catalog', 'remotes', 'list')
 
     out, err = capsys.readouterr()
@@ -158,9 +159,7 @@ def test_list_no_remotes(tmpdir, settings, capsys):
     assert err.strip() == ''
 
 
-def test_add_then_list_multiple_remotes(tmpdir, settings, capsys, monkeypatch):
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
-
+def test_add_then_list_multiple_remotes(tmpdir, capsys, monkeypatch):
     monkeypatch.setattr(
         'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
@@ -197,10 +196,7 @@ def test_add_then_list_multiple_remotes(tmpdir, settings, capsys, monkeypatch):
     assert err.strip() == ''
 
 
-def test_add_then_remove_then_list_remote(
-        tmpdir, settings, capsys, monkeypatch):
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
-
+def test_add_then_remove_then_list_remote(tmpdir, capsys, monkeypatch):
     monkeypatch.setattr(
         'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
@@ -225,14 +221,14 @@ def test_add_then_remove_then_list_remote(
 
 
 def test_update_cache_without_remote(tmpdir, settings, capsys):
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
-
     expected = {'installed': {}, 'available': {}}
 
     call_command('catalog', 'cache', 'update')
-    assert tmpdir.join('catalog.yml').check(file=True)
 
-    with tmpdir.join('catalog.yml').open('r') as f:
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    assert catalog_cache_dir.join('catalog.yml').check(file=True)
+
+    with catalog_cache_dir.join('catalog.yml').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
 
     out, err = capsys.readouterr()
@@ -241,8 +237,6 @@ def test_update_cache_without_remote(tmpdir, settings, capsys):
 
 
 def test_update_cache_with_remote(tmpdir, settings, capsys, monkeypatch):
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
-
     monkeypatch.setattr(
         'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
@@ -265,13 +259,15 @@ def test_update_cache_with_remote(tmpdir, settings, capsys, monkeypatch):
         'all:\n  foovideos:\n    name: Great videos from Foo')
 
     call_command('catalog', 'cache', 'update')
-    assert tmpdir.join('catalog.yml').check(file=True)
+
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    assert catalog_cache_dir.join('catalog.yml').check(file=True)
 
     expected = {'installed': {}, 'available': {
         'foovideos': {'name': 'Great videos from Foo'},
         }}
 
-    with tmpdir.join('catalog.yml').open('r') as f:
+    with catalog_cache_dir.join('catalog.yml').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
 
     out, err = capsys.readouterr()
@@ -280,8 +276,6 @@ def test_update_cache_with_remote(tmpdir, settings, capsys, monkeypatch):
 
 
 def test_clear_cache(tmpdir, settings, capsys, monkeypatch):
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
-
     monkeypatch.setattr(
         'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
@@ -301,9 +295,11 @@ def test_clear_cache(tmpdir, settings, capsys, monkeypatch):
     call_command('catalog', 'cache', 'update')
 
     call_command('catalog', 'cache', 'clear')
-    assert tmpdir.join('catalog.yml').check(file=True)
 
-    with tmpdir.join('catalog.yml').open('r') as f:
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    assert catalog_cache_dir.join('catalog.yml').check(file=True)
+
+    with catalog_cache_dir.join('catalog.yml').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
 
     out, err = capsys.readouterr()
