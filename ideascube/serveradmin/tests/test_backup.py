@@ -77,14 +77,18 @@ def test_create_tarfile(monkeypatch, settings, format, extension):
                         lambda f: filename)
     proof_file = os.path.join(settings.BACKUPED_ROOT, 'backup.me')
     open(proof_file, mode='w')
+    symlink_file = os.path.join(settings.BACKUPED_ROOT, 'symlink')
+    os.symlink('backup.me', symlink_file)
     Backup.create()
     assert os.path.exists(filepath)
     assert tarfile.is_tarfile(filepath)
     archive = tarfile.open(filepath)
     assert './backup.me' in archive.getnames()
+    assert './symlink' not in archive.getnames()
     archive.close()
     os.remove(filepath)
     os.remove(proof_file)
+    os.remove(symlink_file)
 
 
 def test_create_zipfile_must_fail(monkeypatch, tmpdir):
