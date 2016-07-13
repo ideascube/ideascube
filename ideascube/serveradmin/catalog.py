@@ -322,8 +322,8 @@ class StaticSite(SimpleZipPackage):
     handler = Nginx
 
 
-class ZippedMedia(SimpleZipPackage):
-    typename = 'zipped-media'
+class ZippedMedias(SimpleZipPackage):
+    typename = 'zipped-medias'
     handler = MediaCenter
 
     def remove(self, install_dir):

@@ -333,9 +333,9 @@ def test_remove_staticsite(staticsite_path, install_dir):
 
 @pytest.mark.usefixtures('db')
 def test_install_zippedmedia(zippedmedia_path, install_dir):
-    from ideascube.serveradmin.catalog import ZippedMedia
+    from ideascube.serveradmin.catalog import ZippedMedias
 
-    p = ZippedMedia('test-media', {
+    p = ZippedMedias('test-media', {
         'url': 'https://foo.fr/test-media.zip'})
     p.install(zippedmedia_path.strpath, install_dir.strpath)
 
@@ -348,7 +348,7 @@ def test_install_zippedmedia(zippedmedia_path, install_dir):
 
 @pytest.mark.usefixtures('db')
 def test_install_zippedmedia_missing_manifest(tmpdir, zippedmedia_path, install_dir):
-    from ideascube.serveradmin.catalog import InvalidPackageContent, ZippedMedia
+    from ideascube.serveradmin.catalog import InvalidPackageContent, ZippedMedias
 
     bad_zippedmedia_dir = tmpdir.mkdir('source')
     bad_zippedmedia_path = bad_zippedmedia_dir.join('bad-test-media.zip')
@@ -366,16 +366,16 @@ def test_install_zippedmedia_missing_manifest(tmpdir, zippedmedia_path, install_
             bad_zippedmedia_dir.join(name).remove()
 
     with pytest.raises(InvalidPackageContent):
-        p = ZippedMedia('test-media', {
+        p = ZippedMedias('test-media', {
             'url': 'https://foo.fr/bad-test-media.zip'})
         p.install(bad_zippedmedia_path.strpath, install_dir.strpath)
 
 
 @pytest.mark.usefixtures('db')
 def test_remove_zippedmedia(zippedmedia_path, install_dir):
-    from ideascube.serveradmin.catalog import ZippedMedia
+    from ideascube.serveradmin.catalog import ZippedMedias
 
-    p = ZippedMedia('test-media', {
+    p = ZippedMedias('test-media', {
         'url': 'https://foo.fr/test-media.zip'})
     p.install(zippedmedia_path.strpath, install_dir.strpath)
 
@@ -617,9 +617,9 @@ def test_nginx_commits_after_remove(settings, staticsite_path, mocker):
 
 @pytest.mark.usefixtures('db')
 def test_mediacenter_installs_zippedmedia(settings, zippedmedia_path):
-    from ideascube.serveradmin.catalog import MediaCenter, ZippedMedia
+    from ideascube.serveradmin.catalog import MediaCenter, ZippedMedias
 
-    p = ZippedMedia('test-media', {
+    p = ZippedMedias('test-media', {
         'url': 'https://foo.fr/test-media.zip'})
     h = MediaCenter()
     h.install(p, zippedmedia_path.strpath)
@@ -651,9 +651,9 @@ def test_mediacenter_installs_zippedmedia(settings, zippedmedia_path):
 
 @pytest.mark.usefixtures('db')
 def test_mediacenter_removes_zippedmedia(tmpdir, settings, zippedmedia_path):
-    from ideascube.serveradmin.catalog import MediaCenter, ZippedMedia
+    from ideascube.serveradmin.catalog import MediaCenter, ZippedMedias
 
-    p = ZippedMedia('test-media', {
+    p = ZippedMedias('test-media', {
         'url': 'https://foo.fr/test-media.zip'})
     h = MediaCenter()
     h.install(p, zippedmedia_path.strpath)
