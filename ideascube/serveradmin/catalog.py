@@ -412,15 +412,14 @@ class Bar(ProgressBar):
 
 class Catalog:
     def __init__(self):
-        self._cache_base_dir = settings.CATALOG_CACHE_BASE_DIR
-        os.makedirs(self._cache_base_dir, exist_ok=True)
+        self._cache_root = settings.CATALOG_CACHE_ROOT
+        os.makedirs(self._cache_root, exist_ok=True)
 
-        self._cache_remote_dir = os.path.join(self._cache_base_dir, 'remotes')
+        self._cache_remote_dir = os.path.join(self._cache_root, 'remotes')
         self._load_remotes()
 
-        self._catalog_cache = os.path.join(self._cache_base_dir, 'catalog.yml')
-        self._local_package_cache = os.path.join(
-            self._cache_base_dir, 'packages')
+        self._catalog_cache = os.path.join(self._cache_root, 'catalog.yml')
+        self._local_package_cache = os.path.join(self._cache_root, 'packages')
 
         self._load_catalog()
 

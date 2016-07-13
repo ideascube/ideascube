@@ -31,7 +31,7 @@ def setup_dirs(monkeypatch, tmpdir, settings):
     settings.MEDIA_ROOT = storage_root.mkdir('main', 'media').strpath
 
     cache_root = tmpdir.mkdir('cache')
-    settings.CATALOG_CACHE_BASE_DIR = cache_root.mkdir('catalog').strpath
+    settings.CATALOG_CACHE_ROOT = cache_root.mkdir('catalog').strpath
 
     install_root = tmpdir.mkdir('installs')
     settings.CATALOG_HANDLER_INSTALL_DIR = (

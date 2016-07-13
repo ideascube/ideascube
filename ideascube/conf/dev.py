@@ -4,4 +4,4 @@ try:
 except OSError:
     pass
 
-CATALOG_CACHE_BASE_DIR = os.path.join(STORAGE_ROOT, 'catalog')
+CATALOG_CACHE_ROOT = os.path.join(STORAGE_ROOT, 'catalog')

@@ -45,7 +45,7 @@ def test_add_remote(tmpdir, settings, capsys, monkeypatch):
         remote['url'])
 
     # Ensure the remote has been added
-    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     remotes_dir = catalog_cache_dir.join('remotes')
 
     assert remotes_dir.check(dir=True)
@@ -86,7 +86,7 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch):
         'catalog', 'remotes', 'add', remote['id'], remote['name'],
         remote['url'])
 
-    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     remotes_dir = catalog_cache_dir.join('remotes')
 
     assert remotes_dir.check(dir=True)
@@ -127,7 +127,7 @@ def test_remove_remote(tmpdir, settings, capsys, monkeypatch):
     call_command('catalog', 'remotes', 'remove', remote['id'])
 
     # Ensure the remote has been removed
-    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     remotes_dir = catalog_cache_dir.join('remotes')
 
     assert remotes_dir.check(dir=True)
@@ -225,7 +225,7 @@ def test_update_cache_without_remote(tmpdir, settings, capsys):
 
     call_command('catalog', 'cache', 'update')
 
-    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     assert catalog_cache_dir.join('catalog.yml').check(file=True)
 
     with catalog_cache_dir.join('catalog.yml').open('r') as f:
@@ -260,7 +260,7 @@ def test_update_cache_with_remote(tmpdir, settings, capsys, monkeypatch):
 
     call_command('catalog', 'cache', 'update')
 
-    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     assert catalog_cache_dir.join('catalog.yml').check(file=True)
 
     expected = {'installed': {}, 'available': {
@@ -296,7 +296,7 @@ def test_clear_cache(tmpdir, settings, capsys, monkeypatch):
 
     call_command('catalog', 'cache', 'clear')
 
-    catalog_cache_dir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     assert catalog_cache_dir.join('catalog.yml').check(file=True)
 
     with catalog_cache_dir.join('catalog.yml').open('r') as f:

@@ -676,7 +676,7 @@ def test_catalog_no_remote(settings):
     c = Catalog()
     assert c.list_remotes() == []
 
-    remotes_dir = Path(settings.CATALOG_CACHE_BASE_DIR).join('remotes')
+    remotes_dir = Path(settings.CATALOG_CACHE_ROOT).join('remotes')
 
     assert remotes_dir.check(dir=True)
     assert remotes_dir.listdir() == []
@@ -689,7 +689,7 @@ def test_catalog_existing_remote(settings):
         'id': 'foo', 'name': 'Content provided by Foo',
         'url': 'http://foo.fr/catalog.yml'}
 
-    remotes_dir = Path(settings.CATALOG_CACHE_BASE_DIR).mkdir('remotes')
+    remotes_dir = Path(settings.CATALOG_CACHE_ROOT).mkdir('remotes')
     remotes_dir.join('foo.yml').write(
         'id: {id}\nname: {name}\nurl: {url}'.format(**params))
 
@@ -743,7 +743,7 @@ def test_catalog_remove_remote(settings):
         'id': 'foo', 'name': 'Content provided by Foo',
         'url': 'http://foo.fr/catalog.yml'}
 
-    remotes_dir = Path(settings.CATALOG_CACHE_BASE_DIR).mkdir('remotes')
+    remotes_dir = Path(settings.CATALOG_CACHE_ROOT).mkdir('remotes')
     remotes_dir.join('foo.yml').write(
         'id: {id}\nname: {name}\nurl: {url}'.format(**params))
 
@@ -996,7 +996,7 @@ def test_catalog_install_package_already_downloaded(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    cachedir = Path(settings.CATALOG_CACHE_ROOT)
     packagesdir = cachedir.mkdir('packages')
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
@@ -1098,7 +1098,7 @@ def test_catalog_install_package_partially_downloaded(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    cachedir = Path(settings.CATALOG_CACHE_ROOT)
     packagesdir = cachedir.mkdir('packages')
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
@@ -1150,7 +1150,7 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = Path(settings.CATALOG_CACHE_BASE_DIR)
+    cachedir = Path(settings.CATALOG_CACHE_ROOT)
     packagesdir = cachedir.mkdir('packages')
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
