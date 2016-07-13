@@ -11,9 +11,8 @@ from django.utils.translation import ugettext as _
 from ideascube import __version__
 
 
-def make_name(format=None):
+def make_name(format):
     """Return backup formatted file name."""
-    format = format or Backup.FORMAT
     basename = '-'.join([
         settings.IDEASCUBE_ID,
         __version__,
@@ -25,6 +24,7 @@ def make_name(format=None):
 class Backup(object):
 
     FORMAT = settings.BACKUP_FORMAT
+    SUPPORTED_FORMATS_AT_CREATION = ('bztar', 'gztar', 'tar')
     SUPPORTED_FORMATS = ('zip', 'bztar', 'gztar', 'tar')
     SUPPORTED_EXTENSIONS = ('.zip', '.tar.bz2', '.tar.gz', '.tar')
     FORMAT_TO_EXTENSION = dict(zip(SUPPORTED_FORMATS, SUPPORTED_EXTENSIONS))
@@ -75,6 +75,9 @@ class Backup(object):
 
     def save(self):
         """Make a backup of the server data."""
+        if self.format == 'zip':
+            raise ValueError(_("Zip is no more supported to create backup"))
+
         return shutil.make_archive(
             base_name=os.path.join(Backup.ROOT, self.basename),  # W/o ext.
             format=self.format,
@@ -113,6 +116,11 @@ class Backup(object):
 
     @classmethod
     def create(cls, format=None):
+        format = format or Backup.FORMAT
+        if format not in Backup.SUPPORTED_FORMATS_AT_CREATION:
+            raise ValueError(
+                _("Format {} is not supported at creation").format(format)
+            )
         name = make_name(format)
         backup = Backup(name)
         backup.save()
@@ -136,15 +144,25 @@ class Backup(object):
     @classmethod
     def load(cls, file_):
         name = os.path.basename(file_.name)
-        if name.endswith('.zip'):
-            if not zipfile.is_zipfile(file_):
-                raise ValueError(_("Not a zip file"))
-        elif not tarfile.is_tarfile(file_.name):
-            raise ValueError(_("Not a tar file"))
-        file_.seek(0)  # Reset cursor.
         backup = Backup(name)
         with open(backup.path, mode='wb') as f:
-            f.write(file_.read())
+           try:
+               for chunk in file_.chunks():
+                   f.write(chunk)
+           except AttributeError:
+               # file_ as no chunks,
+               # read without them.
+               while True:
+                   content = file_.read(4096)
+                   if not content:
+                       break
+                   f.write(content)
+        if not ((name.endswith('.zip') and zipfile.is_zipfile(backup.path))
+             or tarfile.is_tarfile(backup.path)
+               ):
+            os.unlink(backup.path)
+            raise ValueError(_("Not a {} file").format(
+                                 'zip' if name.endswith('.zip') else 'tar'))
         return backup
 
     @classmethod

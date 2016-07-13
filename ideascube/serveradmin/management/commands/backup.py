@@ -21,15 +21,18 @@ class Command(BaseCommand):
                             '"add", "delete" or "restore" action.')
         parser.add_argument('--format', default=None,
                             help='Backup file format. Possible values: {}'
-                                 'Default: {}'.format(Backup.SUPPORTED_FORMATS,
+                                 'Default: {}'.format(Backup.SUPPORTED_FORMATS_AT_CREATION,
                                                       Backup.FORMAT))
 
     def handle(self, *args, **options):
         format = options['format']
-        if format and format not in Backup.SUPPORTED_FORMATS:
+        action = options['action']
+        supported_formats = (Backup.SUPPORTED_FORMATS_AT_CREATION
+                                if action == 'create'
+                                else Backup.SUPPORTED_FORMATS )
+        if format and format not in supported_formats:
             self.stderr.write('Unsupported format: {}'.format(format))
             sys.exit(1)
-        action = options['action']
         reference = options['reference']
         interactive = options.get('interactive')
         if action == 'list':
@@ -37,11 +40,11 @@ class Command(BaseCommand):
             for backup in Backup.list():
                 self.stdout.write(str(backup))
         elif action == 'create':
-            backup = Backup.create(format=options['format'])
+            backup = Backup.create(format=format)
             self.stdout.write('Succesfully created backup {}'.format(backup))
         elif action == 'add':
             if not reference:
-                self.stderr.write('Missing path to zip backup to add.')
+                self.stderr.write('Missing path to archive backup to add.')
                 sys.exit(1)
             if not os.path.exists(reference):
                 self.stderr.write('File not found {}'.format(reference))

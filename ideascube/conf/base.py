@@ -338,6 +338,6 @@ SERVICES = [
 
 
 SESSION_COOKIE_AGE = 60 * 60  # Members must be logged out after one hour
-BACKUP_FORMAT = 'zip'  # One of 'zip', 'tar', 'bztar', 'gztar'
+BACKUP_FORMAT = 'gztar'  # One of 'tar', 'bztar', 'gztar'
 CATALOG_CACHE_BASE_DIR = '/var/cache/ideascube/catalog'
 TAGGIT_CASE_INSENSITIVE = True
