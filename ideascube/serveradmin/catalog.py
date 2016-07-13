@@ -35,6 +35,20 @@ def rm(path):
         shutil.rmtree(path)
 
 
+def load_from_file(path):
+    with open(path, 'r') as f:
+        return yaml.safe_load(f.read())
+
+
+def persist_to_file(path, data):
+    """Save catalog data to a local file
+
+    Note: The function assumes that the data is serializable.
+    """
+    with open(path, 'w') as f:
+        f.write(yaml.safe_dump(data, default_flow_style=False))
+
+
 class InvalidFile(Exception):
     pass
 
@@ -75,20 +89,18 @@ class Remote:
 
     @classmethod
     def from_file(cls, path):
-        with open(path, 'r') as f:
-            d = yaml.safe_load(f.read())
+        d = load_from_file(path)
 
-            try:
-                return cls(d['id'], d['name'], d['url'])
+        try:
+            return cls(d['id'], d['name'], d['url'])
 
-            except KeyError as e:
-                raise InvalidFile(
-                    'Remote file is missing a {} key: {}'.format(e, path))
+        except KeyError as e:
+            raise InvalidFile(
+                'Remote file is missing a {} key: {}'.format(e, path))
 
     def to_file(self, path):
-        with open(path, 'w') as f:
-            d = {'id': self.id, 'name': self.name, 'url': self.url}
-            f.write(yaml.safe_dump(d, default_flow_style=False))
+        d = {'id': self.id, 'name': self.name, 'url': self.url}
+        persist_to_file(path, d)
 
 
 class Handler:
@@ -412,17 +424,24 @@ class Bar(ProgressBar):
 
 class Catalog:
     def __init__(self):
-        self._cache_base_dir = settings.CATALOG_CACHE_BASE_DIR
-        os.makedirs(self._cache_base_dir, exist_ok=True)
+        self._cache_root = settings.CATALOG_CACHE_ROOT
+        os.makedirs(self._cache_root, exist_ok=True)
 
-        self._cache_remote_dir = os.path.join(self._cache_base_dir, 'remotes')
+        self._catalog_cache = os.path.join(self._cache_root, 'catalog.yml')
+        self._local_package_cache = os.path.join(self._cache_root, 'packages')
+        os.makedirs(self._local_package_cache, exist_ok=True)
+
+        self._storage_root = settings.CATALOG_STORAGE_ROOT
+        os.makedirs(self._storage_root, exist_ok=True)
+
+        self._installed_storage = os.path.join(
+            self._storage_root, 'installed.yml')
+        self._remote_storage = os.path.join(self._storage_root, 'remotes')
+        os.makedirs(self._remote_storage, exist_ok=True)
+
         self._load_remotes()
+        self._load_catalog()
 
-        self._cache_catalog = os.path.join(self._cache_base_dir, 'catalog.yml')
-        self._local_package_cache = os.path.join(
-            self._cache_base_dir, 'packages')
-
-        self._load_cache()
         self._bar = Bar()
 
     def _progress(self, msg, i, chunk_size, remote_size):
@@ -524,20 +543,20 @@ class Catalog:
 
     def list_installed(self, ids):
         pkgs = self._get_packages(
-            ids, self._catalog['installed'], fail_if_no_match=False)
+            ids, self._installed, fail_if_no_match=False)
         return sorted(pkgs, key=attrgetter('id'))
 
     def list_available(self, ids):
         pkgs = self._get_packages(
-            ids, self._catalog['available'], fail_if_no_match=False)
+            ids, self._available, fail_if_no_match=False)
         return sorted(pkgs, key=attrgetter('id'))
 
     def list_upgradable(self, ids):
         pkgs = []
 
         for ipkg in self._get_packages(
-                ids, self._catalog['installed'], fail_if_no_match=False):
-            upkg = self._get_package(ipkg.id, self._catalog['available'])
+                ids, self._installed, fail_if_no_match=False):
+            upkg = self._get_package(ipkg.id, self._available)
 
             if ipkg != upkg:
                 pkgs.append(upkg)
@@ -548,8 +567,8 @@ class Catalog:
         used_handlers = {}
         downloaded = []
 
-        for pkg in self._get_packages(ids, self._catalog['available']):
-            if pkg.id in self._catalog['installed']:
+        for pkg in self._get_packages(ids, self._available):
+            if pkg.id in self._installed:
                 printerr('{0.id} is already installed'.format(pkg))
                 continue
 
@@ -571,9 +590,9 @@ class Catalog:
                 printerr(e)
                 continue
             used_handlers[handler.__class__.__name__] = handler
-            self._catalog['installed'][pkg.id] = (
-                self._catalog['available'][pkg.id])
-            self._persist_cache()
+            self._installed[pkg.id] = (
+                self._available[pkg.id])
+            self._persist_catalog()
 
         for handler in used_handlers.values():
             handler.commit()
@@ -581,7 +600,7 @@ class Catalog:
     def remove_packages(self, ids, commit=True):
         used_handlers = {}
 
-        for pkg in self._get_packages(ids, self._catalog['installed']):
+        for pkg in self._get_packages(ids, self._installed):
             handler = self._get_handler(pkg)
             print('Removing {0.id}'.format(pkg))
             try:
@@ -591,8 +610,8 @@ class Catalog:
                 printerr(e)
                 continue
             used_handlers[handler.__class__.__name__] = handler
-            del(self._catalog['installed'][pkg.id])
-            self._persist_cache()
+            del(self._installed[pkg.id])
+            self._persist_catalog()
 
         if not commit:
             return
@@ -608,8 +627,8 @@ class Catalog:
         used_handlers = {}
         downloaded = []
 
-        for ipkg in self._get_packages(ids, self._catalog['installed']):
-            upkg = self._get_package(ipkg.id, self._catalog['available'])
+        for ipkg in self._get_packages(ids, self._installed):
+            upkg = self._get_package(ipkg.id, self._available)
 
             if ipkg == upkg:
                 printerr('{0.id} has no update available'.format(ipkg))
@@ -644,36 +663,62 @@ class Catalog:
                 continue
             used_handlers[uhandler.__class__.__name__] = uhandler
 
-            self._catalog['installed'][ipkg.id] = (
-                self._catalog['available'][upkg.id])
-            self._persist_cache()
+            self._installed[ipkg.id] = (
+                self._available[upkg.id])
+            self._persist_catalog()
 
         for handler in used_handlers.values():
             handler.commit()
 
     # -- Manage local cache ---------------------------------------------------
-    def _load_cache(self):
-        if os.path.exists(self._cache_catalog):
-            with open(self._cache_catalog, 'r') as f:
-                self._catalog = yaml.safe_load(f.read())
+    def _load_catalog(self):
+        self._available = {}
+        self._installed = {}
 
-        # yaml.safe_load returns None for an empty file.
-        if not getattr(self, '_catalog', None):
-            self._catalog = {'installed': {}, 'available': {}}
-            self._persist_cache()
+        try:
+            catalog = load_from_file(self._catalog_cache)
+
+        except FileNotFoundError:
+            # That's ok
+            pass
+
+        else:
+            # load_from_file returns None for empty files
+            if catalog is not None:
+                if 'available' in catalog and 'installed' in catalog:
+                    # The cache on file is in the old format
+                    # https://github.com/ideascube/ideascube/issues/376
+                    self._available = catalog['available']
+                    self._installed = catalog['installed']
+
+                else:
+                    self._available = catalog
+
+        try:
+            installed = load_from_file(self._installed_storage)
+
+        except FileNotFoundError:
+            # That's ok
+            pass
+
+        else:
+            # load_from_file returns None for empty files
+            if installed is not None:
+                self._installed = installed
+
+        self._persist_catalog()
 
         self._package_caches = [self._local_package_cache]
-        os.makedirs(self._local_package_cache, exist_ok=True)
 
-    def _persist_cache(self):
-        with open(self._cache_catalog, 'w') as f:
-            f.write(yaml.safe_dump(self._catalog, default_flow_style=False))
+    def _persist_catalog(self):
+        persist_to_file(self._catalog_cache, self._available)
+        persist_to_file(self._installed_storage, self._installed)
 
     def add_package_cache(self, path):
         self._package_caches.append(os.path.abspath(path))
 
     def update_cache(self):
-        self._catalog['available'] = {}
+        self._available = {}
 
         for remote in self._remotes.values():
             # TODO: Get resumable.urlretrieve to accept a file-like object?
@@ -686,31 +731,43 @@ class Catalog:
             # TODO: Verify the download with sha256sum? Crypto signature?
             urlretrieve(remote.url, tmppath, reporthook=_progress)
 
-            with open(tmppath, 'r') as f:
-                catalog = yaml.safe_load(f.read())
-                # TODO: Handle content which was removed from the remote source
-                self._catalog['available'].update(catalog['all'])
+            catalog = load_from_file(tmppath)
+
+            # TODO: Handle content which was removed from the remote source
+            self._available.update(catalog['all'])
 
             os.unlink(tmppath)
 
-        self._persist_cache()
+        self._persist_catalog()
 
     def clear_cache(self):
         shutil.rmtree(self._local_package_cache)
         os.mkdir(self._local_package_cache)
 
-        self._catalog['available'] = {}
-        self._persist_cache()
+        self._available = {}
+        self._persist_catalog()
 
     # -- Manage remote sources ------------------------------------------------
     def _load_remotes(self):
-        os.makedirs(self._cache_remote_dir, exist_ok=True)
-
         self._remotes = {}
 
-        for path in glob(os.path.join(self._cache_remote_dir, '*.yml')):
+        for path in glob(os.path.join(self._remote_storage, '*.yml')):
             r = Remote.from_file(path)
             self._remotes[r.id] = r
+
+        if self._remotes:
+            return
+
+        # We might have remotes in the old location
+        old_remote_cache = os.path.join(self._cache_root, 'remotes')
+
+        for path in glob(os.path.join(old_remote_cache, '*.yml')):
+            r = Remote.from_file(path)
+            self.add_remote(r.id, r.name, r.url)
+
+        if self._remotes:
+            # So we did have old remotes after all...
+            shutil.rmtree(old_remote_cache)
 
     def list_remotes(self):
         return sorted(self._remotes.values(), key=attrgetter('id'))
@@ -721,7 +778,7 @@ class Catalog:
             raise ExistingRemoteError(remote)
 
         remote = Remote(id, name, url)
-        remote.to_file(os.path.join(self._cache_remote_dir,
+        remote.to_file(os.path.join(self._remote_storage,
                        '{}.yml'.format(id)))
         self._remotes[id] = remote
 
@@ -730,4 +787,4 @@ class Catalog:
             raise ValueError('There is no "{}" remote'.format(id))
 
         del(self._remotes[id])
-        os.unlink(os.path.join(self._cache_remote_dir, '{}.yml'.format(id)))
+        os.unlink(os.path.join(self._remote_storage, '{}.yml'.format(id)))
