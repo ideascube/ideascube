@@ -89,3 +89,20 @@ def testdatadir(request):
 
     assert datadir.check(dir=True)
     return datadir
+
+
+def pytest_configure(config):
+    from django.conf import settings
+
+    # This is already supposed to be the case by default, and we even tried
+    # setting it explicitly anyway.
+    #
+    # But somehow, at the very beginning of the test suite (when running the
+    # migrations or when the post_migrate signal is fired), the transient
+    # database is on the filesystem (the value of NAME).
+    #
+    # We can't figure out why that is, it might be a bug in pytest-django, or
+    # worse in django itself.
+    #
+    # Somehow the default database is always in memory, though.
+    settings.DATABASES['transient']['TEST_NAME'] = ':memory:'
