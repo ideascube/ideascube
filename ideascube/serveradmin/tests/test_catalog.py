@@ -1,6 +1,7 @@
 import os
 from hashlib import sha256
 
+from py.path import local as Path
 import pytest
 from resumable import DownloadCheck, DownloadError
 
@@ -319,25 +320,24 @@ def test_remove_staticsite(staticsite_path, install_dir):
     assert root.check(exists=False)
 
 
-def test_handler(tmpdir, settings):
+def test_handler(settings):
     from ideascube.serveradmin.catalog import Handler
 
-    settings.CATALOG_HANDLER_INSTALL_DIR = tmpdir.strpath
     h = Handler()
-    assert h._install_dir == tmpdir.strpath
+    assert h._install_dir == settings.CATALOG_HANDLER_INSTALL_DIR
 
 
-def test_kiwix_installs_zippedzim(tmpdir, settings, zippedzim_path):
+def test_kiwix_installs_zippedzim(settings, zippedzim_path):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
-
-    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
 
     p = ZippedZim('wikipedia.tum', {
         'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
     h = Kiwix()
     h.install(p, zippedzim_path.strpath)
 
-    data = tmpdir.join('data')
+    install_root = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+
+    data = install_root.join('data')
     assert data.check(dir=True)
 
     content = data.join('content')
@@ -353,11 +353,8 @@ def test_kiwix_installs_zippedzim(tmpdir, settings, zippedzim_path):
     assert index.join('{}.zim.idx'.format(p.id)).check(dir=True)
 
 
-def test_kiwix_does_not_fail_if_files_already_exist(tmpdir, settings,
-                                                    zippedzim_path):
+def test_kiwix_does_not_fail_if_files_already_exist(settings, zippedzim_path):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
-
-    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
 
     p = ZippedZim('wikipedia.tum', {
         'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
@@ -365,14 +362,14 @@ def test_kiwix_does_not_fail_if_files_already_exist(tmpdir, settings,
     h.install(p, zippedzim_path.strpath)
     h.install(p, zippedzim_path.strpath)
 
-    data = tmpdir.join('data')
+    install_root = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+
+    data = install_root.join('data')
     assert data.check(dir=True)
 
 
-def test_kiwix_removes_zippedzim(tmpdir, settings, zippedzim_path):
+def test_kiwix_removes_zippedzim(settings, zippedzim_path):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
-
-    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
 
     p = ZippedZim('wikipedia.tum', {
         'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
@@ -381,7 +378,9 @@ def test_kiwix_removes_zippedzim(tmpdir, settings, zippedzim_path):
 
     h.remove(p)
 
-    data = tmpdir.join('data')
+    install_root = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+
+    data = install_root.join('data')
     assert data.check(dir=True)
 
     content = data.join('content')
@@ -397,10 +396,9 @@ def test_kiwix_removes_zippedzim(tmpdir, settings, zippedzim_path):
     assert index.join('{}.zim.idx'.format(p.id)).check(exists=False)
 
 
-def test_kiwix_commits_after_install(tmpdir, settings, zippedzim_path, mocker):
+def test_kiwix_commits_after_install(settings, zippedzim_path, mocker):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
 
-    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
     manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
     p = ZippedZim('wikipedia.tum', {
@@ -409,7 +407,9 @@ def test_kiwix_commits_after_install(tmpdir, settings, zippedzim_path, mocker):
     h.install(p, zippedzim_path.strpath)
     h.commit()
 
-    library = tmpdir.join('library.xml')
+    install_root = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+
+    library = install_root.join('library.xml')
     assert library.check(exists=True)
 
     with library.open(mode='r') as f:
@@ -422,11 +422,10 @@ def test_kiwix_commits_after_install(tmpdir, settings, zippedzim_path, mocker):
     manager().restart.call_count == 1
 
 
-def test_kiwix_commits_after_remove(tmpdir, settings, zippedzim_path, mocker):
+def test_kiwix_commits_after_remove(settings, zippedzim_path, mocker):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
     from ideascube.serveradmin.systemd import NoSuchUnit
 
-    settings.CATALOG_KIWIX_INSTALL_DIR = tmpdir.strpath
     manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     manager().get_service.side_effect = NoSuchUnit
 
@@ -442,7 +441,9 @@ def test_kiwix_commits_after_remove(tmpdir, settings, zippedzim_path, mocker):
     h.remove(p)
     h.commit()
 
-    library = tmpdir.join('library.xml')
+    install_root = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+
+    library = install_root.join('library.xml')
     assert library.check(exists=True)
     assert library.read_text('utf-8') == (
         "<?xml version='1.0' encoding='utf-8'?>\n<library/>")
@@ -451,10 +452,9 @@ def test_kiwix_commits_after_remove(tmpdir, settings, zippedzim_path, mocker):
     manager().restart.assert_not_called()
 
 
-def test_nginx_installs_zippedzim(tmpdir, settings, staticsite_path):
+def test_nginx_installs_zippedzim(settings, staticsite_path):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
 
-    settings.CATALOG_NGINX_INSTALL_DIR = tmpdir.strpath
     Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
 
     p = StaticSite('w2eu', {
@@ -462,7 +462,9 @@ def test_nginx_installs_zippedzim(tmpdir, settings, staticsite_path):
     h = Nginx()
     h.install(p, staticsite_path.strpath)
 
-    root = tmpdir.join('w2eu')
+    install_root = Path(settings.CATALOG_NGINX_INSTALL_DIR)
+
+    root = install_root.join('w2eu')
     assert root.check(dir=True)
 
     index = root.join('index.html')
@@ -470,10 +472,9 @@ def test_nginx_installs_zippedzim(tmpdir, settings, staticsite_path):
         assert 'static content' in f.read()
 
 
-def test_nginx_removes_zippedzim(tmpdir, settings, staticsite_path):
+def test_nginx_removes_zippedzim(settings, staticsite_path):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
 
-    settings.CATALOG_NGINX_INSTALL_DIR = tmpdir.strpath
     Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
 
     p = StaticSite('w2eu', {
@@ -483,18 +484,20 @@ def test_nginx_removes_zippedzim(tmpdir, settings, staticsite_path):
 
     h.remove(p)
 
-    root = tmpdir.join('w2eu')
+    install_root = Path(settings.CATALOG_NGINX_INSTALL_DIR)
+
+    root = install_root.join('w2eu')
     assert root.check(exists=False)
 
 
-def test_nginx_commits_after_install(tmpdir, settings, staticsite_path,
-                                     mocker, monkeypatch):
+def test_nginx_commits_after_install(settings, staticsite_path, mocker):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
 
-    settings.CATALOG_NGINX_INSTALL_DIR = tmpdir.strpath
-    monkeypatch.setattr(Nginx, 'root', tmpdir.strpath)
-    os.mkdir(tmpdir.join('sites-available').strpath)
-    os.mkdir(tmpdir.join('sites-enabled').strpath)
+    Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
+    root = Path(Nginx.root).mkdir()
+    available_dir = root.mkdir('sites-available')
+    enabled_dir = root.mkdir('sites-enabled')
+
     manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
     p = StaticSite('w2eu', {
@@ -503,10 +506,10 @@ def test_nginx_commits_after_install(tmpdir, settings, staticsite_path,
     h.install(p, staticsite_path.strpath)
     h.commit()
 
-    conffile = tmpdir.join('sites-available', 'w2eu')
+    conffile = available_dir.join('w2eu')
     with conffile.open() as f:
         assert 'server_name w2eu.' in f.read()
-    symlink = tmpdir.join('sites-enabled', 'w2eu')
+    symlink = enabled_dir.join('w2eu')
     assert symlink.check(exists=True)
     assert symlink.realpath() == conffile
 
@@ -514,15 +517,15 @@ def test_nginx_commits_after_install(tmpdir, settings, staticsite_path,
     manager().restart.call_count == 1
 
 
-def test_nginx_commits_after_remove(tmpdir, settings, staticsite_path,
-                                    mocker, monkeypatch):
+def test_nginx_commits_after_remove(settings, staticsite_path, mocker):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
     from ideascube.serveradmin.systemd import NoSuchUnit
 
-    settings.CATALOG_NGINX_INSTALL_DIR = tmpdir.strpath
-    monkeypatch.setattr(Nginx, 'root', tmpdir.strpath)
-    os.mkdir(tmpdir.join('sites-available').strpath)
-    os.mkdir(tmpdir.join('sites-enabled').strpath)
+    Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
+    root = Path(Nginx.root).mkdir()
+    available_dir = root.mkdir('sites-available')
+    enabled_dir = root.mkdir('sites-enabled')
+
     manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     manager().get_service.side_effect = NoSuchUnit
 
@@ -538,36 +541,38 @@ def test_nginx_commits_after_remove(tmpdir, settings, staticsite_path,
     h.remove(p)
     h.commit()
 
-    conffile = tmpdir.join('sites-available', 'w2eu')
+    conffile = available_dir.join('w2eu')
     assert conffile.check(exists=False)
-    symlink = tmpdir.join('sites-enabled', 'w2eu')
+    symlink = enabled_dir.join('w2eu')
     assert symlink.check(exists=False)
 
     assert manager().get_service.call_count == 2
     manager().restart.assert_not_called()
 
 
-def test_catalog_no_remote(tmpdir, settings):
+def test_catalog_no_remote(settings):
     from ideascube.serveradmin.catalog import Catalog
 
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
     c = Catalog()
     assert c.list_remotes() == []
-    assert tmpdir.join('remotes').check(dir=True)
-    assert tmpdir.join('remotes').listdir() == []
+
+    remotes_dir = Path(settings.CATALOG_CACHE_BASE_DIR).join('remotes')
+
+    assert remotes_dir.check(dir=True)
+    assert remotes_dir.listdir() == []
 
 
-def test_catalog_existing_remote(tmpdir, settings):
+def test_catalog_existing_remote(settings):
     from ideascube.serveradmin.catalog import Catalog
 
     params = {
         'id': 'foo', 'name': 'Content provided by Foo',
         'url': 'http://foo.fr/catalog.yml'}
 
-    tmpdir.mkdir('remotes').join('foo.yml').write(
+    remotes_dir = Path(settings.CATALOG_CACHE_BASE_DIR).mkdir('remotes')
+    remotes_dir.join('foo.yml').write(
         'id: {id}\nname: {name}\nurl: {url}'.format(**params))
 
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
     c = Catalog()
     remotes = c.list_remotes()
     assert len(remotes) == 1
@@ -578,10 +583,9 @@ def test_catalog_existing_remote(tmpdir, settings):
     assert remote.url == params['url']
 
 
-def test_catalog_add_remotes(tmpdir, settings):
+def test_catalog_add_remotes():
     from ideascube.serveradmin.catalog import Catalog, ExistingRemoteError
 
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
     c = Catalog()
     c.add_remote('foo', 'Content provided by Foo', 'http://foo.fr/catalog.yml')
     remotes = c.list_remotes()
@@ -612,17 +616,17 @@ def test_catalog_add_remotes(tmpdir, settings):
     assert 'foo' in exc.exconly()
 
 
-def test_catalog_remove_remote(tmpdir, settings):
+def test_catalog_remove_remote(settings):
     from ideascube.serveradmin.catalog import Catalog
 
     params = {
         'id': 'foo', 'name': 'Content provided by Foo',
         'url': 'http://foo.fr/catalog.yml'}
 
-    tmpdir.mkdir('remotes').join('foo.yml').write(
+    remotes_dir = Path(settings.CATALOG_CACHE_BASE_DIR).mkdir('remotes')
+    remotes_dir.join('foo.yml').write(
         'id: {id}\nname: {name}\nurl: {url}'.format(**params))
 
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
     c = Catalog()
     c.remove_remote(params['id'])
     remotes = c.list_remotes()
@@ -634,7 +638,7 @@ def test_catalog_remove_remote(tmpdir, settings):
     assert params['id'] in exc.exconly()
 
 
-def test_catalog_update_cache(tmpdir, settings, monkeypatch):
+def test_catalog_update_cache(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog
 
     monkeypatch.setattr(
@@ -644,7 +648,6 @@ def test_catalog_update_cache(tmpdir, settings, monkeypatch):
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
 
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
     c = Catalog()
     assert c._catalog == {'installed': {}, 'available': {}}
 
@@ -662,7 +665,7 @@ def test_catalog_update_cache(tmpdir, settings, monkeypatch):
         'available': {'foovideos': {'name': 'Videos from Foo'}}}
 
 
-def test_catalog_clear_cache(tmpdir, settings, monkeypatch):
+def test_catalog_clear_cache(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog
 
     monkeypatch.setattr(
@@ -672,7 +675,6 @@ def test_catalog_clear_cache(tmpdir, settings, monkeypatch):
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
 
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -687,8 +689,7 @@ def test_catalog_clear_cache(tmpdir, settings, monkeypatch):
 def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -712,9 +713,6 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
     mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
 
     c = Catalog()
     c.add_remote(
@@ -736,8 +734,7 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
 def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -762,9 +759,6 @@ def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
 
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -785,8 +779,6 @@ def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
 def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -811,9 +803,6 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
 
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -833,8 +822,6 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, settings,
                                                   testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -873,9 +860,6 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, settings,
         'ideascube.serveradmin.catalog.Kiwix.install',
         side_effect=fake_install)
 
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -892,9 +876,9 @@ def test_catalog_install_package_already_downloaded(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
+    cachedir = Path(settings.CATALOG_CACHE_BASE_DIR)
     packagesdir = cachedir.mkdir('packages')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -918,9 +902,6 @@ def test_catalog_install_package_already_downloaded(
     spy_urlretrieve = mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
 
     c = Catalog()
     c.add_remote(
@@ -946,8 +927,7 @@ def test_catalog_install_package_already_in_additional_cache(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
     additionaldir = tmpdir.mkdir('this-could-be-a-usb-stick')
 
@@ -972,9 +952,6 @@ def test_catalog_install_package_already_in_additional_cache(
     spy_urlretrieve = mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
 
     c = Catalog()
     c.add_remote(
@@ -1001,9 +978,9 @@ def test_catalog_install_package_partially_downloaded(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
+    cachedir = Path(settings.CATALOG_CACHE_BASE_DIR)
     packagesdir = cachedir.mkdir('packages')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1032,9 +1009,6 @@ def test_catalog_install_package_partially_downloaded(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
 
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -1056,9 +1030,9 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
+    cachedir = Path(settings.CATALOG_CACHE_BASE_DIR)
     packagesdir = cachedir.mkdir('packages')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1087,9 +1061,6 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
 
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -1111,7 +1082,6 @@ def test_catalog_install_package_does_not_exist(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog, NoSuchPackage
 
-    cachedir = tmpdir.mkdir('cache')
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1136,8 +1106,6 @@ def test_catalog_install_package_does_not_exist(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
 
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -1152,7 +1120,6 @@ def test_catalog_install_package_with_missing_type(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog, InvalidPackageMetadata
 
-    cachedir = tmpdir.mkdir('cache')
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1175,8 +1142,6 @@ def test_catalog_install_package_with_missing_type(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
 
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -1191,7 +1156,6 @@ def test_catalog_install_package_with_unknown_type(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog, InvalidPackageType
 
-    cachedir = tmpdir.mkdir('cache')
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1215,8 +1179,6 @@ def test_catalog_install_package_with_unknown_type(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
 
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -1230,8 +1192,7 @@ def test_catalog_install_package_with_unknown_type(
 def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1255,9 +1216,6 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
     mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
 
     c = Catalog()
     c.add_remote(
@@ -1291,8 +1249,7 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
 def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1316,9 +1273,6 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
     mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
 
     c = Catalog()
     c.add_remote(
@@ -1337,8 +1291,7 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
 def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1362,9 +1315,6 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
     mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
 
     c = Catalog()
     c.add_remote(
@@ -1383,8 +1333,7 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
 def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1408,9 +1357,6 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
     mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
 
     c = Catalog()
     c.add_remote(
@@ -1463,8 +1409,7 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
 def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1488,9 +1433,6 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
     mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
 
     c = Catalog()
     c.add_remote(
@@ -1544,8 +1486,7 @@ def test_catalog_update_package_already_latest(
         tmpdir, settings, testdatadir, mocker, capsys):
     from ideascube.serveradmin.catalog import Catalog
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1569,9 +1510,6 @@ def test_catalog_update_package_already_latest(
     mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
 
     c = Catalog()
     c.add_remote(
@@ -1597,7 +1535,7 @@ def test_catalog_update_package_already_latest(
     assert err.strip() == 'wikipedia.tum has no update available'
 
 
-def test_catalog_list_available_packages(tmpdir, settings, monkeypatch):
+def test_catalog_list_available_packages(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog, ZippedZim
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
@@ -1612,7 +1550,6 @@ def test_catalog_list_available_packages(tmpdir, settings, monkeypatch):
     monkeypatch.setattr(
         'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
-    settings.CATALOG_CACHE_BASE_DIR = tmpdir.strpath
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -1685,12 +1622,6 @@ def test_catalog_list_installed_packages(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
 
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -1759,12 +1690,6 @@ def test_catalog_list_upgradable_packages(
     mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
         side_effect=fake_urlretrieve)
-
-    cachedir = tmpdir.mkdir('cache')
-    installdir = tmpdir.mkdir('kiwix')
-
-    settings.CATALOG_CACHE_BASE_DIR = cachedir.strpath
-    settings.CATALOG_KIWIX_INSTALL_DIR = installdir.strpath
 
     c = Catalog()
     c.add_remote(

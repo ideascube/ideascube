@@ -9,7 +9,6 @@ from ..backup import Backup
 
 BACKUPS_ROOT = 'ideascube/serveradmin/tests/backups'
 DATA_ROOT = 'ideascube/serveradmin/tests/data/backup'
-BACKUPED_ROOT = 'ideascube/serveradmin/tests/backuped'
 
 
 def test_backup_init_should_raise_with_malformatted_string():
@@ -31,6 +30,7 @@ def test_guess_format_from_name(input, expected):
     assert Backup.guess_file_format(input) == expected
 
 
+@pytest.mark.usefixtures('backup_root')
 def test_list(monkeypatch, settings):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
@@ -38,10 +38,6 @@ def test_list(monkeypatch, settings):
     filename = 'edoardo-0.0.0-201501231405.tar'
     good = os.path.join(BACKUPS_ROOT, filename)
     bad = os.path.join(BACKUPS_ROOT, 'donotlistme.tar')
-    try:
-        os.makedirs(BACKUPS_ROOT)
-    except OSError:
-        pass  # Already exists.
     open(good, mode='w')
     open(bad, mode='w')
     backups = list(Backup.list())
@@ -49,7 +45,6 @@ def test_list(monkeypatch, settings):
     assert backups[0].name == filename
     os.remove(good)
     os.remove(bad)
-    os.rmdir(BACKUPS_ROOT)
 
 
 @pytest.mark.parametrize('format,extension', [
@@ -57,12 +52,8 @@ def test_list(monkeypatch, settings):
     ('bztar', '.tar.bz2'),
     ('gztar', '.tar.gz'),
 ])
+@pytest.mark.usefixtures('backup_root')
 def test_create_tarfile(monkeypatch, settings, format, extension):
-    settings.BACKUPED_ROOT = BACKUPED_ROOT
-    try:
-        os.makedirs(BACKUPED_ROOT)
-    except OSError:
-        pass
     filename = 'edoardo-0.0.0-201501231405' + extension
     filepath = os.path.join(BACKUPS_ROOT, filename)
     try:
@@ -108,9 +99,7 @@ def test_create_zipfile_must_fail(monkeypatch, tmpdir):
 ])
 def test_restore(monkeypatch, settings, extension):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT', DATA_ROOT)
-    TEST_BACKUPED_ROOT = 'ideascube/serveradmin/tests/backuped'
-    settings.BACKUPED_ROOT = TEST_BACKUPED_ROOT
-    dbpath = os.path.join(TEST_BACKUPED_ROOT, 'default.sqlite')
+    dbpath = os.path.join(settings.BACKUPED_ROOT, 'default.sqlite')
     assert not os.path.exists(dbpath)
     backup = Backup('musasa-0.1.0-201501241620' + extension)
     assert os.path.exists(backup.path)  # Should be shipped in git.
@@ -125,6 +114,7 @@ def test_restore(monkeypatch, settings, extension):
     ('.tar.gz'),
     ('.tar.bz2'),
 ])
+@pytest.mark.usefixtures('backup_root')
 def test_load(monkeypatch, extension):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
@@ -143,6 +133,7 @@ def test_load(monkeypatch, extension):
     ('.tar.gz'),
     ('.tar.bz2'),
 ])
+@pytest.mark.usefixtures('backup_root')
 def test_delete(monkeypatch, extension):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
@@ -156,6 +147,7 @@ def test_delete(monkeypatch, extension):
     assert not os.path.exists(backup_path)
 
 
+@pytest.mark.usefixtures('backup_root')
 def test_delete_should_not_fail_if_file_is_missing(monkeypatch):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
                         BACKUPS_ROOT)
@@ -169,6 +161,7 @@ def test_load_should_raise_if_file_is_not_a_zip():
         assert 'Not a zip file' in str(excinfo.value)
 
 
+@pytest.mark.usefixtures('backup_root')
 def test_load_should_raise_if_file_is_not_a_tar():
     bad_file = os.path.join(BACKUPS_ROOT, 'musasa_0.1.0_201501241620.tar')
     with pytest.raises(ValueError) as excinfo:
@@ -178,7 +171,7 @@ def test_load_should_raise_if_file_is_not_a_tar():
     os.remove(bad_file)
 
 
-def test_exists(monkeypatch, settings):
+def test_exists(monkeypatch):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT', DATA_ROOT)
     assert Backup.exists('musasa-0.1.0-201501241620.tar')
     assert not Backup.exists('doesnotexist.tar')
