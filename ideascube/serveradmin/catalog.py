@@ -143,9 +143,7 @@ class Kiwix(Handler):
                 et = etree.parse(f)
                 books = et.findall('book')
 
-                # Messing with the path gets complicated otherwise
-                # TODO: Can we assume this is always true for stuff distributed
-                #       by kiwix?
+                # We only want to handle a single zim per zip
                 assert len(books) == 1
 
                 book = books[0]
