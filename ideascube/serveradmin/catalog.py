@@ -543,20 +543,20 @@ class Catalog:
 
     def list_installed(self, ids):
         pkgs = self._get_packages(
-            ids, self._catalog['installed'], fail_if_no_match=False)
+            ids, self._installed, fail_if_no_match=False)
         return sorted(pkgs, key=attrgetter('id'))
 
     def list_available(self, ids):
         pkgs = self._get_packages(
-            ids, self._catalog['available'], fail_if_no_match=False)
+            ids, self._available, fail_if_no_match=False)
         return sorted(pkgs, key=attrgetter('id'))
 
     def list_upgradable(self, ids):
         pkgs = []
 
         for ipkg in self._get_packages(
-                ids, self._catalog['installed'], fail_if_no_match=False):
-            upkg = self._get_package(ipkg.id, self._catalog['available'])
+                ids, self._installed, fail_if_no_match=False):
+            upkg = self._get_package(ipkg.id, self._available)
 
             if ipkg != upkg:
                 pkgs.append(upkg)
@@ -567,8 +567,8 @@ class Catalog:
         used_handlers = {}
         downloaded = []
 
-        for pkg in self._get_packages(ids, self._catalog['available']):
-            if pkg.id in self._catalog['installed']:
+        for pkg in self._get_packages(ids, self._available):
+            if pkg.id in self._installed:
                 printerr('{0.id} is already installed'.format(pkg))
                 continue
 
@@ -590,8 +590,8 @@ class Catalog:
                 printerr(e)
                 continue
             used_handlers[handler.__class__.__name__] = handler
-            self._catalog['installed'][pkg.id] = (
-                self._catalog['available'][pkg.id])
+            self._installed[pkg.id] = (
+                self._available[pkg.id])
             self._persist_catalog()
 
         for handler in used_handlers.values():
@@ -600,7 +600,7 @@ class Catalog:
     def remove_packages(self, ids, commit=True):
         used_handlers = {}
 
-        for pkg in self._get_packages(ids, self._catalog['installed']):
+        for pkg in self._get_packages(ids, self._installed):
             handler = self._get_handler(pkg)
             print('Removing {0.id}'.format(pkg))
             try:
@@ -610,7 +610,7 @@ class Catalog:
                 printerr(e)
                 continue
             used_handlers[handler.__class__.__name__] = handler
-            del(self._catalog['installed'][pkg.id])
+            del(self._installed[pkg.id])
             self._persist_catalog()
 
         if not commit:
@@ -627,8 +627,8 @@ class Catalog:
         used_handlers = {}
         downloaded = []
 
-        for ipkg in self._get_packages(ids, self._catalog['installed']):
-            upkg = self._get_package(ipkg.id, self._catalog['available'])
+        for ipkg in self._get_packages(ids, self._installed):
+            upkg = self._get_package(ipkg.id, self._available)
 
             if ipkg == upkg:
                 printerr('{0.id} has no update available'.format(ipkg))
@@ -663,8 +663,8 @@ class Catalog:
                 continue
             used_handlers[uhandler.__class__.__name__] = uhandler
 
-            self._catalog['installed'][ipkg.id] = (
-                self._catalog['available'][upkg.id])
+            self._installed[ipkg.id] = (
+                self._available[upkg.id])
             self._persist_catalog()
 
         for handler in used_handlers.values():
@@ -672,7 +672,8 @@ class Catalog:
 
     # -- Manage local cache ---------------------------------------------------
     def _load_catalog(self):
-        self._catalog = {'available': {}, 'installed': {}}
+        self._available = {}
+        self._installed = {}
 
         try:
             catalog = load_from_file(self._catalog_cache)
@@ -687,10 +688,11 @@ class Catalog:
                 if 'available' in catalog and 'installed' in catalog:
                     # The cache on file is in the old format
                     # https://github.com/ideascube/ideascube/issues/376
-                    self._catalog = catalog
+                    self._available = catalog['available']
+                    self._installed = catalog['installed']
 
                 else:
-                    self._catalog['available'] = catalog
+                    self._available = catalog
 
         try:
             installed = load_from_file(self._installed_storage)
@@ -702,21 +704,21 @@ class Catalog:
         else:
             # load_from_file returns None for empty files
             if installed is not None:
-                self._catalog['installed'] = installed
+                self._installed = installed
 
         self._persist_catalog()
 
         self._package_caches = [self._local_package_cache]
 
     def _persist_catalog(self):
-        persist_to_file(self._catalog_cache, self._catalog['available'])
-        persist_to_file(self._installed_storage, self._catalog['installed'])
+        persist_to_file(self._catalog_cache, self._available)
+        persist_to_file(self._installed_storage, self._installed)
 
     def add_package_cache(self, path):
         self._package_caches.append(os.path.abspath(path))
 
     def update_cache(self):
-        self._catalog['available'] = {}
+        self._available = {}
 
         for remote in self._remotes.values():
             # TODO: Get resumable.urlretrieve to accept a file-like object?
@@ -732,7 +734,7 @@ class Catalog:
             catalog = load_from_file(tmppath)
 
             # TODO: Handle content which was removed from the remote source
-            self._catalog['available'].update(catalog['all'])
+            self._available.update(catalog['all'])
 
             os.unlink(tmppath)
 
@@ -742,7 +744,7 @@ class Catalog:
         shutil.rmtree(self._local_package_cache)
         os.mkdir(self._local_package_cache)
 
-        self._catalog['available'] = {}
+        self._available = {}
         self._persist_catalog()
 
     # -- Manage remote sources ------------------------------------------------

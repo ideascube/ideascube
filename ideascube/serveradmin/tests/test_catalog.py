@@ -769,20 +769,19 @@ def test_catalog_update_cache(tmpdir, monkeypatch):
         'all:\n  foovideos:\n    name: Videos from Foo')
 
     c = Catalog()
-    assert c._catalog == {'installed': {}, 'available': {}}
+    assert c._available == {}
+    assert c._installed == {}
 
     c.add_remote(
         'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
     c.update_cache()
-    assert c._catalog == {
-        'installed': {},
-        'available': {'foovideos': {'name': 'Videos from Foo'}}}
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {}
 
     c = Catalog()
-    assert c._catalog == {
-        'installed': {},
-        'available': {'foovideos': {'name': 'Videos from Foo'}}}
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {}
 
 
 def test_catalog_clear_cache(tmpdir, monkeypatch):
@@ -800,10 +799,12 @@ def test_catalog_clear_cache(tmpdir, monkeypatch):
         'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
     c.update_cache()
-    assert c._catalog != {'installed': {}, 'available': {}}
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {}
 
     c.clear_cache()
-    assert c._catalog == {'installed': {}, 'available': {}}
+    assert c._available == {}
+    assert c._installed == {}
 
 
 def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
@@ -988,8 +989,8 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, settings,
     c.install_packages(['wikipedia.tum', 'wikipedia.fr'])
 
     assert spy_install.call_count == 2
-    assert 'wikipedia.tum' not in c._catalog['installed']
-    assert 'wikipedia.fr' in c._catalog['installed']
+    assert 'wikipedia.tum' not in c._installed
+    assert 'wikipedia.fr' in c._installed
 
 
 def test_catalog_install_package_already_downloaded(
