@@ -19,10 +19,19 @@
 {% endblock twothird %}
 {% block third %}
     {% if user.is_staff %}
-        <ul class="card tinted admin">
-            <li>{% fa 'pencil' 'fa-fw' %}<a href="{% url 'mediacenter:document_update' pk=document.pk %}">{% trans 'Edit' %}</a></li>
-            <li>{% fa 'trash' 'fa-fw' %}<a href="{% url 'mediacenter:document_delete' pk=document.pk %}">{% trans 'Delete' %}</a></li>
-        </ul>
+        {% if document.package_id %}
+            <div class="card tinted admin">
+               {% blocktrans with package_id=document.package_id %}
+                   Cannot edit or delete this document.
+                   It is installed by the "{{ package_id }}" package.
+               {% endblocktrans %}
+            </div>
+        {% else %}
+            <ul class="card tinted admin">
+                <li>{% fa 'pencil' 'fa-fw' %}<a href="{% url 'mediacenter:document_update' pk=document.pk %}">{% trans 'Edit' %}</a></li>
+                <li>{% fa 'trash' 'fa-fw' %}<a href="{% url 'mediacenter:document_delete' pk=document.pk %}">{% trans 'Delete' %}</a></li>
+            </ul>
+        {% endif %}
     {% endif %}
     {% tag_cloud url="mediacenter:index" model=view.model tags=document.tags.all %}
 {% endblock third %}

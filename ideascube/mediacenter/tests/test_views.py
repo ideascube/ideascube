@@ -342,6 +342,30 @@ def test_staff_can_edit_document(staffapp, video):
     assert Document.objects.get(pk=video.pk).title == title
 
 
+def test_staff_detail_page_has_no_edit_delete_link_package_id(staffapp):
+    document = DocumentFactory(package_id="foo")
+    response = staffapp.get(reverse('mediacenter:document_detail',
+                                    kwargs={'pk': document.pk}), status=200)
+    decoded_content = response.content.decode()
+    assert "Cannot edit or delete this document." in decoded_content
+    assert ('<a href="/en/mediacenter/document/{}/edit/">Edit</a>'
+            .format(document.pk) not in decoded_content)
+    assert ('<a href="/en/mediacenter/document/{}/delete/">Delete</a>'
+            .format(document.pk) not in decoded_content)
+
+
+def test_staff_detail_page_has_edit_delete_link_no_package_id(staffapp):
+    document = DocumentFactory(package_id="")
+    response = staffapp.get(reverse('mediacenter:document_detail',
+                                    kwargs={'pk': document.pk}), status=200)
+    decoded_content = response.content.decode()
+    assert "Cannot edit or delete this document." not in decoded_content
+    assert ('<a href="/en/mediacenter/document/{}/edit/">Edit</a>'
+            .format(document.pk) in decoded_content)
+    assert ('<a href="/en/mediacenter/document/{}/delete/">Delete</a>'
+            .format(document.pk) in decoded_content)
+
+
 def test_can_create_document(staffapp):
     assert not Document.objects.count()
     url = reverse('mediacenter:document_create')
