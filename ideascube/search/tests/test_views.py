@@ -9,6 +9,7 @@ from ideascube.library.tests.factories import BookFactory
 pytestmark = pytest.mark.django_db
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_view_should_show_results(app):
     content = ContentFactory(title='test content', status=Content.PUBLISHED)
     form = app.get(reverse('search:search')).forms['search']
@@ -17,6 +18,7 @@ def test_search_view_should_show_results(app):
     assert content.title in page.content.decode()
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_view_should_not_return_draft_content_to_anonymous(app):
     content = ContentFactory(title='test content', status=Content.DRAFT)
     form = app.get(reverse('search:search')).forms['search']
@@ -25,6 +27,7 @@ def test_search_view_should_not_return_draft_content_to_anonymous(app):
     assert content.title not in page.content.decode()
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_view_should_not_return_deleted_content_to_anonymous(app):
     content = ContentFactory(title='test content', status=Content.DELETED)
     form = app.get(reverse('search:search')).forms['search']
@@ -33,6 +36,7 @@ def test_search_view_should_not_return_deleted_content_to_anonymous(app):
     assert content.title not in page.content.decode()
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_view_should_not_return_draft_content_to_logged_user(loggedapp):
     content = ContentFactory(title='test content', status=Content.DRAFT)
     form = loggedapp.get(reverse('search:search')).forms['search']
@@ -41,6 +45,7 @@ def test_search_view_should_not_return_draft_content_to_logged_user(loggedapp):
     assert content.title not in page.content.decode()
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_view_should_not_return_deleted_to_logged_user(loggedapp):
     content = ContentFactory(title='test content', status=Content.DELETED)
     form = loggedapp.get(reverse('search:search')).forms['search']
@@ -49,6 +54,7 @@ def test_search_view_should_not_return_deleted_to_logged_user(loggedapp):
     assert content.title not in page.content.decode()
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_view_should_return_draft_content_to_staff_user(staffapp):
     content = ContentFactory(title='test content', status=Content.DRAFT)
     form = staffapp.get(reverse('search:search')).forms['search']
@@ -57,6 +63,7 @@ def test_search_view_should_return_draft_content_to_staff_user(staffapp):
     assert content.title in page.content.decode()
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_view_should_not_return_deleted_to_staff_user(staffapp):
     content = ContentFactory(title='test content', status=Content.DELETED)
     form = staffapp.get(reverse('search:search')).forms['search']
@@ -65,6 +72,7 @@ def test_search_view_should_not_return_deleted_to_staff_user(staffapp):
     assert content.title in page.content.decode()
 
 
+@pytest.mark.usefixtures('cleansearch')
 def test_search_view_should_return_mixed_content(app):
     content = ContentFactory(title='test content', status=Content.PUBLISHED)
     book = BookFactory(title='test book')

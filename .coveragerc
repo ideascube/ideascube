@@ -1,8 +1,10 @@
 [run]
 omit =
+    ideascube/*/migrations/*
     ideascube/*/tests/*
     ideascube/tests/*
     ideascube/wsgi.py
     ideascube/management/commands/dummydata.py
     ideascube/management/commands/import_legacy.py
+    ideascube/migrations/*
     ideascube/conf/*
