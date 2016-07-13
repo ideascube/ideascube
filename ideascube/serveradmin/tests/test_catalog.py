@@ -4,6 +4,8 @@ from hashlib import sha256
 import pytest
 from resumable import DownloadCheck, DownloadError
 
+from ideascube.mediacenter.models import Document
+
 
 @pytest.fixture(
     params=[
@@ -59,6 +61,14 @@ def zippedzim_path(testdatadir, tmpdir):
 def staticsite_path(testdatadir, tmpdir):
     zipfile = testdatadir.join('catalog', 'w2eu-2016-02-26')
     path = tmpdir.mkdir('packages').join('w2eu-2016-02-26')
+    zipfile.copy(path)
+    return path
+
+
+@pytest.fixture
+def zippedmedia_path(testdatadir, tmpdir):
+    zipfile = testdatadir.join('catalog', 'test-media.zip')
+    path = tmpdir.mkdir('packages').join('test-media.zip')
     zipfile.copy(path)
     return path
 
@@ -319,6 +329,35 @@ def test_remove_staticsite(staticsite_path, install_dir):
     assert root.check(exists=False)
 
 
+@pytest.mark.usefixtures('db')
+def test_install_zippedmedia(zippedmedia_path, install_dir):
+    from ideascube.serveradmin.catalog import ZippedMedia
+
+    p = ZippedMedia('test-media', {
+        'url': 'https://foo.fr/test-media.zip'})
+    p.install(zippedmedia_path.strpath, install_dir.strpath)
+
+    root = install_dir.join('test-media')
+    assert root.check(dir=True)
+
+    manifest = root.join('manifest.yml')
+    assert manifest.exists()
+
+
+@pytest.mark.usefixtures('db')
+def test_remove_zippedmedia(zippedmedia_path, install_dir):
+    from ideascube.serveradmin.catalog import ZippedMedia
+
+    p = ZippedMedia('test-media', {
+        'url': 'https://foo.fr/test-media.zip'})
+    p.install(zippedmedia_path.strpath, install_dir.strpath)
+
+    p.remove(install_dir.strpath)
+
+    root = install_dir.join('w2eu')
+    assert root.check(exists=False)
+
+
 def test_handler(tmpdir, settings):
     from ideascube.serveradmin.catalog import Handler
 
@@ -545,6 +584,61 @@ def test_nginx_commits_after_remove(tmpdir, settings, staticsite_path,
 
     assert manager().get_service.call_count == 2
     manager().restart.assert_not_called()
+
+
+@pytest.mark.usefixtures('db')
+def test_mediacenter_installs_zippedmedia(tmpdir, settings, zippedmedia_path):
+    from ideascube.serveradmin.catalog import MediaCenter, ZippedMedia
+
+    settings.CATALOG_MEDIACENTER_INSTALL_DIR = tmpdir.strpath
+    MediaCenter.root = os.path.join(settings.STORAGE_ROOT, 'mediacenter')
+
+    p = ZippedMedia('test-media', {
+        'url': 'https://foo.fr/test-media.zip'})
+    h = MediaCenter()
+    h.install(p, zippedmedia_path.strpath)
+
+    root = tmpdir.join('test-media')
+    assert root.check(dir=True)
+
+    manifest = root.join('manifest.yml')
+    assert manifest.exists()
+
+    assert Document.objects.count() == 3
+    video = Document.objects.get(title='my video')
+    assert video.summary == 'my video summary'
+    assert video.kind == Document.VIDEO
+    assert Document.objects.search('summary').count() == 3
+
+    packaged_documents = Document.objects.filter(package_id='test-media')
+    assert packaged_documents.count() == 3
+
+    # Be sure that referenced documents are the ones installed by the package
+    # and are not copied somewhere by the django media system.
+    for document in packaged_documents:
+        path = os.path.realpath(document.original.path)
+        dirname = os.path.dirname(path)
+        assert dirname == os.path.join(str(tmpdir), 'test-media')
+
+
+@pytest.mark.usefixtures('db')
+def test_mediacenter_removes_zippedmedia(tmpdir, settings, zippedmedia_path):
+    from ideascube.serveradmin.catalog import MediaCenter, ZippedMedia
+    settings.CATALOG_MEDIACENTER_INSTALL_DIR = tmpdir.strpath
+    MediaCenter.root = os.path.join(settings.STORAGE_ROOT, 'mediacenter')
+
+    p = ZippedMedia('test-media', {
+        'url': 'https://foo.fr/test-media.zip'})
+    h = MediaCenter()
+    h.install(p, zippedmedia_path.strpath)
+
+    assert Document.objects.count() == 3
+
+    h.remove(p)
+
+    assert Document.objects.count() == 0
+    root = tmpdir.join('test-media')
+    assert root.check(exists=False)
 
 
 def test_catalog_no_remote(tmpdir, settings):

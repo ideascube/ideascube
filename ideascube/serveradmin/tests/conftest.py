@@ -1,8 +1,18 @@
 import pytest
+import os
 
 from ..backup import Backup
 
 DATA_ROOT = 'ideascube/serveradmin/tests/data/backup'
+BACKUPS_ROOT = 'ideascube/serveradmin/tests/backups'
+
+
+@pytest.fixture
+def backup_root(request):
+    os.makedirs(BACKUPS_ROOT, exist_ok=True)
+    def fin():
+        os.rmdir(BACKUPS_ROOT)
+    request.addfinalizer(fin)
 
 
 @pytest.fixture
