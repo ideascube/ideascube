@@ -1,5 +1,6 @@
 import os
 from hashlib import sha256
+import zipfile
 
 from py.path import local as Path
 import pytest
@@ -343,6 +344,31 @@ def test_install_zippedmedia(zippedmedia_path, install_dir):
 
     manifest = root.join('manifest.yml')
     assert manifest.exists()
+
+
+@pytest.mark.usefixtures('db')
+def test_install_zippedmedia_missing_manifest(tmpdir, zippedmedia_path, install_dir):
+    from ideascube.serveradmin.catalog import InvalidPackageContent, ZippedMedia
+
+    bad_zippedmedia_dir = tmpdir.mkdir('source')
+    bad_zippedmedia_path = bad_zippedmedia_dir.join('bad-test-media.zip')
+
+    with zipfile.ZipFile(zippedmedia_path.strpath) as orig, \
+            zipfile.ZipFile(bad_zippedmedia_path.strpath, mode='w') as bad:
+        names = filter(lambda n: n != 'manifest.yml', orig.namelist())
+
+        for name in names:
+            if name == 'manifest.yml':
+                continue
+
+            orig.extract(name, bad_zippedmedia_dir.strpath)
+            bad.write(bad_zippedmedia_dir.join(name).strpath, arcname=name)
+            bad_zippedmedia_dir.join(name).remove()
+
+    with pytest.raises(InvalidPackageContent):
+        p = ZippedMedia('test-media', {
+            'url': 'https://foo.fr/bad-test-media.zip'})
+        p.install(bad_zippedmedia_path.strpath, install_dir.strpath)
 
 
 @pytest.mark.usefixtures('db')

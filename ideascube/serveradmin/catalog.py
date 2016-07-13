@@ -336,8 +336,14 @@ class ZippedMedia(SimpleZipPackage):
         print('Adding medias to mediacenter database.')
         root = self.get_root_dir(install_dir)
         manifestfile = Path(root, 'manifest.yml')
-        with manifestfile.open('r') as m:
-            manifest = yaml.safe_load(m.read())
+
+        try:
+            with manifestfile.open('r') as m:
+                manifest = yaml.safe_load(m.read())
+
+        except FileNotFoundError:
+            raise InvalidPackageContent('Missing manifest file in {}'.format(
+                self.id))
 
         catalog_path = os.path.join(settings.MEDIA_ROOT, "catalog")
         try:
