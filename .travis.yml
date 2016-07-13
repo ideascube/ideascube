@@ -8,7 +8,9 @@ branches:
 install:
 - make develop
 - pip install python-coveralls
-script: make testcov
+script:
+- python manage.py migrate
+- make testcov
 after_success:
 - coveralls
 notifications:
