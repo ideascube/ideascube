@@ -36,6 +36,28 @@ def test_create_a_package_from_csv(csv_writer):
                              ]
 
 
+@pytest.mark.parametrize('metadata', [
+    ('kind,title,summary,credits,path,preview\n'
+     'video,my video,my video summary,BSF,a-video.mp4,'),
+    ('kind,title,summary,credits,path,preview\n'
+     'video,my video,my video summary,BSF,a-video.mp4,NOT_EXIST'),
+    ('kind,title,summary,credits,path\n'
+     'video,my video,my video summary,BSF,a-video.mp4')
+])
+def test_no_preview_in_csv(csv_writer, metadata):
+    csv_path = csv_writer(metadata)
+    package = MediaCenterPackage.from_csv(csv_path)
+    assert not package.medias[0].get('preview')
+
+
+def test_preview_in_csv(csv_writer):
+    metadata = ('kind,title,summary,credits,path,preview\n'
+                'video,my video,my video summary,BSF,a-video.mp4,an-image.jpg')
+    csv_path = csv_writer(metadata)
+    package = MediaCenterPackage.from_csv(csv_path)
+    assert package.medias[0]['preview'] == 'an-image.jpg'
+
+
 @pytest.mark.parametrize('row', [
     'image,,my summary,BSF,an-image.jpg',
     'image,my title,,BSF,an-image.jpg',
@@ -58,12 +80,14 @@ def test_create_zip_package(package_path):
                            'summary': 'my video summary',
                            'kind': 'video',
                            'credits': 'BSF',
-                           'path': 'a-video.mp4'},
+                           'path': 'a-video.mp4',
+                           'preview': 'an-image1.jpg'},
                           {'title': 'my doc',
                            'summary': 'my doc summary',
                            'kind': 'pdf',
                            'credits': 'BSF',
-                           'path': 'a-pdf.pdf'},
+                           'path': 'a-pdf.pdf',
+                           'preview': 'an-image.jpg'},
                           {'title': 'my image',
                            'summary': 'my image summary',
                            'kind': 'image',
@@ -76,19 +100,22 @@ def test_create_zip_package(package_path):
         assert set(package.namelist()) == set(['manifest.yml',
                                                'a-video.mp4',
                                                'a-pdf.pdf',
-                                               'an-image.jpg'])
+                                               'an-image.jpg',
+                                               'an-image1.jpg'])
         with package.open('manifest.yml') as m:
             manifest = yaml.load(m)
         assert manifest == {'medias': [{'title': 'my video',
                                         'summary': 'my video summary',
                                         'kind': 'video',
                                         'credits': 'BSF',
-                                        'path': 'a-video.mp4'},
+                                        'path': 'a-video.mp4',
+                                        'preview': 'an-image1.jpg'},
                                        {'title': 'my doc',
                                         'summary': 'my doc summary',
                                         'kind': 'pdf',
                                         'credits': 'BSF',
-                                        'path': 'a-pdf.pdf'},
+                                        'path': 'a-pdf.pdf',
+                                        'preview': 'an-image.jpg'},
                                        {'title': 'my image',
                                         'summary': 'my image summary',
                                         'kind': 'image',
@@ -108,12 +135,14 @@ def test_created_zip_package_is_installable(package_path, tmpdir):
                            'summary': 'my video summary',
                            'kind': 'video',
                            'credits': 'BSF',
-                           'path': 'a-video.mp4'},
+                           'path': 'a-video.mp4',
+                           'preview': 'an-image1.jpg'},
                           {'title': 'my doc',
                            'summary': 'my doc summary',
                            'kind': 'pdf',
                            'credits': 'BSF',
-                           'path': 'a-pdf.pdf'},
+                           'path': 'a-pdf.pdf',
+                           'preview': ''},
                           {'title': 'my image',
                            'summary': 'my image summary',
                            'kind': 'image',
@@ -130,3 +159,4 @@ def test_created_zip_package_is_installable(package_path, tmpdir):
     video = Document.objects.get(title='my video')
     assert video.summary == 'my video summary'
     assert video.kind == Document.VIDEO
+    assert os.path.basename(video.preview.name) == 'an-image1.jpg'

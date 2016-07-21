@@ -40,3 +40,4 @@ def csv_writer():
 
     if os.path.exists(CSV_PATH):
         os.remove(CSV_PATH)
+

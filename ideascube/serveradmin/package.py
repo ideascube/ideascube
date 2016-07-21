@@ -22,6 +22,12 @@ class MediaCenterPackage:
                 return False
         if not op.exists(op.join(self.working_dir, media['path'])):
             return False
+        preview_path = media.get('preview')
+        if (preview_path
+         and not op.exists(op.join(self.working_dir, preview_path))):
+            print("Warning : preview_path {} defined but file do not exists"
+                  .format(preview_path))
+            media['preview'] = None
         return True
 
     @classmethod
@@ -43,6 +49,11 @@ class MediaCenterPackage:
             for mediaInfo in self.medias:
                 filename = op.join(self.working_dir, mediaInfo['path'])
                 ziparchive.write(filename=filename, arcname=mediaInfo['path'])
+                preview_path = mediaInfo.get('preview')
+                if preview_path:
+                    preview_path = op.join(self.working_dir, preview_path)
+                    ziparchive.write(filename=preview_path,
+                                     arcname=mediaInfo['preview'])
             ziparchive.writestr('manifest.yml', self.dump_yaml())
         self.size = op.getsize(archive_path)
         sha = hashlib.sha256()
@@ -52,4 +63,4 @@ class MediaCenterPackage:
 
     def dump_yaml(self):
         dump = {'medias': self.medias}
-        return yaml.dump(dump)
+        return yaml.dump(dump, default_flow_style=None)
