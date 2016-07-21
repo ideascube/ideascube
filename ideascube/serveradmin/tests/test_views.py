@@ -19,6 +19,7 @@ pytestmark = pytest.mark.django_db
 
 
 @pytest.mark.parametrize("page", [
+    ("name"),
     ("services"),
     ("power"),
     ("backup"),
@@ -32,6 +33,7 @@ def test_anonymous_user_should_not_access_server(app, page):
 
 
 @pytest.mark.parametrize("page", [
+    ("name"),
     ("services"),
     ("power"),
     ("backup"),
@@ -42,6 +44,40 @@ def test_anonymous_user_should_not_access_server(app, page):
 def test_normals_user_should_not_access_server(loggedapp, page):
     response = loggedapp.get(reverse("server:" + page), status=302)
     assert "login" in response["Location"]
+
+
+def test_staff_can_change_server_name(staffapp):
+    res = staffapp.get(reverse('server:name'), status=200)
+    form = res.forms['server_name']
+    assert form['server_name'].value == 'Ideas Cube'
+
+    form['server_name'] = 'Test Name'
+    res = form.submit()
+    form = res.forms['server_name']
+    assert form['server_name'].value == 'Test Name'
+
+
+def test_staff_app_cannot_set_empty_server_name(staffapp):
+    res = staffapp.get(reverse('server:name'), status=200)
+    form = res.forms['server_name']
+    assert form['server_name'].value == 'Ideas Cube'
+
+    form['server_name'] = ''
+    res = form.submit()
+    form = res.forms['server_name']
+    assert form['server_name'].value == 'Ideas Cube'
+    assert 'Server name cannot be empty' in res.unicode_body
+
+
+def test_staff_is_presented_with_default_server_name(staffapp, settings):
+    res = staffapp.get(reverse('server:name'), status=200)
+    form = res.forms['server_name']
+    assert form['server_name'].value == 'Ideas Cube'
+
+    settings.IDEASCUBE_NAME = 'Le cube à idées'
+    res = staffapp.get(reverse('server:name'), status=200)
+    form = res.forms['server_name']
+    assert form['server_name'].value == 'Le cube à idées'
 
 
 def test_staff_lists_services(mocker, staffapp, settings):

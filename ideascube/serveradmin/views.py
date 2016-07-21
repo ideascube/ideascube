@@ -8,11 +8,26 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 from ideascube.decorators import staff_member_required
+from ideascube.models import Setting
 
 from .backup import Backup
 from .systemd import Manager, NoSuchUnit, UnitManagementError
 from .wifi import (
     AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError)
+
+
+@staff_member_required
+def server_name(request):
+    if request.method == 'POST':
+        new_name = request.POST.get('server_name')
+
+        if new_name:
+            Setting.set('server', 'site-name', new_name, request.user)
+
+        else:
+            messages.error(request, 'Server name cannot be empty')
+
+    return render(request, 'serveradmin/name.html')
 
 
 @staff_member_required

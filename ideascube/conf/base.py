@@ -290,6 +290,14 @@ STAFF_HOME_CARDS = [
         'description': _('Manage Wi-Fi connections.'),
         'fa': 'wifi',
     },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'server:name',
+        'title': _('Server Name'),
+        'description': _('Change the server name.'),
+        'fa': 'info-circle',
+    },
 ]
 
 HOME_CARDS = STAFF_HOME_CARDS + [
