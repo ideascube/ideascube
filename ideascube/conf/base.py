@@ -208,7 +208,6 @@ STATIC_ROOT = None
 DATABASES = None
 
 AUTH_USER_MODEL = 'ideascube.User'
-IDEASCUBE_NAME = 'debugbox'
 IDEASCUBE_PLACE_NAME = _('the camp')
 IDEASCUBE_BODY_ID = 'ideasbox'
 

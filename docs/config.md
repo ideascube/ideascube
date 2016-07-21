@@ -19,10 +19,6 @@ Good reading:
 
 Among all Django and custom settings, here are the one you may want to customize.
 
-#### IDEASCUBE_NAME = *string*
-
-The displayed server name in the header.
-
 #### TIME_ZONE = *string*
 
 The timezone of the server. One of [this list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
