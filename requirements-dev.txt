@@ -4,9 +4,9 @@ factory-boy==2.7.0
 mkdocs==0.15.3
 mock==2.0.0
 pyquery==1.2.13
-pytest==2.9.1
-pytest-cov==2.2.1
+pytest==2.9.2
+pytest-cov==2.3.0
 pytest-django==2.9.1
-pytest-mock==1.0
-transifex-client==0.11
+pytest-mock==1.1
+transifex-client==0.12.1
 WebTest==2.0.21
