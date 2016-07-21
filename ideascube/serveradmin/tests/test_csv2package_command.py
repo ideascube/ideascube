@@ -1,5 +1,6 @@
 import zipfile
 import yaml
+import os
 
 from django.core.management import call_command
 
@@ -35,3 +36,13 @@ def test_csv2package_command(package_path, csv_writer):
                                         'path': 'an-image.jpg'}
                                       ]
                            }
+
+
+def test_csv2package_dry_run_do_not_create_package(package_path, csv_writer):
+    metadata = ('kind,title,summary,credits,path\n'
+                'video,my video,my video summary,BSF,a-video.mp4\n'
+                'pdf,my doc,my doc summary,BSF,a-pdf.pdf\n'
+                'image,my image,my image summary,BSF,an-image.jpg\n')
+    csv_path = csv_writer(metadata)
+    call_command('csv2package', '--dry-run', csv_path, package_path)
+    assert not os.path.exists(package_path)

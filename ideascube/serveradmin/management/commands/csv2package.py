@@ -16,6 +16,8 @@ class Command(BaseCommand):
         parser.add_argument('csv_path', help='Path to CSV metadata.')
         parser.add_argument('package_path',
                             help='Path of the package to create')
+        parser.add_argument('--dry-run', action='store_true',
+                            help='Do not really create the package.')
 
     def abort(self, msg):
         self.stderr.write(msg)
@@ -30,4 +32,5 @@ class Command(BaseCommand):
         os.makedirs(os.path.dirname(package_path), exist_ok=True)
 
         package = MediaCenterPackage.from_csv(csv_path)
-        package.create_package_zip(package_path)
+        if not options['dry_run']:
+            package.create_package_zip(package_path)

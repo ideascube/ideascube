@@ -104,24 +104,26 @@ def test_create_zip_package(package_path):
                                                'an-image1.jpg'])
         with package.open('manifest.yml') as m:
             manifest = yaml.load(m)
-        assert manifest == {'medias': [{'title': 'my video',
-                                        'summary': 'my video summary',
-                                        'kind': 'video',
-                                        'credits': 'BSF',
-                                        'path': 'a-video.mp4',
-                                        'preview': 'an-image1.jpg'},
-                                       {'title': 'my doc',
-                                        'summary': 'my doc summary',
-                                        'kind': 'pdf',
-                                        'credits': 'BSF',
-                                        'path': 'a-pdf.pdf',
-                                        'preview': 'an-image.jpg'},
-                                       {'title': 'my image',
-                                        'summary': 'my image summary',
-                                        'kind': 'image',
-                                        'credits': 'BSF',
-                                        'path': 'an-image.jpg'
-                                       }]}
+        assert manifest == {'medias': [
+                                {'title': 'my video',
+                                 'summary': 'my video summary',
+                                 'kind': 'video',
+                                 'credits': 'BSF',
+                                 'path': 'a-video.mp4',
+                                 'preview': 'an-image1.jpg'},
+                                {'title': 'my doc',
+                                 'summary': 'my doc summary',
+                                 'kind': 'pdf',
+                                 'credits': 'BSF',
+                                 'path': 'a-pdf.pdf',
+                                 'preview': 'an-image.jpg'},
+                                {'title': 'my image',
+                                 'summary': 'my image summary',
+                                 'kind': 'image',
+                                 'credits': 'BSF',
+                                 'path': 'an-image.jpg'
+                                }
+                           ]}
 
 
 @pytest.mark.usefixtures('db')
