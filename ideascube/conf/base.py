@@ -76,6 +76,7 @@ TEMPLATES = [
                 "django.core.context_processors.static",
                 "django.core.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
+                "ideascube.context_processors.server",
                 "ideascube.context_processors.settings",
                 "ideascube.context_processors.version",
             )
