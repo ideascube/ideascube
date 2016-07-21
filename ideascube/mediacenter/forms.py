@@ -59,6 +59,8 @@ class PackagedDocumentForm(forms.ModelForm):
             document.preview = preview
 
         if commit:
-            document.save()
+            if not document.id:
+                document.save()
             self.save_m2m()
+            document.save()
         return document
