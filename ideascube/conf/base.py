@@ -44,7 +44,6 @@ INSTALLED_APPS = (
     'ideascube.search',
     'ideascube.mediacenter',
     'ideascube.monitoring',
-    'ideascube.catalog_utils',
     'taggit',
     'django_countries',
 )

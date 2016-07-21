@@ -2,7 +2,7 @@
 import os
 import sys
 
-from ideascube.catalog_utils.package import MediaCenterPackage
+from ideascube.serveradmin.package import MediaCenterPackage
 
 from django.core.management.base import BaseCommand
 
