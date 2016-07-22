@@ -395,7 +395,7 @@ class ZippedMedias(SimpleZipPackage):
         media_info['original'] = os.path.join(pseudo_install_dir,
                                               media_info['path'])
 
-        if 'preview' in media_info:
+        if media_info.get('preview'):
             media_info['preview'] = os.path.join(pseudo_install_dir,
                                                  media_info['preview'])
 

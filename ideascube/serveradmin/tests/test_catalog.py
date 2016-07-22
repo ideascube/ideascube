@@ -347,8 +347,11 @@ def test_install_zippedmedia(zippedmedia_path, install_dir):
 
 
 @pytest.mark.usefixtures('db')
-def test_install_zippedmedia_missing_manifest(tmpdir, zippedmedia_path, install_dir):
-    from ideascube.serveradmin.catalog import InvalidPackageContent, ZippedMedias
+def test_install_zippedmedia_missing_manifest(tmpdir,
+                                              zippedmedia_path,
+                                              install_dir):
+    from ideascube.serveradmin.catalog import (InvalidPackageContent,
+                                               ZippedMedias)
 
     bad_zippedmedia_dir = tmpdir.mkdir('source')
     bad_zippedmedia_path = bad_zippedmedia_dir.join('bad-test-media.zip')
@@ -619,6 +622,8 @@ def test_nginx_commits_after_remove(settings, staticsite_path, mocker):
 def test_mediacenter_installs_zippedmedia(settings, zippedmedia_path):
     from ideascube.serveradmin.catalog import MediaCenter, ZippedMedias
 
+    assert Document.objects.count() == 0
+
     p = ZippedMedias('test-media', {
         'url': 'https://foo.fr/test-media.zip'})
     h = MediaCenter()
@@ -637,6 +642,22 @@ def test_mediacenter_installs_zippedmedia(settings, zippedmedia_path):
     assert video.summary == 'my video summary'
     assert video.kind == Document.VIDEO
     assert Document.objects.search('summary').count() == 3
+
+    documents_tag1 = Document.objects.search(tags=['tag1'])
+    documents_tag1 = set(d.title for d in documents_tag1)
+    assert documents_tag1 == set(['my video', 'my doc'])
+
+    documents_tag2 = Document.objects.search(tags=['tag2'])
+    documents_tag2 = set(d.title for d in documents_tag2)
+    assert documents_tag2 == set(['my video', 'my image'])
+
+    documents_tag3 = Document.objects.search(tags=['tag3'])
+    documents_tag3 = set(d.title for d in documents_tag3)
+    assert documents_tag3 == set(['my video'])
+
+    documents_tag4 = Document.objects.search(tags=['tag4'])
+    documents_tag4 = set(d.title for d in documents_tag4)
+    assert documents_tag4 == set(['my doc'])
 
     packaged_documents = Document.objects.filter(package_id='test-media')
     assert packaged_documents.count() == 3
@@ -1366,6 +1387,7 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
 
     assert sha256(zim.read_binary()).hexdigest() == good_hash.hexdigest()
     assert zim.read_binary() != '你好嗎？'.encode('utf-8')
+
 
 def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
