@@ -2,7 +2,7 @@
 {% load i18n ideascube_tags %}
 
 {% block heading %}
-    <h2>{% blocktrans with server_name=IDEASCUBE_NAME %}Welcome to {{ server_name }}{% endblocktrans %}</h2>
+    <h2>{% blocktrans with server_name=server_name %}Welcome to {{ server_name }}{% endblocktrans %}</h2>
     <p>{% blocktrans %}To enjoy this digital library, you must first create a username and a password. These will allow you to administrate the server. Make sure to remember both the username AND password!{% endblocktrans %}</p>
 {% endblock heading %}
 

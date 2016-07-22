@@ -16,6 +16,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
 from ideascube.decorators import staff_member_required
 from ideascube.mixins import (FilterableViewMixin, CSVExportMixin,
                               OrderableViewMixin)
+from ideascube.utils import get_server_name
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
@@ -132,7 +133,8 @@ class SpecimenCreate(CreateView):
 
     def get_initial(self):
         book = get_object_or_404(Book, pk=self.kwargs['book_pk'])
-        return {'book': book, 'location': settings.IDEASCUBE_NAME}
+
+        return {'book': book, 'location': get_server_name()}
 
 specimen_create = staff_member_required(SpecimenCreate.as_view())
 

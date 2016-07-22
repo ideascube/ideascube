@@ -76,6 +76,7 @@ TEMPLATES = [
                 "django.core.context_processors.static",
                 "django.core.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
+                "ideascube.context_processors.server",
                 "ideascube.context_processors.settings",
                 "ideascube.context_processors.version",
             )
@@ -207,7 +208,6 @@ STATIC_ROOT = None
 DATABASES = None
 
 AUTH_USER_MODEL = 'ideascube.User'
-IDEASCUBE_NAME = 'debugbox'
 IDEASCUBE_PLACE_NAME = _('the camp')
 IDEASCUBE_BODY_ID = 'ideasbox'
 
@@ -289,6 +289,14 @@ STAFF_HOME_CARDS = [
         'title': _('Wi-Fi'),
         'description': _('Manage Wi-Fi connections.'),
         'fa': 'wifi',
+    },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'server:name',
+        'title': _('Server Name'),
+        'description': _('Change the server name.'),
+        'fa': 'info-circle',
     },
 ]
 

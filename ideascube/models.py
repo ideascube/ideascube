@@ -1,7 +1,10 @@
 from collections import OrderedDict
+import json
+import logging
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -12,6 +15,9 @@ from ideascube.search.models import SearchMixin, SearchableQuerySet
 
 from .fields import CommaSeparatedCharField
 from .utils import classproperty
+
+
+logger = logging.getLogger(__name__)
 
 
 class TimeStampedModel(models.Model):
@@ -279,3 +285,71 @@ class SortedTaggableManager(_TaggableManager):
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)
         return qs.order_by('name')
+
+
+class JSONField(models.TextField):
+    def from_db_value(self, value, expression, connection, context):
+        if value is None:
+            return
+
+        try:
+            return json.loads(value)
+
+        except TypeError as e:
+            raise ValidationError('Could not decode JSON value: %r' % value)
+
+    def to_python(self, value):
+        return self.from_db_value(value)
+
+    def get_prep_value(self, value):
+        return json.dumps(value)
+
+
+class Setting(models.Model):
+    class Meta:
+        ordering = ['-date']
+
+    namespace = models.CharField(max_length=40)
+    key = models.CharField(max_length=40)
+    value = JSONField()
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL)
+    date = models.DateTimeField(auto_now=True)
+
+    @classmethod
+    def _get_typed(cls, namespace, key, type, default=...):
+        try:
+            setting = Setting.objects.get(namespace=namespace, key=key)
+
+        except Setting.DoesNotExist:
+            if default is not ...:
+                return default
+
+            raise
+
+        else:
+            if isinstance(setting.value, type):
+                return setting.value
+
+            if default is not ...:
+                logger.error(
+                    '%s requested but %s is a %s, returning the supplied '
+                    'default value' % (
+                        type.__name__, setting,
+                        setting.value.__class__.__name__))
+                return default
+
+            raise TypeError(
+                '%s is not a %s setting' % (setting, type.__name__))
+
+    @classmethod
+    def get_string(cls, namespace, key, default=...):
+        return cls._get_typed(namespace, key, str, default=default)
+
+    @classmethod
+    def set(cls, namespace, key, value, actor):
+        setting, _ = Setting.objects.update_or_create(
+            namespace=namespace, key=key,
+            defaults={'value': value, 'actor': actor})
+
+    def __str__(self):
+        return '%s.%s=%r' % (self.namespace, self.key, self.value)
