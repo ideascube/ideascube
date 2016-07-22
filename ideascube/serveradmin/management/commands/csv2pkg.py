@@ -8,9 +8,11 @@ from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
-    help = ('Batch import medias from CSV metadata. CSV file must contain '
-            'columns "title", "summary", "path", "credits". Optional columns '
-            'are "lang", "preview", "kind", "tags".')
+    help = ('Convert a CSV describing a set of media into a package. '
+            'The CSV file must contain columns "title", "summary", "path", '
+            '"credits". Optional columns are "lang", "preview", "kind", "tags".'
+            ' Attributes "path" and "preview" (if provided) must be path '
+            '(relative to csv directory) to existing files.')
 
     def add_arguments(self, parser):
         parser.add_argument('csv_path', help='Path to CSV metadata.')
