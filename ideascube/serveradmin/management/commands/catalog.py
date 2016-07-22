@@ -49,6 +49,10 @@ class Command(BaseCommand):
         group.add_argument(
             '--all', action='store_const', dest='filter', const='all',
             help='List available and installed packages (default)')
+        group.add_argument(
+            '--unhandled', action='store_const', dest='filter',
+            const='unhandled',
+            help='List unhandled packages.')
         list.set_defaults(filter='all', func=self.list_packages)
 
         install = subs.add_parser(
@@ -120,7 +124,20 @@ class Command(BaseCommand):
             print("Add a remote source with:\n")
             print("    {} remotes add ID NAME URL\n".format(self.parser.prog))
 
-        fmt = ' {0.id:20}  {0.version!s:12}  {0.filesize:8}  {0.name}'
+        fmt = (' {0.id:20}  {0.version!s:12}  {0.filesize:8}'
+               ' {0.type:15} {0.name}')
+
+        unhandled_pkgs = self.catalog.list_nothandled('*')
+        if unhandled_pkgs:
+            if options['filter'] == 'unhandled':
+                print('Not handled packages')
+
+                for pkg in unhandled_pkgs:
+                    print(fmt.format(pkg))
+            else:
+                print(("Warning: Ignoring {} unsupported package(s)\n"
+                       "Use '--unhandled' for details.\n\n"
+                      ).format(len(unhandled_pkgs)))
 
         if options['filter'] in ('all', 'installed'):
             pkgs = self.catalog.list_installed(options['ids'])
@@ -169,7 +186,7 @@ class Command(BaseCommand):
 
     def reinstall_packages(self, options):
         try:
-            self.catalog.reinstall_packages(oprions['ids'])
+            self.catalog.reinstall_packages(options['ids'])
 
         except NoSuchPackage as e:
             raise CommandError('No such package: {}'.format(e))

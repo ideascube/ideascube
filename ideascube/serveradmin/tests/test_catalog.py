@@ -1894,3 +1894,59 @@ def test_catalog_list_upgradable_packages(
     assert pkg.version == '2015-09'
     assert pkg.size == '200KB'
     assert isinstance(pkg, ZippedZim)
+
+
+def test_catalog_list_nothandled_packages(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('    handler: kiwix\n')
+        f.write('  nothandled:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 0KB\n')
+        f.write('    url: file://fackurl\n')
+        f.write('    sha256sum: 0\n')
+        f.write('    type: NOTHANDLED\n')
+        f.write('    handler: NOONE\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+    mocker.patch(
+        'ideascube.serveradmin.catalog.urlretrieve',
+        side_effect=fake_urlretrieve)
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    pkgs = c.list_available(['*'])
+    assert len(pkgs) == 1
+    pkgs = c.list_nothandled(['*'])
+    assert len(pkgs) == 1
+    pkgs = c.list_installed(['*'])
+    assert len(pkgs) == 0
+
+    c.install_packages(['wikipedia.tum'])
+
+    pkgs = c.list_available(['*'])
+    assert len(pkgs) == 1
+    pkgs = c.list_nothandled(['*'])
+    assert len(pkgs) == 1
+    pkgs = c.list_installed(['*'])
+    assert len(pkgs) == 1
