@@ -14,7 +14,10 @@
     {% endif %}
     <div class="text">{{ document.summary }}</div>
     <div>
-        <a class="button" href="{{ document.original.url }}"><span class="fa fa-download fa-fw"></span> {% trans 'Download document' %}</a>
+        <a class="button" href="{{ document.original.url }}"><span class="fa fa-download fa-fw"></span>
+            {% blocktrans with kind=document.KIND_DICT|getitem:document.kind %}
+                Download {{ kind }}
+            {% endblocktrans %}</a>
     </div>
 {% endblock twothird %}
 {% block third %}
