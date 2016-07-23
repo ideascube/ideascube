@@ -63,7 +63,6 @@ finally:
                 'NAME': os.path.join(STORAGE_ROOT, 'transient.sqlite'),
             }
         }
-    DATABASE_ROUTERS = ['db_router.DatabaseRouter']
     LANGUAGES = []
     # Allow to override AVAILABLE_LANGUAGES in box settings, without needing
     # to override also LANGUAGES.
