@@ -1,3 +1,11 @@
+ideascube (0.11.1) unstable; urgency=low
+
+  * Fix db_router not included in module
+  * Downgrade Pillow preventing the debian build (cf #408)
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 23 Jul 2016 20:30:00 +0300
+
+
 ideascube (0.11.0) unstable; urgency=low
 
   * Add Bardarash conf
