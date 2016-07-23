@@ -1,3 +1,17 @@
+ideascube (0.11.0) unstable; urgency=low
+
+  * Add Bardarash conf
+  * Allow to set the server name from the admin
+  * Add support for media center packages
+  * Add a transient DB (for data we don't want to backup)
+  * Fix catalog listing failing on unknown type packages
+  * Add a django command to create media center packages from CSV
+  * Backup the catalog local configuration
+  * Dropped support for creating zip backups
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 23 Jul 2016 08:30:00 +0300
+
+
 ideascube (0.10.3) unstable; urgency=low
 
   * Fix Dusseldorf conf
