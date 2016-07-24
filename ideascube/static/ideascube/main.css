@@ -331,6 +331,10 @@ input[type="password"].showable-password {
     margin-left: -25px;
     cursor: pointer;
 }
+html[dir='rtl'] .show-password {
+    margin-left: auto;
+    margin-right: -25px;
+}
 
 
 
@@ -611,6 +615,10 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card i.fa {
     position: absolute;
     right: 10px;
+}
+html[dir='rtl'] .card i.fa {
+    right: auto;
+    left: 10px;
 }
 .card .flatlist.active {
     font-family: 'fira_sansmedium';
