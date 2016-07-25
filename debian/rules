@@ -4,4 +4,4 @@
 	dh $@ --with python-virtualenv --buildsystem pybuild
 
 override_dh_virtualenv:
-	dh_virtualenv --preinstall="pip>7" --preinstall wheel --python /usr/bin/python3.4
+	dh_virtualenv --preinstall="pip>7" --preinstall wheel --python /usr/bin/python3.4 --extra-pip-arg='--no-use-wheel'
