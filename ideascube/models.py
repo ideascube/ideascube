@@ -239,7 +239,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         _('Current occupation'), choices=OCCUPATION_CHOICES, blank=True,
         max_length=32)
     country_of_origin_occupation = models.CharField(
-        _('Occupation in the country of origin'),
+        _('Occupation in the place of origin'),
         max_length=100,
         blank=True)
     family_status = models.CharField(
