@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""El-Marj box in Lebanon"""
+"""El Marj box in Lebanon"""
 from .idb import *  # noqa
-IDEASCUBE_NAME = u"El-Marj Lebanon"  # Fixme
+IDEASCUBE_NAME = u"El Marj Lebanon"  # Fixme
 COUNTRIES_FIRST = ['LB', 'SY', 'JO', 'PS']
 TIME_ZONE = 'Asia/Beirut'
 LANGUAGE_CODE = 'ar'
