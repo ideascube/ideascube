@@ -1,3 +1,14 @@
+ideascube (0.11.2) unstable; urgency=low
+
+  * Entries form: do not display activity list if empty
+  * Add User.sdb_level field, for Shabak knowledge
+  * Add User.ku_level field, for Kurdish knowledge
+  * Stop using wheels for the Debian build
+  * fixed some RTL alignments
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 26 Jul 2016 20:20:00 +0300
+
+
 ideascube (0.11.1) unstable; urgency=low
 
   * Fix db_router not included in module
