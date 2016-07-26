@@ -279,6 +279,9 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     sw_level = CommaSeparatedCharField(
         _('Swahili knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
+    ku_level = CommaSeparatedCharField(
+        _('Kurdish knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
 
 
 class SortedTaggableManager(_TaggableManager):
