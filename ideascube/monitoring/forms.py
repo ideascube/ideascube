@@ -26,12 +26,14 @@ class EntryForm(forms.Form):
         }))
     module = forms.CharField(widget=forms.HiddenInput, required=False)
     activity = forms.CharField(required=False, widget=forms.TextInput(attrs={
-            'placeholder': _('Enter a activity name if missing on the list')}))
+            'placeholder': _('Custom activity name')}))
     partner = forms.CharField(required=False, widget=forms.TextInput(attrs={
             'placeholder': _('Partner involved in activity')}))
-    activity_list = forms.ChoiceField(
-        choices=[('', '------')] + settings.ENTRY_ACTIVITY_CHOICES,
-        required=False)
+
+    if settings.ENTRY_ACTIVITY_CHOICES:
+        activity_list = forms.ChoiceField(
+            choices=[('', '------')] + settings.ENTRY_ACTIVITY_CHOICES,
+            required=False)
 
     def clean_module(self):
         for key, label in Entry.MODULES:

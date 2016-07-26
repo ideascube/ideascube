@@ -32,7 +32,7 @@ class EntryView(FormView):
         module = form.cleaned_data['module']
         activity = form.cleaned_data['activity']
         partner = form.cleaned_data['partner']
-        activity_select = form.cleaned_data['activity_list']
+        activity_select = form.cleaned_data.get('activity_list')
         if not activity and activity_select:
             activity = activity_select
         for serial in form.cleaned_data['serials']:

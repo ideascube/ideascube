@@ -239,7 +239,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         _('Current occupation'), choices=OCCUPATION_CHOICES, blank=True,
         max_length=32)
     country_of_origin_occupation = models.CharField(
-        _('Occupation in the country of origin'),
+        _('Occupation in the place of origin'),
         max_length=100,
         blank=True)
     family_status = models.CharField(
@@ -278,6 +278,12 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         blank=True, max_length=32)
     sw_level = CommaSeparatedCharField(
         _('Swahili knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
+    ku_level = CommaSeparatedCharField(
+        _('Kurdish knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        blank=True, max_length=32)
+    sdb_level = CommaSeparatedCharField(
+        _('Shabak knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
 
 
