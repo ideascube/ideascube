@@ -51,7 +51,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'gutenberg',
-        'lang': 'mul',
+        'lang': 'en',
     },
     {
         'id': 'maps',
