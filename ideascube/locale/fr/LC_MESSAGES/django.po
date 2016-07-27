@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-23 06:10+0000\n"
-"PO-Revision-Date: 2016-07-23 06:18+0000\n"
+"POT-Creation-Date: 2016-07-26 22:02+0000\n"
+"PO-Revision-Date: 2016-07-27 03:24+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -128,7 +128,7 @@ msgstr "Dernier publié"
 #: ideascube/conf/idb_fra_grandesynthe.py:15
 #: ideascube/conf/idb_fra_jeanquarre.py:15
 #: ideascube/conf/idb_fra_sarcelles.py:15 ideascube/conf/idb_grc_eleonas.py:13
-#: ideascube/conf/idb_jor_alhashmi.py:9
+#: ideascube/conf/idb_irq_bardarash.py:8 ideascube/conf/idb_jor_alhashmi.py:9
 #: ideascube/conf/idb_lwb_detroit_usa.py:15 ideascube/conf/idb_sen_fap.py:15
 msgid "Personal informations"
 msgstr "Informations personnelles"
@@ -140,13 +140,14 @@ msgstr "Informations personnelles"
 #: ideascube/conf/idb_fra_grandesynthe.py:16
 #: ideascube/conf/idb_fra_jeanquarre.py:16
 #: ideascube/conf/idb_fra_sarcelles.py:16
-#: ideascube/conf/idb_jor_alhashmi.py:10
+#: ideascube/conf/idb_irq_bardarash.py:9 ideascube/conf/idb_jor_alhashmi.py:10
 #: ideascube/conf/idb_lwb_detroit_usa.py:16 ideascube/conf/idb_sen_fap.py:16
 msgid "Family"
 msgstr "Famille"
 
 #: ideascube/conf/azraq.py:16 ideascube/conf/idb_bdi.py:9
 #: ideascube/conf/idb_eth_bokolmanyo.py:16
+#: ideascube/conf/idb_irq_bardarash.py:10
 msgid "In the camp"
 msgstr "Dans le camp"
 
@@ -164,6 +165,7 @@ msgstr "Origine"
 #: ideascube/conf/idb_fra_grandesynthe.py:18
 #: ideascube/conf/idb_fra_jeanquarre.py:18
 #: ideascube/conf/idb_fra_sarcelles.py:18 ideascube/conf/idb_grc_eleonas.py:15
+#: ideascube/conf/idb_irq_bardarash.py:11
 #: ideascube/conf/idb_jor_alhashmi.py:12
 #: ideascube/conf/idb_lwb_detroit_usa.py:18 ideascube/conf/idb_sen_fap.py:18
 msgid "Language skills"
@@ -350,11 +352,11 @@ msgstr "Gérer les connexions wifi"
 
 #: ideascube/conf/base.py:297
 msgid "Server Name"
-msgstr ""
+msgstr "Nom du serveur"
 
 #: ideascube/conf/base.py:298
 msgid "Change the server name."
-msgstr ""
+msgstr "Changer le nom du serveur."
 
 #: ideascube/conf/base.py:333
 msgid "Python web server"
@@ -789,7 +791,7 @@ msgid ""
 "\n"
 "                Download %(kind)s\n"
 "            "
-msgstr ""
+msgstr "\nTélécharger le document %(kind)s"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:27
 #, python-format
@@ -1080,8 +1082,8 @@ msgid "Current occupation"
 msgstr "Profession actuelle"
 
 #: ideascube/models.py:242
-msgid "Occupation in the country of origin"
-msgstr "Profession dans le pays d'origine"
+msgid "Occupation in the place of origin"
+msgstr "Occupation dans le lieu d'origine"
 
 #: ideascube/models.py:246
 msgid "Family status"
@@ -1131,50 +1133,58 @@ msgstr "Connaissance du Français"
 msgid "Swahili knowledge"
 msgstr "Connaissance du Swahili"
 
+#: ideascube/models.py:283
+msgid "Kurdish knowledge"
+msgstr "Connaissance du kurde"
+
+#: ideascube/models.py:286
+msgid "Shabak knowledge"
+msgstr "Connaissance du chabak"
+
 #: ideascube/monitoring/forms.py:24
 msgid "Enter user serials"
 msgstr "Entrer les serials d'utilisateurs"
 
 #: ideascube/monitoring/forms.py:29
-msgid "Enter a activity name if missing on the list"
-msgstr "Entrez un nom d'activité si absent de la liste"
+msgid "Custom activity name"
+msgstr "Nom de l'activité"
 
 #: ideascube/monitoring/forms.py:31
 msgid "Partner involved in activity"
 msgstr "Partenaire impliqué dans l'activité"
 
-#: ideascube/monitoring/forms.py:40
+#: ideascube/monitoring/forms.py:42
 msgid "Missing module name"
 msgstr "Nom du module manquant"
 
-#: ideascube/monitoring/forms.py:75
+#: ideascube/monitoring/forms.py:77
 msgid "Enter a bar code"
 msgstr "Entrer un code-barre"
 
-#: ideascube/monitoring/forms.py:83 ideascube/monitoring/forms.py:110
+#: ideascube/monitoring/forms.py:85 ideascube/monitoring/forms.py:112
 #, python-brace-format
 msgid "Bar code {barcode} not found"
 msgstr "Code-barre {barcode} non trouvé"
 
-#: ideascube/monitoring/forms.py:95 ideascube/monitoring/forms.py:131
+#: ideascube/monitoring/forms.py:97 ideascube/monitoring/forms.py:133
 msgid "Enter an item barcode"
 msgstr "Entrer un code-barre d'item"
 
-#: ideascube/monitoring/forms.py:97
+#: ideascube/monitoring/forms.py:99
 msgid "Enter a user serial"
 msgstr "Entrer un serial d'utilisateur"
 
-#: ideascube/monitoring/forms.py:104
+#: ideascube/monitoring/forms.py:106
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
 msgstr "L'item avec le code-barre {barcode} est déjà prété."
 
-#: ideascube/monitoring/forms.py:120
+#: ideascube/monitoring/forms.py:122
 #, python-brace-format
 msgid "Serial {serial} not found"
 msgstr "Serial {serial} non trouvé"
 
-#: ideascube/monitoring/forms.py:138
+#: ideascube/monitoring/forms.py:140
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
 msgstr "L'item avec le code-barre {barcode} n'est pas prété."
@@ -1819,8 +1829,8 @@ msgid "learn"
 msgstr "apprendre"
 
 #: ideascube/templates/ideascube/includes/cards/bil-tunisia.html:4
-msgid "Plateforme de partage de connaissance basée sur l'ouverture"
-msgstr ""
+msgid "Conferences on various topic."
+msgstr "Conférences sur des sujets divers."
 
 #: ideascube/templates/ideascube/includes/cards/blog.html:5
 msgid "Browse blog posts."
@@ -1858,7 +1868,7 @@ msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/clickinfosn.html:4
 msgid "Learn how to live in Sénégal."
-msgstr ""
+msgstr "Apprendre à vivre au Sénégal."
 
 #: ideascube/templates/ideascube/includes/cards/dirtybiology.html:2
 msgid "Dirtybiology"

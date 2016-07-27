@@ -6,12 +6,13 @@
 # inaamcharaf@gmail.com <Inaamcharaf@gmail.com>, 2014
 # narjis naji areff ihloh <nano_naji@yahoo.com>, 2015
 # Salah Saud <salahsaud@gmail.com>, 2015
+# yohanboniface <yohanboniface@free.fr>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-23 06:10+0000\n"
-"PO-Revision-Date: 2016-07-23 06:11+0000\n"
+"POT-Creation-Date: 2016-07-26 22:02+0000\n"
+"PO-Revision-Date: 2016-07-26 22:05+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: Arabic (http://www.transifex.com/ideascube/ideascube/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +72,7 @@ msgstr "اللغة"
 
 #: ideascube/blog/templates/blog/content_detail.html:6
 msgid "View all posts"
-msgstr ""
+msgstr "اظهار كل ماتمّت معاينته"
 
 #: ideascube/blog/templates/blog/content_detail.html:7
 #: ideascube/blog/templates/blog/index.html:6
@@ -116,7 +117,7 @@ msgstr "أضف محتوى"
 
 #: ideascube/blog/views.py:17
 msgid "Last published"
-msgstr ""
+msgstr "الطبعة الاخيرة"
 
 #: ideascube/conf/azraq.py:14 ideascube/conf/idb_aus_queensland.py:15
 #: ideascube/conf/idb_bdi.py:7 ideascube/conf/idb_deu_dusseldorf.py:15
@@ -126,10 +127,10 @@ msgstr ""
 #: ideascube/conf/idb_fra_grandesynthe.py:15
 #: ideascube/conf/idb_fra_jeanquarre.py:15
 #: ideascube/conf/idb_fra_sarcelles.py:15 ideascube/conf/idb_grc_eleonas.py:13
-#: ideascube/conf/idb_jor_alhashmi.py:9
+#: ideascube/conf/idb_irq_bardarash.py:8 ideascube/conf/idb_jor_alhashmi.py:9
 #: ideascube/conf/idb_lwb_detroit_usa.py:15 ideascube/conf/idb_sen_fap.py:15
 msgid "Personal informations"
-msgstr ""
+msgstr "المعلومات الشخصيّة"
 
 #: ideascube/conf/azraq.py:15 ideascube/conf/idb_aus_queensland.py:16
 #: ideascube/conf/idb_bdi.py:8 ideascube/conf/idb_deu_dusseldorf.py:16
@@ -138,21 +139,22 @@ msgstr ""
 #: ideascube/conf/idb_fra_grandesynthe.py:16
 #: ideascube/conf/idb_fra_jeanquarre.py:16
 #: ideascube/conf/idb_fra_sarcelles.py:16
-#: ideascube/conf/idb_jor_alhashmi.py:10
+#: ideascube/conf/idb_irq_bardarash.py:9 ideascube/conf/idb_jor_alhashmi.py:10
 #: ideascube/conf/idb_lwb_detroit_usa.py:16 ideascube/conf/idb_sen_fap.py:16
 msgid "Family"
-msgstr ""
+msgstr "العائلة"
 
 #: ideascube/conf/azraq.py:16 ideascube/conf/idb_bdi.py:9
 #: ideascube/conf/idb_eth_bokolmanyo.py:16
+#: ideascube/conf/idb_irq_bardarash.py:10
 msgid "In the camp"
-msgstr ""
+msgstr "في المخيّم"
 
 #: ideascube/conf/azraq.py:17 ideascube/conf/idb_bdi.py:10
 #: ideascube/conf/idb_eth_bokolmanyo.py:17
 #: ideascube/conf/idb_jor_alhashmi.py:11
 msgid "Origin"
-msgstr ""
+msgstr "الأصل"
 
 #: ideascube/conf/azraq.py:18 ideascube/conf/base.py:230
 #: ideascube/conf/idb_aus_queensland.py:18 ideascube/conf/idb_bdi.py:11
@@ -162,16 +164,17 @@ msgstr ""
 #: ideascube/conf/idb_fra_grandesynthe.py:18
 #: ideascube/conf/idb_fra_jeanquarre.py:18
 #: ideascube/conf/idb_fra_sarcelles.py:18 ideascube/conf/idb_grc_eleonas.py:15
+#: ideascube/conf/idb_irq_bardarash.py:11
 #: ideascube/conf/idb_jor_alhashmi.py:12
 #: ideascube/conf/idb_lwb_detroit_usa.py:18 ideascube/conf/idb_sen_fap.py:18
 msgid "Language skills"
-msgstr ""
+msgstr "المهارات اللغويّة"
 
 #: ideascube/conf/azraq.py:19 ideascube/conf/idb_bdi.py:12
 #: ideascube/conf/idb_eth_bokolmanyo.py:19
 #: ideascube/conf/idb_jor_alhashmi.py:13
 msgid "National residents"
-msgstr ""
+msgstr "من سكّن البلد"
 
 #: ideascube/conf/azraq.py:23
 msgid "16 Days of Activism"
@@ -283,11 +286,11 @@ msgstr ""
 
 #: ideascube/conf/base.py:211
 msgid "the camp"
-msgstr ""
+msgstr "المخيّم"
 
 #: ideascube/conf/base.py:229
 msgid "Basic informations"
-msgstr ""
+msgstr "معلومات أوليّة"
 
 #: ideascube/conf/base.py:241 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
@@ -295,15 +298,15 @@ msgstr "المستخدمين"
 
 #: ideascube/conf/base.py:242
 msgid "Create, remove or modify users."
-msgstr ""
+msgstr "انشاء وازالة وتغيير المستخدم"
 
 #: ideascube/conf/base.py:249
 msgid "Entries"
-msgstr ""
+msgstr "الداخلون الى صندوق الافكار"
 
 #: ideascube/conf/base.py:250
 msgid "Manage user entries."
-msgstr ""
+msgstr "ادارة دخول المستخدم"
 
 #: ideascube/conf/base.py:257
 #: ideascube/monitoring/templates/monitoring/stock.html:5
@@ -312,39 +315,39 @@ msgstr "المخزون"
 
 #: ideascube/conf/base.py:258
 msgid "Manage stock."
-msgstr ""
+msgstr "ادارة الجرد"
 
 #: ideascube/conf/base.py:265
 msgid "Loans"
-msgstr ""
+msgstr "الاعارة"
 
 #: ideascube/conf/base.py:266
 msgid "Manage loans."
-msgstr ""
+msgstr "ادارة الاعارة"
 
 #: ideascube/conf/base.py:273
 msgid "Stop/Restart"
-msgstr ""
+msgstr "ايقاف او اعادة تشغيل"
 
 #: ideascube/conf/base.py:274
 msgid "Stop or restart the server."
-msgstr ""
+msgstr "ايقاف او اعادة تشغيل المخدّم"
 
 #: ideascube/conf/base.py:281
 msgid "Backups"
-msgstr ""
+msgstr "المحفوظات"
 
 #: ideascube/conf/base.py:282
 msgid "Create, restore, download, upload backups."
-msgstr ""
+msgstr "انشاء واسترجاع وتحميل وارسال المحفوظات"
 
 #: ideascube/conf/base.py:289
 msgid "Wi-Fi"
-msgstr ""
+msgstr "شبكة انترنت"
 
 #: ideascube/conf/base.py:290
 msgid "Manage Wi-Fi connections."
-msgstr ""
+msgstr "ادارة اتصالات شبكة الانترنت"
 
 #: ideascube/conf/base.py:297
 msgid "Server Name"
@@ -1078,8 +1081,8 @@ msgid "Current occupation"
 msgstr "المهنة الحالية"
 
 #: ideascube/models.py:242
-msgid "Occupation in the country of origin"
-msgstr "المهنة في بلد المنشأ"
+msgid "Occupation in the place of origin"
+msgstr ""
 
 #: ideascube/models.py:246
 msgid "Family status"
@@ -1129,50 +1132,58 @@ msgstr "المعرفة باللغة الفرنسية"
 msgid "Swahili knowledge"
 msgstr "المعرفة باللغة السواحلية"
 
+#: ideascube/models.py:283
+msgid "Kurdish knowledge"
+msgstr ""
+
+#: ideascube/models.py:286
+msgid "Shabak knowledge"
+msgstr ""
+
 #: ideascube/monitoring/forms.py:24
 msgid "Enter user serials"
 msgstr "ادخل الرقم المتسلسل للمستخدم"
 
 #: ideascube/monitoring/forms.py:29
-msgid "Enter a activity name if missing on the list"
+msgid "Custom activity name"
 msgstr ""
 
 #: ideascube/monitoring/forms.py:31
 msgid "Partner involved in activity"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:40
+#: ideascube/monitoring/forms.py:42
 msgid "Missing module name"
 msgstr "اسم الصندوق مفقود"
 
-#: ideascube/monitoring/forms.py:75
+#: ideascube/monitoring/forms.py:77
 msgid "Enter a bar code"
 msgstr "ادخل الباركود"
 
-#: ideascube/monitoring/forms.py:83 ideascube/monitoring/forms.py:110
+#: ideascube/monitoring/forms.py:85 ideascube/monitoring/forms.py:112
 #, python-brace-format
 msgid "Bar code {barcode} not found"
 msgstr "الباركود {barcode} غير معرف"
 
-#: ideascube/monitoring/forms.py:95 ideascube/monitoring/forms.py:131
+#: ideascube/monitoring/forms.py:97 ideascube/monitoring/forms.py:133
 msgid "Enter an item barcode"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:97
+#: ideascube/monitoring/forms.py:99
 msgid "Enter a user serial"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:104
+#: ideascube/monitoring/forms.py:106
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
 msgstr ""
 
-#: ideascube/monitoring/forms.py:120
+#: ideascube/monitoring/forms.py:122
 #, python-brace-format
 msgid "Serial {serial} not found"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:138
+#: ideascube/monitoring/forms.py:140
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
 msgstr ""
@@ -1817,7 +1828,7 @@ msgid "learn"
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/bil-tunisia.html:4
-msgid "Plateforme de partage de connaissance basée sur l'ouverture"
+msgid "Conferences on various topic."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/blog.html:5

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-23 06:10+0000\n"
-"PO-Revision-Date: 2016-07-23 06:11+0000\n"
+"POT-Creation-Date: 2016-07-26 22:02+0000\n"
+"PO-Revision-Date: 2016-07-26 22:05+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: Somali (http://www.transifex.com/ideascube/ideascube/language/so/)\n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgstr ""
 #: ideascube/conf/idb_fra_grandesynthe.py:15
 #: ideascube/conf/idb_fra_jeanquarre.py:15
 #: ideascube/conf/idb_fra_sarcelles.py:15 ideascube/conf/idb_grc_eleonas.py:13
-#: ideascube/conf/idb_jor_alhashmi.py:9
+#: ideascube/conf/idb_irq_bardarash.py:8 ideascube/conf/idb_jor_alhashmi.py:9
 #: ideascube/conf/idb_lwb_detroit_usa.py:15 ideascube/conf/idb_sen_fap.py:15
 msgid "Personal informations"
 msgstr ""
@@ -136,13 +136,14 @@ msgstr ""
 #: ideascube/conf/idb_fra_grandesynthe.py:16
 #: ideascube/conf/idb_fra_jeanquarre.py:16
 #: ideascube/conf/idb_fra_sarcelles.py:16
-#: ideascube/conf/idb_jor_alhashmi.py:10
+#: ideascube/conf/idb_irq_bardarash.py:9 ideascube/conf/idb_jor_alhashmi.py:10
 #: ideascube/conf/idb_lwb_detroit_usa.py:16 ideascube/conf/idb_sen_fap.py:16
 msgid "Family"
 msgstr ""
 
 #: ideascube/conf/azraq.py:16 ideascube/conf/idb_bdi.py:9
 #: ideascube/conf/idb_eth_bokolmanyo.py:16
+#: ideascube/conf/idb_irq_bardarash.py:10
 msgid "In the camp"
 msgstr ""
 
@@ -160,6 +161,7 @@ msgstr ""
 #: ideascube/conf/idb_fra_grandesynthe.py:18
 #: ideascube/conf/idb_fra_jeanquarre.py:18
 #: ideascube/conf/idb_fra_sarcelles.py:18 ideascube/conf/idb_grc_eleonas.py:15
+#: ideascube/conf/idb_irq_bardarash.py:11
 #: ideascube/conf/idb_jor_alhashmi.py:12
 #: ideascube/conf/idb_lwb_detroit_usa.py:18 ideascube/conf/idb_sen_fap.py:18
 msgid "Language skills"
@@ -1076,7 +1078,7 @@ msgid "Current occupation"
 msgstr ""
 
 #: ideascube/models.py:242
-msgid "Occupation in the country of origin"
+msgid "Occupation in the place of origin"
 msgstr ""
 
 #: ideascube/models.py:246
@@ -1127,50 +1129,58 @@ msgstr ""
 msgid "Swahili knowledge"
 msgstr ""
 
+#: ideascube/models.py:283
+msgid "Kurdish knowledge"
+msgstr ""
+
+#: ideascube/models.py:286
+msgid "Shabak knowledge"
+msgstr ""
+
 #: ideascube/monitoring/forms.py:24
 msgid "Enter user serials"
 msgstr ""
 
 #: ideascube/monitoring/forms.py:29
-msgid "Enter a activity name if missing on the list"
+msgid "Custom activity name"
 msgstr ""
 
 #: ideascube/monitoring/forms.py:31
 msgid "Partner involved in activity"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:40
+#: ideascube/monitoring/forms.py:42
 msgid "Missing module name"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:75
+#: ideascube/monitoring/forms.py:77
 msgid "Enter a bar code"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:83 ideascube/monitoring/forms.py:110
+#: ideascube/monitoring/forms.py:85 ideascube/monitoring/forms.py:112
 #, python-brace-format
 msgid "Bar code {barcode} not found"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:95 ideascube/monitoring/forms.py:131
+#: ideascube/monitoring/forms.py:97 ideascube/monitoring/forms.py:133
 msgid "Enter an item barcode"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:97
+#: ideascube/monitoring/forms.py:99
 msgid "Enter a user serial"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:104
+#: ideascube/monitoring/forms.py:106
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
 msgstr ""
 
-#: ideascube/monitoring/forms.py:120
+#: ideascube/monitoring/forms.py:122
 #, python-brace-format
 msgid "Serial {serial} not found"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:138
+#: ideascube/monitoring/forms.py:140
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
 msgstr ""
@@ -1815,7 +1825,7 @@ msgid "learn"
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/bil-tunisia.html:4
-msgid "Plateforme de partage de connaissance basée sur l'ouverture"
+msgid "Conferences on various topic."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/blog.html:5
