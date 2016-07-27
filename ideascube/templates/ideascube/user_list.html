@@ -3,7 +3,7 @@
 
 {% block twothird %}
     <table>
-        <caption>{% trans "Users" %} ({{ user_list.count }})</caption>
+        <caption>{% trans "Users" %} ({{ paginator.count }})</caption>
         <tr>
             <th>{% trans 'Name' %}</th>
             {% for field in USERS_LIST_EXTRA_FIELDS %}

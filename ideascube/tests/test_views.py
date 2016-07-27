@@ -134,6 +134,8 @@ def test_user_list_page_is_paginated(staffapp, monkeypatch):
     monkeypatch.setattr(UserList, 'paginate_by', 2)
     UserFactory.create_batch(size=3)  # There is also the staff user.
     response = staffapp.get(reverse('user_list'))
+    # Count should be the full count, not only current page total.
+    assert response.pyquery.find('caption')[0].text == 'Users (4)'
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
