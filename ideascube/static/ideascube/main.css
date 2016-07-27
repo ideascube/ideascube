@@ -532,6 +532,9 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card.wiktionary {
     background-image: url('./img/cards/wiktionary.png');
 }
+.card.wikiquote {
+    background-image: url('./img/cards/wikiquote.png');
+}
 .card.wikiversity {
     background-image: url('./img/cards/wikiversity.png');
 }

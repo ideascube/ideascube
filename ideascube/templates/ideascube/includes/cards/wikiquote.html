@@ -1,0 +1,5 @@
+{% load i18n %}
+{% trans "Wikiquote" as name %}
+{% trans "learn" as theme %}
+{% trans "The free quote compendium." as description %}
+{% include 'ideascube/includes/cards/_kiwix.html' with card=card class="wikiquote" theme_class="learn" name=name description=description theme=theme %}
