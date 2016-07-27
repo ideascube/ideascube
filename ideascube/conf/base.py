@@ -346,6 +346,7 @@ SERVICES = [
 
 
 SESSION_COOKIE_AGE = 60 * 60  # Members must be logged out after one hour
+SESSION_SAVE_EVERY_REQUEST = True
 BACKUP_FORMAT = 'gztar'  # One of 'tar', 'bztar', 'gztar'
 TAGGIT_CASE_INSENSITIVE = True
 DATABASE_ROUTERS = ['ideascube.db_router.DatabaseRouter']
