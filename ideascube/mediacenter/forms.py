@@ -17,6 +17,7 @@ class DocumentForm(forms.ModelForm):
         widgets = {
             'lang': LangSelect,
         }
+        exclude = ['package_id']
 
     def save(self, commit=True):
         document = super().save(commit=False)

@@ -378,6 +378,18 @@ def test_can_create_document(staffapp):
     assert Document.objects.count() == 1
 
 
+def test_package_id_should_not_be_editable_when_creating(staffapp):
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
+    assert 'package_id' not in form.fields
+
+
+def test_package_id_should_not_be_editable_when_editing(staffapp, pdf):
+    url = reverse('mediacenter:document_update', kwargs={'pk': pdf.pk})
+    form = staffapp.get(url).forms['model_form']
+    assert 'package_id' not in form.fields
+
+
 def test_can_create_app_document(staffapp):
     assert not Document.objects.count()
     url = reverse('mediacenter:document_create')
