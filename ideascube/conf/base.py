@@ -110,22 +110,10 @@ AVAILABLE_LANGUAGES = (
     ('am', 'አማርኛ'),
     ('ar', 'العربية'),
     ('bm', 'Bambara'),
-    ('de', 'Deutsch'),
-    ('el', 'Ελληνικά'),
     ('en', 'English'),
-    ('fa', 'فارسی'),
     ('fr', 'Français'),
-    ('it', 'Italiano'),
-    ('ku', 'Kurdî'),
-    ('ln', 'Lingála'),
-    ('ps', 'پښتو'),
-    ('rn', 'Kirundi'),
     ('so', 'Af-Soomaali'),
     ('sw', 'Swahili'),
-    ('ti', 'ትግርኛ'),
-    ('ur', 'اردو'),
-    ('vi', 'Tiếng Việt'),
-    ('es', 'Español'),
 )
 
 # Those will be added to django.locale.LANG_INFO.
