@@ -460,7 +460,7 @@ header h1 a {
 }
 html[dir='rtl'] .boxid {
     float: left;
-    right: -31px;
+    right: -81px;
 }
 footer .half {
     margin-left: 50%;
