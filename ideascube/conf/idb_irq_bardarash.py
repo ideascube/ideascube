@@ -38,7 +38,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'wikiversity',
-        'languages': ['en', 'ar']
+        'languages': ['ar']
     },
     {
         'id': 'ted',
