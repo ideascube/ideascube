@@ -18,6 +18,15 @@ REGISTRY = {
     #         'default': 'Default value',
     #     },
     # },
+    'content': {
+        'local-languages': {
+            'summary': 'The list of languages in which users can upload '
+                       'content.',
+            'pretty_type': 'A list of ISO language codes',
+            'type': list,
+            'default': ['ar', 'en', 'es', 'fr'],
+        },
+    },
     'server': {
         'site-name': {
             'summary': 'The pretty name of the server, as seen by users of '
