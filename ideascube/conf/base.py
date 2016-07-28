@@ -105,7 +105,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Languages that will be available in all forms.
+# Languages that will be available as UI translations
 AVAILABLE_LANGUAGES = (
     ('am', 'አማርኛ'),
     ('ar', 'العربية'),
