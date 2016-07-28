@@ -3,7 +3,6 @@
 from .kb import *  # noqa
 
 LANGUAGE_CODE = 'es'
-IDEASCUBE_NAME = 'Avanti'
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'blog',
