@@ -1,10 +1,10 @@
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from taggit.managers import TaggableManager
 
-from ideascube.models import SortedTaggableManager, TimeStampedModel
+from ideascube.models import (
+    LanguageField, SortedTaggableManager, TimeStampedModel)
 from ideascube.search.models import SearchableQuerySet, SearchMixin
 
 
@@ -44,8 +44,7 @@ class Book(SearchMixin, TimeStampedModel):
     publisher = models.CharField(_('publisher'), max_length=100, blank=True)
     section = models.PositiveSmallIntegerField(_('section'),
                                                choices=SECTION_CHOICES)
-    lang = models.CharField(_('Language'), max_length=10,
-                            choices=settings.LANGUAGES)
+    lang = LanguageField(_('Language'), max_length=10)
     cover = models.ImageField(_('cover'), upload_to='library/cover',
                               blank=True)
 
