@@ -27,6 +27,15 @@ def get_all_languages():
     return sorted(languages)
 
 
+def get_local_languages():
+    # Import here to avoid cyclic import
+    from ideascube.models import Setting
+
+    default = ['ar', 'en', 'es', 'fr']
+
+    return Setting.get_list('content', 'local-languages', default=default)
+
+
 def get_server_name():
     # Import here to avoid cyclic import
     from ideascube.models import Setting
