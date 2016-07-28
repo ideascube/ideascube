@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 
-from ideascube.fields import LangSelect
+from ideascube.widgets import LangSelect
 
 from .models import Document
 from .utils import guess_kind_from_content_type

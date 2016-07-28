@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from ideascube.fields import LangSelect
+from ideascube.widgets import LangSelect
 
 from .models import Book, BookSpecimen
 from .utils import (fetch_from_openlibrary, load_from_ideascube,
