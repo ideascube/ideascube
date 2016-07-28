@@ -460,7 +460,7 @@ header h1 a {
 }
 html[dir='rtl'] .boxid {
     float: left;
-    right: -31px;
+    right: -81px;
 }
 footer .half {
     margin-left: 50%;
@@ -643,7 +643,7 @@ html[dir='rtl'] .card img {
     background-position: center right 5px;
 }
 html[dir='rtl'] .tinted {
-    background-position: center left;
+    background-position: center left 5px;
 }
 .grid {
     display: flex;
