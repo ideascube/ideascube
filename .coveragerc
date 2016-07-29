@@ -8,3 +8,4 @@ omit =
     ideascube/management/commands/import_legacy.py
     ideascube/migrations/*
     ideascube/conf/*
+    ideascube/settings.py
