@@ -109,13 +109,13 @@ USE_TZ = True
 
 # Languages that will be available as UI translations
 AVAILABLE_LANGUAGES = (
-    ('am', 'አማርኛ'),
-    ('ar', 'العربية'),
-    ('bm', 'Bambara'),
-    ('en', 'English'),
-    ('fr', 'Français'),
-    ('so', 'Af-Soomaali'),
-    ('sw', 'Swahili'),
+    'am',
+    'ar',
+    'bm',
+    'en',
+    'fr',
+    'so',
+    'sw',
 )
 
 # Those will be added to django.locale.LANG_INFO.
