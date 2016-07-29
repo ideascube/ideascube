@@ -1,12 +1,12 @@
 from django.apps import AppConfig
 from django.db.models.signals import post_migrate
 
-from .utils import create_index_table
+from .utils import reindex_content
 
 
 def create_index(sender, **kwargs):
     if isinstance(sender, SearchConfig):
-        create_index_table(force=False)
+        reindex_content(force=False)
 
 
 class SearchConfig(AppConfig):

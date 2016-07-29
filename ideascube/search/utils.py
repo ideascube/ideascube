@@ -15,9 +15,9 @@ def create_index_table(force=True):
                                  "lang, kind, tags)")
 
 
-def reindex_content(*args, **kwargs):
+def reindex_content(force=True):
     from ideascube.search.models import SEARCHABLE
-    create_index_table(force=True)
+    create_index_table(force=force)
     indexed = {}
     for model in SEARCHABLE.values():
         count = 0
