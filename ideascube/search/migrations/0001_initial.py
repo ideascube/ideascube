@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
-import ideascube.search.models
+from django.db import migrations
+from ideascube.search.utils import create_index_table
+
+
+class CreateSearchModel(migrations.CreateModel):
+    def database_forwards(self, *_):
+        # Don't run the parent method, we create the table our own way
+        create_index_table()
 
 
 class Migration(migrations.Migration):
@@ -11,15 +17,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
+        CreateSearchModel(
             name='Search',
-            fields=[
-                ('rowid', models.IntegerField(serialize=False, primary_key=True)),
-                ('model', models.CharField(max_length=64)),
-                ('model_id', models.IntegerField()),
-                ('public', models.BooleanField(default=True)),
-                ('text', ideascube.search.models.SearchField()),
-            ],
+            fields=[],
             options={
                 'db_table': 'idx',
                 'managed': False,
