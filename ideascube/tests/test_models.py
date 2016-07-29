@@ -88,10 +88,10 @@ def test_json_field(value):
 @pytest.mark.parametrize(
     'value',
     [
-        True, 42, None, 'A string',
+        True, 42, None, 'A string', [1, '2'],
     ],
     ids=[
-        'boolean', 'int', 'none', 'string',
+        'boolean', 'int', 'none', 'string', 'list',
     ])
 def test_settings(value, user):
     from ideascube.models import Setting
@@ -120,9 +120,10 @@ def test_settings(value, user):
         (True, False),
         (42, 43),
         ('A string', 'Another string'),
+        ([1, '2'], ['foo', None]),
     ],
     ids=[
-        'boolean', 'int', 'string',
+        'boolean', 'int', 'string', 'list',
     ])
 def test_set_settings(value1, value2, user):
     from ideascube.models import Setting
@@ -176,10 +177,10 @@ def test_get_unexistent_string_setting():
 @pytest.mark.parametrize(
     'value',
     [
-        True, 42, None,
+        True, 42, None, [1, '2'],
     ],
     ids=[
-        'boolean', 'int', 'none',
+        'boolean', 'int', 'none', 'list',
     ])
 def test_get_nonstring_setting(value, user):
     from ideascube.models import Setting
@@ -191,3 +192,42 @@ def test_get_nonstring_setting(value, user):
 
     assert Setting.get_string(
         'tests', 'setting1', default='the default') == 'the default'
+
+
+def test_get_list_setting(user):
+    from ideascube.models import Setting
+
+    Setting.set('tests', 'setting1', [1, '2'], user)
+    assert Setting.objects.count() == 1
+
+    assert Setting.get_list('tests', 'setting1') == [1, '2']
+
+
+def test_get_unexistent_list_setting():
+    from ideascube.models import Setting
+
+    with pytest.raises(Setting.DoesNotExist):
+        Setting.get_list('tests', 'setting1')
+
+    assert Setting.get_list(
+        'tests', 'setting1', default=['the', 'default']) == ['the', 'default']
+
+
+@pytest.mark.parametrize(
+    'value',
+    [
+        True, 42, None, 'value',
+    ],
+    ids=[
+        'boolean', 'int', 'none', 'string',
+    ])
+def test_get_nonlist_setting(value, user):
+    from ideascube.models import Setting
+
+    Setting.set('tests', 'setting1', value, user)
+
+    with pytest.raises(TypeError):
+        Setting.get_list('tests', 'setting1')
+
+    assert Setting.get_list(
+        'tests', 'setting1', default=['the', 'default']) == ['the', 'default']

@@ -348,6 +348,10 @@ class Setting(models.Model):
                 '%s is not a %s setting' % (setting, type.__name__))
 
     @classmethod
+    def get_list(cls, namespace, key, default=...):
+        return cls._get_typed(namespace, key, list, default=default)
+
+    @classmethod
     def get_string(cls, namespace, key, default=...):
         return cls._get_typed(namespace, key, str, default=default)
 
