@@ -11,8 +11,7 @@ class CommaSeparatedCharField(SelectMultipleField):
         We just set our custom get_FIELD_display(),
         which returns a comma-separated list of displays.
         """
-        super(CommaSeparatedCharField, self).contribute_to_class(cls, name,
-                                                                 **kwargs)
+        super().contribute_to_class(cls, name, **kwargs)
 
         def _get_FIELD_display(instance):
             choices = dict(self.choices)
