@@ -9,6 +9,7 @@ from webtest.forms import Checkbox, Upload
 from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
 
+from ideascube.models import Setting
 from ..backup import Backup
 from .test_backup import BACKUPS_ROOT, DATA_ROOT
 from . import (
@@ -20,6 +21,7 @@ pytestmark = pytest.mark.django_db
 
 @pytest.mark.parametrize("page", [
     ("name"),
+    ("languages"),
     ("services"),
     ("power"),
     ("backup"),
@@ -34,6 +36,7 @@ def test_anonymous_user_should_not_access_server(app, page):
 
 @pytest.mark.parametrize("page", [
     ("name"),
+    ("languages"),
     ("services"),
     ("power"),
     ("backup"),
@@ -647,3 +650,59 @@ def test_staff_forgets_non_existing_connection(mocker, staffapp):
     assert u'No known Wi-Fi networks' not in res.unicode_body
     assert u'my home network' in res.unicode_body
     assert u'random open network' in res.unicode_body
+
+
+def test_staff_can_set_languages(staffapp):
+    Setting.set('content', 'local-languages', ['en'], staffapp.user)
+
+    response = staffapp.get(reverse('server:languages'))
+
+    form = response.forms['languages']
+    checked = [
+        name
+        for name, field in sorted(filter(lambda x: x[0], form.fields.items()))
+        if getattr(field[0], 'checked', False)
+        ]
+    assert checked == ['en']
+
+    form['ar'] = True
+    form['en'] = False
+    form['zh-hant'] = True
+    response = form.submit()
+
+    form = response.forms['languages']
+    checked = [
+        name
+        for name, field in sorted(filter(lambda x: x[0], form.fields.items()))
+        if getattr(field[0], 'checked', False)
+        ]
+    assert checked == ['ar', 'zh-hant']
+    assert Setting.get_list('content', 'local-languages') == ['ar', 'zh-hant']
+
+
+def test_staff_cannot_unset_all_languages(staffapp):
+    Setting.set('content', 'local-languages', ['ar', 'zh-hant'], staffapp.user)
+
+    response = staffapp.get(reverse('server:languages'))
+
+    form = response.forms['languages']
+    checked = [
+        name
+        for name, field in sorted(filter(lambda x: x[0], form.fields.items()))
+        if getattr(field[0], 'checked', False)
+        ]
+    assert checked == ['ar', 'zh-hant']
+
+    form['ar'] = False
+    form['zh-hant'] = False
+    response = form.submit()
+
+    assert 'Please select at least one language' in response.unicode_body
+    form = response.forms['languages']
+    checked = [
+        name
+        for name, field in sorted(filter(lambda x: x[0], form.fields.items()))
+        if getattr(field[0], 'checked', False)
+        ]
+    assert checked == ['ar', 'zh-hant']
+    assert Setting.get_list('content', 'local-languages') == ['ar', 'zh-hant']

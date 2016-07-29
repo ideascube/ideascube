@@ -298,6 +298,14 @@ STAFF_HOME_CARDS = [
         'description': _('Change the server name.'),
         'fa': 'info-circle',
     },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'server:languages',
+        'title': _('Languages'),
+        'description': _('Enabled or disable languages.'),
+        'fa': 'language',
+    },
 ]
 
 HOME_CARDS = STAFF_HOME_CARDS + [

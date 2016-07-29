@@ -1,0 +1,26 @@
+{% extends 'serveradmin/index.html' %}
+
+{% load i18n %}
+
+{% block twothird %}
+<h2>{% trans "Select Languages" %}</h2>
+
+<p>{% trans "Select here the languages which will be available when uploading content" %}</p>
+
+<form id="languages" method="POST" action="">
+    {% csrf_token %}
+
+    <fieldset class="list-box" name="languages">
+
+    {% for language_code, language_name in languages %}
+        <label class="list-box-item" for="{{ language_code }}">
+            <input type="checkbox" id="{{ language_code }}" name="{{ language_code }}" {% if language_code in selected %}checked="checked"{% endif %} />
+            {{ language_name }} ({{ language_code }})
+        </label>
+    {% endfor %}
+
+    </fieldset>
+    <input type="submit" value="{% trans 'Save' %}" />
+</form>
+
+{% endblock %}

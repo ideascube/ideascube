@@ -9,11 +9,37 @@ from django.utils.translation import ugettext as _
 
 from ideascube.decorators import staff_member_required
 from ideascube.models import Setting
+from ideascube.utils import get_all_languages, get_local_languages
 
 from .backup import Backup
 from .systemd import Manager, NoSuchUnit, UnitManagementError
 from .wifi import (
     AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError)
+
+
+@staff_member_required
+def languages(request):
+    languages = get_all_languages()
+
+    if request.method == "POST":
+        selected = []
+
+        for code, checked in request.POST.items():
+            if checked.lower() in ('on', 'true'):
+                selected.append(code)
+
+        if selected:
+            Setting.set('content', 'local-languages', selected, request.user)
+
+        else:
+            messages.error(request, _('Please select at least one language'))
+
+    local_languages = get_local_languages()
+
+    return render(
+        request, 'serveradmin/languages.html', {
+            'languages': languages, 'selected': local_languages,
+        })
 
 
 @staff_member_required
