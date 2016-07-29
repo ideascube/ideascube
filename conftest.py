@@ -23,6 +23,12 @@ def staffuser():
     return UserFactory(short_name="Hello", password='password', is_staff=True)
 
 
+@pytest.fixture()
+def systemuser():
+    # Create it the same way the migration does it
+    return UserFactory(serial='__system__', full_name='System', password='!!')
+
+
 @pytest.fixture
 def setup_dirs(monkeypatch, tmpdir, settings):
     storage_root = tmpdir.mkdir('storage')

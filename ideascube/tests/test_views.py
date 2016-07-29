@@ -116,6 +116,16 @@ def test_login_page_should_not_log_in_user_with_incorrect_POST(client, user):
     assert not response.context['user'].is_authenticated()
 
 
+def test_system_user_cannot_log_in(client, systemuser):
+    response = client.post(reverse('login'), {
+        'username': systemuser.serial,
+        'password': systemuser.password,
+    }, follow=True)
+    assert response.status_code == 200
+    assert len(response.redirect_chain) == 0
+    assert not response.context['user'].is_authenticated()
+
+
 def test_login_from_link_should_redirect_to_previous(app, user, staffuser):
     # Loading staffuser fixture so we don't fail into welcome_staff page.
     mediacenter = app.get(reverse('mediacenter:index'))
