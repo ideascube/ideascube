@@ -25,7 +25,7 @@ def server_name(request):
             Setting.set('server', 'site-name', new_name, request.user)
 
         else:
-            messages.error(request, 'Server name cannot be empty')
+            messages.error(request, _('Server name cannot be empty'))
 
     return render(request, 'serveradmin/name.html')
 
