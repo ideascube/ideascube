@@ -307,7 +307,15 @@ STAFF_HOME_CARDS = [
         'title': _('Home page'),
         'description': _('Manage home page'),
         'fa': 'th',
-    }
+    },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'server:languages',
+        'title': _('Languages'),
+        'description': _('Enable or disable languages.'),
+        'fa': 'language',
+    },
 ]
 
 HOME_CARDS = STAFF_HOME_CARDS + [

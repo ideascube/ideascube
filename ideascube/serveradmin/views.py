@@ -7,8 +7,9 @@ from django.http import StreamingHttpResponse
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
-from ideascube.configuration import set_config
+from ideascube.configuration import get_config, set_config
 from ideascube.decorators import staff_member_required
+from ideascube.utils import get_all_languages
 
 from .backup import Backup
 from .systemd import Manager, NoSuchUnit, UnitManagementError
@@ -24,6 +25,28 @@ from .wifi import (
 # module.
 from . import catalog as catalog_mod
 from ideascube.configuration import get_config, set_config
+
+@staff_member_required
+def languages(request):
+    languages = get_all_languages()
+
+    if request.method == "POST":
+        selected = request.POST.getlist('languages')
+
+        if selected:
+            set_config(
+                'content', 'local-languages', sorted(selected), request.user)
+
+        else:
+            messages.error(request, _('Please select at least one language'))
+
+    local_languages = get_config('content', 'local-languages')
+
+    return render(
+        request, 'serveradmin/languages.html', {
+            'languages': languages, 'selected': local_languages,
+        })
+
 
 @staff_member_required
 def server_name(request):
