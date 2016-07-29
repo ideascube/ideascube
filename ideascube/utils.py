@@ -19,8 +19,7 @@ def get_server_name():
     # expectations from users of already deployed boxes.
     default = getattr(settings, 'IDEASCUBE_NAME', 'Ideas Cube')
 
-    return Setting.get_string(
-        namespace='server', key='site-name', default=default)
+    return Setting.get_string('server', 'site-name', default=default)
 
 
 # We do not use functool.partial cause we want to mock stderr for unittest
