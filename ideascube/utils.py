@@ -31,7 +31,10 @@ def get_local_languages():
     # Import here to avoid cyclic import
     from ideascube.models import Setting
 
-    default = ['ar', 'en', 'es', 'fr']
+    default = _get_used_languages()
+
+    if not default:
+        default = ['ar', 'en', 'es', 'fr']
 
     return Setting.get_list('content', 'local-languages', default=default)
 
@@ -45,6 +48,21 @@ def get_server_name():
     default = getattr(settings, 'IDEASCUBE_NAME', 'Ideas Cube')
 
     return Setting.get_string('server', 'site-name', default=default)
+
+
+def _get_used_languages():
+    # Import here to avoid cyclic import
+    from ideascube.blog.models import Content
+    from ideascube.library.models import Book
+    from ideascube.mediacenter.models import Document
+
+    langs = set()
+
+    for model in (Content, Book, Document):
+        for obj in model.objects.all():
+            langs.add(obj.lang)
+
+    return sorted(langs)
 
 
 # We do not use functool.partial cause we want to mock stderr for unittest
