@@ -877,22 +877,22 @@ img.cover {
     color: #C0392B;
 }
 
-.wifi-list {
+.list-box {
     border: 1px solid #ddd;
     padding: 0;
     margin: 0;
 }
-.wifi-network {
+.list-box-item {
     text-decoration: none;
     display: block;
     padding: 1em;
     border-bottom: 1px dotted #ddd;
 }
-.wifi-network:hover {
+.list-box-item:hover {
     background-color: #f1f1f1;
     cursor: pointer;
 }
-.wifi-network span {
+.list-box-item span {
     margin: auto 1em;
 }
 
