@@ -12,7 +12,7 @@ def create_index_table(force=True):
         cursor_transient.execute("DROP TABLE IF EXISTS idx")
         cursor_transient.execute("CREATE VIRTUAL TABLE idx using "
                                  "FTS4(id, model, model_id, public, text, "
-                                 "lang, kind, tags)")
+                                 "lang, kind, tags, source)")
 
 
 def reindex_content(force=True):

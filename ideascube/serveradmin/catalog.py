@@ -387,6 +387,7 @@ class StaticSite(SimpleZipPackage):
 class ZippedMedias(SimpleZipPackage):
     typename = 'zipped-medias'
     handler = MediaCenter
+    template_id = "media-package"
 
     def remove(self, install_dir):
         # Easy part here. Just delete documents from the package.
