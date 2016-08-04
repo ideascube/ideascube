@@ -22,6 +22,8 @@ from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.forms import PackagedDocumentForm
 from ideascube.mediacenter.utils import guess_kind_from_content_type
 from ideascube.templatetags.ideascube_tags import smart_truncate
+from ideascube.configuration import get_config, set_config
+from ideascube.models import User
 
 from .systemd import Manager as SystemManager, NoSuchUnit
 
@@ -604,9 +606,20 @@ class Catalog:
 
         return sorted(pkgs, key=attrgetter('id'))
 
+    @staticmethod
+    def _update_displayed_packages_on_home(*, to_remove_ids=None, to_add_ids=None):
+        displayed_packages = get_config('home-page', 'displayed-package-ids')
+        if to_remove_ids:
+            displayed_packages = [id for id in displayed_packages if id not in to_remove_ids]
+        if to_add_ids:
+            displayed_packages.extend(id for id in to_add_ids if id not in displayed_packages)
+        set_config('home-page', 'displayed-package-ids',
+                   displayed_packages, User.objects.get_system_user())
+
     def install_packages(self, ids):
         used_handlers = {}
         downloaded = []
+        installed_ids = []
 
         for pkg in self._get_packages(ids, self._available):
             if pkg.id in self._installed:
@@ -631,9 +644,11 @@ class Catalog:
                 printerr(e)
                 continue
             used_handlers[handler.__class__.__name__] = handler
-            self._installed[pkg.id] = (
-                self._available[pkg.id])
+            self._installed[pkg.id] = self._available[pkg.id]
+            installed_ids.append(pkg.id)
             self._persist_catalog()
+
+        self._update_displayed_packages_on_home(to_add_ids=installed_ids)
 
         for handler in used_handlers.values():
             handler.commit()
@@ -653,6 +668,8 @@ class Catalog:
             used_handlers[handler.__class__.__name__] = handler
             del(self._installed[pkg.id])
             self._persist_catalog()
+
+        self._update_displayed_packages_on_home(to_remove_ids=ids)
 
         if not commit:
             return
@@ -704,8 +721,7 @@ class Catalog:
                 continue
             used_handlers[uhandler.__class__.__name__] = uhandler
 
-            self._installed[ipkg.id] = (
-                self._available[upkg.id])
+            self._installed[ipkg.id] = self._available[upkg.id]
             self._persist_catalog()
 
         for handler in used_handlers.values():

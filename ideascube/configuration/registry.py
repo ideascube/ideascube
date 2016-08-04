@@ -22,6 +22,12 @@ REGISTRY = {
             'default': getattr(settings, 'IDEASCUBE_NAME', 'Ideas Cube'),
         },
     },
+    'home-page': {
+        'displayed-package-ids': {
+            'type': list,
+            'default': [],
+        },
+    },
 }
 
 
