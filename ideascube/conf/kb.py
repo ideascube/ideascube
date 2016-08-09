@@ -21,7 +21,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'wikipedia',
-        'languages': ['ln', 'en', 'wo', 'fr']
+        'languages': ['en', 'wo', 'fr']
     },
     {
         'id': 'khanacademy',
