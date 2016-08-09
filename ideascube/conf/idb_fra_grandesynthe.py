@@ -35,7 +35,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'languages': ['ku', 'ar', 'fa', 'fr']
     },
     {
-        'id' : 'dirtybiology',
+        'id': 'dirtybiology',
         'languages': ['fr']
     },
     {
