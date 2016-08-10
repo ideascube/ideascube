@@ -18,9 +18,6 @@ USER_FORM_FIELDS = (
     (_('Language skills'), ['en_level']),
 )
 
-STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS
-                    if c['url'] not in ['server:battery']]
-
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'blog',
