@@ -50,6 +50,18 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'languages': ['ar', 'en', 'el']
     },
     {
+        'id': 'vikidia',
+        'languages': ['en']
+    },
+    {
+        'id': 'bil-tunisia',
+        'languages': ['ar']
+    },
+    {
+        'id': 'mullah-piaz-digest',
+        'languages': ['fa']
+    },
+    {
         'id': 'khanacademy',
     },
     {
