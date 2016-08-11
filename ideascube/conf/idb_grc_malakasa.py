@@ -1,15 +1,5 @@
 """Ideasbox Malakasa, Grece"""
-from .idb import *  # noqa
-from django.utils.translation import ugettext_lazy as _
-
-COUNTRIES_FIRST = ['AF', 'GR', 'IR', 'PK', 'SY']
-TIME_ZONE = 'Europe/Athens'
-LANGUAGE_CODE = 'en'
-USER_FORM_FIELDS = (
-    (_('Personal informations'), ['serial', 'short_name', 'full_name', 'latin_name', 'birth_year', 'gender']),  # noqa
-    (_('In the town'), ['current_occupation', 'school_level', 'phone', 'email']),  # noqa
-    (_('Language skills'), ['en_level', 'ar_level', 'fa_level']),
-)
+from .idb_grc_eleonas import *  # noqa
 
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
