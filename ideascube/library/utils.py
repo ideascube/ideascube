@@ -28,6 +28,7 @@ def to_unicode(text):
 def fetch_from_openlibrary(isbn):
     """Fetch notice from Open Library and return a ready to use dict.
     Doc: https://openlibrary.org/dev/docs/api/books."""
+    isbn = isbn.strip()
     args = {
         'jscmd': 'data',
         'format': 'json',
@@ -66,10 +67,10 @@ def fetch_from_openlibrary(isbn):
 def read_url(url):
     try:
         response = urlopen(url)
-        return response.read()
+        return response.read().decode()
     except:
         # Catch all, we don't want to fail in any way.
-        return None
+        return ''
 
 
 def load_cover_from_url(url):
