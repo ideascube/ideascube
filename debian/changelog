@@ -1,3 +1,19 @@
+ideascube (0.11.4) unstable; urgency=low
+
+  * Fixed book import from ISBN broken since python 3 switch
+  * Added configuration idb_aus_slwa
+  * Added configuration idb_grc_malakasa
+  * Added configuration kb_esp_avanti
+  * Added configuration kb_jor_croixrouge
+  * Added configuration idb_lbn_elmarj (old Maedi box)
+  * Fixed user total displayed in user page
+  * More RTL HTML/CSS fixes
+  * Save session at every request so staff user is not disconnected while working
+  * Add new card for Wikiquote
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 11 Aug 2016 11:00:00 +0200
+
+
 ideascube (0.11.3) unstable; urgency=low
 
   * Removed package_id from Document form
