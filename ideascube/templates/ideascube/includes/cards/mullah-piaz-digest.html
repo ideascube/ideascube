@@ -1,5 +1,5 @@
 {% load i18n %}
-{% trans "Mullah Piaz" as name %}
-{% trans "learn" as theme %}
-{% trans "Mullah Piaz videos cartoon" as description %}
-{% include 'ideascube/includes/cards/_kiwix.html' with card=card class="mullahpiaz" theme_class="learn" name=name description=description theme=theme %}
+<div class="card tinted mullahpiaz">
+    <h4 class="flow"><span class="theme learn">{% trans 'info' %}</span><span><a href="http://kiwix.ideasbox.lan/mullah_piaz_digest/">{% trans "Mullah Piaz" %}</a></span></h4>
+    <p>{% trans "Mullah Piaz videos cartoon" %}</p>
+</div>
