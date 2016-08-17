@@ -1,0 +1,5 @@
+{% load i18n %}
+{% trans "Deus Ex Silicium" as name %}
+{% trans "learn" as theme %}
+{% trans "Vidéos dédiées à la science des semi-conducteurs" as description %}
+{% include 'ideascube/includes/cards/_kiwix.html' with card=card class="deus-ex-silicium" theme_class="learn" name=name description=description theme=theme %}

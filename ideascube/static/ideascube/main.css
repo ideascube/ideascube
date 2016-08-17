@@ -566,6 +566,18 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card.bilconference {
     background-image: url('./img/cards/bilconference.png');
 }
+.card.biologie-tout-compris {
+    background-image: url('./img/cards/biologie-tout-compris.jpg');
+}
+.card.deus-ex-silicium {
+    background-image: url('./img/cards/deus-ex-silicium.jpg');
+}
+.card.e-penser {
+    background-image: url('./img/cards/e-penser.jpg');
+}
+.card.bouquineux {
+    background-image: url('./img/cards/bouquineux.png');
+}
 .card.mullahpiaz {
     background-image: url('./img/cards/mullahpiaz.jpg');
 }

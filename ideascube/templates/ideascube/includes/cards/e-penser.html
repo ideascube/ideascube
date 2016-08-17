@@ -1,0 +1,5 @@
+{% load i18n %}
+{% trans "E-penser" as name %}
+{% trans "learn" as theme %}
+{% trans "Restez curieux, et prenez le temps d'e-penser." as description %}
+{% include 'ideascube/includes/cards/_kiwix.html' with card=card class="e-penser" theme_class="learn" name=name description=description theme=theme %}

@@ -1,0 +1,5 @@
+{% load i18n %}
+{% trans "Bouquineux" as name %}
+{% trans "learn" as theme %}
+{% trans " Livres numériques gratuits et libres de droits" as description %}
+{% include 'ideascube/includes/cards/_kiwix.html' with card=card class="bouquineux" theme_class="learn" name=name description=description theme=theme %}
