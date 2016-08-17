@@ -1,2 +1,2 @@
 """Bwagiriza box in Burundi"""
-from .idb_bdi2 import *  # noqa
+from .idb_bdi import *  # noqa

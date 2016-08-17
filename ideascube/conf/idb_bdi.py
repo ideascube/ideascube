@@ -12,18 +12,46 @@ USER_FORM_FIELDS = (
     (_('National residents'), ['id_card_number']),
 )
 
-HOME_CARDS = HOME_CARDS + [
+HOME_CARDS = STAFF_HOME_CARDS + [
     {
-        'id': 'cpassorcier.old',
+        'id': 'blog',
     },
     {
-        'id': 'ted.old',
+        'id': 'library',
+    },
+    {
+        'id': 'mediacenter',
+    },
+    {
+        'id': 'wikipedia',
+        'languages': ['fr','rn','sw']
+    },
+    {
+        'id': 'vikidia',
+        'languages': ['fr']
+    },
+    {
+        'id': 'khanacademy',
+    },
+    {
+        'id': 'gutenberg',
+        'lang': 'mul',
+    },
+    {
+        'id': 'ted',
+        'sessions': [
+            ('tedxgeneva2014.fr', 'Geneva 2014'),
+            ('tedxlausanne2012.fr', 'Lausanne 2012'),
+            ('tedxlausanne2013.fr', 'Lausanne 2013'),
+            ('tedxlausanne2014.fr', 'Lausanne 2014'),
+            ('tedxlausannechange2013.fr', 'Lausanne Exchange 2013'),
+        ]
     },
     {
         'id': 'maps',
         'maps': [
-            (_('World'), 'world.map'),
+            ('World', 'world.map'),
             ('Burundi', 'burundi.map'),
         ]
-    },
+    }
 ]
