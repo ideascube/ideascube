@@ -96,6 +96,10 @@ def fake_urlretrieve(url, path, reporthook=None, sha256sum=None):
         out.seek(already)
         out.write(in_.read())
 
+    if reporthook is not None:
+        # Fake those values, this is just to call the progress callbacks
+        reporthook(0, 1, 1)
+
     if sha256sum is not None:
         with open(path, 'rb') as f:
             checksum = sha256(f.read()).hexdigest()
