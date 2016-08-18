@@ -30,6 +30,11 @@ def test_guess_format_from_name(input, expected):
     assert Backup.guess_file_format(input) == expected
 
 
+def test_guess_format_from_name_fails():
+    with pytest.raises(ValueError):
+        Backup.guess_file_format('name.png')
+
+
 @pytest.mark.usefixtures('backup_root')
 def test_list(monkeypatch, settings):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT',
@@ -43,6 +48,7 @@ def test_list(monkeypatch, settings):
     backups = list(Backup.list())
     assert len(backups) == 1
     assert backups[0].name == filename
+    assert str(backups[0]) == filename
     os.remove(good)
     os.remove(bad)
 
