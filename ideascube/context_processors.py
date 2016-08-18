@@ -1,11 +1,11 @@
 from django.conf import settings as djsettings
 
 from ideascube import __version__
-from ideascube.utils import get_server_name
+from ideascube.configuration import get_config
 
 
 def server(request):
-    return {'server_name': get_server_name()}
+    return {'server_name': get_config('server', 'site-name')}
 
 
 def settings(request):

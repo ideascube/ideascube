@@ -19,11 +19,11 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   ListView, UpdateView, View)
 from taggit.models import TaggedItem
 
+from ideascube.configuration import get_config
 from ideascube.blog.models import Content
 from ideascube.decorators import staff_member_required
 from ideascube.library.models import Book
 from ideascube.mediacenter.models import Document
-from ideascube.utils import get_server_name
 
 from .forms import UserForm, CreateStaffForm
 from .mixins import CSVExportMixin
@@ -58,7 +58,8 @@ def welcome_staff(request):
             user = authenticate(serial=user.serial,
                                 password=request.POST['password'])
             login(request, user)
-            msg = _(u'Welcome to {}, {}!').format(get_server_name(), user)
+            msg = _(u'Welcome to {}, {}!').format(
+                get_config('server', 'site-name'), user)
             messages.add_message(request, messages.SUCCESS, msg)
             return HttpResponseRedirect('/')
     else:

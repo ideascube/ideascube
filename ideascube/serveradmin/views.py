@@ -7,8 +7,8 @@ from django.http import StreamingHttpResponse
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
+from ideascube.configuration import set_config
 from ideascube.decorators import staff_member_required
-from ideascube.models import Setting
 
 from .backup import Backup
 from .systemd import Manager, NoSuchUnit, UnitManagementError
@@ -22,7 +22,7 @@ def server_name(request):
         new_name = request.POST.get('server_name')
 
         if new_name:
-            Setting.set('server', 'site-name', new_name, request.user)
+            set_config('server', 'site-name', new_name, request.user)
 
         else:
             messages.error(request, _('Server name cannot be empty'))

@@ -13,10 +13,10 @@ from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   ListView, UpdateView, View)
 
+from ideascube.configuration import get_config
 from ideascube.decorators import staff_member_required
 from ideascube.mixins import (FilterableViewMixin, CSVExportMixin,
                               OrderableViewMixin)
-from ideascube.utils import get_server_name
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
@@ -134,7 +134,7 @@ class SpecimenCreate(CreateView):
     def get_initial(self):
         book = get_object_or_404(Book, pk=self.kwargs['book_pk'])
 
-        return {'book': book, 'location': get_server_name()}
+        return {'book': book, 'location': get_config('server', 'site-name')}
 
 specimen_create = staff_member_required(SpecimenCreate.as_view())
 
