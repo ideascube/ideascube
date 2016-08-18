@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ideascube',
+    'ideascube.configuration',
     'ideascube.serveradmin',
     'ideascube.blog',
     'ideascube.library',
