@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+from django.conf import settings
+
 from .exceptions import (
     NoSuchConfigurationKeyError,
     NoSuchConfigurationNamespaceError,
@@ -11,11 +13,13 @@ REGISTRY = {
     # 'namespace': {
     #     'key': {
     #         'type': str,
+    #         'default': 'Default value',
     #     },
     # },
     'server': {
         'site-name': {
             'type': str,
+            'default': getattr(settings, 'IDEASCUBE_NAME', 'Ideas Cube'),
         },
     },
 }
@@ -33,6 +37,10 @@ def get_config_data(namespace, key):
 
     except KeyError:
         raise NoSuchConfigurationKeyError(namespace, key)
+
+
+def get_default_value(namespace, key):
+    return get_config_data(namespace, key)['default']
 
 
 def get_expected_type(namespace, key):

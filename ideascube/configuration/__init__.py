@@ -1,6 +1,52 @@
+import logging
+
+
 __all__ = [
+    'get_config',
     'set_config',
 ]
+
+
+logger = logging.getLogger(__name__)
+
+
+def get_config(namespace, key):
+    """Get a configuration option
+
+    Args:
+        namespace (str): The configuration namespace.
+        key (str): The configuration key inside the namespace.
+
+    Returns:
+        The current value for this option. Its type will be the one defined in
+            the registry for this configuration option.
+
+    Raises:
+        ideascube.configuration.exceptions.NoSuchConfigurationNamespaceError:
+            The requested namespace does not exist.
+        ideascube.configuration.exceptions.NoSuchConfigurationKeyError:
+            The requested key does not exist in the requested namespace.
+    """
+    from .models import Configuration
+    from .registry import get_default_value, get_expected_type
+
+    default_value = get_default_value(namespace, key)
+    expected_type = get_expected_type(namespace, key)
+
+    try:
+        config = Configuration.objects.get(namespace=namespace, key=key)
+
+    except Configuration.DoesNotExist:
+        return default_value
+
+    if not isinstance(config.value, expected_type):
+        logger.error(
+            'The stored value for %s is of type %s instead of %s. This should'
+            ' never have happened.'
+            % (config, type(config.value), expected_type))
+        return default_value
+
+    return config.value
 
 
 def set_config(namespace, key, value, actor):
