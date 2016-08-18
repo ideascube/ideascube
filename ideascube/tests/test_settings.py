@@ -15,9 +15,11 @@ def test_all_settings(request):
         module = '.conf.%s' % module
 
         try:
-            importlib.import_module(module, package="ideascube")
+            settings = importlib.import_module(module, package="ideascube")
 
         except Exception as e:
             print(path)
             print(module)
             pytest.fail(str(e))
+
+        assert isinstance(getattr(settings, 'IDEASCUBE_NAME', ''), str)
