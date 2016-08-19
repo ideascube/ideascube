@@ -150,6 +150,85 @@ def test_list_keys_invalid_namespace(capsys, monkeypatch):
         'Unknown configuration namespace: "namespace1"') in str(exc_info.value)
 
 
+@pytest.mark.usefixtures('db')
+def test_reset_config(capsys, monkeypatch, user):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {'namespace1': {'key1': {'type': str, 'default': 'default'}}})
+
+    set_config('namespace1', 'key1', 'A string', user)
+    call_command('config', 'reset', 'namespace1', 'key1')
+
+    out, err = capsys.readouterr()
+    assert out.strip() == ''
+    assert err.strip() == ''
+
+    assert get_config('namespace1', 'key1') == 'default'
+
+
+@pytest.mark.usefixtures('db')
+def test_reset_default_config(capsys, monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {'namespace1': {'key1': {'type': str, 'default': 'default'}}})
+
+    call_command('config', 'reset', 'namespace1', 'key1')
+
+    out, err = capsys.readouterr()
+    assert out.strip() == ''
+    assert err.strip() == ''
+
+    assert get_config('namespace1', 'key1') == 'default'
+
+
+def test_reset_invalid_namespace(capsys, monkeypatch):
+    monkeypatch.setattr('ideascube.configuration.registry.REGISTRY', {})
+
+    with pytest.raises(CommandError) as exc_info:
+        call_command('config', 'reset', 'namespace1', 'key1')
+
+    assert (
+        'Unknown configuration namespace: "namespace1"') in str(exc_info.value)
+
+
+def test_reset_invalid_key(capsys, monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY', {'namespace1': {}})
+
+    with pytest.raises(CommandError) as exc_info:
+        call_command('config', 'reset', 'namespace1', 'key1')
+
+    assert (
+        'Unknown configuration key: "namespace1.key1"') in str(exc_info.value)
+
+
+@pytest.mark.usefixtures('db')
+def test_reset_invalid_config(capsys, monkeypatch, user):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {'namespace1': {'key1': {'type': int, 'default': 0}}})
+
+    # Make an invalid config, this should never happen in theory
+    Configuration(
+        namespace='namespace1', key='key1', value='foo', actor=user).save()
+
+    call_command('config', 'reset', 'namespace1', 'key1')
+
+    out, err = capsys.readouterr()
+    assert out.strip() == ''
+    assert err.strip().split(':') == [
+        'ERROR', 'ideascube.configuration',
+        "The stored value for namespace1.key1='foo' is of type <class 'str'> "
+        "instead of <class 'int'>. This should never have happened."]
+
+    assert get_config('namespace1', 'key1') == 0
+
+    # No log added this time, the invalid value is gone
+    out, err = capsys.readouterr()
+    assert out.strip() == ''
+    assert err.strip() == ''
+
+
 @pytest.mark.usefixtures('db', 'systemuser')
 @pytest.mark.parametrize(
     'value, expected, type, default',

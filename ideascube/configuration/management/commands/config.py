@@ -4,7 +4,7 @@ import ast
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 
-from ideascube.configuration import get_config, set_config
+from ideascube.configuration import get_config, reset_config, set_config
 from ideascube.configuration.exceptions import (
     InvalidConfigurationValueError,
     NoSuchConfigurationKeyError,
@@ -35,6 +35,12 @@ class Command(BaseCommand):
             'namespace', nargs='?',
             help='Only list configuration keys for this namespace')
         list.set_defaults(func=self.list_configs)
+
+        reset = subs.add_parser(
+            'reset', help='Reset a configuration option to its default value')
+        reset.add_argument('namespace', help='The configuration namespace')
+        reset.add_argument('key', help='The configuration key')
+        reset.set_defaults(func=self.reset_config)
 
         set = subs.add_parser(
             'set', help='Set the value of a configuration option')
@@ -94,6 +100,17 @@ class Command(BaseCommand):
                 print("%s %s" % (namespace, key))
 
         except NoSuchConfigurationNamespaceError as e:
+            raise CommandError(e)
+
+    def reset_config(self, options):
+        namespace = options['namespace']
+        key = options['key']
+
+        try:
+            reset_config(namespace, key)
+
+        except (NoSuchConfigurationNamespaceError,
+                NoSuchConfigurationKeyError) as e:
             raise CommandError(e)
 
     def set_config(self, options):

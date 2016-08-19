@@ -4,7 +4,7 @@ import freezegun
 
 import pytest
 
-from ideascube.configuration import get_config, set_config
+from ideascube.configuration import get_config, reset_config, set_config
 from ideascube.configuration.exceptions import (
     InvalidConfigurationValueError,
     NoSuchConfigurationKeyError,
@@ -75,6 +75,60 @@ def test_get_default_configuration(monkeypatch):
         {'tests': {'setting1': {'type': int, 'default': 42}}})
 
     assert get_config('tests', 'setting1') == 42
+
+
+def test_reset_configuration(monkeypatch, user):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY', {
+            'tests': {
+                'setting1': {'type': str},
+                'setting2': {'type': int},
+            },
+            'tests2': {
+                'setting3': {'type': list},
+            },
+        })
+
+    set_config('tests', 'setting1', 'A string', user)
+    set_config('tests', 'setting2', 42, user)
+    set_config('tests2', 'setting3', ['A', 'list'], user)
+    assert Configuration.objects.count() == 3
+
+    reset_config('tests', 'setting1')
+    assert Configuration.objects.count() == 2
+
+    with pytest.raises(Configuration.DoesNotExist):
+        Configuration.objects.get(namespace='tests', key='settings1')
+
+
+def test_reset_default_configuration(monkeypatch, user):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {'tests': {'setting1': {'type': str}}})
+
+    reset_config('tests', 'setting1')
+
+    assert Configuration.objects.count() == 0
+
+
+def test_reset_configuration_invalid_type(capsys, monkeypatch, user):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {'tests': {'setting1': {'type': int}}})
+
+    # Store a bad value in the database
+    Configuration(
+        namespace='tests', key='setting1', value='foo', actor=user).save()
+    reset_config('tests', 'setting1')
+
+    assert Configuration.objects.count() == 0
+
+    out, err = capsys.readouterr()
+    assert out.strip() == ''
+    assert err.strip().split(':') == [
+        'ERROR', 'ideascube.configuration',
+        "The stored value for tests.setting1='foo' is of type <class 'str'> "
+        "instead of <class 'int'>. This should never have happened."]
 
 
 @pytest.mark.parametrize(
