@@ -2,7 +2,9 @@ import argparse
 
 from django.core.management.base import BaseCommand, CommandError
 
+from ideascube.configuration import get_config
 from ideascube.configuration.exceptions import (
+    NoSuchConfigurationKeyError,
     NoSuchConfigurationNamespaceError,
     )
 from ideascube.configuration.registry import (
@@ -17,6 +19,12 @@ class Command(BaseCommand):
         subs = parser.add_subparsers(
             title='Commands', dest='cmd', metavar='',
             parser_class=argparse.ArgumentParser)
+
+        get = subs.add_parser(
+            'get', help='Get the current value of a configuration option')
+        get.add_argument('namespace', help='The configuration namespace')
+        get.add_argument('key', help='The configuration key')
+        get.set_defaults(func=self.get_config)
 
         list = subs.add_parser(
             'list', help='List configuration namespaces and keys')
@@ -33,6 +41,19 @@ class Command(BaseCommand):
             self.parser.exit(1)
 
         options['func'](options)
+
+    def get_config(self, options):
+        namespace = options['namespace']
+        key = options['key']
+
+        try:
+            value = get_config(namespace, key)
+
+        except (NoSuchConfigurationNamespaceError,
+                NoSuchConfigurationKeyError) as e:
+            raise CommandError(e)
+
+        print('%r' % value)
 
     def list_configs(self, options):
         namespace = options['namespace']
