@@ -55,3 +55,13 @@ def get_default_value(namespace, key):
 
 def get_expected_type(namespace, key):
     return get_config_data(namespace, key)['type']
+
+
+def get_namespaced_configs(namespace):
+    try:
+        namespace_registry = REGISTRY[namespace]
+
+    except KeyError:
+        raise NoSuchConfigurationNamespaceError(namespace)
+
+    yield from sorted(namespace_registry)
