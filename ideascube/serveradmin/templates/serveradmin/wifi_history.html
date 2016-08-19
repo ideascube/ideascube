@@ -7,9 +7,9 @@
 {% if forloop.first %}
 <form method="POST" action="{% url 'server:wifi_history' %}" id="wifi_history">
     {% csrf_token %}
-    <fieldset class="wifi-list" name="ssids">
+    <fieldset class="list-box" name="ssids">
 {% endif %}
-        <label class="wifi-network" for="{{ wifi.ssid }}">
+        <label class="list-box-item" for="{{ wifi.ssid }}">
             <input type="checkbox" id="{{ wifi.ssid }}" name="{{ wifi.ssid }}" />
             {{ wifi.ssid }}
             {% if wifi.connected %}

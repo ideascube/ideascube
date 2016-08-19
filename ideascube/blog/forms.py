@@ -1,6 +1,6 @@
 from django import forms
 
-from ideascube.fields import LangSelect
+from ideascube.widgets import LangSelect
 
 from .models import Content
 

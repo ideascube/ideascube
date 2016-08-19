@@ -72,6 +72,16 @@ def test_welcome_page_should_create_staff_user_with_unicode(app):
     response.mustcontain(name.encode())
 
 
+def test_welcome_page_does_not_create_staff_user_passwords_do_not_match(app):
+    form = app.get(reverse('welcome_staff')).forms['model_form']
+    form['serial'] = 'myuser'
+    form['password'] = 'password1'
+    form['password_confirm'] = 'password2'
+    res = form.submit()
+    assert 'The two passwords do not match' in res.unicode_body
+    assert user_model.objects.count() == 0
+
+
 def test_login_page_should_log_in_user_if_POST_data_is_correct(client, user,
                                                                staffuser):
     # Loading staffuser fixture so we don't fail into welcome_staff page.
