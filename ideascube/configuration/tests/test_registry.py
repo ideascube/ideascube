@@ -4,7 +4,7 @@ from ideascube.configuration.exceptions import (
     NoSuchConfigurationKeyError, NoSuchConfigurationNamespaceError,
 )
 from ideascube.configuration.registry import (
-    get_config_data, get_default_value, get_expected_type,
+    get_all_namespaces, get_config_data, get_default_value, get_expected_type,
 )
 
 
@@ -15,6 +15,15 @@ def test_nobody_messed_the_registry():
         for config_data in namespaced_keys.values():
             assert 'default' in config_data
             assert 'type' in config_data
+
+
+def test_get_all_namespaces(monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {'namespace2': {}, 'namespace1': {}})
+
+    namespaces = get_all_namespaces()
+    assert list(namespaces) == ['namespace1', 'namespace2']
 
 
 def test_get_config_data(monkeypatch):

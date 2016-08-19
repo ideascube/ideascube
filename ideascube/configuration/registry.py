@@ -31,6 +31,10 @@ REGISTRY = {
 }
 
 
+def get_all_namespaces():
+    yield from sorted(REGISTRY)
+
+
 def get_config_data(namespace, key):
     try:
         namespace_registry = REGISTRY[namespace]
