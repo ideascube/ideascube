@@ -2,6 +2,9 @@
 """Configuration for a demo server hosted here, at BSF Headquarters"""
 from .idb import *  # noqa
 
+ALLOWED_HOSTS = ['.demo.ideascube.ideas-box.fr', '.ideasbox.lan.', 'localhost']
+DOMAIN = 'demo.ideascube.ideas-box.fr'
+
 LANGUAGE_CODE = 'es'
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
