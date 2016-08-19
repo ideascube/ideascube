@@ -95,6 +95,51 @@ def test_get_invalid_config(capsys, monkeypatch, user):
         "instead of <class 'int'>. This should never have happened."]
 
 
+def test_describe_config(capsys, monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY', {
+            'namespace1': {
+                'key1': {
+                    'summary': 'A configuration key',
+                    'pretty_type': 'A string',
+                    'default': 'the default',
+                },
+            }})
+
+    call_command('config', 'describe', 'namespace1', 'key1')
+
+    out, err = capsys.readouterr()
+    assert out.strip().split('\n') == [
+        '# namespace1 key1',
+        '',
+        'A configuration key',
+        '',
+        '* type: A string',
+        "* default value: 'the default'"]
+    assert err.strip() == ''
+
+
+def test_describe_config_no_namespace(monkeypatch):
+    monkeypatch.setattr('ideascube.configuration.registry.REGISTRY', {})
+
+    with pytest.raises(CommandError) as exc_info:
+        call_command('config', 'describe', 'namespace1', 'key1')
+
+    assert (
+        'Unknown configuration namespace: "namespace1"') in str(exc_info.value)
+
+
+def test_describe_config_no_key(monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY', {'namespace1': {}})
+
+    with pytest.raises(CommandError) as exc_info:
+        call_command('config', 'describe', 'namespace1', 'key1')
+
+    assert (
+        'Unknown configuration key: "namespace1.key1"') in str(exc_info.value)
+
+
 def test_list_namespaces(capsys, monkeypatch):
     monkeypatch.setattr(
         'ideascube.configuration.registry.REGISTRY',

@@ -11,7 +11,7 @@ from ideascube.configuration.exceptions import (
     NoSuchConfigurationNamespaceError,
     )
 from ideascube.configuration.registry import (
-    get_all_namespaces, get_namespaced_configs,
+    get_all_namespaces, get_config_data, get_namespaced_configs,
     )
 
 
@@ -28,6 +28,12 @@ class Command(BaseCommand):
         get.add_argument('namespace', help='The configuration namespace')
         get.add_argument('key', help='The configuration key')
         get.set_defaults(func=self.get_config)
+
+        describe = subs.add_parser(
+            'describe', help='Describe a configuration option')
+        describe.add_argument('namespace', help='The configuration namespace')
+        describe.add_argument('key', help='The configuration key')
+        describe.set_defaults(func=self.describe_config)
 
         list = subs.add_parser(
             'list', help='List configuration namespaces and keys')
@@ -85,6 +91,25 @@ class Command(BaseCommand):
             raise CommandError(e)
 
         print('%r' % value)
+
+    def describe_config(self, options):
+        data = {
+            'namespace': options['namespace'],
+            'key': options['key'],
+        }
+
+        try:
+            data.update(get_config_data(data['namespace'], data['key']))
+
+        except (NoSuchConfigurationNamespaceError,
+                NoSuchConfigurationKeyError) as e:
+            raise CommandError(e)
+
+        print(
+            '# {namespace} {key}\n\n'
+            '{summary}\n\n'
+            '* type: {pretty_type}\n'
+            '* default value: {default!r}'.format(**data))
 
     def list_configs(self, options):
         namespace = options['namespace']

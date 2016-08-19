@@ -15,6 +15,8 @@ def test_nobody_messed_the_registry():
     for namespaced_keys in REGISTRY.values():
         for config_data in namespaced_keys.values():
             assert 'default' in config_data
+            assert 'pretty_type' in config_data
+            assert 'summary' in config_data
             assert 'type' in config_data
 
 
