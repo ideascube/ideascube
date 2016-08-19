@@ -42,7 +42,7 @@ class CreateStaffForm(forms.ModelForm):
         password2 = self.cleaned_data.get('password_confirm')
         if password1 and password2:
             if password1 != password2:
-                raise forms.ValidationError('The two passwords does not match')
+                raise forms.ValidationError('The two passwords do not match')
         return password2
 
     def save(self, *args, **kwargs):

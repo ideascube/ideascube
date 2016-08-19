@@ -78,7 +78,7 @@ def test_welcome_page_does_not_create_staff_user_passwords_do_not_match(app):
     form['password'] = 'password1'
     form['password_confirm'] = 'password2'
     res = form.submit()
-    assert 'The two passwords does not match' in res.unicode_body
+    assert 'The two passwords do not match' in res.unicode_body
     assert user_model.objects.count() == 0
 
 
