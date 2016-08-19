@@ -3,7 +3,7 @@ from django.core.management.base import CommandError
 
 import pytest
 
-from ideascube.configuration import set_config
+from ideascube.configuration import get_config, set_config
 from ideascube.configuration.models import Configuration
 
 
@@ -148,3 +148,68 @@ def test_list_keys_invalid_namespace(capsys, monkeypatch):
 
     assert (
         'Unknown configuration namespace: "namespace1"') in str(exc_info.value)
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+@pytest.mark.parametrize(
+    'value, expected, type, default',
+    [
+        ("True", True, bool, False),
+        ("true", True, bool, False),
+        ("42", 42, int, 0),
+        ("'A string'", 'A string', str, 'default'),
+        ("unquoted-string", 'unquoted-string', str, 'default'),
+        ("['A', 'list']", ['A', 'list'], list, []),
+    ],
+    ids=[
+        'boolean', 'boolean-2', 'int', 'string', 'string-2', 'list',
+    ])
+def test_set_config(capsys, monkeypatch, value, expected, type, default):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {'namespace1': {'key1': {'type': type, 'default': default}}})
+
+    call_command('config', 'set', 'namespace1', 'key1', value)
+
+    out, err = capsys.readouterr()
+    assert out.strip() == ''
+    assert err.strip() == ''
+
+    assert get_config('namespace1', 'key1') == expected
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_set_config_no_namespace(monkeypatch):
+    monkeypatch.setattr('ideascube.configuration.registry.REGISTRY', {})
+
+    with pytest.raises(CommandError) as exc_info:
+        call_command('config', 'set', 'namespace1', 'key1', "'value 1'")
+
+    assert (
+        'Unknown configuration namespace: "namespace1"') in str(exc_info.value)
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_set_config_no_key(monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY', {'namespace1': {}})
+
+    with pytest.raises(CommandError) as exc_info:
+        call_command('config', 'set', 'namespace1', 'key1', "'value 1'")
+
+    assert (
+        'Unknown configuration key: "namespace1.key1"') in str(exc_info.value)
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_set_invalid_config(monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {'namespace1': {'key1': {'type': int, 'default': 0}}})
+
+    with pytest.raises(CommandError) as exc_info:
+        call_command('config', 'set', 'namespace1', 'key1', "'value 1'")
+
+    assert (
+        'Invalid type for configuration key "namespace1.key1": expected '
+        "<class 'int'>, got <class 'str'>") in str(exc_info.value)
