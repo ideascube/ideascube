@@ -55,6 +55,19 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
         user.save(using=self._db)
         return user
 
+    def get_queryset(self):
+        return super().get_queryset().exclude(serial='__system__')
+
+    def get_queryset_unfiltered(self):
+        return super().get_queryset()
+
+    def all(self, include_system_user=False):
+        if include_system_user:
+            return self.get_queryset_unfiltered().all()
+
+        else:
+            return super().all()
+
 
 class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     """
@@ -101,6 +114,18 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+    def validate_unique(self, exclude=None):
+        super().validate_unique(exclude=exclude)
+
+        if self.id is None:
+            # We are creating a new user.
+            # Include system user in the check for uniqueness.
+            all_users = User.objects.all(include_system_user=True)
+
+            if all_users.filter(serial=self.serial).exists():
+                raise ValidationError({
+                    'serial': _('User with this Serial already exists.')})
 
     @classmethod
     def get_data_fields(cls):
