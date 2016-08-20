@@ -116,6 +116,16 @@ def test_login_page_should_not_log_in_user_with_incorrect_POST(client, user):
     assert not response.context['user'].is_authenticated()
 
 
+def test_system_user_cannot_log_in(client, systemuser):
+    response = client.post(reverse('login'), {
+        'username': systemuser.serial,
+        'password': systemuser.password,
+    }, follow=True)
+    assert response.status_code == 200
+    assert len(response.redirect_chain) == 0
+    assert not response.context['user'].is_authenticated()
+
+
 def test_login_from_link_should_redirect_to_previous(app, user, staffuser):
     # Loading staffuser fixture so we don't fail into welcome_staff page.
     mediacenter = app.get(reverse('mediacenter:index'))
@@ -138,6 +148,11 @@ def test_non_staff_should_not_access_user_list_page(loggedapp):
 def test_user_list_page_should_be_accessible_to_staff(staffapp, user):
     response = staffapp.get(reverse('user_list'), status=200)
     response.mustcontain(str(user))
+
+
+def test_system_user_does_not_appear_in_list(staffapp, systemuser):
+    response = staffapp.get(reverse('user_list'), status=200)
+    response.mustcontain(no=str(systemuser))
 
 
 def test_user_list_page_is_paginated(staffapp, monkeypatch):
@@ -163,6 +178,11 @@ def test_user_list_page_should_be_searchable(staffapp):
     response.mustcontain(str(user1), no=str(user2))
 
 
+def test_system_user_is_not_searchable(staffapp, systemuser):
+    response = staffapp.get(reverse('user_list') + '?q=system')
+    response.mustcontain(no=str(systemuser))
+
+
 def test_user_detail_page_should_not_be_accessible_to_anonymous(app, user):
     assert app.get(reverse('user_detail', kwargs={'pk': user.pk}),
                    status=302)
@@ -176,6 +196,11 @@ def test_non_staff_should_not_access_user_detail_page(loggedapp, user):
 def test_user_detail_page_should_be_accessible_to_staff(staffapp, user):
     response = staffapp.get(reverse('user_detail', kwargs={'pk': user.pk}))
     response.mustcontain(str(user))
+
+
+def test_system_user_cannot_be_viewed(staffapp, systemuser):
+    response = staffapp.get(
+        reverse('user_detail', kwargs={'pk': systemuser.pk}), status=404)
 
 
 def test_user_create_page_should_not_be_accessible_to_anonymous(app):
@@ -205,6 +230,13 @@ def test_should_not_create_user_without_serial(staffapp):
     form = staffapp.get(reverse('user_create')).forms['model_form']
     form.submit()
     assert len(user_model.objects.all()) == 1
+
+
+def test_system_serial_is_unique(staffapp, systemuser):
+    form = staffapp.get(reverse('user_create')).forms['model_form']
+    form['serial'] = systemuser.serial
+    response = form.submit()
+    assert response.status_code == 200
 
 
 def test_user_update_page_should_not_be_accessible_to_anonymous(app, user):
@@ -243,6 +275,11 @@ def test_should_not_update_user_without_serial(app, staffapp, user):
     assert dbuser.short_name == user.short_name
 
 
+def test_system_user_cannot_be_updated(staffapp, systemuser):
+    url = reverse('user_update', kwargs={'pk': systemuser.pk})
+    form = staffapp.get(url, status=404)
+
+
 def test_delete_page_should_not_be_reachable_to_anonymous(app, user):
     assert app.get(reverse('user_delete', kwargs={'pk': user.pk}), status=302)
 
@@ -278,6 +315,12 @@ def test_staff_user_can_delete_user(staffapp, user):
     form = staffapp.get(url).forms['delete_form']
     form.submit()
     assert len(user_model.objects.all()) == 1
+
+
+def test_system_user_cannot_be_deleted(staffapp, systemuser):
+    staffapp.get(
+        reverse('user_delete', kwargs={'pk': systemuser.pk}),
+        status=404)
 
 
 def test_anonymous_cannot_access_toggle_staff_page(app, user):
@@ -333,6 +376,12 @@ def test_staff_can_set_password(staffapp, client, user):
     form['new_password2'] = password
     form.submit().follow()
     assert user_model.objects.get(pk=user.pk).password != old_password
+
+
+def test_systemuser_cannot_have_its_password_changed(staffapp, systemuser):
+    staffapp.get(
+        reverse('user_set_password', kwargs={'pk': systemuser.pk}),
+        status=404)
 
 
 def test_anonymous_cannot_export_users(app, user):

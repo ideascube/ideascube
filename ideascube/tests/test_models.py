@@ -37,6 +37,18 @@ def test_create_superuser():
     assert user.is_staff
 
 
+def test_list_users():
+    model = get_user_model()
+    model.objects.create_user('123456')
+    model.objects.create_user('__system__')
+
+    users = model.objects.all()
+    assert [u.serial for u in users] == ['123456']
+
+    users = model.objects.all(include_system_user=True)
+    assert [u.serial for u in users] == ['__system__', '123456']
+
+
 def test_client_login(client, user):
     assert client.login(serial=user.serial, password='password')
 
