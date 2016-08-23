@@ -77,8 +77,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'languages': ['fr']
     },
     {
-        'id': 'bouquineux',
-        'languages': ['fr']
+        'id': 'bouquineux'
     },
     {
         'id': 'deus-ex-silicium',
