@@ -59,6 +59,7 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
         return super().get_queryset().exclude(serial='__system__')
 
     def get_queryset_unfiltered(self):
+        # Use the parent's queryset, as it is not filtered
         return super().get_queryset()
 
     def all(self, include_system_user=False):
@@ -67,6 +68,9 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
 
         else:
             return super().all()
+
+    def get_system_user(self):
+        return self.get_queryset_unfiltered().get(serial='__system__')
 
 
 class User(SearchMixin, TimeStampedModel, AbstractBaseUser):

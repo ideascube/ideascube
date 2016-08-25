@@ -48,6 +48,9 @@ def test_list_users():
     users = model.objects.all(include_system_user=True)
     assert [u.serial for u in users] == ['__system__', '123456']
 
+    systemuser = model.objects.get_system_user()
+    assert systemuser.serial == '__system__'
+
 
 def test_client_login(client, user):
     assert client.login(serial=user.serial, password='password')
