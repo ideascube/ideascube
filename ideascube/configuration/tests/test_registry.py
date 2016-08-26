@@ -8,6 +8,15 @@ from ideascube.configuration.registry import (
 )
 
 
+def test_nobody_messed_the_registry():
+    from ideascube.configuration.registry import REGISTRY
+
+    for namespaced_keys in REGISTRY.values():
+        for config_data in namespaced_keys.values():
+            assert 'default' in config_data
+            assert 'type' in config_data
+
+
 def test_get_config_data(monkeypatch):
     monkeypatch.setattr(
         'ideascube.configuration.registry.REGISTRY',
