@@ -7,6 +7,12 @@ from django.core.urlresolvers import reverse
 from ideascube.tests.factories import UserFactory
 from ideascube.search.utils import create_index_table
 
+import logging
+# This Handler always use sys.stderr and do not cache it.
+# Let's configure logging to always use it when we are testing.
+_alwaysUseStdErrHandler = logging._StderrHandler(logging.WARNING)
+logging.basicConfig(handlers=[_alwaysUseStdErrHandler])
+
 
 @pytest.fixture()
 def cleansearch():
