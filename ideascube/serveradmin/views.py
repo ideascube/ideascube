@@ -15,6 +15,15 @@ from .systemd import Manager, NoSuchUnit, UnitManagementError
 from .wifi import (
     AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError)
 
+# For unittesting purpose, we need to mock the Catalog class.
+# However, the mock is made in a fixture and at this moment, we don't
+# know where the mocked catalog will be used.
+# So the fixture mocks 'ideascube.serveradmin.catalog.Catalog'.
+# If we want to use the mocked Catalog here, we must not import the
+# Catalog class directly but reference it from ideascube.serveradmin.catalog
+# module.
+from . import catalog as catalog_mod
+from ideascube.configuration import get_config, set_config
 
 @staff_member_required
 def server_name(request):
@@ -188,3 +197,20 @@ def wifi_history(request):
     return render(
         request, 'serveradmin/wifi_history.html',
         {'wifi_list': wifi_list.values()})
+
+
+@staff_member_required
+def home_page(request):
+    if request.POST:
+        displayed_packages = request.POST.getlist("displayed")
+        set_config('home-page', 'displayed-package-ids',
+                   displayed_packages, request.user)
+        messages.success(request, _('Home cards updated successfully'))
+
+    catalog = catalog_mod.Catalog()
+    installed_packages = catalog.list_installed(['*'])
+    displayed_packages = get_config('home-page', 'displayed-package-ids')
+
+    return render(request, 'serveradmin/home_page.html',
+        {'installed_packages': installed_packages,
+         'displayed_packages': displayed_packages})

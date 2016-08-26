@@ -300,6 +300,14 @@ STAFF_HOME_CARDS = [
         'description': _('Change the server name.'),
         'fa': 'info-circle',
     },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'server:home_page',
+        'title': _('Home page'),
+        'description': _('Manage home page'),
+        'fa': 'th',
+    }
 ]
 
 HOME_CARDS = STAFF_HOME_CARDS + [
