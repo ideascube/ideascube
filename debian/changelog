@@ -1,3 +1,12 @@
+ideascube (0.11.5) unstable; urgency=low
+
+  * Added cards for Bouquineux, E-Penser, Biologie tout compris, Deux Ex-Silicium
+  * Added a system user
+  * Added conf for Tanzanie Koombook in French Ambassy
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 26 Aug 2016 11:15:00 +0200
+
+
 ideascube (0.11.4) unstable; urgency=low
 
   * Fixed book import from ISBN broken since python 3 switch
