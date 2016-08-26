@@ -224,7 +224,7 @@ class Command(BaseCommand):
                 raise CommandError(
                     ('There already is a "{0.id}" remote and urls differ '
                      '({0.url} and {1})').format(e.remote, options['url']))
-            print('Not adding already existing remote: "{}"'.format(id))
+            print('Not adding already existing remote: "{}"'.format(options['id']))
         else:
             self.catalog.update_cache()
 
