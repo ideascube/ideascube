@@ -568,15 +568,19 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 }
 .card.biologie-tout-compris {
     background-image: url('./img/cards/biologie-tout-compris.jpg');
+    padding-right: 100px;
 }
 .card.deus-ex-silicium {
     background-image: url('./img/cards/deus-ex-silicium.jpg');
+    padding-right: 100px;
 }
 .card.e-penser {
     background-image: url('./img/cards/e-penser.jpg');
+    padding-right: 100px;
 }
 .card.bouquineux {
     background-image: url('./img/cards/bouquineux.png');
+    padding-right: 100px;
 }
 .card.mullahpiaz {
     background-image: url('./img/cards/mullahpiaz.jpg');
