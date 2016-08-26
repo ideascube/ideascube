@@ -14,6 +14,7 @@ from django.template.defaultfilters import filesizeformat
 from lxml import etree
 from progressist import ProgressBar
 from resumable import DownloadCheck, DownloadError, urlretrieve
+from requests import ConnectionError
 import yaml
 import mimetypes
 
@@ -762,21 +763,26 @@ class Catalog:
 
         for remote in self._remotes.values():
             # TODO: Get resumable.urlretrieve to accept a file-like object?
-            fd, tmppath = tempfile.mkstemp()
-            os.close(fd)
+            with tempfile.NamedTemporaryFile() as fd:
+                tmppath = fd.name
 
-            def _progress(*args):
-                self._progress(' {}'.format(remote.name), *args)
+                def _progress(*args):
+                    self._progress(' {}'.format(remote.name), *args)
 
-            # TODO: Verify the download with sha256sum? Crypto signature?
-            urlretrieve(remote.url, tmppath, reporthook=_progress)
+                # TODO: Verify the download with sha256sum? Crypto signature?
+                try:
+                    urlretrieve(remote.url, tmppath, reporthook=_progress)
+                except ConnectionError:
+                    print("Warning: Impossible to connect to the remote"
+                          " {remote.name}({remote.url}).\n"
+                          "Continue anyway without this remote."
+                          .format(remote=remote))
+                    continue
 
-            catalog = load_from_file(tmppath)
+                catalog = load_from_file(tmppath)
 
-            # TODO: Handle content which was removed from the remote source
-            self._available.update(catalog['all'])
-
-            os.unlink(tmppath)
+                # TODO: Handle content which was removed from the remote source
+                self._available.update(catalog['all'])
 
         self._persist_catalog()
 

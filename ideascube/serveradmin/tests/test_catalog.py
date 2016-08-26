@@ -808,6 +808,20 @@ def test_catalog_update_cache(tmpdir, monkeypatch):
     assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
     assert c._installed == {}
 
+def test_catalog_update_cache_no_fail_if_remote_unavailable(mocker):
+    from ideascube.serveradmin.catalog import Catalog
+    from requests import ConnectionError
+
+    mocker.patch('ideascube.serveradmin.catalog.urlretrieve',
+                 side_effect=ConnectionError)
+
+    c = Catalog()
+
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'http://exemple.com/not_existing')
+    c.update_cache()
+
 
 def test_catalog_clear_cache(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog
