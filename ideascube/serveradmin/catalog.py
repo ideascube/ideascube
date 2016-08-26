@@ -289,12 +289,24 @@ class ZippedZim(Package):
         with zipfile.ZipFile(download_path, "r") as z:
             names = z.namelist()
             names = filter(lambda n: n.startswith('data/'), names)
+            # Make it a list so we can reuse it later
+            names = list(names)
             z.extractall(install_dir, members=names)
 
-        zimname = os.path.basename(self.url).split('+', 1)[-1][:-4] + '.zim'
         datadir = os.path.join(install_dir, 'data')
 
-        for path in glob(os.path.join(datadir, '*', '{}*'.format(zimname))):
+        for path in glob(os.path.join(datadir, '*', '*.zim*')):
+            relpath = os.path.relpath(path, install_dir)
+
+            if os.path.isdir(path):
+                # Dirs end with a / in the zip file list
+                relpath += '/'
+
+            if relpath not in names:
+                # Ignore zim files installed by other packages
+                continue
+
+            zimname = os.path.basename(path).split('.zim')[0] + '.zim'
             new = path.replace(zimname, '{0.id}.zim'.format(self))
             try:
                 os.rename(path, new)
