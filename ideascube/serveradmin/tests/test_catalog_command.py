@@ -69,7 +69,7 @@ def test_add_remote(tmpdir, settings, capsys, monkeypatch):
     assert err.strip() == ''
 
 
-def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch):
+def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch, capsys):
     monkeypatch.setattr(
         'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
@@ -93,10 +93,15 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch):
 
     old_mtime = remotes_dir.join('foo.yml').mtime()
 
+    capsys.readouterr()
+
     # Adding the same remote with the same url should not fail.
     call_command(
         'catalog', 'remotes', 'add', remote['id'], remote['name'],
         remote['url'])
+
+    out, _ = capsys.readouterr()
+    assert out == 'Not adding already existing remote: "{}"\n'.format(remote['id'])
 
     # But should fail with different urls.
     with pytest.raises(CommandError):
