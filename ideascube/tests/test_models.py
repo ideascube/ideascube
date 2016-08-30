@@ -53,7 +53,9 @@ def test_client_login(client, user):
     assert client.login(serial=user.serial, password='password')
 
 
-def test_user_data_fields_should_return_labels_and_values():
+def test_user_data_fields_should_return_labels_and_values(settings):
+    settings.USER_DATA_FIELDS = ['short_name', 'ar_level']
+
     user = User(short_name='my name', ar_level=['u', 's'])
     fields = user.data_fields
     assert 'is_staff' not in fields
