@@ -227,7 +227,6 @@ USER_INDEX_FIELDS = ['short_name', 'full_name', 'serial']
 
 USER_FORM_FIELDS = (
     (_('Basic informations'), ['serial', 'short_name', 'full_name']),
-    (_('Language skills'), ['ar_level', 'en_level']),
 )
 
 ENTRY_ACTIVITY_CHOICES = [
