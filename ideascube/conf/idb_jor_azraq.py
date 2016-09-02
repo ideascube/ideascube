@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
 """Azraq box in Jordan"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
-IDEASCUBE_NAME = u"مخيم الأزرق"
 COUNTRIES_FIRST = ['SY', 'JO']
 TIME_ZONE = 'Asia/Amman'
 LANGUAGE_CODE = 'ar'
@@ -49,7 +47,6 @@ ENTRY_ACTIVITY_CHOICES = [
     ("World Mental Health Day", _("World Mental Health Day")),
 ]
 
-# We need to install the other apps on this server.
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'blog',
@@ -62,11 +59,60 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'wikipedia',
+        'languages': ['ar', 'en']
     },
     {
         'id': 'khanacademy',
     },
     {
-        'id': 'gutenberg',
+        'id': 'wiktionary',
+        'languages': ['en', 'ar']
     },
+    {
+        'id': 'wikisource',
+        'languages': ['ar', 'en']
+    },
+    {
+        'id': 'vikidia',
+        'languages': ['en']
+    },
+    {
+        'id': 'gutenberg',
+        'lang': 'en',
+    },
+    {
+        'id': 'ted',
+        'sessions': [
+            ('tedbusiness.en', 'Business'),
+            ('teddesign.en', 'Design'),
+            ('tedentertainment.en', 'Entertainment'),
+            ('tedglobalissues.en', 'Global Issues'),
+            ('tedscience.en', 'Science'),
+            ('tedtechnology.en', 'Technology'),
+        ]
+    },
+    {
+        'id': 'wikiquote',
+        'languages': ['ar', 'en']
+    },
+    {
+        'id': 'wikibooks',
+        'languages': ['ar', 'en']
+    },
+    {
+        'id': 'wikiversity',
+        'languages': ['en', 'ar']
+    },
+    {
+        'id': 'bil-tunisia',
+        'languages': ['ar']
+    },
+    {
+        'id': 'maps',
+        'maps': [
+            ('World', 'world.map'),
+            ('Jordan', 'jordan.map'),
+            ('Syria', 'syria.map'),
+        ]
+    }
 ]
