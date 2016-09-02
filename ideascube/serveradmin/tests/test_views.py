@@ -74,11 +74,6 @@ def test_staff_is_presented_with_default_server_name(staffapp, settings):
     form = res.forms['server_name']
     assert form['server_name'].value == 'Ideas Cube'
 
-    settings.IDEASCUBE_NAME = 'Le cube à idées'
-    res = staffapp.get(reverse('server:name'), status=200)
-    form = res.forms['server_name']
-    assert form['server_name'].value == 'Le cube à idées'
-
 
 def test_staff_lists_services(mocker, staffapp, settings):
     mocker.patch(
