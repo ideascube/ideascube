@@ -61,4 +61,13 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'bil-tunisia',
         'languages': ['ar']
     },
+    {
+        'id': 'maps',
+        'maps': [
+            ('World', 'world.map'),
+            ('Jordan', 'jordan.map'),
+            ('Syria', 'syria.map'),
+            ('iraq', 'iraq.map'),
+        ]
+    },
 ]
