@@ -50,6 +50,9 @@ class Command(BaseCommand):
         replace.add_argument('new', help='New tag name.')
         replace.set_defaults(func=self.replace)
 
+        list_ = subs.add_parser('list', help='List tags')
+        list_.set_defaults(func=self.list)
+
     def handle(self, *args, **options):
         if 'func' not in options:
             self.parser.print_help()
@@ -111,3 +114,10 @@ class Command(BaseCommand):
             content.tags.add(new)
         old.delete()
         notice('Deleted "{}"'.format(old))
+
+    def list(self, options):
+        row = '{:<40}{:<40}{}'
+        print(row.format('name', 'slug', 'count'))
+        print(row.format('.' * 40, '.' * 40, '.' * 40))
+        for tag in Tag.objects.order_by('slug'):
+            print(row.format(tag.name, tag.slug, self._count(tag.name)))
