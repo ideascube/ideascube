@@ -1107,10 +1107,16 @@ table.stock .actions {
     .twide {
         width: 100%;
     }
+    .thalf {
+        width: 50%;
+    }
 }
 @media screen and (max-width: 767px) {
     .mwide {
         width: 100%;
+    }
+    .mhalf {
+        width: 50%;
     }
     header {
         margin-top: 20px;
