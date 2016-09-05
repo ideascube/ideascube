@@ -515,6 +515,13 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card > a {
     text-decoration: none;
 }
+.home .card {
+    padding-right: 100px;
+}
+html[dir='rtl'] .home .card {
+    padding-right: 10px;
+    padding-left: 100px;
+}
 .card.khanacademy {
     background-image: url('./img/cards/khanacademy.png');
 }
@@ -569,19 +576,15 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 }
 .card.biologie-tout-compris {
     background-image: url('./img/cards/biologie-tout-compris.jpg');
-    padding-right: 100px;
 }
 .card.deus-ex-silicium {
     background-image: url('./img/cards/deus-ex-silicium.jpg');
-    padding-right: 100px;
 }
 .card.e-penser {
     background-image: url('./img/cards/e-penser.jpg');
-    padding-right: 100px;
 }
 .card.bouquineux {
     background-image: url('./img/cards/bouquineux.png');
-    padding-right: 100px;
 }
 .card.mullahpiaz {
     background-image: url('./img/cards/mullahpiaz.jpg');
@@ -592,7 +595,6 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 }
 .card.ubuntudoc {
     background-image: url('./img/cards/ubuntudoc.jpeg');
-    padding-right: 100px;
 }
 .card.universcience {
     background-image: url('./img/cards/universcience.png');
@@ -620,11 +622,9 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 }
 .card.w2eu {
     background-image: url('./img/cards/w2eu.jpg');
-    padding-right: 100px;
 }
 .card.maps {
     background-image: url('./img/cards/maps.png');
-    padding-right: 100px;
 }
 .card img {
     max-width: 150px;
