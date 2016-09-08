@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="{% static 'ideascube/vendor/minislate/minislate.min.css' %}" />
         <link rel="stylesheet" href="{% static 'ideascube/vendor/font-awesome/css/font-awesome.min.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static "ideascube/main.css" %}">
-        <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
+        <script type="text/javascript" src="{% url 'jsi18n' %}?version={{ IDEASCUBE_VERSION }}"></script>
         <script type="text/javascript">
             var ID = {
                 DOMAIN: "{{ DOMAIN }}"
