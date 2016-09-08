@@ -210,7 +210,7 @@ DATABASES = None
 
 AUTH_USER_MODEL = 'ideascube.User'
 IDEASCUBE_PLACE_NAME = _('the camp')
-IDEASCUBE_BODY_ID = 'ideasbox'
+IDEASCUBE_BOX_TYPE = 'ideasbox'
 
 LOAN_DURATION = 0  # In days.
 
