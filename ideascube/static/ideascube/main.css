@@ -348,6 +348,7 @@ header {
     background-color: #fefefe;
     color: #333;
     border-bottom: 1px solid #eee;
+    margin-bottom: 40px;
 }
 header section {
     align-self: center;
@@ -514,6 +515,13 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 .card > a {
     text-decoration: none;
 }
+.home .card {
+    padding-right: 100px;
+}
+html[dir='rtl'] .home .card {
+    padding-right: 10px;
+    padding-left: 100px;
+}
 .card.khanacademy {
     background-image: url('./img/cards/khanacademy.png');
 }
@@ -568,19 +576,15 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 }
 .card.biologie-tout-compris {
     background-image: url('./img/cards/biologie-tout-compris.jpg');
-    padding-right: 100px;
 }
 .card.deus-ex-silicium {
     background-image: url('./img/cards/deus-ex-silicium.jpg');
-    padding-right: 100px;
 }
 .card.e-penser {
     background-image: url('./img/cards/e-penser.jpg');
-    padding-right: 100px;
 }
 .card.bouquineux {
     background-image: url('./img/cards/bouquineux.png');
-    padding-right: 100px;
 }
 .card.mullahpiaz {
     background-image: url('./img/cards/mullahpiaz.jpg');
@@ -591,7 +595,6 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 }
 .card.ubuntudoc {
     background-image: url('./img/cards/ubuntudoc.jpeg');
-    padding-right: 100px;
 }
 .card.universcience {
     background-image: url('./img/cards/universcience.png');
@@ -619,11 +622,9 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 }
 .card.w2eu {
     background-image: url('./img/cards/w2eu.jpg');
-    padding-right: 100px;
 }
 .card.maps {
     background-image: url('./img/cards/maps.png');
-    padding-right: 100px;
 }
 .card img {
     max-width: 150px;
@@ -1082,155 +1083,18 @@ table.stock .actions {
 /* ************************************************* */
 /* ******************** MEDIA QUERIES ************** */
 /* ************************************************* */
-@media screen and (max-width: 600px) {
-    header {
-        flex-direction : column;
-        -webkit-flex-direction: column;
-        margin-bottom: 0px;
-        -webkit-align-items: center;
-    }
-    header section:first-child {
-        margin-top: 15px;
-    }
-    .boxid {
-        display: none;
-    }
+@media screen and (max-width: 1279px) {
     header .menu {
         margin-right: 0px;
     }
-    html[dir='rtl'] header h1 {
-        margin-right: 50px;
-    }
-    .menu a{
-        font-size: 80%;
-        max-height: 70px;
-        margin-top: -20px;
-    }
-    header .menu a + a {
-        margin-left: 20px;
-    }
-    header .menu .dropdown-menu ul {
-        margin-top: 0;
-    }
-    .row {
-        max-width: 90%;
-    }
-    .mwide {
-        flex-direction: column;
-        -webkit-flex-direction: column;
-    }
-    .mwide div {
-        width: 100%;
-    }
     .col + .col {
-        padding-left: 0px;
+        padding-left: 5px;
     }
     html[dir='rtl'] .col + .col {
-        padding-right: 0px;
-    }
-    .two-third h2{
-        margin-top: 20px;
-        margin-bottom: 0px;
-        text-align: center;
-    }
-    .card:first-child {
-        margin-top: 20px;
-    }
-    .grid {
-        justify-content: center;
-        -webkit-justify-content: center;
-    }
-    .mwide img {
-        display: block;
-        -webkit-display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 15px;
-        margin-top: 20px;
-    }
-    .blog img {
-        margin: 10px 10px 10px 0 !important;
-    }
-    .flow {
-        flex-direction : column;
-        -webkit-flex-direction: column;
-    }
-    footer .row {
-        -webkit-flex-direction: column;
-        flex-direction: column;
-        align-items: center;
-        -webkit-align-items: center;
-    }
-    footer .half {
-        margin-left: 0%;
-    }
-    footer .i18n_switch {
-        padding-top: 0px;
-    }
-    footer .third {
-        width: 80%;
-    }
-    footer img {
-        margin-top: 10px;
-    }
-}
-@media screen and (min-width: 600px) and (max-width: 900px) {
-    header {
-        -webkit-flex-direction: column;
-        flex-direction : column;
-        margin-bottom: 0px;
-    }
-    header section:first-child {
-        margin-top: 15px;
-    }
-    .boxid {
-        display: inline;
-    }
-    header .menu {
-        margin-right: 0px;
-    }
-    header .menu .dropdown-menu ul {
-        margin-top: 0;
-    }
-    .twide {
-        flex-direction: column;
-        align-items: center;
+        padding-right: 5px;
     }
     .row {
-        max-width: 90%;
-    }
-    .col {
-        width: 80%;
-    }
-    .col + .col {
-        padding-left: 0px;
-    }
-    html[dir='rtl'] .col + .col {
-        padding-right: 0px;
-    }
-    .two-third h2{
-        margin-top: 20px;
-        margin-bottom: 0px;
-        text-align: center;
-    }
-    .grid {
-        justify-content: center;
-        -webkit-justify-content: center;
-    }
-    .card:first-child {
-        margin-top: 20px;
-    }
-    .menu a {
-        font-size: 15px;
-        max-height: 70px;
-        margin-top: -20px;
-    }
-    header .menu a + a {
-        margin-left: 40px;
-    }
-    .mwide img {
-        margin-top: 20px;
-        margin-bottom: 15px;
+        max-width: 95%;
     }
     footer .half {
         margin-left: 10%;
@@ -1239,66 +1103,34 @@ table.stock .actions {
         width: 60%;
     }
 }
-@media screen and (min-width: 900px) and (max-width: 1279px) {
-    header {
-        -webkit-flex-direction: row;
-        flex-direction : row;
-        min-height: 100px;
-        margin-bottom: 40px;
-    }
-    .boxid {
-        display: inline;
-    }
-    header .menu {
-        margin-right: 0px;
-    }
-    .row {
-        max-width: 95%;
-    }
+@media screen and (max-width: 1023px) {
     .twide {
-        flex-direction: column;
-        align-items: center;
+        width: 100%;
     }
-    .col {
-        width: 80%;
-    }
-    .col + .col {
-        padding-left: 0px;
-    }
-    html[dir='rtl'] .col + .col {
-        padding-right: 0px;
-    }
-    .menu a {
-        font-size: 15px;
-    }
-    header .menu a + a {
-        margin-left: 20px;
-    }
-    footer .half {
-        margin-left: 30%;
-    }
-    footer .third {
+    .thalf {
         width: 50%;
-        margin-left: 5%;
     }
 }
-@media screen and (min-width: 1280px) {
+@media screen and (max-width: 767px) {
+    .mwide {
+        width: 100%;
+    }
+    .mhalf {
+        width: 50%;
+    }
     header {
-        -webkit-flex-direction: row;
-        flex-direction : row;
-        min-height: 100px;
-        margin-bottom: 40px;
+        margin-top: 20px;
+        flex-direction : column;
+        -webkit-flex-direction: column;
+        -webkit-align-items: center;
     }
+    .grid {
+        justify-content: center;
+        -webkit-justify-content: center;
+    }
+}
+@media screen and (max-width: 600px) {
     .boxid {
-        display: inline;
-    }
-    header .menu {
-        margin-right: 60px;
-    }
-    .menu a {
-        font-size: 15px;
-    }
-    header .menu a + a {
-        margin-left: 20px;
+        display: none;
     }
 }
