@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>{% block title %}{{ server_name }}{% endblock %}</title>
+        <link rel="icon" href="{% get_static_prefix %}ideascube/img/favicons/{{ IDEASCUBE_BOX_TYPE }}.png">
         <link rel="stylesheet" href="{% static 'ideascube/vendor/minislate/minislate.min.css' %}" />
         <link rel="stylesheet" href="{% static 'ideascube/vendor/font-awesome/css/font-awesome.min.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static "ideascube/main.css" %}">
