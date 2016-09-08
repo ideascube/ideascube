@@ -11,6 +11,8 @@
         <video controls width="100%">
             <source src="{{ document.original.url }}">
         </video>
+    {% elif document.preview %}
+        <a href="{{ document.original.url }}"><img src="{{ document.preview.url }}" /></a>
     {% endif %}
     <div class="text">{{ document.summary }}</div>
     <div>
