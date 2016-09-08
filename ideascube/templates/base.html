@@ -12,7 +12,7 @@
         <script type="text/javascript" src="{% url 'javascript' %}"></script>
         {% block extra_head %}{% endblock %}
     </head>
-    <body class="{% block body_class %}{% endblock %}" {% if IDEASCUBE_BODY_ID %}id="{{ IDEASCUBE_BODY_ID }}"{% endif %}>
+    <body class="{% block body_class %}{% endblock %}" {% if IDEASCUBE_BOX_TYPE %}id="{{ IDEASCUBE_BOX_TYPE }}"{% endif %}>
         {% block header %}
             {% include 'ideascube/includes/header.html' %}
         {% endblock header %}
