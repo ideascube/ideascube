@@ -25,6 +25,7 @@ server {
 
     location /static/ {
         alias /var/ideascube/static/;
+        expires 1y;
     }
 
     # Finally, send all non-media requests to the Django server.

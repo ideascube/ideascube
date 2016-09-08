@@ -77,6 +77,7 @@ TEMPLATES = [
                 "django.core.context_processors.static",
                 "django.core.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
+                "ideascube.context_processors.favicon_url",
                 "ideascube.context_processors.server",
                 "ideascube.context_processors.settings",
                 "ideascube.context_processors.version",
@@ -195,6 +196,7 @@ LOCALE_PATHS = (
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 
 

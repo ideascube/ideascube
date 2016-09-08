@@ -1,4 +1,4 @@
-{% load static i18n mediacenter_tags %}
+{% load i18n mediacenter_tags %}
 {% if document.kind == document.IMAGE %}
     <img src="{{ document.original.url }}" />
     <p>{{ document.summary }} - {{ document.credits }}</p>
