@@ -1,4 +1,6 @@
-{% load static i18n %}
+{% load i18n %}
+{% load static from staticfiles %}
+
 <!DOCTYPE html>
 <html{% if LANGUAGE_CODE|language_bidi %} dir="rtl"{% endif %}>
     <head>

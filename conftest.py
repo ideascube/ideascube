@@ -122,3 +122,8 @@ def pytest_configure(config):
     #
     # Somehow the default database is always in memory, though.
     settings.DATABASES['transient']['TEST_NAME'] = ':memory:'
+
+    # The documentation says not to use the ManifestStaticFilesStorage for
+    # tests, and indeed if we do they fail.
+    settings.STATICFILES_STORAGE = (
+        'django.contrib.staticfiles.storage.StaticFilesStorage')
