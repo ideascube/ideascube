@@ -14,7 +14,7 @@ def server(request):
 
 
 def settings(request):
-    keys = ['IDEASCUBE_BOX_TYPE', 'IDEASCUBE_ID',
+    keys = ['DOMAIN', 'IDEASCUBE_BOX_TYPE', 'IDEASCUBE_ID',
             'IDEASCUBE_HOSTNAME', 'LANG_INFO']
     return {k: getattr(djsettings, k) for k in keys}
 
