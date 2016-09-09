@@ -4,8 +4,9 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_control, cache_page
 from django.views.i18n import javascript_catalog
+
 
 from . import views
 
@@ -36,10 +37,10 @@ urlpatterns = i18n_patterns(
         views.user_delete, name='user_delete'),
     url(r'^user/(?P<pk>[\d]+)/toggle-staff/$',
         views.user_toggle_staff, name='user_toggle_staff'),
-    url(r'^js/$', views.javascript, name='javascript'),
     url(r'^ajax-proxy/$', cache_page(180)(views.ajax_proxy), name='ajax-proxy')
 )
 urlpatterns = urlpatterns + [
-    url(r'^jsi18n/$', javascript_catalog),
+    url(r'^jsi18n/$', cache_control(max_age=31536000)(javascript_catalog),
+        name='jsi18n'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

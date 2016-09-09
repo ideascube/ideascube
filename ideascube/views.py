@@ -263,10 +263,3 @@ class AjaxProxy(View):
             return HttpResponse(content, status=status_code,
                                 content_type=mimetype)
 ajax_proxy = AjaxProxy.as_view()
-
-
-def javascript(request):
-    response = render(request, 'ideascube/includes/js.html',
-                      {'settings': settings})
-    response['Content-Type'] = 'text/javascript'
-    return response
