@@ -1,7 +1,6 @@
 batinfo==0.3
 Django==1.9.8
 django-countries==3.4.1
-django-select-multiple-field==0.4.2
 django-taggit==0.20.2
 lxml==3.6.1
 mypy-lang
@@ -26,3 +25,10 @@ Unidecode==0.4.19
 # So we forked the forked, backporting the pip-related patches to the 1.1.1
 # branch, and we use that here.
 git+https://github.com/ideascube/dbus-python.git@pipified-1.1.1#egg=dbus-python
+
+# Upstream isn't compatible with Django 1.10, and they are taking a long time
+# to merge in a fix.
+#     https://github.com/kelvinwong-ca/django-select-multiple-field/issues/12
+#
+# So we forked, and took the branch someone had submitted as a pull request.
+git+https://github.com/ideascube/django-select-multiple-field@remove-dj110-warning#egg=django-select-multiple-field

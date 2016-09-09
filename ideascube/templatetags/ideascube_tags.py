@@ -92,7 +92,7 @@ def do_getitem(obj, key):
 @register.filter()
 def field_verbose_name(model, name):
     try:
-        field, _, _, _ = model._meta.get_field_by_name(name)
+        field = model._meta.get_field(name)
     except FieldDoesNotExist:
         return ''
     else:
@@ -142,14 +142,14 @@ def paginate(request, **kwargs):
 
 @register.assignment_tag(takes_context=True)
 def is_in_qs(context, key, value):
-    req = template.resolve_variable('request', context)
+    req = template.Variable('request').resolve(context)
     params = req.GET.copy()
     return key in params and value in params.getlist(key)
 
 
 @register.simple_tag(takes_context=True)
 def add_qs(context, **kwargs):
-    req = template.resolve_variable('request', context)
+    req = template.Variable('request').resolve(context)
     params = req.GET.copy()
     for key, value in kwargs.items():
         if value not in params.getlist(key):
@@ -160,7 +160,7 @@ def add_qs(context, **kwargs):
 
 @register.simple_tag(takes_context=True)
 def replace_qs(context, **kwargs):
-    req = template.resolve_variable('request', context)
+    req = template.Variable('request').resolve(context)
     params = req.GET.copy()
     for key, value in kwargs.items():
         params[key] = value
@@ -170,7 +170,7 @@ def replace_qs(context, **kwargs):
 
 @register.simple_tag(takes_context=True)
 def remove_qs(context, **kwargs):
-    req = template.resolve_variable('request', context)
+    req = template.Variable('request').resolve(context)
     existing = dict(req.GET.copy())
     for key, value in kwargs.items():
         try:
