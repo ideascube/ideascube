@@ -92,7 +92,7 @@ def do_getitem(obj, key):
 @register.filter()
 def field_verbose_name(model, name):
     try:
-        field, _, _, _ = model._meta.get_field_by_name(name)
+        field = model._meta.get_field(name)
     except FieldDoesNotExist:
         return ''
     else:

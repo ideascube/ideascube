@@ -135,7 +135,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     def get_data_fields(cls):
         names = ['created_at']
         names.extend(settings.USER_DATA_FIELDS)
-        fields = [cls._meta.get_field_by_name(name)[0] for name in names]
+        fields = [cls._meta.get_field(name) for name in names]
         return fields
 
     @property
