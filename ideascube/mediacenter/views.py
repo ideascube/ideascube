@@ -104,12 +104,10 @@ class OEmbed(DetailView):
         return queryset.get(pk=match.kwargs['pk'])
 
     def render_to_response(self, context, **response_kwargs):
-        response_kwargs.setdefault('content_type', self.content_type)
-        html = render_to_string(self.get_template_names(), response_kwargs,
-                                RequestContext(self.request, context))
+        html = render_to_string(self.get_template_names(), context=context)
         return HttpResponse(json.dumps({
             "html": html,
             "type": "rich"
-        }))
+        }), content_type=self.content_type)
 
 oembed = OEmbed.as_view()
