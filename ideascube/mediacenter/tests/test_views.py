@@ -454,6 +454,7 @@ def test_oembed_should_return_video_oembed_extract(app, video):
         media=reverse('mediacenter:document_detail', kwargs={'pk': video.pk})
         )
     resp = app.get(url, extra_environ={'SERVER_NAME': 'testserver'})
+    assert resp.content_type == 'application/json'
     assert 'video' in resp.content.decode()
     assert 'source' in resp.content.decode()
     assert video.original.url in resp.content.decode()
