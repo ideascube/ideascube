@@ -6,6 +6,7 @@ from .models import Content
 
 
 class ContentForm(forms.ModelForm):
+    use_required_attribute = False
 
     class Meta:
         model = Content
