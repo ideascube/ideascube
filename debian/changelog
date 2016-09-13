@@ -1,3 +1,23 @@
+ideascube (0.12.0) unstable; urgency=low
+
+  * Upgade to Django 1.10
+  * Removed language_skills from default user form
+  * Refactored in database settings
+  * Rebooted Azraq configuration
+  * Fixed broken wifi modal
+  * Added favicons
+  * Refactored CSS responsiveness
+  * Display PDF/Audio preview in the media page if any
+  * Use ManifestStaticFileStorage and add static files cache-control
+  * Embed /js/ to remove one useless query per loaded page
+  * Agressivelly cache /jsi18n/ client side
+  * Fix home page cards padding
+  * Renamed IDEASCUBE_BODY_ID to IDEASCUBE_BOX_TYPE
+  * Catalog: do not fail if one remote is unavailable
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 13 Sep 2016 06:24:00 +0200
+
+
 ideascube (0.11.5) unstable; urgency=low
 
   * Added cards for Bouquineux, E-Penser, Biologie tout compris, Deux Ex-Silicium
