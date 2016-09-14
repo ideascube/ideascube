@@ -24,7 +24,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'wikimooc',
-        'languages': ['fr']
     },
     {
         'id': 'vikidia',
