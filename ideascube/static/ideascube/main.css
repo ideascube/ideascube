@@ -583,6 +583,9 @@ html[dir='rtl'] .home .card {
 .card.e-penser {
     background-image: url('./img/cards/e-penser.jpg');
 }
+.card.wikimooc {
+    background-image: url('./img/cards/wikimooc.png');
+}
 .card.bouquineux {
     background-image: url('./img/cards/bouquineux.png');
 }
