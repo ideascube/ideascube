@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Configuration for a demo server hosted here, at BSF Headquarters"""
 from .idb import *  # noqa
 
