@@ -4,7 +4,7 @@
     <div class="row mwide twide">
         <div class="col third">
             <h5><a href="{% url 'library:index' %}">&lt; {% trans 'View all books' %}</a></h5>
-            {% if book.cover %}<img src="{{ book.cover.url }}" class="cover" />{% endif %}
+            {% if book.cover %}<img src="{% media book 'cover' %}" class="cover" />{% endif %}
         </div>
         <div class="col two-third book-detail">
             <h4 class="flow"><span class="theme read">{% trans "read" %}</span></h4>

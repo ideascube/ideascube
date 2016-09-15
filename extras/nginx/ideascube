@@ -20,7 +20,7 @@ server {
     # Django media
     location /media/  {
         alias /var/ideascube/main/media/;
-        expires 30d;
+        expires 1y;
     }
 
     location /static/ {

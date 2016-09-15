@@ -4,9 +4,9 @@
     <a href="{{ document.get_absolute_url }}">
         <h3><span class="theme discover">{{ document.slug }}</span> {{ document }}</h3>
         {% if document.preview %}
-            <img src="{{ document.preview.url }}" title="{{ document.title }}" />
+            <img src="{% media document 'preview' %}" title="{{ document.title }}" />
         {% elif document.kind == document.IMAGE %}
-            <img src="{{ document.original.url %}" title="{{ document.title }}" />
+            <img src="{% media document 'original' %}" title="{{ document.title }}" />
         {% else %}
             <img src="{% static document|default_preview_url %}" title="{{ document.title }}" />
         {% endif %}
