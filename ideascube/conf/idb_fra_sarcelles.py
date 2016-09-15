@@ -29,36 +29,5 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'khanacademy',
-    },
-    {
-        'id': 'wikipedia',
-        'languages': ['fr']
-    },
-    {
-        'id': 'gutenberg',
-        'lang': 'fr'
-    },
-    {
-        'id': 'dirtybiology',
-        'languages': ['fr']
-    },
-    {
-        'id': 'cest-pas-sorcier',
-    },
-    {
-        'id': 'wiktionary',
-        'languages': ['fr']
-    },
-    {
-        'id': 'wikiversity',
-        'languages': ['fr']
-    },
-    {
-        'id': 'universcience',
-        'languages': ['fr']
-    },
-    {
-        'id': 'les-fondamentaux',
-        'languages': ['fr']
-    },
+    }
 ]

@@ -20,41 +20,9 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'bsfcampus',
     },
     {
-        'id': 'wikipedia',
-        'languages': ['en', 'wo', 'fr']
-    },
-    {
         'id': 'khanacademy',
     },
     {
-        'id': 'wikisource',
-        'languages': ['fr', 'en']
-    },
-    {
-        'id': 'vikidia',
-        'languages': ['fr']
-    },
-    {
-        'id': 'gutenberg',
-        'lang': 'fr',
-    },
-    {
-        'id': 'cest-pas-sorcier',
-    },
-    {
-        'id': 'ted',
-        'sessions': [
-            ('tedxgeneva2014.fr', 'Geneva 2014'),
-            ('tedxlausanne2012.fr', 'Lausanne 2012'),
-            ('tedxlausanne2013.fr', 'Lausanne 2013'),
-            ('tedxlausanne2014.fr', 'Lausanne 2014'),
-        ]
-    },
-    {
         'id': 'software',
-    },
-    {
-        'id': 'ubuntudoc',
-        'languages': ['fr']
-    },
+    }
 ]

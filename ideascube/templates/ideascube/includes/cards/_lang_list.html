@@ -1,6 +1,0 @@
-{% load i18n ideascube_tags %}
-{% if languages|length > 1 %}
-    <p>{% for lang in languages %}<a class="subnav" href="http://kiwix.{{ domain }}/{{ card.id }}.{{ lang }}/">{{ LANG_INFO|getitem:lang|getitem:'name_local' }}</a> {% endfor %}</p>
-{% else %}
-    <p><a class="subnav" href="http://kiwix.{{ domain }}/{{ card.id }}.{{ languages.0 }}/">{% blocktrans with name=name %}Go to {{ name }}{% endblocktrans %}</a></p>
-{% endif %}

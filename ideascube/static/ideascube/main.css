@@ -556,7 +556,7 @@ html[dir='rtl'] .home .card {
 .card.koombookedu {
     background-image: url('./img/cards/koombookedu.png');
 }
-.card.cpassorcier {
+.card.cest-pas-sorcier {
     background-image: url('./img/cards/cpassorcier.png');
     background-position: top 10px right 5px;
 }
@@ -569,10 +569,10 @@ html[dir='rtl'] .home .card {
 .card.icd10 {
     background-image: url('./img/cards/icd10.png');
 }
-.card.lesfondamentaux {
+.card.les-fondamentaux {
     background-image: url('./img/cards/lesfondamentaux.png');
 }
-.card.bilconference {
+.card.bil-tunisia {
     background-image: url('./img/cards/bilconference.png');
 }
 .card.biologie-tout-compris {
@@ -590,7 +590,7 @@ html[dir='rtl'] .home .card {
 .card.bouquineux {
     background-image: url('./img/cards/bouquineux.png');
 }
-.card.mullahpiaz {
+.card.mullah-piaz-digest {
     background-image: url('./img/cards/mullahpiaz.jpg');
 }
 .card.ted {

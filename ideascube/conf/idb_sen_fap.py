@@ -29,52 +29,5 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'khanacademy',
-    },
-    {
-        'id': 'wikipedia',
-        'languages': ['fr', 'wo']
-    },
-    {
-        'id': 'gutenberg',
-        'lang': 'fr',
-    },
-    {
-        'id': 'cest-pas-sorcier',
-    },
-    {
-        'id': 'wikisource',
-        'languages': ['fr']
-    },
-    {
-        'id': 'wiktionary',
-        'languages': ['fr']
-    },
-    {
-        'id': 'ted',
-        'sessions': [
-            ('tedxgeneva2014.fr', 'Geneva 2014'),
-            ('tedxlausanne2012.fr', 'Lausanne 2012'),
-            ('tedxlausanne2013.fr', 'Lausanne 2013'),
-            ('tedxlausanne2014.fr', 'Lausanne 2014'),
-        ]
-    },
-    {
-        'id' : 'dirtybiology',
-        'languages': ['fr']
-    },
-    {
-        'id': 'ubuntudoc',
-        'languages': ['fr']
-    },
-    {
-        'id': 'wikistage',
-        'languages': ['fr']
-    },
-    {
-        'id': 'maps',
-        'maps': [
-            (_('World'), 'world.map'),
-            ('Sénégal', 'senegal.map'),
-        ]
-    },
+    }
 ]

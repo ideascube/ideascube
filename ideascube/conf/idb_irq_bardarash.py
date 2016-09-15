@@ -27,36 +27,5 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'khanacademy',
-    },
-    {
-        'id': 'wikipedia',
-        'languages': ['en', 'ar']
-    },
-    {
-        'id': 'wiktionary',
-        'languages': ['en', 'ar']
-    },
-    {
-        'id': 'wikiversity',
-        'languages': ['ar']
-    },
-    {
-        'id': 'ted',
-        'sessions': [
-            ('tedbusiness.en', 'Business'),
-            ('teddesign.en', 'Design'),
-            ('tedentertainment.en', 'Entertainment'),
-            ('tedglobalissues.en', 'Global Issues'),
-            ('tedscience.en', 'Science'),
-            ('tedtechnology.en', 'Technology'),
-        ]
-    },
-    {
-        'id': 'gutenberg',
-        'lang': 'en',
-    },
-    {
-        'id': 'bil-tunisia',
-        'languages': ['ar']
-    },
+    }
 ]

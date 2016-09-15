@@ -29,54 +29,5 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'khanacademy',
-    },
-    {
-        'id': 'wikipedia',
-        'languages': ['ku', 'ar', 'fa', 'fr']
-    },
-    {
-        'id': 'dirtybiology',
-        'languages': ['fr']
-    },
-    {
-        'id': 'cest-pas-sorcier',
-    },
-    {
-        'id': 'ted',
-        'sessions': [
-            ('tedbusiness.en', 'Business'),
-            ('teddesign.en', 'Design'),
-            ('tedentertainment.en', 'Entertainment'),
-            ('tedglobalissues.en', 'Global Issues'),
-            ('tedscience.en', 'Science'),
-            ('tedtechnology.en', 'Technology'),
-        ]
-    },
-    {
-        'id': 'wiktionary',
-        'languages': ['fr', 'fa', 'ar', 'ku']
-    },
-    {
-        'id': 'wikiversity',
-        'languages': ['fr', 'ar']
-    },
-    {
-        'id': 'universcience',
-        'languages': ['fr']
-    },
-    {
-        'id': 'les-fondamentaux',
-        'languages': ['fr']
-    },
-    {
-        'id': 'bil-tunisia',
-        'languages': ['ar']
-    },
-    {
-        'id': 'mullah-piaz-digest',
-        'languages': ['fa']
-    },
-    {
-        'id': 'w2eu',
     }
 ]
