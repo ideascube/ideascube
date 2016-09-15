@@ -47,6 +47,10 @@ def test_home_page_should_redirect_to_welcome_staff_if_no_staff(app, user):
     assert response.forms['model_form']
 
 
+def test_home_page_should_not_redirect_if_staff_exists(app, staffuser):
+    app.get(reverse('index'), status=200)
+
+
 def test_home_page_should_redirect_to_welcome_staff_if_staff_exists(staffapp):
     response = staffapp.get(reverse('welcome_staff'))
     assert response.status_code == 302
