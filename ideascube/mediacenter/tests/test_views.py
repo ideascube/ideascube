@@ -436,18 +436,6 @@ def test_content_type_should_have_priority_over_extension(staffapp):
     assert Document.objects.first().kind == Document.IMAGE
 
 
-def test_uploading_without_content_type_should_be_ok(staffapp):
-    assert not Document.objects.count()
-    url = reverse('mediacenter:document_create')
-    form = staffapp.get(url).forms['model_form']
-    form['title'] = 'my document title'
-    form['summary'] = 'my document summary'
-    form['credits'] = 'my document credits'
-    form['original'] = Upload('audio.mp3', b'xxxxxx')
-    form.submit().follow()
-    assert Document.objects.count() == 1
-
-
 def test_oembed_should_return_video_oembed_extract(app, video):
     url = '{base}?url=http://testserver{media}'.format(
         base=reverse('mediacenter:oembed'),
