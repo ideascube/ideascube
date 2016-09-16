@@ -4,7 +4,7 @@ from django.db.models.signals import post_migrate
 from .utils import reindex_content
 
 
-def create_index(sender, **kwargs):
+def reindex(sender, **kwargs):
     if isinstance(sender, SearchConfig):
         reindex_content(force=False)
 
@@ -14,4 +14,4 @@ class SearchConfig(AppConfig):
     verbose_name = 'Search'
 
     def ready(self):
-        post_migrate.connect(create_index, sender=self)
+        post_migrate.connect(reindex, sender=self)
