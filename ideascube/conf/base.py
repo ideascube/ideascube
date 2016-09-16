@@ -132,11 +132,17 @@ EXTRA_LANG_INFO = {
         'code': 'bm',
         'name_local': 'Bambara'
     },
-    'ti': {
+    'ku': {
         'bidi': False,
-        'name': 'Tigrinya',
-        'code': 'bm',
-        'name_local': 'ትግርኛ'
+        'name': 'Kurdish',
+        'code': 'ku',
+        'name_local': 'Kurdî'
+    },
+    'ln': {
+        'bidi': False,
+        'name': 'Lingala',
+        'code': 'ln',
+        'name_local': 'Lingála'
     },
     'ps': {
         'bidi': True,
@@ -156,23 +162,17 @@ EXTRA_LANG_INFO = {
         'code': 'so',
         'name_local': u'Af-Soomaali'
     },
+    'ti': {
+        'bidi': False,
+        'name': 'Tigrinya',
+        'code': 'bm',
+        'name_local': 'ትግርኛ'
+    },
     'wo': {
         'bidi': False,
         'name': 'Wolof',
         'code': 'wo',
         'name_local': 'wolof'
-    },
-    'ln': {
-        'bidi': False,
-        'name': 'Lingala',
-        'code': 'ln',
-        'name_local': 'Lingála'
-    },
-    'ku': {
-        'bidi': False,
-        'name': 'Kurdish',
-        'code': 'ku',
-        'name_local': 'Kurdî'
     },
 }
 
