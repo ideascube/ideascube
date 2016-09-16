@@ -122,6 +122,12 @@ LANG_INFO.update({
         'code': 'bm',
         'name_local': 'Bambara'
     },
+    'ckb': {
+        'bidi': True,
+        'name': 'Soranî',
+        'code': 'ckb',
+        'name_local': 'سۆرانی',
+    },
     'ku': {
         'bidi': False,
         'name': 'Kurdish',
