@@ -71,3 +71,11 @@ def test_delete_should_delete_tag():
 def test_delete_should_exit_on_non_existing_tag():
     with pytest.raises(SystemExit):
         call_command('tags', 'delete', 'tag1')
+
+
+def test_list_should_list_tags_and_slugs(capsys):
+    tag = Tag.objects.create(name='Some Tag')
+    call_command('tags', 'list',)
+    out, err = capsys.readouterr()
+    assert tag.name in out
+    assert tag.slug in out
