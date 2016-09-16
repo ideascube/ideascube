@@ -83,7 +83,7 @@ def loggedapp(app, user):
     form = app.get(reverse('login')).forms['login']
     form['username'] = user.serial
     form['password'] = 'password'
-    form.submit().follow()
+    form.submit()
     setattr(app, 'user', user)  # for later use, if needed
     return app
 
@@ -94,7 +94,7 @@ def staffapp(app, staffuser):
     form = app.get(reverse('login')).forms['login']
     form['username'] = staffuser.serial
     form['password'] = 'password'
-    form.submit().follow()
+    form.submit()
     setattr(app, 'user', staffuser)  # for later use, if needed
     return app
 
