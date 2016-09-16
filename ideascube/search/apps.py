@@ -6,7 +6,7 @@ from .utils import reindex_content
 
 def create_index(sender, **kwargs):
     if isinstance(sender, SearchConfig):
-        reindex_content(force=False)
+        reindex_content(force=True)
 
 
 class SearchConfig(AppConfig):
