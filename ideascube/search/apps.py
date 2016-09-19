@@ -1,10 +1,15 @@
 from django.apps import AppConfig
-from django.db.models.signals import post_migrate
+from django.db.models.signals import pre_migrate, post_migrate
 
-from .utils import reindex_content
+from .utils import create_index_table, reindex_content
 
 
 def create_index(sender, **kwargs):
+    if isinstance(sender, SearchConfig):
+        create_index_table(force=True)
+
+
+def reindex(sender, **kwargs):
     if isinstance(sender, SearchConfig):
         reindex_content(force=False)
 
@@ -14,4 +19,5 @@ class SearchConfig(AppConfig):
     verbose_name = 'Search'
 
     def ready(self):
-        post_migrate.connect(create_index, sender=self)
+        pre_migrate.connect(create_index, sender=self)
+        post_migrate.connect(reindex, sender=self)
