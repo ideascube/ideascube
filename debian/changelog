@@ -1,3 +1,14 @@
+ideascube (0.12.1) unstable; urgency=low
+
+  - Always reindex after running migrate (and thus at debian package install)
+  - Agressively cache medias
+  - Added "list" argument to "tags" command
+  - Added wikimoook card template
+  - Added conf for BabyLab koombook
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 19 Sep 2016 02:39:00 +0200
+
+
 ideascube (0.12.0) unstable; urgency=low
 
   * Upgade to Django 1.10
