@@ -4,7 +4,7 @@ from django.conf import settings
 from ideascube.widgets import LangSelect
 
 from .models import Document
-from .utils import guess_kind_from_content_type
+from .utils import guess_kind_from_content_type, guess_kind_from_filename
 
 import os
 
@@ -19,21 +19,29 @@ class DocumentForm(forms.ModelForm):
         }
         exclude = ['package_id']
 
-    def save(self, commit=True):
-        document = super().save(commit=False)
+    def clean_kind(self):
+        kind = self.cleaned_data['kind']
         original = self.cleaned_data['original']
-        # When editing a form, original is a FileField, not an UploadedFile,
-        # so we don't have content_type.
-        content_type = getattr(original, 'content_type', None)
-        kind = guess_kind_from_content_type(content_type)
-        if kind:
-            document.kind = kind
+
+        if kind != Document.OTHER:
+            return kind
+
+        try:
+            new_kind = guess_kind_from_content_type(original.content_type)
+
+        except AttributeError:
+            # The document was edited without changing its 'original'
+            new_kind = guess_kind_from_filename(original.name)
+
+        return new_kind or kind
+
+    def save(self, commit=True):
+        document = super().save(commit=commit)
+
         if commit:
-            if not document.id:
-                # m2m need the document to have an id.
-                document.save()
-            self.save_m2m()
-            document.save()  # Search index needs m2m to be saved.
+            # Need to save a second time to index the m2m
+            document.save()
+
         return document
 
 

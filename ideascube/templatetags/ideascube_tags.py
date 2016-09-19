@@ -184,3 +184,11 @@ def remove_qs(context, **kwargs):
     params.update(MultiValueDict(existing))
     params.pop('page', None)  # Changing search context, reset page.
     return '?%s' % params.urlencode()
+
+
+@register.simple_tag
+def media(instance, attribute):
+    url = getattr(instance, attribute).url
+    qs = 'mtime={0.modified_at:%Y-%m-%dT%H:%M:%S%Z}'.format(instance)
+
+    return '%s?%s' % (url, qs)

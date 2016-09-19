@@ -1,13 +1,18 @@
-{% load i18n mediacenter_tags %}
+{% load i18n ideascube_tags mediacenter_tags static %}
 {% if document.kind == document.IMAGE %}
-    <img src="{{ document.original.url }}" />
+    <img src="{% media document 'original' %}" />
     <p>{{ document.summary }} - {{ document.credits }}</p>
 {% elif document.kind == document.VIDEO %}
     <video controls width="100%">
-        <source src="{{ document.original.url }}">
+        <source src="{% media document 'original' %}">
     </video>
 {% else %}
-    <a href="{{ document.original.url }}">
-        <img src="{{ document|preview_url }}" /><br />{% trans 'Download document' %}
+    <a href="{% media document 'original' %}">
+        {% if document.preview %}
+            <img src="{% media document 'preview' %}" title="{{ document.title }}" />
+        {% else %}
+            <img src="{% static document|default_preview_url %}" title="{{ document.title }}" />
+        {% endif %}
+        <br />{% trans 'Download document' %}
     </a>
 {% endif %}

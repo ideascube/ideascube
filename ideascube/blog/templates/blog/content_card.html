@@ -1,3 +1,5 @@
+{% load ideascube_tags %}
+
 <div class="card blog">
     <a href="{% url 'blog:content_detail' pk=content.pk %}">
         <h3>{{ content }}</h3>
@@ -5,7 +7,7 @@
     <h5>{{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.get_author_display }}</h5>
     <p>{% if content.image %}
          <a href="{% url 'blog:content_detail' pk=content.pk %}">
-            <img src="{{ content.image.url }}">
+            <img src="{% media content 'image' %}">
         </a>
     {% endif %}
         {{ content.summary }}

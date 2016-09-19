@@ -436,16 +436,28 @@ def test_content_type_should_have_priority_over_extension(staffapp):
     assert Document.objects.first().kind == Document.IMAGE
 
 
-def test_uploading_without_content_type_should_be_ok(staffapp):
+def test_guess_kind_when_editing_without_changing_original(staffapp):
     assert not Document.objects.count()
     url = reverse('mediacenter:document_create')
     form = staffapp.get(url).forms['model_form']
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
-    form['original'] = Upload('audio.mp3', b'xxxxxx')
+    form['original'] = Upload('audio.mp3', b'xxxxxx', 'audio/mpeg')
+    form['kind'] = Document.OTHER
+    form.submit().follow()
+
+    assert Document.objects.count() == 1
+    document = Document.objects.first()
+    assert document.kind == Document.AUDIO
+
+    # Now edit again, only resetting the `kind` to 'other'
+    url = reverse('mediacenter:document_update', kwargs={'pk': document.pk})
+    form = staffapp.get(url).forms['model_form']
+    form['kind'] = Document.OTHER
     form.submit().follow()
     assert Document.objects.count() == 1
+    assert Document.objects.first().kind == Document.AUDIO
 
 
 def test_oembed_should_return_video_oembed_extract(app, video):

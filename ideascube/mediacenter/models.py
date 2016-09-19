@@ -7,7 +7,6 @@ from taggit.managers import TaggableManager
 
 from ideascube.models import SortedTaggableManager, TimeStampedModel
 from ideascube.search.models import SearchableQuerySet, SearchMixin
-from .utils import guess_kind_from_filename
 
 
 class DocumentQuerySet(SearchableQuerySet, models.QuerySet):
@@ -84,18 +83,6 @@ class Document(SearchMixin, TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('mediacenter:document_detail', kwargs={'pk': self.pk})
-
-    def save(self, *args, **kwargs):
-        self.set_kind()
-        super(Document, self).save(*args, **kwargs)
-
-    def set_kind(self):
-        """Set Document kind guessing from the file name. If kind is already
-        set, does nothing."""
-        if self.original and (not self.kind or self.kind == self.OTHER):
-            kind = guess_kind_from_filename(self.original.name)
-            if kind:
-                self.kind = kind
 
     @property
     def index_strings(self):
