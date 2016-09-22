@@ -1,6 +1,6 @@
 from .base import *  # noqa
 
-ALLOWED_HOSTS = ['.koombook.lan.', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.koombook.lan', 'localhost', '127.0.0.1']
 TIME_ZONE = None
 DOMAIN = 'koombook.lan'
 BACKUP_FORMAT = 'gztar'
