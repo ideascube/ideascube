@@ -20,17 +20,17 @@ def cleansearch():
 
 
 @pytest.fixture()
-def user():
+def user(db):
     return UserFactory(short_name="Hello", password='password')
 
 
 @pytest.fixture()
-def staffuser():
+def staffuser(db):
     return UserFactory(short_name="Hello", password='password', is_staff=True)
 
 
 @pytest.fixture()
-def systemuser():
+def systemuser(db):
     # Create it the same way the migration does it
     return UserFactory(serial='__system__', full_name='System', password='!!')
 
@@ -83,7 +83,7 @@ def loggedapp(app, user):
     form = app.get(reverse('login')).forms['login']
     form['username'] = user.serial
     form['password'] = 'password'
-    form.submit().follow()
+    form.submit()
     setattr(app, 'user', user)  # for later use, if needed
     return app
 
@@ -94,7 +94,7 @@ def staffapp(app, staffuser):
     form = app.get(reverse('login')).forms['login']
     form['username'] = staffuser.serial
     form['password'] = 'password'
-    form.submit().follow()
+    form.submit()
     setattr(app, 'user', staffuser)  # for later use, if needed
     return app
 
