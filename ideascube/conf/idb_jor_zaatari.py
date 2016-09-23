@@ -61,7 +61,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
             ('tedglobalissues.en', 'Global Issues'),
             ('tedscience.en', 'Science'),
             ('tedtechnology.en', 'Technology'),
-            ('ted-ed', 'Education'),
+            ('ted-ed.en', 'Education'),
             ('tedmed.en', 'Medical'),
         ]
     },
