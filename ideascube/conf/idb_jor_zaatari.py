@@ -67,7 +67,7 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     },
     {
         'id': 'gutenberg',
-        'languages': ['en', 'fr']
+        'lang': ['en', 'fr']
     },
     {
         'id': 'crashcourse',
