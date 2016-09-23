@@ -19,12 +19,18 @@ class DocumentForm(forms.ModelForm):
         }
         exclude = ['package_id']
 
-    def clean_kind(self):
-        kind = self.cleaned_data['kind']
-        original = self.cleaned_data['original']
+    def clean(self):
+        cleaned_data = super().clean()
+
+        kind = cleaned_data['kind']
+        original = cleaned_data.get('original')
+
+        if original is None:
+            # The 'original' field validator already found this was wrong
+            return cleaned_data
 
         if kind != Document.OTHER:
-            return kind
+            return cleaned_data
 
         try:
             new_kind = guess_kind_from_content_type(original.content_type)
@@ -33,7 +39,9 @@ class DocumentForm(forms.ModelForm):
             # The document was edited without changing its 'original'
             new_kind = guess_kind_from_filename(original.name)
 
-        return new_kind or kind
+        cleaned_data['kind'] = new_kind or kind
+
+        return cleaned_data
 
     def save(self, commit=True):
         document = super().save(commit=commit)
