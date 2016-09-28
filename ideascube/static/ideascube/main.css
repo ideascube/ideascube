@@ -844,6 +844,10 @@ img.cover {
     max-height: 300px;
     max-width: 200px;
 }
+.default img.cover {
+    box-shadow: none;
+}
+
 .book-list .card {
     border: 1px solid #efefef;
     padding: 5px;
@@ -859,6 +863,12 @@ img.cover {
     max-height: 200px;
     float: none;
 }
+/* default image for books does not have large blank borders */
+.book-list .card.default a:not(:first-of-type) {
+    display: block;
+    margin-top: 50px;
+}
+
 .book-detail h2, h3, h4, h5 {
     margin-bottom: 10px;
 }

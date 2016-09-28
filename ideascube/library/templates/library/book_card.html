@@ -1,5 +1,5 @@
 {% load ideascube_tags static %}
-<div class="card">
+<div class="card {% if not book.cover %}default{% endif %}">
     <a href="{% url 'library:book_detail' pk=book.pk %}">
         <h3>{{ book }}</h3>
     </a>
