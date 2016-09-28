@@ -630,10 +630,9 @@ html[dir='rtl'] .home .card {
     background-image: url('./img/cards/maps.png');
 }
 .card img {
-    max-width: 150px;
     float: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    display: block;
+    margin: 0 auto;
 }
 .card i.fa {
     position: absolute;
@@ -665,6 +664,7 @@ html[dir='rtl'] .card img {
 html[dir='rtl'] .tinted {
     background-position: center left 5px;
 }
+
 .grid {
     display: flex;
     display: -webkit-flex;
@@ -673,25 +673,24 @@ html[dir='rtl'] .tinted {
 }
 .grid .card {
     clear: none;
-    margin-right: 10px;
     margin-top: 0;
+    margin-right: 10px;
     margin-bottom: 10px;
+    max-width: 32.5%;
     flex-grow: 1;
     flex-basis: 300px;
     position: relative;
+    overflow: hidden;
 }
-.card.book img {
-    float: right;
-    max-height: 100px;
-    margin-left: 10px;
+.grid .card img {
+    display: block;
+    float: left;
 }
+
 html[dir='rtl'] .card.book img {
     float: left;
     margin-left: 0;
     margin-right: 10px;
-}
-.card.book {
-    overflow: hidden;
 }
 .card h3 em {
     font-family: 'fira_sanslight';
@@ -845,6 +844,10 @@ img.cover {
     max-height: 300px;
     max-width: 200px;
 }
+.default img.cover {
+    box-shadow: none;
+}
+
 .book-list .card {
     border: 1px solid #efefef;
     padding: 5px;
@@ -860,6 +863,12 @@ img.cover {
     max-height: 200px;
     float: none;
 }
+/* default image for books does not have large blank borders */
+.book-list .card.default a:not(:first-of-type) {
+    display: block;
+    margin-top: 50px;
+}
+
 .book-detail h2, h3, h4, h5 {
     margin-bottom: 10px;
 }
@@ -978,7 +987,7 @@ html[dir='rtl'] .search input[type='submit'] {
 /* ************************************************* */
 .document-list .card {
     border: 1px solid #efefef;
-    padding: 5px;
+    padding: 10px;
     width: 250px;
     height: 250px;
     text-align: center;
@@ -986,7 +995,9 @@ html[dir='rtl'] .search input[type='submit'] {
     max-width: 300px;
 }
 .document-list .card > a {
-    text-decoration: none;
+    display: block;
+    max-height: 100%;
+    overflow: hidden;
 }
 .document-list .card h3 {
     height: 3em;
@@ -995,18 +1006,14 @@ html[dir='rtl'] .search input[type='submit'] {
 }
 .document-list .card img {
     float: none;
-    max-height: 150px;
+    display: block;
+    margin: 0 auto;
 }
 .card.document img {
     float: right;
-    max-height: 100px;
-    margin-left: 10px;
-    margin-bottom: 10px;
 }
 html[dir='rtl'] .card.document img {
     float: left;
-    margin-left: 0;
-    margin-right: 10px;
 }
 .card.document {
     overflow: hidden;
