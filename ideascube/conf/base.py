@@ -25,7 +25,7 @@ SECRET_KEY = '16exrv_@=2(za=oj$tj+l_^v#sbt83!=t#wz$s+1udfa04#vz!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', True))
 
-ALLOWED_HOSTS = ['.ideasbox.lan', 'localhost']
+ALLOWED_HOSTS = ['.ideasbox.lan', '.koombook.lan', 'localhost']
 
 
 # Application definition
