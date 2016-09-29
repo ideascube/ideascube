@@ -25,6 +25,7 @@
 
 {% block extra_foot %}
     <script type="text/javascript">
+    ID.focusOn('[name=serial]')
         var inputs = document.querySelectorAll('#model_form input[type="text"]');
         for (var i = 0; i < inputs.length; i++) {
             if (ID.endswith(inputs[i].name, '_date')) ID.initDatepicker(inputs[i].name);

@@ -25,6 +25,7 @@
                 </div>
                 <div class="col two-third">
                     <h3>{% trans 'Content' %}</h3>
+                    <label class="strip required">Content</label>
                     <div data-editable-for="text" placeholder="{% trans 'Type your text here…' %}">{{ form.text.value|default:''|safe }}</div>
                 </div>
         </div>
@@ -32,6 +33,7 @@
 {% endblock content %}
 {% block extra_foot %}
     <script type="text/javascript">
+        ID.focusOn('[name=title]');
         ID.initEditor('text');
         ID.initDatepicker('published_at')
     </script>

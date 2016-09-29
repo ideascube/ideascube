@@ -10,3 +10,9 @@
     <input type="submit" value="{% trans 'Submit' %}" />
 </form>
 {% endblock %}
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        ID.focusOn('[name=server_name]');
+    </script>
+{% endblock extra_foot %}
