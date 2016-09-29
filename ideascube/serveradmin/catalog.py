@@ -22,6 +22,8 @@ from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.forms import PackagedDocumentForm
 from ideascube.mediacenter.utils import guess_kind_from_content_type
 from ideascube.templatetags.ideascube_tags import smart_truncate
+from ideascube.configuration import get_config, set_config
+from ideascube.models import User
 
 from .systemd import Manager as SystemManager, NoSuchUnit
 
@@ -283,6 +285,7 @@ class Package(metaclass=MetaRegistry):
 class ZippedZim(Package):
     typename = 'zipped-zim'
     handler = Kiwix
+    template_id = "kiwix"
 
     def install(self, download_path, install_dir):
         self.assert_is_zipfile(download_path)
@@ -322,6 +325,30 @@ class ZippedZim(Package):
         for path in glob(os.path.join(datadir, '*', zimname)):
             rm(path)
 
+    # [FIXME] Thoses two properties look like hacks.
+    # We may want to find a way to find those information in the package or
+    # catalog metadata.
+    # For now, use special cases.
+    @property
+    def theme(self):
+        # Strings "discover", "read" and "learn" must be marked as translatable.
+        # For this we use a dummy function who do nothing.
+        # As the function is named _, gettext will mark the strings.
+        _ = lambda t: t
+        base_name, extension = self.id.rsplit('.', 1)
+        if base_name in ("wikipedia", "wikivoyage", "vikidia"):
+            return _("discover")
+        if base_name in ("gutemberg", "icd10", "wikisource", "wikibooks"):
+            return _("read")
+        return _("learn")
+
+    @property
+    def css_class(self):
+        base_name, _ = self.id.rsplit('.', 1)
+        if base_name.startswith('ted'):
+            return 'ted'
+        return base_name
+
 
 class SimpleZipPackage(Package):
     def get_root_dir(self, install_dir):
@@ -344,10 +371,23 @@ class StaticSite(SimpleZipPackage):
     typename = 'static-site'
     handler = Nginx
 
+    # [FIXME] This propertie looks like hacks.
+    # We should rewrite few templates to have just one able to handle all
+    # static sites.
+    @property
+    def template_id(self):
+         if self.id == 'w2eu':
+             return self.id
+         if '.map' in self.id:
+             return 'maps'
+         base_name, _ = self.id.rsplit('.', 1)
+         return base_name
+
 
 class ZippedMedias(SimpleZipPackage):
     typename = 'zipped-medias'
     handler = MediaCenter
+    template_id = "media-package"
 
     def remove(self, install_dir):
         # Easy part here. Just delete documents from the package.
@@ -604,9 +644,20 @@ class Catalog:
 
         return sorted(pkgs, key=attrgetter('id'))
 
+    @staticmethod
+    def _update_displayed_packages_on_home(*, to_remove_ids=None, to_add_ids=None):
+        displayed_packages = get_config('home-page', 'displayed-package-ids')
+        if to_remove_ids:
+            displayed_packages = [id for id in displayed_packages if id not in to_remove_ids]
+        if to_add_ids:
+            displayed_packages.extend(id for id in to_add_ids if id not in displayed_packages)
+        set_config('home-page', 'displayed-package-ids',
+                   displayed_packages, User.objects.get_system_user())
+
     def install_packages(self, ids):
         used_handlers = {}
         downloaded = []
+        installed_ids = []
 
         for pkg in self._get_packages(ids, self._available):
             if pkg.id in self._installed:
@@ -631,9 +682,11 @@ class Catalog:
                 printerr(e)
                 continue
             used_handlers[handler.__class__.__name__] = handler
-            self._installed[pkg.id] = (
-                self._available[pkg.id])
+            self._installed[pkg.id] = self._available[pkg.id]
+            installed_ids.append(pkg.id)
             self._persist_catalog()
+
+        self._update_displayed_packages_on_home(to_add_ids=installed_ids)
 
         for handler in used_handlers.values():
             handler.commit()
@@ -653,6 +706,8 @@ class Catalog:
             used_handlers[handler.__class__.__name__] = handler
             del(self._installed[pkg.id])
             self._persist_catalog()
+
+        self._update_displayed_packages_on_home(to_remove_ids=ids)
 
         if not commit:
             return
@@ -704,8 +759,7 @@ class Catalog:
                 continue
             used_handlers[uhandler.__class__.__name__] = uhandler
 
-            self._installed[ipkg.id] = (
-                self._available[upkg.id])
+            self._installed[ipkg.id] = self._available[upkg.id]
             self._persist_catalog()
 
         for handler in used_handlers.values():

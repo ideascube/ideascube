@@ -1,6 +1,0 @@
-{% load i18n %}
-<div class="card tinted ted">
-    <h4 class="flow"><span class="theme learn">learn</span> <span>{% trans "Ted Talks" %}</span></h4>
-    <p>{% trans "Set of videos conference on innovation." %}</p>
-    <p>{% for id, name in card.sessions %}<a href="http://kiwix.{{ domain }}/{{ id }}/" class="subnav">{{ name }}</a> {% endfor %}</p>
-</div>

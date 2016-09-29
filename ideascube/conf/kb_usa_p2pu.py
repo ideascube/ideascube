@@ -12,29 +12,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'mediacenter',
     },
     {
-        'id': 'gutenberg',
-        'lang': 'en',
-    },
-    {
-        'id': 'wikipedia',
-        'languages': ['en']
-    },
-    {
-        'id': 'wiktionary',
-        'languages': ['en']
-    },
-    {
-        'id': 'ted',
-        'sessions': [
-            ('tedbusiness.en', 'Business'),
-            ('teddesign.en', 'Design'),
-            ('tedentertainment.en', 'Entertainment'),
-            ('tedglobalissues.en', 'Global Issues'),
-            ('tedscience.en', 'Science'),
-            ('tedtechnology.en', 'Technology'),
-        ]
-    },
-    {
         'id': 'khanacademy',
     },
 ]

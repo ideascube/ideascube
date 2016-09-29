@@ -642,3 +642,51 @@ def test_staff_forgets_non_existing_connection(mocker, staffapp):
     assert u'No known Wi-Fi networks' not in res.unicode_body
     assert u'my home network' in res.unicode_body
     assert u'random open network' in res.unicode_body
+
+
+def test_staff_should_see_packages_with_cards(staffapp, systemuser, catalog):
+    from ideascube.configuration import set_config
+    from ideascube.serveradmin.catalog import Package
+    set_config('home-page', 'displayed-package-ids', ['test.package1'], systemuser)
+
+    catalog.add_mocked_package(Package('test.package1', {
+        'name':'Test package1',
+        'description':'Test package1 description',
+        'language':'fr',
+        'staff_only':False}))
+    catalog.add_mocked_package(Package('test.package2', {
+        'name':'Test package2',
+        'description':'Test package2 description',
+        'language':'fr',
+        'staff_only':False}))
+    catalog.add_mocked_package(Package('test.package3', {
+        'name':'Test package3 no template',
+        'description':'Test package3.\n'
+                      'A package without template'}))
+
+    res = staffapp.get(reverse("server:home_page"), status=200)
+    form = res.forms['cards']
+    inputs = form.fields['displayed']
+
+    # We use the private attribute _value here cause the
+    # value attribute is set to 'on' if the input is checked.
+    # As we want to test the value set *in the html* we need to
+    # use the real value, ie the _value attribute.
+    # See https://github.com/Pylons/webtest/issues/165
+    assert len(inputs) == 3
+    assert inputs[0]._value == 'test.package1'
+    assert inputs[0].checked
+    assert inputs[1]._value == 'test.package2'
+    assert not inputs[1].checked
+    assert inputs[2]._value == 'test.package3'
+    assert not inputs[2].checked
+
+    # inverse the checked
+    for input_ in form.fields['displayed']:
+        input_.checked = not input_.checked
+
+    res = form.submit()
+    inputs = res.forms['cards'].fields['displayed']
+    assert not inputs[0].checked
+    assert inputs[1].checked
+    assert inputs[2].checked

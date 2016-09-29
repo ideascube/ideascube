@@ -50,6 +50,8 @@ class FilterableViewMixin:
             search['kind'] = context['kind']
         if context.get('lang') and attr != 'lang':
             search['lang'] = context['lang']
+        if context.get('source') and attr != 'source':
+            search['source'] = context['source']
         if context.get('tags'):
             search['tags__match'] = context['tags']
         return Search.objects.filter(**search).values_list(attr, flat=True).distinct()
@@ -72,10 +74,10 @@ class FilterableViewMixin:
 
     def get_context_data(self, **kwargs):
         context = super(FilterableViewMixin, self).get_context_data(**kwargs)
-        for key in ('q', 'kind', 'lang'):
+        for key in ('q', 'kind', 'lang', 'source'):
             context[key] = self.request.GET.get(key)
         context['tags'] = self.request.GET.getlist('tags')
-        current_filters = [(k, context[k]) for k in ('kind', 'lang')
+        current_filters = [(k, context[k]) for k in ('kind', 'lang', 'source')
                            if context[k]]
         for tag in context['tags']:
             current_filters.append(('tags', tag))
@@ -89,8 +91,9 @@ class FilterableViewMixin:
         kind = self.request.GET.get('kind')
         lang = self.request.GET.get('lang')
         tags = self.request.GET.getlist('tags')
-        if any((query, kind, lang, tags)):
-            qs = qs.search(query=query, lang=lang, kind=kind, tags=tags)
+        source = self.request.GET.get('source')
+        if any((query, kind, lang, tags, source)):
+            qs = qs.search(query=query, lang=lang, kind=kind, tags=tags, source=source)
         return qs
 
 

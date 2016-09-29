@@ -61,6 +61,7 @@ class Search(models.Model):
     lang = models.Field()
     kind = models.Field()
     tags = SearchTagField()
+    source = models.Field()
 
     objects = SearchQuerySet.as_manager()
 
@@ -106,6 +107,10 @@ class SearchMixin(models.Model):
     def index_public(self):
         return True
 
+    @property
+    def index_source(self):
+        return None
+
     def is_indexable(self):
         return True
 
@@ -119,6 +124,7 @@ class SearchMixin(models.Model):
             'public': self.index_public,
             'lang': self.index_lang,
             'kind': self.index_kind,
+            'source': self.index_source,
             'tags': tags
         }
         Search.objects.update_or_create(
@@ -134,7 +140,7 @@ class SearchMixin(models.Model):
 
 
 class SearchableQuerySet(object):
-    def search(self, query=None, kind=None, lang=None, tags=[], **kwargs):
+    def search(self, query=None, kind=None, lang=None, tags=[], source=None, **kwargs):
         kwargs['model'] = self.model.__name__
         if query:
             kwargs['text__match'] = query
@@ -142,6 +148,8 @@ class SearchableQuerySet(object):
             kwargs['kind'] = kind
         if lang:
             kwargs['lang'] = lang
+        if source:
+            kwargs['source'] = source
         if tags:
             kwargs['tags__match'] = tags
         ids = Search.ids(**kwargs).distinct()

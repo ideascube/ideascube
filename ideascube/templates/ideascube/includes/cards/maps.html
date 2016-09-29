@@ -2,5 +2,5 @@
 <div class="card tinted maps">
     <h4 class="flow"><span class="theme discover">{% trans 'discover' %}</span><span>{% trans "maps" %}</span></h4>
     <p>{% trans "Browse maps of the area." %}</p>
-    <p>{% for name, subdomain in card.maps %}<a class="subnav" href="http://{{ subdomain }}.{{ domain }}">{{ name }}</a>{% endfor %}</p>
+    <p><a class="subnav" href="http://{{ card.package_id }}.{{ domain }}">{{ card.name }}</a></p>
 </div>

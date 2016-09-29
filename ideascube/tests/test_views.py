@@ -15,6 +15,8 @@ from ideascube.library.tests.factories import BookSpecimenFactory
 from .factories import UserFactory
 from ..views import ByTag, UserList
 
+import mock
+
 pytestmark = pytest.mark.django_db
 user_model = get_user_model()
 
@@ -515,3 +517,63 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
     response = app.get(url + '&page=3', status=404)
+
+
+def test_build_package_card_info_must_not_fail_for_no_package(app, systemuser):
+    from ideascube.configuration import set_config
+    from ideascube.views import build_package_card_info
+    set_config('home-page', 'displayed-package-ids', ['test.package1'], systemuser)
+    assert build_package_card_info() == []
+
+
+def test_build_package_card_info(app, systemuser, catalog):
+    from ideascube.configuration import set_config
+    from ideascube.views import build_package_card_info
+    from ideascube.serveradmin.catalog import ZippedZim, ZippedMedias
+    catalog.add_mocked_package(ZippedZim('test.package1.fr', {
+        'name':'Test package1',
+        'description':'Test package1 description',
+        'language':'fr',
+        'staff_only':False}))
+    catalog.add_mocked_package(ZippedMedias('test.package2.fr', {
+        'name':'Test package2',
+        'description':'Test package2 description',
+        'language':'fr',
+        'staff_only':False}))
+    set_config('home-page', 'displayed-package-ids', ['test.package1.fr', 'test.package2.fr'], systemuser)
+
+    assert build_package_card_info() == [{
+        'package_id' : 'test.package1.fr',
+        'name'       : 'Test package1',
+        'description': 'Test package1 description',
+        'lang'       : 'fr',
+        'is_staff'   : False,
+        'id'         : 'kiwix',
+        'css_class'  : 'test.package1',
+        'theme'      : 'learn'
+    },
+    {
+        'package_id' : 'test.package2.fr',
+        'name'       : 'Test package2',
+        'description': 'Test package2 description',
+        'lang'       : 'fr',
+        'is_staff'   : False,
+        'id'         : 'media-package',
+        'css_class'  : None,
+        'theme'      : None
+    }]
+
+
+@pytest.mark.usefixtures('staffuser')
+def test_cards_properly_displayed(app):
+    with mock.patch('ideascube.views.build_package_card_info') as Mocker:
+        Mocker.return_value = [{
+            'package_id' : 'wikipedia.fr',
+            'name'       : 'Test package1',
+            'description': 'Test package1 description',
+            'lang'       : 'fr',
+            'is_staff'   : False,
+            'id'         : 'kiwix'
+        }]
+        response = app.get(reverse('index'), status=200)
+        assert 'Test package1' in response.unicode_body

@@ -223,12 +223,26 @@ def test_tags_link_should_update_querystring(app):
         response.request.GET.dict_of_lists()
 
 
-def test_remove_filter_should_be_present(app):
+def test_remove_filter_should_be_present(app, catalog):
+    from ideascube.serveradmin.catalog import Package
+    # We use the available_packages in the view to get the display name
+    # of package in the remove filter link.
+    # But to have some available_packages, we need content that match the search.
+    DocumentFactory(lang='en', title='foo', tags=['tag1', 'tag2'], kind='video', package_id='test.package1')
+
+    # Also add the test.package1 in the catalog.
+    catalog.add_mocked_package(Package('test.package1', {
+        'name':'Test package1',
+        'description':'Test package1 description',
+        'language':'fr',
+        'staff_only':False}))
+
     response = app.get(reverse('mediacenter:index'),
                        {'lang': 'en',
                         'q': 'foo',
                         'tags': ['tag1', 'tag2'],
-                        'kind': 'video'})
+                        'kind': 'video',
+                        'source': 'test.package1'})
 
     links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "English" in (elem.text or ''))
@@ -236,8 +250,11 @@ def test_remove_filter_should_be_present(app):
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
                                  links[0].attrib['href']),
                    status=200)
-    assert {'q': ['foo'], 'tags': ['tag1', 'tag2'], 'kind': ['video']} == \
-        resp.request.GET.dict_of_lists()
+    assert resp.request.GET.dict_of_lists() == {
+        'q': ['foo'],
+        'tags': ['tag1', 'tag2'],
+        'kind': ['video'],
+        'source': ['test.package1']}
 
     links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "foo" in (elem.text or ''))
@@ -245,8 +262,11 @@ def test_remove_filter_should_be_present(app):
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
                                  links[0].attrib['href']),
                    status=200)
-    assert {'lang': ['en'], 'tags': ['tag1', 'tag2'], 'kind': ['video']} == \
-        resp.request.GET.dict_of_lists()
+    assert resp.request.GET.dict_of_lists() == {
+        'lang': ['en'],
+        'tags': ['tag1', 'tag2'],
+        'kind': ['video'],
+        'source': ['test.package1']}
 
     links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "tag1" in (elem.text or ''))
@@ -255,7 +275,11 @@ def test_remove_filter_should_be_present(app):
                                  links[0].attrib['href']),
                    status=200)
     assert resp.request.GET.dict_of_lists() == {
-        'lang': ['en'], 'q': ['foo'], 'tags': ['tag2'], 'kind': ['video']}
+        'lang': ['en'],
+        'q': ['foo'],
+        'tags': ['tag2'],
+        'kind': ['video'],
+        'source': ['test.package1']}
 
     links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "tag2" in (elem.text or ''))
@@ -264,7 +288,11 @@ def test_remove_filter_should_be_present(app):
                                  links[0].attrib['href']),
                    status=200)
     assert resp.request.GET.dict_of_lists() == {
-        'lang': ['en'], 'q': ['foo'], 'tags': ['tag1'], 'kind': ['video']}
+        'lang': ['en'],
+        'q': ['foo'],
+        'tags': ['tag1'],
+        'kind': ['video'],
+        'source': ['test.package1']}
 
     links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "video" in (elem.text or ''))
@@ -272,8 +300,23 @@ def test_remove_filter_should_be_present(app):
     resp = app.get("{}{}".format(reverse('mediacenter:index'),
                                  links[0].attrib['href']),
                    status=200)
-    assert {'lang': ['en'], 'q': ['foo'], 'tags': ['tag1', 'tag2']} == \
-        resp.request.GET.dict_of_lists()
+    assert resp.request.GET.dict_of_lists() == {
+        'lang': ['en'],
+        'q': ['foo'],
+        'tags': ['tag1', 'tag2'],
+        'source': ['test.package1']}
+
+    links = response.pyquery('.filters.card a').filter(
+        lambda i, elem: "Test package" in (elem.text or ''))
+    assert links
+    resp = app.get("{}{}".format(reverse('mediacenter:index'),
+                                 links[0].attrib['href']),
+                   status=200)
+    assert resp.request.GET.dict_of_lists() == {
+        'lang': ['en'],
+        'q': ['foo'],
+        'tags': ['tag1', 'tag2'],
+        'kind': ['video']}
 
 
 @pytest.mark.usefixtures('cleansearch')

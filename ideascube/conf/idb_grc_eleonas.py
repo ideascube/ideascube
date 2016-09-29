@@ -26,25 +26,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'mediacenter',
     },
     {
-        'id': 'wikipedia',
-        'languages': ['ps', 'ar', 'en', 'ur', 'fa']
-    },
-    {
         'id': 'khanacademy',
-    },
-    {
-        'id': 'gutenberg',
-        'lang': 'mul',
-    },
-    {
-        'id': 'w2eu',
-    },
-    {
-        'id': 'maps',
-        'maps': [
-            ('World', 'world.map'),
-            ('Athens', 'athens.map'),
-            ('Lesvos', 'lesvos.map'),
-        ]
     }
 ]

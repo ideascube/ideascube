@@ -14,6 +14,15 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 from ideascube.decorators import staff_member_required
 from ideascube.mixins import FilterableViewMixin, OrderableViewMixin
 
+# For unittesting purpose, we need to mock the Catalog class.
+# However, the mock is made in a fixture and at this moment, we don't
+# know where the mocked catalog will be used.
+# So the fixture mocks 'ideascube.serveradmin.catalog.Catalog'.
+# If we want to use the mocked Catalog here, we must not import the
+# Catalog class directly but reference it from ideascube.serveradmin.catalog
+# module.
+from ideascube.serveradmin import catalog as catalog_mod
+
 from .models import Document
 from .forms import DocumentForm
 
@@ -50,6 +59,19 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
         self._set_available_kinds(context)
         self._set_available_langs(context)
         self._set_available_tags(context)
+        # We assume that if there is a source, it is a package_id.
+        package_id = context.get('source')
+        if package_id:
+            catalog = catalog_mod.Catalog()
+            try:
+                package = catalog.list_installed([package_id])[0]
+            except IndexError:
+                # We cannot find the package.
+                # This should not happen. Remove the filter
+                del context['source']
+                return context
+
+            context['source_name'] = package.name
         return context
 
 index = Index.as_view()

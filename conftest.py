@@ -1,6 +1,7 @@
 import pytest
 import django_webtest
 import os
+import mock
 
 from django.core.urlresolvers import reverse
 
@@ -127,3 +128,46 @@ def pytest_configure(config):
     # tests, and indeed if we do they fail.
     settings.STATICFILES_STORAGE = (
         'django.contrib.staticfiles.storage.StaticFilesStorage')
+
+class CatalogMocker:
+    """A CatalogMocker.
+    A instance of CatalogMocker is a (reusable) context manager.
+    """
+    def __init__(self):
+        self.patcher = mock.patch('ideascube.serveradmin.catalog.Catalog',
+                                  spec=True)
+        self.packages = []
+        self.mocked = None
+
+    def add_mocked_package(self, package):
+        self.packages.append(package)
+
+    def list_installed(self, ids_list):
+        if '*' in ids_list:
+            return self.packages
+
+        return [p for p in self.packages if p.id in ids_list]
+
+    def __enter__(self):
+        if self.mocked is not None:
+            raise RuntimeError(
+                "CatalogMocker is not a reentrant context manager.\n"
+                "You can open only one context at the same time "
+                "and it seems that a context is already opened at this time.")
+
+        self.mocked = self.patcher.__enter__()
+        instance = self.mocked.return_value
+        instance.list_installed.side_effect = self.list_installed
+        return self.mocked
+
+    def __exit__(self, type, value, traceback):
+        self.patcher.__exit__(type, value, traceback)
+        self.mocked = None
+
+
+@pytest.yield_fixture()
+def catalog():
+    mocker = CatalogMocker()
+    with mocker:
+        yield mocker
+

@@ -29,18 +29,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'library',
     },
     {
-        'id': 'wikipedia',
-        'languages': ['en']
-    },
-    {
         'id': 'khanacademy',
-    },
-    {
-        'id': 'gutenberg',
-        'lang': 'en',
-    },
-    {
-        'id': 'vikidia',
-        'languages': ['en']
-    },
+    }
 ]

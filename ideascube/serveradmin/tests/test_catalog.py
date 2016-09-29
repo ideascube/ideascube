@@ -468,6 +468,7 @@ def test_kiwix_removes_zippedzim(settings, zippedzim_path):
     assert index.join('{}.zim.idx'.format(p.id)).check(exists=False)
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_kiwix_commits_after_install(settings, zippedzim_path, mocker):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
 
@@ -494,6 +495,7 @@ def test_kiwix_commits_after_install(settings, zippedzim_path, mocker):
     manager().restart.call_count == 1
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_kiwix_commits_after_remove(settings, zippedzim_path, mocker):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
     from ideascube.serveradmin.systemd import NoSuchUnit
@@ -562,6 +564,7 @@ def test_nginx_removes_zippedzim(settings, staticsite_path):
     assert root.check(exists=False)
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_nginx_commits_after_install(settings, staticsite_path, mocker):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
 
@@ -589,6 +592,7 @@ def test_nginx_commits_after_install(settings, staticsite_path, mocker):
     manager().restart.call_count == 1
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_nginx_commits_after_remove(settings, staticsite_path, mocker):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
     from ideascube.serveradmin.systemd import NoSuchUnit
@@ -846,6 +850,7 @@ def test_catalog_clear_cache(tmpdir, monkeypatch):
     assert c._installed == {}
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -891,6 +896,7 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -936,6 +942,7 @@ def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -978,6 +985,7 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
     assert spy_urlretrieve.call_count == 2
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_does_not_stop_on_failure(tmpdir, settings,
                                                   testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
@@ -1032,6 +1040,7 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, settings,
     assert 'wikipedia.fr' in c._installed
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_already_downloaded(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
@@ -1083,6 +1092,7 @@ def test_catalog_install_package_already_downloaded(
     assert spy_urlretrieve.call_count == 1
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_already_in_additional_cache(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
@@ -1134,6 +1144,7 @@ def test_catalog_install_package_already_in_additional_cache(
     assert spy_urlretrieve.call_count == 1
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_partially_downloaded(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
@@ -1186,6 +1197,7 @@ def test_catalog_install_package_partially_downloaded(
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_partially_downloaded_but_corrupted(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
@@ -1349,6 +1361,7 @@ def test_catalog_install_package_with_unknown_type(
         c.install_packages(['wikipedia.tum'])
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -1407,6 +1420,7 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
     assert zim.read_binary() != '你好嗎？'.encode('utf-8')
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -1449,6 +1463,7 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
         "<?xml version='1.0' encoding='utf-8'?>\n<library/>")
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -1491,6 +1506,7 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
         "<?xml version='1.0' encoding='utf-8'?>\n<library/>")
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -1567,6 +1583,7 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
         assert 'date="2015-09-10"' in libdata
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -1643,6 +1660,7 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
         assert 'date="2015-09-10"' in libdata
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_package_already_latest(
         tmpdir, settings, testdatadir, mocker, capsys):
     from ideascube.serveradmin.catalog import Catalog
@@ -1757,6 +1775,7 @@ def test_catalog_list_available_packages(tmpdir, monkeypatch):
     assert isinstance(pkg, ZippedZim)
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_list_installed_packages(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog, ZippedZim
@@ -1826,6 +1845,7 @@ def test_catalog_list_installed_packages(
     assert isinstance(pkg, ZippedZim)
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_list_upgradable_packages(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog, ZippedZim
@@ -1914,6 +1934,7 @@ def test_catalog_list_upgradable_packages(
     assert isinstance(pkg, ZippedZim)
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_list_nothandled_packages(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
@@ -1968,3 +1989,22 @@ def test_catalog_list_nothandled_packages(
     assert len(pkgs) == 1
     pkgs = c.list_installed(['*'])
     assert len(pkgs) == 1
+
+
+def test_catalog_update_displayed_package(systemuser):
+    from ideascube.configuration import get_config, set_config
+    from ideascube.serveradmin.catalog import Catalog
+    set_config('home-page', 'displayed-package-ids',
+               ['id1', 'id2', 'id3'], systemuser)
+
+    Catalog._update_displayed_packages_on_home(to_remove_ids=['id1', 'id4'])
+    assert get_config('home-page', 'displayed-package-ids') == ['id2', 'id3']
+
+    Catalog._update_displayed_packages_on_home(to_add_ids=['id2', 'id4', 'id4'])
+    assert get_config('home-page', 'displayed-package-ids') \
+        == ['id2', 'id3', 'id4']
+
+    Catalog._update_displayed_packages_on_home(to_remove_ids=['id2', 'id4'],
+                                               to_add_ids=['id1', 'id4'])
+    assert get_config('home-page', 'displayed-package-ids') \
+        == ['id3', 'id1', 'id4']

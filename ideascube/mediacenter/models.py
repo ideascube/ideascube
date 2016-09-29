@@ -98,6 +98,10 @@ class Document(SearchMixin, TimeStampedModel):
         return self.kind
 
     @property
+    def index_source(self):
+        return self.package_id
+
+    @property
     def index_tags(self):
         return self.tags.slugs()
 
