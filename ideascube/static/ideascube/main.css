@@ -206,7 +206,8 @@ html[dir='rtl'] .flow * + * {
 input[type="text"], input[type="password"], input[type="date"],
 input[type="datetime"], input[type="email"], input[type="number"],
 input[type="search"], input[type="tel"], input[type="time"],
-input[type="url"], textarea {
+input[type="url"], textarea,
+[contenteditable] {
     background-color: white;
     border: 1px solid #CCCCCC;
     border-radius: 2px 2px 2px 2px;
@@ -215,7 +216,7 @@ input[type="url"], textarea {
     display: block;
     font-family: inherit;
     font-size: 14px;
-    height: 50px;
+    min-height: 50px;
     margin: 0 0 14px;
     padding: 7px;
     width: 100%;
