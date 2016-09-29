@@ -196,6 +196,37 @@ def test_list_keys_invalid_namespace(capsys, monkeypatch):
 
 
 @pytest.mark.usefixtures('db')
+def test_report_config(capsys, monkeypatch, user):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {'namespace1': {'key1': {}, 'key2': {}}})
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {
+            'namespace2': {
+                'key1': {'type': list, 'default': []},
+            },
+            'namespace1': {
+                'key2': {'type': int, 'default': 0},
+                'key1': {'type': str, 'default': 'default'},
+            },
+        })
+
+    set_config('namespace1', 'key1', 'value', user)
+    set_config('namespace2', 'key1', ['a', 'value'], user)
+
+    call_command('config', 'report')
+
+    out, err = capsys.readouterr()
+    assert out.strip().split('\n') == [
+        "namespace1 key1: 'value' (default: 'default')",
+        "namespace1 key2: 0 (default: 0)",
+        "namespace2 key1: ['a', 'value'] (default: [])",
+    ]
+    assert err == ''
+
+
+@pytest.mark.usefixtures('db')
 def test_reset_config(capsys, monkeypatch, user):
     monkeypatch.setattr(
         'ideascube.configuration.registry.REGISTRY',

@@ -11,7 +11,8 @@ from ideascube.configuration.exceptions import (
     NoSuchConfigurationNamespaceError,
     )
 from ideascube.configuration.registry import (
-    get_all_namespaces, get_config_data, get_namespaced_configs,
+    get_all_namespaces, get_config_data, get_default_value,
+    get_namespaced_configs,
     )
 
 
@@ -41,6 +42,10 @@ class Command(BaseCommand):
             'namespace', nargs='?',
             help='Only list configuration keys for this namespace')
         list.set_defaults(func=self.list_configs)
+
+        report = subs.add_parser(
+            'report', help='Print a full report of the current configuration.')
+        report.set_defaults(func=self.report_config)
 
         reset = subs.add_parser(
             'reset', help='Reset a configuration option to its default value')
@@ -126,6 +131,15 @@ class Command(BaseCommand):
 
         except NoSuchConfigurationNamespaceError as e:
             raise CommandError(e)
+
+    def report_config(self, _):
+        for namespace in get_all_namespaces():
+            for key in get_namespaced_configs(namespace):
+                value = get_config(namespace, key)
+                default = get_default_value(namespace, key)
+
+                print('%s %s: %r (default: %r)' % (
+                    namespace, key, value, default))
 
     def reset_config(self, options):
         namespace = options['namespace']
