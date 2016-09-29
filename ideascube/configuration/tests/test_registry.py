@@ -4,7 +4,8 @@ from ideascube.configuration.exceptions import (
     NoSuchConfigurationKeyError, NoSuchConfigurationNamespaceError,
 )
 from ideascube.configuration.registry import (
-    get_config_data, get_default_value, get_expected_type,
+    get_all_namespaces, get_config_data, get_default_value, get_expected_type,
+    get_namespaced_configs,
 )
 
 
@@ -14,7 +15,18 @@ def test_nobody_messed_the_registry():
     for namespaced_keys in REGISTRY.values():
         for config_data in namespaced_keys.values():
             assert 'default' in config_data
+            assert 'pretty_type' in config_data
+            assert 'summary' in config_data
             assert 'type' in config_data
+
+
+def test_get_all_namespaces(monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {'namespace2': {}, 'namespace1': {}})
+
+    namespaces = get_all_namespaces()
+    assert list(namespaces) == ['namespace1', 'namespace2']
 
 
 def test_get_config_data(monkeypatch):
@@ -77,3 +89,21 @@ def test_get_expected_type(monkeypatch):
     with pytest.raises(KeyError):
         # The 'type' key is mandatory
         assert get_expected_type('namespace1', 'key3')
+
+
+def test_get_namespaced_configs(monkeypatch):
+    monkeypatch.setattr(
+        'ideascube.configuration.registry.REGISTRY',
+        {
+            'namespace1': {'key2': {}, 'key1': {}},
+            'namespace2': {},
+        })
+
+    keys = get_namespaced_configs('namespace1')
+    assert list(keys) == ['key1', 'key2']
+
+    keys = get_namespaced_configs('namespace2')
+    assert list(keys) == []
+
+    with pytest.raises(NoSuchConfigurationNamespaceError):
+        list(get_namespaced_configs('namespace3'))

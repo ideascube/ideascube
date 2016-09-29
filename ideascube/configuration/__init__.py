@@ -3,11 +3,15 @@ import logging
 
 __all__ = [
     'get_config',
+    'reset_config',
     'set_config',
 ]
 
 
 logger = logging.getLogger(__name__)
+IMPOSSIBLE_MESSAGE = (
+    'The stored value for %s is of type %s instead of %s. This should never '
+    'have happened.')
 
 
 def get_config(namespace, key):
@@ -40,13 +44,43 @@ def get_config(namespace, key):
         return default_value
 
     if not isinstance(config.value, expected_type):
-        logger.error(
-            'The stored value for %s is of type %s instead of %s. This should'
-            ' never have happened.'
-            % (config, type(config.value), expected_type))
+        logger.error(IMPOSSIBLE_MESSAGE % (
+            config, type(config.value), expected_type))
         return default_value
 
     return config.value
+
+
+def reset_config(namespace, key):
+    """Reset a configuration option to its default value
+
+    Args:
+        namespace (str): The configuration namespace.
+        key (str): The configuration key inside the namespace.
+
+    Raises:
+        ideascube.configuration.exceptions.NoSuchConfigurationNamespaceError:
+            The requested namespace does not exist.
+        ideascube.configuration.exceptions.NoSuchConfigurationKeyError:
+            The requested key does not exist in the requested namespace.
+    """
+    from .models import Configuration
+    from .registry import get_expected_type
+
+    expected_type = get_expected_type(namespace, key)
+
+    try:
+        config = Configuration.objects.get(namespace=namespace, key=key)
+
+    except Configuration.DoesNotExist:
+        # The configuration had never been modified, nothing to reset
+        return
+
+    if not isinstance(config.value, expected_type):
+        logger.error(
+            IMPOSSIBLE_MESSAGE % (config, type(config.value), expected_type))
+
+    config.delete()
 
 
 def set_config(namespace, key, value, actor):
