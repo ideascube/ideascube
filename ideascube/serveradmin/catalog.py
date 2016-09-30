@@ -801,8 +801,6 @@ class Catalog:
             if installed is not None:
                 self._installed = installed
 
-        self._persist_catalog()
-
         self._package_caches = [self._local_package_cache]
 
     def _persist_catalog(self):
