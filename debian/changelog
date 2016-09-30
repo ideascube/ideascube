@@ -1,3 +1,21 @@
+ideascube (0.13.0) unstable; urgency=low
+
+  - Display a home card for each installed package
+  - Allow to define the active languages from the admin
+  - Add a CLI to manage in-db configuration
+  - Cleaned local settings
+  - Added configuration file for idb_jor_zaatari
+  - Added crash source card icon and CSS
+  - Display a message when saving the site name
+  - Fixed an issue preventing to clear the catalog cache when the disk was full
+  - Improved blog content form
+  - Changed default book image
+  - Removed the image icon from the blog toolbar
+  - Moved the form submit button on the bottom
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 30 Sep 2016 14:27:00 +0300
+
+
 ideascube (0.12.2) unstable; urgency=low
 
   - Fix default media thumbnail path broken since 0.12.1
