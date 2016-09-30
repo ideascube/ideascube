@@ -1,5 +1,5 @@
 """Bardarash in Kurdistan, Iraq"""
-from .azraq import *  # noqa
+from .idb_jor_azraq import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -14,18 +14,3 @@ MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'birth_year', 'gender']
 
 
 ENTRY_ACTIVITY_CHOICES = []
-
-HOME_CARDS = STAFF_HOME_CARDS + [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'library',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'khanacademy',
-    }
-]

@@ -1,12 +1,11 @@
-"""Queensland box in Australia"""
+"""Default Ideaxbox config for France"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
-IDEASCUBE_NAME = u"Queensland"
-IDEASCUBE_PLACE_NAME = _("the community")
-COUNTRIES_FIRST = ['AU']
-TIME_ZONE = 'Australia/Darwin'
-LANGUAGE_CODE = 'en'
+IDEASCUBE_PLACE_NAME = _("city")
+COUNTRIES_FIRST = ['FR']
+TIME_ZONE = None
+LANGUAGE_CODE = 'fr'
 LOAN_DURATION = 14
 MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'user_id', 'birth_year', 'gender']
 USER_FORM_FIELDS = (

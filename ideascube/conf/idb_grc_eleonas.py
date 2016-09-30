@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Library Without Borders box in Athenes, Grece"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
@@ -14,18 +13,3 @@ USER_FORM_FIELDS = (
     (_('In the town'), ['current_occupation', 'school_level', 'phone', 'email']),  # noqa
     (_('Language skills'), ['en_level', 'ar_level', 'fa_level']),
 )
-
-HOME_CARDS = STAFF_HOME_CARDS + [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'library',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'khanacademy',
-    }
-]

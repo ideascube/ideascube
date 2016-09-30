@@ -17,17 +17,3 @@ USER_FORM_FIELDS = (
     (_('In the town'), ['current_occupation', 'school_level']),
     (_('Language skills'), ['en_level']),
 )
-HOME_CARDS = STAFF_HOME_CARDS + [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'library',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'khanacademy',
-    }
-]
