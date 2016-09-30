@@ -9,7 +9,6 @@
     {% endif %}
 {% endblock heading %}
 {% block col %}
-    <input type="submit" value="{% trans 'submit' %}" />
     {% if stockitem %}
         <a class="button" href="{{ stockitem.get_absolute_url }}">{% trans 'cancel' %}</a>
         <a class="button warning" href="{% url 'monitoring:stockitem_delete' pk=stockitem.pk %}">{% trans 'delete' %}</a>

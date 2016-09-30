@@ -9,7 +9,6 @@
     {% endif %}
 {% endblock heading %}
 {% block col %}
-    <input type="submit" value="{% trans 'submit' %}" />
     {% if document %}
         <a class="button" href="{{ document.get_absolute_url }}">{% trans 'cancel' %}</a>
     {% endif %}

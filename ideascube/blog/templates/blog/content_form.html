@@ -21,13 +21,15 @@
                     {% for field in form %}
                         {% form_field field %}
                     {% endfor %}
-                    <input type="submit" value="{% trans 'submit' %}" />
                 </div>
                 <div class="col two-third">
                     <h3>{% trans 'Content' %}</h3>
                     <label class="strip required">Content</label>
                     <div data-editable-for="text" placeholder="{% trans 'Type your text here…' %}">{{ form.text.value|default:''|safe }}</div>
                 </div>
+        </div>
+        <div class="row">
+          <input type="submit" value="{% trans 'submit' %}" />
         </div>
     </form>
 {% endblock content %}
