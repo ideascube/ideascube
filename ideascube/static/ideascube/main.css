@@ -9,7 +9,6 @@
          url('./font/FiraSans-Bold.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-
 }
 
 @font-face {
@@ -510,7 +509,12 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
     margin-top: 20px;
 }
 .card h4 {
-    text-transform: uppercase;
+    margin-bottom: 10px;
+    line-height: 1.6em;
+    display: inherit;
+}
+.card h4 span:not(.theme)::before {
+  content: " ";
 }
 .card h4 a,
 .card > a {

@@ -7,7 +7,7 @@
             {% if book.cover %}<img src="{% media book 'cover' %}" class="cover" />{% endif %}
         </div>
         <div class="col two-third book-detail">
-            <h4 class="flow"><span class="theme read">{% trans "read" %}</span></h4>
+            <h4><span class="theme read">{% trans "read" %}</span></h4>
             <h2>{{ book }}</h2>
             {% if book.subtitle %}<h3>{{ book.subtitle }}</h3>{% endif %}
             <hr />
