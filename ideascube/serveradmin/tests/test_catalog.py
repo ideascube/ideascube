@@ -674,10 +674,20 @@ def test_catalog_add_remotes():
     assert remote.name == 'Content provided by Foo'
     assert remote.url == 'http://foo.fr/catalog.yml'
 
-    with pytest.raises(ExistingRemoteError) as exc:
-        c.add_remote('foo', 'Content by Foo', 'http://foo.fr/catalog.yml')
+    # Try adding the same remote twice, nothing should happen
+    c.add_remote('foo', 'Content by Foo', 'http://foo.fr/catalog.yml')
 
-    assert 'foo' in exc.exconly()
+    # Try adding a remote with an existing id
+    with pytest.raises(ExistingRemoteError) as excinfo:
+        c.add_remote('foo', 'Content by Baz', 'http://baz.fr/catalog.yml')
+
+    excinfo.match('A remote with this id already exists')
+
+    # Try adding a remote with an existing URL
+    with pytest.raises(ExistingRemoteError) as excinfo:
+        c.add_remote('baz', 'Content by Baz', 'http://foo.fr/catalog.yml')
+
+    excinfo.match('A remote with this url already exists')
 
 
 def test_catalog_remove_remote(settings):
