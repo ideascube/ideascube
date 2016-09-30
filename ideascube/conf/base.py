@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 
+from django.conf.locale import LANG_INFO
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -118,8 +119,8 @@ AVAILABLE_LANGUAGES = (
     'sw',
 )
 
-# Those will be added to django.locale.LANG_INFO.
-EXTRA_LANG_INFO = {
+# Add languages we're missing from Django
+LANG_INFO.update({
     'am': {
         'bidi': False,
         'name': 'Amharic',
@@ -174,7 +175,7 @@ EXTRA_LANG_INFO = {
         'code': 'wo',
         'name_local': 'wolof'
     },
-}
+})
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'ideascube', 'locale'),

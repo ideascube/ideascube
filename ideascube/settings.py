@@ -64,10 +64,6 @@ finally:
             }
         }
 
-    # Some languages are missing from Django.
-    from django.conf.locale import LANG_INFO
-    LANG_INFO.update(EXTRA_LANG_INFO)  # noqa
-
     LANGUAGES = []
     # Allow to override AVAILABLE_LANGUAGES in box settings
     for code, lang_data in sorted(LANG_INFO.items()):
