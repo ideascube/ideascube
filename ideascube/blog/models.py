@@ -7,7 +7,8 @@ from taggit.managers import TaggableManager
 from taggit.models import TagBase
 from unidecode import unidecode
 
-from ideascube.models import SortedTaggableManager, TimeStampedModel
+from ideascube.models import (
+    LanguageField, SortedTaggableManager, TimeStampedModel)
 from ideascube.search.models import SearchableQuerySet, SearchMixin
 
 
@@ -57,9 +58,8 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
     published_at = models.DateTimeField(_('publication date'))
     status = models.PositiveSmallIntegerField(_('Status'), choices=STATUSES,
                                               default=DRAFT)
-    lang = models.CharField(_('Language'), max_length=10,
-                            choices=settings.LANGUAGES,
-                            default=settings.LANGUAGE_CODE)
+    lang = LanguageField(
+        _('Language'), max_length=10, default=settings.LANGUAGE_CODE)
 
     objects = ContentQuerySet.as_manager()
     tags = TaggableManager(blank=True, manager=SortedTaggableManager)

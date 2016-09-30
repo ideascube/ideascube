@@ -14,7 +14,7 @@ from taggit.managers import _TaggableManager
 from ideascube.search.models import SearchMixin, SearchableQuerySet
 
 from .fields import CommaSeparatedCharField
-from .utils import classproperty
+from .utils import classproperty, get_all_languages
 
 
 logger = logging.getLogger(__name__)
@@ -338,3 +338,10 @@ class JSONField(models.TextField):
 
     def get_prep_value(self, value):
         return json.dumps(value)
+
+
+class LanguageField(models.CharField):
+    def __init__(self, *args, **kwargs):
+        kwargs['choices'] = get_all_languages()
+
+        super().__init__(*args, **kwargs)

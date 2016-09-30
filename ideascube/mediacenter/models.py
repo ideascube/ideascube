@@ -1,11 +1,11 @@
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from taggit.managers import TaggableManager
 
-from ideascube.models import SortedTaggableManager, TimeStampedModel
+from ideascube.models import (
+    LanguageField, SortedTaggableManager, TimeStampedModel)
 from ideascube.search.models import SearchableQuerySet, SearchMixin
 
 
@@ -52,8 +52,7 @@ class Document(SearchMixin, TimeStampedModel):
 
     title = models.CharField(_('title'), max_length=100)
     summary = models.TextField(_('summary'))
-    lang = models.CharField(_('Language'), max_length=10, blank=True,
-                            choices=settings.LANGUAGES)
+    lang = LanguageField(_('Language'), max_length=10, blank=True)
     original = models.FileField(_('original'),
                                 upload_to='mediacenter/document',
                                 max_length=10240)

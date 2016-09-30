@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
 
 from ..backup import Backup
+from ideascube.configuration import get_config, set_config
 from .test_backup import BACKUPS_ROOT, DATA_ROOT
 from . import (
     FakeBus, FakePopen, FailingPopen, NMActiveConnection, NMConnection,
@@ -20,6 +21,7 @@ pytestmark = pytest.mark.django_db
 
 @pytest.mark.parametrize("page", [
     ("name"),
+    ("languages"),
     ("services"),
     ("power"),
     ("backup"),
@@ -34,6 +36,7 @@ def test_anonymous_user_should_not_access_server(app, page):
 
 @pytest.mark.parametrize("page", [
     ("name"),
+    ("languages"),
     ("services"),
     ("power"),
     ("backup"),
@@ -690,3 +693,44 @@ def test_staff_should_see_packages_with_cards(staffapp, systemuser, catalog):
     assert not inputs[0].checked
     assert inputs[1].checked
     assert inputs[2].checked
+
+
+def test_staff_can_set_languages(staffapp):
+    set_config('content', 'local-languages', ['en'], staffapp.user)
+
+    response = staffapp.get(reverse('server:languages'))
+
+    form = response.forms['languages']
+    checked = sorted(f.id for f in form.fields['languages'] if f.checked)
+    assert checked == ['en']
+
+    for field in form.fields['languages']:
+         field.checked = field.id in ('ar', 'zh-hant')
+
+    response = form.submit()
+
+    form = response.forms['languages']
+    checked = sorted(f.id for f in form.fields['languages'] if f.checked)
+    assert checked == ['ar', 'zh-hant']
+    assert get_config('content', 'local-languages') == ['ar', 'zh-hant']
+
+
+def test_staff_cannot_unset_all_languages(staffapp):
+    set_config('content', 'local-languages', ['ar', 'zh-hant'], staffapp.user)
+
+    response = staffapp.get(reverse('server:languages'))
+
+    form = response.forms['languages']
+    checked = sorted(f.id for f in form.fields['languages'] if f.checked)
+    assert checked == ['ar', 'zh-hant']
+
+    for field in form.fields['languages']:
+         field.checked = False
+
+    response = form.submit()
+
+    assert 'Please select at least one language' in response.unicode_body
+    form = response.forms['languages']
+    checked = sorted(f.id for f in form.fields['languages'] if f.checked)
+    assert checked == ['ar', 'zh-hant']
+    assert get_config('content', 'local-languages') == ['ar', 'zh-hant']

@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 
+from django.conf.locale import LANG_INFO
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -107,31 +108,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Languages that will be available in all forms.
-AVAILABLE_LANGUAGES = (
-    ('am', 'አማርኛ'),
-    ('ar', 'العربية'),
-    ('bm', 'Bambara'),
-    ('de', 'Deutsch'),
-    ('el', 'Ελληνικά'),
-    ('en', 'English'),
-    ('fa', 'فارسی'),
-    ('fr', 'Français'),
-    ('it', 'Italiano'),
-    ('ku', 'Kurdî'),
-    ('ln', 'Lingála'),
-    ('ps', 'پښتو'),
-    ('rn', 'Kirundi'),
-    ('so', 'Af-Soomaali'),
-    ('sw', 'Swahili'),
-    ('ti', 'ትግርኛ'),
-    ('ur', 'اردو'),
-    ('vi', 'Tiếng Việt'),
-    ('es', 'Español'),
-)
-
-# Those will be added to django.locale.LANG_INFO.
-EXTRA_LANG_INFO = {
+# Add languages we're missing from Django
+LANG_INFO.update({
     'am': {
         'bidi': False,
         'name': 'Amharic',
@@ -144,11 +122,23 @@ EXTRA_LANG_INFO = {
         'code': 'bm',
         'name_local': 'Bambara'
     },
-    'ti': {
+    'ckb': {
+        'bidi': True,
+        'name': 'Soranî',
+        'code': 'ckb',
+        'name_local': 'سۆرانی',
+    },
+    'ku': {
         'bidi': False,
-        'name': 'Tigrinya',
-        'code': 'bm',
-        'name_local': 'ትግርኛ'
+        'name': 'Kurdish',
+        'code': 'ku',
+        'name_local': 'Kurdî'
+    },
+    'ln': {
+        'bidi': False,
+        'name': 'Lingala',
+        'code': 'ln',
+        'name_local': 'Lingála'
     },
     'ps': {
         'bidi': True,
@@ -168,25 +158,34 @@ EXTRA_LANG_INFO = {
         'code': 'so',
         'name_local': u'Af-Soomaali'
     },
+    'ti': {
+        'bidi': False,
+        'name': 'Tigrinya',
+        'code': 'bm',
+        'name_local': 'ትግርኛ'
+    },
     'wo': {
         'bidi': False,
         'name': 'Wolof',
         'code': 'wo',
         'name_local': 'wolof'
     },
-    'ln': {
-        'bidi': False,
-        'name': 'Lingala',
-        'code': 'ln',
-        'name_local': 'Lingála'
-    },
-    'ku': {
-        'bidi': False,
-        'name': 'Kurdish',
-        'code': 'ku',
-        'name_local': 'Kurdî'
-    },
-}
+})
+
+# Languages that will be available as UI translations
+_AVAILABLE_LANGUAGES = (
+    'am',
+    'ar',
+    'bm',
+    'en',
+    'fr',
+    'so',
+    'sw',
+)
+LANGUAGES = []
+for code, lang_data in sorted(LANG_INFO.items()):
+    if code in _AVAILABLE_LANGUAGES:
+        LANGUAGES.append((code, lang_data['name_local'].capitalize()))
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'ideascube', 'locale'),
@@ -307,7 +306,15 @@ STAFF_HOME_CARDS = [
         'title': _('Home page'),
         'description': _('Manage home page'),
         'fa': 'th',
-    }
+    },
+    {
+        'is_staff': True,
+        'category': 'manage',
+        'url': 'server:languages',
+        'title': _('Languages'),
+        'description': _('Enable or disable languages.'),
+        'fa': 'language',
+    },
 ]
 
 HOME_CARDS = STAFF_HOME_CARDS + [
