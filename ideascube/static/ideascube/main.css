@@ -630,6 +630,9 @@ html[dir='rtl'] .home .card {
 .card.maps {
     background-image: url('./img/cards/maps.png');
 }
+.card.crashcourse {
+    background-image: url('./img/cards/crashcourse.png');
+}
 .card img {
     float: left;
     display: block;
