@@ -154,8 +154,8 @@ class Kiwix(Handler):
         for libpath in glob(os.path.join(libdir, '*.xml')):
             zimname = os.path.basename(libpath)[:-4]
 
-            with open(libpath, 'r') as f:
-                et = etree.parse(f)
+            with open(libpath, mode='r', encoding='utf-8') as f:
+                et = etree.fromstring(f.read())
                 books = et.findall('book')
 
                 # We only want to handle a single zim per zip
