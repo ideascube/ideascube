@@ -232,12 +232,10 @@ class Command(BaseCommandWithSubcommands):
         try:
             self.catalog.add_remote(options['id'], options['name'],
                                     options['url'])
+
         except ExistingRemoteError as e:
-            if e.remote.url != options['url']:
-                raise CommandError(
-                    'There already is a "{0.id}" remote and urls differ '
-                    '({0.url} and {1})'.format(e.remote, options['url']))
-            print('Not adding already existing remote: "{}"'.format(options['id']))
+            raise CommandError(e)
+
         else:
             self.catalog.update_cache()
 

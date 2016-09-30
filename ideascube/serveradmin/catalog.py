@@ -67,11 +67,14 @@ class InvalidPackageContent(Exception):
 
 
 class ExistingRemoteError(Exception):
-    def __init__(self, remote):
+    def __init__(self, remote, conflict_attr):
         self.remote = remote
+        self.conflict_attr = conflict_attr
 
     def __str__(self):
-        return "Remote {} already exists".format(self.remote.id)
+        return (
+            'A remote with this {self.conflict_attr} already exists:\n'
+            '{self.remote}'.format(self=self))
 
 
 class Remote:
@@ -924,9 +927,16 @@ class Catalog:
         return sorted(self._remotes.values(), key=attrgetter('id'))
 
     def add_remote(self, id, name, url):
-        remote = self._remotes.get(id)
-        if remote:
-            raise ExistingRemoteError(remote)
+        for remote in self._remotes.values():
+            if remote.id == id and remote.url == url:
+                printerr('This remote already exists, ignoring')
+                return
+
+            if remote.id == id:
+                raise ExistingRemoteError(remote, 'id')
+
+            if remote.url == url:
+                raise ExistingRemoteError(remote, 'url')
 
         remote = Remote(id, name, url)
         remote.to_file(os.path.join(self._remote_storage,
