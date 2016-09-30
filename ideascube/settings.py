@@ -63,9 +63,3 @@ finally:
                 'NAME': os.path.join(STORAGE_ROOT, 'transient.sqlite'),
             }
         }
-
-    LANGUAGES = []
-    # Allow to override AVAILABLE_LANGUAGES in box settings
-    for code, lang_data in sorted(LANG_INFO.items()):
-        if code in ldict.get('AVAILABLE_LANGUAGES'):
-            LANGUAGES.append((code, lang_data['name_local'].capitalize()))

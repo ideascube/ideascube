@@ -108,17 +108,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Languages that will be available as UI translations
-AVAILABLE_LANGUAGES = (
-    'am',
-    'ar',
-    'bm',
-    'en',
-    'fr',
-    'so',
-    'sw',
-)
-
 # Add languages we're missing from Django
 LANG_INFO.update({
     'am': {
@@ -176,6 +165,21 @@ LANG_INFO.update({
         'name_local': 'wolof'
     },
 })
+
+# Languages that will be available as UI translations
+_AVAILABLE_LANGUAGES = (
+    'am',
+    'ar',
+    'bm',
+    'en',
+    'fr',
+    'so',
+    'sw',
+)
+LANGUAGES = []
+for code, lang_data in sorted(LANG_INFO.items()):
+    if code in _AVAILABLE_LANGUAGES:
+        LANGUAGES.append((code, lang_data['name_local'].capitalize()))
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'ideascube', 'locale'),
