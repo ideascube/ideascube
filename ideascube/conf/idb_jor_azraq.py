@@ -46,18 +46,3 @@ ENTRY_ACTIVITY_CHOICES = [
     ("Training of Trainers", _("Training of Trainers")),
     ("World Mental Health Day", _("World Mental Health Day")),
 ]
-
-HOME_CARDS = STAFF_HOME_CARDS + [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'library',
-    },
-    {
-        'id': 'khanacademy',
-    },
-]

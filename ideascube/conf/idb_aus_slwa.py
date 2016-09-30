@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
 """State Library Western Australia box"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
-#IDEASCUBE_NAME = u"State Library Western Australia"
 IDEASCUBE_PLACE_NAME = _("the community")
 COUNTRIES_FIRST = ['AU']
 TIME_ZONE = 'Australia/Darwin'
@@ -17,18 +15,3 @@ USER_FORM_FIELDS = (
     (_('In the town'), ['current_occupation', 'school_level']),
     (_('Language skills'), ['en_level']),
 )
-
-HOME_CARDS = STAFF_HOME_CARDS + [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'library',
-    },
-    {
-        'id': 'khanacademy',
-    }
-]

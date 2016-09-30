@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Ideaxbox for Sarcelles, France"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
@@ -17,17 +16,3 @@ USER_FORM_FIELDS = (
     (_('In the town'), ['current_occupation', 'school_level']),
     (_('Language skills'), ['en_level']),
 )
-HOME_CARDS = STAFF_HOME_CARDS + [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'library',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'khanacademy',
-    }
-]

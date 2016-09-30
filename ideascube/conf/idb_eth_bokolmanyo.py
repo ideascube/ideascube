@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Bokolmanyo box in Ethiopia"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
@@ -18,3 +17,27 @@ USER_FORM_FIELDS = (
     (_('Language skills'), ['ar_level', 'en_level']),
     (_('National residents'), ['id_card_number']),
 )
+
+HOME_CARDS = STAFF_HOME_CARDS + [
+    {
+        'id': 'blog',
+    },
+    {
+        'id': 'mediacenter',
+    },
+    {
+        'id': 'library',
+    },
+    {
+        'id': 'wikipedia.old',
+    },
+    {
+        'id': 'khanacademy',
+    },
+    {
+        'id': 'vikidia.old',
+    },
+    {
+        'id': 'gutenberg.old',
+    },
+]

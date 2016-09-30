@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Ideaxbox Cultura, France"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _

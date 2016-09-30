@@ -14,18 +14,3 @@ MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'birth_year', 'gender']
 
 
 ENTRY_ACTIVITY_CHOICES = []
-
-HOME_CARDS = STAFF_HOME_CARDS + [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'library',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'khanacademy',
-    }
-]
