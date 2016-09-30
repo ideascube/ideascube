@@ -15,13 +15,8 @@
         {% for field in fields %}
             {% form_field form|getitem:field %}
         {% endfor %}
-        <hr />
     {% endfor %}
 {% endblock form %}
-
-{% block col %}
-        <input type="submit" value="submit" />
-{% endblock col %}
 
 {% block extra_foot %}
     <script type="text/javascript">

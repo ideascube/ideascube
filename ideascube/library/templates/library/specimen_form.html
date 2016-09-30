@@ -9,7 +9,6 @@
     {% endif %}
 {% endblock heading %}
 {% block col %}
-    <input type="submit" value="{% trans 'submit' %}" />
     {% if specimen %}
         <a href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</a>
     {% endif %}
