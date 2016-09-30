@@ -5,15 +5,15 @@
  * Includes Rangy
  * https://code.google.com/p/rangy/
  *
- * Copyright 2015, Olivier Meunier and contributors
+ * Copyright 2016, Olivier Meunier and contributors
  * Released under the MIT license
  *
- * Date: 2015-03-16T20:27:49Z
+ * Date: 2016-09-30T15:08:59Z
  */
 !function(e) {
     if ("object" == typeof exports && "undefined" != typeof module) module.exports = e(); else if ("function" == typeof define && define.amd) define([], e); else {
         var f;
-        "undefined" != typeof window ? f = window : "undefined" != typeof global ? f = global : "undefined" != typeof self && (f = self), 
+        "undefined" != typeof window ? f = window : "undefined" != typeof global ? f = global : "undefined" != typeof self && (f = self),
         f.Minislate = e();
     }
 }(function() {
@@ -3196,7 +3196,7 @@
             var rangy = _dereq_("./core");
             rangy.api.createModule("SaveRestore", [ "WrappedRange" ], function(api, module) {
                 var dom = api.dom;
-                var markerTextChar = "﻿";
+                var markerTextChar = "\ufeff";
                 function gEBI(id, doc) {
                     return (doc || document).getElementById(id);
                 }
