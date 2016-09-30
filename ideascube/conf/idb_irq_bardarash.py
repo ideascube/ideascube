@@ -1,5 +1,5 @@
 """Bardarash in Kurdistan, Iraq"""
-from .azraq import *  # noqa
+from .idb_jor_azraq import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 
 
