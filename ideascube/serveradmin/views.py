@@ -32,6 +32,7 @@ def server_name(request):
 
         if new_name:
             set_config('server', 'site-name', new_name, request.user)
+            messages.success(request, _('Server name changed successfully'))
 
         else:
             messages.error(request, _('Server name cannot be empty'))
