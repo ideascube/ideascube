@@ -204,7 +204,6 @@ ID.editor = Minislate.Class(Minislate.Editor, {
         this.toolbar.addControl(Minislate.controls.inline.Italic, 'italic');
         this.toolbar.addControl(Minislate.controls.inline.Underline, 'underline');
         this.toolbar.addControl(Minislate.controls.inline.Link, 'link');
-        this.toolbar.addControl(Minislate.controls.media.Image, 'image');
         this.toolbar.addControl(ID.Oembed, 'oembed');
     }
 });
