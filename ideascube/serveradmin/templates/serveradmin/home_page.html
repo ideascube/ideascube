@@ -9,8 +9,8 @@
         <tr><th>{% trans 'Card name' %}</th><th>{% trans 'Displayed' %}</th></tr>
         {% for package in installed_packages %}
         <tr>
-            <td>{{ package.name }}</td>
-            <td><input name="displayed" type="checkbox" value="{{ package.id }}" {% if package.id in displayed_packages %}checked{% endif %}/></td>
+            <td><label for="package-{{ package.id }}">{{ package.name }}</label></td>
+            <td><input id="package-{{ package.id }}" name="displayed" type="checkbox" value="{{ package.id }}" {% if package.id in displayed_packages %}checked{% endif %}/></td>
         </tr>
         {% endfor %}
     </table>
