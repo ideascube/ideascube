@@ -1,9 +1,8 @@
 import re
 
 from django import forms
-from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 
 from ideascube.widgets import LangSelect
 
@@ -88,7 +87,7 @@ class ImportForm(forms.Form):
             if not notice:
                 continue
             notice.setdefault('section', Book.OTHER)
-            notice.setdefault('lang', settings.LANGUAGE_CODE)
+            notice.setdefault('lang', get_language())
             isbn = notice.get('isbn')
             instance = None
             if isbn:

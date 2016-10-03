@@ -1,13 +1,11 @@
 from urllib.parse import urlparse
 
-from django.conf import settings
 from django.core.urlresolvers import reverse_lazy, resolve, Resolver404
 from django.db.models import F
 from django.db.models.functions import Lower
 from django.http import Http404, JsonResponse
-from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
@@ -92,7 +90,7 @@ class DocumentCreate(CreateView):
     model = Document
     form_class = DocumentForm
     initial = {
-        'lang': settings.LANGUAGE_CODE,
+        'lang': get_language(),
     }
 document_create = staff_member_required(DocumentCreate.as_view())
 
