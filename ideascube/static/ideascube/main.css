@@ -990,6 +990,11 @@ html[dir='rtl'] .search input[type='submit'] {
     position: initial;
 }
 
+#cards td label {
+  display: block;
+  cursor: pointer;
+}
+
 /* ************************************************* */
 /* **************** MEDIAS CENTER ****************** */
 /* ************************************************* */
