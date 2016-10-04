@@ -1,4 +1,5 @@
 from select_multiple_field.models import SelectMultipleField
+from django.forms import CheckboxSelectMultiple
 
 
 class CommaSeparatedCharField(SelectMultipleField):
@@ -17,3 +18,11 @@ class CommaSeparatedCharField(SelectMultipleField):
             return ", ".join(str(choices.get(c, c)) for c in values if c)
 
         setattr(cls, 'get_%s_display' % self.name, _get_FIELD_display)
+
+    def formfield(self, **kwargs):
+        kwargs['widget'] = CheckboxSelectMultiple
+        return super().formfield(**kwargs)
+
+    def get_choices(self, **kwargs):
+        kwargs['include_blank'] = False
+        return super().get_choices(**kwargs)
