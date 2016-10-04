@@ -436,6 +436,8 @@ class ZippedMedias(SimpleZipPackage):
                 media_info))
 
         if 'lang' not in media_info:
+            # Unsure if we shouldn't use `get_language()` instead of
+            # LANGUAGE_CODE from the settings.
             media_info['lang'] = settings.LANGUAGE_CODE
 
         kind = media_info.get('kind')

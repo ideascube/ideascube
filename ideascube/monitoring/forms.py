@@ -4,7 +4,7 @@ from datetime import date
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Entry, InventorySpecimen, Loan, Specimen
 

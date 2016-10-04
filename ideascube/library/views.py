@@ -2,14 +2,13 @@ import os
 from io import BytesIO
 from zipfile import ZipFile
 
-from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import F
 from django.db.models.functions import Lower
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.utils.translation import ugettext as _
+from django.utils.translation import get_language, ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   ListView, UpdateView, View)
 
@@ -80,7 +79,7 @@ class BookCreate(CreateView):
     model = Book
     form_class = BookForm
     initial = {
-        'lang': settings.LANGUAGE_CODE
+        'lang': get_language()
     }
 book_create = staff_member_required(BookCreate.as_view())
 
