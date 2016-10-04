@@ -336,6 +336,9 @@ html[dir='rtl'] .show-password {
     margin-right: -25px;
 }
 
+form h3 {
+  margin-top: 1.8em;
+}
 
 
 /* ************************************************* */
