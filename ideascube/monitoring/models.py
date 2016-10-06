@@ -63,7 +63,7 @@ class StockItem(models.Model):
         (ADMIN, _('Administration')),
         (OTHER, _('Other')),
     )
-    module = models.CharField(max_length=20, choices=MODULES)
+    module = models.CharField(_('module'), max_length=20, choices=MODULES)
     name = models.CharField(_('name'), max_length=150)
     description = models.TextField(_('description'), blank=True)
 
@@ -86,7 +86,7 @@ class Specimen(models.Model):
     serial = models.CharField(_('Serial number'), max_length=100, blank=True,
                               null=True)
     item = models.ForeignKey(StockItem, related_name='specimens')
-    count = models.IntegerField(default=1)
+    count = models.IntegerField(_('quantity'), default=1)
     comments = models.TextField(_('comments'), blank=True)
 
     def get_absolute_url(self):
