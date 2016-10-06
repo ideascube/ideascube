@@ -369,19 +369,26 @@ class SimpleZipPackage(Package):
 
 class StaticSite(SimpleZipPackage):
     typename = 'static-site'
+    template_id = 'static-site'
     handler = Nginx
 
     # [FIXME] This propertie looks like hacks.
-    # We should rewrite few templates to have just one able to handle all
-    # static sites.
     @property
-    def template_id(self):
-         if self.id == 'w2eu':
-             return self.id
-         if '.map' in self.id:
-             return 'maps'
-         base_name, _ = self.id.rsplit('.', 1)
-         return base_name
+    def theme(self):
+        # theme string must be marked as translatable.
+        # For this we use a dummy function who do nothing.
+        # As the function is named _, gettext will mark the strings.
+        _ = lambda t: t
+        if '.map' in self.id:
+            return _('discover')
+        return _('info')
+
+    @property
+    def css_class(self):
+        if '.map' in self.id:
+            return 'maps'
+        base_name, *_ = self.id.split('.')
+        return base_name
 
 
 class ZippedMedias(SimpleZipPackage):

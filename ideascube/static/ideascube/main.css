@@ -570,8 +570,8 @@ html[dir='rtl'] .home .card {
 .card.gutenberg {
     background-image: url('./img/cards/gutenberg.jpeg');
 }
-.card.clickinfosn {
-    background-image: url('./img/cards/clickinfosn.png');
+.card.clickinfoado {
+    background-image: url('./img/cards/clickinfoado.png');
 }
 .card.icd10 {
     background-image: url('./img/cards/icd10.png');
@@ -728,6 +728,9 @@ html[dir='rtl'] .card.book img {
 .subnav:before {
     content: '▪';
     padding-right: 5px;
+}
+.info {
+    background-color: #E26A6A;
 }
 .learn {
     background-color: #19B5FE;
