@@ -25,8 +25,8 @@ class TimeStampedModel(models.Model):
     An abstract base class model that provides self-
     updating ``created_at`` and ``modified_at`` fields.
     """
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(_('creation date'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modification date'), auto_now=True)
 
     class Meta:
         abstract = True
@@ -247,7 +247,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     id_card_number = models.CharField(_('ID card number'), max_length=50,
                                       blank=True)
     children_under_12 = models.PositiveSmallIntegerField(
-                        ('Number of children under 12'), blank=True, null=True)
+        _('Number of children under 12'), blank=True, null=True)
     children_under_18 = models.PositiveSmallIntegerField(
         _('Number of children under 18'), blank=True, null=True)
     children_above_18 = models.PositiveSmallIntegerField(

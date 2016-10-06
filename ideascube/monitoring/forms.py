@@ -73,8 +73,9 @@ class SpecimenForm(forms.ModelForm):
 
 class InventorySpecimenForm(forms.ModelForm):
 
-    specimen = forms.CharField(widget=forms.TextInput(attrs={
-                               'placeholder': _('Enter a bar code')}))
+    specimen = forms.CharField(label=_('specimen'),
+                               widget=forms.TextInput(attrs={
+                                   'placeholder': _('Enter a barcode')}))
 
     def clean_specimen(self):
         barcode = clean_barcode(self.cleaned_data['specimen'])
@@ -93,11 +94,14 @@ class InventorySpecimenForm(forms.ModelForm):
 
 
 class LoanForm(forms.ModelForm):
-    specimen = forms.CharField(widget=forms.TextInput(attrs={
-                               'placeholder': _('Enter an item barcode')}))
-    user = forms.CharField(widget=forms.TextInput(attrs={
-                               'placeholder': _('Enter a user serial')}))
-    due_date = forms.DateField(widget=forms.DateInput(format='%Y-%m-%d'),
+    specimen = forms.CharField(label=_('specimen'),
+                               widget=forms.TextInput(attrs={
+                                   'placeholder': _('Enter an item barcode')}))
+    user = forms.CharField(label=_('user'),
+                           widget=forms.TextInput(attrs={
+                               'placeholder': _('Enter a user identifier')}))
+    due_date = forms.DateField(label=_('due date'),
+                               widget=forms.DateInput(format='%Y-%m-%d'),
                                initial=date.today)
 
     def clean_specimen(self):
@@ -129,8 +133,9 @@ class LoanForm(forms.ModelForm):
 
 
 class ReturnForm(forms.Form):
-    loan = forms.CharField(widget=forms.TextInput(attrs={
-                           'placeholder': _('Enter an item barcode')}))
+    loan = forms.CharField(label=_('specimen'),
+                           widget=forms.TextInput(attrs={
+                               'placeholder': _('Enter an item barcode')}))
 
     def clean_loan(self):
         barcode = self.cleaned_data['loan']
