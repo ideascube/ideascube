@@ -67,7 +67,15 @@ def get_config_data(namespace, key):
 
 
 def get_default_value(namespace, key):
-    return get_config_data(namespace, key)['default']
+    value = get_config_data(namespace, key)['default']
+
+    try:
+        # Dicts, lists, and sets are mutable, we don't want the caller to
+        # accidentally modify the registry
+        return value.copy()
+
+    except AttributeError:
+        return value
 
 
 def get_expected_type(namespace, key):
