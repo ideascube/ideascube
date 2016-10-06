@@ -88,7 +88,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
 
     PRIVATE_DATA = ('short_name', 'full_name', 'email', 'phone')
 
-    serial = models.CharField(max_length=40, unique=True)
+    serial = models.CharField(_('identifier'), max_length=40, unique=True)
     short_name = models.CharField(_('usual name'), max_length=30, blank=True)
     full_name = models.CharField(_('full name'), max_length=100, blank=True)
     is_staff = models.BooleanField(_('staff status'), default=False,
@@ -129,7 +129,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
 
             if all_users.filter(serial=self.serial).exists():
                 raise ValidationError({
-                    'serial': _('User with this Serial already exists.')})
+                    'serial': _('User with this identifier already exists.')})
 
     @classmethod
     def get_data_fields(cls):

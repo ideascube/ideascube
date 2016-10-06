@@ -21,7 +21,7 @@ def clean_barcode(barcode):
 class EntryForm(forms.Form):
 
     serials = forms.CharField(widget=forms.Textarea(attrs={
-            'placeholder': _('Enter user serials'),
+            'placeholder': _('Enter user identifiers'),
             'rows': 4
         }))
     module = forms.CharField(widget=forms.HiddenInput, required=False)
@@ -119,7 +119,7 @@ class LoanForm(forms.ModelForm):
             user = user_model.objects.get(serial=serial)
         except user_model.DoesNotExist:
             raise forms.ValidationError(
-                _('Serial {serial} not found'.format(serial=serial)))
+                _('Identifier {serial} not found'.format(serial=serial)))
         else:
             return user
 
