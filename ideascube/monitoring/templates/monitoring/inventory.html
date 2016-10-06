@@ -20,7 +20,7 @@
             <tr><th>{% trans 'count' %}</th><th>{% trans 'barcode' %}</th><th>{% trans 'status' %}</th></tr>
         {% for item in module.objects  %}
             <tr class="stockitem"><td colspan="3">{{ item }}</td></tr>
-            {% for specimen in item.specimens.all %}
+            {% for specimen in item.specimens.physical %}
                 {% get_inventory_specimen inventory specimen as inventoryspecimen %}
                 <tr class="specimen">
                     <td>{{ specimen.count }}</td>

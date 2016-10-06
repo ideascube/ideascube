@@ -107,7 +107,7 @@ class StockListMixin(object):
             stock.append({
                 'key': key,
                 'name': name,
-                'objects': StockItem.objects.filter(module=key)
+                'objects': StockItem.objects.filter(module=key).physical()
             })
         return stock
 
@@ -169,7 +169,7 @@ class InventoryExport(CSVExportMixin, DetailView):
         return self.headers
 
     def get_items(self):
-        return Specimen.objects.all()
+        return Specimen.objects.physical()
 
     def get_row(self, specimen):
         return {

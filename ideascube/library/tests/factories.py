@@ -7,8 +7,8 @@ from ..models import Book, BookSpecimen
 
 
 class BookFactory(factory.django.DjangoModelFactory):
-    title = factory.Sequence(lambda n: "Test book {0}".format(n))
-    summary = "This is a test summary"
+    name = factory.Sequence(lambda n: "Test book {0}".format(n))
+    description = "This is a test description"
     section = 1
     lang = settings.LANGUAGE_CODE
     cover = factory.django.ImageField()
@@ -24,14 +24,14 @@ class BookFactory(factory.django.DjangoModelFactory):
 
 class BookSpecimenFactory(factory.django.DjangoModelFactory):
 
-    serial = FuzzyText(length=6)
-    book = factory.SubFactory(BookFactory)
+    barcode = FuzzyText(length=6)
+    item = factory.SubFactory(BookFactory)
 
     @factory.post_generation
     def is_digital(obj, create, extracted, **kwargs):
         if extracted:
             obj.file = 'ideascube/library/tests/data/test-digital'
-            obj.serial = None
+            obj.barcode = None
 
     class Meta:
         model = BookSpecimen

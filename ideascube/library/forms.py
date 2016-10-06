@@ -13,32 +13,34 @@ from .utils import (fetch_from_openlibrary, load_from_ideascube,
 
 class BookSpecimenForm(forms.ModelForm):
 
-    def clean_serial(self):
+    def clean_barcode(self):
         # Keep only letters, and make sure empty values are mapped to None,
         # not empty string (we need NULL values in db, not empty strings, for
         # uniqueness constraints).
-        return re.sub(r'\s', '', self.cleaned_data['serial']) or None
+        return re.sub(r'\s', '', self.cleaned_data['barcode']) or None
 
     def clean_file(self):
-        # Ensure specimenfile and serial are not both filled or both set to
+        # Ensure specimenfile and barcode are not both filled or both set to
         # None.
-        if all([self.cleaned_data['file'], self.cleaned_data['serial']]):
-            raise ValidationError(_("You can't have both a file and a serial"))
-        if not any([self.cleaned_data['file'], self.cleaned_data['serial']]):
-            raise ValidationError(_("You must add a file or a serial"))
+        if all([self.cleaned_data['file'], self.cleaned_data['barcode']]):
+            raise ValidationError(_("You can't have both a file and a barcode"))
+        if not any([self.cleaned_data['file'], self.cleaned_data['barcode']]):
+            raise ValidationError(_("You must add a file or a barcode"))
         return self.cleaned_data['file']
 
     class Meta:
         model = BookSpecimen
-        widgets = {'book': forms.HiddenInput}
-        fields = '__all__'
+        widgets = {'item': forms.HiddenInput}
+        exclude = ['serial', 'count']
 
 
 class BookForm(forms.ModelForm):
-
     class Meta:
         model = Book
-        fields = '__all__'
+        exclude = ['module']
+        labels = {
+            'name': _('title'),
+        }
         widgets = {
             'lang': LangSelect
         }
