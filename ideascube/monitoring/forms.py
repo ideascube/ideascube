@@ -46,18 +46,19 @@ class EntryForm(forms.Form):
         return set([s for s in serials.splitlines() if s])
 
 
-class ExportEntryForm(forms.Form):
+class SinceForm(forms.Form):
 
-    since = forms.DateField(
-        widget=forms.DateInput(format='%Y-%m-%d'),
-        required=False)
+    since = forms.DateField(label=_('since'),
+                            widget=forms.DateInput(format='%Y-%m-%d'),
+                            required=False)
 
 
-class ExportLoanForm(forms.Form):
+class ExportEntryForm(SinceForm):
+    pass
 
-    since = forms.DateField(
-        widget=forms.DateInput(format='%Y-%m-%d'),
-        required=False)
+
+class ExportLoanForm(SinceForm):
+    pass
 
 
 class SpecimenForm(forms.ModelForm):
