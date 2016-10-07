@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-03 06:47+0000\n"
-"PO-Revision-Date: 2016-10-03 06:48+0000\n"
+"POT-Creation-Date: 2016-10-07 14:07+0000\n"
+"PO-Revision-Date: 2016-10-07 14:18+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -104,7 +104,6 @@ msgstr "Tapez votre texte ici…"
 
 #: ideascube/blog/templates/blog/content_form.html:32
 #: ideascube/templates/form-fullpage.html:26
-#: ideascube/templates/ideascube/welcome_staff.html:14
 msgid "submit"
 msgstr "envoyer"
 
@@ -191,22 +190,22 @@ msgstr "Changer le nom du serveur."
 
 #: ideascube/conf/base.py:306
 msgid "Home page"
-msgstr ""
+msgstr "Page d'accueil"
 
 #: ideascube/conf/base.py:307
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:5
 #: ideascube/serveradmin/templates/serveradmin/index.html:26
 msgid "Manage home page"
-msgstr ""
+msgstr "Gérer la page d'accueil"
 
 #: ideascube/conf/base.py:314
 #: ideascube/serveradmin/templates/serveradmin/index.html:20
 msgid "Languages"
-msgstr ""
+msgstr "Langues"
 
 #: ideascube/conf/base.py:315
 msgid "Enable or disable languages."
-msgstr ""
+msgstr "Activer ou désactiver des langues."
 
 #: ideascube/conf/base.py:347
 msgid "Python web server"
@@ -313,7 +312,7 @@ msgstr "Apprentissage informatique"
 
 #: ideascube/conf/idb_jor_azraq.py:25
 msgid "Beauty Training"
-msgstr ""
+msgstr "Beauty Training"
 
 #: ideascube/conf/idb_jor_azraq.py:26
 msgid "Book Club"
@@ -325,7 +324,7 @@ msgstr "Formation à la résolution de conflit"
 
 #: ideascube/conf/idb_jor_azraq.py:28
 msgid "Coping Skills and Mechanisms Training"
-msgstr ""
+msgstr "Coping Skills and Mechanisms Training"
 
 #: ideascube/conf/idb_jor_azraq.py:29
 msgid "EDRAAK"
@@ -333,15 +332,15 @@ msgstr "EDRAAK"
 
 #: ideascube/conf/idb_jor_azraq.py:30
 msgid "Emotional intelligence Training"
-msgstr ""
+msgstr "Emotional intelligence Training"
 
 #: ideascube/conf/idb_jor_azraq.py:31
 msgid "Handicrafts"
-msgstr ""
+msgstr "Handicrafts"
 
 #: ideascube/conf/idb_jor_azraq.py:32
 msgid "How to be a Psychosocial Counselor Training"
-msgstr ""
+msgstr "How to be a Psychosocial Counselor Training"
 
 #: ideascube/conf/idb_jor_azraq.py:33
 msgid "I am Woman"
@@ -369,11 +368,11 @@ msgstr "Éducation parentale"
 
 #: ideascube/conf/idb_jor_azraq.py:39
 msgid "Peer Support Group"
-msgstr ""
+msgstr "Peer Support Group"
 
 #: ideascube/conf/idb_jor_azraq.py:40
 msgid "Psychosocial ART Interventions Training"
-msgstr ""
+msgstr "Psychosocial ART Interventions Training"
 
 #: ideascube/conf/idb_jor_azraq.py:41
 msgid "Puppets and Theatre"
@@ -381,19 +380,19 @@ msgstr "Marionnettes et Théâtre"
 
 #: ideascube/conf/idb_jor_azraq.py:42
 msgid "Sewing and stitching"
-msgstr ""
+msgstr "Sewing and stitching"
 
 #: ideascube/conf/idb_jor_azraq.py:43
 msgid "SIMSIM Club"
-msgstr ""
+msgstr "SIMSIM Club"
 
 #: ideascube/conf/idb_jor_azraq.py:44
 msgid "Social Work Training"
-msgstr ""
+msgstr "Social Work Training"
 
 #: ideascube/conf/idb_jor_azraq.py:45
 msgid "Stress Management Training"
-msgstr ""
+msgstr "Stress Management Training"
 
 #: ideascube/conf/idb_jor_azraq.py:46
 msgid "Training of Trainers"
@@ -401,7 +400,7 @@ msgstr "Formation de formateurs"
 
 #: ideascube/conf/idb_jor_azraq.py:47
 msgid "World Mental Health Day"
-msgstr ""
+msgstr "World Mental Health Day"
 
 #: ideascube/forms.py:22
 msgid "Username"
@@ -422,23 +421,23 @@ msgstr "Pour créer un bon mot de passe, oubliez les mots de passe, et cherchez 
 msgid "Confirm password"
 msgstr "Confirmer le mot de passe"
 
-#: ideascube/library/forms.py:27
+#: ideascube/library/forms.py:26
 msgid "You can't have both a file and a serial"
 msgstr "Il n'est pas possible d'avoir à la fois un fichier et un code-barres"
 
-#: ideascube/library/forms.py:29
+#: ideascube/library/forms.py:28
 msgid "You must add a file or a serial"
 msgstr "Vous devez ajouter un fichier ou un code-barres"
 
-#: ideascube/library/forms.py:65
+#: ideascube/library/forms.py:64
 msgid "CSV from \"Mocam-en-ligne\""
 msgstr "CSV de \"Mocam-en-ligne\""
 
-#: ideascube/library/forms.py:67
+#: ideascube/library/forms.py:66
 msgid "Ideascube ZIP"
 msgstr "Zip Ideascube"
 
-#: ideascube/library/forms.py:85
+#: ideascube/library/forms.py:84
 msgid "Unknown file format"
 msgstr "Format inconnu"
 
@@ -554,7 +553,7 @@ msgid "read"
 msgstr "lire"
 
 #: ideascube/library/templates/library/book_detail.html:14
-#: ideascube/library/views.py:42
+#: ideascube/library/views.py:41
 msgid "Author"
 msgstr "Auteur"
 
@@ -694,28 +693,28 @@ msgstr "Ce n'est pas un fichier zip"
 msgid "Missing CSV file in zip"
 msgstr "Il n'y a pas de fichier CSV dans le zip"
 
-#: ideascube/library/views.py:30
+#: ideascube/library/views.py:29
 msgid "Last added"
 msgstr "Dernier ajouté"
 
-#: ideascube/library/views.py:36 ideascube/mediacenter/views.py:41
+#: ideascube/library/views.py:35 ideascube/mediacenter/views.py:39
 msgid "Title"
 msgstr "Titre"
 
-#: ideascube/library/views.py:109
+#: ideascube/library/views.py:108
 msgid "Unable to process notices: {}"
 msgstr "Impossible de traiter les notices : {}"
 
-#: ideascube/library/views.py:113
+#: ideascube/library/views.py:112
 #, python-brace-format
 msgid "Successfully processed {count} notices."
 msgstr "{count} notices traitées avec succès."
 
-#: ideascube/library/views.py:119
+#: ideascube/library/views.py:118
 msgid "No notice processed"
 msgstr "Aucune notice importée"
 
-#: ideascube/library/views.py:122
+#: ideascube/library/views.py:121
 msgid "You need to provide a file."
 msgstr "Vous devez fournir un fichier."
 
@@ -811,8 +810,7 @@ msgid "New document"
 msgstr "Nouveau document"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:7
-#: ideascube/serveradmin/catalog.py:340
-#: ideascube/templates/ideascube/includes/cards/maps.html:3
+#: ideascube/serveradmin/catalog.py:340 ideascube/serveradmin/catalog.py:383
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 #: ideascube/templates/ideascube/includes/cards/vikidia.old.html:3
@@ -836,9 +834,17 @@ msgstr "Ajouter un document"
 msgid "Download document"
 msgstr "Télécharger le document"
 
-#: ideascube/mediacenter/views.py:35
+#: ideascube/mediacenter/views.py:33
 msgid "Last modification"
 msgstr "Dernière modification"
+
+#: ideascube/models.py:28
+msgid "creation date"
+msgstr "date de création"
+
+#: ideascube/models.py:29
+msgid "modification date"
+msgstr "date de modification"
 
 #: ideascube/models.py:83
 msgid "Understood"
@@ -855,6 +861,10 @@ msgstr "Parlé"
 #: ideascube/models.py:86
 msgid "Read"
 msgstr "Lire"
+
+#: ideascube/models.py:91
+msgid "identifier"
+msgstr "identifiant"
 
 #: ideascube/models.py:92
 msgid "usual name"
@@ -873,8 +883,8 @@ msgid "Designates whether the user can log into this admin site."
 msgstr "Permet de définir si l'utilisateur pour accéder aux fonctions d'administration"
 
 #: ideascube/models.py:132
-msgid "User with this Serial already exists."
-msgstr ""
+msgid "User with this identifier already exists."
+msgstr "Un utilisateur avec cet identifiant existe déjà."
 
 #: ideascube/models.py:180
 msgid "Student"
@@ -1040,6 +1050,10 @@ msgstr "Ville d'origine"
 msgid "ID card number"
 msgstr "Numéro de carte d'identité"
 
+#: ideascube/models.py:250
+msgid "Number of children under 12"
+msgstr "Nombre d'enfants de moins de 12 ans"
+
 #: ideascube/models.py:252
 msgid "Number of children under 18"
 msgstr "Nombre d'enfants en dessous de 18 ans"
@@ -1133,8 +1147,8 @@ msgid "Shabak knowledge"
 msgstr "Connaissance du chabak"
 
 #: ideascube/monitoring/forms.py:24
-msgid "Enter user serials"
-msgstr "Entrer les serials d'utilisateurs"
+msgid "Enter user identifiers"
+msgstr "Identifiants utilisateurs"
 
 #: ideascube/monitoring/forms.py:29
 msgid "Custom activity name"
@@ -1148,34 +1162,51 @@ msgstr "Partenaire impliqué dans l'activité"
 msgid "Missing module name"
 msgstr "Nom du module manquant"
 
-#: ideascube/monitoring/forms.py:77
-msgid "Enter a bar code"
-msgstr "Entrer un code-barre"
+#: ideascube/monitoring/forms.py:51
+msgid "since"
+msgstr "depuis"
 
-#: ideascube/monitoring/forms.py:85 ideascube/monitoring/forms.py:112
+#: ideascube/monitoring/forms.py:77 ideascube/monitoring/forms.py:98
+#: ideascube/monitoring/forms.py:137
+msgid "specimen"
+msgstr "specimen"
+
+#: ideascube/monitoring/forms.py:79
+msgid "Enter a barcode"
+msgstr "Entrer un code-barres"
+
+#: ideascube/monitoring/forms.py:87 ideascube/monitoring/forms.py:117
 #, python-brace-format
-msgid "Bar code {barcode} not found"
-msgstr "Code-barre {barcode} non trouvé"
+msgid "Barcode {barcode} not found"
+msgstr "Le core-barres {barcode} n'existe pas."
 
-#: ideascube/monitoring/forms.py:97 ideascube/monitoring/forms.py:133
+#: ideascube/monitoring/forms.py:100 ideascube/monitoring/forms.py:139
 msgid "Enter an item barcode"
 msgstr "Entrer un code-barre d'item"
 
-#: ideascube/monitoring/forms.py:99
-msgid "Enter a user serial"
-msgstr "Entrer un serial d'utilisateur"
+#: ideascube/monitoring/forms.py:101
+msgid "user"
+msgstr "utilisateur"
 
-#: ideascube/monitoring/forms.py:106
+#: ideascube/monitoring/forms.py:103
+msgid "Enter a user identifier"
+msgstr "Entrer un identifiant d'utilisateur"
+
+#: ideascube/monitoring/forms.py:104
+msgid "due date"
+msgstr "date limite"
+
+#: ideascube/monitoring/forms.py:111
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
 msgstr "L'item avec le code-barre {barcode} est déjà prété."
 
-#: ideascube/monitoring/forms.py:122
+#: ideascube/monitoring/forms.py:127
 #, python-brace-format
-msgid "Serial {serial} not found"
-msgstr "Serial {serial} non trouvé"
+msgid "Identifier {serial} not found"
+msgstr "L'identifiant {serial} n'existe pas"
 
-#: ideascube/monitoring/forms.py:140
+#: ideascube/monitoring/forms.py:146
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
 msgstr "L'item avec le code-barre {barcode} n'est pas prété."
@@ -1208,6 +1239,10 @@ msgstr "commentaires"
 msgid "Administration"
 msgstr "Administration"
 
+#: ideascube/monitoring/models.py:66
+msgid "module"
+msgstr "module"
+
 #: ideascube/monitoring/models.py:67
 msgid "name"
 msgstr "nom"
@@ -1223,6 +1258,10 @@ msgstr "Code-barres ideascube"
 #: ideascube/monitoring/models.py:86
 msgid "Serial number"
 msgstr "Numéro de série"
+
+#: ideascube/monitoring/models.py:89
+msgid "quantity"
+msgstr "quantité"
 
 #: ideascube/monitoring/models.py:121
 #: ideascube/monitoring/templates/monitoring/loan.html:24
@@ -1533,6 +1572,10 @@ msgstr "Ceci n'est pas un fichier de type {}"
 msgid "learn"
 msgstr "apprendre"
 
+#: ideascube/serveradmin/catalog.py:384
+msgid "info"
+msgstr "info"
+
 #: ideascube/serveradmin/templates/serveradmin/backup.html:5
 msgid "Manage server backups"
 msgstr "Gérer les sauvegardes du serveur"
@@ -1606,11 +1649,11 @@ msgstr "Capacité"
 
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:9
 msgid "Card name"
-msgstr ""
+msgstr "Nom de la carte"
 
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:9
 msgid "Displayed"
-msgstr ""
+msgstr "Affiché"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:11
 msgid "Server info"
@@ -1659,16 +1702,16 @@ msgstr "Gérer le wifi"
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:6
 msgid "Select Languages"
-msgstr ""
+msgstr "Choisir les langes"
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:8
 msgid ""
 "Select here the languages which will be available when uploading content"
-msgstr ""
+msgstr "Sélectionner les langues qui seront disponibles pour ajouter des contenus"
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:23
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 #: ideascube/serveradmin/templates/serveradmin/name.html:5
 msgid "Change Server Name"
@@ -1730,15 +1773,15 @@ msgstr "Aucun réseau wifi connu"
 
 #: ideascube/serveradmin/views.py:41
 msgid "Please select at least one language"
-msgstr ""
+msgstr "Merci de sélectionner au moins une langue"
 
 #: ideascube/serveradmin/views.py:58
 msgid "Server name changed successfully"
-msgstr ""
+msgstr "Le nom du serveur a bien été modifié"
 
 #: ideascube/serveradmin/views.py:61
 msgid "Server name cannot be empty"
-msgstr ""
+msgstr "Le nom du serveur ne peut pas être vide"
 
 #: ideascube/serveradmin/views.py:120
 #, python-brace-format
@@ -1780,7 +1823,7 @@ msgstr "Aucun réseau nommé : {ssid}"
 
 #: ideascube/serveradmin/views.py:232
 msgid "Home cards updated successfully"
-msgstr ""
+msgstr "Les cartes de la page d'accueil ont été modifiées"
 
 #: ideascube/serveradmin/wifi.py:95
 msgid "A key is required to connect to this network"
@@ -1845,14 +1888,6 @@ msgstr "BSF Campus"
 msgid "Renforcer les capacités des bibliothèques."
 msgstr "Renforcer les capacités des bibliothèques."
 
-#: ideascube/templates/ideascube/includes/cards/clickinfosn.html:3
-msgid "ClickInfo Sénégal"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/clickinfosn.html:4
-msgid "Learn how to live in Sénégal."
-msgstr "Apprendre à vivre au Sénégal."
-
 #: ideascube/templates/ideascube/includes/cards/cpassorcier.old.html:3
 msgid "C'est pas sorcier"
 msgstr "C'est pas sorcier"
@@ -1893,14 +1928,6 @@ msgstr "Plateforme d'e-learning ouverte aux <br /> étudiants et aux professeurs
 #: ideascube/templates/ideascube/includes/cards/library.html:5
 msgid "Browse books."
 msgstr "Parcourir les livres."
-
-#: ideascube/templates/ideascube/includes/cards/maps.html:3
-msgid "maps"
-msgstr "cartes"
-
-#: ideascube/templates/ideascube/includes/cards/maps.html:4
-msgid "Browse maps of the area."
-msgstr "Visualiser les cartes."
 
 #: ideascube/templates/ideascube/includes/cards/media-package.html:6
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:6
@@ -1946,18 +1973,6 @@ msgstr "Vikidia"
 #: ideascube/templates/ideascube/includes/cards/vikidia.old.html:4
 msgid "Browse the encyclopedia for children."
 msgstr "Parcourir l'encyclopédie pour enfants."
-
-#: ideascube/templates/ideascube/includes/cards/w2eu.html:3
-msgid "info"
-msgstr "info"
-
-#: ideascube/templates/ideascube/includes/cards/w2eu.html:3
-msgid "w2eu"
-msgstr "w2eu"
-
-#: ideascube/templates/ideascube/includes/cards/w2eu.html:4
-msgid "Independent information for refugees and migrants coming to Europe."
-msgstr "Information indépendante pour les réfugiés et les migrants en Europe."
 
 #: ideascube/templates/ideascube/includes/cards/wikipedia.old.html:3
 msgid "wikipedia"

@@ -1,21 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Jibril Ali <jibril.ali@savethechildren.org>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-03 06:47+0000\n"
+"POT-Creation-Date: 2016-10-07 14:07+0000\n"
 "PO-Revision-Date: 2016-10-03 06:48+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
-"Language-Team: Somali (http://www.transifex.com/ideascube/ideascube/language/so/)\n"
+"Language-Team: Somali (http://www.transifex.com/ideascube/ideascube/language/"
+"so/)\n"
+"Language: so\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: so\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ideascube/blog/models.py:45
@@ -99,7 +100,6 @@ msgstr ""
 
 #: ideascube/blog/templates/blog/content_form.html:32
 #: ideascube/templates/form-fullpage.html:26
-#: ideascube/templates/ideascube/welcome_staff.html:14
 msgid "submit"
 msgstr ""
 
@@ -409,31 +409,31 @@ msgstr ""
 #: ideascube/forms.py:25
 msgid ""
 "To create a strong password, forget about passwords, and think rather about "
-"a passphrase. For instance: \"The boat is flowing on the water\" is a strong"
-" and easy to remember passphrase. Now choose your own passphrase!"
+"a passphrase. For instance: \"The boat is flowing on the water\" is a strong "
+"and easy to remember passphrase. Now choose your own passphrase!"
 msgstr ""
 
 #: ideascube/forms.py:33
 msgid "Confirm password"
 msgstr ""
 
-#: ideascube/library/forms.py:27
+#: ideascube/library/forms.py:26
 msgid "You can't have both a file and a serial"
 msgstr ""
 
-#: ideascube/library/forms.py:29
+#: ideascube/library/forms.py:28
 msgid "You must add a file or a serial"
 msgstr ""
 
-#: ideascube/library/forms.py:65
+#: ideascube/library/forms.py:64
 msgid "CSV from \"Mocam-en-ligne\""
 msgstr ""
 
-#: ideascube/library/forms.py:67
+#: ideascube/library/forms.py:66
 msgid "Ideascube ZIP"
 msgstr ""
 
-#: ideascube/library/forms.py:85
+#: ideascube/library/forms.py:84
 msgid "Unknown file format"
 msgstr ""
 
@@ -535,7 +535,8 @@ msgstr ""
 
 #: ideascube/library/templates/library/book_confirm_delete.html:4
 #, python-format
-msgid "Are you sure you want to delete book \"%(book)s\" and all its specimens?"
+msgid ""
+"Are you sure you want to delete book \"%(book)s\" and all its specimens?"
 msgstr ""
 
 #: ideascube/library/templates/library/book_detail.html:6
@@ -549,7 +550,7 @@ msgid "read"
 msgstr ""
 
 #: ideascube/library/templates/library/book_detail.html:14
-#: ideascube/library/views.py:42
+#: ideascube/library/views.py:41
 msgid "Author"
 msgstr ""
 
@@ -689,28 +690,28 @@ msgstr ""
 msgid "Missing CSV file in zip"
 msgstr ""
 
-#: ideascube/library/views.py:30
+#: ideascube/library/views.py:29
 msgid "Last added"
 msgstr ""
 
-#: ideascube/library/views.py:36 ideascube/mediacenter/views.py:41
+#: ideascube/library/views.py:35 ideascube/mediacenter/views.py:39
 msgid "Title"
 msgstr ""
 
-#: ideascube/library/views.py:109
+#: ideascube/library/views.py:108
 msgid "Unable to process notices: {}"
 msgstr ""
 
-#: ideascube/library/views.py:113
+#: ideascube/library/views.py:112
 #, python-brace-format
 msgid "Successfully processed {count} notices."
 msgstr ""
 
-#: ideascube/library/views.py:119
+#: ideascube/library/views.py:118
 msgid "No notice processed"
 msgstr ""
 
-#: ideascube/library/views.py:122
+#: ideascube/library/views.py:121
 msgid "You need to provide a file."
 msgstr ""
 
@@ -806,8 +807,7 @@ msgid "New document"
 msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:7
-#: ideascube/serveradmin/catalog.py:340
-#: ideascube/templates/ideascube/includes/cards/maps.html:3
+#: ideascube/serveradmin/catalog.py:340 ideascube/serveradmin/catalog.py:383
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 #: ideascube/templates/ideascube/includes/cards/vikidia.old.html:3
@@ -831,9 +831,21 @@ msgstr ""
 msgid "Download document"
 msgstr ""
 
-#: ideascube/mediacenter/views.py:35
+#: ideascube/mediacenter/views.py:33
 msgid "Last modification"
 msgstr ""
+
+#: ideascube/models.py:28
+#, fuzzy
+#| msgid "publication date"
+msgid "creation date"
+msgstr "Taariikhda lasoosaaray"
+
+#: ideascube/models.py:29
+#, fuzzy
+#| msgid "publication date"
+msgid "modification date"
+msgstr "Taariikhda lasoosaaray"
 
 #: ideascube/models.py:83
 msgid "Understood"
@@ -849,6 +861,10 @@ msgstr ""
 
 #: ideascube/models.py:86
 msgid "Read"
+msgstr ""
+
+#: ideascube/models.py:91
+msgid "identifier"
 msgstr ""
 
 #: ideascube/models.py:92
@@ -868,7 +884,7 @@ msgid "Designates whether the user can log into this admin site."
 msgstr ""
 
 #: ideascube/models.py:132
-msgid "User with this Serial already exists."
+msgid "User with this identifier already exists."
 msgstr ""
 
 #: ideascube/models.py:180
@@ -1035,6 +1051,10 @@ msgstr ""
 msgid "ID card number"
 msgstr ""
 
+#: ideascube/models.py:250
+msgid "Number of children under 12"
+msgstr ""
+
 #: ideascube/models.py:252
 msgid "Number of children under 18"
 msgstr ""
@@ -1128,7 +1148,7 @@ msgid "Shabak knowledge"
 msgstr ""
 
 #: ideascube/monitoring/forms.py:24
-msgid "Enter user serials"
+msgid "Enter user identifiers"
 msgstr ""
 
 #: ideascube/monitoring/forms.py:29
@@ -1143,34 +1163,51 @@ msgstr ""
 msgid "Missing module name"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:77
-msgid "Enter a bar code"
+#: ideascube/monitoring/forms.py:51
+msgid "since"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:85 ideascube/monitoring/forms.py:112
+#: ideascube/monitoring/forms.py:77 ideascube/monitoring/forms.py:98
+#: ideascube/monitoring/forms.py:137
+msgid "specimen"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:79
+msgid "Enter a barcode"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:87 ideascube/monitoring/forms.py:117
 #, python-brace-format
-msgid "Bar code {barcode} not found"
+msgid "Barcode {barcode} not found"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:97 ideascube/monitoring/forms.py:133
+#: ideascube/monitoring/forms.py:100 ideascube/monitoring/forms.py:139
 msgid "Enter an item barcode"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:99
-msgid "Enter a user serial"
+#: ideascube/monitoring/forms.py:101
+msgid "user"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:106
+#: ideascube/monitoring/forms.py:103
+msgid "Enter a user identifier"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:104
+msgid "due date"
+msgstr ""
+
+#: ideascube/monitoring/forms.py:111
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
 msgstr ""
 
-#: ideascube/monitoring/forms.py:122
+#: ideascube/monitoring/forms.py:127
 #, python-brace-format
-msgid "Serial {serial} not found"
+msgid "Identifier {serial} not found"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:140
+#: ideascube/monitoring/forms.py:146
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
 msgstr ""
@@ -1203,6 +1240,10 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
+#: ideascube/monitoring/models.py:66
+msgid "module"
+msgstr ""
+
 #: ideascube/monitoring/models.py:67
 msgid "name"
 msgstr ""
@@ -1217,6 +1258,10 @@ msgstr ""
 
 #: ideascube/monitoring/models.py:86
 msgid "Serial number"
+msgstr ""
+
+#: ideascube/monitoring/models.py:89
+msgid "quantity"
 msgstr ""
 
 #: ideascube/monitoring/models.py:121
@@ -1355,7 +1400,9 @@ msgstr ""
 
 #: ideascube/monitoring/templates/monitoring/specimen_confirm_delete.html:4
 #, python-format
-msgid "Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s\"?"
+msgid ""
+"Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s"
+"\"?"
 msgstr ""
 
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:6
@@ -1528,6 +1575,10 @@ msgstr ""
 msgid "learn"
 msgstr ""
 
+#: ideascube/serveradmin/catalog.py:384
+msgid "info"
+msgstr ""
+
 #: ideascube/serveradmin/templates/serveradmin/backup.html:5
 msgid "Manage server backups"
 msgstr ""
@@ -1583,8 +1634,8 @@ msgstr ""
 #: ideascube/serveradmin/templates/serveradmin/backup.html:31
 #, python-brace-format
 msgid ""
-"File must be a zip, and file name must be in the form "
-"{source}-{version}-{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
+"File must be a zip, and file name must be in the form {source}-{version}-"
+"{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
 msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:32
@@ -1840,14 +1891,6 @@ msgstr ""
 msgid "Renforcer les capacités des bibliothèques."
 msgstr ""
 
-#: ideascube/templates/ideascube/includes/cards/clickinfosn.html:3
-msgid "ClickInfo Sénégal"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/clickinfosn.html:4
-msgid "Learn how to live in Sénégal."
-msgstr ""
-
 #: ideascube/templates/ideascube/includes/cards/cpassorcier.old.html:3
 msgid "C'est pas sorcier"
 msgstr ""
@@ -1887,14 +1930,6 @@ msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/library.html:5
 msgid "Browse books."
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/maps.html:3
-msgid "maps"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/maps.html:4
-msgid "Browse maps of the area."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/media-package.html:6
@@ -1940,18 +1975,6 @@ msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/vikidia.old.html:4
 msgid "Browse the encyclopedia for children."
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/w2eu.html:3
-msgid "info"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/w2eu.html:3
-msgid "w2eu"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/w2eu.html:4
-msgid "Independent information for refugees and migrants coming to Europe."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/wikipedia.old.html:3
