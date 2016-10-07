@@ -69,7 +69,7 @@ class Document(SearchMixin, TimeStampedModel):
     objects = DocumentQuerySet.as_manager()
     tags = TaggableManager(blank=True, manager=SortedTaggableManager)
 
-    package_id = models.CharField(_('package_id'), max_length=100, blank=True)
+    package_id = models.CharField(_('package'), max_length=100, blank=True)
 
     class Meta:
         ordering = ["-modified_at", ]
