@@ -1,3 +1,5 @@
+import os
+
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -99,3 +101,10 @@ class BookSpecimen(Specimen, TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('library:book_detail', kwargs={'pk': self.item.pk})
+
+    @property
+    def extension(self):
+        if not self.file:
+            return ''
+        name, extension = os.path.splitext(self.file.name)
+        return extension[1:]

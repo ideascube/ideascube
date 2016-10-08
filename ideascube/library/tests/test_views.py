@@ -105,7 +105,7 @@ def test_book_detail_page_does_not_list_specimens_to_non_staff(app, book):
     specimen = BookSpecimenFactory(item=book, barcode='123789')
     DigitalBookSpecimenFactory(item=book, file__filename='book.epub')
     resp = app.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
-    resp.mustcontain(no=[specimen.barcode, 'Digital specimen'])
+    resp.mustcontain(no=[specimen.barcode])
 
 
 def test_book_detail_page_list_physical_specimens_to_staff(staffapp, book):
@@ -115,9 +115,15 @@ def test_book_detail_page_list_physical_specimens_to_staff(staffapp, book):
 
 
 def test_book_detail_page_list_digital_specimens_to_staff(staffapp, book):
-    BookSpecimenFactory(item=book, is_digital=True)
+    DigitalBookSpecimenFactory(item=book)
     resp = staffapp.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
     resp.mustcontain('Digital specimen')
+
+
+def test_book_detail_allow_to_download_digital_specimen(app, book):
+    DigitalBookSpecimenFactory(item=book, file__filename='book.epub')
+    resp = app.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
+    resp.mustcontain('Download epub')
 
 
 def test_anonymous_should_not_access_book_create_page(app):

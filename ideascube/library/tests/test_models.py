@@ -79,3 +79,18 @@ def test_unicode_returns_digital_specimen_of_book():
     book = BookFactory()
     specimen = DigitalBookSpecimenFactory(item=book)
     assert str(specimen).startswith(u'Digital specimen of')
+
+
+def test_specimen_extension():
+    specimen = DigitalBookSpecimenFactory(file__filename='book.epub')
+    assert specimen.extension == 'epub'
+
+
+def test_specimen_without_extension():
+    specimen = DigitalBookSpecimenFactory(file__filename='book')
+    assert specimen.extension == ''
+
+
+def test_pysical_specimen_extension():
+    specimen = BookSpecimenFactory()
+    assert specimen.extension == ''

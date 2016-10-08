@@ -95,8 +95,14 @@ class StockItem(models.Model):
 
 
 class SpecimenQuerySet(models.QuerySet):
+
     def physical(self):
-        return [specimen for specimen in self if specimen.instance.physical]
+        return [specimen.instance for specimen in self
+                if specimen.instance.physical]
+
+    def digital(self):
+        return [specimen.instance for specimen in self
+                if not specimen.instance.physical]
 
 
 class Specimen(models.Model):
