@@ -1,3 +1,14 @@
+ideascube (0.14.0) unstable; urgency=low
+
+  - Made Book and BookSpecimen inherit from StockItem and Specimen
+  - Added command line to reset home cards: `reset_home`
+  - Switched from SelectMultiple to CheckBox for User form
+  - Added idb_jor_hostcommunity config
+  - Added more Arabic translations
+  - Add download link for digital book specimens
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 30 Sep 2016 15:42:00 +0300
+
 ideascube (0.13.0) unstable; urgency=low
 
   - Display a home card for each installed package
