@@ -1,14 +1,15 @@
-from datetime import datetime
 import zipfile
+from datetime import datetime
 
 import pytest
-from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
+from django.core.urlresolvers import reverse
 from webtest import Upload
 
 from ..models import Book, BookSpecimen
-from ..views import Index, BookExport
-from .factories import BookFactory, BookSpecimenFactory
+from ..views import BookExport, Index
+from .factories import (BookFactory, BookSpecimenFactory,
+                        DigitalBookSpecimenFactory)
 
 pytestmark = pytest.mark.django_db
 
@@ -102,7 +103,7 @@ def test_everyone_should_access_book_detail_page(app, book):
 
 def test_book_detail_page_does_not_list_specimens_to_non_staff(app, book):
     specimen = BookSpecimenFactory(item=book, barcode='123789')
-    BookSpecimenFactory(item=book, is_digital=True)
+    DigitalBookSpecimenFactory(item=book, file__filename='book.epub')
     resp = app.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
     resp.mustcontain(no=[specimen.barcode, 'Digital specimen'])
 

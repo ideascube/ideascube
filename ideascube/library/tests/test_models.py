@@ -1,10 +1,10 @@
 import pytest
 from django.db import IntegrityError
+from factory.fuzzy import FuzzyText
 
 from ..models import Book, BookSpecimen
-from .factories import BookFactory, BookSpecimenFactory
-
-from factory.fuzzy import FuzzyText
+from .factories import (BookFactory, BookSpecimenFactory,
+                        DigitalBookSpecimenFactory)
 
 pytestmark = pytest.mark.django_db
 
@@ -45,8 +45,8 @@ def test_can_search_books_by_tags():
 
 
 def test_it_should_be_allowed_to_create_more_than_one_digital_specimen():
-    BookSpecimenFactory(is_digital=True)
-    BookSpecimenFactory(is_digital=True)
+    DigitalBookSpecimenFactory()
+    DigitalBookSpecimenFactory()
     assert BookSpecimen.objects.count() == 2
 
 
@@ -60,13 +60,13 @@ def test_deleting_digital_specimen():
 
 
 def test_physical_from_model_method():
-    specimen = BookSpecimenFactory(is_digital=True)
+    specimen = DigitalBookSpecimenFactory()
     assert not specimen.physical
 
 
 def test_is_physical_after_filling_barcode_whithout_removing_file():
-    specimen = BookSpecimenFactory(
-        barcode=FuzzyText(length=6), is_digital=True)
+    specimen = DigitalBookSpecimenFactory(
+        barcode=FuzzyText(length=6))
     assert not specimen.physical
 
 
@@ -77,5 +77,5 @@ def test_physical_after_removing_file():
 
 def test_unicode_returns_digital_specimen_of_book():
     book = BookFactory()
-    specimen = BookSpecimenFactory(item=book, is_digital=True)
+    specimen = DigitalBookSpecimenFactory(item=book)
     assert str(specimen).startswith(u'Digital specimen of')

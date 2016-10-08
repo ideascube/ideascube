@@ -27,11 +27,10 @@ class BookSpecimenFactory(factory.django.DjangoModelFactory):
     barcode = FuzzyText(length=6)
     item = factory.SubFactory(BookFactory)
 
-    @factory.post_generation
-    def is_digital(obj, create, extracted, **kwargs):
-        if extracted:
-            obj.file = 'ideascube/library/tests/data/test-digital'
-            obj.barcode = None
-
     class Meta:
         model = BookSpecimen
+
+
+class DigitalBookSpecimenFactory(BookSpecimenFactory):
+    barcode = None
+    file = factory.django.FileField(filename='book.epub')
