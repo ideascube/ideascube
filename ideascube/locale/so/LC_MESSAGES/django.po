@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 14:07+0000\n"
+"POT-Creation-Date: 2016-10-08 10:43+0000\n"
 "PO-Revision-Date: 2016-10-03 06:48+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
 "Language-Team: Somali (http://www.transifex.com/ideascube/ideascube/language/"
@@ -752,7 +752,7 @@ msgid "type"
 msgstr ""
 
 #: ideascube/mediacenter/models.py:72
-msgid "package_id"
+msgid "package"
 msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5

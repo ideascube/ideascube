@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Florian HESLOUIN <splite@zimdeo.fr>, 2015
 # Grégoire Pouget <gregoire.pouget@bibliosansfrontieres.org>, 2016
@@ -13,14 +13,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 14:07+0000\n"
+"POT-Creation-Date: 2016-10-08 10:43+0000\n"
 "PO-Revision-Date: 2016-10-07 14:18+0000\n"
 "Last-Translator: yohanboniface <yohanboniface@free.fr>\n"
-"Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/fr/)\n"
+"Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/"
+"fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ideascube/blog/models.py:45
@@ -413,9 +414,12 @@ msgstr "Mot de passe"
 #: ideascube/forms.py:25
 msgid ""
 "To create a strong password, forget about passwords, and think rather about "
-"a passphrase. For instance: \"The boat is flowing on the water\" is a strong"
-" and easy to remember passphrase. Now choose your own passphrase!"
-msgstr "Pour créer un bon mot de passe, oubliez les mots de passe, et cherchez plutôt des phrases. par exemple: \"Le bateau flotte sur la rivière\" est un bon mot de passe facile à retenir. Maintenant choisissez une phrase de passe!"
+"a passphrase. For instance: \"The boat is flowing on the water\" is a strong "
+"and easy to remember passphrase. Now choose your own passphrase!"
+msgstr ""
+"Pour créer un bon mot de passe, oubliez les mots de passe, et cherchez "
+"plutôt des phrases. par exemple: \"Le bateau flotte sur la rivière\" est un "
+"bon mot de passe facile à retenir. Maintenant choisissez une phrase de passe!"
 
 #: ideascube/forms.py:33
 msgid "Confirm password"
@@ -539,8 +543,11 @@ msgstr "Exemplaire numérique"
 
 #: ideascube/library/templates/library/book_confirm_delete.html:4
 #, python-format
-msgid "Are you sure you want to delete book \"%(book)s\" and all its specimens?"
-msgstr "Êtes-vous sûr de vouloir supprimer le livre \"%(book)s\" et tous ses exemplaires ?"
+msgid ""
+"Are you sure you want to delete book \"%(book)s\" and all its specimens?"
+msgstr ""
+"Êtes-vous sûr de vouloir supprimer le livre \"%(book)s\" et tous ses "
+"exemplaires ?"
 
 #: ideascube/library/templates/library/book_detail.html:6
 msgid "View all books"
@@ -755,7 +762,7 @@ msgid "type"
 msgstr "type"
 
 #: ideascube/mediacenter/models.py:72
-msgid "package_id"
+msgid "package"
 msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5
@@ -778,7 +785,9 @@ msgid ""
 "\n"
 "                Download %(kind)s\n"
 "            "
-msgstr "\nTélécharger le document %(kind)s"
+msgstr ""
+"\n"
+"Télécharger le document %(kind)s"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:29
 #, python-format
@@ -787,7 +796,10 @@ msgid ""
 "                   Cannot edit or delete this document.\n"
 "                   It is installed by the \"%(package_id)s\" package.\n"
 "               "
-msgstr "\nL'édition ou la suppression ne sont pas possibles. Ce document fait partie du package %(package_id)s."
+msgstr ""
+"\n"
+"L'édition ou la suppression ne sont pas possibles. Ce document fait partie "
+"du package %(package_id)s."
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:36
 #: ideascube/monitoring/templates/monitoring/inventory.html:44
@@ -880,7 +892,9 @@ msgstr "membre de l'équipe"
 
 #: ideascube/models.py:95
 msgid "Designates whether the user can log into this admin site."
-msgstr "Permet de définir si l'utilisateur pour accéder aux fonctions d'administration"
+msgstr ""
+"Permet de définir si l'utilisateur pour accéder aux fonctions "
+"d'administration"
 
 #: ideascube/models.py:132
 msgid "User with this identifier already exists."
@@ -1108,7 +1122,8 @@ msgstr "Adresse dans le camp"
 
 #: ideascube/models.py:288
 msgid "Phone number (use comma to register more than one)"
-msgstr "Numéro de téléphone (utiliser des virgules pour en enregistrer plusieurs)"
+msgstr ""
+"Numéro de téléphone (utiliser des virgules pour en enregistrer plusieurs)"
 
 #: ideascube/models.py:290
 msgid "Email address (optional)"
@@ -1399,8 +1414,12 @@ msgstr "Retour"
 
 #: ideascube/monitoring/templates/monitoring/specimen_confirm_delete.html:4
 #, python-format
-msgid "Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s\"?"
-msgstr "Êtes-vous sûr de vouloir supprimer l'exemplaire \"%(specimen)s\" de \"%(item)s\" ?"
+msgid ""
+"Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s"
+"\"?"
+msgstr ""
+"Êtes-vous sûr de vouloir supprimer l'exemplaire \"%(specimen)s\" de "
+"\"%(item)s\" ?"
 
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:6
 #, python-format
@@ -1631,9 +1650,11 @@ msgstr "Mettre en ligne"
 #: ideascube/serveradmin/templates/serveradmin/backup.html:31
 #, python-brace-format
 msgid ""
-"File must be a zip, and file name must be in the form "
-"{source}-{version}-{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
-msgstr "Le fichier doit être un zip, et son nom doit être de la forme {source}-{version}-{date}.zip; par exemple : musasa-0.1.0-201501231405.zip"
+"File must be a zip, and file name must be in the form {source}-{version}-"
+"{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
+msgstr ""
+"Le fichier doit être un zip, et son nom doit être de la forme {source}-"
+"{version}-{date}.zip; par exemple : musasa-0.1.0-201501231405.zip"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:32
 msgid "Upload backup file"
@@ -1707,7 +1728,8 @@ msgstr "Choisir les langes"
 #: ideascube/serveradmin/templates/serveradmin/languages.html:8
 msgid ""
 "Select here the languages which will be available when uploading content"
-msgstr "Sélectionner les langues qui seront disponibles pour ajouter des contenus"
+msgstr ""
+"Sélectionner les langues qui seront disponibles pour ajouter des contenus"
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:23
 msgid "Save"
@@ -1923,7 +1945,8 @@ msgstr "KoomBook EDU"
 #: ideascube/templates/ideascube/includes/cards/koombookedu.html:4
 msgid ""
 "Plateforme d'e-learning ouverte aux <br /> étudiants et aux professeurs."
-msgstr "Plateforme d'e-learning ouverte aux <br /> étudiants et aux professeurs."
+msgstr ""
+"Plateforme d'e-learning ouverte aux <br /> étudiants et aux professeurs."
 
 #: ideascube/templates/ideascube/includes/cards/library.html:5
 msgid "Browse books."
@@ -2077,7 +2100,10 @@ msgid ""
 "To enjoy this digital library, you must first create a username and a "
 "password. These will allow you to administrate the server. Make sure to "
 "remember both the username AND password!"
-msgstr "Pour profiter de cette bibliothèque numérique, vous devez d'abord créer un nom d'utilisateur et un mot de passe. Assurez-vous de vous rappeler à la fois du nom d'utilisateur ET du mot de passe !"
+msgstr ""
+"Pour profiter de cette bibliothèque numérique, vous devez d'abord créer un "
+"nom d'utilisateur et un mot de passe. Assurez-vous de vous rappeler à la "
+"fois du nom d'utilisateur ET du mot de passe !"
 
 #: ideascube/templates/registration/login.html:14
 msgid "Log in"

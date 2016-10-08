@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 14:07+0000\n"
-"PO-Revision-Date: 2016-10-03 12:19+0000\n"
+"POT-Creation-Date: 2016-10-08 10:43+0000\n"
+"PO-Revision-Date: 2016-10-08 08:51+0000\n"
 "Last-Translator: narjis naji areff ihloh <nano_naji@yahoo.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/ideascube/ideascube/language/"
 "ar/)\n"
@@ -29,11 +29,11 @@ msgstr "مسودة"
 
 #: ideascube/blog/models.py:46
 msgid "published"
-msgstr "تم نشره"
+msgstr "نشر"
 
 #: ideascube/blog/models.py:47
 msgid "deleted"
-msgstr "تمت إزالته"
+msgstr "تم الحذف"
 
 #: ideascube/blog/models.py:50 ideascube/library/models.py:41
 #: ideascube/mediacenter/models.py:53
@@ -74,21 +74,21 @@ msgstr "اللغة"
 
 #: ideascube/blog/templates/blog/content_detail.html:6
 msgid "View all posts"
-msgstr "اظهار كل ماتمّت معاينته"
+msgstr "إظهار جميع المنشورات"
 
 #: ideascube/blog/templates/blog/content_detail.html:7
 #: ideascube/blog/templates/blog/index.html:6
 #: ideascube/templates/ideascube/includes/cards/blog.html:4
 msgid "Blog"
-msgstr "مدونة"
+msgstr "المدونة"
 
 #: ideascube/blog/templates/blog/content_form.html:12
 msgid "Edit post"
-msgstr "تحرير النص"
+msgstr "تعديل المنشور"
 
 #: ideascube/blog/templates/blog/content_form.html:14
 msgid "New post"
-msgstr "نص جديد"
+msgstr "منشور جديد"
 
 #: ideascube/blog/templates/blog/content_form.html:20
 msgid "Metadatas"
@@ -105,15 +105,15 @@ msgstr "أكتب النص هنا ...."
 #: ideascube/blog/templates/blog/content_form.html:32
 #: ideascube/templates/form-fullpage.html:26
 msgid "submit"
-msgstr "إرسال"
+msgstr "حفظ"
 
 #: ideascube/blog/templates/blog/index.html:17
 msgid "Add content"
-msgstr "أضف محتوى"
+msgstr "إضافة محتوى"
 
 #: ideascube/blog/views.py:17
 msgid "Last published"
-msgstr "الطبعة الاخيرة"
+msgstr "أحدث المنشورات"
 
 #: ideascube/conf/base.py:213
 msgid "the camp"
@@ -121,7 +121,7 @@ msgstr "المخيّم"
 
 #: ideascube/conf/base.py:231
 msgid "Basic informations"
-msgstr "معلومات أوليّة"
+msgstr "معلومات أساسية"
 
 #: ideascube/conf/base.py:242 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
@@ -129,15 +129,15 @@ msgstr "المستخدمين"
 
 #: ideascube/conf/base.py:243
 msgid "Create, remove or modify users."
-msgstr "انشاء وازالة وتغيير المستخدم"
+msgstr "إنشاء / حذف / تعديل المستخدم"
 
 #: ideascube/conf/base.py:250
 msgid "Entries"
-msgstr "الداخلون الى صندوق الافكار"
+msgstr "المستخدمين"
 
 #: ideascube/conf/base.py:251
 msgid "Manage user entries."
-msgstr "ادارة دخول المستخدم"
+msgstr "إدارة دخول المستخدمين"
 
 #: ideascube/conf/base.py:258
 #: ideascube/monitoring/templates/monitoring/stock.html:5
@@ -146,39 +146,39 @@ msgstr "المخزون"
 
 #: ideascube/conf/base.py:259
 msgid "Manage stock."
-msgstr "ادارة الجرد"
+msgstr "إدارة المخزون ( الجرد )"
 
 #: ideascube/conf/base.py:266
 msgid "Loans"
-msgstr "الاعارة"
+msgstr "الاستعارة"
 
 #: ideascube/conf/base.py:267
 msgid "Manage loans."
-msgstr "ادارة الاعارة"
+msgstr "ادارة الاستعارة"
 
 #: ideascube/conf/base.py:274
 msgid "Stop/Restart"
-msgstr "ايقاف او اعادة تشغيل"
+msgstr "إيقاف / إعادة تشغيل"
 
 #: ideascube/conf/base.py:275
 msgid "Stop or restart the server."
-msgstr "ايقاف او اعادة تشغيل المخدّم"
+msgstr "إيقاف / إعادة تشغيل الخادم"
 
 #: ideascube/conf/base.py:282
 msgid "Backups"
-msgstr "المحفوظات"
+msgstr "النسخ الإحتياطية"
 
 #: ideascube/conf/base.py:283
 msgid "Create, restore, download, upload backups."
-msgstr "انشاء واسترجاع وتحميل وارسال المحفوظات"
+msgstr "إنشاء / إسترجاع / تحميل / إرسال النسخ الإحتياطية"
 
 #: ideascube/conf/base.py:290
 msgid "Wi-Fi"
-msgstr "شبكة انترنت"
+msgstr "شبكة الإنترنت"
 
 #: ideascube/conf/base.py:291
 msgid "Manage Wi-Fi connections."
-msgstr "ادارة اتصالات شبكة الانترنت"
+msgstr "التحكم  باتصالات شبكة الانترنت"
 
 #: ideascube/conf/base.py:298
 msgid "Server Name"
@@ -229,7 +229,7 @@ msgstr "برنامج Daemon المخصص لربط غيتنبيرغ على شبك
 
 #: ideascube/conf/base.py:358
 msgid "Daemon used for distant connexion to server"
-msgstr "الناطرة المستخدمة للاتصال بالمخدم عن بعد"
+msgstr "برنامج Daemon المستخدمة للاتصال بالمخدم عن بعد"
 
 #: ideascube/conf/idb_aus_queensland.py:6 ideascube/conf/idb_aus_slwa.py:5
 msgid "the community"
@@ -259,7 +259,7 @@ msgstr "العائلة"
 #: ideascube/conf/idb_grc_eleonas.py:13
 #: ideascube/conf/idb_lwb_detroit_usa.py:17 ideascube/conf/idb_sen_fap.py:17
 msgid "In the town"
-msgstr "في المدينه"
+msgstr "في المدينة"
 
 #: ideascube/conf/idb_aus_queensland.py:17 ideascube/conf/idb_aus_slwa.py:16
 #: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_deu_dusseldorf.py:17
@@ -449,7 +449,7 @@ msgstr "رقمي"
 
 #: ideascube/library/models.py:22
 msgid "children - cartoons"
-msgstr "رسوم متحركة للأطفال"
+msgstr "رسوم للأطفال"
 
 #: ideascube/library/models.py:23
 msgid "children - novels"
@@ -477,11 +477,11 @@ msgstr "روايات للبالغين"
 
 #: ideascube/library/models.py:29
 msgid "adults - poetry"
-msgstr "شعر -بالغين"
+msgstr "شعر - للبالغين"
 
 #: ideascube/library/models.py:30
 msgid "adults - theatre"
-msgstr "مسرح - بالغين"
+msgstr "مسرح - للبالغين"
 
 #: ideascube/library/models.py:31
 msgid "adults - documentary"
@@ -505,7 +505,7 @@ msgstr "المؤلفين"
 
 #: ideascube/library/models.py:40
 msgid "serie"
-msgstr "السلاسل"
+msgstr "السلسلة"
 
 #: ideascube/library/models.py:42
 msgid "subtitle"
@@ -517,15 +517,15 @@ msgstr "الناشر"
 
 #: ideascube/library/models.py:45
 msgid "section"
-msgstr "قسم /فرع"
+msgstr "قسم / فرع"
 
 #: ideascube/library/models.py:48
 msgid "cover"
-msgstr "غلاف"
+msgstr "الغلاف"
 
 #: ideascube/library/models.py:80
 msgid "serial"
-msgstr "دورية"
+msgstr "الرقم المتسلسل"
 
 #: ideascube/library/models.py:82
 msgid "location"
@@ -566,7 +566,7 @@ msgstr "الناشر"
 
 #: ideascube/library/templates/library/book_detail.html:16
 msgid "Serie"
-msgstr "التسلسل"
+msgstr "السلسلة"
 
 #: ideascube/library/templates/library/book_detail.html:19
 msgid "ISBN"
@@ -574,7 +574,7 @@ msgstr "الرقم المعياري الدولي للكتاب"
 
 #: ideascube/library/templates/library/book_detail.html:21
 msgid "Section"
-msgstr "الفصل"
+msgstr "الفرع"
 
 #: ideascube/library/templates/library/book_detail.html:29
 msgid "Add a specimen"
@@ -586,7 +586,7 @@ msgstr "احذف هذا الكتاب"
 
 #: ideascube/library/templates/library/book_detail.html:31
 msgid "Edit this book"
-msgstr "حرر هذا الكتاب"
+msgstr " تعديل هذا الكتاب"
 
 #: ideascube/library/templates/library/book_detail.html:34
 msgid "Specimens"
@@ -602,7 +602,7 @@ msgstr "لا توجد عينة لهذا الكتاب"
 
 #: ideascube/library/templates/library/book_form.html:6
 msgid "Edit book"
-msgstr "تحرير الكتاب"
+msgstr "تعديل الكتاب"
 
 #: ideascube/library/templates/library/book_form.html:8
 msgid "New book"
@@ -618,7 +618,7 @@ msgstr "إلغاء"
 
 #: ideascube/library/templates/library/import.html:6
 msgid "Import books notices"
-msgstr "استدراج خصائص الكتاب"
+msgstr "إستدراج خصائص الكتاب"
 
 #: ideascube/library/templates/library/import.html:15
 msgid "From files"
@@ -656,11 +656,11 @@ msgstr "أضف كتاباً"
 
 #: ideascube/library/templates/library/index.html:19
 msgid "Import notices"
-msgstr "استدراج الخصائص"
+msgstr "إستيراد - حفظ الخصائص"
 
 #: ideascube/library/templates/library/index.html:20
 msgid "Export notices"
-msgstr "إستيراد الملاحظات"
+msgstr "إرسال الملاحظات"
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:4
 #, python-format
@@ -694,7 +694,7 @@ msgstr "ملف غير مضغوط"
 
 #: ideascube/library/utils.py:150
 msgid "Missing CSV file in zip"
-msgstr "ملف ال '('CVS')' مفقود"
+msgstr "ملف ال (CVS) مفقود"
 
 #: ideascube/library/views.py:29
 msgid "Last added"
@@ -706,12 +706,12 @@ msgstr "العنوان"
 
 #: ideascube/library/views.py:108
 msgid "Unable to process notices: {}"
-msgstr "لا يمكن إتمام العملية:{}"
+msgstr "لا يمكن إتمام العملية: {}"
 
 #: ideascube/library/views.py:112
 #, python-brace-format
 msgid "Successfully processed {count} notices."
-msgstr "تم معالدجة الخصائص بنجاح و {count} "
+msgstr "تم معالجة الخصائص بنجاح و {count} "
 
 #: ideascube/library/views.py:118
 msgid "No notice processed"
@@ -743,7 +743,7 @@ msgstr "التطبيق"
 
 #: ideascube/mediacenter/models.py:56
 msgid "original"
-msgstr "أصلي"
+msgstr "الأصلي"
 
 #: ideascube/mediacenter/models.py:59
 msgid "preview"
@@ -758,8 +758,8 @@ msgid "type"
 msgstr "النوع"
 
 #: ideascube/mediacenter/models.py:72
-msgid "package_id"
-msgstr "رقم ال"
+msgid "package"
+msgstr "حزمة"
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5
 #, python-format
@@ -794,9 +794,9 @@ msgid ""
 "               "
 msgstr ""
 "\n"
-"Cannot edit or delete this document.\n"
+"لا يمكن حذف أو تعديل هذا الملف\n"
 "\n"
-"It is installed by the \"%(package_id)s\" package."
+"تم تحميله من خلال \"%(package_id)s\" "
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:36
 #: ideascube/monitoring/templates/monitoring/inventory.html:44
@@ -812,7 +812,7 @@ msgstr "حذف"
 
 #: ideascube/mediacenter/templates/mediacenter/document_form.html:6
 msgid "Edit document"
-msgstr "تعديل على المجلد"
+msgstr "تعديل المجلد"
 
 #: ideascube/mediacenter/templates/mediacenter/document_form.html:8
 msgid "New document"
@@ -845,39 +845,35 @@ msgstr "تنزيل المستند"
 
 #: ideascube/mediacenter/views.py:33
 msgid "Last modification"
-msgstr "التعديل الاخير"
+msgstr "تنزيل المستند"
 
 #: ideascube/models.py:28
-#, fuzzy
-#| msgid "publication date"
 msgid "creation date"
-msgstr "تاريخ النشر"
+msgstr "تاريخ الإنشاء"
 
 #: ideascube/models.py:29
-#, fuzzy
-#| msgid "publication date"
 msgid "modification date"
-msgstr "تاريخ النشر"
+msgstr "تاريخ التعديل"
 
 #: ideascube/models.py:83
 msgid "Understood"
-msgstr "فهم"
+msgstr "يفهم"
 
 #: ideascube/models.py:84
 msgid "Written"
-msgstr "مكتوب"
+msgstr "يكتب"
 
 #: ideascube/models.py:85
 msgid "Spoken"
-msgstr "منطوق"
+msgstr "يتحدث"
 
 #: ideascube/models.py:86
 msgid "Read"
-msgstr "قرأ"
+msgstr "يقرأ"
 
 #: ideascube/models.py:91
 msgid "identifier"
-msgstr ""
+msgstr "المعرف"
 
 #: ideascube/models.py:92
 msgid "usual name"
@@ -896,10 +892,8 @@ msgid "Designates whether the user can log into this admin site."
 msgstr "حدد إذا ما كان بإمكان المستخدم الولوج إلى هذا الموقع الإداري"
 
 #: ideascube/models.py:132
-#, fuzzy
-#| msgid "User with this Serial already exists."
 msgid "User with this identifier already exists."
-msgstr "المستخدم الذي يملك الرقم المتسلسل موجود"
+msgstr "المستخدم الذي يملك هذا المعرف موجود اصلا"
 
 #: ideascube/models.py:180
 msgid "Student"
@@ -939,7 +933,7 @@ msgstr "عائلته موجوده في  {place} و يعيش بدونهم"
 
 #: ideascube/models.py:197
 msgid "Comitees, representation groups"
-msgstr "لجان و مجموعات التمثيل"
+msgstr "اللجان و ممثلين المجتمع"
 
 #: ideascube/models.py:198
 msgid "Music, dance, singing"
@@ -963,7 +957,7 @@ msgstr "مجموعة الحديث"
 
 #: ideascube/models.py:203
 msgid "Recreational"
-msgstr "Recreational"
+msgstr "أنشطة ترفيهيه"
 
 #: ideascube/models.py:204
 msgid "Volunteering"
@@ -971,15 +965,15 @@ msgstr "التطوع "
 
 #: ideascube/models.py:205
 msgid "Psycosocial"
-msgstr "Psycosocial"
+msgstr "أنشطه دعم نفسي"
 
 #: ideascube/models.py:206
 msgid "Educational"
-msgstr "Educational"
+msgstr "أنشطة تعليمية"
 
 #: ideascube/models.py:207
 msgid "Sport"
-msgstr "Sport"
+msgstr "أنشطة رياضية"
 
 #: ideascube/models.py:211
 msgid "Seen the Box"
@@ -987,43 +981,43 @@ msgstr "تمت مشاهدة الصندوق"
 
 #: ideascube/models.py:212
 msgid "Has been informed by partner organization"
-msgstr "تم إعلامه من قبل المنظمة الشريكة"
+msgstr "تم إعلامه من قبل المنظمة "
 
 #: ideascube/models.py:213
 msgid "Has been informed by other organization"
-msgstr "تم أعلامه من قبل المنظمة"
+msgstr "تم أعلامه من قبل المنظمات أخرى"
 
 #: ideascube/models.py:214
 msgid "Word of mouth"
-msgstr "سراً"
+msgstr "تم إخباره عنه من قبل بعض الأشخاص"
 
 #: ideascube/models.py:215
 msgid "Poster campaign"
-msgstr "ملصق الحملة"
+msgstr "ملصق الحملة -إعلان"
 
 #: ideascube/models.py:220
 msgid "Primary"
-msgstr "الأولي"
+msgstr "الإبتدائية"
 
 #: ideascube/models.py:221
 msgid "Secondary"
-msgstr "الثانوي"
+msgstr "الثانوية"
 
 #: ideascube/models.py:222
 msgid "Professional"
-msgstr "مهني"
+msgstr "محترف"
 
 #: ideascube/models.py:223
 msgid "Higher education"
-msgstr "الدراسة العليا"
+msgstr "الدراسات العليا"
 
 #: ideascube/models.py:227
 msgid "Couple"
-msgstr "ثنائي"
+msgstr "متزوج"
 
 #: ideascube/models.py:228
 msgid "Single"
-msgstr "مفرد/عازب "
+msgstr "عازب "
 
 #: ideascube/models.py:229
 msgid "Widowed"
@@ -1043,7 +1037,7 @@ msgstr "انثى"
 
 #: ideascube/models.py:238
 msgid "Latin written name"
-msgstr "الأسم باللغة الانجليزيه"
+msgstr "الأسم الكامل باللغة الانجليزية"
 
 #: ideascube/models.py:241
 msgid "Birth year"
@@ -1055,21 +1049,19 @@ msgstr "الجنس"
 
 #: ideascube/models.py:245
 msgid "Country of origin"
-msgstr "بلد الاصل"
+msgstr "بلد الأصل"
 
 #: ideascube/models.py:246
 msgid "City of origin"
-msgstr "المدينة مسقط الرأس"
+msgstr "المدينة - مسقط الرأس"
 
 #: ideascube/models.py:247
 msgid "ID card number"
 msgstr "رقم الهوية الشخصية"
 
 #: ideascube/models.py:250
-#, fuzzy
-#| msgid "Number of children under 18"
 msgid "Number of children under 12"
-msgstr "عدد الأطفال تحت سن الــ18"
+msgstr "عدد الأطفال اقل من  12 سنه"
 
 #: ideascube/models.py:252
 msgid "Number of children under 18"
@@ -1089,7 +1081,7 @@ msgstr "الحالة الأجتماعية"
 
 #: ideascube/models.py:262
 msgid "Ideas Box awareness"
-msgstr "وعي صندوق الأفكار"
+msgstr " طريقةالمعرفه عن Ideas Box "
 
 #: ideascube/models.py:264
 msgid "Refugee ID"
@@ -1097,7 +1089,7 @@ msgstr "هوية اللاجئ"
 
 #: ideascube/models.py:265
 msgid "Camp entry date"
-msgstr "تاريخ الالتحاق بالمخيم"
+msgstr "تاريخ الدخول للمخيم"
 
 #: ideascube/models.py:268
 msgid "Current occupation"
@@ -1105,7 +1097,7 @@ msgstr "المهنة الحالية"
 
 #: ideascube/models.py:271
 msgid "Occupation in the place of origin"
-msgstr "المهنة في مكان السكن الأصلي"
+msgstr "المهنة في بلد الأصلي"
 
 #: ideascube/models.py:275
 msgid "Family status"
@@ -1113,7 +1105,7 @@ msgstr "الوضع العائلي"
 
 #: ideascube/models.py:278
 msgid "Sent to school in the country of origin (if under 18)"
-msgstr "هل ذهب الى المدرسة في الدولة الأصل '('إذا اقل من 18 سنه')'"
+msgstr "هل ذهب الى المدرسة في الدولة الأصل(ذا اقل من 18 سنه)"
 
 #: ideascube/models.py:281
 msgid "Activities in the camp"
@@ -1125,12 +1117,11 @@ msgstr "العنوان في المخيم"
 
 #: ideascube/models.py:288
 msgid "Phone number (use comma to register more than one)"
-msgstr ""
-"رقم الهاتف '(' أستخدم الفاصله للفصل بين الارقام في حال وجود أكثر من رقم ')'"
+msgstr "رقم الهاتف (أستخدم الفاصله للفصل بين الارقام في حال وجود أكثر من رقم )"
 
 #: ideascube/models.py:290
 msgid "Email address (optional)"
-msgstr "عنوان البريد الألكتروني (خياري)"
+msgstr "عنوان البريد الألكتروني (إختياري)"
 
 #: ideascube/models.py:294
 msgid "English knowledge"
@@ -1142,7 +1133,7 @@ msgstr "المعرفة باللغة العربية"
 
 #: ideascube/models.py:300
 msgid "Persian knowledge"
-msgstr "المعرفة الفارسيه"
+msgstr "المعرفة باللغة الفارسية"
 
 #: ideascube/models.py:303
 msgid "Kirundi knowledge"
@@ -1165,14 +1156,12 @@ msgid "Shabak knowledge"
 msgstr "المعرفه بلغه الشبك"
 
 #: ideascube/monitoring/forms.py:24
-#, fuzzy
-#| msgid "Enter user serials"
 msgid "Enter user identifiers"
-msgstr "ادخل الرقم المتسلسل للمستخدم"
+msgstr "أدخل معرف المستخدم"
 
 #: ideascube/monitoring/forms.py:29
 msgid "Custom activity name"
-msgstr "أسم نشاط مخصص"
+msgstr "أسم النشاط "
 
 #: ideascube/monitoring/forms.py:31
 msgid "Partner involved in activity"
@@ -1184,48 +1173,37 @@ msgstr "اسم الصندوق مفقود"
 
 #: ideascube/monitoring/forms.py:51
 msgid "since"
-msgstr ""
+msgstr "منذ"
 
 #: ideascube/monitoring/forms.py:77 ideascube/monitoring/forms.py:98
 #: ideascube/monitoring/forms.py:137
-#, fuzzy
-#| msgid "Specimens"
 msgid "specimen"
-msgstr "عينات"
+msgstr "عينة"
 
 #: ideascube/monitoring/forms.py:79
-#, fuzzy
-#| msgid "Enter a bar code"
 msgid "Enter a barcode"
-msgstr "ادخل الباركود"
+msgstr "أدخل الباركود"
 
 #: ideascube/monitoring/forms.py:87 ideascube/monitoring/forms.py:117
-#, fuzzy, python-brace-format
-#| msgid "Bar code {barcode} not found"
+#, python-brace-format
 msgid "Barcode {barcode} not found"
-msgstr "الباركود {barcode} غير معرف"
+msgstr "الباركود {barcode} غير موجود"
 
 #: ideascube/monitoring/forms.py:100 ideascube/monitoring/forms.py:139
 msgid "Enter an item barcode"
 msgstr "أدخل الباركود للقطعه"
 
 #: ideascube/monitoring/forms.py:101
-#, fuzzy
-#| msgid "Add user"
 msgid "user"
-msgstr "أضف مستخدم"
+msgstr "المستخدم"
 
 #: ideascube/monitoring/forms.py:103
-#, fuzzy
-#| msgid "Enter a user serial"
 msgid "Enter a user identifier"
-msgstr "أدخل الرقم المتسلسل للمستخدم"
+msgstr "أدخل المعرف المستخدم"
 
 #: ideascube/monitoring/forms.py:104
-#, fuzzy
-#| msgid "Due date"
 msgid "due date"
-msgstr "خلال تاريخ"
+msgstr "خلال التاريخ"
 
 #: ideascube/monitoring/forms.py:111
 #, python-brace-format
@@ -1233,10 +1211,9 @@ msgid "Item with barcode {barcode} is already loaned."
 msgstr "القطعه التي تحمل الباركود رقم {barcode} تم إستعارتها"
 
 #: ideascube/monitoring/forms.py:127
-#, fuzzy, python-brace-format
-#| msgid "Serial {serial} not found"
+#, python-brace-format
 msgid "Identifier {serial} not found"
-msgstr "الرقم المتسلسل {serial} غير موجود"
+msgstr "المعرف {serial} غير موجود"
 
 #: ideascube/monitoring/forms.py:146
 #, python-brace-format
@@ -1257,7 +1234,7 @@ msgstr "ادخال"
 
 #: ideascube/monitoring/models.py:27
 msgid "entries"
-msgstr "ادخالات"
+msgstr "المدخلات"
 
 #: ideascube/monitoring/models.py:39
 msgid "date"
@@ -1272,10 +1249,8 @@ msgid "Administration"
 msgstr "الادارة"
 
 #: ideascube/monitoring/models.py:66
-#, fuzzy
-#| msgid "Module"
 msgid "module"
-msgstr "الوحدة"
+msgstr "الموديل"
 
 #: ideascube/monitoring/models.py:67
 msgid "name"
@@ -1295,7 +1270,7 @@ msgstr "الرقم المتسلسل"
 
 #: ideascube/monitoring/models.py:89
 msgid "quantity"
-msgstr ""
+msgstr "الكمية"
 
 #: ideascube/monitoring/models.py:121
 #: ideascube/monitoring/templates/monitoring/loan.html:24
@@ -1329,7 +1304,7 @@ msgstr "الى صندوق المكتبة"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:22
 msgid "To the digital module"
-msgstr "الى الصندوق الرقمي"
+msgstr "الى الصندوق الوسائط المتعددة"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:27
 msgid "Module"
@@ -1353,12 +1328,12 @@ msgstr "%(time)s مضت "
 #: ideascube/monitoring/templates/monitoring/loan.html:49
 #: ideascube/monitoring/templates/monitoring/loan.html:55
 msgid "Export"
-msgstr "استدراج"
+msgstr "إستيراد"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:20
 #: ideascube/monitoring/templates/monitoring/stock.html:9
 msgid "count"
-msgstr "عد"
+msgstr "العدد"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:20
 msgid "barcode"
@@ -1409,7 +1384,7 @@ msgstr "إستعاره"
 #: ideascube/monitoring/templates/monitoring/loan.html:46
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:17
 msgid "Validate"
-msgstr "التحقق من الصحه"
+msgstr "حفظ"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:19
 msgid "Ongoing loans"
@@ -1640,7 +1615,7 @@ msgstr "النسخة "
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Date"
-msgstr "البيانات"
+msgstr "التاريخ"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Size"
@@ -1652,7 +1627,7 @@ msgstr "الصيغه"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:25
 msgid "Download selected"
-msgstr "تحميل الذي تم أختياره"
+msgstr "تنزيل الذي تم أختياره"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:26
 msgid "Restore selected"
@@ -1716,7 +1691,7 @@ msgstr "أسم المستضيف : %(name)s"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:19
 msgid "Server name"
-msgstr "أسم الخاجم"
+msgstr "أسم الخادم"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:21
 #: ideascube/serveradmin/templates/serveradmin/services.html:6
@@ -1759,7 +1734,7 @@ msgstr "تغيير أسم الخادم"
 
 #: ideascube/serveradmin/templates/serveradmin/name.html:10
 msgid "Submit"
-msgstr "إرسال "
+msgstr "حفظ "
 
 #: ideascube/serveradmin/templates/serveradmin/power.html:5
 msgid "Stop or restart the server"
@@ -1768,7 +1743,7 @@ msgstr "إيقاف او إعادة تشغيل الخادم"
 #: ideascube/serveradmin/templates/serveradmin/power.html:8
 #: ideascube/serveradmin/templates/serveradmin/service_form.html:13
 msgid "Stop"
-msgstr "توقف"
+msgstr "إيقاف"
 
 #: ideascube/serveradmin/templates/serveradmin/power.html:9
 #: ideascube/serveradmin/templates/serveradmin/service_form.html:12
@@ -1918,7 +1893,7 @@ msgstr "تصفح منشورات الموقع"
 
 #: ideascube/templates/ideascube/includes/cards/blog.html:6
 msgid "Go to the blog"
-msgstr "الذهاب الى البلوغ"
+msgstr "الذهاب الى المدونة"
 
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:3
 msgid "BSF Campus"
@@ -1973,11 +1948,11 @@ msgstr "تصفح الكتب"
 #: ideascube/templates/ideascube/includes/cards/media-package.html:6
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:6
 msgid "Go to the medias center"
-msgstr "الذهاب إلى مركز الوسائط"
+msgstr "الذهاب إلى مركز الوسائط المتعددة"
 
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "Medias center"
-msgstr "مركز وسائط الإعلام"
+msgstr "مركز الوسائط المتعددة"
 
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:5
 msgid "Browse videos, sounds, images, pdf…"
@@ -1985,7 +1960,7 @@ msgstr "تتصفح الفيديوهات , الاغاني, الصور , ملفا�
 
 #: ideascube/templates/ideascube/includes/cards/software.html:3
 msgid "Free software"
-msgstr "برميجات مجانيه"
+msgstr "برامج مجانية"
 
 #: ideascube/templates/ideascube/includes/cards/software.html:4
 msgid "Free software for windows."
@@ -2094,7 +2069,7 @@ msgstr "أضف مستخدم"
 
 #: ideascube/templates/ideascube/user_form.html:6
 msgid "Edit user"
-msgstr "تحرير المستخدم"
+msgstr "تعديل المستخدم"
 
 #: ideascube/templates/ideascube/user_form.html:8
 msgid "New User"
@@ -2106,7 +2081,7 @@ msgstr "الأسم"
 
 #: ideascube/templates/ideascube/user_list.html:28
 msgid "Export all users"
-msgstr "تصدير جميع المستخدمين"
+msgstr "إستيراد لائحة المستخدمين"
 
 #: ideascube/templates/ideascube/welcome_staff.html:5
 #, python-format
@@ -2134,21 +2109,3 @@ msgstr "مرحبا بك في {}, {}!"
 #, python-brace-format
 msgid "Password has been set for {user}"
 msgstr "تم تعيين كلمة السر لـ {user}"
-
-#~ msgid "ClickInfo Sénégal"
-#~ msgstr "ClickInfo Sénégal"
-
-#~ msgid "Learn how to live in Sénégal."
-#~ msgstr "تعلم طريقه العيش في السينغال"
-
-#~ msgid "maps"
-#~ msgstr "الخرائط"
-
-#~ msgid "Browse maps of the area."
-#~ msgstr "تصفح خريطه المنطقة"
-
-#~ msgid "w2eu"
-#~ msgstr "w2eu"
-
-#~ msgid "Independent information for refugees and migrants coming to Europe."
-#~ msgstr "معلومات مستقلة للاجئين والمهاجرين القادمين إلى أوروبا"
