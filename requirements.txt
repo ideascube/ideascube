@@ -1,10 +1,10 @@
 batinfo==0.3
-Django==1.10.1
+Django==1.10.2
 django-countries==4.0
-django-taggit==0.21.2
+django-taggit==0.21.3
 lxml==3.6.4
 mypy-lang
-Pillow==3.3.1
+Pillow==3.4.1
 progressist
 pymarc==3.1.5
 python-networkmanager==1.2.1
