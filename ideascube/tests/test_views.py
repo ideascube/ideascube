@@ -492,20 +492,20 @@ def test_valid_proxy_request(app):
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = ContentFactory(status=Content.PUBLISHED, tags=['plane'])
     boat = ContentFactory(status=Content.PUBLISHED, tags=['boat'])
-    plane2 = BookSpecimenFactory(book__tags=['plane'])
-    boat2 = BookSpecimenFactory(book__tags=['boat'])
+    plane2 = BookSpecimenFactory(item__tags=['plane'])
+    boat2 = BookSpecimenFactory(item__tags=['boat'])
     response = app.get(reverse('by_tag'), {'tags': 'plane'})
     assert plane.title in response.content.decode()
-    assert plane2.book.title in response.content.decode()
+    assert plane2.item.name in response.content.decode()
     assert boat.title not in response.content.decode()
-    assert boat2.book.title not in response.content.decode()
+    assert boat2.item.name not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):
     monkeypatch.setattr(ByTag, 'paginate_by', 2)
     ContentFactory.create_batch(size=2, status=Content.PUBLISHED,
                                 tags=['plane'])
-    BookSpecimenFactory.create_batch(size=2, book__tags=['plane'])
+    BookSpecimenFactory.create_batch(size=2, item__tags=['plane'])
     url = reverse('by_tag')
     url = url+"?tags=plane"
     response = app.get(url)

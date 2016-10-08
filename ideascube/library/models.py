@@ -5,6 +5,7 @@ from taggit.managers import TaggableManager
 
 from ideascube.models import (
     LanguageField, SortedTaggableManager, TimeStampedModel)
+from ideascube.monitoring.models import StockItem, Specimen
 from ideascube.search.models import SearchableQuerySet, SearchMixin
 
 
@@ -13,7 +14,7 @@ class BookQuerySet(SearchableQuerySet, models.QuerySet):
         return self.filter(specimens__isnull=False).distinct()
 
 
-class Book(SearchMixin, TimeStampedModel):
+class Book(StockItem, SearchMixin, TimeStampedModel):
 
     OTHER = 99
 
@@ -38,9 +39,7 @@ class Book(SearchMixin, TimeStampedModel):
     isbn = models.CharField(max_length=40, unique=True, null=True, blank=True)
     authors = models.CharField(_('authors'), max_length=300, blank=True)
     serie = models.CharField(_('serie'), max_length=300, blank=True)
-    title = models.CharField(_('title'), max_length=300)
     subtitle = models.CharField(_('subtitle'), max_length=300, blank=True)
-    summary = models.TextField(_('summary'), blank=True)
     publisher = models.CharField(_('publisher'), max_length=100, blank=True)
     section = models.PositiveSmallIntegerField(_('section'),
                                                choices=SECTION_CHOICES)
@@ -52,18 +51,18 @@ class Book(SearchMixin, TimeStampedModel):
     tags = TaggableManager(blank=True, manager=SortedTaggableManager)
 
     class Meta:
-        ordering = ['title']
+        ordering = ['name']
 
     def __str__(self):
-        return self.title
+        return self.name
 
     def get_absolute_url(self):
         return reverse('library:book_detail', kwargs={'pk': self.pk})
 
     @property
     def index_strings(self):
-        return (self.title, self.isbn, self.authors, self.subtitle,
-                self.summary, self.serie, u' '.join(self.tags.names()))
+        return (self.name, self.isbn, self.authors, self.subtitle,
+                self.description, self.serie, u' '.join(self.tags.names()))
 
     @property
     def index_tags(self):
@@ -73,26 +72,34 @@ class Book(SearchMixin, TimeStampedModel):
     def index_lang(self):
         return self.lang
 
+    @property
+    def bookspecimens(self):
+        return [specimen.instance for specimen in self.specimens.all()]
 
-class BookSpecimen(TimeStampedModel):
+    @property
+    def physical(self):
+        return any(s.physical for s in self.bookspecimens)
 
-    book = models.ForeignKey(Book, related_name='specimens')
-    serial = models.CharField(_('serial'), max_length=40, unique=True,
-                              blank=True, null=True)
+    def save(self, *args, **kwargs):
+        self.module = self.LIBRARY
+        return super().save(*args, **kwargs)
+
+
+class BookSpecimen(Specimen, TimeStampedModel):
+
     location = models.CharField(_('location'), max_length=300, blank=True)
-    remarks = models.TextField(_('remarks'), blank=True)
     file = models.FileField(_('digital file'), upload_to='library/digital',
                             blank=True)
 
     @property
-    def is_digital(self):
-        return bool(self.file)
+    def physical(self):
+        return not bool(self.file)
 
     def __str__(self):
-        if self.is_digital:
-            # serial is null for digital specimens.
-            return u'Digital specimen of "{0}"'.format(self.book)
-        return u'Specimen {0} of "{1}"'.format(self.serial, self.book)
+        if self.physical:
+            # barcode is null for digital specimens.
+            return u'Specimen {0} of "{1}"'.format(self.barcode, self.item)
+        return u'Digital specimen of "{0}"'.format(self.item)
 
     def get_absolute_url(self):
-        return reverse('library:book_detail', kwargs={'pk': self.book.pk})
+        return reverse('library:book_detail', kwargs={'pk': self.item.pk})

@@ -12,7 +12,7 @@ pytestmark = pytest.mark.django_db
 def test_deleting_book_sould_delete_specimen_too(specimen):
     assert BookSpecimen.objects.count()
     assert Book.objects.count()
-    specimen.book.delete()
+    specimen.item.delete()
     assert not BookSpecimen.objects.count()
     assert not Book.objects.count()
 
@@ -59,22 +59,23 @@ def test_deleting_digital_specimen():
     assert Book.objects.count()
 
 
-def test_is_digital_from_model_method():
+def test_physical_from_model_method():
     specimen = BookSpecimenFactory(is_digital=True)
-    assert specimen.is_digital
+    assert not specimen.physical
 
 
-def test_is_digital_after_filling_serial_whithout_removing_file():
-    specimen = BookSpecimenFactory(serial=FuzzyText(length=6), is_digital=True)
-    assert specimen.is_digital
+def test_is_physical_after_filling_barcode_whithout_removing_file():
+    specimen = BookSpecimenFactory(
+        barcode=FuzzyText(length=6), is_digital=True)
+    assert not specimen.physical
 
 
-def test_is_not_digital_after_removing_file():
+def test_physical_after_removing_file():
     specimen = BookSpecimenFactory(file=None)
-    assert not specimen.is_digital
+    assert specimen.physical
 
 
 def test_unicode_returns_digital_specimen_of_book():
     book = BookFactory()
-    specimen = BookSpecimenFactory(book=book, is_digital=True)
+    specimen = BookSpecimenFactory(item=book, is_digital=True)
     assert str(specimen).startswith(u'Digital specimen of')

@@ -19,8 +19,8 @@ def test_anonymous_should_access_index_page(app):
 
 def test_only_books_with_specimen_should_be_in_index(app, book, specimen):
     response = app.get(reverse('library:index'))
-    assert specimen.book.title in response.content.decode()
-    assert book.title not in response.content.decode()
+    assert specimen.item.name in response.content.decode()
+    assert book.name not in response.content.decode()
 
 
 def test_index_page_is_paginated(app, monkeypatch):
@@ -42,9 +42,9 @@ def test_books_are_ordered_by_created_at_by_default(app):
     book3 = BookFactory()
     book1 = BookFactory()
     book2 = BookFactory()
-    BookSpecimenFactory(book=book1)
-    BookSpecimenFactory(book=book2)
-    BookSpecimenFactory(book=book3)
+    BookSpecimenFactory(item=book1)
+    BookSpecimenFactory(item=book2)
+    BookSpecimenFactory(item=book3)
     # Update without calling save (which would not honour created_at).
     Book.objects.filter(pk=book1.pk).update(created_at=datetime(2016, 6,
                                             26, 16, 17))
@@ -54,18 +54,18 @@ def test_books_are_ordered_by_created_at_by_default(app):
                                             26, 16, 15))
     response = app.get(reverse('library:index'))
     titles = response.pyquery.find('.book-list h3')
-    assert book1.title in titles[0].text_content()
-    assert book2.title in titles[1].text_content()
-    assert book3.title in titles[2].text_content()
+    assert book1.name in titles[0].text_content()
+    assert book2.name in titles[1].text_content()
+    assert book3.name in titles[2].text_content()
 
 
 def test_should_take_sort_parameter_into_account(app):
     book3 = BookFactory()
     book1 = BookFactory()
     book2 = BookFactory()
-    BookSpecimenFactory(book=book1)
-    BookSpecimenFactory(book=book2)
-    BookSpecimenFactory(book=book3)
+    BookSpecimenFactory(item=book1)
+    BookSpecimenFactory(item=book2)
+    BookSpecimenFactory(item=book3)
     # Update without calling save (which would not honour created_at).
     Book.objects.filter(pk=book1.pk).update(created_at=datetime(2016, 6,
                                             26, 16, 17))
@@ -75,29 +75,48 @@ def test_should_take_sort_parameter_into_account(app):
                                             26, 16, 15))
     response = app.get(reverse('library:index'), {'sort': 'asc'})
     titles = response.pyquery.find('.book-list h3')
-    assert book3.title in titles[0].text_content()
-    assert book2.title in titles[1].text_content()
-    assert book1.title in titles[2].text_content()
+    assert book3.name in titles[0].text_content()
+    assert book2.name in titles[1].text_content()
+    assert book1.name in titles[2].text_content()
 
 
 def test_should_take_order_by_parameter_into_account(app):
     book3 = BookFactory(authors='Corneille')
     book1 = BookFactory(authors='Antoine de Saint-Exupéry')
     book2 = BookFactory(authors='Blaise Pascal')
-    BookSpecimenFactory(book=book1)
-    BookSpecimenFactory(book=book2)
-    BookSpecimenFactory(book=book3)
+    BookSpecimenFactory(item=book1)
+    BookSpecimenFactory(item=book2)
+    BookSpecimenFactory(item=book3)
     response = app.get(reverse('library:index'), {'sort': 'asc',
                                                   'order_by': 'authors'})
     titles = response.pyquery.find('.book-list h3')
-    assert book1.title in titles[0].text_content()
-    assert book2.title in titles[1].text_content()
-    assert book3.title in titles[2].text_content()
+    assert book1.name in titles[0].text_content()
+    assert book2.name in titles[1].text_content()
+    assert book3.name in titles[2].text_content()
 
 
 def test_everyone_should_access_book_detail_page(app, book):
     assert app.get(reverse('library:book_detail',
                            kwargs={'pk': book.pk}), status=200)
+
+
+def test_book_detail_page_does_not_list_specimens_to_non_staff(app, book):
+    specimen = BookSpecimenFactory(item=book, barcode='123789')
+    BookSpecimenFactory(item=book, is_digital=True)
+    resp = app.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
+    resp.mustcontain(no=[specimen.barcode, 'Digital specimen'])
+
+
+def test_book_detail_page_list_physical_specimens_to_staff(staffapp, book):
+    specimen = BookSpecimenFactory(item=book, barcode='123789')
+    resp = staffapp.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
+    resp.mustcontain(specimen.barcode)
+
+
+def test_book_detail_page_list_digital_specimens_to_staff(staffapp, book):
+    BookSpecimenFactory(item=book, is_digital=True)
+    resp = staffapp.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
+    resp.mustcontain('Digital specimen')
 
 
 def test_anonymous_should_not_access_book_create_page(app):
@@ -150,21 +169,21 @@ def test_staff_should_access_book_update_page(staffapp, book):
 def test_staff_can_create_book(staffapp):
     form = staffapp.get(reverse('library:book_create')).forms['model_form']
     assert not Book.objects.count()
-    form['title'] = 'My book title'
-    form['summary'] = 'My book summary'
+    form['name'] = 'My book title'
+    form['description'] = 'My book summary'
     form['section'] = '1'
     form.submit().follow()
-    assert Book.objects.count()
+    assert Book.objects.count() == 1
 
 
 def test_staff_can_edit_book(staffapp, book):
     form = staffapp.get(reverse('library:book_update',
                                 kwargs={'pk': book.pk})).forms['model_form']
     title = "New title"
-    assert Book.objects.get(pk=book.pk).title != title
-    form['title'] = title
+    assert Book.objects.get(pk=book.pk).name != title
+    form['name'] = title
     form.submit().follow()
-    assert Book.objects.get(pk=book.pk).title == title
+    assert Book.objects.get(pk=book.pk).name == title
 
 
 def test_staff_user_can_delete_book(staffapp, book):
@@ -179,19 +198,21 @@ def test_staff_can_create_specimen(staffapp, book):
     url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
     form = staffapp.get(url).forms['model_form']
     assert not book.specimens.count()
-    form['serial'] = '23135321'
-    form.submit().follow()
+    form['barcode'] = '23135321'
+    response = form.submit()
+    print(response)
+    response.follow()
     assert book.specimens.count()
 
 
 def test_staff_can_edit_specimen(staffapp, specimen):
     url = reverse('library:specimen_update', kwargs={'pk': specimen.pk})
     form = staffapp.get(url).forms['model_form']
-    remarks = "This is a new remark"
-    assert BookSpecimen.objects.get(pk=specimen.pk).remarks != remarks
-    form['remarks'] = remarks
+    comments = "This is a new comment"
+    assert BookSpecimen.objects.get(pk=specimen.pk).comments != comments
+    form['comments'] = comments
     form.submit().follow()
-    assert BookSpecimen.objects.get(pk=specimen.pk).remarks == remarks
+    assert BookSpecimen.objects.get(pk=specimen.pk).comments == comments
 
 
 def test_staff_user_can_delete_specimen(staffapp, specimen):
@@ -208,14 +229,14 @@ def test_it_should_be_possible_to_create_several_books_without_isbn(staffapp):
     assert not Book.objects.count()
     url = reverse('library:book_create')
     form = staffapp.get(url).forms['model_form']
-    form['title'] = 'My book title'
-    form['summary'] = 'My book summary'
+    form['name'] = 'My book title'
+    form['description'] = 'My book summary'
     form['section'] = '1'
     form['isbn'] = ''
     form.submit().follow()
     form = staffapp.get(url).forms['model_form']
-    form['title'] = 'My book title 2'
-    form['summary'] = 'My book summary 2'
+    form['name'] = 'My book title 2'
+    form['description'] = 'My book summary 2'
     form['section'] = '2'
     form['isbn'] = ''
     form.submit().follow()
@@ -240,8 +261,8 @@ def test_it_should_be_possible_to_remove_isbn_from_books(staffapp):
 def test_should_keep_only_numbers_in_isbn(staffapp):
     form = staffapp.get(reverse('library:book_create')).forms['model_form']
     assert not Book.objects.count()
-    form['title'] = 'My book title'
-    form['summary'] = 'My book summary'
+    form['name'] = 'My book title'
+    form['description'] = 'My book summary'
     form['section'] = '1'
     form['isbn'] = '2-7071-2402-8'
     form.submit().follow()
@@ -271,6 +292,22 @@ def test_import_from_files(staffapp, monkeypatch):
     response = form.submit()
     response.follow()
     assert Book.objects.count() == 2
+
+    book = Book.objects.last()
+    assert book.name == 'Les Enchanteurs'
+    assert book.description.startswith(
+        "Le narrateur, Fosco Zaga, est un vieillard. Hors d'âge. Deux cents ")
+    assert book.isbn == '9782070379040'
+    assert book.authors == 'Romain Gary'
+    assert book.publisher == 'Gallimard'
+
+    book = Book.objects.first()
+    assert book.name == 'Le petit prince'
+    assert book.description.startswith(
+        "«Le premier soir je me suis donc endormi sur le sable à mille ")
+    assert book.isbn == '9782070612758'
+    assert book.authors == 'Antoine de Saint-Exupéry'
+    assert book.publisher == 'Gallimard'
 
 
 def test_import_from_files_does_not_duplicate(staffapp, monkeypatch):
@@ -308,8 +345,8 @@ def test_import_from_ideascube_export(staffapp, monkeypatch):
         'isbn': '123456',
         'authors': 'Marcel Pagnol',
         'serie': "L'Eau des collines",
-        'title': 'Jean de Florette',
-        'summary': u"Les Bastides Blanches, c'était une paroisse de cent cinquante habitants, perchée sur la proue de l'un des derniers contreforts du massif de l'Étoile, à deux lieues d'Aubagne… Une route de terre y conduisait par une montée si abrupte que de loin elle paraissait verticale : mais du côté des collines il n'en sortait qu'un chemin muletier d'où partaient quelques sentiers qui menaient au ciel.",  # noqa
+        'name': 'Jean de Florette',
+        'description': u"Les Bastides Blanches, c'était une paroisse de cent cinquante habitants, perchée sur la proue de l'un des derniers contreforts du massif de l'Étoile, à deux lieues d'Aubagne… Une route de terre y conduisait par une montée si abrupte que de loin elle paraissait verticale : mais du côté des collines il n'en sortait qu'un chemin muletier d'où partaient quelques sentiers qui menaient au ciel.",  # noqa
         'publisher': u'Éditions de Provence',
         'lang': 'fr',
     }
@@ -330,16 +367,16 @@ def test_import_from_ideascube_export(staffapp, monkeypatch):
 
 
 def test_by_tag_page_should_be_filtered_by_tag(app):
-    plane = BookSpecimenFactory(book__tags=['plane'])
-    boat = BookSpecimenFactory(book__tags=['boat'])
+    plane = BookSpecimenFactory(item__tags=['plane'])
+    boat = BookSpecimenFactory(item__tags=['boat'])
     response = app.get(reverse('library:index'), {'tags': 'plane'})
-    assert plane.book.title in response.content.decode()
-    assert boat.book.title not in response.content.decode()
+    assert plane.item.name in response.content.decode()
+    assert boat.item.name not in response.content.decode()
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
-    BookSpecimenFactory.create_batch(size=4, book__tags=['plane'])
+    BookSpecimenFactory.create_batch(size=4, item__tags=['plane'])
     url = reverse('library:index')
     response = app.get(url, {'tags': 'plane'})
     assert response.pyquery.find('.pagination')
@@ -355,8 +392,8 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
 def test_can_create_book_with_tags(staffapp):
     url = reverse('library:book_create')
     form = staffapp.get(url).forms['model_form']
-    form['title'] = 'My book title'
-    form['summary'] = 'My book summary'
+    form['name'] = 'My book title'
+    form['description'] = 'My book summary'
     form['section'] = '1'
     form['tags'] = 'tag1, tag2'
     form.submit().follow()
@@ -376,8 +413,8 @@ def test_can_update_book_tags(staffapp, book):
     assert other.tags.first().name == 'tag1'
 
 
-def test_cannot_create_digital_specimen_when_serial_and_file_not_set(staffapp,
-                                                                     book):
+def test_cannot_create_digital_specimen_when_barcode_and_file_not_set(staffapp,
+                                                                      book):
     url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
     form = staffapp.get(url).forms['model_form']
     assert not book.specimens.count()
@@ -385,12 +422,12 @@ def test_cannot_create_digital_specimen_when_serial_and_file_not_set(staffapp,
     assert not book.specimens.count()
 
 
-def test_cannot_create_digital_specimen_when_serial_and_file_both_set(staffapp,
+def test_cannot_create_digital_specimen_when_barcode_and_file_are_set(staffapp,
                                                                       book):
     url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
     form = staffapp.get(url).forms['model_form']
     assert not book.specimens.count()
-    form['serial'] = '123456'
+    form['barcode'] = '123456'
     form['file'] = Upload('ideascube/library/tests/data/test-digital')
     form.submit()
     assert not book.specimens.count()
@@ -403,18 +440,18 @@ def test_when_only_file_is_set_specimen_is_created_as_digital(staffapp, book):
     form['file'] = Upload('ideascube/library/tests/data/test-digital')
     form.submit()
     assert book.specimens.count()
-    assert BookSpecimen.objects.last().is_digital
+    assert not BookSpecimen.objects.last().physical
 
 
-def test_when_only_serial_is_set_specimen_is_created_as_not_digital(staffapp,
-                                                                    book):
+def test_when_only_barcode_is_set_specimen_is_created_as_not_digital(staffapp,
+                                                                     book):
     url = reverse('library:specimen_create', kwargs={'book_pk': book.pk})
     form = staffapp.get(url).forms['model_form']
     assert not book.specimens.count()
-    form['serial'] = '123456'
+    form['barcode'] = '123456'
     form.submit()
     assert book.specimens.count()
-    assert not BookSpecimen.objects.last().is_digital
+    assert BookSpecimen.objects.last().physical
 
 
 def test_anonymous_cannot_export_book_notices(app):
@@ -426,9 +463,9 @@ def test_non_staff_cannot_export_book_notices(loggedapp):
 
 
 def test_export_book_notices(staffapp, monkeypatch):
-    book1 = BookFactory(isbn="123456", title="my book title")
+    book1 = BookFactory(isbn="123456", name="my book title")
     name_utf8 = u'النبي (كتاب)'
-    BookFactory(isbn="654321", title=name_utf8)
+    BookFactory(isbn="654321", name=name_utf8)
     monkeypatch.setattr(BookExport, 'get_filename', lambda s: 'myfilename')
     resp = staffapp.get(reverse('library:book_export'))
     assert 'myfilename.zip' in resp['Content-Disposition']
@@ -440,8 +477,9 @@ def test_export_book_notices(staffapp, monkeypatch):
     assert 'myfilename.csv' in archive.namelist()
     assert len(archive.namelist()) == 3
     csv_content = archive.open('myfilename.csv').read().decode('utf-8')
-    assert csv_content.startswith('isbn,authors,serie,title,subtitle,summary,'
-                                  'publisher,section,lang,cover,tags\r\n')
+    assert csv_content.startswith(
+        'isbn,authors,serie,name,subtitle,description,publisher,section,lang,'
+        'cover,tags\r\n')
     assert "my book title" in csv_content
     assert cover_name in csv_content
     assert name_utf8 in csv_content

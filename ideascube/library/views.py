@@ -31,9 +31,9 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
             'sort': 'desc'
         },
         {
-            'key': 'title',
+            'key': 'name',
             'label': _('Title'),
-            'expression': Lower('title'),  # Case insensitive.
+            'expression': Lower('name'),  # Case insensitive.
             'sort': 'asc'
         },
         {
@@ -133,7 +133,7 @@ class SpecimenCreate(CreateView):
     def get_initial(self):
         book = get_object_or_404(Book, pk=self.kwargs['book_pk'])
 
-        return {'book': book, 'location': get_config('server', 'site-name')}
+        return {'item': book, 'location': get_config('server', 'site-name')}
 
 specimen_create = staff_member_required(SpecimenCreate.as_view())
 
@@ -160,7 +160,7 @@ specimen_delete = staff_member_required(SpecimenDelete.as_view())
 class BookExport(CSVExportMixin, View):
 
     prefix = 'notices'
-    fields = ['isbn', 'authors', 'serie', 'title', 'subtitle', 'summary',
+    fields = ['isbn', 'authors', 'serie', 'name', 'subtitle', 'description',
               'publisher', 'section', 'lang', 'cover', 'tags']
 
     def get(self, *args, **kwargs):

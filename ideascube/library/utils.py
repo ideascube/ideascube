@@ -56,7 +56,7 @@ def fetch_from_openlibrary(isbn):
         publisher = None
     notice = {
         'isbn': isbn,
-        'title': data.get('title'),
+        'name': data.get('title'),
         'authors': ', '.join([a['name'] for a in data.get('authors', [])]),
         'cover': cover,
         'publisher': publisher
@@ -107,10 +107,10 @@ def load_from_moccam_csv(content):
         notice = {
             'isbn': row['isbn'],
             # Moccam sucks in many ways, including encoding.
-            'title': to_unicode(row['title']),
+            'name': to_unicode(row['title']),
             'authors': to_unicode(authors),
             'publisher': to_unicode(row['publisher']),
-            'summary': to_unicode(row['summary'])
+            'description': to_unicode(row['summary'])
         }
         yield notice, cover
 
@@ -126,11 +126,11 @@ def load_unimarc(content):
             continue
         notice = {
             'isbn': row.isbn(),
-            'title': row.title(),
+            'name': row.title(),
             'authors': row.author() or '',
             'publisher': row.publisher() or '',
-            'summary': '\n'.join([str(d)
-                                  for d in row.physicaldescription()]),
+            'description': '\n'.join(
+                [str(d) for d in row.physicaldescription()]),
         }
         yield notice, None
 
@@ -161,9 +161,9 @@ def load_from_ideascube(content):
             'isbn': row.get('isbn'),
             'authors': to_unicode(row.get('authors')),
             'serie': to_unicode(row.get('serie')),
-            'title': to_unicode(row.get('title')),
+            'name': to_unicode(row.get('name')),
             'subtitle': to_unicode(row.get('subtitle')),
-            'summary': to_unicode(row.get('summary')),
+            'description': to_unicode(row.get('description')),
             'publisher': to_unicode(row.get('publisher')),
             'section': to_unicode(row.get('section')),
             'lang': to_unicode(row.get('lang')),

@@ -50,7 +50,13 @@ class Inventory(TimeStampedModel):
         return self.inventoryspecimen_set.filter(specimen=specimen).exists()
 
 
+class StockItemQuerySet(models.QuerySet):
+    def physical(self):
+        return [item for item in self if item.instance.physical]
+
+
 class StockItem(models.Model):
+    physical = True
     CINEMA = 'cinema'
     LIBRARY = 'library'
     DIGITAL = 'digital'
@@ -64,8 +70,10 @@ class StockItem(models.Model):
         (OTHER, _('Other')),
     )
     module = models.CharField(_('module'), max_length=20, choices=MODULES)
-    name = models.CharField(_('name'), max_length=150)
+    name = models.CharField(_('name'), max_length=300)
     description = models.TextField(_('description'), blank=True)
+
+    objects = StockItemQuerySet.as_manager()
 
     def __str__(self):
         return self.name
@@ -76,11 +84,24 @@ class StockItem(models.Model):
             pk=self.pk
         )
 
+    @property
+    def instance(self):
+        if hasattr(self, 'book'):
+            return self.book
+        return self
+
     class Meta:
         ordering = ('module', 'name')
 
 
+class SpecimenQuerySet(models.QuerySet):
+    def physical(self):
+        return [specimen for specimen in self if specimen.instance.physical]
+
+
 class Specimen(models.Model):
+    physical = True
+
     barcode = models.CharField(_('ideascube bar code'), max_length=40,
                                unique=True, blank=True, null=True)
     serial = models.CharField(_('Serial number'), max_length=100, blank=True,
@@ -89,8 +110,16 @@ class Specimen(models.Model):
     count = models.IntegerField(_('quantity'), default=1)
     comments = models.TextField(_('comments'), blank=True)
 
+    objects = SpecimenQuerySet.as_manager()
+
     def get_absolute_url(self):
         return self.item.get_absolute_url()
+
+    @property
+    def instance(self):
+        if hasattr(self, 'bookspecimen'):
+            return self.bookspecimen
+        return self
 
     class Meta:
         ordering = ('barcode', )
