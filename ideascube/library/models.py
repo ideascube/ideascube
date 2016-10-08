@@ -73,12 +73,8 @@ class Book(StockItem, SearchMixin, TimeStampedModel):
         return self.lang
 
     @property
-    def bookspecimens(self):
-        return [specimen.instance for specimen in self.specimens.all()]
-
-    @property
     def physical(self):
-        return any(s.physical for s in self.bookspecimens)
+        return any(s.instance.physical for s in self.specimens.all())
 
     def save(self, *args, **kwargs):
         self.module = self.LIBRARY
