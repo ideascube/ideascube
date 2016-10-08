@@ -13,3 +13,9 @@
         <a href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</a>
     {% endif %}
 {% endblock col %}
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        ID.focusOn('[name=serial]');
+    </script>
+{% endblock extra_foot %}
