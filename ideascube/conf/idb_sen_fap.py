@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Ideaxbox for FAP in Sénégal"""
+"""Ideasbox for FAP in Sénégal"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 

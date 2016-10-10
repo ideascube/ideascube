@@ -1,4 +1,4 @@
-"""Default Ideaxbox config for France"""
+"""Default Ideasbox config for France"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 

@@ -1,4 +1,4 @@
-"""Ideaxbox for Welcome Point, Dusseldorf"""
+"""Ideasbox for Welcome Point, Dusseldorf"""
 from .idb import *  # noqa
 from django.utils.translation import ugettext_lazy as _
 

@@ -1,4 +1,4 @@
-"""Ideaxbox for Grande Synthe, France"""
+"""Ideasbox for Grande Synthe, France"""
 from .idb_fra import *  # noqa
 
 IDEASCUBE_NAME = u"Grande-Synthe"
