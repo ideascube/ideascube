@@ -47,19 +47,23 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
         (DELETED, _('deleted')),
     )
 
-    title = models.CharField(_('title'), max_length=100)
+    title = models.CharField(verbose_name=_('title'), max_length=100)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               on_delete=models.PROTECT)
-    author_text = models.CharField(_('author text'), max_length=300,
+                               on_delete=models.PROTECT,
+                               verbose_name=_('author'))
+    author_text = models.CharField(verbose_name=_('author text'), max_length=300,
                                    blank=True)
-    summary = models.CharField(_('summary'), max_length=300)
-    image = models.ImageField(_('image'), upload_to='blog/image', blank=True)
-    text = models.TextField(_('text'))
-    published_at = models.DateTimeField(_('publication date'))
-    status = models.PositiveSmallIntegerField(_('Status'), choices=STATUSES,
+    summary = models.CharField(verbose_name=_('summary'), max_length=300)
+    image = models.ImageField(verbose_name=_('image'),
+                              upload_to='blog/image',
+                              blank=True)
+    text = models.TextField(verbose_name=_('text'))
+    published_at = models.DateTimeField(verbose_name=_('publication date'))
+    status = models.PositiveSmallIntegerField(verbose_name=_('Status'),
+                                              choices=STATUSES,
                                               default=DRAFT)
-    lang = LanguageField(
-        _('Language'), max_length=10, default=settings.LANGUAGE_CODE)
+    lang = LanguageField(verbose_name=_('Language'), max_length=10,
+                         default=settings.LANGUAGE_CODE)
 
     objects = ContentQuerySet.as_manager()
     tags = TaggableManager(blank=True, manager=SortedTaggableManager)

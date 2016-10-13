@@ -38,15 +38,21 @@ class Book(StockItem, SearchMixin, TimeStampedModel):
     )
 
     # We allow ISBN to be null, but when it is set it needs to be unique.
-    isbn = models.CharField(max_length=40, unique=True, null=True, blank=True)
-    authors = models.CharField(_('authors'), max_length=300, blank=True)
-    serie = models.CharField(_('serie'), max_length=300, blank=True)
-    subtitle = models.CharField(_('subtitle'), max_length=300, blank=True)
-    publisher = models.CharField(_('publisher'), max_length=100, blank=True)
-    section = models.PositiveSmallIntegerField(_('section'),
+    isbn = models.CharField(verbose_name=_('isbn'), max_length=40,
+                            unique=True, null=True, blank=True)
+    authors = models.CharField(verbose_name=_('authors'), max_length=300,
+                               blank=True)
+    serie = models.CharField(verbose_name=_('serie'), max_length=300,
+                             blank=True)
+    subtitle = models.CharField(verbose_name=_('subtitle'), max_length=300,
+                                blank=True)
+    publisher = models.CharField(verbose_name=_('publisher'), max_length=100,
+                                 blank=True)
+    section = models.PositiveSmallIntegerField(verbose_name=_('section'),
                                                choices=SECTION_CHOICES)
-    lang = LanguageField(_('Language'), max_length=10)
-    cover = models.ImageField(_('cover'), upload_to='library/cover',
+    lang = LanguageField(verbose_name=_('Language'), max_length=10)
+    cover = models.ImageField(verbose_name=_('cover'),
+                              upload_to='library/cover',
                               blank=True)
 
     objects = BookQuerySet.as_manager()
@@ -85,8 +91,10 @@ class Book(StockItem, SearchMixin, TimeStampedModel):
 
 class BookSpecimen(Specimen, TimeStampedModel):
 
-    location = models.CharField(_('location'), max_length=300, blank=True)
-    file = models.FileField(_('digital file'), upload_to='library/digital',
+    location = models.CharField(verbose_name=_('location'), max_length=300,
+                                blank=True)
+    file = models.FileField(verbose_name=_('digital file'),
+                            upload_to='library/digital',
                             blank=True)
 
     @property

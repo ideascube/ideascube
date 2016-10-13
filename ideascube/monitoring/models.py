@@ -17,10 +17,14 @@ class Entry(TimeStampedModel):
         (LIBRARY, _('Library')),
         (DIGITAL, _('Multimedia')),
     )
-    module = models.CharField(max_length=20, choices=MODULES)
-    activity = models.CharField(max_length=200, blank=True)
-    partner = models.CharField(max_length=200, blank=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    module = models.CharField(verbose_name=_('module'),
+                              max_length=20, choices=MODULES)
+    activity = models.CharField(verbose_name=_('activity'),
+                                max_length=200, blank=True)
+    partner = models.CharField(verbose_name=_('partner'),
+                               max_length=200, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             verbose_name=_('user'))
 
     class Meta:
         verbose_name = _("entry")
@@ -36,8 +40,8 @@ class Entry(TimeStampedModel):
 
 
 class Inventory(TimeStampedModel):
-    made_at = models.DateField(_('date'))
-    comments = models.TextField(_('comments'), blank=True)
+    made_at = models.DateField(verbose_name=_('date'))
+    comments = models.TextField(verbose_name=_('comments'), blank=True)
 
     def get_absolute_url(self):
         return reverse('monitoring:inventory', kwargs={'pk': self.pk})
@@ -69,9 +73,10 @@ class StockItem(models.Model):
         (ADMIN, _('Administration')),
         (OTHER, _('Other')),
     )
-    module = models.CharField(_('module'), max_length=20, choices=MODULES)
-    name = models.CharField(_('name'), max_length=300)
-    description = models.TextField(_('description'), blank=True)
+    module = models.CharField(verbose_name=_('module'), max_length=20,
+                              choices=MODULES)
+    name = models.CharField(verbose_name=_('name'), max_length=300)
+    description = models.TextField(verbose_name=_('description'), blank=True)
 
     objects = StockItemQuerySet.as_manager()
 
@@ -108,13 +113,15 @@ class SpecimenQuerySet(models.QuerySet):
 class Specimen(models.Model):
     physical = True
 
-    barcode = models.CharField(_('ideascube bar code'), max_length=40,
+    barcode = models.CharField(verbose_name=_('ideascube bar code'),
+                               max_length=40,
                                unique=True, blank=True, null=True)
-    serial = models.CharField(_('Serial number'), max_length=100, blank=True,
-                              null=True)
-    item = models.ForeignKey(StockItem, related_name='specimens')
-    count = models.IntegerField(_('quantity'), default=1)
-    comments = models.TextField(_('comments'), blank=True)
+    serial = models.CharField(verbose_name=_('Serial number'), max_length=100,
+                              blank=True, null=True)
+    item = models.ForeignKey(StockItem, related_name='specimens',
+                             verbose_name=_('item'))
+    count = models.IntegerField(verbose_name=_('quantity'), default=1)
+    comments = models.TextField(verbose_name=_('comments'), blank=True)
 
     objects = SpecimenQuerySet.as_manager()
 
@@ -150,13 +157,17 @@ class LoanQuerySet(models.QuerySet):
 
 
 class Loan(TimeStampedModel):
-    specimen = models.ForeignKey(Specimen)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans')
-    by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans_made')
-    due_date = models.DateField(_('Due date'), default=date.today)
-    returned_at = models.DateTimeField(_('Return time'), default=None,
+    specimen = models.ForeignKey(Specimen, verbose_name=_('specimen'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans',
+                             verbose_name=_('user'))
+    by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans_made',
+                           verbose_name=_('by'))
+    due_date = models.DateField(verbose_name=_('Due date'), default=date.today)
+    returned_at = models.DateTimeField(verbose_name=_('Return time'),
+                                       default=None,
                                        null=True, blank=True)
-    comments = models.CharField(_('Comments'), blank=True, max_length=500)
+    comments = models.CharField(verbose_name=_('Comments'), blank=True,
+                                max_length=500)
 
     objects = LoanQuerySet.as_manager()
 

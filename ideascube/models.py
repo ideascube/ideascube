@@ -25,8 +25,10 @@ class TimeStampedModel(models.Model):
     An abstract base class model that provides self-
     updating ``created_at`` and ``modified_at`` fields.
     """
-    created_at = models.DateTimeField(_('creation date'), auto_now_add=True)
-    modified_at = models.DateTimeField(_('modification date'), auto_now=True)
+    created_at = models.DateTimeField(verbose_name=_('creation date'),
+                                      auto_now_add=True)
+    modified_at = models.DateTimeField(verbose_name=_('modification date'),
+                                       auto_now=True)
 
     class Meta:
         abstract = True
@@ -88,10 +90,14 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
 
     PRIVATE_DATA = ('short_name', 'full_name', 'email', 'phone')
 
-    serial = models.CharField(_('identifier'), max_length=40, unique=True)
-    short_name = models.CharField(_('usual name'), max_length=30, blank=True)
-    full_name = models.CharField(_('full name'), max_length=100, blank=True)
-    is_staff = models.BooleanField(_('staff status'), default=False,
+    serial = models.CharField(verbose_name=_('identifier'), max_length=40,
+                              unique=True)
+    short_name = models.CharField(verbose_name=_('usual name'), max_length=30,
+                                  blank=True)
+    full_name = models.CharField(verbose_name=_('full name'), max_length=100,
+                                 blank=True)
+    is_staff = models.BooleanField(verbose_name=_('staff status'),
+                                   default=False,
                                    help_text=_('Designates whether the user '
                                                'can log into this admin '
                                                'site.'))
@@ -236,84 +242,91 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         ('female', _('Female')),
     )
 
-    latin_name = models.CharField(_('Latin written name'),
+    latin_name = models.CharField(verbose_name=_('Latin written name'),
                                   max_length=200, blank=True)
 
-    birth_year = models.PositiveSmallIntegerField(_('Birth year'), blank=True,
+    birth_year = models.PositiveSmallIntegerField(verbose_name=_('Birth year'),
+                                                  blank=True,
                                                   null=True)
-    gender = models.CharField(_('Gender'), choices=GENDER_CHOICES, blank=True,
+    gender = models.CharField(verbose_name=_('Gender'), choices=GENDER_CHOICES,
+                              blank=True,
                               max_length=32)
-    country = CountryField(_('Country of origin'), max_length=100, blank=True)
-    city = models.CharField(_('City of origin'), max_length=100, blank=True)
-    id_card_number = models.CharField(_('ID card number'), max_length=50,
+    country = CountryField(verbose_name=_('Country of origin'), max_length=100,
+                           blank=True)
+    city = models.CharField(verbose_name=_('City of origin'), max_length=100,
+                            blank=True)
+    id_card_number = models.CharField(verbose_name=_('ID card number'),
+                                      max_length=50,
                                       blank=True)
     children_under_12 = models.PositiveSmallIntegerField(
-        _('Number of children under 12'), blank=True, null=True)
+        verbose_name=_('Number of children under 12'), blank=True, null=True)
     children_under_18 = models.PositiveSmallIntegerField(
-        _('Number of children under 18'), blank=True, null=True)
+        verbose_name=_('Number of children under 18'), blank=True, null=True)
     children_above_18 = models.PositiveSmallIntegerField(
-        _('Number of children above 18'), blank=True, null=True)
+        verbose_name=_('Number of children above 18'), blank=True, null=True)
     school_level = models.CharField(
-                _('School level'), choices=SCHOOL_LEVEL_CHOICES, blank=True,
-                max_length=32)
+                verbose_name=_('School level'), choices=SCHOOL_LEVEL_CHOICES,
+                blank=True, max_length=32)
     marital_status = models.CharField(
-        _('Marital situation'), choices=MARITAL_STATUS_CHOICES, blank=True,
-        max_length=32)
+        verbose_name=_('Marital situation'), choices=MARITAL_STATUS_CHOICES,
+        blank=True, max_length=32)
     box_awareness = models.CharField(
-        _('Ideas Box awareness'), choices=BOX_AWARENESS_CHOICES, blank=True,
-        max_length=32)
-    refugee_id = models.CharField(_('Refugee ID'), max_length=100, blank=True)
-    camp_entry_date = models.DateField(_('Camp entry date'), blank=True,
+        verbose_name=_('Ideas Box awareness'), choices=BOX_AWARENESS_CHOICES,
+        blank=True, max_length=32)
+    refugee_id = models.CharField(verbose_name=_('Refugee ID'), max_length=100,
+                                  blank=True)
+    camp_entry_date = models.DateField(verbose_name=_('Camp entry date'),
+                                       blank=True,
                                        null=True)
     current_occupation = models.CharField(
-        _('Current occupation'), choices=OCCUPATION_CHOICES, blank=True,
-        max_length=32)
+        verbose_name=_('Current occupation'), choices=OCCUPATION_CHOICES,
+        blank=True, max_length=32)
     country_of_origin_occupation = models.CharField(
-        _('Occupation in the place of origin'),
+        verbose_name=_('Occupation in the place of origin'),
         max_length=100,
         blank=True)
     family_status = models.CharField(
-        _('Family status'), choices=FAMILY_STATUS_CHOICES, blank=True,
-        max_length=32)
+        verbose_name=_('Family status'), choices=FAMILY_STATUS_CHOICES,
+        blank=True, max_length=32)
     is_sent_to_school = models.BooleanField(
-        _('Sent to school in the country of origin (if under 18)'),
+        verbose_name=_('Sent to school in the country of origin (if under 18)'),
         default=False)
     camp_activities = CommaSeparatedCharField(
-        _('Activities in the camp'),
+        verbose_name=_('Activities in the camp'),
         max_length=512,
         choices=CAMP_ACTIVITY_CHOICES,
         blank=True)
-    camp_address = models.CharField(_('Address in the camp'),
+    camp_address = models.CharField(verbose_name=_('Address in the camp'),
                                     max_length=200, blank=True)
     phone = models.CharField(
-                    _('Phone number (use comma to register more than one)'),
-                    max_length=200, blank=True, null=True)
-    email = models.EmailField(_('Email address (optional)'), null=True,
-                              blank=True)
+        verbose_name=_('Phone number (use comma to register more than one)'),
+        max_length=200, blank=True, null=True)
+    email = models.EmailField(verbose_name=_('Email address (optional)'),
+                              null=True, blank=True)
 
     en_level = CommaSeparatedCharField(
-        _('English knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        verbose_name=_('English knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
     ar_level = CommaSeparatedCharField(
-        _('Arabic knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        verbose_name=_('Arabic knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
     fa_level = CommaSeparatedCharField(
-        _('Persian knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        verbose_name=_('Persian knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
     rn_level = CommaSeparatedCharField(
-        _('Kirundi knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        verbose_name=_('Kirundi knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
     fr_level = CommaSeparatedCharField(
-        _('French knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        verbose_name=_('French knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
     sw_level = CommaSeparatedCharField(
-        _('Swahili knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        verbose_name=_('Swahili knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
     ku_level = CommaSeparatedCharField(
-        _('Kurdish knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        verbose_name=_('Kurdish knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
     sdb_level = CommaSeparatedCharField(
-        _('Shabak knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
+        verbose_name=_('Shabak knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
 
 
