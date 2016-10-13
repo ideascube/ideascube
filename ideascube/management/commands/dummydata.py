@@ -77,11 +77,11 @@ class Command(BaseCommand):
                    "no longer any question that Kingsbridge should be the "
                    "place.")
         path = 'ideascube/tests/data/deering-of-deal.jpg'
-        book = BookFactory(title='Deering of Deal', summary=summary,
+        book = BookFactory(name='Deering of Deal', description=summary,
                            subtitle='The Spirit of the School',
                            authors=u'Latta Griswold', lang='en',
                            cover__from_path=path, tags=['plane', 'aviation'])
-        BookSpecimenFactory(book=book, serial="1234567")
+        BookSpecimenFactory(item=book, barcode="1234567")
         summary = (u"Le roman raconte les aventures d'un Gascon impécunieux "
                    u"de 18 ans, d'Artagnan, venu à Paris pour faire carrière "
                    u"dans le corps des mousquetaires. Il se lie d'amitié avec "
@@ -92,10 +92,10 @@ class Command(BaseCommand):
                    u"de Winter, pour sauver l'honneur de la reine de France "
                    u"Anne d'Autriche.")
         path = 'ideascube/tests/data/les-trois-mousquetaires.jpg'
-        book = BookFactory(title='Les Trois Mousquetaires', summary=summary,
+        book = BookFactory(name='Les Trois Mousquetaires', description=summary,
                            authors=u'Alexandre Dumas', lang='fr',
                            cover__from_path=path, tags=['roman', 'aventure'])
-        BookSpecimenFactory(book=book, serial="98765479")
+        BookSpecimenFactory(item=book, barcode="98765479")
         summary = ("With the title of Sense and Sensibility is connected one "
                    "of those minor problems which delight the cummin-splitters"
                    " of criticism. In the Cecilia of Madame D'Arblay-the "
@@ -111,10 +111,10 @@ class Command(BaseCommand):
                    "Austen borrowed from Cecilia, the title of her second "
                    "novel.")
         path = 'ideascube/tests/data/sense-and-sensibility.jpg'
-        book = BookFactory(title='Sense and Sensibility', summary=summary,
+        book = BookFactory(name='Sense and Sensibility', description=summary,
                            authors=u'Jane Austen', lang='en',
                            cover__from_path=path, tags=['19th-century'])
-        BookSpecimenFactory(book=book, serial="32657324")
+        BookSpecimenFactory(item=book, barcode="32657324")
         summary = (u"النبي (1923) أشهر كتب جبران كتبه بالإنجليزية وترجم إلى "
                    u"أكثر من خمسين لغة، وهو يعتبر بحق رائعة جبران العالمية، "
                    u"مضمونه اجتماعي، مثالي وتأملي فلسفي، وهو يحوي خلاصة "
@@ -127,10 +127,10 @@ class Command(BaseCommand):
                    u"وفي كتاب النبي يعبر جبران عن آرائه في الحياة عن طريق "
                    u"معالجته للعلاقات الإنسانية التي تربط الإنسان بالإنسان.")
         path = 'ideascube/tests/data/the-prophet.jpg'
-        book = BookFactory(title=u'النبي (كتاب)', summary=summary,
+        book = BookFactory(name=u'النبي (كتاب)', description=summary,
                            authors=u'جبران خليل جبران', lang='ar',
                            cover__from_path=path)
-        BookSpecimenFactory(book=book, serial="3213542")
+        BookSpecimenFactory(item=book, barcode="3213542")
         title = (u"Déclaration des droits de l'homme et du citoyen "
                  u"du 26 août 1789")
         summary = (u"Les Représentants du Peuple Français, constitués en "
