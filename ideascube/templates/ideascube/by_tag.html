@@ -4,9 +4,9 @@
 {% block twothird %}
     <h2>
     {% if tags|length == 1 %}
-        {% blocktrans with theme=tags.0 %}Browse theme "{{ theme }}"{% endblocktrans %}
+        {% blocktrans with topic=tags.0 %}Browse topic "{{ topic }}"{% endblocktrans %}
     {% else %}
-        {% blocktrans with themes=tags|join:', ' %}Browse themes "{{ themes }}"{% endblocktrans %}
+        {% blocktrans with topics=tags|join:', ' %}Browse topics "{{ topics }}"{% endblocktrans %}
     {% endif %}
     </h2>
     <div class="results">
