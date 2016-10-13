@@ -168,7 +168,14 @@ class KnownWifiConnection(object):
         result = []
 
         for connection in NMSettings.ListConnections():
-            if '802-11-wireless' not in connection.GetSettings():
+            try:
+                conn_settings = connection.GetSettings()
+            except DBusException as e:
+                # NM throws an exception if we try to use GetSettings on a
+                # connection owned by another user. We just ignore it.
+                continue
+
+            if '802-11-wireless' not in conn_settings:
                 continue
 
             result.append(cls(connection))
