@@ -181,6 +181,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         ('teacher', _('Teacher')),
         ('no_profession', _('Without profession')),
         ('profit_profession', _('Profit profession')),
+        ('volunteering', _('Volunteering')),
         ('other', _('Other')),
     )
 
