@@ -3,7 +3,7 @@ from datetime import date, datetime
 import pytest
 
 from django.core.urlresolvers import reverse
-from django.utils import translation
+from django.utils import translation, timezone
 
 from ..views import Index
 from ..models import Content
@@ -294,7 +294,7 @@ def test_create_content_with_default_values(staffapp):
     form['title'] = 'my content title'
     form['summary'] = 'my content summary'
     form['text'] = 'my content text'
-    form['published_at'] = '2014-12-10'
     form.submit().follow()
     content = Content.objects.last()
     assert content.author == staffapp.user
+    assert content.published_at.date() == timezone.now().date()
