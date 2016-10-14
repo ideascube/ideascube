@@ -286,3 +286,15 @@ def test_text_is_kept_on_invalid_form(staffapp, published):
     form['summary'] = ''  # Make form invalid.
     response = form.submit()
     assert response.pyquery.find('[data-editable-for="text"]').text() == text
+
+
+def test_create_content_with_default_values(staffapp):
+    assert not Content.objects.count()
+    form = staffapp.get(reverse('blog:content_create')).forms['model_form']
+    form['title'] = 'my content title'
+    form['summary'] = 'my content summary'
+    form['text'] = 'my content text'
+    form['published_at'] = '2014-12-10'
+    form.submit().follow()
+    content = Content.objects.last()
+    assert content.author == staffapp.user
