@@ -26,6 +26,47 @@ from .wifi import (
 from . import catalog as catalog_mod
 from ideascube.configuration import get_config, set_config
 
+
+def authenticate_with_cockpit():
+    # TODO: Do that properly
+    import requests
+    response = requests.get(
+        'http://localhost:9090/cockpit/login',
+        headers={'Authorization': 'Bearer secret_token'})
+
+    return response.cookies['cockpit']
+
+
+def get_all_timezones():
+    with open('/usr/share/zoneinfo/zone.tab') as f:
+         lines = (line.strip() for line in f)
+         lines = (line for line in lines if line)
+         lines = (line for line in lines if not line.startswith('#'))
+
+         return sorted(line.split('\t')[2] for line in lines)
+
+
+@staff_member_required
+def datetime(request):
+    try:
+        cockpit_cookie = authenticate_with_cockpit()
+        cockpit_available = True
+
+    except Exception:
+        cockpit_available = False
+
+    response = render(
+        request, 'serveradmin/datetime.html', {
+            'timezones': get_all_timezones(),
+            'cockpit_available': cockpit_available,
+        })
+
+    if cockpit_available:
+        response.set_cookie('cockpit', cockpit_cookie, httponly=True)
+
+    return response
+
+
 @staff_member_required
 def languages(request):
     languages = get_all_languages()

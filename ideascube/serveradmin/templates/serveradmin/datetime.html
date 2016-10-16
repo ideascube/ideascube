@@ -1,0 +1,45 @@
+{% extends 'serveradmin/index.html' %}
+{% load i18n static%}
+
+{% block twothird %}
+
+    <h2>{% trans "Date & Time" %}</h2>
+
+  {% if cockpit_available %}
+    <form id="datetime">
+        <label for="timezone">{% trans 'Current Time Zone' %}</label>
+        <select id="timezone" name="timezone">
+            {% for timezone in timezones %}
+                <option value="{{ timezone }}">{{ timezone }}</option> <!--{% if timezone == current_timezone %} selected="selected"{% endif %}></option>-->
+            {% endfor %}
+        </select>
+
+        <input id="submit" class="button" type="button" value="{% trans 'Change' %}" />
+    </form>
+
+    <script src="http://localhost:9090/cockpit/@localhost/base1/cockpit.js"></script>
+    <script>
+    /* Fixme: Really? */
+    window.mock.url = 'ws://localhost:9090/cockpit/socket';
+
+    var timezone_field = document.getElementById('timezone');
+    var submit_btn = document.getElementById('submit');
+    submit_btn.addEventListener('click', change_zone);
+
+    var service = cockpit.dbus('org.freedesktop.timedate1');
+    var timedate = service.proxy();
+    timedate.addEventListener("changed", display_zone);
+
+    function display_zone() {
+        timezone_field.value = timedate.Timezone;
+    }
+
+    function change_zone() {
+        var call = timedate.SetTimezone(timezone_field.value, true);
+    }
+    </script>
+  {% else %}
+    <p>{% blocktrans %}This is not available.{% endblocktrans %}</p>
+  {% endif %}
+
+{% endblock %}

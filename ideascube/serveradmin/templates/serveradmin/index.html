@@ -16,6 +16,7 @@
         </ul>
         <hr />
         <ul>
+            <li>{% fa 'clock-o' 'fa-fw' %} <a href="{% url 'server:datetime' %}">{% trans "Date & Time" %}</a></li>
             <li>{% fa 'info-circle' 'fa-fw' %} <a href="{% url 'server:name' %}">{% trans "Server name" %}</a></li>
             <li>{% fa 'language' 'fa-fw' %} <a href="{% url 'server:languages' %}">{% trans "Languages" %}</a></li>
             <li>{% fa 'cogs' 'fa-fw' %} <a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
