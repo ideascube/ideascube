@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import zipfile
+from urllib.parse import urlparse
 
 from django.conf import settings
 from django.template.defaultfilters import filesizeformat
@@ -831,14 +832,25 @@ class Catalog:
                     self._progress(' {}'.format(remote.name), *args)
 
                 # TODO: Verify the download with sha256sum? Crypto signature?
-                try:
-                    urlretrieve(remote.url, tmppath, reporthook=_progress)
-                except ConnectionError:
-                    print("Warning: Impossible to connect to the remote"
-                          " {remote.name}({remote.url}).\n"
-                          "Continue anyway without this remote."
-                          .format(remote=remote))
-                    continue
+                urlparsed = urlparse(remote.url)
+                if urlparsed.scheme in ['file', '']:
+                    try:
+                        shutil.copyfile(urlparsed.path, tmppath)
+                    except Exception as error:
+                        print("Warning: Impossible to copy the catalog file"
+                              " {remote.name}({remote.url}).\n{error}\n"
+                              "Continue anyway without this remote."
+                              .format(remote=remote, error=error))
+                        continue
+                else:
+                    try:
+                        urlretrieve(remote.url, tmppath, reporthook=_progress)
+                    except ConnectionError:
+                        print("Warning: Impossible to connect to the remote"
+                            " {remote.name}({remote.url}).\n"
+                            "Continue anyway without this remote."
+                            .format(remote=remote))
+                        continue
 
                 catalog = load_from_file(tmppath)
 
