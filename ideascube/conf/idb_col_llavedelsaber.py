@@ -1,4 +1,4 @@
-"""Configuration for Llave Del Saber, Columbia"""
+"""Configuration for Llave Del Saber, Colombia"""
 from .idb import *  # noqa
 
 LANGUAGE_CODE = 'es'
