@@ -535,13 +535,6 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 a.card {
     text-decoration: none;
 }
-.home .card {
-    padding-right: 140px;
-}
-html[dir='rtl'] .home .card {
-    padding-right: 10px;
-    padding-left: 140px;
-}
 .card i.fa {
     position: absolute;
     right: 10px;
