@@ -779,6 +779,34 @@ class Catalog:
         persist_to_file(self._catalog_cache, self._available)
         persist_to_file(self._installed_storage, self._installed)
 
+    def _update_installed_metadata(self):
+        # These are the keys we must only ever update with an actual package
+        # upgrade, and thus not here.
+        blacklist = (
+            'sha256sum',
+            'type',
+            'version',
+        )
+
+        for pkgid in self._installed:
+            installed = self._installed[pkgid]
+            available = self._available.get(pkgid)
+
+            if available is None:
+                # The package was installed but it isn't available any more
+                continue
+
+            if any(installed[k] != available[k] for k in blacklist):
+                # We really should upgrade this package, not update its
+                # installed metadata here
+                continue
+
+            # The remote catalog metadata for this package changed, but the
+            # values associated to blacklisted keys didn't. It is thus the
+            # exact same package, just with updated (and let's hope improved)
+            # name, description, ...
+            self._installed[pkgid] = available.copy()
+
     def add_package_cache(self, path):
         self._package_caches.append(os.path.abspath(path))
 
@@ -808,6 +836,7 @@ class Catalog:
                 # TODO: Handle content which was removed from the remote source
                 self._available.update(catalog['all'])
 
+        self._update_installed_metadata()
         self._persist_catalog()
 
     def clear_cache(self):

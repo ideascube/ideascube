@@ -801,6 +801,118 @@ def test_catalog_update_cache_no_fail_if_remote_unavailable(mocker):
     assert c._installed == {}
 
 
+def test_catalog_update_cache_updates_installed_metadata(tmpdir, monkeypatch):
+    from ideascube.serveradmin.catalog import Catalog
+
+    monkeypatch.setattr(
+        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n'
+        '  foovideos:\n'
+        '    name: Videos from Foo\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+    )
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+    assert c._installed == {}
+
+    # Let's pretend we've installed stuff here
+    c._installed = c._available.copy()
+    c._persist_catalog()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+    assert c._installed == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+
+    # And now let's say that someone modified the remote metadata, for example
+    # to fix an undescriptive name
+    remote_catalog_file.write(
+        'all:\n'
+        '  foovideos:\n'
+        '    name: Awesome videos from Foo\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+    )
+
+    c.update_cache()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Awesome videos from Foo'}}
+    assert c._installed == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Awesome videos from Foo'}}
+
+
+def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir, monkeypatch):
+    from ideascube.serveradmin.catalog import Catalog
+
+    monkeypatch.setattr(
+        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n'
+        '  foovideos:\n'
+        '    name: Videos from Foo\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+    )
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+    assert c._installed == {}
+
+    # Let's pretend we've installed stuff here
+    c._installed = c._available.copy()
+    c._persist_catalog()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+    assert c._installed == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+
+    # And now let's say that someone modified the remote metadata, for example
+    # to fix an undescriptive name... while also publishing an update
+    remote_catalog_file.write(
+        'all:\n'
+        '  foovideos:\n'
+        '    name: Awesome videos from Foo\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 2.0.0\n'
+    )
+
+    c.update_cache()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '2.0.0',
+        'name': 'Awesome videos from Foo'}}
+    assert c._installed == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+
+
 def test_catalog_clear_cache(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog
 
