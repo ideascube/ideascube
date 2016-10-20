@@ -654,7 +654,7 @@ class Catalog:
                 printerr(e)
                 continue
             used_handlers[handler.__class__.__name__] = handler
-            self._installed[pkg.id] = self._available[pkg.id]
+            self._installed[pkg.id] = self._available[pkg.id].copy()
             installed_ids.append(pkg.id)
             self._persist_catalog()
 
@@ -731,7 +731,7 @@ class Catalog:
                 continue
             used_handlers[uhandler.__class__.__name__] = uhandler
 
-            self._installed[ipkg.id] = self._available[upkg.id]
+            self._installed[ipkg.id] = self._available[upkg.id].copy()
             self._persist_catalog()
 
         for handler in used_handlers.values():
