@@ -1,0 +1,121 @@
+/* ************************************************* */
+/* ******************** HOME *********************** */
+/* ************************************************* */
+
+.card.khanacademy {
+    background-image: url('./img/cards/khanacademy.png');
+}
+.card.wikipedia {
+    background-image: url('./img/cards/wikipedia.png');
+}
+.card.wikisource {
+    background-image: url('./img/cards/wikisource.png');
+}
+.card.wikibooks {
+    background-image: url('./img/cards/wikibooks.png');
+}
+.card.wikivoyage {
+    background-image: url('./img/cards/wikivoyage.png');
+}
+.card.wiktionary {
+    background-image: url('./img/cards/wiktionary.png');
+}
+.card.wikiquote {
+    background-image: url('./img/cards/wikiquote.png');
+}
+.card.wikiversity {
+    background-image: url('./img/cards/wikiversity.png');
+}
+.card.appinventor {
+    background-image: url('./img/cards/appinventor.jpeg');
+}
+.card.bsfcampus {
+    background-image: url('./img/cards/bsfcampus.png');
+}
+.card.koombookedu {
+    background-image: url('./img/cards/koombookedu.png');
+}
+.card.cest-pas-sorcier {
+    background-image: url('./img/cards/cest-pas-sorcier.png');
+    background-position: top 10px right 5px;
+}
+.card.gutenberg {
+    background-image: url('./img/cards/gutenberg.jpeg');
+}
+.card.clickinfoado {
+    background-image: url('./img/cards/clickinfoado.png');
+}
+.card.icd10 {
+    background-image: url('./img/cards/icd10.png');
+}
+.card.les-fondamentaux {
+    background-image: url('./img/cards/les-fondamentaux.png');
+}
+.card.bil-tunisia {
+    background-image: url('./img/cards/bil-tunisia.png');
+}
+.card.biologie-tout-compris {
+    background-image: url('./img/cards/biologie-tout-compris.jpg');
+}
+.card.deus-ex-silicium {
+    background-image: url('./img/cards/deus-ex-silicium.jpg');
+}
+.card.e-penser {
+    background-image: url('./img/cards/e-penser.jpg');
+}
+.card.wikimooc {
+    background-image: url('./img/cards/wikimooc.png');
+}
+.card.bouquineux {
+    background-image: url('./img/cards/bouquineux.png');
+}
+.card.mullah-piaz-digest {
+    background-image: url('./img/cards/mullah-piaz-digest.jpg');
+}
+.card.ted {
+    background-image: url('./img/cards/ted.png');
+    background-position: top 24px right 5px;
+}
+.card.ubuntudoc {
+    background-image: url('./img/cards/ubuntudoc.jpeg');
+}
+.card.universcience {
+    background-image: url('./img/cards/universcience.png');
+}
+.card.vikidia {
+    background-image: url('./img/cards/vikidia.png');
+}
+.card.wikistage {
+    background-image: url('./img/cards/wikistage.png');
+}
+.card.dirtybiology {
+    background-image: url('./img/cards/dirtybiology.png');
+}
+.card.software {
+    background-image: url('./img/cards/windows.jpeg');
+}
+.grid .card.blog {
+    background-image: url('./img/blog.png');
+}
+.grid .card.library {
+    background-image: url('./img/library.png');
+}
+.grid .card.mediacenter {
+    background-image: url('./img/mediacenter.png');
+}
+.card.w2eu {
+    background-image: url('./img/cards/w2eu.jpg');
+}
+.card.maps {
+    background-image: url('./img/cards/maps.png');
+}
+.card.crashcourse {
+    background-image: url('./img/cards/crashcourse.png');
+}
+.card.maguare {
+    background-image: url('./img/cards/maguare.png');
+}
+.card.cinescuela {
+    background-image: url('./img/cards/cinescuela.jpg');
+}
+

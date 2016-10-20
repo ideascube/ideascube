@@ -1,5 +1,9 @@
 {% extends 'two-third-third.html' %}
-{% load i18n ideascube_tags %}
+{% load i18n ideascube_tags static %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static "library/library.css" %}">
+{% endblock %}
 
 {% block twothird %}
     {% block content_title %}<h2><span class="theme read">{% trans "read" %}</span> {% trans "Library" %}</h2>{% endblock %}

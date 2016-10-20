@@ -1,6 +1,10 @@
 {% extends 'two-third-third.html' %}
 
-{% load i18n ideascube_tags %}
+{% load i18n ideascube_tags static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{% static "mediacenter/mediacenter.css" %}">
+{% endblock extra_head %}
 
 {% block twothird %}
     <h5><a href="{% url 'mediacenter:index' %}">&lt; {% trans 'View all medias' %}</a></h5>

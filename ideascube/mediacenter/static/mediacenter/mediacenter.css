@@ -1,0 +1,36 @@
+/* ************************************************* */
+/* **************** MEDIAS CENTER ****************** */
+/* ************************************************* */
+.document-list .card {
+    border: 1px solid #efefef;
+    padding: 10px;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    flex-basis: 250px;
+    max-width: 300px;
+}
+.document-list .card > a {
+    display: block;
+    max-height: 100%;
+    overflow: hidden;
+}
+.document-list .card h3 {
+    height: 3em;
+    font-size: 1em;
+    line-height: 1.4em;
+}
+.document-list .card img {
+    float: none;
+    display: block;
+    margin: 0 auto;
+}
+.card.document img {
+    float: right;
+}
+html[dir='rtl'] .card.document img {
+    float: left;
+}
+.card.document {
+    overflow: hidden;
+}

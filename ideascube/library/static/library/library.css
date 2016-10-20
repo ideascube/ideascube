@@ -1,0 +1,43 @@
+/* ************************************************* */
+/* ******************* LIBRARY ********************* */
+/* ************************************************* */
+img.cover {
+    box-shadow: 0px 0px 10px 0px #999;
+    max-height: 300px;
+    max-width: 200px;
+}
+.default img.cover {
+    box-shadow: none;
+}
+
+.book-list .card {
+    border: 1px solid #efefef;
+    padding: 5px;
+    width: 250px;
+    height: 300px;
+    text-align: center;
+    flex-basis: 200px;
+}
+.book-list .card h3 {
+    height: 2em;
+}
+.book-list .card img {
+    max-height: 200px;
+    float: none;
+}
+/* default image for books does not have large blank borders */
+.book-list .card.default a:not(:first-of-type) {
+    display: block;
+    margin-top: 50px;
+}
+
+.book-detail h2, h3, h4, h5 {
+    margin-bottom: 10px;
+}
+.book-detail h4 {
+    text-transform: uppercase;
+}
+.book-detail h3 {
+    font-family: 'fira_sansmedium';
+    font-size: 1em;
+}
