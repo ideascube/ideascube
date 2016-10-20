@@ -1,10 +1,15 @@
 {% load i18n %}
-<div class="card tinted">
-        {% if card.fa %}<i class="fa fa-{{ card.fa }} fa-3x"></i>{% endif %}
-        {% if card.url|slice:'7' == 'http://' %}<a href="{{ card.url }}">{% else %}<a href="{% url card.url %}">{% endif %}
-        <h4><span class="theme {{ card.category }}">{{ card.category }}</span><span>
-        {{ card.title }}
-        </span></h4>
-        <p>{{ card.description }}</p>
-    </a>
-</div>
+
+<a href="
+{% if card.url|slice:'7' == 'http://' %}
+  {{ card.url }}
+{% else %}
+  {% url card.url %}
+{% endif %}" class="card tinted">
+  {% if card.fa %}<i class="fa fa-{{ card.fa }} fa-3x"></i>{% endif %}
+  <h4>
+    <span class="theme {{ card.category }}">{{ card.category }}</span>
+    <span>{{ card.title }}</span>
+  </h4>
+  <p>{{ card.description }}</p>
+</a>

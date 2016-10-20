@@ -94,13 +94,13 @@
 .card.software {
     background-image: url('./img/cards/windows.jpeg');
 }
-.grid .card.blog {
+.card.blog {
     background-image: url('./img/blog.png');
 }
-.grid .card.library {
+.card.library {
     background-image: url('./img/library.png');
 }
-.grid .card.mediacenter {
+.card.mediacenter {
     background-image: url('./img/mediacenter.png');
 }
 .card.w2eu {
@@ -118,4 +118,3 @@
 .card.cinescuela {
     background-image: url('./img/cards/cinescuela.jpg');
 }
-
