@@ -7,11 +7,15 @@
 
 {% block twothird %}
     {% block content_title %}<h2><span class="theme read">{% trans "read" %}</span> {% trans "Library" %}</h2>{% endblock %}
-    <div class="grid book-list">
+    <div class="pure-g book-list">
         {% for book in book_list  %}
+            <div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-u-lg-1-4 pure-u">
             {% include 'library/book_card.html' %}
+            </div>
         {% empty %}
+            <div class="pure-u-1">
             {% trans "No books yet." %}
+            </div>
         {% endfor %}
     </div>
     {% include "ideascube/pagination.html" %}

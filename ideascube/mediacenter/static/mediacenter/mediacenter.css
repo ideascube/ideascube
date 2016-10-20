@@ -4,10 +4,7 @@
 .document-list .card {
     border: 1px solid #efefef;
     padding: 10px;
-    width: 250px;
-    height: 250px;
     text-align: center;
-    flex-basis: 250px;
     max-width: 300px;
 }
 .document-list .card > a {

@@ -513,9 +513,11 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 /* ******************** TOOLS ********************** */
 /* ************************************************* */
 .card {
-    float: none;
-    clear: both;
-    max-width: 400px;
+    margin: 5px;
+    display: block;
+    width:100%;
+    position: relative;
+    overflow: hidden;
 }
 .card + .card {
     margin-top: 20px;
@@ -529,7 +531,8 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
   content: " ";
 }
 .card h4 a,
-.card > a {
+.card > a,
+a.card {
     text-decoration: none;
 }
 .home .card {
@@ -538,11 +541,6 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 html[dir='rtl'] .home .card {
     padding-right: 10px;
     padding-left: 100px;
-}
-.card img {
-    float: left;
-    display: block;
-    margin: 0 auto;
 }
 .card i.fa {
     position: absolute;
@@ -558,11 +556,6 @@ html[dir='rtl'] .card i.fa {
 .card a.flatlist + a.flatlist:before {
     content: ' • ';
 }
-html[dir='rtl'] .card img {
-    float: right;
-    margin-left: 10px;
-    margin-right: 0;
-}
 .tinted {
     background-color: #fefefe;
     padding: 20px;
@@ -573,28 +566,6 @@ html[dir='rtl'] .card img {
 }
 html[dir='rtl'] .tinted {
     background-position: center left 5px;
-}
-
-.grid {
-    display: flex;
-    display: -webkit-flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
-.grid .card {
-    clear: none;
-    margin-top: 0;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    max-width: 32.5%;
-    flex-grow: 1;
-    flex-basis: 300px;
-    position: relative;
-    overflow: hidden;
-}
-.grid .card img {
-    display: block;
-    float: left;
 }
 
 html[dir='rtl'] .card.book img {
@@ -618,15 +589,6 @@ html[dir='rtl'] .card.book img {
     color: #fff;
     padding: 0 5px;
     text-decoration: none;
-}
-.subnav {
-    color: rgba(0, 0, 0, 0.5);
-    text-decoration: none;
-    padding-right: 5px;
-}
-.subnav:before {
-    content: '▪';
-    padding-right: 5px;
 }
 .info {
     background-color: #E26A6A;
@@ -848,13 +810,27 @@ html[dir='rtl'] .search input[type='submit'] {
         -webkit-flex-direction: column;
         -webkit-align-items: center;
     }
-    .grid {
-        justify-content: center;
-        -webkit-justify-content: center;
-    }
 }
 @media screen and (max-width: 600px) {
     .boxid {
         display: none;
     }
 }
+
+.pure-g {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.pure-g > div {
+     padding: 5px;
+}
+
+.pure-u {
+    display: flex !important;
+}
+
+@media screen and (min-width: 48em) {
+    .u-md-order-2 {
+        order: 2;
+    }

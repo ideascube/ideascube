@@ -16,7 +16,6 @@ img.cover {
     width: 250px;
     height: 300px;
     text-align: center;
-    flex-basis: 200px;
 }
 .book-list .card h3 {
     height: 2em;
