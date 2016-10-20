@@ -76,6 +76,15 @@ textarea {
   font:15px/20px 'fira_sansregular', sans-serif;
   -webkit-font-smoothing:antialiased;
 }
+/* pure-g force the use of a font that works correctly in all browser for the
+ * em unit (https://github.com/yahoo/pure/issues/41/).
+ * The font is then reset to the default one (sans-serif) in pure-u elements.
+ * As we use 'fira_sansregular' by default, we need to overide the default
+ * value from pure.
+ */
+.pure-g [class*="pure-u"] {
+  font-family: 'fira_sansregular', sans-serif !important;
+}
 div, ul, li, a, section, nav,
 h1, h2, h3, h4, h5, h6,
 hr, input, textarea, footer, header {
