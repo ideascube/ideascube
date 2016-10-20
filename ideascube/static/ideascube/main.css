@@ -536,11 +536,11 @@ a.card {
     text-decoration: none;
 }
 .home .card {
-    padding-right: 100px;
+    padding-right: 140px;
 }
 html[dir='rtl'] .home .card {
     padding-right: 10px;
-    padding-left: 100px;
+    padding-left: 140px;
 }
 .card i.fa {
     position: absolute;
