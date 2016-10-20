@@ -3,7 +3,7 @@ from datetime import date, datetime
 import pytest
 
 from django.core.urlresolvers import reverse
-from django.utils import translation
+from django.utils import translation, timezone
 
 from ..views import Index
 from ..models import Content
@@ -286,3 +286,15 @@ def test_text_is_kept_on_invalid_form(staffapp, published):
     form['summary'] = ''  # Make form invalid.
     response = form.submit()
     assert response.pyquery.find('[data-editable-for="text"]').text() == text
+
+
+def test_create_content_with_default_values(staffapp):
+    assert not Content.objects.count()
+    form = staffapp.get(reverse('blog:content_create')).forms['model_form']
+    form['title'] = 'my content title'
+    form['summary'] = 'my content summary'
+    form['text'] = 'my content text'
+    form.submit().follow()
+    content = Content.objects.last()
+    assert content.author == staffapp.user
+    assert content.published_at.date() == timezone.now().date()

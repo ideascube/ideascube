@@ -55,4 +55,9 @@ content_update = staff_member_required(ContentUpdate.as_view())
 class ContentCreate(CreateView):
     model = Content
     form_class = ContentForm
+
+    def get_initial(self):
+        initial = super(ContentCreate, self).get_initial()
+        initial['author'] = self.request.user
+        return initial
 content_create = staff_member_required(ContentCreate.as_view())

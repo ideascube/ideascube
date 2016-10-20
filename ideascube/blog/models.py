@@ -58,7 +58,8 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
                               upload_to='blog/image',
                               blank=True)
     text = models.TextField(verbose_name=_('text'))
-    published_at = models.DateTimeField(verbose_name=_('publication date'))
+    published_at = models.DateTimeField(verbose_name=_('publication date'),
+                                        default=timezone.now)
     status = models.PositiveSmallIntegerField(verbose_name=_('Status'),
                                               choices=STATUSES,
                                               default=DRAFT)
