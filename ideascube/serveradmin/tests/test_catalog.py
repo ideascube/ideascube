@@ -791,11 +791,14 @@ def test_catalog_update_cache_no_fail_if_remote_unavailable(mocker):
                  side_effect=ConnectionError)
 
     c = Catalog()
+    assert c._available == {}
+    assert c._installed == {}
 
     c.add_remote(
-        'foo', 'Content from Foo',
-        'http://exemple.com/not_existing')
+        'foo', 'Content from Foo', 'http://example.com/not_existing')
     c.update_cache()
+    assert c._available == {}
+    assert c._installed == {}
 
 
 def test_catalog_clear_cache(tmpdir, monkeypatch):
@@ -812,6 +815,9 @@ def test_catalog_clear_cache(tmpdir, monkeypatch):
     c.add_remote(
         'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    assert c._available == {}
+    assert c._installed == {}
+
     c.update_cache()
     assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
     assert c._installed == {}
