@@ -526,7 +526,7 @@ def test_kiwix_commits_after_remove(settings, zippedzim_path, mocker):
     manager().restart.assert_not_called()
 
 
-def test_nginx_installs_zippedzim(settings, staticsite_path):
+def test_nginx_installs_staticsite(settings, staticsite_path):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
 
     Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
@@ -546,7 +546,7 @@ def test_nginx_installs_zippedzim(settings, staticsite_path):
         assert 'static content' in f.read()
 
 
-def test_nginx_removes_zippedzim(settings, staticsite_path):
+def test_nginx_removes_staticsite(settings, staticsite_path):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
 
     Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
