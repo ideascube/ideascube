@@ -37,7 +37,7 @@ def fetch_from_openlibrary(isbn):
     args['bibkeys'] = key
     query = urlencode(args)
     url = '{base}{query}'.format(base=OPENLIBRARY_API_URL, query=query)
-    content = read_url(url)
+    content = read_url(url).decode()
     try:
         data = json.loads(content).get(key)
     except ValueError:
@@ -67,12 +67,12 @@ def fetch_from_openlibrary(isbn):
 def read_url(url):
     try:
         response = urlopen(url)
-        return response.read().decode()
+        return response.read()
     except:
         # Catch all, we don't want to fail in any way.
         import traceback
         print(traceback.format_exc())
-        return ''
+        return b''
 
 
 def load_cover_from_url(url):
