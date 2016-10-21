@@ -529,8 +529,6 @@ def test_kiwix_commits_after_remove(settings, zippedzim_path, mocker):
 def test_nginx_installs_staticsite(settings, staticsite_path):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
 
-    Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
-
     p = StaticSite('w2eu', {})
     h = Nginx()
     h.install(p, staticsite_path.strpath)
@@ -548,8 +546,6 @@ def test_nginx_installs_staticsite(settings, staticsite_path):
 def test_nginx_removes_staticsite(settings, staticsite_path):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
 
-    Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
-
     p = StaticSite('w2eu', {})
     h = Nginx()
     h.install(p, staticsite_path.strpath)
@@ -566,24 +562,12 @@ def test_nginx_removes_staticsite(settings, staticsite_path):
 def test_nginx_commits_after_install(settings, staticsite_path, mocker):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
 
-    Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
-    root = Path(Nginx.root).mkdir()
-    available_dir = root.mkdir('sites-available')
-    enabled_dir = root.mkdir('sites-enabled')
-
     manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
     p = StaticSite('w2eu', {})
     h = Nginx()
     h.install(p, staticsite_path.strpath)
     h.commit()
-
-    conffile = available_dir.join('w2eu')
-    with conffile.open() as f:
-        assert 'server_name w2eu.' in f.read()
-    symlink = enabled_dir.join('w2eu')
-    assert symlink.check(exists=True)
-    assert symlink.realpath() == conffile
 
     manager().get_service.assert_called_once_with('nginx')
     manager().restart.call_count == 1
@@ -593,11 +577,6 @@ def test_nginx_commits_after_install(settings, staticsite_path, mocker):
 def test_nginx_commits_after_remove(settings, staticsite_path, mocker):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
     from ideascube.serveradmin.systemd import NoSuchUnit
-
-    Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
-    root = Path(Nginx.root).mkdir()
-    available_dir = root.mkdir('sites-available')
-    enabled_dir = root.mkdir('sites-enabled')
 
     manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     manager().get_service.side_effect = NoSuchUnit
@@ -612,11 +591,6 @@ def test_nginx_commits_after_remove(settings, staticsite_path, mocker):
 
     h.remove(p)
     h.commit()
-
-    conffile = available_dir.join('w2eu')
-    assert conffile.check(exists=False)
-    symlink = enabled_dir.join('w2eu')
-    assert symlink.check(exists=False)
 
     assert manager().get_service.call_count == 2
     manager().restart.assert_not_called()
