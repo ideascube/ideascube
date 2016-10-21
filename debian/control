@@ -35,4 +35,11 @@ Depends:
   ${misc:Depends},
   ${shlibs:Depends},
   python3,
-Description: Ideascube media server
+Description: Library server
+ Ideascube is a complete library management server. It allows librarians to
+ manage their content, the users, and more. It also allows installing more
+ content and applications from various repositories, for example offline
+ copies of Wikipedia.
+ .
+ Ideascube is used as the main user interface in the Ideasbox and Koombook
+ servers from Libraries Without Borders.

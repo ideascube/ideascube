@@ -7,7 +7,18 @@ case "$1" in
     remove)
         # on removal we should clean project directory
         echo "Removing ideascube project directory"
-        rm -rf /var/lib/$DPKG_MAINTSCRIPT_PACKAGE
+        rm -rf /var/$DPKG_MAINTSCRIPT_PACKAGE/static || :
+
+        rm -f /etc/nginx/sites-enabled/$DPKG_MAINTSCRIPT_PACKAGE
+        rm -f /etc/uwsgi/apps-enabled/$DPKG_MAINTSCRIPT_PACKAGE.ini
+        ;;
+
+    purge)
+        rm -rf /var/$DPKG_MAINTSCRIPT_PACKAGE || :
+        rm -rf /var/cache/$DPKG_MAINTSCRIPT_PACKAGE || :
+
+        deluser --quiet $DPKG_MAINTSCRIPT_PACKAGE > /dev/null || :
+        delgroup --quiet $DPKG_MAINTSCRIPT_PACKAGE > /dev/null || :
         ;;
 esac
 

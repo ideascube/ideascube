@@ -5,20 +5,13 @@ set -e
 
 case "$1" in
     configure)
-        # Create ideascube group if not existing
-        if ! getent group "$DPKG_MAINTSCRIPT_PACKAGE" > /dev/null 2>&1 ; then
-            echo -n "Creating $DPKG_MAINTSCRIPT_PACKAGE group..."
-            addgroup --quiet --system "$DPKG_MAINTSCRIPT_PACKAGE"
-            echo " OK"
-        fi
-
         # Create ideascube user if not existing
-        if ! id $DPKG_MAINTSCRIPT_PACKAGE > /dev/null 2>&1 ; then
+        if ! getent passwd "$DPKG_MAINTSCRIPT_PACKAGE" > /dev/null 2>&1 ; then
             echo -n "Creating $DPKG_MAINTSCRIPT_PACKAGE user..."
             adduser --quiet \
                     --system \
                     --no-create-home \
-                    --ingroup "$DPKG_MAINTSCRIPT_PACKAGE" \
+                    --group \
                     --disabled-password \
                     --shell /bin/false \
                     "$DPKG_MAINTSCRIPT_PACKAGE"
@@ -42,14 +35,6 @@ case "$1" in
         systemctl daemon-reload
         systemctl restart nginx.service uwsgi.service
         systemctl enable uwsgi.service
-        ;;
-
-    abort-upgrade|abort-remove|abort-deconfigure)
-        # Do nothing
-        ;;
-    *)
-
-        echo "Unrecognized postinst argument '$1'"
         ;;
 esac
 
