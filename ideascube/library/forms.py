@@ -63,7 +63,7 @@ class ImportForm(forms.Form):
     UNIMARC = 'unimarc'
     IDEASCUBE = 'ideascube'
     FORMATS = (
-        (MOCCAM_CSV, _('CSV from "Mocam-en-ligne"')),
+        (MOCCAM_CSV, _('CSV from "MoCCam-en-ligne"')),
         (UNIMARC, 'UNIMARC'),
         (IDEASCUBE, _('Ideascube ZIP')),
     )
