@@ -7,7 +7,7 @@ BACKUP_FORMAT = 'gztar'
 IDEASCUBE_BOX_TYPE = 'koombook'
 STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS
                     if c['url'] in ['user_list', 'server:power',
-                                    'server:backup', 'server:wifi']]
+                                    'server:wifi']]
 
 HOME_CARDS = STAFF_HOME_CARDS + [
     {
