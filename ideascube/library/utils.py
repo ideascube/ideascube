@@ -70,6 +70,8 @@ def read_url(url):
         return response.read().decode()
     except:
         # Catch all, we don't want to fail in any way.
+        import traceback
+        print(traceback.format_exc())
         return ''
 
 
