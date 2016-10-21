@@ -531,8 +531,7 @@ def test_nginx_installs_staticsite(settings, staticsite_path):
 
     Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
 
-    p = StaticSite('w2eu', {
-        'url': 'https://foo.fr/w2eu-2016-02-26.zim'})
+    p = StaticSite('w2eu', {})
     h = Nginx()
     h.install(p, staticsite_path.strpath)
 
@@ -551,8 +550,7 @@ def test_nginx_removes_staticsite(settings, staticsite_path):
 
     Nginx.root = os.path.join(settings.STORAGE_ROOT, 'nginx')
 
-    p = StaticSite('w2eu', {
-        'url': 'https://foo.fr/w2eu-2016-02-26.zim'})
+    p = StaticSite('w2eu', {})
     h = Nginx()
     h.install(p, staticsite_path.strpath)
 
@@ -575,8 +573,7 @@ def test_nginx_commits_after_install(settings, staticsite_path, mocker):
 
     manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
-    p = StaticSite('w2eu', {
-        'url': 'https://foo.fr/w2eu-2016-02-26.zim'})
+    p = StaticSite('w2eu', {})
     h = Nginx()
     h.install(p, staticsite_path.strpath)
     h.commit()
@@ -605,8 +602,7 @@ def test_nginx_commits_after_remove(settings, staticsite_path, mocker):
     manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     manager().get_service.side_effect = NoSuchUnit
 
-    p = StaticSite('w2eu', {
-        'url': 'https://foo.fr/w2eu-2016-02-26.zim'})
+    p = StaticSite('w2eu', {})
     h = Nginx()
     h.install(p, staticsite_path.strpath)
     h.commit()
