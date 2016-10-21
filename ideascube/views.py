@@ -39,6 +39,7 @@ from .mixins import CSVExportMixin
 
 user_model = get_user_model()
 
+
 def build_package_card_info():
     package_card_info = []
     catalog = catalog_mod.Catalog()
@@ -57,6 +58,7 @@ def build_package_card_info():
         }
         package_card_info.append(card_info)
     return package_card_info
+
 
 def index(request):
     if not user_model.objects.filter(is_staff=True).exists():

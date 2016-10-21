@@ -216,8 +216,6 @@ IDEASCUBE_BOX_TYPE = 'ideasbox'
 LOAN_DURATION = 0  # In days.
 
 DOMAIN = 'ideasbox.lan'
-WIKIPEDIA_URL = 'http://wikipedia.{domain}'.format(domain=DOMAIN)
-KHANACADEMY_URL = 'http://khanacademy.{domain}'.format(domain=DOMAIN)
 
 # Fields to be used in the entry export. This export is supposed to be
 # anonymized, so no personal data like name.

@@ -176,46 +176,9 @@ class Kiwix(Handler):
 
 
 class Nginx(Handler):
-    template = """
-server {{
-    listen   80;
-    server_name {server_name};
-    root {root};
-    index index.html;
-}}
-"""
-    root = '/etc/nginx/'
-
     def commit(self):
-        for pkg in self._removed:
-            self.unregister_site(pkg)
-        for pkg in self._installed:
-            self.register_site(pkg)
         self.restart_service('nginx')
         super().commit()
-
-    def register_site(self, package):
-        available = Path(self.root, 'sites-available', package.id)
-        enabled = Path(self.root, 'sites-enabled', package.id)
-        server_name = '{subdomain}.{domain}'.format(subdomain=package.id,
-                                                    domain=settings.DOMAIN)
-        root = package.get_root_dir(self._install_dir)
-        with available.open('w') as f:
-            f.write(self.template.format(server_name=server_name, root=root))
-        try:
-            enabled.symlink_to(available)
-        except FileExistsError:
-            if enabled.realpath() != available.realpath():
-                # Can we delete it? Even if it's not a symlink?
-                # Let's prevent install for now.
-                raise
-
-    def unregister_site(self, package):
-        try:
-            Path(self.root, 'sites-available', package.id).unlink()
-            Path(self.root, 'sites-enabled', package.id).unlink()
-        except FileNotFoundError as e:
-            printerr(e)
 
 
 class MediaCenter(Handler):
