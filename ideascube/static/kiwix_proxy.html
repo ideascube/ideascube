@@ -1,0 +1,113 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-flow: column;
+}
+iframe {
+  flex: 1 1 auto;
+}
+#kiwixtoolbar {
+    padding: .5em;
+    left:0;
+    right:0;
+    top: 0;
+    z-index:100;
+    max-height: 2.8em;
+    flex: 0 1 auto;
+}
+
+#kiwixsearchbox {
+    width: 20em;
+}
+
+.kiwixsearch {
+	float: right;
+}
+@media only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 1.5/1),
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio: 1.5) {
+    #kiwixtoolbar button, #kiwixtoolbar input {
+    	font-size: 2em;
+    }
+    #kiwixsearchbox {
+		width: 7em;
+	}
+}
+</style>
+<script>  
+  function on_iframe_ref_changed(iframe){
+    /*alert("changed");*/
+    var location = iframe.contentWindow.location;
+    var new_url = location.protocol + "//" + location.host + "/book" + location.pathname + location.search;
+    var title = iframe.contentDocument.title;
+    document.title = title;
+    if (window.location != new_url) {
+      /*alert("pushState " + title + " | " + new_url);*/
+      window.history.pushState({'iframe_location': ""+location}, title, new_url);
+    }
+  };
+  
+  window.onpopstate = function(event) {
+    /*alert("on popstate " + event);*/
+    if (event.state) {
+      /*alert("on popstate " + event.state.iframe_location);*/
+      var iframe = document.getElementById("mainFrame");
+      iframe.setAttribute("src", event.state.iframe_location);
+    }
+  };
+  
+  function init() {
+    /*alert("init");*/
+    var hostName = window.location.host;
+    var scheme = window.location.protocol;
+    var pathName = window.location.pathname.substring(5);
+    var zimName = pathName.split('/')[1];
+    var search_ = window.location.search;
+    var new_iframe_src = scheme + "//" + hostName + pathName + search_;
+    if ( zimName == "random" || zimName == "search" )
+    {
+      /* This is a random request (random?content=zimname)
+         or a search request (random?content=zimname&pattern=foo)
+       */
+      var args = search_.substring(1).split("&");
+      for (var i in args)
+      {
+        var splitted = args[i].split("=");
+        if (splitted[0] == "content")
+        {
+          zimName = splitted[1];
+          break;
+        }
+      }    
+    }
+    document.getElementById("rootBookButton").setAttribute("href", "/book/"+zimName+"/");
+    document.getElementById("randomButton").setAttribute("href", "/book/random?content="+zimName);
+    document.getElementById("contentInput").setAttribute("value", zimName);
+    var iframe = document.getElementById("mainFrame")
+    /*alert("setting iframe to " + new_iframe_src);*/
+    iframe.setAttribute("src", new_iframe_src);
+    iframe.setAttribute("onload", "on_iframe_ref_changed(this)");
+  }
+</script>
+</head>
+<body onload="init()">
+<span id="kiwixtoolbar" class="ui-widget-header">
+  <a id="rootBookButton"><button>Home</button></a>
+  <a id="randomButton"><button>Random</button></a>
+  <form class="kiwixsearch" method="GET" action="/book/search" id="kiwixsearchform">
+    <input id="contentInput" type="hidden" name="content" />
+    <input autocomplete="off" class="ui-autocomplete-input" id="kiwixsearchbox" name="pattern" type="text">
+    <input type="submit" value="Search">
+  </form>
+</span>
+<iframe id="mainFrame" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+</body>
+</html>
