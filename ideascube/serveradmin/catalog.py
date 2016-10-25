@@ -584,6 +584,7 @@ class Catalog:
             self._progress(' {}'.format(package.id), *args)
 
         filename = '{0.id}-{0.version}'.format(package)
+        urlparsed = urlparse(package.url)
 
         for cache in self._package_caches:
             path = os.path.join(cache, filename)
@@ -591,30 +592,47 @@ class Catalog:
             if os.path.isfile(path):
                 if self._verify_sha256(path, package.sha256sum):
                     return path
+                if urlparsed.scheme in ['file', '']:
+                    try:
+                        shutil.copyfile(urlparsed.path, path)
+                    except Exception as error:
+                        print("Warning: Impossible to copy the package file"
+                              " {package.title}({package.url}).\n{error}\n"
+                              "Continue anyway without this remote."
+                              .format(package=package, error=error))
+                        os.unlink(path)
+                else:
+                    try:
+                        # This might be an incomplete download, try finishing it
+                        urlretrieve(
+                            package.url, path, sha256sum=package.sha256sum,
+                            reporthook=_progress)
+                        return path
 
-                try:
-                    # This might be an incomplete download, try finishing it
-                    urlretrieve(
-                        package.url, path, sha256sum=package.sha256sum,
-                        reporthook=_progress)
-                    return path
+                    except DownloadError as e:
+                        # File was too busted, could not finish the download
+                        if e.args[0] is DownloadCheck.checksum_mismatch:
+                            msg = 'Downloaded file has invalid checksum'
 
-                except DownloadError as e:
-                    # File was too busted, could not finish the download
-                    if e.args[0] is DownloadCheck.checksum_mismatch:
-                        msg = 'Downloaded file has invalid checksum'
+                        else:
+                            msg = 'Error downloading the file: {}'.format(e)
 
-                    else:
-                        msg = 'Error downloading the file: {}'.format(e)
-
-                    printerr(msg)
-                    os.unlink(path)
+                        printerr(msg)
+                        os.unlink(path)
 
         path = os.path.join(self._local_package_cache, filename)
-        urlretrieve(
-            package.url, path, sha256sum=package.sha256sum,
-            reporthook=_progress)
-
+        if urlparsed.scheme in ['file', '']:
+            try:
+                shutil.copyfile(urlparsed.path, path)
+            except Exception as error:
+                print("Warning: Impossible to copy the package file"
+                      " {package.title}({package.url}).\n{error}\n"
+                      "Continue anyway without this remote."
+                      .format(package=package, error=error))
+        else:
+            urlretrieve(
+                package.url, path, sha256sum=package.sha256sum,
+                reporthook=_progress)
         return path
 
     def list_installed(self, ids):
