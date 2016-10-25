@@ -957,9 +957,6 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -976,8 +973,6 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-
-    assert spy_urlretrieve.call_count == 1
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1004,9 +999,6 @@ def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1023,8 +1015,6 @@ def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-
-    assert spy_urlretrieve.call_count == 1
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1050,9 +1040,6 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1062,11 +1049,8 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
     c.install_packages(['wikipedia.tum'])
 
     # Once to download the remote catalog.yml, once to download the package
-    assert spy_urlretrieve.call_count == 1
 
     c.install_packages(['wikipedia.tum'])
-
-    assert spy_urlretrieve.call_count == 1
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1101,9 +1085,6 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, settings,
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     def fake_install(package, download_path):
         if package.id == 'wikipedia.tum':
@@ -1123,7 +1104,6 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, settings,
     assert spy_install.call_count == 2
     assert 'wikipedia.tum' not in c._installed
     assert 'wikipedia.fr' in c._installed
-    assert spy_urlretrieve.call_count == 2
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1247,9 +1227,6 @@ def test_catalog_install_package_partially_downloaded(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1266,8 +1243,6 @@ def test_catalog_install_package_partially_downloaded(
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-
-    assert spy_urlretrieve.call_count == 1
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1301,9 +1276,6 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1320,8 +1292,6 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-
-    assert spy_urlretrieve.call_count == 2
 
 
 def test_catalog_install_package_does_not_exist(
@@ -1445,9 +1415,6 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1467,8 +1434,6 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-
-    assert spy_urlretrieve.call_count == 1
 
     # Now let's pretend a hacker modified the file
     good_hash = sha256(zim.read_binary())
@@ -1505,9 +1470,6 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1521,7 +1483,6 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
     assert library.check(exists=True)
     assert library.read_text('utf-8') == (
         "<?xml version='1.0' encoding='utf-8'?>\n<library/>")
-    assert spy_urlretrieve.call_count == 1
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1548,9 +1509,6 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1564,7 +1522,6 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
     assert library.check(exists=True)
     assert library.read_text('utf-8') == (
         "<?xml version='1.0' encoding='utf-8'?>\n<library/>")
-    assert spy_urlretrieve.call_count == 1
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1591,9 +1548,6 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1641,8 +1595,6 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
         assert 'date="2015-09-10"' in libdata
 
-    assert spy_urlretrieve.call_count == 2
-
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
@@ -1668,9 +1620,6 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1718,8 +1667,6 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
         assert 'date="2015-09-10"' in libdata
 
-    assert spy_urlretrieve.call_count == 2
-
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_package_already_latest(
@@ -1746,9 +1693,6 @@ def test_catalog_update_package_already_latest(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1772,8 +1716,6 @@ def test_catalog_update_package_already_latest(
     out, err = capsys.readouterr()
     assert out.strip() == ''
     assert err.strip() == 'wikipedia.tum has no update available'
-
-    assert spy_urlretrieve.call_count == 1
 
 
 def test_catalog_list_available_packages(tmpdir, monkeypatch):
@@ -1856,9 +1798,6 @@ def test_catalog_list_installed_packages(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1902,8 +1841,6 @@ def test_catalog_list_installed_packages(
     assert pkg.size == '200KB'
     assert isinstance(pkg, ZippedZim)
 
-    assert spy_urlretrieve.call_count == 1
-
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_list_upgradable_packages(
@@ -1927,9 +1864,6 @@ def test_catalog_list_upgradable_packages(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1991,8 +1925,6 @@ def test_catalog_list_upgradable_packages(
     assert pkg.size == '200KB'
     assert isinstance(pkg, ZippedZim)
 
-    assert spy_urlretrieve.call_count == 1
-
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_list_nothandled_packages(
@@ -2022,9 +1954,6 @@ def test_catalog_list_nothandled_packages(
         f.write('    type: NOTHANDLED\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -2047,8 +1976,6 @@ def test_catalog_list_nothandled_packages(
     assert len(pkgs) == 1
     pkgs = c.list_installed(['*'])
     assert len(pkgs) == 1
-
-    assert spy_urlretrieve.call_count == 1
 
 
 def test_catalog_update_displayed_package(systemuser):
