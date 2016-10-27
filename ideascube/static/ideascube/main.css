@@ -640,6 +640,9 @@ html[dir='rtl'] .home .card {
 .card.crashcourse {
     background-image: url('./img/cards/crashcourse.png');
 }
+.card.maguare {
+    background-image: url('./img/cards/maguare.png');
+}
 .card img {
     float: left;
     display: block;

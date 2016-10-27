@@ -342,7 +342,7 @@ class StaticSite(SimpleZipPackage):
         # For this we use a dummy function who do nothing.
         # As the function is named _, gettext will mark the strings.
         _ = lambda t: t
-        if '.map' in self.id:
+        if '.map' in self.id or 'maguare' in self.id:
             return _('discover')
         return _('info')
 
