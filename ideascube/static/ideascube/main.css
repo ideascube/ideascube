@@ -643,6 +643,9 @@ html[dir='rtl'] .home .card {
 .card.maguare {
     background-image: url('./img/cards/maguare.png');
 }
+.card.cinescuela {
+    background-image: url('./img/cards/cinescuela.jpg');
+}
 .card img {
     float: left;
     display: block;
