@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timezone
 
 import factory
 from factory.fuzzy import FuzzyText
@@ -17,7 +17,7 @@ class EntryFactory(factory.django.DjangoModelFactory):
 
 
 class InventoryFactory(factory.django.DjangoModelFactory):
-    made_at = factory.LazyAttribute(lambda o: datetime.datetime.utcnow())
+    made_at = factory.LazyAttribute(lambda o: datetime.now(timezone.utc))
 
     class Meta:
         model = Inventory
