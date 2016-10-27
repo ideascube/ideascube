@@ -196,6 +196,9 @@ LOCALE_PATHS = (
 
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_DIRS = [
+    '/usr/share/ideascube/static',
+    ]
 MEDIA_URL = '/media/'
 
 
