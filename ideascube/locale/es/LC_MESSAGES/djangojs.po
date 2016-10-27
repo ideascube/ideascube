@@ -3,135 +3,134 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# narjis naji areff ihloh <nano_naji@yahoo.com>, 2015
+# Diana Puyo <diana.puyo@bibliosansfrontieres.org>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: ideasbox.lan\n"
+"Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-27 19:44+0000\n"
-"PO-Revision-Date: 2015-03-25 13:27+0000\n"
-"Last-Translator: narjis naji areff ihloh <nano_naji@yahoo.com>\n"
-"Language-Team: Arabic (http://www.transifex.com/projects/p/ideasboxlan/"
-"language/ar/)\n"
-"Language: ar\n"
+"PO-Revision-Date: 2016-10-07 13:21+0000\n"
+"Last-Translator: Diana Puyo <diana.puyo@bibliosansfrontieres.org>\n"
+"Language-Team: Spanish (http://www.transifex.com/ideascube/ideascube/"
+"language/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ideascube/static/ideascube/js/ideascube.js:229
 msgid "Previous Month"
-msgstr "الشهر السابق "
+msgstr "Mes pasado"
 
 #: ideascube/static/ideascube/js/ideascube.js:230
 msgid "Next Month"
-msgstr "الشهر التالي "
+msgstr "Próximo mes"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "January"
-msgstr "يناير"
+msgstr "Enero"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "February"
-msgstr "فبراير"
+msgstr "Febrero"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "March"
-msgstr "مارس"
+msgstr "Marzo"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "April"
-msgstr "ابريل"
+msgstr "Abril"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "May"
-msgstr "ايار"
+msgstr "Mayo"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "June"
-msgstr "حزيران"
+msgstr "Junio"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "July"
-msgstr "تموز"
+msgstr "Julio"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "August"
-msgstr "اب"
+msgstr "Agosto"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "September"
-msgstr "ايلول"
+msgstr "Septiembre"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "October"
-msgstr "اكتوبر"
+msgstr "Octubre"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "November"
-msgstr "نوفمبر"
+msgstr "Noviembre"
 
 #: ideascube/static/ideascube/js/ideascube.js:231
 msgid "December"
-msgstr "ديسمبر"
+msgstr "Diciembre"
 
 #: ideascube/static/ideascube/js/ideascube.js:232
 msgid "Sunday"
-msgstr "الأحد"
+msgstr "Domingo"
 
 #: ideascube/static/ideascube/js/ideascube.js:232
 msgid "Monday"
-msgstr "الأثنين"
+msgstr "Lunes"
 
 #: ideascube/static/ideascube/js/ideascube.js:232
 msgid "Tuesday"
-msgstr "الثلاثاء"
+msgstr "Martes"
 
 #: ideascube/static/ideascube/js/ideascube.js:232
 msgid "Wednesday"
-msgstr "الأربعاء"
+msgstr "Miércoles"
 
 #: ideascube/static/ideascube/js/ideascube.js:232
 msgid "Thursday"
-msgstr "الخميس"
+msgstr "Jueves"
 
 #: ideascube/static/ideascube/js/ideascube.js:232
 msgid "Friday"
-msgstr "الجمعة"
+msgstr "Viernes"
 
 #: ideascube/static/ideascube/js/ideascube.js:232
 msgid "Saturday"
-msgstr "السبت"
+msgstr "Sábado"
 
 #: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Sun"
-msgstr "الأحد"
+msgstr "Dom"
 
 #: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Mon"
-msgstr "الأثنين"
+msgstr "Lun"
 
 #: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Tue"
-msgstr "الثلاثاء"
+msgstr "Mar"
 
 #: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Wed"
-msgstr "الأربعاء"
+msgstr "Mie"
 
 #: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Thu"
-msgstr "الخميس"
+msgstr "Jue"
 
 #: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Fri"
-msgstr "الجمعة"
+msgstr "Vie"
 
 #: ideascube/static/ideascube/js/ideascube.js:233
 msgid "Sat"
-msgstr "السبت"
+msgstr "Sab"
 
 #: ideascube/static/ideascube/js/ideascube.js:260
 msgid "Are you sure?"
-msgstr ""
+msgstr "Está seguro?"
