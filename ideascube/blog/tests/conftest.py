@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -13,7 +13,7 @@ def published():
 
 @pytest.fixture()
 def published_in_the_future():
-    publication_date = datetime.datetime.utcnow() + datetime.timedelta(days=10)
+    publication_date = datetime.now(timezone.utc) + timedelta(days=10)
     return ContentFactory(status=Content.PUBLISHED,
                           published_at=publication_date)
 
