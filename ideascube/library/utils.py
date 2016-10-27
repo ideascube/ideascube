@@ -9,20 +9,9 @@ from django.core.files.base import ContentFile
 from django.utils.translation import ugettext as _
 from pymarc import MARCReader
 
+from ideascube.utils import to_unicode
+
 OPENLIBRARY_API_URL = 'https://openlibrary.org/api/books?'
-
-
-def to_unicode(text):
-    """Do its best to return an unicode string."""
-    text = text or ''
-    if isinstance(text, str):
-        return text
-    else:
-        try:
-            text = text.decode('utf-8')
-        except UnicodeDecodeError:
-            text = text.decode('latin-1')
-        return text
 
 
 def fetch_from_openlibrary(isbn):

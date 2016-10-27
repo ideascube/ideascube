@@ -53,3 +53,16 @@ def printerr(*args, **kwargs):
     kwargs['file'] = sys.stderr
     kwargs['flush'] = True
     return print(*args, **kwargs)
+
+
+def to_unicode(text):
+    """Do its best to return an unicode string."""
+    text = text or ''
+    if isinstance(text, str):
+        return text
+    else:
+        try:
+            text = text.decode('utf-8')
+        except UnicodeDecodeError:
+            text = text.decode('latin-1')
+        return text

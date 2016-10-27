@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-import pytest
-
-from ..utils import (fetch_from_openlibrary, load_from_moccam_csv,
-                     load_unimarc, to_unicode)
+from ..utils import fetch_from_openlibrary, load_from_moccam_csv, load_unimarc
 
 
 def test_load_from_moccam_csv(monkeypatch):
@@ -38,11 +34,3 @@ def test_fetch_from_openlibrary(monkeypatch):
     assert notice['authors'] == 'Romain Gary'
     assert notice['cover'] == 'xxx'
     assert notice['publisher'] == 'Gallimard'
-
-
-@pytest.mark.parametrize('string', [
-    u'éééé'.encode('latin-1'),
-    u'éééé'
-])
-def test_to_unicode(string):
-    assert isinstance(to_unicode(string), str)

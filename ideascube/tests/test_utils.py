@@ -2,6 +2,8 @@ from io import BytesIO
 
 import pytest
 
+from ideascube.utils import to_unicode
+
 
 @pytest.mark.parametrize(
     'input, expected, encoding',
@@ -28,3 +30,11 @@ def test_textio_wrapper(input, expected, encoding):
     # Now try letting it guess the encoding
     for i, line in enumerate(TextIOWrapper(stream)):
         assert line == expected[i]
+
+
+@pytest.mark.parametrize('string', [
+    u'éééé'.encode('latin-1'),
+    u'éééé'
+])
+def test_to_unicode(string):
+    assert isinstance(to_unicode(string), str)
