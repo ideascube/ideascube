@@ -24,7 +24,7 @@
         </script>
         {% block extra_head %}{% endblock %}
     </head>
-    <body class="{% block body_class %}{% endblock %}" {% if IDEASCUBE_BOX_TYPE %}id="{{ IDEASCUBE_BOX_TYPE }}"{% endif %}>
+    <body class="{% block body_class %}{% endblock %}">
         {% block header %}
             {% include 'ideascube/includes/header.html' %}
         {% endblock header %}
