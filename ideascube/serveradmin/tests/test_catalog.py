@@ -782,6 +782,7 @@ def test_catalog_update_cache(tmpdir, monkeypatch):
     assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
     assert c._installed == {}
 
+
 def test_catalog_update_cache_no_fail_if_remote_unavailable(mocker):
     from ideascube.serveradmin.catalog import Catalog
     from requests import ConnectionError
@@ -790,11 +791,126 @@ def test_catalog_update_cache_no_fail_if_remote_unavailable(mocker):
                  side_effect=ConnectionError)
 
     c = Catalog()
+    assert c._available == {}
+    assert c._installed == {}
 
     c.add_remote(
-        'foo', 'Content from Foo',
-        'http://exemple.com/not_existing')
+        'foo', 'Content from Foo', 'http://example.com/not_existing')
     c.update_cache()
+    assert c._available == {}
+    assert c._installed == {}
+
+
+def test_catalog_update_cache_updates_installed_metadata(tmpdir, monkeypatch):
+    from ideascube.serveradmin.catalog import Catalog
+
+    monkeypatch.setattr(
+        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n'
+        '  foovideos:\n'
+        '    name: Videos from Foo\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+    )
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+    assert c._installed == {}
+
+    # Let's pretend we've installed stuff here
+    c._installed = c._available.copy()
+    c._persist_catalog()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+    assert c._installed == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+
+    # And now let's say that someone modified the remote metadata, for example
+    # to fix an undescriptive name
+    remote_catalog_file.write(
+        'all:\n'
+        '  foovideos:\n'
+        '    name: Awesome videos from Foo\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+    )
+
+    c.update_cache()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Awesome videos from Foo'}}
+    assert c._installed == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Awesome videos from Foo'}}
+
+
+def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir, monkeypatch):
+    from ideascube.serveradmin.catalog import Catalog
+
+    monkeypatch.setattr(
+        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n'
+        '  foovideos:\n'
+        '    name: Videos from Foo\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+    )
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+    assert c._installed == {}
+
+    # Let's pretend we've installed stuff here
+    c._installed = c._available.copy()
+    c._persist_catalog()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+    assert c._installed == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
+
+    # And now let's say that someone modified the remote metadata, for example
+    # to fix an undescriptive name... while also publishing an update
+    remote_catalog_file.write(
+        'all:\n'
+        '  foovideos:\n'
+        '    name: Awesome videos from Foo\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 2.0.0\n'
+    )
+
+    c.update_cache()
+    assert c._available == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '2.0.0',
+        'name': 'Awesome videos from Foo'}}
+    assert c._installed == {'foovideos': {
+        'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
+        'name': 'Videos from Foo'}}
 
 
 def test_catalog_clear_cache(tmpdir, monkeypatch):
@@ -811,6 +927,9 @@ def test_catalog_clear_cache(tmpdir, monkeypatch):
     c.add_remote(
         'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    assert c._available == {}
+    assert c._installed == {}
+
     c.update_cache()
     assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
     assert c._installed == {}
@@ -842,7 +961,6 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -888,7 +1006,6 @@ def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -933,7 +1050,6 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     spy_urlretrieve = mocker.patch(
@@ -1035,7 +1151,6 @@ def test_catalog_install_package_already_downloaded(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     spy_urlretrieve = mocker.patch(
@@ -1086,7 +1201,6 @@ def test_catalog_install_package_already_in_additional_cache(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     spy_urlretrieve = mocker.patch(
@@ -1143,7 +1257,6 @@ def test_catalog_install_package_partially_downloaded(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1196,7 +1309,6 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1241,7 +1353,6 @@ def test_catalog_install_package_does_not_exist(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1278,7 +1389,6 @@ def test_catalog_install_package_with_missing_type(
         f.write(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
@@ -1315,7 +1425,6 @@ def test_catalog_install_package_with_unknown_type(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: something-not-supported\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch(
         'ideascube.serveradmin.catalog.urlretrieve',
@@ -1353,7 +1462,6 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1412,7 +1520,6 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1455,7 +1562,6 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1498,7 +1604,6 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1537,7 +1642,6 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
             '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
             'd78fd4c9cf2c3dd\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     c.update_cache()
     c.upgrade_packages(['wikipedia.tum'])
@@ -1575,7 +1679,6 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1614,7 +1717,6 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
             '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
             'd78fd4c9cf2c3dd\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     c.update_cache()
     c.upgrade_packages(['wikipedia.*'])
@@ -1653,7 +1755,6 @@ def test_catalog_update_package_already_latest(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1765,7 +1866,6 @@ def test_catalog_list_installed_packages(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1835,7 +1935,6 @@ def test_catalog_list_upgradable_packages(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
@@ -1865,7 +1964,6 @@ def test_catalog_list_upgradable_packages(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
 
     c.update_cache()
     pkgs = c.list_upgradable(['nosuchpackage'])
@@ -1924,14 +2022,12 @@ def test_catalog_list_nothandled_packages(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
-        f.write('    handler: kiwix\n')
         f.write('  nothandled:\n')
         f.write('    version: 2015-08\n')
         f.write('    size: 0KB\n')
         f.write('    url: file://fackurl\n')
         f.write('    sha256sum: 0\n')
         f.write('    type: NOTHANDLED\n')
-        f.write('    handler: NOONE\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
     mocker.patch(
