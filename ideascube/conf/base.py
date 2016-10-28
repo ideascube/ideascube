@@ -178,6 +178,7 @@ _AVAILABLE_LANGUAGES = (
     'ar',
     'bm',
     'en',
+    'es',
     'fr',
     'so',
     'sw',
