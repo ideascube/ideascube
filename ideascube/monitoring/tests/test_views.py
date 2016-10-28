@@ -5,6 +5,8 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.utils import translation
 
+from webtest import Upload
+
 from ideascube.tests.factories import UserFactory
 from ideascube.library.tests.factories import BookFactory
 
@@ -21,6 +23,7 @@ URLS = [
     'monitoring:inventory_create',
     'monitoring:stock',
     'monitoring:stock_export',
+    'monitoring:stock_import',
     'monitoring:stockitem_create',
 ]
 
@@ -104,6 +107,67 @@ def test_books_are_not_exported(staffapp):
     assert len(lines) == 2
     assert lines[0] == 'module,name,description'
     assert lines[1].startswith('digital,Stock item ')
+
+
+def test_import_stock(staffapp, tmpdir):
+    source = tmpdir.join('stock.csv')
+    source.write(
+        'module,name,description\n'
+        'cinema,C\'est arrivé près de chez vous,"Conte féérique pour les '
+        'petits et les grands, le film relate les aventures de Benoît, preux '
+        'chevalier en quête de justice, et des ménestrels Rémy, André et '
+        'Patrick.\n\nBenoît parviendra-t-il à leur enseigner le principe de '
+        'la poussée d\'Archimède ? Patrick reverra-t-il Marie-Paule ?"\n'
+        'notamodule,Not a name,This is not a description.\n'
+        )
+
+    response = staffapp.get(reverse('monitoring:stock_import'))
+    form = response.forms['import']
+    form['source'] = Upload(str(source), source.read_binary(), 'text/csv')
+    response = form.submit()
+    assert response.status_code == 302
+    assert response.location.endswith(reverse('monitoring:stock'))
+
+    response = response.follow()
+    assert response.status_code == 200
+    assert 'Successfully imported 1 items' in response.text
+    assert 'C&#39;est arrivé près de chez vous' in response.text
+    assert 'Could not import line 2: ' in response.text
+    assert 'Not a name' not in response.text
+
+    assert StockItem.objects.count() == 1
+    movie = StockItem.objects.last()
+    assert movie.name == "C'est arrivé près de chez vous"
+    assert movie.module == 'cinema'
+    assert movie.description == (
+        'Conte féérique pour les petits et les grands, le film relate les '
+        'aventures de Benoît, preux chevalier en quête de justice, et des '
+        'ménestrels Rémy, André et Patrick.\n\nBenoît parviendra-t-il à leur '
+        'enseigner le principe de la poussée d\'Archimède ? Patrick '
+        'reverra-t-il Marie-Paule ?')
+
+
+def test_import_stock_invalid_csv(staffapp, tmpdir):
+    source = tmpdir.join('stock.csv')
+    source.write(
+        'module,name\n'
+        'digital,Auriculaire\n'
+        )
+
+    response = staffapp.get(reverse('monitoring:stock_import'))
+    form = response.forms['import']
+    form['source'] = Upload(str(source), source.read_binary(), 'text/csv')
+    response = form.submit()
+    assert response.status_code == 302
+    assert response.location.endswith(reverse('monitoring:stock'))
+
+    response = response.follow()
+    assert response.status_code == 200
+    assert 'Successfully imported {} elements' not in response.text
+    assert 'Missing column &quot;description&quot; on line 1' in response.text
+    assert 'Auriculaire' not in response.text
+
+    assert StockItem.objects.count() == 0
 
 
 def test_staff_can_create_stockitem(staffapp):

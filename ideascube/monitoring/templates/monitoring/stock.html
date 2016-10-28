@@ -28,6 +28,7 @@
     <ul class="card tinted admin">
         <li>{% fa 'archive' 'fa-fw' %} <a href="{% url 'monitoring:stockitem_create' %}">{% trans "Add stock item" %}</a></li>
         <li>{% fa 'table' 'fa-fw' %} <a href="{% url 'monitoring:stock_export' %}">{% trans "Export" %}</a></li>
+        <li>{% fa 'upload' 'fa-fw' %} <a href="{% url 'monitoring:stock_import' %}">{% trans "Import" %}</a></li>
         <li>{% fa 'bars' 'fa-fw' %} <a href="{% url 'monitoring:inventory_create' %}">{% trans "Start inventory" %}</a></li>
     </ul>
     <div class="card tinted admin">

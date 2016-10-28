@@ -14,7 +14,8 @@ from ideascube.views import CSVExportMixin
 from ideascube.decorators import staff_member_required
 
 from .forms import (EntryForm, ExportEntryForm, ExportLoanForm,
-                    InventorySpecimenForm, LoanForm, ReturnForm, SpecimenForm)
+                    InventorySpecimenForm, LoanForm, ReturnForm, SpecimenForm,
+                    StockImportForm)
 from .models import (Entry, Inventory, InventorySpecimen, Loan, Specimen,
                      StockItem)
 
@@ -235,6 +236,26 @@ class StockExport(CSVExportMixin, View):
             'description': item.description,
         }
 stock_export = staff_member_required(StockExport.as_view())
+
+
+class StockImport(FormView):
+    form_class = StockImportForm
+    template_name = 'monitoring/stock_import.html'
+    success_url = reverse_lazy('monitoring:stock')
+
+    def form_valid(self, form):
+        items, errors = form.save()
+
+        if items:
+            messages.success(
+                self.request,
+                _('Successfully imported {} items').format(len(items)))
+
+        for error in errors:
+            messages.error(self.request, error)
+
+        return super().form_valid(form)
+stock_import = staff_member_required(StockImport.as_view())
 
 
 class SpecimenUpdate(UpdateView):

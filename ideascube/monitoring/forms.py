@@ -1,3 +1,4 @@
+import csv
 import re
 from datetime import date
 
@@ -6,7 +7,9 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Entry, InventorySpecimen, Loan, Specimen
+from ideascube.utils import TextIOWrapper
+
+from .models import Entry, InventorySpecimen, Loan, Specimen, StockItem
 
 user_model = get_user_model()
 
@@ -149,3 +152,46 @@ class ReturnForm(forms.Form):
             # Should araise only after migration 0.3.2 to 0.3.0.
             loan = Loan.objects.due().filter(specimen__barcode=barcode).first()
         return loan
+
+
+class StockItemForm(forms.ModelForm):
+    class Meta:
+        fields = ['module', 'name', 'description']
+        model = StockItem
+
+
+class StockImportForm(forms.Form):
+    source = forms.FileField(label=_('CSV File'), required=True)
+
+    def save(self):
+        source = TextIOWrapper(self.cleaned_data['source'].file)
+        items = []
+        errors = []
+
+        for index, row in enumerate(csv.DictReader(source)):
+            try:
+                data = {
+                    'module': row['module'], 'name': row['name'],
+                    'description': row['description'],
+                }
+
+            except KeyError as e:
+                errors.append(_('Missing column "{}" on line {}').format(
+                    e.args[0], index + 1))
+                continue
+
+            form = StockItemForm(data=data)
+
+            if form.is_valid():
+                item = form.save()
+                items.append(item)
+
+            else:
+                msgs = (
+                    '{}: {}'.format(k, v.as_text())
+                    for k, v in form.errors.items())
+                errors.append(_('Could not import line {}: {}').format(
+                    index + 1, '; '.join(msgs)))
+                continue
+
+        return items, errors[:10]

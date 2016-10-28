@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^entry/export/$', views.export_entry, name='export_entry'),
     url(r'^stock/$', views.stock, name='stock'),
     url(r'^stock/export/$', views.stock_export, name='stock_export'),
+    url(r'^stock/import/$', views.stock_import, name='stock_import'),
     url(r'^stock/inventory/(?P<pk>[\d]+)/$', views.inventory, name='inventory'),  # noqa
     url(r'^stock/inventory/(?P<pk>[\d]+)/edit/$', views.inventory_update, name='inventory_update'),  # noqa
     url(r'^stock/inventory/(?P<pk>[\d]+)/export/$', views.inventory_export, name='inventory_export'),  # noqa
