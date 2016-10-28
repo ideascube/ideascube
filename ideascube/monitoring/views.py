@@ -217,6 +217,26 @@ class StockItemDelete(DeleteView):
 stockitem_delete = staff_member_required(StockItemDelete.as_view())
 
 
+class StockExport(CSVExportMixin, View):
+    prefix = 'stock'
+
+    def get_headers(self):
+        return ['module', 'name', 'description']
+
+    def get_items(self):
+        qs = StockItem.objects.all()
+        qs = qs.filter(book__isnull=True)
+
+        return qs
+
+    def get_row(self, item):
+        return {
+            'module': item.module, 'name': item.name,
+            'description': item.description,
+        }
+stock_export = staff_member_required(StockExport.as_view())
+
+
 class SpecimenUpdate(UpdateView):
     model = Specimen
     form_class = SpecimenForm

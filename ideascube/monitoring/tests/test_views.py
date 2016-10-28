@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.utils import translation
 
 from ideascube.tests.factories import UserFactory
+from ideascube.library.tests.factories import BookFactory
 
 from ..models import (Entry, Inventory, InventorySpecimen, Loan, Specimen,
                       StockItem)
@@ -19,6 +20,7 @@ URLS = [
     'monitoring:export_entry',
     'monitoring:inventory_create',
     'monitoring:stock',
+    'monitoring:stock_export',
     'monitoring:stockitem_create',
 ]
 
@@ -73,6 +75,35 @@ def test_export_entry_should_return_csv_with_entries(staffapp, settings):
     content = resp.content.decode()
     assert content.startswith("module,date,activity,partner\r\ncinema,")
     assert content.count("cinema") == 3
+
+
+def test_export_stock(staffapp):
+    StockItemFactory(module=StockItem.DIGITAL)
+    url = reverse('monitoring:stock_export')
+    response = staffapp.get(url)
+
+    assert response.content_type == 'text/csv'
+    assert response.content_disposition.startswith(
+        'attachment; filename="stock_')
+    lines = response.unicode_body.strip().split('\r\n')
+    assert len(lines) == 2
+    assert lines[0] == 'module,name,description'
+    assert lines[1].startswith('digital,Stock item ')
+
+
+def test_books_are_not_exported(staffapp):
+    StockItemFactory(module=StockItem.DIGITAL)
+    BookFactory()
+    url = reverse('monitoring:stock_export')
+    response = staffapp.get(url)
+
+    assert response.content_type == 'text/csv'
+    assert response.content_disposition.startswith(
+        'attachment; filename="stock_')
+    lines = response.unicode_body.strip().split('\r\n')
+    assert len(lines) == 2
+    assert lines[0] == 'module,name,description'
+    assert lines[1].startswith('digital,Stock item ')
 
 
 def test_staff_can_create_stockitem(staffapp):
