@@ -37,8 +37,15 @@ def staffuser(db):
 
 @pytest.fixture()
 def systemuser(db):
+    from django.contrib.auth import get_user_model
     # Create it the same way the migration does it
-    return UserFactory(serial='__system__', full_name='System', password='!!')
+    User = get_user_model()
+    try:
+        return User.objects.get_system_user()
+    except User.DoesNotExist:
+        return UserFactory(serial='__system__',
+                           full_name='System',
+                           password='!!')
 
 
 @pytest.fixture
@@ -175,4 +182,3 @@ def catalog():
     mocker = CatalogMocker()
     with mocker:
         yield mocker
-
