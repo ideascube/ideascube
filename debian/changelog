@@ -1,3 +1,24 @@
+ideascube (0.15.0) unstable; urgency=low
+
+  - Added Spanish translation of the UI
+  - Added Maguaré logo and CSS
+  - Added Cinescuela logo and CSS
+  - Added bibliotecamovil.lan as known host
+  - Default domain is now ideascube.lan
+  - Update installed package metadata on catalog cache update
+  - Cut long descriptions in stock list
+  - static-site packages now use only one Nginx VHost
+  - Fixed cover not being imported from OpenLibrary
+  - Hide backup links
+  - Debian package has been cleaned
+  - Select current user as default blog author
+  - Preset blog publication_date in post form
+  - Renamed "theme" as "topic"
+  - Catch errors during wifi connection
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 28 Oct 2016 11:17:00 -0500
+
+
 ideascube (0.14.0) unstable; urgency=low
 
   - Made Book and BookSpecimen inherit from StockItem and Specimen
