@@ -188,6 +188,8 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         ('no_profession', _('Without profession')),
         ('profit_profession', _('Profit profession')),
         ('volunteering', _('Volunteering')),
+        ('homemaker', _('Homemaker')),
+        ('retired', _('Retired')),
         ('other', _('Other')),
     )
 
