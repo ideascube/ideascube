@@ -71,7 +71,7 @@ class ExportEntry(CSVExportMixin, View):
     def get(self, *args, **kwargs):
         self.form = ExportEntryForm(self.request.GET)
         if self.form.is_valid():
-            return self.render_to_csv()
+            return super().get(*args, **kwargs)
         else:
             msg = _('Error while processing entries export')
             messages.add_message(self.request, messages.ERROR, msg)
@@ -159,9 +159,9 @@ inventory_delete = staff_member_required(InventoryDelete.as_view())
 class InventoryExport(CSVExportMixin, DetailView):
     model = Inventory
 
-    def get(self, request, *args, **kwargs):
+    def get(self, *args, **kwargs):
         self.object = self.get_object()
-        return self.render_to_csv()
+        return super().get(*args, **kwargs)
 
     def get_headers(self):
         self.headers = ['module', 'name', 'description', 'barcode', 'serial',
@@ -381,7 +381,7 @@ class ExportLoan(CSVExportMixin, View):
     def get(self, *args, **kwargs):
         self.form = ExportLoanForm(self.request.GET)
         if self.form.is_valid():
-            return self.render_to_csv()
+            return super().get(*args, **kwargs)
         else:
             msg = _('Error while processing loans export')
             messages.add_message(self.request, messages.ERROR, msg)

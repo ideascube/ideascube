@@ -136,3 +136,6 @@ class CSVExportMixin(object):
             str(datetime.now())
         ])
         return filename
+
+    def get(self, *args, **kwargs):
+        return self.render_to_csv()
