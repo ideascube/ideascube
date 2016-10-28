@@ -117,7 +117,7 @@ class CSVExportMixin(object):
         filename = self.get_filename()
         attachment = 'attachment; filename="{name}.csv"'.format(name=filename)
         response['Content-Disposition'] = attachment
-        response['Content-Type'] = 'text/csv'
+        response['Content-Type'] = 'text/csv; charset=utf-8'
         return response
 
     def get_items(self):
