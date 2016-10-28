@@ -11,7 +11,7 @@ server {
     listen      443 ssl;
     listen   [::]:443 ssl;
     # the domain name it will serve for
-    server_name ideasbox.lan www.ideasbox.lan ideasbox.local www.ideasbox.local koombook.lan www.koombook.lan koombook.local www.koombook.local;
+    server_name ideasbox.lan www.ideasbox.lan ideasbox.local www.ideasbox.local koombook.lan www.koombook.lan koombook.local www.koombook.local bibliotecamovil.lan www.bibliotecamovil.lan;
     charset     utf-8;
 
     # max upload size
@@ -42,7 +42,7 @@ server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
-    server_name sites.ideasbox.lan sites.ideasbox.local sites.koombook.lan sites.koombook.local;
+    server_name sites.ideasbox.lan sites.ideasbox.local sites.koombook.lan sites.koombook.local sites.bibliotecamovil.lan;
 
     charset utf-8;
 
