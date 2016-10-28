@@ -126,6 +126,9 @@ class CSVExportMixin(object):
     def get_headers(self):
         raise NotImplementedError('CSVExportMixin needs a get_headers method')
 
+    def get_row(self, item):
+        raise NotImplementedError('CSVExportMixin needs a get_row method')
+
     def get_filename(self):
         filename = "_".join([
             self.prefix,
