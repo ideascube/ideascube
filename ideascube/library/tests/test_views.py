@@ -206,7 +206,7 @@ def test_staff_can_create_book(staffapp):
     assert not Book.objects.count()
     form['name'] = 'My book title'
     form['description'] = 'My book summary'
-    form['section'] = '1'
+    form['section'] = 'digital'
     form.submit().follow()
     assert Book.objects.count() == 1
 
@@ -266,13 +266,13 @@ def test_it_should_be_possible_to_create_several_books_without_isbn(staffapp):
     form = staffapp.get(url).forms['model_form']
     form['name'] = 'My book title'
     form['description'] = 'My book summary'
-    form['section'] = '1'
+    form['section'] = 'digital'
     form['isbn'] = ''
     form.submit().follow()
     form = staffapp.get(url).forms['model_form']
     form['name'] = 'My book title 2'
     form['description'] = 'My book summary 2'
-    form['section'] = '2'
+    form['section'] = 'children-cartoons'
     form['isbn'] = ''
     form.submit().follow()
     assert Book.objects.count() == 2
@@ -298,7 +298,7 @@ def test_should_keep_only_numbers_in_isbn(staffapp):
     assert not Book.objects.count()
     form['name'] = 'My book title'
     form['description'] = 'My book summary'
-    form['section'] = '1'
+    form['section'] = 'digital'
     form['isbn'] = '2-7071-2402-8'
     form.submit().follow()
     assert Book.objects.get(isbn='2707124028')
@@ -429,7 +429,7 @@ def test_can_create_book_with_tags(staffapp):
     form = staffapp.get(url).forms['model_form']
     form['name'] = 'My book title'
     form['description'] = 'My book summary'
-    form['section'] = '1'
+    form['section'] = 'digital'
     form['tags'] = 'tag1, tag2'
     form.submit().follow()
     book = Book.objects.last()

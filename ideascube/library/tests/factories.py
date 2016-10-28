@@ -9,7 +9,7 @@ from ..models import Book, BookSpecimen
 class BookFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: "Test book {0}".format(n))
     description = "This is a test description"
-    section = 1
+    section = 'digital'
     lang = settings.LANGUAGE_CODE
     cover = factory.django.ImageField()
 
