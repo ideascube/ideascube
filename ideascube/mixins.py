@@ -120,7 +120,7 @@ class CSVExportMixin(object):
         response['Content-Type'] = 'text/csv'
         return response
 
-    def get_item(self):
+    def get_items(self):
         raise NotImplementedError('CSVExportMixin needs a get_items method')
 
     def get_headers(self):
