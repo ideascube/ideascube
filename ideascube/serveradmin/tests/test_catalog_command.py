@@ -26,9 +26,6 @@ def test_no_command(tmpdir, capsys):
 
 
 def test_add_remote(tmpdir, settings, capsys, monkeypatch):
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -70,9 +67,6 @@ def test_add_remote(tmpdir, settings, capsys, monkeypatch):
 
 
 def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch, capsys):
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -113,9 +107,6 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch, capsys):
 
 
 def test_remove_remote(tmpdir, settings, capsys, monkeypatch):
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -164,9 +155,6 @@ def test_list_no_remotes(capsys):
 
 
 def test_add_then_list_multiple_remotes(tmpdir, capsys, monkeypatch):
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file1 = tmpdir.mkdir('source1').join('catalog.yml')
     remote_catalog_file1.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -201,9 +189,6 @@ def test_add_then_list_multiple_remotes(tmpdir, capsys, monkeypatch):
 
 
 def test_add_then_remove_then_list_remote(tmpdir, capsys, monkeypatch):
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source1').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -241,9 +226,6 @@ def test_update_cache_without_remote(tmpdir, settings, capsys):
 
 
 def test_update_cache_with_remote(tmpdir, settings, capsys, monkeypatch):
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -278,9 +260,6 @@ def test_update_cache_with_remote(tmpdir, settings, capsys, monkeypatch):
 
 
 def test_clear_cache(tmpdir, settings, capsys, monkeypatch):
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -310,9 +289,6 @@ def test_clear_cache(tmpdir, settings, capsys, monkeypatch):
 
 
 def test_split_cache(tmpdir, settings, monkeypatch):
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -349,9 +325,6 @@ def test_split_cache(tmpdir, settings, monkeypatch):
 
 
 def test_move_remotes(tmpdir, settings, monkeypatch):
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -381,9 +354,6 @@ def test_move_remotes(tmpdir, settings, monkeypatch):
 
 def test_list_with_unknown_package_must_no_fail(
     tmpdir, settings, capsys, monkeypatch):
-
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write('''all:
