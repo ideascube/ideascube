@@ -237,6 +237,14 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         ('female', _('Female')),
     )
 
+    DISABILITY_CHOICES = (
+        ('visual', _('Visual')),
+        ('auditive', _('Auditive')),
+        ('physical', _('Physical')),
+        ('cognitive', _('Cognitive')),
+        ('mental', _('Mental')),
+    )
+
     latin_name = models.CharField(verbose_name=_('Latin written name'),
                                   max_length=200, blank=True)
 
@@ -293,6 +301,9 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         blank=True)
     camp_address = models.CharField(verbose_name=_('Address in the camp'),
                                     max_length=200, blank=True)
+    disabilities = CommaSeparatedCharField(
+        verbose_name=_('Disabilities'), max_length=128,
+        choices=DISABILITY_CHOICES, blank=True)
     phone = models.CharField(
         verbose_name=_('Phone number (use comma to register more than one)'),
         max_length=200, blank=True, null=True)
