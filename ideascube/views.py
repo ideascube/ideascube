@@ -34,7 +34,7 @@ from ideascube.mediacenter.models import Document
 # module.
 from ideascube.serveradmin import catalog as catalog_mod
 
-from .forms import UserForm, CreateStaffForm
+from .forms import UserForm, CreateStaffForm, UserImportForm
 from .mixins import CSVExportMixin
 
 user_model = get_user_model()
@@ -236,6 +236,24 @@ class UserExport(CSVExportMixin, View):
             row[str(field.verbose_name)] = value
         return row
 user_export = staff_member_required(UserExport.as_view())
+
+
+class UserImport(FormView):
+    form_class = UserImportForm
+    template_name = 'ideascube/user_import.html'
+    success_url = reverse_lazy('user_import')
+
+    def form_valid(self, form):
+        users, errors = form.save()
+        if users:
+            msg = _('Successfully processed {count} users.')
+            msg = msg.format(count=len(users))
+            messages.success(self.request, msg)
+        for error in errors:
+            messages.error(self.request, error)
+        return super(UserImport, self).form_valid(form)
+
+user_import = staff_member_required(UserImport.as_view())
 
 
 def validate_url(request):
