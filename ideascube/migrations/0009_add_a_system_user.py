@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth import get_user_model
 from django.db import migrations
 
 
-def add_user(*args):
-    User = get_user_model()
+def add_user(apps, *args):
+    User = apps.get_model('ideascube', 'User')
     User(serial='__system__', full_name='System', password='!!').save()
 
 
