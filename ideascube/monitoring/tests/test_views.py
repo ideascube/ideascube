@@ -14,17 +14,28 @@ from .factories import (EntryFactory, InventoryFactory, LoanFactory,
 
 pytestmark = pytest.mark.django_db
 
+URLS = [
+    'monitoring:entry',
+    'monitoring:export_entry',
+    'monitoring:inventory_create',
+    'monitoring:stock',
+    'monitoring:stockitem_create',
+]
 
-def test_anonymous_should_not_access_entry_page(app):
-    assert app.get(reverse('monitoring:entry'), status=302)
+
+@pytest.mark.parametrize('url_name', URLS)
+def test_anonymous_should_not_access_page(app, url_name):
+    assert app.get(reverse(url_name), status=302)
 
 
-def test_non_staff_should_not_access_entry_page(loggedapp):
-    assert loggedapp.get(reverse('monitoring:entry'), status=302)
+@pytest.mark.parametrize('url_name', URLS)
+def test_non_staff_should_not_access_page(loggedapp, url_name):
+    assert loggedapp.get(reverse(url_name), status=302)
 
 
-def test_staff_should_access_entry_page(staffapp):
-    assert staffapp.get(reverse('monitoring:entry'), status=200)
+@pytest.mark.parametrize('url_name', URLS)
+def test_staff_should_access_page(staffapp, url_name):
+    assert staffapp.get(reverse(url_name), status=200)
 
 
 @pytest.mark.parametrize('module', [m[0] for m in Entry.MODULES])
@@ -55,18 +66,6 @@ def test_can_create_entries_with_activity(staffapp):
     Entry.objects.last().activity == 'special activity'
 
 
-def test_anonymous_should_not_access_export_entry_url(app):
-    assert app.get(reverse('monitoring:export_entry'), status=302)
-
-
-def test_non_staff_should_not_access_export_entry_url(loggedapp):
-    assert loggedapp.get(reverse('monitoring:export_entry'), status=302)
-
-
-def test_staff_should_access_export_entry_url(staffapp):
-    assert staffapp.get(reverse('monitoring:export_entry'), status=200)
-
-
 def test_export_entry_should_return_csv_with_entries(staffapp, settings):
     EntryFactory.create_batch(3)
     settings.MONITORING_ENTRY_EXPORT_FIELDS = []
@@ -74,30 +73,6 @@ def test_export_entry_should_return_csv_with_entries(staffapp, settings):
     content = resp.content.decode()
     assert content.startswith("module,date,activity,partner\r\ncinema,")
     assert content.count("cinema") == 3
-
-
-def test_anonymous_should_not_access_stock_page(app):
-    assert app.get(reverse('monitoring:stock'), status=302)
-
-
-def test_non_staff_should_not_access_stock_page(loggedapp):
-    assert loggedapp.get(reverse('monitoring:stock'), status=302)
-
-
-def test_staff_should_access_stock_page(staffapp):
-    assert staffapp.get(reverse('monitoring:stock'), status=200)
-
-
-def test_anonymous_should_not_access_stockitem_create_page(app):
-    assert app.get(reverse('monitoring:stockitem_create'), status=302)
-
-
-def test_non_staff_should_not_access_stockitem_create_page(loggedapp):
-    assert loggedapp.get(reverse('monitoring:stockitem_create'), status=302)
-
-
-def test_staff_should_access_stockitem_create_page(staffapp):
-    assert staffapp.get(reverse('monitoring:stockitem_create'), status=200)
 
 
 def test_staff_can_create_stockitem(staffapp):
@@ -154,18 +129,6 @@ def test_staff_can_edit_specimen(staffapp):
     form['count'] = 4
     form.submit().follow()
     assert Specimen.objects.get(pk=specimen.pk).count == 4
-
-
-def test_anonymous_should_not_access_inventory_create_page(app):
-    assert app.get(reverse('monitoring:inventory_create'), status=302)
-
-
-def test_non_staff_should_not_access_inventory_create_page(loggedapp):
-    assert loggedapp.get(reverse('monitoring:inventory_create'), status=302)
-
-
-def test_staff_should_access_inventory_create_page(staffapp):
-    assert staffapp.get(reverse('monitoring:inventory_create'), status=200)
 
 
 def test_staff_can_create_inventory(staffapp):
