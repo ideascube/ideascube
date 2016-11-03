@@ -9,13 +9,6 @@ import pytest
 import yaml
 
 
-def fake_urlretrieve(url, path, reporthook=None):
-    assert url.startswith('file://')
-
-    src = url[7:]
-    shutil.copyfile(src, path)
-
-
 def test_no_command(tmpdir, capsys):
     with pytest.raises(SystemExit):
         call_command('catalog')

@@ -80,34 +80,6 @@ def install_dir(tmpdir):
     return tmpdir.mkdir('install')
 
 
-# This is starting to look a lot like adding file:// support to
-# resumable.urlretrieve...
-# TODO: Do they want it upstream?
-def fake_urlretrieve(url, path, reporthook=None, sha256sum=None):
-    assert url.startswith('file://')
-
-    src = url[7:]
-
-    with open(src, 'rb') as in_, open(path, 'a+b') as out:
-        out.seek(0)
-        already = len(out.read())
-
-        in_.seek(already)
-        out.seek(already)
-        out.write(in_.read())
-
-    if reporthook is not None:
-        # Fake those values, this is just to call the progress callbacks
-        reporthook(0, 1, 1)
-
-    if sha256sum is not None:
-        with open(path, 'rb') as f:
-            checksum = sha256(f.read()).hexdigest()
-
-        if sha256sum != checksum:
-            raise DownloadError(DownloadCheck.checksum_mismatch)
-
-
 def test_remote_from_file(input_file):
     from ideascube.serveradmin.catalog import InvalidFile, Remote
 
@@ -801,9 +773,6 @@ def test_catalog_update_cache_no_fail_if_remote_unavailable(mocker):
 def test_catalog_update_cache_updates_installed_metadata(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog
 
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n'
@@ -856,9 +825,6 @@ def test_catalog_update_cache_updates_installed_metadata(tmpdir, monkeypatch):
 
 def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog
-
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
