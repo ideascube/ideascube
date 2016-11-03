@@ -1,5 +1,5 @@
 {% load ideascube_tags static %}
-<a class="card {% if not book.cover %}default{% endif %}" href="{% url 'library:book_detail' pk=book.pk %}">
+<a class="card {% if not book.cover %}default{% endif %} {{ book.section }}" href="{% url 'library:book_detail' pk=book.pk %}">
   <h3>{{ book }}</h3>
   <p>{{ book.authors }}</p>
   {% if book.cover %}

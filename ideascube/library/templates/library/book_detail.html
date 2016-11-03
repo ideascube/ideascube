@@ -9,7 +9,7 @@
     <div class="row mwide twide">
         <div class="col third">
             <h5><a href="{% url 'library:index' %}">&lt; {% trans 'View all books' %}</a></h5>
-            {% if book.cover %}<img src="{% media book 'cover' %}" class="cover" />{% endif %}
+            {% if book.cover %}<img src="{% media book 'cover' %}" class="cover {{ book.section }}" />{% endif %}
         </div>
         <div class="col two-third book-detail">
             <h4><span class="theme read">{% trans "read" %}</span></h4>
@@ -23,7 +23,7 @@
             <p><strong>{% trans "Language" %}</strong> {{ book.get_lang_display }}</p>
             <p><strong>{% trans "ISBN" %}</strong> {{ book.isbn|default:'—' }}</p>
             <hr />
-            {% if book.section %}<p class="flow"><strong>{% trans "Section" %}</strong> <span>{{ book.get_section_display }}</span></p>{% endif %}
+            {% if book.section %}<p class="flow"><strong>{% trans "Section" %}</strong> <span class="{{ book.section }}">{{ book.get_section_display }}</span></p>{% endif %}
             <p>{{ book.description }}</p>
         </div>
     </div>

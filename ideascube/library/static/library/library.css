@@ -40,3 +40,149 @@ img.cover {
     font-family: 'fira_sansmedium';
     font-size: 1em;
 }
+
+
+
+/* ************************************************* */
+/* ************ SECTION COLORS ********************* */
+/* ************************************************* */
+
+#id_section > option::before {
+  content: "■ ";
+  color: white;
+}
+
+/************* Cartoons *************/
+#id_section > option[value=children-cartoons]::before {
+  color: #e9d460;
+}
+
+.book-detail .children-cartoons {
+  background-color: #e9d460;
+  padding: 0 5px;
+  color: #fff;
+}
+
+.card.children-cartoons,
+.cover.children-cartoons {
+  border: 4px solid #e9d460;
+}
+
+
+/************* Novels *************/
+#id_section > option[value=children-novels]::before,
+#id_section > option[value=adults-novels]::before {
+  color: #4183D7;
+}
+
+.book-detail .children-novels,
+.book-detail .adults-novels {
+  background-color: #4183D7;
+  padding: 0 5px;
+  color: #fff;
+}
+
+.card.children-novels,
+.card.adults-novels,
+.cover.children-novels,
+.cover.adults-novels {
+  border: 4px solid #4183D7;
+}
+
+
+/************* Poetry *************/
+#id_section > option[value=children-poetry]::before,
+#id_section > option[value=adults-poetry]::before {
+  color: #9B59B6;
+}
+
+.book-detail .children-poetry,
+.book-detail .adults-poetry {
+  background-color: #9B59B6;
+  padding: 0 5px;
+  color: #fff;
+}
+
+.card.children-poetry,
+.card.adults-poetry {
+  border: 4px solid #9B59B6;
+}
+
+
+/************* Theatre *************/
+#id_section > option[value=children-theatre]::before,
+#id_section > option[value=adults-theatre]::before {
+  color: #6C7A89;
+}
+
+.book-detail .children-theatre,
+.book-detail .adults-theatre {
+  background-color: #6C7A89;
+  padding: 0 5px;
+  color: #fff;
+}
+
+.card.children-theatre,
+.card.adults-theatre {
+  border: 4px solid #6C7A89;
+}
+
+/************* Tales *************/
+#id_section > option[value=children-tales]::before,
+#id_section > option[value=adults-tales]::before {
+  color: #4DAF7C;
+}
+
+.book-detail .children-tales,
+.book-detail .adults-tales {
+  background-color: #4DAF7C;
+  padding: 0 5px;
+  color: #fff;
+}
+
+.card.children-tales,
+.card.adults-tales,
+.cover.children-tales,
+.cover.adults-tales {
+  border: 4px solid #4DAF7C;
+}
+
+
+/************* Comics *************/
+#id_section > option[value=children-comics]::before,
+#id_section > option[value=adults-comics]::before {
+  color: #D91E18;
+}
+
+.book-detail .children-comics,
+.book-detail .adults-comics {
+  background-color: #D91E18;
+  padding: 0 5px;
+  color: #fff;
+}
+
+.card.children-comics,
+.card.adults-comics {
+  border: 4px solid #D91E18;
+}
+
+
+/************* Myths *************/
+#id_section > option[value=children-myths]::before,
+#id_section > option[value=adults-myths]::before {
+  color: #F27935;
+}
+
+.book-detail .children-myths,
+.book-detail .adults-myths {
+  background-color: #F27935;
+  padding: 0 5px;
+  color: #fff;
+}
+
+.card.children-myths,
+.card.adults-myths,
+.cover.children-myths,
+.cover.adults-myths {
+  border: 4px solid #F27935;
+}
