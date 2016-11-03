@@ -48,6 +48,12 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
     template_name = 'library/index.html'
     paginate_by = 10
 
+    def _set_available_kinds(self, context):
+        available_kinds = self._search_for_attr_from_context('kind', context)
+        context['available_kinds'] = [
+            (kind, label) for kind, label in Book.SECTION_CHOICES
+            if kind in available_kinds]
+
     def get_queryset(self):
         qs = super().get_queryset()
         user = self.request.user
@@ -59,6 +65,7 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
         context = super(Index, self).get_context_data(**kwargs)
         self._set_available_langs(context)
         self._set_available_tags(context)
+        self._set_available_kinds(context)
         return context
 
 index = Index.as_view()

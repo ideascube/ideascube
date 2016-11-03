@@ -409,6 +409,14 @@ def test_by_tag_page_should_be_filtered_by_tag(app):
     assert boat.item.name not in response.content.decode()
 
 
+def test_by_kind_page_should_be_filtered_by_section_kind(app):
+    digital = BookSpecimenFactory(item__section='digital')
+    myth = BookSpecimenFactory(item__section='adults-myths')
+    response = app.get(reverse('library:index'), {'kind': 'digital'})
+    assert digital.item.name in response.content.decode()
+    assert myth.item.name not in response.content.decode()
+
+
 def test_by_tag_page_is_paginated(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
     BookSpecimenFactory.create_batch(size=4, item__tags=['plane'])
