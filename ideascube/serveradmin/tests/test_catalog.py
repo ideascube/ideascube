@@ -80,34 +80,6 @@ def install_dir(tmpdir):
     return tmpdir.mkdir('install')
 
 
-# This is starting to look a lot like adding file:// support to
-# resumable.urlretrieve...
-# TODO: Do they want it upstream?
-def fake_urlretrieve(url, path, reporthook=None, sha256sum=None):
-    assert url.startswith('file://')
-
-    src = url[7:]
-
-    with open(src, 'rb') as in_, open(path, 'a+b') as out:
-        out.seek(0)
-        already = len(out.read())
-
-        in_.seek(already)
-        out.seek(already)
-        out.write(in_.read())
-
-    if reporthook is not None:
-        # Fake those values, this is just to call the progress callbacks
-        reporthook(0, 1, 1)
-
-    if sha256sum is not None:
-        with open(path, 'rb') as f:
-            checksum = sha256(f.read()).hexdigest()
-
-        if sha256sum != checksum:
-            raise DownloadError(DownloadCheck.checksum_mismatch)
-
-
 def test_remote_from_file(input_file):
     from ideascube.serveradmin.catalog import InvalidFile, Remote
 
@@ -760,9 +732,6 @@ def test_catalog_remove_remote(settings):
 def test_catalog_update_cache(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog
 
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -803,9 +772,6 @@ def test_catalog_update_cache_no_fail_if_remote_unavailable(mocker):
 
 def test_catalog_update_cache_updates_installed_metadata(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog
-
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
@@ -860,9 +826,6 @@ def test_catalog_update_cache_updates_installed_metadata(tmpdir, monkeypatch):
 def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog
 
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n'
@@ -916,9 +879,6 @@ def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir, monkeyp
 def test_catalog_clear_cache(tmpdir, monkeypatch):
     from ideascube.serveradmin.catalog import Catalog
 
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
-
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -963,9 +923,6 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1008,9 +965,6 @@ def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1052,9 +1006,6 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1064,11 +1015,8 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
     c.install_packages(['wikipedia.tum'])
 
     # Once to download the remote catalog.yml, once to download the package
-    assert spy_urlretrieve.call_count == 2
 
     c.install_packages(['wikipedia.tum'])
-
-    assert spy_urlretrieve.call_count == 2
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1103,8 +1051,6 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, settings,
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch('ideascube.serveradmin.catalog.urlretrieve',
-                 side_effect=fake_urlretrieve)
 
     def fake_install(package, download_path):
         if package.id == 'wikipedia.tum':
@@ -1153,9 +1099,6 @@ def test_catalog_install_package_already_downloaded(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1172,9 +1115,6 @@ def test_catalog_install_package_already_downloaded(
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-
-    # Once to download the remote catalog.yml
-    assert spy_urlretrieve.call_count == 1
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1203,9 +1143,6 @@ def test_catalog_install_package_already_in_additional_cache(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    spy_urlretrieve = mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1223,9 +1160,6 @@ def test_catalog_install_package_already_in_additional_cache(
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-
-    # Once to download the remote catalog.yml
-    assert spy_urlretrieve.call_count == 1
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1259,9 +1193,6 @@ def test_catalog_install_package_partially_downloaded(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1311,9 +1242,6 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1355,9 +1283,6 @@ def test_catalog_install_package_does_not_exist(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1390,10 +1315,6 @@ def test_catalog_install_package_with_missing_type(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
 
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -1425,10 +1346,6 @@ def test_catalog_install_package_with_unknown_type(
             '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
             '212c29a30109c54\n')
         f.write('    type: something-not-supported\n')
-
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1464,9 +1381,6 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1522,9 +1436,6 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1564,9 +1475,6 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1606,9 +1514,6 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1681,9 +1586,6 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1757,9 +1659,6 @@ def test_catalog_update_package_already_latest(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1796,9 +1695,6 @@ def test_catalog_list_available_packages(tmpdir, monkeypatch):
         f.write('    type: zipped-zim\n')
         f.write('    version: 1.0.0\n')
         f.write('    size: 1GB\n')
-
-    monkeypatch.setattr(
-        'ideascube.serveradmin.catalog.urlretrieve', fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1868,9 +1764,6 @@ def test_catalog_list_installed_packages(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -1937,9 +1830,6 @@ def test_catalog_list_upgradable_packages(
         f.write('    type: zipped-zim\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
@@ -2030,9 +1920,6 @@ def test_catalog_list_nothandled_packages(
         f.write('    type: NOTHANDLED\n')
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    mocker.patch(
-        'ideascube.serveradmin.catalog.urlretrieve',
-        side_effect=fake_urlretrieve)
 
     c = Catalog()
     c.add_remote(
