@@ -559,9 +559,9 @@ class Catalog:
                     try:
                         shutil.copyfile(urlparsed.path, path)
                     except Exception as error:
-                        print("Warning: Impossible to copy the package file"
+                        print("Warning: Impossible to fetch the package file"
                               " {package.title}({package.url}).\n{error}\n"
-                              "Continue anyway without this remote."
+                              "Ignoring this package."
                               .format(package=package, error=error))
                         os.unlink(path)
                 else:
@@ -588,9 +588,9 @@ class Catalog:
             try:
                 shutil.copyfile(urlparsed.path, path)
             except Exception as error:
-                print("Warning: Impossible to copy the package file"
+                print("Warning: Impossible to fetch the package file"
                       " {package.title}({package.url}).\n{error}\n"
-                      "Continue anyway without this remote."
+                      "Ignoring this package."
                       .format(package=package, error=error))
         else:
             urlretrieve(
@@ -846,7 +846,7 @@ class Catalog:
                     try:
                         shutil.copyfile(urlparsed.path, tmppath)
                     except Exception as error:
-                        print("Warning: Impossible to copy the catalog file"
+                        print("Warning: Impossible to fetch the catalog file"
                               " {remote.name}({remote.url}).\n{error}\n"
                               "Continue anyway without this remote."
                               .format(remote=remote, error=error))
@@ -856,9 +856,9 @@ class Catalog:
                         urlretrieve(remote.url, tmppath, reporthook=_progress)
                     except ConnectionError:
                         print("Warning: Impossible to connect to the remote"
-                            " {remote.name}({remote.url}).\n"
-                            "Continue anyway without this remote."
-                            .format(remote=remote))
+                              " {remote.name}({remote.url}).\n"
+                              "Continue anyway without this remote."
+                              .format(remote=remote))
                         continue
 
                 catalog = load_from_file(tmppath)
