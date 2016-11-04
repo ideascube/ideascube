@@ -22,12 +22,17 @@ def cleansearch():
 
 @pytest.fixture()
 def user(db):
-    return UserFactory(short_name="Hello", password='password')
+    return UserFactory(serial='123456',
+                       short_name="Hello",
+                       password='password')
 
 
 @pytest.fixture()
 def staffuser(db):
-    return UserFactory(short_name="Hello", password='password', is_staff=True)
+    return UserFactory(serial='123456staff',
+                       short_name="Hello",
+                       password='password',
+                       is_staff=True)
 
 
 @pytest.fixture()

@@ -34,16 +34,13 @@ def test_create_superuser():
     assert user.is_staff
 
 
-def test_list_users():
+def test_list_users(user, systemuser):
     model = get_user_model()
-    model.objects.create_user('123456')
-    model.objects.create_user('__system__')
-
     users = model.objects.all()
     assert [u.serial for u in users] == ['123456']
 
     users = model.objects.all(include_system_user=True)
-    assert [u.serial for u in users] == ['__system__', '123456']
+    assert sorted([u.serial for u in users]) == sorted(['__system__', '123456'])
 
     systemuser = model.objects.get_system_user()
     assert systemuser.serial == '__system__'
