@@ -206,6 +206,12 @@ html[dir='rtl'] .col + .col {
 html[dir='rtl'] .flow * + * {
     margin-right: 5px;
 }
+.layout-container {
+    margin: 0 -10px;
+}
+.layout-element {
+    padding: 0 10px;
+}
 
 
 /* ************************************************* */
@@ -350,13 +356,18 @@ form h3 {
 }
 
 
+.content {
+    padding: 0 30px;
+}
+
+
 /* ************************************************* */
 /* *************** HEADER & FOOTER ***************** */
 /* ************************************************* */
 header {
     display: -webkit-flex;
     display: flex;
-    padding: 0 20px;
+    padding: 0 30px;
     background-color: #fefefe;
     color: #333;
     border-bottom: 1px solid #eee;
@@ -368,7 +379,6 @@ header section {
     display: flex;
 }
 header h1 {
-    margin-left: 40px;
     background-image: url('./img/ideasbox.png');
     background-repeat: no-repeat;
     background-position: left center;
@@ -512,12 +522,19 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 /* ************************************************* */
 /* ******************** TOOLS ********************** */
 /* ************************************************* */
+.card-container {
+    margin: 0 -10px;
+}
+
 .card {
-    margin: 5px;
+    margin: 10px;
     display: block;
     width:100%;
     position: relative;
     overflow: hidden;
+}
+.card.admin {
+    margin: 0;
 }
 .card + .card {
     margin-top: 20px;
@@ -813,10 +830,6 @@ html[dir='rtl'] .search input[type='submit'] {
 .pure-g {
     display: flex;
     flex-flow: row wrap;
-}
-
-.pure-g > div {
-     padding: 5px;
 }
 
 .pure-u {
