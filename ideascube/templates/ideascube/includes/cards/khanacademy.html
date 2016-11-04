@@ -1,6 +1,8 @@
 {% load i18n %}
-<div class="card tinted khanacademy">
-        <h4><span class="theme learn">learn</span> <span><a href="http://khanacademy.{{ domain }}">{% trans "Khan Academy" %}</a></span></h4>
-    <p>{% trans "Learn with videos and exercises." %}</p>
-    <p><a class="subnav" href="http://khanacademy.{{ domain }}">{% trans "Go to Khan Academy" %}</a></p>
-</div>
+<a href="http://khanacademy.{{ domain }}" class="card tinted khanacademy">
+  <h4>
+    <span class="theme learn">learn</span>
+    <span>{% trans "Khan Academy" %}</span>
+  </h4>
+  <p>{% trans "Learn with videos and exercises." %}</p>
+</a>

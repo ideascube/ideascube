@@ -76,6 +76,15 @@ textarea {
   font:15px/20px 'fira_sansregular', sans-serif;
   -webkit-font-smoothing:antialiased;
 }
+/* pure-g force the use of a font that works correctly in all browser for the
+ * em unit (https://github.com/yahoo/pure/issues/41/).
+ * The font is then reset to the default one (sans-serif) in pure-u elements.
+ * As we use 'fira_sansregular' by default, we need to overide the default
+ * value from pure.
+ */
+.pure-g [class*="pure-u"] {
+  font-family: 'fira_sansregular', sans-serif !important;
+}
 div, ul, li, a, section, nav,
 h1, h2, h3, h4, h5, h6,
 hr, input, textarea, footer, header {
@@ -196,6 +205,12 @@ html[dir='rtl'] .col + .col {
 }
 html[dir='rtl'] .flow * + * {
     margin-right: 5px;
+}
+.layout-container {
+    margin: 0 -10px;
+}
+.layout-element {
+    padding: 0 10px;
 }
 
 
@@ -341,13 +356,18 @@ form h3 {
 }
 
 
+.content {
+    padding: 0 30px;
+}
+
+
 /* ************************************************* */
 /* *************** HEADER & FOOTER ***************** */
 /* ************************************************* */
 header {
     display: -webkit-flex;
     display: flex;
-    padding: 0 20px;
+    padding: 0 30px;
     background-color: #fefefe;
     color: #333;
     border-bottom: 1px solid #eee;
@@ -359,7 +379,6 @@ header section {
     display: flex;
 }
 header h1 {
-    margin-left: 40px;
     background-image: url('./img/ideasbox.png');
     background-repeat: no-repeat;
     background-position: left center;
@@ -503,10 +522,19 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 /* ************************************************* */
 /* ******************** TOOLS ********************** */
 /* ************************************************* */
+.card-container {
+    margin: 0 -10px;
+}
+
 .card {
-    float: none;
-    clear: both;
-    max-width: 400px;
+    margin: 10px;
+    display: block;
+    width:100%;
+    position: relative;
+    overflow: hidden;
+}
+.card.admin {
+    margin: 0;
 }
 .card + .card {
     margin-top: 20px;
@@ -520,136 +548,9 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
   content: " ";
 }
 .card h4 a,
-.card > a {
+.card > a,
+a.card {
     text-decoration: none;
-}
-.home .card {
-    padding-right: 100px;
-}
-html[dir='rtl'] .home .card {
-    padding-right: 10px;
-    padding-left: 100px;
-}
-.card.khanacademy {
-    background-image: url('./img/cards/khanacademy.png');
-}
-.card.wikipedia {
-    background-image: url('./img/cards/wikipedia.png');
-}
-.card.wikisource {
-    background-image: url('./img/cards/wikisource.png');
-}
-.card.wikibooks {
-    background-image: url('./img/cards/wikibooks.png');
-}
-.card.wikivoyage {
-    background-image: url('./img/cards/wikivoyage.png');
-}
-.card.wiktionary {
-    background-image: url('./img/cards/wiktionary.png');
-}
-.card.wikiquote {
-    background-image: url('./img/cards/wikiquote.png');
-}
-.card.wikiversity {
-    background-image: url('./img/cards/wikiversity.png');
-}
-.card.appinventor {
-    background-image: url('./img/cards/appinventor.jpeg');
-}
-.card.bsfcampus {
-    background-image: url('./img/cards/bsfcampus.png');
-}
-.card.koombookedu {
-    background-image: url('./img/cards/koombookedu.png');
-}
-.card.cest-pas-sorcier {
-    background-image: url('./img/cards/cest-pas-sorcier.png');
-    background-position: top 10px right 5px;
-}
-.card.gutenberg {
-    background-image: url('./img/cards/gutenberg.jpeg');
-}
-.card.clickinfoado {
-    background-image: url('./img/cards/clickinfoado.png');
-}
-.card.icd10 {
-    background-image: url('./img/cards/icd10.png');
-}
-.card.les-fondamentaux {
-    background-image: url('./img/cards/les-fondamentaux.png');
-}
-.card.bil-tunisia {
-    background-image: url('./img/cards/bil-tunisia.png');
-}
-.card.biologie-tout-compris {
-    background-image: url('./img/cards/biologie-tout-compris.jpg');
-}
-.card.deus-ex-silicium {
-    background-image: url('./img/cards/deus-ex-silicium.jpg');
-}
-.card.e-penser {
-    background-image: url('./img/cards/e-penser.jpg');
-}
-.card.wikimooc {
-    background-image: url('./img/cards/wikimooc.png');
-}
-.card.bouquineux {
-    background-image: url('./img/cards/bouquineux.png');
-}
-.card.mullah-piaz-digest {
-    background-image: url('./img/cards/mullah-piaz-digest.jpg');
-}
-.card.ted {
-    background-image: url('./img/cards/ted.png');
-    background-position: top 24px right 5px;
-}
-.card.ubuntudoc {
-    background-image: url('./img/cards/ubuntudoc.jpeg');
-}
-.card.universcience {
-    background-image: url('./img/cards/universcience.png');
-}
-.card.vikidia {
-    background-image: url('./img/cards/vikidia.png');
-}
-.card.wikistage {
-    background-image: url('./img/cards/wikistage.png');
-}
-.card.dirtybiology {
-    background-image: url('./img/cards/dirtybiology.png');
-}
-.card.software {
-    background-image: url('./img/cards/windows.jpeg');
-}
-.grid .card.blog {
-    background-image: url('./img/blog.png');
-}
-.grid .card.library {
-    background-image: url('./img/library.png');
-}
-.grid .card.mediacenter {
-    background-image: url('./img/mediacenter.png');
-}
-.card.w2eu {
-    background-image: url('./img/cards/w2eu.jpg');
-}
-.card.maps {
-    background-image: url('./img/cards/maps.png');
-}
-.card.crashcourse {
-    background-image: url('./img/cards/crashcourse.png');
-}
-.card.maguare {
-    background-image: url('./img/cards/maguare.png');
-}
-.card.cinescuela {
-    background-image: url('./img/cards/cinescuela.jpg');
-}
-.card img {
-    float: left;
-    display: block;
-    margin: 0 auto;
 }
 .card i.fa {
     position: absolute;
@@ -665,11 +566,6 @@ html[dir='rtl'] .card i.fa {
 .card a.flatlist + a.flatlist:before {
     content: ' • ';
 }
-html[dir='rtl'] .card img {
-    float: right;
-    margin-left: 10px;
-    margin-right: 0;
-}
 .tinted {
     background-color: #fefefe;
     padding: 20px;
@@ -680,28 +576,6 @@ html[dir='rtl'] .card img {
 }
 html[dir='rtl'] .tinted {
     background-position: center left 5px;
-}
-
-.grid {
-    display: flex;
-    display: -webkit-flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
-.grid .card {
-    clear: none;
-    margin-top: 0;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    max-width: 32.5%;
-    flex-grow: 1;
-    flex-basis: 300px;
-    position: relative;
-    overflow: hidden;
-}
-.grid .card img {
-    display: block;
-    float: left;
 }
 
 html[dir='rtl'] .card.book img {
@@ -725,15 +599,6 @@ html[dir='rtl'] .card.book img {
     color: #fff;
     padding: 0 5px;
     text-decoration: none;
-}
-.subnav {
-    color: rgba(0, 0, 0, 0.5);
-    text-decoration: none;
-    padding-right: 5px;
-}
-.subnav:before {
-    content: '▪';
-    padding-right: 5px;
 }
 .info {
     background-color: #E26A6A;
@@ -845,105 +710,9 @@ span.error {
   color: #06D85F;
 }
 
-
-/* ************************************************* */
-/* ******************** HOME *********************** */
-/* ************************************************* */
-
-
 /* ************************************************* */
 /* ******************** BLOG *********************** */
 /* ************************************************* */
-
-
-/* ************************************************* */
-/* ******************* LIBRARY ********************* */
-/* ************************************************* */
-img.cover {
-    box-shadow: 0px 0px 10px 0px #999;
-    max-height: 300px;
-    max-width: 200px;
-}
-.default img.cover {
-    box-shadow: none;
-}
-
-.book-list .card {
-    border: 1px solid #efefef;
-    padding: 5px;
-    width: 250px;
-    height: 300px;
-    text-align: center;
-    flex-basis: 200px;
-}
-.book-list .card h3 {
-    height: 2em;
-}
-.book-list .card img {
-    max-height: 200px;
-    float: none;
-}
-/* default image for books does not have large blank borders */
-.book-list .card.default a:not(:first-of-type) {
-    display: block;
-    margin-top: 50px;
-}
-
-.book-detail h2, h3, h4, h5 {
-    margin-bottom: 10px;
-}
-.book-detail h4 {
-    text-transform: uppercase;
-}
-.book-detail h3 {
-    font-family: 'fira_sansmedium';
-    font-size: 1em;
-}
-
-/* ************************************************* */
-/* **************** SERVER ADMIN ******************* */
-/* ************************************************* */
-.services .service {
-    padding-bottom: 20px;
-}
-.services .service h3 {
-    text-transform: uppercase;
-}
-.services .service + .service {
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-}
-.services .status-error h3 span,
-.services .status-off h3 span,
-.services .status-on h3 span {
-    font-family: 'fira_sansbook';
-}
-.services .status-on h3 span {
-    color: #26A65B;
-}
-.services .status-error h3 span,
-.services .status-off h3 span {
-    color: #C0392B;
-}
-
-.list-box {
-    border: 1px solid #ddd;
-    padding: 0;
-    margin: 0;
-}
-.list-box-item {
-    text-decoration: none;
-    display: block;
-    padding: 1em;
-    border-bottom: 1px dotted #ddd;
-}
-.list-box-item:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
-}
-.list-box-item span {
-    margin: auto 1em;
-}
 
 
 /* ************************************************* */
@@ -1008,114 +777,6 @@ html[dir='rtl'] .search input[type='submit'] {
 }
 
 /* ************************************************* */
-/* **************** MEDIAS CENTER ****************** */
-/* ************************************************* */
-.document-list .card {
-    border: 1px solid #efefef;
-    padding: 10px;
-    width: 250px;
-    height: 250px;
-    text-align: center;
-    flex-basis: 250px;
-    max-width: 300px;
-}
-.document-list .card > a {
-    display: block;
-    max-height: 100%;
-    overflow: hidden;
-}
-.document-list .card h3 {
-    height: 3em;
-    font-size: 1em;
-    line-height: 1.4em;
-}
-.document-list .card img {
-    float: none;
-    display: block;
-    margin: 0 auto;
-}
-.card.document img {
-    float: right;
-}
-html[dir='rtl'] .card.document img {
-    float: left;
-}
-.card.document {
-    overflow: hidden;
-}
-
-
-/* ************************************************* */
-/* ****************** MONITORING ******************* */
-/* ************************************************* */
-.module {text-transform: uppercase;}
-.cinema {color: #22A7F0;}
-.library {color: #F89406;}
-.digital {color: #87D37C;}
-input.cinema {background-color: #22A7F0;}
-input.library {background-color: #F89406;}
-input.digital {background-color: #87D37C;}
-
-table.stock {
-    color: #444;
-}
-table.stock td {
-    padding: 5px 10px;
-}
-table.stock tr.stockitem {
-    background-color: #eee;
-}
-table.stock tr.stockitem td {
-    text-align: left;
-}
-table.stock tr.specimen {
-    background-color: #fff;
-}
-table.stock .notfound {
-    background-color: #C0392B;
-}
-table.stock .missing {
-    background-color: #F27935;
-}
-table.stock .missing,
-table.stock .notfound,
-table.stock .notfound a {
-    color: #E0E0D1;
-    line-height: 100%;
-}
-table.stock caption {
-    color: #fff;
-    text-transform: uppercase;
-    padding: 5px 0;
-    background-color: #444;
-    position: relative;
-}
-table.stock caption a {
-    color: #fff;
-    position: absolute;
-    right: 10px;
-    text-transform: none;
-}
-html[dir='rtl'] table.stock caption a {
-    left: 10px;
-    right: auto;
-}
-table.stock th {
-    background-color: #999;
-    color: #fff;
-    font-family: 'fira_sansmedium';
-    font-weight: normal;
-}
-table.cinema caption {background-color: #22A7F0;}
-table.library caption {background-color: #F89406;}
-table.digital caption {background-color: #87D37C;}
-table.admin caption {background-color: #F2CC11;}
-table.stock tr.stockitem .actions,
-table.stock .actions {
-    text-align: right;
-}
-
-/* ************************************************* */
 /* ******************** MEDIA QUERIES ************** */
 /* ************************************************* */
 @media screen and (max-width: 1279px) {
@@ -1159,13 +820,23 @@ table.stock .actions {
         -webkit-flex-direction: column;
         -webkit-align-items: center;
     }
-    .grid {
-        justify-content: center;
-        -webkit-justify-content: center;
-    }
 }
 @media screen and (max-width: 600px) {
     .boxid {
         display: none;
     }
 }
+
+.pure-g {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.pure-u {
+    display: flex !important;
+}
+
+@media screen and (min-width: 48em) {
+    .u-md-order-2 {
+        order: 2;
+    }

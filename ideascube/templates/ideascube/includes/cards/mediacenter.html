@@ -1,8 +1,8 @@
 {% load i18n %}
-<div class="card tinted mediacenter">
-    <a href="{% url 'mediacenter:index' %}">
-    <h4><span class="theme discover">{% trans "discover" %}</span><span>{% trans "Medias center" %}</span></h4>
-    <p>{% trans "Browse videos, sounds, images, pdf…" %}</p>
-    <p><span class="subnav">{% trans "Go to the medias center" %}</span></p>
-    </a>
-</div>
+<a href="{% url 'mediacenter:index' %}" class="card tinted mediacenter">
+  <h4>
+    <span class="theme discover">{% trans "discover" %}</span>
+    <span>{% trans "Medias center" %}</span>
+  </h4>
+  <p>{% trans "Browse videos, sounds, images, pdf…" %}</p>
+</a>

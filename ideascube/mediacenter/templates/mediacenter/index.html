@@ -1,15 +1,23 @@
 {% extends 'two-third-third.html' %}
-{% load i18n ideascube_tags %}
+{% load i18n ideascube_tags static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{% static "mediacenter/mediacenter.css" %}">
+{% endblock %}
 
 {% block body_class %}mediacenter{% endblock %}
 
 {% block twothird %}
     {% block content_title %}<h2><span class="theme discover">{% trans "discover" %}</span> {% trans "Medias Center" %}</h2>{% endblock %}
-    <div class="grid document-list">
+    <div class="pure-g document-list card-container">
         {% for document in document_list  %}
+            <div class="pure-u-1 pure-u-sm-1-2 pure-u-lg-1-3 pure-u-xl-1-4 pure-u">
             {% include "mediacenter/document_card.html" %}
+            </div>
         {% empty %}
+            <div class="pure-u-1">
             {% trans "No documents yet." %}
+            </div>
         {% endfor %}
     </div>
     {% include "ideascube/pagination.html" %}

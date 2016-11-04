@@ -1,14 +1,10 @@
 {% load ideascube_tags static %}
-<div class="card {% if not book.cover %}default{% endif %}">
-    <a href="{% url 'library:book_detail' pk=book.pk %}">
-        <h3>{{ book }}</h3>
-    </a>
-    <p>{{ book.authors }}</p>
-    <a href="{% url 'library:book_detail' pk=book.pk %}">
-    {% if book.cover %}
-        <img src="{% media book 'cover' %}" class="cover" />
-    {% else %}
-    	<img src="{% static "ideascube/img/default-book.png" %}" class="cover" />
-    {% endif %}
-    </a>
-</div>
+<a class="card {% if not book.cover %}default{% endif %}" href="{% url 'library:book_detail' pk=book.pk %}">
+  <h3>{{ book }}</h3>
+  <p>{{ book.authors }}</p>
+  {% if book.cover %}
+    <img src="{% media book 'cover' %}" class="cover" />
+  {% else %}
+    <img src="{% static "ideascube/img/default-book.png" %}" class="cover" />
+  {% endif %}
+</a>

@@ -1,8 +1,9 @@
 {% extends 'two-third-third.html' %}
 
-{% load i18n ideascube_tags %}
+{% load i18n ideascube_tags static %}
 
 {% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{% static "monitoring/monitoring.css" %}">
     {% include 'ideascube/includes/form_statics.html' %}
 {% endblock extra_head %}
 

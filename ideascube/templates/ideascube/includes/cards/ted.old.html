@@ -1,5 +1,8 @@
 {% load i18n %}
-<div class="card tinted ted">
-        <h4><span class="theme learn">learn</span> <span><a href="http://ted.{{ domain }}">{% trans "Ted Talks" %}</a></span></h4>
-    <p>{% trans "Set of videos conference on innovation." %}</p>
-</div>
+<a href="http://ted.{{ domain }}" class="card tinted ted">
+  <h4>
+    <span class="theme learn">learn</span>
+    <span>{% trans "Ted Talks" %}</span>
+  </h4>
+  <p>{% trans "Set of videos conference on innovation." %}</p>
+</a>

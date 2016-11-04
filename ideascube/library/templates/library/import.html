@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static "library/library.css" %}">
+{% endblock %}
 
 {% block content %}
     <div class="row">

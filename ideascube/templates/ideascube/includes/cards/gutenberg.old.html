@@ -1,5 +1,8 @@
 {% load i18n %}
-<div class="card tinted gutenberg">
-        <h4><span class="theme read">read</span> <span><a href="http://gutenberg.{{ domain }}">{% trans "Gutenberg project" %}</a></span></h4>
-    <p>{% trans "Read and download e-books." %}</p>
-</div>
+<a href="http://gutenberg.{{ domain }}" class="card tinted gutenberg">
+  <h4>
+    <span class="theme read">read</span>
+    <span>{% trans "Gutenberg project" %}</span>
+  </h4>
+  <p>{% trans "Read and download e-books." %}</p>
+</a>

@@ -1,5 +1,10 @@
 {% extends 'two-third-third.html' %}
-{% load i18n ideascube_tags %}
+{% load i18n ideascube_tags static %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static "library/library.css" %}">
+{% endblock %}
+
 {% block twothird %}
     <div class="row mwide twide">
         <div class="col third">

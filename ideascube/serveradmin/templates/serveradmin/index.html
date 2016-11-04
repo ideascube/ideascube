@@ -1,10 +1,11 @@
 {% extends 'third-two-third.html' %}
 
+{% load i18n ideascube_tags static %}
+
 {% block extra_head %}
     {% include 'ideascube/includes/form_statics.html' %}
+    <link rel="stylesheet" type="text/css" href="{% static "serveradmin/serveradmin.css" %}">
 {% endblock extra_head %}
-
-{% load i18n ideascube_tags %}
 
 {% block third %}
     <div class="card tinted admin">

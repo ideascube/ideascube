@@ -1,5 +1,8 @@
 {% load i18n %}
-<div class="card tinted wikisource">
-        <h4><span class="theme read">read</span> <span><a href="http://wikisource.{{ domain }}">{% trans "Wikisource" %}</a></span></h4>
-    <p>{% trans "Bibliothèque de textes libres et gratuits." %}</p>
-</div>
+<a href="http://wikisource.{{ domain }}" class="card tinted wikisource">
+  <h4>
+    <span class="theme read">read</span>
+    <span>{% trans "Wikisource" %}</span>
+  </h4>
+  <p>{% trans "Bibliothèque de textes libres et gratuits." %}</p>
+</a>

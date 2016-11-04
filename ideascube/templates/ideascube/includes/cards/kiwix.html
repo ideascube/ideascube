@@ -1,10 +1,8 @@
 {% load i18n %}
-<div class="card tinted {{ card.css_class }}">
-  <a href="http://kiwix.{{ domain }}/{{ card.package_id }}/">
-    <h4>
-      <span class="theme {{ card.theme }}">{% trans card.theme %}</span>
-      <span>{{ card.name }}</span>
-    </h4>
-    <p>{{ card.description }}</p>
-  </a>
-</div>
+<a href="http://kiwix.{{ domain }}/{{ card.package_id }}/" class="card tinted {{ card.css_class }}">
+  <h4>
+    <span class="theme {{ card.theme }}">{% trans card.theme %}</span>
+    <span>{{ card.name }}</span>
+  </h4>
+  <p>{{ card.description }}</p>
+</a>
