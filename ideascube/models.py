@@ -64,13 +64,6 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
         # Use the parent's queryset, as it is not filtered
         return super().get_queryset()
 
-    def all(self, include_system_user=False):
-        if include_system_user:
-            return self.get_queryset_unfiltered().all()
-
-        else:
-            return super().all()
-
     def get_system_user(self):
         return self.get_queryset_unfiltered().get(serial='__system__')
 
@@ -131,7 +124,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         if self.id is None:
             # We are creating a new user.
             # Include system user in the check for uniqueness.
-            all_users = User.objects.all(include_system_user=True)
+            all_users = User.objects.get_queryset_unfiltered()
 
             if all_users.filter(serial=self.serial).exists():
                 raise ValidationError({

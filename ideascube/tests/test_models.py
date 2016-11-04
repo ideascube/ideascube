@@ -39,7 +39,7 @@ def test_list_users(user, systemuser):
     users = model.objects.all()
     assert [u.serial for u in users] == ['123456']
 
-    users = model.objects.all(include_system_user=True)
+    users = model.objects.get_queryset_unfiltered()
     assert sorted([u.serial for u in users]) == sorted(['__system__', '123456'])
 
     systemuser = model.objects.get_system_user()
