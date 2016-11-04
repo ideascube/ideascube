@@ -1,3 +1,4 @@
+import io
 import sys
 
 from django.conf import locale
@@ -9,6 +10,24 @@ class classproperty(property):
     """
     def __get__(self, cls, owner):
         return self.fget.__get__(None, owner)()
+
+
+class TextIOWrapper(io.TextIOWrapper):
+    def __init__(self, buffer, encoding=None, **kwargs):
+        if encoding is None:
+            try:
+                buffer.read().decode('utf-8')
+
+            except UnicodeDecodeError:
+                # FIXME: If this ever causes problems, we can go with cchardet
+                encoding = 'latin-1'
+
+            else:
+                encoding = 'utf-8'
+
+            buffer.seek(0)
+
+        super().__init__(buffer, encoding=encoding, **kwargs)
 
 
 def get_all_languages():
