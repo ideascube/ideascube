@@ -2,14 +2,3 @@
 from .kb import *  # noqa
 
 LANGUAGE_CODE = 'es'
-HOME_CARDS = STAFF_HOME_CARDS + [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'khanacademy',
-    },
-]

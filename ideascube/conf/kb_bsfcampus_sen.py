@@ -1,5 +1,5 @@
 """KoomBook conf"""
-from .kb import *  # noqa
+from .kb_bsfcampus import *  # noqa
 
 LANGUAGE_CODE = 'fr'
 IDEASCUBE_NAME = 'BSF Campus SÉNÉGAL'
