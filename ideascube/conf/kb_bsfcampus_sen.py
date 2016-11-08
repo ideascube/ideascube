@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """KoomBook conf"""
 from .kb import *  # noqa
 
