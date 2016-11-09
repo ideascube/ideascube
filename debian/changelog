@@ -1,3 +1,12 @@
+ideascube (0.16.0) unstable; urgency=low
+
+  - Revamped CSS and grid (add purecss as dependency)
+  - Allow local path for catalog remotes URI
+  - Cleaned KB config files, and added kb_bsfcampus
+
+ -- Yohan Boniface <hi@yohanboniface.me>  Tue, 09 Nov 2016 07:43:00 +0100
+
+
 ideascube (0.15.0) unstable; urgency=low
 
   - Added Spanish translation of the UI
