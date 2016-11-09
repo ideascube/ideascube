@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """KoomBook conf"""
 from .kb import *  # noqa
 
@@ -12,15 +11,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
         'id': 'mediacenter',
     },
     {
-        'id': 'wikipedia.old',
-    },
-    {
-        'id': 'vikidia.old',
-    },
-    {
         'id': 'appinventor',
-    },
-    {
-        'id': 'cpassorcier.old',
     },
 ]
