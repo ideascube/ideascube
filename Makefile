@@ -1,7 +1,7 @@
 test:
 	py.test
 testcov:
-	py.test --cov=ideascube/ --cov-report=term-missing
+	py.test --cov=ideascube/ --cov-report=term-missing --migrations
 develop:
 	pip3 install -r requirements-dev.txt
 doc:
