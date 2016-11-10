@@ -61,36 +61,3 @@ def test_user_data_fields_should_return_labels_and_values(settings):
     assert str(fields['ar_level']['value']) == 'Understood, Spoken'
     assert str(fields['ar_level']['label']) == 'Arabic knowledge'
 
-
-class JSONModel(models.Model):
-    class Meta:
-        app_label = 'ideascube'
-
-    data = JSONField()
-
-
-@pytest.mark.parametrize(
-    'value',
-    [
-        True,
-        42,
-        None,
-        'A string',
-        [1, 2, 3],
-        {'foo': 'bar'}
-    ],
-    ids=[
-        'boolean',
-        'int',
-        'none',
-        'string',
-        'list',
-        'dict',
-    ])
-def test_json_field(value):
-    obj = JSONModel(data=value)
-    obj.save()
-    assert JSONModel.objects.count() == 1
-
-    obj = JSONModel.objects.first()
-    assert obj.data == value
