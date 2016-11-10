@@ -379,15 +379,10 @@ header section {
     display: flex;
 }
 header h1 {
-    background-image: url('./img/ideasbox.png');
-    background-repeat: no-repeat;
-    background-position: left center;
-    background-size: 250px;
     width: 300px;
-    height: 50px;
 }
-#koombook header h1 {
-    background-image: url('./img/koombook.png');
+header h1 img {
+    width: 250px;
 }
 html[dir='rtl'] header h1 {
     background-position: right center;

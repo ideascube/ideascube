@@ -1,7 +1,14 @@
-{% load i18n %}
+{% load i18n static %}
 {% spaceless %}
 <header>
-    <section><a href="{% url 'index' %}"><h1></h1></a><span class="boxid">{{ server_name }}</span></section>
+    <section>
+      <a href="{% url 'index' %}">
+        <h1>
+          <img src="{% static 'branding/header-logo.png' %}"></img>
+        </h1>
+      </a>
+      <span class="boxid">{{ server_name }}</span>
+    </section>
     <section class="menu">
       {% if user.is_authenticated %}
         <a href="{% url 'logout' %}" id="logout">{% blocktrans with user=user %}log out from {{ user }}{% endblocktrans %}{% if user.is_staff %} <i class="fa fa-user-secret"></i>{% endif %}</a></li>

@@ -78,7 +78,6 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "ideascube.context_processors.favicon_url",
                 "ideascube.context_processors.server",
                 "ideascube.context_processors.settings",
                 "ideascube.context_processors.version",
@@ -197,6 +196,9 @@ LOCALE_PATHS = (
 
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_DIRS = [
+    '/usr/share/ideascube/static',
+    ]
 MEDIA_URL = '/media/'
 
 
@@ -212,7 +214,6 @@ DATABASES = None
 
 AUTH_USER_MODEL = 'ideascube.User'
 IDEASCUBE_PLACE_NAME = _('the camp')
-IDEASCUBE_BOX_TYPE = 'ideasbox'
 
 LOAN_DURATION = 0  # In days.
 
