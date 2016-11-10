@@ -217,9 +217,6 @@ set_password = staff_member_required(SetPassword.as_view())
 
 class UserExport(CSVExportMixin, View):
 
-    def get(self, *args, **kwargs):
-        return self.render_to_csv()
-
     def get_items(self):
         return user_model.objects.all()
 

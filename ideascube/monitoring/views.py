@@ -14,7 +14,8 @@ from ideascube.views import CSVExportMixin
 from ideascube.decorators import staff_member_required
 
 from .forms import (EntryForm, ExportEntryForm, ExportLoanForm,
-                    InventorySpecimenForm, LoanForm, ReturnForm, SpecimenForm)
+                    InventorySpecimenForm, LoanForm, ReturnForm, SpecimenForm,
+                    StockImportForm)
 from .models import (Entry, Inventory, InventorySpecimen, Loan, Specimen,
                      StockItem)
 
@@ -71,7 +72,7 @@ class ExportEntry(CSVExportMixin, View):
     def get(self, *args, **kwargs):
         self.form = ExportEntryForm(self.request.GET)
         if self.form.is_valid():
-            return self.render_to_csv()
+            return super().get(*args, **kwargs)
         else:
             msg = _('Error while processing entries export')
             messages.add_message(self.request, messages.ERROR, msg)
@@ -159,9 +160,9 @@ inventory_delete = staff_member_required(InventoryDelete.as_view())
 class InventoryExport(CSVExportMixin, DetailView):
     model = Inventory
 
-    def get(self, request, *args, **kwargs):
+    def get(self, *args, **kwargs):
         self.object = self.get_object()
-        return self.render_to_csv()
+        return super().get(*args, **kwargs)
 
     def get_headers(self):
         self.headers = ['module', 'name', 'description', 'barcode', 'serial',
@@ -215,6 +216,46 @@ class StockItemDelete(DeleteView):
     model = StockItem
     success_url = reverse_lazy('monitoring:stock')
 stockitem_delete = staff_member_required(StockItemDelete.as_view())
+
+
+class StockExport(CSVExportMixin, View):
+    prefix = 'stock'
+
+    def get_headers(self):
+        return ['module', 'name', 'description']
+
+    def get_items(self):
+        qs = StockItem.objects.all()
+        qs = qs.filter(book__isnull=True)
+
+        return qs
+
+    def get_row(self, item):
+        return {
+            'module': item.module, 'name': item.name,
+            'description': item.description,
+        }
+stock_export = staff_member_required(StockExport.as_view())
+
+
+class StockImport(FormView):
+    form_class = StockImportForm
+    template_name = 'monitoring/stock_import.html'
+    success_url = reverse_lazy('monitoring:stock')
+
+    def form_valid(self, form):
+        items, errors = form.save()
+
+        if items:
+            messages.success(
+                self.request,
+                _('Successfully imported {} items').format(len(items)))
+
+        for error in errors:
+            messages.error(self.request, error)
+
+        return super().form_valid(form)
+stock_import = staff_member_required(StockImport.as_view())
 
 
 class SpecimenUpdate(UpdateView):
@@ -381,7 +422,7 @@ class ExportLoan(CSVExportMixin, View):
     def get(self, *args, **kwargs):
         self.form = ExportLoanForm(self.request.GET)
         if self.form.is_valid():
-            return self.render_to_csv()
+            return super().get(*args, **kwargs)
         else:
             msg = _('Error while processing loans export')
             messages.add_message(self.request, messages.ERROR, msg)

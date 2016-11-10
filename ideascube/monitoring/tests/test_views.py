@@ -5,7 +5,10 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.utils import translation
 
+from webtest import Upload
+
 from ideascube.tests.factories import UserFactory
+from ideascube.library.tests.factories import BookFactory
 
 from ..models import (Entry, Inventory, InventorySpecimen, Loan, Specimen,
                       StockItem)
@@ -14,17 +17,30 @@ from .factories import (EntryFactory, InventoryFactory, LoanFactory,
 
 pytestmark = pytest.mark.django_db
 
+URLS = [
+    'monitoring:entry',
+    'monitoring:export_entry',
+    'monitoring:inventory_create',
+    'monitoring:stock',
+    'monitoring:stock_export',
+    'monitoring:stock_import',
+    'monitoring:stockitem_create',
+]
 
-def test_anonymous_should_not_access_entry_page(app):
-    assert app.get(reverse('monitoring:entry'), status=302)
+
+@pytest.mark.parametrize('url_name', URLS)
+def test_anonymous_should_not_access_page(app, url_name):
+    assert app.get(reverse(url_name), status=302)
 
 
-def test_non_staff_should_not_access_entry_page(loggedapp):
-    assert loggedapp.get(reverse('monitoring:entry'), status=302)
+@pytest.mark.parametrize('url_name', URLS)
+def test_non_staff_should_not_access_page(loggedapp, url_name):
+    assert loggedapp.get(reverse(url_name), status=302)
 
 
-def test_staff_should_access_entry_page(staffapp):
-    assert staffapp.get(reverse('monitoring:entry'), status=200)
+@pytest.mark.parametrize('url_name', URLS)
+def test_staff_should_access_page(staffapp, url_name):
+    assert staffapp.get(reverse(url_name), status=200)
 
 
 @pytest.mark.parametrize('module', [m[0] for m in Entry.MODULES])
@@ -55,18 +71,6 @@ def test_can_create_entries_with_activity(staffapp):
     Entry.objects.last().activity == 'special activity'
 
 
-def test_anonymous_should_not_access_export_entry_url(app):
-    assert app.get(reverse('monitoring:export_entry'), status=302)
-
-
-def test_non_staff_should_not_access_export_entry_url(loggedapp):
-    assert loggedapp.get(reverse('monitoring:export_entry'), status=302)
-
-
-def test_staff_should_access_export_entry_url(staffapp):
-    assert staffapp.get(reverse('monitoring:export_entry'), status=200)
-
-
 def test_export_entry_should_return_csv_with_entries(staffapp, settings):
     EntryFactory.create_batch(3)
     settings.MONITORING_ENTRY_EXPORT_FIELDS = []
@@ -76,28 +80,94 @@ def test_export_entry_should_return_csv_with_entries(staffapp, settings):
     assert content.count("cinema") == 3
 
 
-def test_anonymous_should_not_access_stock_page(app):
-    assert app.get(reverse('monitoring:stock'), status=302)
+def test_export_stock(staffapp):
+    StockItemFactory(module=StockItem.DIGITAL)
+    url = reverse('monitoring:stock_export')
+    response = staffapp.get(url)
+
+    assert response.content_type == 'text/csv'
+    assert response.content_disposition.startswith(
+        'attachment; filename="stock_')
+    lines = response.unicode_body.strip().split('\r\n')
+    assert len(lines) == 2
+    assert lines[0] == 'module,name,description'
+    assert lines[1].startswith('digital,Stock item ')
 
 
-def test_non_staff_should_not_access_stock_page(loggedapp):
-    assert loggedapp.get(reverse('monitoring:stock'), status=302)
+def test_books_are_not_exported(staffapp):
+    StockItemFactory(module=StockItem.DIGITAL)
+    BookFactory()
+    url = reverse('monitoring:stock_export')
+    response = staffapp.get(url)
+
+    assert response.content_type == 'text/csv'
+    assert response.content_disposition.startswith(
+        'attachment; filename="stock_')
+    lines = response.unicode_body.strip().split('\r\n')
+    assert len(lines) == 2
+    assert lines[0] == 'module,name,description'
+    assert lines[1].startswith('digital,Stock item ')
 
 
-def test_staff_should_access_stock_page(staffapp):
-    assert staffapp.get(reverse('monitoring:stock'), status=200)
+def test_import_stock(staffapp, tmpdir):
+    source = tmpdir.join('stock.csv')
+    source.write(
+        'module,name,description\n'
+        'cinema,C\'est arrivé près de chez vous,"Conte féérique pour les '
+        'petits et les grands, le film relate les aventures de Benoît, preux '
+        'chevalier en quête de justice, et des ménestrels Rémy, André et '
+        'Patrick.\n\nBenoît parviendra-t-il à leur enseigner le principe de '
+        'la poussée d\'Archimède ? Patrick reverra-t-il Marie-Paule ?"\n'
+        'notamodule,Not a name,This is not a description.\n'
+        )
+
+    response = staffapp.get(reverse('monitoring:stock_import'))
+    form = response.forms['import']
+    form['source'] = Upload(str(source), source.read_binary(), 'text/csv')
+    response = form.submit()
+    assert response.status_code == 302
+    assert response.location.endswith(reverse('monitoring:stock'))
+
+    response = response.follow()
+    assert response.status_code == 200
+    assert 'Successfully imported 1 items' in response.text
+    assert 'C&#39;est arrivé près de chez vous' in response.text
+    assert 'Could not import line 2: ' in response.text
+    assert 'Not a name' not in response.text
+
+    assert StockItem.objects.count() == 1
+    movie = StockItem.objects.last()
+    assert movie.name == "C'est arrivé près de chez vous"
+    assert movie.module == 'cinema'
+    assert movie.description == (
+        'Conte féérique pour les petits et les grands, le film relate les '
+        'aventures de Benoît, preux chevalier en quête de justice, et des '
+        'ménestrels Rémy, André et Patrick.\n\nBenoît parviendra-t-il à leur '
+        'enseigner le principe de la poussée d\'Archimède ? Patrick '
+        'reverra-t-il Marie-Paule ?')
 
 
-def test_anonymous_should_not_access_stockitem_create_page(app):
-    assert app.get(reverse('monitoring:stockitem_create'), status=302)
+def test_import_stock_invalid_csv(staffapp, tmpdir):
+    source = tmpdir.join('stock.csv')
+    source.write(
+        'module,name\n'
+        'digital,Auriculaire\n'
+        )
 
+    response = staffapp.get(reverse('monitoring:stock_import'))
+    form = response.forms['import']
+    form['source'] = Upload(str(source), source.read_binary(), 'text/csv')
+    response = form.submit()
+    assert response.status_code == 302
+    assert response.location.endswith(reverse('monitoring:stock'))
 
-def test_non_staff_should_not_access_stockitem_create_page(loggedapp):
-    assert loggedapp.get(reverse('monitoring:stockitem_create'), status=302)
+    response = response.follow()
+    assert response.status_code == 200
+    assert 'Successfully imported {} elements' not in response.text
+    assert 'Missing column &quot;description&quot; on line 1' in response.text
+    assert 'Auriculaire' not in response.text
 
-
-def test_staff_should_access_stockitem_create_page(staffapp):
-    assert staffapp.get(reverse('monitoring:stockitem_create'), status=200)
+    assert StockItem.objects.count() == 0
 
 
 def test_staff_can_create_stockitem(staffapp):
@@ -154,18 +224,6 @@ def test_staff_can_edit_specimen(staffapp):
     form['count'] = 4
     form.submit().follow()
     assert Specimen.objects.get(pk=specimen.pk).count == 4
-
-
-def test_anonymous_should_not_access_inventory_create_page(app):
-    assert app.get(reverse('monitoring:inventory_create'), status=302)
-
-
-def test_non_staff_should_not_access_inventory_create_page(loggedapp):
-    assert loggedapp.get(reverse('monitoring:inventory_create'), status=302)
-
-
-def test_staff_should_access_inventory_create_page(staffapp):
-    assert staffapp.get(reverse('monitoring:inventory_create'), status=200)
 
 
 def test_staff_can_create_inventory(staffapp):

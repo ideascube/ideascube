@@ -117,14 +117,17 @@ class CSVExportMixin(object):
         filename = self.get_filename()
         attachment = 'attachment; filename="{name}.csv"'.format(name=filename)
         response['Content-Disposition'] = attachment
-        response['Content-Type'] = 'text/csv'
+        response['Content-Type'] = 'text/csv; charset=utf-8'
         return response
 
-    def get_item(self):
+    def get_items(self):
         raise NotImplementedError('CSVExportMixin needs a get_items method')
 
     def get_headers(self):
         raise NotImplementedError('CSVExportMixin needs a get_headers method')
+
+    def get_row(self, item):
+        raise NotImplementedError('CSVExportMixin needs a get_row method')
 
     def get_filename(self):
         filename = "_".join([
@@ -133,3 +136,6 @@ class CSVExportMixin(object):
             str(datetime.now())
         ])
         return filename
+
+    def get(self, *args, **kwargs):
+        return self.render_to_csv()

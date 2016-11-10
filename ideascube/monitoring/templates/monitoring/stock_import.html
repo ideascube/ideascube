@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+    <div class="row">
+        <h2>{% trans "Import Stock" %}</h2>
+    </div>
+
+    <div class="row">
+        <form method="POST" id="import"  enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="{{ form.source.id_for_label }}">{{ form.source.label }}</label>
+            {{ form.source }}
+            <input type="submit" value="{% trans 'Import' %}">
+        </form>
+    </div>
+
+{% endblock content %}
