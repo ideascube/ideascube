@@ -1,7 +1,8 @@
 from collections import Counter
 import csv
-from io import StringIO
+from io import BytesIO, StringIO
 from datetime import datetime
+from zipfile import ZipFile
 
 from django.conf import settings
 from django.conf.locale import LANG_INFO
@@ -139,3 +140,24 @@ class CSVExportMixin:
 
     def get(self, *args, **kwargs):
         return self.render_to_csv()
+
+
+class ZippedCSVExportMixin(CSVExportMixin):
+
+    def render_to_zipped_csv(self):
+        out = BytesIO()
+        self.zip = ZipFile(out, "a")
+        csv = self.to_csv()
+        self.zip.writestr("{}.csv".format(self.get_filename()), csv)
+        self.zip.close()
+        response = HttpResponse()
+        filename = self.get_filename()
+        attachment = 'attachment; filename="{name}.zip"'.format(name=filename)
+        response['Content-Disposition'] = attachment
+        response['Content-Type'] = 'application/zip'
+        out.seek(0)
+        response.write(out.read())
+        return response
+
+    def get(self, *args, **kwargs):
+        return self.render_to_zipped_csv()

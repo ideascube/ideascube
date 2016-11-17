@@ -1,6 +1,4 @@
 import os
-from io import BytesIO
-from zipfile import ZipFile
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
@@ -13,8 +11,8 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
 
 from ideascube.configuration import get_config
 from ideascube.decorators import staff_member_required
-from ideascube.mixins import (FilterableViewMixin, CSVExportMixin,
-                              OrderableViewMixin)
+from ideascube.mixins import (FilterableViewMixin, OrderableViewMixin,
+                              ZippedCSVExportMixin)
 
 from .forms import BookForm, BookSpecimenForm, ImportForm
 from .models import Book, BookSpecimen
@@ -171,26 +169,11 @@ class SpecimenDelete(DeleteView):
 specimen_delete = staff_member_required(SpecimenDelete.as_view())
 
 
-class BookExport(CSVExportMixin, View):
+class BookExport(ZippedCSVExportMixin, View):
 
     prefix = 'notices'
     fields = ['isbn', 'authors', 'serie', 'name', 'subtitle', 'description',
               'publisher', 'section', 'lang', 'cover', 'tags']
-
-    def get(self, *args, **kwargs):
-        out = BytesIO()
-        self.zip = ZipFile(out, "a")
-        csv = self.to_csv()
-        self.zip.writestr("{}.csv".format(self.get_filename()), csv)
-        self.zip.close()
-        response = HttpResponse()
-        filename = self.get_filename()
-        attachment = 'attachment; filename="{name}.zip"'.format(name=filename)
-        response['Content-Disposition'] = attachment
-        response['Content-Type'] = 'application/zip'
-        out.seek(0)
-        response.write(out.read())
-        return response
 
     def get_items(self):
         return Book.objects.all()
