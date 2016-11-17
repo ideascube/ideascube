@@ -113,14 +113,6 @@ class CSVExportMixin:
         out.seek(0)
         return out.read()
 
-    def render_to_csv(self):
-        response = HttpResponse(self.to_csv())
-        filename = self.get_filename()
-        attachment = 'attachment; filename="{name}.csv"'.format(name=filename)
-        response['Content-Disposition'] = attachment
-        response['Content-Type'] = 'text/csv; charset=utf-8'
-        return response
-
     def get_items(self):
         raise NotImplementedError('CSVExportMixin needs a get_items method')
 
@@ -139,12 +131,17 @@ class CSVExportMixin:
         return filename
 
     def get(self, *args, **kwargs):
-        return self.render_to_csv()
+        response = HttpResponse(self.to_csv())
+        filename = self.get_filename()
+        attachment = 'attachment; filename="{name}.csv"'.format(name=filename)
+        response['Content-Disposition'] = attachment
+        response['Content-Type'] = 'text/csv; charset=utf-8'
+        return response
 
 
 class ZippedCSVExportMixin(CSVExportMixin):
 
-    def render_to_zipped_csv(self):
+    def get(self, *args, **kwargs):
         out = BytesIO()
         self.zip = ZipFile(out, "a")
         csv = self.to_csv()
@@ -158,6 +155,3 @@ class ZippedCSVExportMixin(CSVExportMixin):
         out.seek(0)
         response.write(out.read())
         return response
-
-    def get(self, *args, **kwargs):
-        return self.render_to_zipped_csv()
