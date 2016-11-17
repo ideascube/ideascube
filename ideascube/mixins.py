@@ -132,8 +132,11 @@ class CSVExportMixin:
         ])
         return filename
 
+    def _get_response_content(self):
+        return self.to_csv()
+
     def get(self, *args, **kwargs):
-        response = HttpResponse(self.to_csv())
+        response = HttpResponse(self._get_response_content())
         filename = self.get_filename()
         attachment = 'attachment; filename="{name}.{extension}"'.format(
             name=filename, extension=self.file_extension)
@@ -147,17 +150,12 @@ class ZippedCSVExportMixin(CSVExportMixin):
     content_type = 'application/zip'
     file_extension = 'zip'
 
-    def get(self, *args, **kwargs):
+    def _get_response_content(self):
         out = BytesIO()
         self.zip = ZipFile(out, "a")
         csv = self.to_csv()
         self.zip.writestr("{}.csv".format(self.get_filename()), csv)
         self.zip.close()
         out.seek(0)
-        response = HttpResponse(out.read())
-        filename = self.get_filename()
-        attachment = 'attachment; filename="{name}.{extension}"'.format(
-            name=filename, extension=self.file_extension)
-        response['Content-Disposition'] = attachment
-        response['Content-Type'] = self.content_type
-        return response
+
+        return out.read()
