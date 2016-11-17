@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from webtest import Upload
 
 from ..models import Book, BookSpecimen
-from ..views import BookExport, Index
+from ..views import BookExport, BookSpecimenExport, Index
 from .factories import (BookFactory, BookSpecimenFactory,
                         DigitalBookSpecimenFactory)
 
@@ -526,3 +526,28 @@ def test_export_book_notices(staffapp, monkeypatch):
     assert "my book title" in csv_content
     assert cover_name in csv_content
     assert name_utf8 in csv_content
+
+
+def test_export_book_specimens(staffapp, monkeypatch):
+    book1 = BookFactory(isbn="123456", name="my book title")
+    specimen1 = BookSpecimenFactory(item=book1)
+    book2 = BookFactory(isbn="654321", name='ﺎﻠﻨﺒﻳ (ﻚﺗﺎﺑ)')
+    specimen2 = DigitalBookSpecimenFactory(item=book2)
+
+    monkeypatch.setattr(
+        BookSpecimenExport, 'get_filename', lambda s: 'specimens')
+
+    resp = staffapp.get(reverse('library:specimen_export'))
+    assert 'specimens.zip' in resp['Content-Disposition']
+
+    with zipfile.ZipFile(ContentFile(resp.content)) as archive:
+        epubname = '{}.epub'.format(specimen2.pk)
+        assert sorted(archive.namelist()) == [epubname, 'specimens.csv']
+        csv = archive.open('specimens.csv').read().decode('utf-8').strip()
+        assert csv.split('\r\n') == [
+            'isbn,title,barcode,serial,comments,location,file',
+            '{},{},{},,,,'.format(
+                specimen1.item.isbn, specimen1.item.name, specimen1.barcode),
+            '{},{},,,,,{}'.format(
+                specimen2.item.isbn, specimen2.item.name, epubname),
+        ]

@@ -17,4 +17,5 @@ urlpatterns = [
         name='specimen_update'),
     url(r'^specimen/(?P<pk>[\d]+)/delete/$', views.specimen_delete,
         name='specimen_delete'),
+    url(r'^specimen/export/$', views.specimen_export, name='specimen_export'),
 ]

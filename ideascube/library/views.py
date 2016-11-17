@@ -199,3 +199,39 @@ class BookExport(ZippedCSVExportMixin, View):
         return row
 
 book_export = staff_member_required(BookExport.as_view())
+
+
+class BookSpecimenExport(ZippedCSVExportMixin, View):
+
+    fields = [
+        'isbn', 'title', 'barcode', 'serial', 'comments', 'location', 'file',
+        ]
+    model = BookSpecimen
+    prefix = 'book_specimens'
+
+    def get_headers(self):
+        return self.fields
+
+    def get_row(self, bookspecimen):
+        row = {}
+
+        for field in self.fields:
+            if field == 'title':
+                row[field] = bookspecimen.item.name
+
+            elif field == 'isbn':
+                row[field] = bookspecimen.item.book.isbn
+
+            elif field == 'file':
+                if bookspecimen.file:
+                    _, ext = os.path.splitext(bookspecimen.file.name)
+                    filename = '{}{}'.format(bookspecimen.pk, ext)
+                    row[field] = filename
+                    self.zip.writestr(filename, bookspecimen.file.read())
+
+            else:
+                row[field] = getattr(bookspecimen, field)
+
+        return row
+
+specimen_export = staff_member_required(BookSpecimenExport.as_view())
