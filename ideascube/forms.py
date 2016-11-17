@@ -1,6 +1,13 @@
+import csv
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+
+from ideascube.utils import TextIOWrapper
+
+
+User = get_user_model()
 
 
 class UserForm(forms.ModelForm):
@@ -14,7 +21,7 @@ class UserForm(forms.ModelForm):
                 field.widget = forms.DateInput(format='%Y-%m-%d')
 
     class Meta:
-        model = get_user_model()
+        model = User
         exclude = ['password', 'last_login', 'is_staff']
 
 
@@ -52,3 +59,28 @@ class CreateStaffForm(forms.ModelForm):
         user.is_staff = True
         user.save()
         return user
+
+
+class UserImportForm(forms.Form):
+    source = forms.FileField(required=True)
+
+    def save(self):
+        source = TextIOWrapper(self.cleaned_data['source'].file)
+        users = []
+        errors = []
+        for idx, row in enumerate(csv.DictReader(source)):
+            qs = User.objects.all()
+            try:
+                instance = qs.get(serial=row['serial'])
+            except (User.DoesNotExist, KeyError):
+                instance = None
+            form = UserForm(data=row, instance=instance)
+            if form.is_valid():
+                user = form.save()
+                users.append(user)
+            else:
+                reason = ', '.join('{}: {}'.format(k, v.as_text())
+                                   for k, v in form.errors.items())
+                errors.append(_('Invalid row at line {id}: {reason}'.format(
+                    id=idx + 1, reason=reason)))
+        return users, errors[:10]

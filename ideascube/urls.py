@@ -33,6 +33,7 @@ urlpatterns = i18n_patterns(
         name='user_set_password'),
     url(r'^user/new/$', views.user_create, name='user_create'),
     url(r'^user/export/$', views.user_export, name='user_export'),
+    url(r'^user/import/$', views.user_import, name='user_import'),
     url(r'^user/(?P<pk>[\d]+)/delete/$',
         views.user_delete, name='user_delete'),
     url(r'^user/(?P<pk>[\d]+)/toggle-staff/$',
