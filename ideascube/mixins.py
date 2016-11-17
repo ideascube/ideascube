@@ -97,7 +97,7 @@ class FilterableViewMixin:
         return qs
 
 
-class CSVExportMixin(object):
+class CSVExportMixin:
 
     prefix = 'ideascube'
 
