@@ -50,4 +50,7 @@ class DatabaseRouter(object):
         db_to_use = _database_to_use.get((app_label, model_name), 'default')
         if db_to_use != db:
             return False
+        using = hints.get('using')
+        if using:
+            return using == db
         return True
