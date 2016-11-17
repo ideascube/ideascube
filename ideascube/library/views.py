@@ -66,6 +66,14 @@ index = Index.as_view()
 
 class BookDetail(DetailView):
     model = Book
+
+    def get(self, request, *args, **kwargs):
+        ret = super().get(request, *args, **kwargs)
+        user = request.user
+        if user.is_staff and not self.object.specimens.count():
+            messages.warning(request, _("Please add a specimen, or the book "
+                                        "won't be available for the users"))
+        return ret
 book_detail = BookDetail.as_view()
 
 
