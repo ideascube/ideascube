@@ -152,10 +152,11 @@ class ZippedCSVExportMixin(CSVExportMixin):
 
     def _get_response_content(self):
         out = BytesIO()
-        self.zip = ZipFile(out, "a")
-        csv = self.to_csv()
-        self.zip.writestr("{}.csv".format(self.get_filename()), csv)
-        self.zip.close()
+
+        with ZipFile(out, "a") as self.zip:
+            csv = self.to_csv()
+            self.zip.writestr("{}.csv".format(self.get_filename()), csv)
+
         out.seek(0)
 
         return out.read()
