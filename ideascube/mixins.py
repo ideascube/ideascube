@@ -154,6 +154,8 @@ class ZippedCSVExportMixin(CSVExportMixin):
         out = BytesIO()
 
         with ZipFile(out, "a") as self.zip:
+            # Warning: Calling to_csv() might write the content of other
+            # files to self.zip (through get_row) as a side-effect
             csv = self.to_csv()
             self.zip.writestr("{}.csv".format(self.get_filename()), csv)
 
