@@ -171,12 +171,10 @@ specimen_delete = staff_member_required(SpecimenDelete.as_view())
 
 class BookExport(ZippedCSVExportMixin, View):
 
+    model = Book
     prefix = 'notices'
     fields = ['isbn', 'authors', 'serie', 'name', 'subtitle', 'description',
               'publisher', 'section', 'lang', 'cover', 'tags']
-
-    def get_items(self):
-        return Book.objects.all()
 
     def get_headers(self):
         return self.fields

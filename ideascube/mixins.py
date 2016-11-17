@@ -116,7 +116,7 @@ class CSVExportMixin:
         return out.read()
 
     def get_items(self):
-        raise NotImplementedError('CSVExportMixin needs a get_items method')
+        return self.model.objects.order_by('id')
 
     def get_headers(self):
         raise NotImplementedError('CSVExportMixin needs a get_headers method')

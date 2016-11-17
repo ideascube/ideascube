@@ -219,13 +219,14 @@ stockitem_delete = staff_member_required(StockItemDelete.as_view())
 
 
 class StockExport(CSVExportMixin, View):
+    model = StockItem
     prefix = 'stock'
 
     def get_headers(self):
         return ['module', 'name', 'description']
 
     def get_items(self):
-        qs = StockItem.objects.all()
+        qs = super().get_items()
         qs = qs.filter(book__isnull=True)
 
         return qs
