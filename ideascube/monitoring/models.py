@@ -113,9 +113,11 @@ class SpecimenQuerySet(models.QuerySet):
 class Specimen(models.Model):
     physical = True
 
+    # This is the barcode added by the staff (usually as a sticker)
     barcode = models.CharField(verbose_name=_('ideascube bar code'),
                                max_length=40,
                                unique=True, blank=True, null=True)
+    # This is the serial number attributed by the manufacturer/distributor
     serial = models.CharField(verbose_name=_('Serial number'), max_length=100,
                               blank=True, null=True)
     item = models.ForeignKey(StockItem, related_name='specimens',
