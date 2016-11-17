@@ -153,12 +153,11 @@ class ZippedCSVExportMixin(CSVExportMixin):
         csv = self.to_csv()
         self.zip.writestr("{}.csv".format(self.get_filename()), csv)
         self.zip.close()
-        response = HttpResponse()
+        out.seek(0)
+        response = HttpResponse(out.read())
         filename = self.get_filename()
         attachment = 'attachment; filename="{name}.{extension}"'.format(
             name=filename, extension=self.file_extension)
         response['Content-Disposition'] = attachment
         response['Content-Type'] = self.content_type
-        out.seek(0)
-        response.write(out.read())
         return response
