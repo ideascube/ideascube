@@ -100,6 +100,8 @@ class FilterableViewMixin:
 
 class CSVExportMixin:
 
+    content_type = 'text/csv; charset=utf-8'
+    file_extension = 'csv'
     prefix = 'ideascube'
 
     def to_csv(self):
@@ -133,13 +135,17 @@ class CSVExportMixin:
     def get(self, *args, **kwargs):
         response = HttpResponse(self.to_csv())
         filename = self.get_filename()
-        attachment = 'attachment; filename="{name}.csv"'.format(name=filename)
+        attachment = 'attachment; filename="{name}.{extension}"'.format(
+            name=filename, extension=self.file_extension)
         response['Content-Disposition'] = attachment
-        response['Content-Type'] = 'text/csv; charset=utf-8'
+        response['Content-Type'] = self.content_type
         return response
 
 
 class ZippedCSVExportMixin(CSVExportMixin):
+
+    content_type = 'application/zip'
+    file_extension = 'zip'
 
     def get(self, *args, **kwargs):
         out = BytesIO()
@@ -149,9 +155,10 @@ class ZippedCSVExportMixin(CSVExportMixin):
         self.zip.close()
         response = HttpResponse()
         filename = self.get_filename()
-        attachment = 'attachment; filename="{name}.zip"'.format(name=filename)
+        attachment = 'attachment; filename="{name}.{extension}"'.format(
+            name=filename, extension=self.file_extension)
         response['Content-Disposition'] = attachment
-        response['Content-Type'] = 'application/zip'
+        response['Content-Type'] = self.content_type
         out.seek(0)
         response.write(out.read())
         return response
