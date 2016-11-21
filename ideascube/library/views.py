@@ -14,7 +14,9 @@ from ideascube.decorators import staff_member_required
 from ideascube.mixins import (FilterableViewMixin, OrderableViewMixin,
                               ZippedCSVExportMixin)
 
-from .forms import BookForm, BookSpecimenForm, ImportForm
+from .forms import (
+    BookForm, BookSpecimenForm, BookSpecimenImportForm, ImportForm,
+)
 from .models import Book, BookSpecimen
 
 
@@ -235,3 +237,24 @@ class BookSpecimenExport(ZippedCSVExportMixin, View):
         return row
 
 specimen_export = staff_member_required(BookSpecimenExport.as_view())
+
+
+class BookSpecimenImport(FormView):
+    form_class = BookSpecimenImportForm
+    template_name = 'library/specimen_import.html'
+    success_url = reverse_lazy('library:index')
+
+    def form_valid(self, form):
+        items, errors = form.save()
+
+        if items:
+            messages.success(
+                self.request,
+                _('Successfully imported {} items').format(len(items)))
+
+        for error in errors:
+            messages.error(self.request, error)
+
+        return super().form_valid(form)
+
+specimen_import = staff_member_required(BookSpecimenImport.as_view())

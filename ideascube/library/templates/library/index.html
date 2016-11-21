@@ -26,6 +26,7 @@
             <li>{% fa 'plus' 'fa-fw' %} <a href="{% url 'library:book_create' %}">{% trans "Add a book" %}</a></li>
             <li>{% fa 'upload' 'fa-fw' %} <a href="{% url 'library:book_import' %}">{% trans "Import notices" %}</a></li>
             <li>{% fa 'download' 'fa-fw' %} <a href="{% url 'library:book_export' %}">{% trans "Export notices" %}</a></li>
+            <li>{% fa 'upload' 'fa-fw' %} <a href="{% url 'library:specimen_import' %}">{% trans "Import specimens" %}</a></li>
             <li>{% fa 'download' 'fa-fw' %} <a href="{% url 'library:specimen_export' %}">{% trans "Export specimens" %}</a></li>
         </ul>
     {% endif %}
