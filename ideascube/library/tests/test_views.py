@@ -24,6 +24,12 @@ def test_only_books_with_specimen_should_be_in_index(app, book, specimen):
     assert book.name not in response.content.decode()
 
 
+def test_all_books_should_be_in_index_for_staff(staffapp, book, specimen):
+    response = staffapp.get(reverse('library:index'))
+    assert specimen.item.name in response.content.decode()
+    assert book.name in response.content.decode()
+
+
 def test_index_page_is_paginated(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
     BookSpecimenFactory.create_batch(size=4)
@@ -106,6 +112,28 @@ def test_book_detail_page_does_not_list_specimens_to_non_staff(app, book):
     DigitalBookSpecimenFactory(item=book, file__filename='book.epub')
     resp = app.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
     resp.mustcontain(no=[specimen.barcode])
+
+
+def test_book_detail_page_shows_warning_message_to_staff_if_no_specimens(staffapp, book):
+    resp = staffapp.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
+    resp.mustcontain("Please add a specimen, or the book won&#39;t be available for the users")
+
+
+def test_book_detail_page_does_not_show_warning_message_to_user_if_no_specimens(app, book):
+    resp = app.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
+    resp.mustcontain(no="Please add a specimen, or the book won&#39;t be available for the users")
+
+
+def test_book_detail_page_does_not_show_warning_message_if_specimens(staffapp, book):
+    BookSpecimenFactory(item=book)
+    resp = staffapp.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
+    resp.mustcontain(no="Please add a specimen, or the book won&#39;t be available for the users")
+
+
+def test_book_detail_page_does_not_show_warning_message_if_digital_specimens(staffapp, book):
+    DigitalBookSpecimenFactory(item=book)
+    resp = staffapp.get(reverse('library:book_detail', kwargs={'pk': book.pk}))
+    resp.mustcontain(no="Please add a specimen, or the book won&#39;t be available for the users")
 
 
 def test_book_detail_page_list_physical_specimens_to_staff(staffapp, book):
