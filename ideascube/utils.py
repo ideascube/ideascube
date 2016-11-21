@@ -15,8 +15,10 @@ class classproperty(property):
 class TextIOWrapper(io.TextIOWrapper):
     def __init__(self, buffer, encoding=None, **kwargs):
         if encoding is None:
+            content = buffer.read()
+
             try:
-                buffer.read().decode('utf-8')
+                content.decode('utf-8')
 
             except UnicodeDecodeError:
                 # FIXME: If this ever causes problems, we can go with cchardet
@@ -25,7 +27,7 @@ class TextIOWrapper(io.TextIOWrapper):
             else:
                 encoding = 'utf-8'
 
-            buffer.seek(0)
+            buffer = io.BytesIO(content)
 
         super().__init__(buffer, encoding=encoding, **kwargs)
 
