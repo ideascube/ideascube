@@ -126,3 +126,6 @@ html[dir='rtl'] .card {
 .card.cinescuela {
     background-image: url('./img/cards/cinescuela.jpg');
 }
+.card.24hinanewsroom.en {
+    background-image: url('./img/cards/24hinanewsroom.en.jpg');
+}
