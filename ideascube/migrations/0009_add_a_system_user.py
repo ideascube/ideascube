@@ -6,7 +6,7 @@ from django.db import migrations
 
 def add_user(apps, *args):
     # The apps.get_model() method returns us a 'fake' model with a
-    # default manager and the 'save' method is not overwrited
+    # default manager and the 'save' method is not overwritten
     # and the user is not indexed at creation.
     # This is not a problem here as we have post-migrate hook who reindex
     # everything at end of migration. Moreover, it is better has we do not
