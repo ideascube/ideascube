@@ -23,5 +23,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(do_migrate),
+        migrations.RunPython(do_migrate, hints={'using': 'default'}),
     ]

@@ -5,12 +5,12 @@ from .utils import create_index_table, reindex_content
 
 
 def create_index(sender, **kwargs):
-    if isinstance(sender, SearchConfig):
+    if (kwargs['using'] == 'transient' and isinstance(sender, SearchConfig)):
         create_index_table(force=True)
 
 
 def reindex(sender, **kwargs):
-    if isinstance(sender, SearchConfig):
+    if (kwargs['using'] == 'transient' and isinstance(sender, SearchConfig)):
         reindex_content(force=False)
 
 

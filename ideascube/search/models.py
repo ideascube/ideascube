@@ -52,7 +52,6 @@ class SearchQuerySet(models.QuerySet):
 
 class Search(models.Model):
     """Model that handle the search."""
-    _dbname = 'transient'
     rowid = models.IntegerField(primary_key=True)
     model = models.CharField(max_length=64)
     model_id = models.IntegerField()

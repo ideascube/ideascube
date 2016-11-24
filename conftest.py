@@ -22,18 +22,30 @@ def cleansearch():
 
 @pytest.fixture()
 def user(db):
-    return UserFactory(short_name="Hello", password='password')
+    return UserFactory(serial='123456',
+                       short_name="Hello",
+                       password='password')
 
 
 @pytest.fixture()
 def staffuser(db):
-    return UserFactory(short_name="Hello", password='password', is_staff=True)
+    return UserFactory(serial='123456staff',
+                       short_name="Hello",
+                       password='password',
+                       is_staff=True)
 
 
 @pytest.fixture()
 def systemuser(db):
+    from django.contrib.auth import get_user_model
     # Create it the same way the migration does it
-    return UserFactory(serial='__system__', full_name='System', password='!!')
+    User = get_user_model()
+    try:
+        return User.objects.get_system_user()
+    except User.DoesNotExist:
+        return UserFactory(serial='__system__',
+                           full_name='System',
+                           password='!!')
 
 
 @pytest.fixture
@@ -170,4 +182,3 @@ def catalog():
     mocker = CatalogMocker()
     with mocker:
         yield mocker
-

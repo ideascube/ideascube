@@ -14,5 +14,5 @@ class Migration(migrations.Migration):
     dependencies = [('search', '0001_initial')]
 
     operations = [
-        migrations.RunPython(migrate),
+        migrations.RunPython(migrate, hints={'using': 'default'}),
     ]

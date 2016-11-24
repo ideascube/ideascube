@@ -34,16 +34,13 @@ def test_create_superuser():
     assert user.is_staff
 
 
-def test_list_users():
+def test_list_users(user, systemuser):
     model = get_user_model()
-    model.objects.create_user('123456')
-    model.objects.create_user('__system__')
-
     users = model.objects.all()
     assert [u.serial for u in users] == ['123456']
 
-    users = model.objects.all(include_system_user=True)
-    assert [u.serial for u in users] == ['__system__', '123456']
+    users = model.objects.get_queryset_unfiltered()
+    assert sorted([u.serial for u in users]) == sorted(['__system__', '123456'])
 
     systemuser = model.objects.get_system_user()
     assert systemuser.serial == '__system__'
@@ -64,36 +61,3 @@ def test_user_data_fields_should_return_labels_and_values(settings):
     assert str(fields['ar_level']['value']) == 'Understood, Spoken'
     assert str(fields['ar_level']['label']) == 'Arabic knowledge'
 
-
-class JSONModel(models.Model):
-    class Meta:
-        app_label = 'ideascube'
-
-    data = JSONField()
-
-
-@pytest.mark.parametrize(
-    'value',
-    [
-        True,
-        42,
-        None,
-        'A string',
-        [1, 2, 3],
-        {'foo': 'bar'}
-    ],
-    ids=[
-        'boolean',
-        'int',
-        'none',
-        'string',
-        'list',
-        'dict',
-    ])
-def test_json_field(value):
-    obj = JSONModel(data=value)
-    obj.save()
-    assert JSONModel.objects.count() == 1
-
-    obj = JSONModel.objects.first()
-    assert obj.data == value
