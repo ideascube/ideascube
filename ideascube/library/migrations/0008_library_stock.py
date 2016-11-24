@@ -11,26 +11,62 @@ def migrate_data(apps, schema_editor):
     OldBook = apps.get_model('library', 'OldBook')
     Book = apps.get_model('library', 'Book')
     BookSpecimen = apps.get_model('library', 'BookSpecimen')
+    Specimen = apps.get_model('monitoring', 'Specimen')
 
     db_alias = schema_editor.connection.alias
+
+    specimens = Specimen.objects.filter(barcode__isnull=False)
+    specimens = {s.barcode: s for s in specimens}
 
     for old_book in OldBook.objects.using(db_alias).order_by('created_at'):
         new_book = Book(
             module='library', name=old_book.title,
-            description=old_book.summary,
-            # And now the stuff which hasn't changed
+            description=old_book.summary, created_at=old_book.created_at,
             isbn=old_book.isbn, authors=old_book.authors, serie=old_book.serie,
             subtitle=old_book.subtitle, publisher=old_book.publisher,
             section=old_book.section, lang=old_book.lang, cover=old_book.cover,
             tags=old_book.tags)
+
+        old_bookspecimens = list(old_book.specimens.all())
+
+        # First try and find whether we need to relate this new Book to an
+        # existing StockItem
+        for old_bookspecimen in old_bookspecimens:
+            try:
+                old_specimen = specimens[old_bookspecimen.serial]
+
+            except KeyError:
+                continue
+
+            new_book.stockitem_ptr = old_specimen.item
+            new_book.id = old_specimen.item.id
+            break
+
         new_book.save()
 
-        for old_bookspecimen in old_book.specimens.all():
+        # Now migrate the BookSpecimen objects
+        for old_bookspecimen in old_bookspecimens:
+            try:
+                old_specimen = specimens[old_bookspecimen.serial]
+
+            except KeyError:
+                # There was no corresponding specimen in the stock
+                count = 1
+                specimen_ptr = None
+
+            else:
+                # There was a corresponding specimen in the stock
+                count = old_specimen.count
+                specimen_ptr = old_specimen
+
             new_bookspecimen = BookSpecimen(
-                barcode=old_bookspecimen.serial, item=new_book, count=1,
+                item=new_book,
+                count=count,
+                specimen_ptr=specimen_ptr,
+                barcode=old_bookspecimen.serial,
                 comments=old_bookspecimen.remarks,
-                # And now the stuff which hasn't changed
-                location=old_bookspecimen.location, file=old_bookspecimen.file)
+                location=old_bookspecimen.location,
+                file=old_bookspecimen.file)
             new_bookspecimen.save()
 
 
