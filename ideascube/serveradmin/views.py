@@ -1,6 +1,5 @@
 from subprocess import call
 
-import batinfo
 from django.conf import settings
 from django.contrib import messages
 from django.http import StreamingHttpResponse
@@ -12,6 +11,7 @@ from ideascube.decorators import staff_member_required
 from ideascube.utils import get_all_languages
 
 from .backup import Backup
+from .battery import get_batteries
 from .systemd import Manager, NoSuchUnit, UnitManagementError
 from .wifi import (
     AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError)
@@ -166,7 +166,7 @@ def backup(request):
 @staff_member_required
 def battery(request):
     return render(request, 'serveradmin/battery.html',
-                  {'batteries': batinfo.batteries()})
+                  {'batteries': get_batteries()})
 
 
 @staff_member_required
