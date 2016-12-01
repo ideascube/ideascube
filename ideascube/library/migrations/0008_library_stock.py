@@ -25,13 +25,13 @@ def migrate_data(apps, schema_editor):
             tags=old_book.tags)
         new_book.save()
 
-        for old_specimen in old_book.specimens.all():
-            new_specimen = BookSpecimen(
-                barcode=old_specimen.serial, item=new_book, count=1,
-                comments=old_specimen.remarks,
+        for old_bookspecimen in old_book.specimens.all():
+            new_bookspecimen = BookSpecimen(
+                barcode=old_bookspecimen.serial, item=new_book, count=1,
+                comments=old_bookspecimen.remarks,
                 # And now the stuff which hasn't changed
-                location=old_specimen.location, file=old_specimen.file)
-            new_specimen.save()
+                location=old_bookspecimen.location, file=old_bookspecimen.file)
+            new_bookspecimen.save()
 
 
 class Migration(migrations.Migration):
