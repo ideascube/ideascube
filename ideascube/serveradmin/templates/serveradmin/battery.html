@@ -4,7 +4,7 @@
 {% block twothird %}
 <h2>{% trans "Battery monitoring" %}</h2>
 <ul>
-{% for battery in batteries.stat %}
+{% for battery in batteries %}
 	<li><strong>{% trans 'Status' %}</strong> {{ battery.status }}</li>
 	<li><strong>{% trans 'Capacity' %}</strong> {{ battery.capacity|default:0|min:100 }}%</li>
 </ul>
