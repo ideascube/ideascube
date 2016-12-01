@@ -163,7 +163,9 @@ class Migration(migrations.Migration):
             },
             bases=('monitoring.specimen', models.Model),
         ),
-        migrations.RunPython(migrate_data, hints={'using': 'default'}),
+        migrations.RunPython(
+            migrate_data, migrations.RunPython.noop,
+            hints={'using': 'default'}),
         migrations.DeleteModel('OldBookSpecimen'),
         migrations.DeleteModel('OldBook'),
     ]
