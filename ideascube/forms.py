@@ -1,6 +1,7 @@
 import csv
 
 from django import forms
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
@@ -19,6 +20,10 @@ class UserForm(forms.ModelForm):
                 # Force date format on load, so date picker doesn't mess it up
                 # because of i10n.
                 field.widget = forms.DateInput(format='%Y-%m-%d')
+
+            if name == 'extra':
+                field.label = getattr(
+                    settings, 'USER_EXTRA_FIELD_LABEL', _('Additional data'))
 
     class Meta:
         model = User
