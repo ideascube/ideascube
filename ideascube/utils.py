@@ -1,7 +1,9 @@
 import io
 import sys
+import os
 
 from django.conf import locale
+from hashlib import sha256
 
 
 class classproperty(property):
@@ -68,3 +70,20 @@ def to_unicode(text):
         except UnicodeDecodeError:
             text = text.decode('latin-1')
         return text
+
+def get_file_sha256(path):
+    sha = sha256()
+
+    with open(path, 'rb') as f:
+        while True:
+            data = f.read(8388608)
+
+            if not data:
+                break
+
+            sha.update(data)
+
+    return sha.hexdigest()
+
+def get_file_size(path):
+    return os.stat(path).st_size
