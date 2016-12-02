@@ -7,13 +7,16 @@ from ideascube.management.utils import Reporter
 
 from django.core.management.base import BaseCommand
 
+help_str = """Convert a CSV describing a set of media into a package.
+
+The CSV file must contain columns "title", "summary", "path" and "credits".
+Optional columns are "lang", "preview", "kind", "tags".
+Attributes "path" and "preview" (if provided) must be paths
+(relative to the directory containing the CSV) to existing files.
+"""
 
 class Command(BaseCommand):
-    help = ('Convert a CSV describing a set of media into a package. '
-            'The CSV file must contain columns "title", "summary", "path", '
-            '"credits". Optional columns are "lang", "preview", "kind", "tags".'
-            ' Attributes "path" and "preview" (if provided) must be path '
-            '(relative to csv directory) to existing files.')
+    help = help_str
 
     def add_arguments(self, parser):
         parser.add_argument('csv_path', help='Path to CSV metadata.')
