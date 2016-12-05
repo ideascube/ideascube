@@ -335,6 +335,8 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
         verbose_name=_('Shabak knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
 
+    extra = models.CharField(blank=True, max_length=100)
+
 
 class SortedTaggableManager(_TaggableManager):
     def get_queryset(self, *args, **kwargs):
