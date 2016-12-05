@@ -33,5 +33,6 @@
     {% include 'search/box.html' with action=index %}
     {% include 'search/order_by.html' %}
     {% include 'search/filter_by_lang.html' %}
+    {% include 'search/filter_by_kind.html' with title=_('by section') %}
     {% tag_cloud url="library:index" model=view.model tags=available_tags %}
 {% endblock third %}

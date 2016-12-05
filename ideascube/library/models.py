@@ -41,6 +41,8 @@ class Book(StockItem, SearchMixin, TimeStampedModel):
         (OTHER, _('other')),
     )
 
+    KIND_DICT = dict(SECTION_CHOICES)
+
     # We allow ISBN to be null, but when it is set it needs to be unique.
     isbn = models.CharField(verbose_name=_('isbn'), max_length=40,
                             unique=True, null=True, blank=True)
@@ -83,6 +85,10 @@ class Book(StockItem, SearchMixin, TimeStampedModel):
     @property
     def index_lang(self):
         return self.lang
+
+    @property
+    def index_kind(self):
+        return self.section
 
     @property
     def physical(self):
