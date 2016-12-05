@@ -217,8 +217,7 @@ set_password = staff_member_required(SetPassword.as_view())
 
 class UserExport(CSVExportMixin, View):
 
-    def get_items(self):
-        return user_model.objects.all()
+    model = user_model
 
     def get_headers(self):
         fields = user_model.get_data_fields()

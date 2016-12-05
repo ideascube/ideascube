@@ -1,9 +1,13 @@
+import csv
 import re
+import zipfile
 
 from django import forms
 from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
 from django.utils.translation import get_language, ugettext_lazy as _
 
+from ideascube.utils import TextIOWrapper
 from ideascube.widgets import LangSelect
 
 from .models import Book, BookSpecimen
@@ -32,6 +36,115 @@ class BookSpecimenForm(forms.ModelForm):
         model = BookSpecimen
         widgets = {'item': forms.HiddenInput}
         exclude = ['serial', 'count']
+
+
+class BookSpecimenImportForm(forms.Form):
+    source = forms.FileField(label=_('CSV File'), required=True)
+
+    def clean_source(self):
+        if not zipfile.is_zipfile(self.cleaned_data['source']):
+            raise ValidationError(_('Uploaded file is not a Zip archive'))
+
+        with zipfile.ZipFile(self.cleaned_data['source'].file) as zip:
+            for name in zip.namelist():
+                if name.endswith('.csv'):
+                    self.cleaned_data['csvfilename'] = name
+                    break
+
+            else:
+                raise ValidationError(_('Archive does not contain a CSV'))
+
+        return self.cleaned_data['source']
+
+    def save(self):
+        source = self.cleaned_data['source'].file
+        csvfilename = self.cleaned_data['csvfilename']
+        items = []
+        errors = []
+
+        with zipfile.ZipFile(source) as zip:
+            with TextIOWrapper(zip.open(csvfilename, mode='r')) as csvfile:
+                for index, row in enumerate(csv.DictReader(csvfile)):
+                    linenum = index + 2  # Start at 0 and first header line
+
+                    try:
+                        data = {
+                            'barcode': row['barcode'],
+                            'comments': row['comments'],
+                            'location': row['location'],
+                            'serial': row['serial'],
+                            'file': row['file'],
+                            'isbn': row['isbn'],
+                            'title': row['title'],
+                        }
+
+                    except KeyError as e:
+                        errors.append(_(
+                            'Missing column "{}" on line {}').format(
+                                e.args[0], linenum))
+                        continue
+
+                    # Get the related book item
+                    isbn = data.pop('isbn')
+                    title = data.pop('title')
+
+                    if isbn:
+                        try:
+                            data['item'] = Book.objects.get(isbn=isbn).pk
+
+                        except Book.DoesNotExist:
+                            errors.append(
+                                _('Could not import line {}: no book with ISBN'
+                                ' "{}"').format(linenum, isbn))
+                            continue
+
+                    else:
+                        try:
+                            data['item'] = Book.objects.get(name=title).pk
+
+                        except Book.DoesNotExist:
+                            errors.append(_(
+                                'Could not import line {}: no "{}" book'
+                                ).format(linenum, title))
+                            continue
+
+                        except Book.MultipleObjectsReturned:
+                            errors.append(_(
+                                'Could not import line {}: found multiple '
+                                '"{}" books').format(linenum, title))
+                            continue
+
+                    # Get the file if the specimen is digital
+                    filename = data.pop('file')
+                    files = {}
+
+                    if filename:
+                        try:
+                            files['file'] = ContentFile(
+                                zip.open(filename).read(), name=filename)
+
+                        except KeyError:
+                            errors.append(_(
+                                'Could not import line {}: file {} is missing '
+                                'from the archive').format(
+                                    linenum, filename))
+                            continue
+
+                    form = BookSpecimenForm(data=data, files=files)
+
+                    if form.is_valid():
+                        item = form.save()
+                        items.append(item)
+
+                    else:
+                        msgs = (
+                            '{}: {}'.format(k, v.as_text())
+                            for k, v in form.errors.items())
+                        errors.append(_('Could not import line {}: {}').format(
+                            linenum, '; '.join(msgs)))
+                        continue
+
+        return items, errors[:10]
 
 
 class BookForm(forms.ModelForm):

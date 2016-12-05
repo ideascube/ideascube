@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from webtest import Upload
 
 from ..models import Book, BookSpecimen
-from ..views import BookExport, Index
+from ..views import BookExport, BookSpecimenExport, Index
 from .factories import (BookFactory, BookSpecimenFactory,
                         DigitalBookSpecimenFactory)
 
@@ -526,3 +526,152 @@ def test_export_book_notices(staffapp, monkeypatch):
     assert "my book title" in csv_content
     assert cover_name in csv_content
     assert name_utf8 in csv_content
+
+
+def test_export_book_specimens(staffapp, monkeypatch):
+    book1 = BookFactory(isbn="123456", name="my book title")
+    specimen1 = BookSpecimenFactory(item=book1)
+    book2 = BookFactory(isbn="654321", name='ﺎﻠﻨﺒﻳ (ﻚﺗﺎﺑ)')
+    specimen2 = DigitalBookSpecimenFactory(item=book2)
+
+    monkeypatch.setattr(
+        BookSpecimenExport, 'get_filename', lambda s: 'specimens')
+
+    resp = staffapp.get(reverse('library:specimen_export'))
+    assert 'specimens.zip' in resp['Content-Disposition']
+
+    with zipfile.ZipFile(ContentFile(resp.content)) as archive:
+        epubname = '{}.epub'.format(specimen2.pk)
+        assert sorted(archive.namelist()) == [epubname, 'specimens.csv']
+        csv = archive.open('specimens.csv').read().decode('utf-8').strip()
+        assert csv.split('\r\n') == [
+            'isbn,title,barcode,serial,comments,location,file',
+            '{},{},{},,,,'.format(
+                specimen1.item.isbn, specimen1.item.name, specimen1.barcode),
+            '{},{},,,,,{}'.format(
+                specimen2.item.isbn, specimen2.item.name, epubname),
+        ]
+
+
+def test_import_book_specimens(staffapp, tmpdir):
+    book1 = BookFactory(isbn='123456', name='my book title')
+    book2 = BookFactory(isbn='234567', name='ﺎﻠﻨﺒﻳ (ﻚﺗﺎﺑ)')
+    book3 = BookFactory(isbn='345678', name='my book title')
+
+    zip_path = tmpdir.join('specimens.zip')
+    csv_content = '\n'.join([
+        'isbn,title,barcode,serial,comments,location,file',
+        '123456,my book title,1234,,,,',
+        '123456,my book title,,,,,1.epub',
+        '234567,ﺎﻠﻨﺒﻳ (ﻚﺗﺎﺑ),,,,,2.epub',
+        '234567,ﺎﻠﻨﺒﻳ (ﻚﺗﺎﺑ),1234,,,,',
+        '123456,no such book,2345,,,,',
+        ',ﺎﻠﻨﺒﻳ (ﻚﺗﺎﺑ),3456,,,,',
+        ',no such book,1234,,,,',
+        ',my book title,1234,,,,',
+        '987654,ﺎﻠﻨﺒﻳ (ﻚﺗﺎﺑ),1234,,,,',
+    ])
+
+    with zipfile.ZipFile(str(zip_path), mode='w') as zip:
+        zip.writestr('specimens.csv', csv_content.encode('utf-8'))
+        zip.writestr('2.epub', b'Trust me, this is an epub')
+
+    form = staffapp.get(reverse('library:specimen_import')).forms['import']
+    form['source'] = Upload(
+        zip_path.basename, zip_path.read_binary(), 'application/zip')
+    response = form.submit()
+    assert response.status_int == 302
+    assert response.location.endswith(reverse('library:index'))
+
+    response = response.follow()
+    specimens = BookSpecimen.objects.order_by('id')
+    assert specimens.count() == 4
+
+    # CSV line 2
+    specimen = specimens[0]
+    assert specimen.item.pk == book1.pk
+    assert specimen.barcode == '1234'
+    assert specimen.serial is None
+    assert specimen.comments == ''
+    assert specimen.location == ''
+    assert not specimen.file
+
+    # CSV line 3
+    assert (
+        'Could not import line 3: file 1.epub is missing from the archive'
+    ) in response
+
+    # CSV line 4
+    specimen = specimens[1]
+    assert specimen.item.pk == book2.pk
+    assert specimen.barcode is None
+    assert specimen.serial is None
+    assert specimen.comments == ''
+    assert specimen.location == ''
+    assert specimen.file.read() == b'Trust me, this is an epub'
+
+    # CSV line 5
+    assert (
+        'Could not import line 5: barcode: * Specimen with this Ideascube bar '
+        'code already exists.'
+    ) in response
+
+    # CSV line 6
+    specimen = specimens[2]
+    assert specimen.item.pk == book1.pk
+    assert specimen.barcode == '2345'
+    assert specimen.serial is None
+    assert specimen.comments == ''
+    assert specimen.location == ''
+    assert not specimen.file
+
+    # CSV line 7
+    specimen = specimens[3]
+    assert specimen.item.pk == book2.pk
+    assert specimen.barcode == '3456'
+    assert specimen.serial is None
+    assert specimen.comments == ''
+    assert specimen.location == ''
+    assert not specimen.file
+
+    # CSV line 8
+    assert (
+        'Could not import line 8: no &quot;no such book&quot; book'
+    ) in response
+
+    # CSV line 9
+    assert (
+        'Could not import line 9: found multiple &quot;my book title&quot; '
+        'books') in response
+
+    # CSV line 10
+    assert (
+        'Could not import line 10: no book with ISBN &quot;987654&quot;'
+        ) in response
+
+
+def test_import_book_specimens_without_zip(staffapp, tmpdir):
+    path = tmpdir.join('specimens.txt')
+    path.write('This is a text file')
+
+    form = staffapp.get(reverse('library:specimen_import')).forms['import']
+    form['source'] = Upload(path.basename, path.read_binary(), 'text/plain')
+    response = form.submit()
+    assert response.status_int == 200
+    assert 'Uploaded file is not a Zip archive' in response
+    assert BookSpecimen.objects.count() == 0
+
+
+def test_import_book_specimens_without_csv(staffapp, tmpdir):
+    zip_path = tmpdir.join('specimens.zip')
+
+    with zipfile.ZipFile(str(zip_path), mode='w') as zip:
+        zip.writestr('2.epub', b'Trust me, this is an epub')
+
+    form = staffapp.get(reverse('library:specimen_import')).forms['import']
+    form['source'] = Upload(
+        zip_path.basename, zip_path.read_binary(), 'application/zip')
+    response = form.submit()
+    assert response.status_int == 200
+    assert 'Archive does not contain a CSV' in response
+    assert BookSpecimen.objects.count() == 0

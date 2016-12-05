@@ -1,12 +1,9 @@
 import os
-from io import BytesIO
-from zipfile import ZipFile
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import F
 from django.db.models.functions import Lower
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
@@ -14,10 +11,12 @@ from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
 
 from ideascube.configuration import get_config
 from ideascube.decorators import staff_member_required
-from ideascube.mixins import (FilterableViewMixin, CSVExportMixin,
-                              OrderableViewMixin)
+from ideascube.mixins import (FilterableViewMixin, OrderableViewMixin,
+                              ZippedCSVExportMixin)
 
-from .forms import BookForm, BookSpecimenForm, ImportForm
+from .forms import (
+    BookForm, BookSpecimenForm, BookSpecimenImportForm, ImportForm,
+)
 from .models import Book, BookSpecimen
 
 
@@ -172,29 +171,12 @@ class SpecimenDelete(DeleteView):
 specimen_delete = staff_member_required(SpecimenDelete.as_view())
 
 
-class BookExport(CSVExportMixin, View):
+class BookExport(ZippedCSVExportMixin, View):
 
+    model = Book
     prefix = 'notices'
     fields = ['isbn', 'authors', 'serie', 'name', 'subtitle', 'description',
               'publisher', 'section', 'lang', 'cover', 'tags']
-
-    def get(self, *args, **kwargs):
-        out = BytesIO()
-        self.zip = ZipFile(out, "a")
-        csv = self.to_csv()
-        self.zip.writestr("{}.csv".format(self.get_filename()), csv)
-        self.zip.close()
-        response = HttpResponse()
-        filename = self.get_filename()
-        attachment = 'attachment; filename="{name}.zip"'.format(name=filename)
-        response['Content-Disposition'] = attachment
-        response['Content-Type'] = 'application/zip'
-        out.seek(0)
-        response.write(out.read())
-        return response
-
-    def get_items(self):
-        return Book.objects.all()
 
     def get_headers(self):
         return self.fields
@@ -219,3 +201,60 @@ class BookExport(CSVExportMixin, View):
         return row
 
 book_export = staff_member_required(BookExport.as_view())
+
+
+class BookSpecimenExport(ZippedCSVExportMixin, View):
+
+    fields = [
+        'isbn', 'title', 'barcode', 'serial', 'comments', 'location', 'file',
+        ]
+    model = BookSpecimen
+    prefix = 'book_specimens'
+
+    def get_headers(self):
+        return self.fields
+
+    def get_row(self, bookspecimen):
+        row = {}
+
+        for field in self.fields:
+            if field == 'title':
+                row[field] = bookspecimen.item.name
+
+            elif field == 'isbn':
+                row[field] = bookspecimen.item.book.isbn
+
+            elif field == 'file':
+                if bookspecimen.file:
+                    _, ext = os.path.splitext(bookspecimen.file.name)
+                    filename = '{}{}'.format(bookspecimen.pk, ext)
+                    row[field] = filename
+                    self.zip.writestr(filename, bookspecimen.file.read())
+
+            else:
+                row[field] = getattr(bookspecimen, field)
+
+        return row
+
+specimen_export = staff_member_required(BookSpecimenExport.as_view())
+
+
+class BookSpecimenImport(FormView):
+    form_class = BookSpecimenImportForm
+    template_name = 'library/specimen_import.html'
+    success_url = reverse_lazy('library:index')
+
+    def form_valid(self, form):
+        items, errors = form.save()
+
+        if items:
+            messages.success(
+                self.request,
+                _('Successfully imported {} items').format(len(items)))
+
+        for error in errors:
+            messages.error(self.request, error)
+
+        return super().form_valid(form)
+
+specimen_import = staff_member_required(BookSpecimenImport.as_view())

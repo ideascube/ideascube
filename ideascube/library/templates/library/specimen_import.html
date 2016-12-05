@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+    <div>
+        <h2>{% trans "Import Book Specimens" %}</h2>
+        {% if form.errors %}
+            <div class="error">{{ form.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div>
+        <form method="POST" id="import" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="{{ form.source.id_for_label }}">{{ form.source.label }}</label>
+            {{ form.source }}
+            <input type="submit" value="{% trans 'Import' %}">
+        </form>
+    </div>
+
+{% endblock content %}

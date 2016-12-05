@@ -1,7 +1,8 @@
 from collections import Counter
 import csv
-from io import StringIO
+from io import BytesIO, StringIO
 from datetime import datetime
+from zipfile import ZipFile
 
 from django.conf import settings
 from django.conf.locale import LANG_INFO
@@ -97,8 +98,10 @@ class FilterableViewMixin:
         return qs
 
 
-class CSVExportMixin(object):
+class CSVExportMixin:
 
+    content_type = 'text/csv; charset=utf-8'
+    file_extension = 'csv'
     prefix = 'ideascube'
 
     def to_csv(self):
@@ -112,16 +115,8 @@ class CSVExportMixin(object):
         out.seek(0)
         return out.read()
 
-    def render_to_csv(self):
-        response = HttpResponse(self.to_csv())
-        filename = self.get_filename()
-        attachment = 'attachment; filename="{name}.csv"'.format(name=filename)
-        response['Content-Disposition'] = attachment
-        response['Content-Type'] = 'text/csv; charset=utf-8'
-        return response
-
     def get_items(self):
-        raise NotImplementedError('CSVExportMixin needs a get_items method')
+        return self.model.objects.order_by('id')
 
     def get_headers(self):
         raise NotImplementedError('CSVExportMixin needs a get_headers method')
@@ -137,5 +132,33 @@ class CSVExportMixin(object):
         ])
         return filename
 
+    def _get_response_content(self):
+        return self.to_csv()
+
     def get(self, *args, **kwargs):
-        return self.render_to_csv()
+        response = HttpResponse(self._get_response_content())
+        filename = self.get_filename()
+        attachment = 'attachment; filename="{name}.{extension}"'.format(
+            name=filename, extension=self.file_extension)
+        response['Content-Disposition'] = attachment
+        response['Content-Type'] = self.content_type
+        return response
+
+
+class ZippedCSVExportMixin(CSVExportMixin):
+
+    content_type = 'application/zip'
+    file_extension = 'zip'
+
+    def _get_response_content(self):
+        out = BytesIO()
+
+        with ZipFile(out, "a") as self.zip:
+            # Warning: Calling to_csv() might write the content of other
+            # files to self.zip (through get_row) as a side-effect
+            csv = self.to_csv()
+            self.zip.writestr("{}.csv".format(self.get_filename()), csv)
+
+        out.seek(0)
+
+        return out.read()
