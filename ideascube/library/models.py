@@ -18,22 +18,26 @@ class BookQuerySet(SearchableQuerySet, models.QuerySet):
 
 class Book(StockItem, SearchMixin, TimeStampedModel):
 
-    OTHER = 99
+    OTHER = 'other'
 
     SECTION_CHOICES = (
-        (1, _('digital')),
-        (2, _('children - cartoons')),
-        (3, _('children - novels')),
-        (10, _('children - poetry')),
-        (11, _('children - theatre')),
-        (4, _('children - documentary')),
-        (5, _('children - comics')),
-        (6, _('adults - novels')),
-        (12, _('adults - poetry')),
-        (13, _('adults - theatre')),
-        (7, _('adults - documentary')),
-        (8, _('adults - comics')),
-        (9, _('game')),
+        ('digital', _('digital')),
+        ('children-cartoons', _('children - cartoons')),
+        ('children-novels', _('children - novels')),
+        ('children-poetry', _('children - poetry')),
+        ('children-theatre', _('children - theatre')),
+        ('children-documentary', _('children - documentary')),
+        ('children-comics', _('children - comics')),
+        ('children-tales', _('children - tales')),
+        ('children-myths', _('chirdren - myths and legends')),
+        ('adults-novels', _('adults - novels')),
+        ('adults-poetry', _('adults - poetry')),
+        ('adults-theatre', _('adults - theatre')),
+        ('adults-documentary', _('adults - documentary')),
+        ('adults-comics', _('adults - comics')),
+        ('adults-tales', _('adults - tales')),
+        ('adults-myths', _('adults - myths and legends')),
+        ('game', _('game')),
         (OTHER, _('other')),
     )
 
@@ -48,8 +52,8 @@ class Book(StockItem, SearchMixin, TimeStampedModel):
                                 blank=True)
     publisher = models.CharField(verbose_name=_('publisher'), max_length=100,
                                  blank=True)
-    section = models.PositiveSmallIntegerField(verbose_name=_('section'),
-                                               choices=SECTION_CHOICES)
+    section = models.CharField(verbose_name=_('section'), max_length=50,
+                               choices=SECTION_CHOICES)
     lang = LanguageField(verbose_name=_('Language'), max_length=10)
     cover = models.ImageField(verbose_name=_('cover'),
                               upload_to='library/cover',
