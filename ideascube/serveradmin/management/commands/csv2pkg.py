@@ -1,9 +1,12 @@
 
 import os
 import sys
+import yaml
+from datetime import date
 
 from ideascube.serveradmin.package import MediaCenterPackage
 from ideascube.management.utils import Reporter
+from ideascube.utils import get_file_sha256, get_file_size
 
 from django.core.management.base import BaseCommand
 
@@ -13,7 +16,29 @@ The CSV file must contain columns "title", "summary", "path" and "credits".
 Optional columns are "lang", "preview", "kind", "tags".
 Attributes "path" and "preview" (if provided) must be paths
 (relative to the directory containing the CSV) to existing files.
+
+csv2pkg also generates a yaml to add to the catalog.
+Some attributes are automically calculated from the generated package.
+Other attributes may be provided as command arguments.
 """
+
+
+def generate_catalog_yaml_metadata(path, metadata, _type='zipped-medias'):
+    return {
+        'all' : {
+            metadata['package_id']: {
+                'name': metadata['name'],
+                'description': metadata['description'],
+                'version': date.today().isoformat(),
+                'url': metadata['url'],
+                'sha256sum': get_file_sha256(path),
+                'size': get_file_size(path),
+                'language': metadata['language'],
+                'type': _type
+            }
+        }
+    }
+
 
 class Command(BaseCommand):
     help = help_str
@@ -24,6 +49,18 @@ class Command(BaseCommand):
                             help='Path of the package to create')
         parser.add_argument('--dry-run', action='store_true',
                             help='Do not really create the package.')
+
+        group = parser.add_argument_group('yaml generation arguments')
+        group.add_argument('--package-id', default="<package_id>",
+                           help="Identifier of the package.")
+        group.add_argument('--name', default="<Package name>",
+                           help="Name of the package.")
+        group.add_argument('--description', default="<Package description>",
+                           help="Description of the package.")
+        group.add_argument('--language', default="<lang>",
+                           help="Language of the package.")
+        group.add_argument('--url', default="<http://...>",
+                           help="URL where the package will be available")
 
     def abort(self, msg):
         self.stderr.write(msg)
@@ -58,3 +95,9 @@ class Command(BaseCommand):
                   nb_media=len(package.medias)
                   )
               )
+
+        if not options['dry_run']:
+            print("\nYaml to use is: \n")
+            yaml_metadata = generate_catalog_yaml_metadata(
+                package_path, options)
+            print(yaml.safe_dump(yaml_metadata, default_flow_style=False))
