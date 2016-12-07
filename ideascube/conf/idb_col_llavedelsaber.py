@@ -1,5 +1,6 @@
 """Configuration for Llave Del Saber, Colombia"""
 from .idb import *  # noqa
+from django.utils.translation import ugettext_lazy as _
 
 LANGUAGE_CODE = 'es'
 DOMAIN = 'bibliotecamovil.lan'
