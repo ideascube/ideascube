@@ -7,7 +7,7 @@ DOMAIN = 'bibliotecamovil.lan'
 ALLOWED_HOSTS = ['.bibliotecamovil.lan', 'localhost']
 
 USER_FORM_FIELDS = USER_FORM_FIELDS + (
-        (_('Personal informations'), ['extra'], ['disabilities']),
+        (_('Personal informations'), ['extra', 'disabilities']),
 )
 
 USER_EXTRA_FIELD_LABEL = 'Etnicidad'
