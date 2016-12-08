@@ -1,3 +1,19 @@
+ideascube (0.17.0) unstable; urgency=low
+
+  - Ideascube now only comes with its default branding, but allows deployments to override it with their own.
+  - Added export/import facilities for the library, stock and users.
+  - Added a warning so that the staff knows that users won't see a book when it doesn't have any specimen.
+  - Massively reworked our data migrations, so that they work better and can be tested.
+  - Fixed the battery reporting on Koombooks.
+  - Added new library sections.
+  - Added colours to the library sections.
+  - Added support for searching books by section.
+  - Added some new fields to the user model.
+  - Upgraded our dependencies to the latest and greatest.
+
+ -- ToM <thomas.faucher@bibliosansfrontieres.org>  Thu, 08 Dec 2016 15:02:00 +0100
+
+
 ideascube (0.16.0) unstable; urgency=low
 
   - Revamped CSS and grid (add purecss as dependency)
