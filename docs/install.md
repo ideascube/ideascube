@@ -25,7 +25,7 @@ Update your index
 
     sudo apt-get update
 
-Upgrade your index
+Upgrade your system
 
     sudo apt-get upgrade
 
