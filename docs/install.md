@@ -13,23 +13,23 @@ You need python 3.0 installed.
 
 ## Installation using ideascube repository (prefered)
 
-Install software-properties-common
+Install `software-properties-common`:
 
     sudo apt-get install software-properties-common
 
-Install ideascube's repository
+Install ideascube's repository:
 
     sudo apt-add-repository 'deb http://repos.ideascube.org/debian/ jessie/'
 
-Update your index
+Update your index:
 
     sudo apt-get update
 
-Upgrade your system
+Upgrade your system:
 
     sudo apt-get upgrade
 
-Install ideascube
+Install ideascube:
 
     sudo apt-get install ideascube
 
