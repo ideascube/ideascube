@@ -19,12 +19,12 @@ project's maintainers:
 
 Here are online resources you may find useful to contribute to the project:
 
-* Homepage: http://www.ideas-box.org/
-* Code repository: https://github.com/ideascube/ideascube
+* Homepage: <http://www.ideas-box.org/>
+* Code repository: <https://github.com/ideascube/ideascube>
 * Issues, questions and feature requests:
-  https://github.com/ideascube/ideascube/issues
-* Continuous integration: https://travis-ci.org/ideascube/ideascube
-* Documentation: https://github.com/ideascube/ideascube/blob/master/docs/index.md
+  <https://github.com/ideascube/ideascube/issues>
+* Continuous integration: <https://travis-ci.org/ideascube/ideascube>
+* Documentation: <https://github.com/ideascube/ideascube/blob/master/docs/index.md>
 
 
 ## How can I give a hand?

@@ -12,6 +12,7 @@ This can be done in three ways:
 - define `DJANGO_SETTINGS_MODULE` environment variable
 
 Good reading:
+
 - Django documentation about [settings](https://docs.djangoproject.com/en/1.8/ref/settings/)
 - examples of local [settings](https://github.com/ideas-box/ideascube/tree/master/ideascube/conf)
 
