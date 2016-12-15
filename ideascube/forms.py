@@ -69,11 +69,24 @@ class CreateStaffForm(forms.ModelForm):
 class UserImportForm(forms.Form):
     source = forms.FileField(required=True)
 
+    def canonicalize_row(self, row):
+        result = {}
+        data_fields = User.get_data_fields()
+        data_fields = {str(f.verbose_name): f.name for f in data_fields}
+
+        for field in row:
+            # TODO: What to do on KeyError?
+            canonical_name = data_fields[field]
+            result[canonical_name] = row[field]
+
+        return result
+
     def save(self):
         source = TextIOWrapper(self.cleaned_data['source'].file)
         users = []
         errors = []
         for idx, row in enumerate(csv.DictReader(source)):
+            row = self.canonicalize_row(row)
             qs = User.objects.all()
             try:
                 instance = qs.get(serial=row['serial'])
