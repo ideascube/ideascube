@@ -410,8 +410,8 @@ def test_export_users_should_return_csv_with_users(staffapp, settings):
     user2 = UserFactory(short_name="user2", full_name=u"I'm user2 with é")
     resp = staffapp.get(reverse('user_export'), status=200)
     resp.mustcontain(
-        'identifier', user1.serial, user2.serial, no=[
-            'usual name', user1.short_name, user2.short_name,
+        'serial', user1.serial, user2.serial, no=[
+            'short_name', user1.short_name, user2.short_name,
             'full_name', user1.full_name, user2.full_name,
             ])
 
@@ -421,8 +421,7 @@ def test_export_users_should_be_ok_in_arabic(staffapp, settings):
     user1 = UserFactory(serial="جبران خليل جبران")
     user2 = UserFactory(serial="النبي (كتاب)")
     resp = staffapp.get(reverse('user_export'), status=200)
-    field = user_model._meta.get_field('serial')
-    resp.mustcontain(str(field.verbose_name))
+    resp.mustcontain('serial')
     resp.mustcontain(user1.serial)
     resp.mustcontain(user2.serial)
     translation.deactivate()
