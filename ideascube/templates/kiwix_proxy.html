@@ -1,6 +1,8 @@
-<html>
-<head>
-<meta charset="utf-8" />
+{% extends 'base.html' %}
+
+{% load i18n static %}
+
+{% block extra_head %}
 <style>
 body {
   width: 100%;
@@ -47,6 +49,12 @@ li.ui-state-focus {
     font-weight: bold;
 }
 
+
+#mainFrame {
+  width: 100%;
+  height: 100%;
+}
+
 /* Specific CSS for Bookeen Cybook device (800x600 B&W ereader) */
 .cybook #kiwixtoolbar button, .cybook #kiwixtoolbar input {
 	font-size: 1.5em;
@@ -70,10 +78,10 @@ only screen and (min-device-pixel-ratio: 1.5) {
 	}
 }*/
 </style>
-<link rel="stylesheet" href="/static/ideascube/main.css">
 <link rel="stylesheet" href="/static/ideascube/vendor/awesomplete/awesomplete.css">
 <script src="/static/ideascube/vendor/awesomplete/awesomplete.min.js"></script>
 <script>
+  document.domain = "{{ domain }}";
   function update_autocomplete() {
     var request = new XMLHttpRequest();
     url = '/suggest?content='+zimName+'&term='+this.value;
@@ -96,7 +104,8 @@ only screen and (min-device-pixel-ratio: 1.5) {
   function on_iframe_ref_changed(iframe){
     /*alert("changed");*/
     var location = iframe.contentWindow.location;
-    var new_url = location.protocol + "//" + location.host + "/book" + location.pathname + location.search;
+    
+    var new_url = location.protocol + "//" + hostName + "/kiwix" + location.pathname + location.search;
     var title = iframe.contentDocument.title;
     document.title = title;
     if (window.location != new_url) {
@@ -115,13 +124,17 @@ only screen and (min-device-pixel-ratio: 1.5) {
   };
   
   function init() {
-    /*alert("init");*/
-    var hostName = window.location.host;
+    var zimName = "{{ zimName }}";
+    
+    alert("init "+window.location.pathname);
+    alert("hostname "+window.location.host);
+    hostName = window.location.host;
     var scheme = window.location.protocol;
-    var pathName = window.location.pathname.substring(5);
+    var pathName = window.location.pathname.substring(6);
     zimName = pathName.split('/')[1];
     var search_ = window.location.search;
-    var new_iframe_src = scheme + "//" + hostName + pathName + search_;
+    alert(scheme + " " + hostName + " " + pathName + " " + " " + search_);
+    var new_iframe_src = scheme + "//kiwix." + hostName + pathName + search_;
     if ( zimName == "random" || zimName == "search" )
     {
       /* This is a random request (random?content=zimname)
@@ -138,34 +151,35 @@ only screen and (min-device-pixel-ratio: 1.5) {
         }
       }    
     }
-    document.getElementById("rootBookButton").setAttribute("href", "/book/"+zimName+"/");
-    document.getElementById("randomButton").setAttribute("href", "/book/random?content="+zimName);
-    document.getElementById("contentInput").setAttribute("value", zimName);
     var searchBox = document.getElementById("kiwixsearchbox");
-    completer = new Awesomplete(searchBox, {
+    /*completer = new Awesomplete(searchBox, {
       minChars: 1,
       autoFirst: true
     });
-    searchBox.addEventListener("keyup", update_autocomplete);
+    searchBox.addEventListener("keyup", update_autocomplete); */
+
     var iframe = document.getElementById("mainFrame")
-    /*alert("setting iframe to " + new_iframe_src);*/
+    alert("setting iframe to " + new_iframe_src);
     iframe.setAttribute("src", new_iframe_src);
     iframe.setAttribute("onload", "on_iframe_ref_changed(this)");
   }
 </script>
-</head>
+{% endblock %}
+
+
+{% block content %}
 <body onload="init()">
 <div id="kiwixtoolbar" class="ui-widget-header">
-  <img src="/static/branding/header-logo.png" />
-  <a id="rootBookButton" class="button">Home</a>
-  <a id="randomButton" class="button">Random</a>
+  <a id="rootBookButton" class="button" href="/kiwix/{{ zimName }}/">Home</a>
+  <a id="randomButton" class="button" href="/kiwix/random?content={{ zimName }}">Random</a>
   <div id="spacer"></div>
-  <form class="kiwixsearch" method="GET" action="/book/search" id="kiwixsearchform">
-    <input id="contentInput" type="hidden" name="content" />
+  <form class="kiwixsearch" method="GET" action="http://kiwix.{{ domain }}/search" id="kiwixsearchform">
+    <input id="contentInput" type="hidden" name="content" value="{{ zimName }}" />
     <input id="kiwixsearchbox" name="pattern" type="text">
     <input type="submit" value="Search">
   </form>
 </div>
-<iframe id="mainFrame" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
-</body>
-</html>
+<iframe id="mainFrame"
+        src="http://kiwix.{{ domain }}/{{ zimName }}/{{ article }}?{{ search }}"
+        ></iframe>
+{% endblock %}

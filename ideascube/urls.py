@@ -44,4 +44,5 @@ urlpatterns = urlpatterns + [
     url(r'^jsi18n/$', cache_control(max_age=31536000)(javascript_catalog),
         name='jsi18n'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^kiwix/(?P<zimName>.+)/(?P<article>.*)$', views.kiwix_proxy, name='kiwix-proxy')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

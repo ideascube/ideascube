@@ -16,7 +16,7 @@ from django.http import (HttpResponse, HttpResponseBadRequest,
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
-                                  ListView, UpdateView, View)
+                                  ListView, UpdateView, View, TemplateView)
 from taggit.models import TaggedItem
 
 from ideascube.configuration import get_config
@@ -309,3 +309,14 @@ class AjaxProxy(View):
             return HttpResponse(content, status=status_code,
                                 content_type=mimetype)
 ajax_proxy = AjaxProxy.as_view()
+
+
+def kiwix_proxy(request, zimName, article, *args, **kwargs):
+    context = {
+        'zimName': zimName,
+        'article': article,
+        'search': request.GET.urlencode(),
+        'domain': settings.DOMAIN,
+    }
+    return render(request, 'kiwix_proxy.html', context)
+        
