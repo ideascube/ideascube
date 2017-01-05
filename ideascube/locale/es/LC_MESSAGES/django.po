@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-27 19:44+0000\n"
-"PO-Revision-Date: 2016-10-27 20:40+0000\n"
+"PO-Revision-Date: 2016-12-15 21:56+0000\n"
 "Last-Translator: Diana Puyo <diana.puyo@bibliosansfrontieres.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/ideascube/ideascube/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -618,7 +618,7 @@ msgstr "Cancelar"
 
 #: ideascube/library/templates/library/import.html:6
 msgid "Import books notices"
-msgstr "Importar notas de libros"
+msgstr "Importar reseñas de libros"
 
 #: ideascube/library/templates/library/import.html:15
 msgid "From files"
@@ -626,7 +626,7 @@ msgstr "Desde los archivos"
 
 #: ideascube/library/templates/library/import.html:18
 msgid "Load notices from files"
-msgstr "Cargar notas desde los archivos"
+msgstr "Cargar reseñas desde los archivos"
 
 #: ideascube/library/templates/library/import.html:21
 msgid "From ISBN"
@@ -638,7 +638,7 @@ msgstr "Se requiere una conexión a internet"
 
 #: ideascube/library/templates/library/import.html:24
 msgid "Load notices from ISBN"
-msgstr "Cargar notas desde el ISBN"
+msgstr "Cargar reseñas desde el ISBN"
 
 #: ideascube/library/templates/library/index.html:5
 #: ideascube/monitoring/models.py:17 ideascube/monitoring/models.py:71
@@ -656,11 +656,11 @@ msgstr "Añadir un libro"
 
 #: ideascube/library/templates/library/index.html:19
 msgid "Import notices"
-msgstr "Importar notas"
+msgstr "Importar reseñas"
 
 #: ideascube/library/templates/library/index.html:20
 msgid "Export notices"
-msgstr "Exportar notas"
+msgstr "Exportar reseñas"
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:4
 #, python-format
@@ -706,16 +706,16 @@ msgstr "Título"
 
 #: ideascube/library/views.py:108
 msgid "Unable to process notices: {}"
-msgstr "No se pueden procesar las notas: {}"
+msgstr "No se pueden procesar las reseñas: {}"
 
 #: ideascube/library/views.py:112
 #, python-brace-format
 msgid "Successfully processed {count} notices."
-msgstr "{count} notas procesadas exitosamente"
+msgstr "{count} reseñas procesadas exitosamente"
 
 #: ideascube/library/views.py:118
 msgid "No notice processed"
-msgstr "No se procesaron notas"
+msgstr "No se procesaron reseñas"
 
 #: ideascube/library/views.py:121
 msgid "You need to provide a file."
