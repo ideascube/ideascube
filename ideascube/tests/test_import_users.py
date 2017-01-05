@@ -220,3 +220,22 @@ def test_does_not_try_to_create_system_user(staffapp, monkeypatch):
     assert qs.count() == 2
     user = qs.get(serial='__system__')
     assert user.full_name != 'ANewFunkyName'
+
+
+def test_import_from_invalid_format(staffapp, settings):
+    settings.USER_IMPORT_FORMATS = (
+        ('llavedelsaber', 'Llave del Saber'),
+        ('ideascube', 'Ideascube'),
+    )
+    data = 'whatever, this will not be imported'
+
+    form = staffapp.get(reverse('user_import')).forms['import']
+    form['format'].force_value('no-such-format')
+    form['source'] = Upload('users.csv', data.encode('utf-8'), 'text/csv')
+    response = form.submit(status=200)
+    assert (
+        'Select a valid choice. no-such-format is not one of the available '
+        'choices.') in response.text
+
+    users = User.objects.all()
+    assert users.count() == 1  # The staff
