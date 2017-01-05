@@ -16,13 +16,31 @@ def test_anonymous_should_access_index_page(app):
     assert app.get(reverse('blog:index'), status=200)
 
 
-def test_only_published_should_be_in_index(app, published, draft, deleted,
-                                           published_in_the_future):
+def test_only_published_should_be_in_index_for_anonymous(
+        app, published, draft, deleted, published_in_the_future):
     response = app.get(reverse('blog:index'))
     assert published.title in response.content.decode()
     assert draft.title not in response.content.decode()
     assert deleted.title not in response.content.decode()
     assert published_in_the_future.title not in response.content.decode()
+
+
+def test_only_published_should_be_in_index_for_users(
+        loggedapp, published, draft, deleted, published_in_the_future):
+    response = loggedapp.get(reverse('blog:index'))
+    assert published.title in response.content.decode()
+    assert draft.title not in response.content.decode()
+    assert deleted.title not in response.content.decode()
+    assert published_in_the_future.title not in response.content.decode()
+
+
+def test_published_and_drafts_and_future_should_be_in_index_for_staff(
+        staffapp, published, draft, deleted, published_in_the_future):
+    response = staffapp.get(reverse('blog:index'))
+    assert published.title in response.content.decode()
+    assert draft.title in response.content.decode()
+    assert deleted.title not in response.content.decode()
+    assert published_in_the_future.title in response.content.decode()
 
 
 def test_index_page_is_paginated(app, monkeypatch):

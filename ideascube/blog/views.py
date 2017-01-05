@@ -21,9 +21,16 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
     ]
 
     model = Content
-    queryset = Content.objects.published()
     template_name = 'blog/index.html'
     paginate_by = 10
+
+    def get_queryset(self):
+        qs = super().get_queryset().exclude(status=Content.DELETED)
+
+        if not self.request.user.is_staff:
+            qs = qs.published()
+
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
