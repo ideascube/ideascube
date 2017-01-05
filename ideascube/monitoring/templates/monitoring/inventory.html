@@ -18,7 +18,12 @@
     {% for module in stock %}
         <table class="stock {{ module.key }}">
             <caption>{% trans module.name %}</caption>
-            <tr><th>{% trans 'count' %}</th><th>{% trans 'barcode' %}</th><th>{% trans 'status' %}</th></tr>
+            <tr>
+                <th>{% trans 'count' %}</th>
+                <th>{% trans 'barcode' %}</th>
+                <th>{% trans 'serial number' %}</th>
+                <th>{% trans 'status' %}</th>
+            </tr>
         {% for item in module.objects  %}
             <tr class="stockitem"><td colspan="3">{{ item }}</td></tr>
             {% for specimen in item.specimens.physical %}
@@ -26,6 +31,7 @@
                 <tr class="specimen">
                     <td>{{ specimen.count }}</td>
                     <td>{{ specimen.barcode|default:'—' }}</td>
+                    <td>{{ specimen.serial|default:'—' }}</td>
                     {% if inventoryspecimen %}
                         <td class="{% if inventoryspecimen.count >= specimen.count %}found{% else %}missing{% endif %}">{{ inventoryspecimen.count }} <a href="{% url 'monitoring:inventoryspecimen_increase' pk=inventoryspecimen.pk %}">{% fa "plus-circle" %}</a> <a href="{% url 'monitoring:inventoryspecimen_decrease' pk=inventoryspecimen.pk %}">{% fa "minus-circle" %}</a> <a href="{% url 'monitoring:inventoryspecimen_remove' inventory_pk=inventory.pk specimen_pk=specimen.pk %}">{% fa "times-circle" %}</a></td>
                     {% else %}
