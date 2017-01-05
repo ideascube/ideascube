@@ -72,10 +72,12 @@ class UserImportForm(forms.Form):
 
     def save(self):
         source = TextIOWrapper(self.cleaned_data['source'].file)
+        qs = User.objects.all()
+
         users = []
         errors = []
+
         for idx, row in enumerate(csv.DictReader(source)):
-            qs = User.objects.all()
             try:
                 instance = qs.get(serial=row['serial'])
             except (User.DoesNotExist, KeyError):
