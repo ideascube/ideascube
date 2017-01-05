@@ -1,17 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'form-fullpage.html' %}
 
 {% load i18n %}
 
-{% block content %}
-    <div class="row">
-        <h2>{% trans "Import users" %}</h2>
-    </div>
-    <div class="row">
-        <form method="POST" enctype="multipart/form-data" id="import">
-            {% csrf_token %}
-            <label>{% trans 'Please select a CSV file to import.' %}</label><br />
-            {{ form.source }}
-            <input type="submit" value="{% trans 'Import' %}">
-        </form>
-    </div>
-{% endblock content %}
+{% block heading %}
+    <h2>{% trans "Import users" %}</h2>
+{% endblock %}
+
+{% block form_id %}import{% endblock %}
