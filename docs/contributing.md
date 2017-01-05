@@ -71,7 +71,7 @@ Install python dependencies:
 
 Run the initial database migration::
 
-    python3 manage.py migrate
+    make migrate
 
 To populate the database with some initial dummy data, you can run the command::
 

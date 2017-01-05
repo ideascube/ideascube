@@ -25,3 +25,6 @@ install:
 	sudo dpkg -i builds/*.deb
 uninstall:
 	sudo dpkg -r ideascube
+migrate:
+	python3 manage.py migrate --database=default
+	python3 manage.py migrate --database=transient
