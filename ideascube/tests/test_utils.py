@@ -2,7 +2,8 @@ from io import BytesIO
 
 import pytest
 
-from ideascube.utils import to_unicode
+from ideascube.utils import to_unicode, get_file_sha256, get_file_size
+from hashlib import sha256
 
 
 @pytest.mark.parametrize(
@@ -38,3 +39,19 @@ def test_textio_wrapper(input, expected, encoding):
 ])
 def test_to_unicode(string):
     assert isinstance(to_unicode(string), str)
+
+
+def test_sha256(tmpdir):
+    file_path = tmpdir.join("file")
+    content = b"abcdefghijklmnopqrstuvw"
+    with file_path.open("wb") as f:
+        f.write(content)
+    assert get_file_sha256(str(file_path)) == sha256(content).hexdigest()
+
+
+def test_size(tmpdir):
+    file_path = tmpdir.join("file")
+    content = b"abcdefghijklmnopqrstuvw"
+    with file_path.open("wb") as f:
+        f.write(content)
+    assert get_file_size(str(file_path)) == len(content)

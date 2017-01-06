@@ -28,7 +28,7 @@ from ideascube.models import User
 
 from .systemd import Manager as SystemManager, NoSuchUnit
 
-from ..utils import printerr
+from ..utils import printerr, get_file_sha256
 
 
 def rm(path):
@@ -529,18 +529,8 @@ class Catalog:
         return package.handler()
 
     def _verify_sha256(self, path, sha256sum):
-        sha = sha256()
-
-        with open(path, 'rb') as f:
-            while True:
-                data = f.read(8388608)
-
-                if not data:
-                    break
-
-                sha.update(data)
-
-        return sha.hexdigest() == sha256sum
+        sha = get_file_sha256(path)
+        return sha == sha256sum
 
     def _fetch_package(self, package):
         def _progress(*args):
