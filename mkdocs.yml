@@ -5,6 +5,7 @@ pages:
 - [config.md, Configuration]
 - [contributing.md, Contributing]
 - [i18n.md, Translations]
+- [release_process.md, Make a Release]
 theme: yeti
 repo_url: https://github.com/ideascube/ideascube
 site_description: Ideas Box server core application.
