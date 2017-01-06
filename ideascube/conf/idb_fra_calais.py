@@ -3,7 +3,7 @@ from .idb_fra import *  # noqa
 
 
 IDEASCUBE_NAME = u"CALAIS BIBLIOTHEQUE"
-HOME_CARDS = STAFF_HOME_CARDS + [
+HOME_CARDS = STAFF_HOME_CARDS + [  # pragma: no flakes
     {
         'id': 'blog',
     },

@@ -18,7 +18,7 @@ USER_FORM_FIELDS = (
     (_('National residents'), ['id_card_number']),
 )
 
-HOME_CARDS = STAFF_HOME_CARDS + [
+HOME_CARDS = STAFF_HOME_CARDS + [  # pragma: no flakes
     {
         'id': 'blog',
     },

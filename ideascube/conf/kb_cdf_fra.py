@@ -3,7 +3,7 @@ from .kb import *  # noqa
 
 LANGUAGE_CODE = 'fr'
 IDEASCUBE_NAME = 'Coeur de Forêt'
-HOME_CARDS = STAFF_HOME_CARDS + [
+HOME_CARDS = STAFF_HOME_CARDS + [  # pragma: no flakes
     {
         'id': 'blog',
     },

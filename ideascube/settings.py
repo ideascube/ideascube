@@ -60,6 +60,6 @@ finally:
             },
             'transient': {
                 'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': os.path.join(STORAGE_ROOT, 'transient.sqlite'),
+                'NAME': os.path.join(STORAGE_ROOT, 'transient.sqlite'),  # pragma: no flakes
             }
         }
