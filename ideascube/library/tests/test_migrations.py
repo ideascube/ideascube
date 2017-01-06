@@ -1,5 +1,3 @@
-import pytest
-
 from ideascube.tests.helpers import migration_test
 
 section_int_to_name = {

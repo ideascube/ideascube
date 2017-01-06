@@ -1,7 +1,6 @@
 from datetime import timedelta
 from fnmatch import fnmatch
 from glob import glob
-from hashlib import sha256
 from operator import attrgetter
 import os
 from pathlib import Path

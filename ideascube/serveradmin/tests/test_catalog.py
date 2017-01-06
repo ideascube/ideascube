@@ -4,7 +4,6 @@ import zipfile
 
 from py.path import local as Path
 import pytest
-from resumable import DownloadCheck, DownloadError
 
 from ideascube.mediacenter.models import Document
 
