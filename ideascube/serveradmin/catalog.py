@@ -115,6 +115,7 @@ class Handler:
 
     @classmethod
     def install(cls, package, download_path):
+        os.makedirs(cls._install_dir, exist_ok=True)
         package.install(download_path, cls._install_dir)
 
     @classmethod
