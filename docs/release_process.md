@@ -4,7 +4,7 @@ So you want to release a new version, great!
 
 First, make sure all the desired pull requests have been merged.
 
-Next, pull [the latest translations](translate.md).
+Next, pull [the latest translations](i18n.md).
 
 Finally, here are the steps to follow.
 
