@@ -1,3 +1,17 @@
+ideascube (0.18.0) unstable; urgency=low
+
+  * The csv2pkg command was vastly improved.
+  * User exports now generate a CSV file which can be imported as is.
+  * The inventory view now displays the serial number.
+  * Staff users can now see the drafts in the blog index, as well as articles
+    which will be published in the future.
+  * Existing documentations have been improved.
+  * A new documentation was written on how to cut a new release.
+  * Updated the translations.
+  * Upgraded our dependencies to the latest and greatest.
+
+ -- Mathieu Bridon <bochecha@daitauha.fr>  Fri, 06 Jan 2017 18:30:00 +0100
+
 ideascube (0.17.0) unstable; urgency=low
 
   - Ideascube now only comes with its default branding, but allows deployments to override it with their own.
