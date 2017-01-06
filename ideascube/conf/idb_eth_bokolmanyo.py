@@ -1,5 +1,5 @@
 """Bokolmanyo box in Ethiopia"""
-from .idb import *  # noqa
+from .idb import *  # pragma: no flakes
 from django.utils.translation import ugettext_lazy as _
 
 IDEASCUBE_NAME = u"Bokolmanyo"

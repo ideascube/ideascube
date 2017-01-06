@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Library Without Borders box in Detroit, USA"""
-from .idb import *  # noqa
+from .idb import *  # pragma: no flakes
 from django.utils.translation import ugettext_lazy as _
 
 IDEASCUBE_NAME = u"Library Whitout Border Detroit"

@@ -1,5 +1,5 @@
 """Ideasbox in Calais Bibliothèque, France"""
-from .idb_fra import *  # noqa
+from .idb_fra import *  # pragma: no flakes
 
 
 IDEASCUBE_NAME = u"CALAIS BIBLIOTHEQUE"

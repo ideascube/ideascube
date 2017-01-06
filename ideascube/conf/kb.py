@@ -1,4 +1,4 @@
-from .base import *  # noqa
+from .base import *  # pragma: no flakes
 
 ALLOWED_HOSTS = ['.koombook.lan', 'localhost', '127.0.0.1']
 TIME_ZONE = None

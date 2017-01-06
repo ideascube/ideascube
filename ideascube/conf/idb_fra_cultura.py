@@ -1,5 +1,5 @@
 """Ideasbox Cultura, France"""
-from .idb_fra import *  # noqa
+from .idb_fra import *  # pragma: no flakes
 from django.utils.translation import ugettext_lazy as _
 
 IDEASCUBE_NAME = u"Cultura"

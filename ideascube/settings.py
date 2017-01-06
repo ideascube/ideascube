@@ -38,14 +38,14 @@ finally:
         if k.isupper() and not k.startswith('__') or not k.endswith('__'):
             ldict[k] = sub.__dict__[k]
     USER_DATA_FIELDS = []
-    for section, fields in USER_FORM_FIELDS:  # noqa
+    for section, fields in USER_FORM_FIELDS:  # pragma: no flakes
         USER_DATA_FIELDS.extend(fields)
 
     # Allow server settings to only define STORAGE_ROOT without needing to
     # redefine all ROOTS like settings.
-    BACKUPED_ROOT = ldict.get('BACKUPED_ROOT') or os.path.join(STORAGE_ROOT, 'main')  # noqa
+    BACKUPED_ROOT = ldict.get('BACKUPED_ROOT') or os.path.join(STORAGE_ROOT, 'main')  # pragma: no flakes
     MEDIA_ROOT = ldict.get('MEDIA_ROOT') or os.path.join(BACKUPED_ROOT, 'media')  # noqa
-    STATIC_ROOT = ldict.get('STATIC_ROOT') or os.path.join(STORAGE_ROOT, 'static')  # noqa
+    STATIC_ROOT = ldict.get('STATIC_ROOT') or os.path.join(STORAGE_ROOT, 'static')  # pragma: no flakes
     CATALOG_CACHE_ROOT = (
         ldict.get('CATALOG_CACHE_ROOT') or '/var/cache/ideascube/catalog')
     CATALOG_STORAGE_ROOT = (
