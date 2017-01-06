@@ -3,6 +3,7 @@ import os
 import sys
 import yaml
 from datetime import date
+from collections import OrderedDict
 
 from ideascube.serveradmin.package import MediaCenterPackage
 from ideascube.management.utils import Reporter
@@ -23,19 +24,25 @@ Other attributes may be provided as command arguments.
 """
 
 
+def ordered_representer(dumper, data):
+    return dumper.represent_mapping('tag:yaml.org,2002:map', data.items())
+
+yaml.add_representer(OrderedDict, ordered_representer, Dumper=yaml.SafeDumper)
+
+
 def generate_catalog_yaml_metadata(path, metadata, _type='zipped-medias'):
     return {
         'all' : {
-            metadata['package_id']: {
-                'name': metadata['name'],
-                'description': metadata['description'],
-                'version': date.today().isoformat(),
-                'url': metadata['url'],
-                'sha256sum': get_file_sha256(path),
-                'size': get_file_size(path),
-                'language': metadata['language'],
-                'type': _type
-            }
+            metadata['package_id']: OrderedDict([
+                ('name', metadata['name']),
+                ('description', metadata['description']),
+                ('language', metadata['language']),
+                ('version', date.today().isoformat()),
+                ('url', metadata['url']),
+                ('size', get_file_size(path)),
+                ('sha256sum', get_file_sha256(path)),
+                ('type', _type)
+            ])
         }
     }
 

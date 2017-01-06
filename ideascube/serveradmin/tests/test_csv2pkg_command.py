@@ -41,6 +41,11 @@ def test_csv2pkg_command(package_path, csv_writer, capsys):
                            }
 
     assert "Package {} has been created with 3 medias.".format(package_path) in out
+    #Check the order of the output
+    index = 0
+    for k in ('name', 'description', 'language', 'version', 'url', 'size', 'sha256sum', 'type'):
+        index = out.find('    '+k, index)
+        assert index != -1, '{} is not in the right order'.format(k)
 
 
 def test_csv2pkg_wrong_metadata_command(package_path, csv_writer, capsys):
