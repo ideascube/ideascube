@@ -9,8 +9,8 @@ doc:
 dummydata:
 	python3 manage.py dummydata
 collect_translations:
-	python3 manage.py makemessages -a --ignore=debian
-	python3 manage.py makemessages -d djangojs -a --ignore=debian
+	python3 manage.py makemessages -a --ignore=debian -d django
+	python3 manage.py makemessages -a --ignore=debian -d djangojs
 push_translations:
 	tx push -s
 pull_translations:
