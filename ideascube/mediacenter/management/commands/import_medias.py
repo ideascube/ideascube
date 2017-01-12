@@ -19,7 +19,6 @@ from ideascube.management.utils import Reporter
 
 class Bar(ProgressBar):
     template = 'Import: {percent} |{animation}| {done}/{total} | ETA: {eta}'
-    done_char = '⬛'
 
 
 class Command(BaseCommand):
