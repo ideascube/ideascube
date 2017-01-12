@@ -87,6 +87,6 @@ class UserImportForm(forms.Form):
             else:
                 reason = ', '.join('{}: {}'.format(k, v.as_text())
                                    for k, v in form.errors.items())
-                errors.append(_('Invalid row at line {id}: {reason}'.format(
-                    id=idx + 1, reason=reason)))
+                errors.append(_('Invalid row at line {id}: {reason}').format(
+                    id=idx + 1, reason=reason))
         return users, errors[:10]
