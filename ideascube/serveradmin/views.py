@@ -24,7 +24,7 @@ from .wifi import (
 # Catalog class directly but reference it from ideascube.serveradmin.catalog
 # module.
 from . import catalog as catalog_mod
-from ideascube.configuration import get_config, set_config
+
 
 @staff_member_required
 def languages(request):

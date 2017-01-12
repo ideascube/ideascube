@@ -1,5 +1,5 @@
 """Generic config for Ideasbox of Burundi"""
-from .idb import *  # noqa
+from .idb import *  # pragma: no flakes
 from django.utils.translation import ugettext_lazy as _
 
 USER_FORM_FIELDS = (

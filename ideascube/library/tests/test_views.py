@@ -556,7 +556,7 @@ def test_export_book_specimens(staffapp, monkeypatch):
 def test_import_book_specimens(staffapp, tmpdir):
     book1 = BookFactory(isbn='123456', name='my book title')
     book2 = BookFactory(isbn='234567', name='ﺎﻠﻨﺒﻳ (ﻚﺗﺎﺑ)')
-    book3 = BookFactory(isbn='345678', name='my book title')
+    BookFactory(isbn='345678', name='my book title')
 
     zip_path = tmpdir.join('specimens.zip')
     csv_content = '\n'.join([

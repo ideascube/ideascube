@@ -1,9 +1,9 @@
 """Ideasbox in Calais Bibliothèque, France"""
-from .idb_fra import *  # noqa
-from django.utils.translation import ugettext_lazy as _
+from .idb_fra import *  # pragma: no flakes
+
 
 IDEASCUBE_NAME = u"CALAIS BIBLIOTHEQUE"
-HOME_CARDS = STAFF_HOME_CARDS + [
+HOME_CARDS = STAFF_HOME_CARDS + [  # pragma: no flakes
     {
         'id': 'blog',
     },

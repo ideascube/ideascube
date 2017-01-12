@@ -1,5 +1,5 @@
 """Library Without Borders box in Athenes, Grece"""
-from .idb import *  # noqa
+from .idb import *  # pragma: no flakes
 from django.utils.translation import ugettext_lazy as _
 
 IDEASCUBE_NAME = u"Eleonas"

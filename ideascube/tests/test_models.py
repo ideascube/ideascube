@@ -1,9 +1,8 @@
 import pytest
 
 from django.contrib.auth import get_user_model
-from django.db import models
 
-from ..models import JSONField, User
+from ..models import User
 from .factories import UserFactory
 
 pytestmark = pytest.mark.django_db

@@ -1,5 +1,5 @@
 """State Library Western Australia box"""
-from .idb import *  # noqa
+from .idb import *  # pragma: no flakes
 from django.utils.translation import ugettext_lazy as _
 
 IDEASCUBE_PLACE_NAME = _("the community")

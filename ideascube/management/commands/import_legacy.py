@@ -469,7 +469,7 @@ class Notices(models.Model):
     def authors(self):
         links = Responsability.objects.using('burundi').filter(responsability_notice=self.pk).values('responsability_author')  # noqa
         ids = [link['responsability_author'] for link in links]
-        return u', '.join([unicode(a) for a in Authors.objects.using('burundi').filter(author_id__in=ids)])
+        return u', '.join([str(a) for a in Authors.objects.using('burundi').filter(author_id__in=ids)])
 
     @property
     def serie(self):

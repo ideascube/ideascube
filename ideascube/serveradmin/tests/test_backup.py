@@ -92,7 +92,7 @@ def test_create_zipfile_must_fail(monkeypatch, tmpdir):
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.ROOT', str(tmpdir))
     monkeypatch.setattr('ideascube.serveradmin.backup.Backup.FORMAT', 'zip')
     assert len(list(Backup.list())) == 0
-    with pytest.raises(ValueError) as excinfo:
+    with pytest.raises(ValueError):
         Backup.create()
     assert len(list(Backup.list())) == 0
 

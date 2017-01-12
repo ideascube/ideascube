@@ -1,5 +1,5 @@
 """Configuration for a demo server hosted here, at BSF Headquarters"""
-from .idb import *  # noqa
+from .idb import *  # pragma: no flakes
 
 ALLOWED_HOSTS = ['.demo.ideascube.org', '.ideasbox.lan', 'localhost']
 DOMAIN = 'demo.ideascube.org'

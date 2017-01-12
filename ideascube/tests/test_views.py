@@ -205,7 +205,7 @@ def test_user_detail_page_should_be_accessible_to_staff(staffapp, user):
 
 
 def test_system_user_cannot_be_viewed(staffapp, systemuser):
-    response = staffapp.get(
+    staffapp.get(
         reverse('user_detail', kwargs={'pk': systemuser.pk}), status=404)
 
 
@@ -283,7 +283,7 @@ def test_should_not_update_user_without_serial(app, staffapp, user):
 
 def test_system_user_cannot_be_updated(staffapp, systemuser):
     url = reverse('user_update', kwargs={'pk': systemuser.pk})
-    form = staffapp.get(url, status=404)
+    staffapp.get(url, status=404)
 
 
 def test_delete_page_should_not_be_reachable_to_anonymous(app, user):
