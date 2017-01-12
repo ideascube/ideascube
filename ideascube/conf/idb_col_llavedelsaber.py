@@ -9,3 +9,8 @@ ALLOWED_HOSTS = ['.bibliotecamovil.lan', 'localhost']
 USER_FORM_FIELDS = USER_FORM_FIELDS + (  # pragma: no flakes
         (_('Personal informations'), ['disabilities']),
 )
+
+USER_IMPORT_FORMATS = (
+    ('llavedelsaber', 'Llave del Saber'),
+    ('ideascube', 'Ideascube'),
+)

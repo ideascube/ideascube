@@ -89,6 +89,15 @@ class UserImportForm(forms.Form):
     def _get_ideascube_mapping(self, data):
         return data
 
+    def _get_llavedelsaber_reader(self, source):
+        return csv.DictReader(source, delimiter=';', quoting=csv.QUOTE_ALL)
+
+    def _get_llavedelsaber_mapping(self, data):
+        # TODO: Implement the rest, once we hear back from Sergio
+        return {
+            'serial': data['serial'],
+        }
+
     def save(self):
         format = self.cleaned_data['format']
         source = TextIOWrapper(self.cleaned_data['source'].file)
