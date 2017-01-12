@@ -1,3 +1,4 @@
+from datetime import date
 import csv
 
 from django import forms
@@ -121,9 +122,59 @@ class UserImportForm(forms.Form):
         return csv.DictReader(source, delimiter=';', quoting=csv.QUOTE_ALL)
 
     def _get_llavedelsaber_mapping(self, data):
-        # TODO: Implement the rest, once we hear back from Sergio
+        data = {k.lower(): v for k, v in data.items()}
+
+        gender_mapping = {'femenino': 'female', 'masculino': 'male'}
+        gender = gender_mapping.get(data['sexo'].lower(), 'undefined')
+
+        school_mapping = {
+            'No tiene': 'none', 'Primaria': 'primary',
+            'Secundaria': 'secondary', 'Universitario': 'college',
+        }
+        school_level = data['nivel educativo'].capitalize()
+        school_level = school_mapping.get(school_level, school_level)
+
+        disability_mapping = {
+            'Ninguna': '',
+            'Auditiva': 'auditive',
+            'Cognitiva': 'cognitive',
+            'Fisica': 'physical',
+            'Visual': 'visual',
+        }
+        disabilities = data['discapacidades'].capitalize().split(',')
+        disabilities = (d.strip() for d in disabilities)
+        disabilities = (disability_mapping.get(d, d) for d in disabilities)
+        disabilities = (d for d in disabilities if d)
+        disabilities = ','.join(disabilities)
+
+        occupation_mapping = {
+            'Ninguna': 'none',
+            'Estudiante': 'student',
+            'Desempleado': 'unemployed',
+            'Empleado': 'employee',
+            'Independiente': 'freelance',
+            'Docente': 'teacher',
+            'Investigador': 'researcher',
+            'Pensionado': 'retired',
+            'Otro': 'other',
+        }
+        occupations = data['ocupaciones'].capitalize().split(',')
+        occupation = occupations[0].strip() if occupations else ''
+        occupation = occupation_mapping.get(occupation, occupation)
+
+        try:
+            age = int(data['edad'])
+
+        except ValueError:
+            raise ValueError('Invalid age: %s' % data['edad'])
+
+        # Yes, that's not accurate, but it's good enough for our needs
+        birth_year = date.today().year - age
+
         return {
-            'serial': data['serial'],
+            'serial': data['serial'], 'gender': gender,
+            'birth_year': birth_year, 'school_level': school_level,
+            'disabilities': disabilities, 'current_occupation': occupation,
         }
 
     def save(self):
