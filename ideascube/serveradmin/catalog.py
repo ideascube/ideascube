@@ -443,7 +443,6 @@ class ZippedMedias(SimpleZipPackage):
 class Bar(ProgressBar):
     template = ('Download: {percent} |{animation}| {done:B}/{total:B} '
                 '({speed:B}/s) | ETA: {eta}')
-    done_char = '⬛'
     throttle = timedelta(seconds=1)
 
 
