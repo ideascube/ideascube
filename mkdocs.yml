@@ -1,11 +1,11 @@
 site_name: Ideascube
 pages:
-- [index.md, Home]
-- [install.md, Installation]
-- [config.md, Configuration]
-- [contributing.md, Contributing]
-- [i18n.md, Translations]
-- [release_process.md, Make a Release]
+- Home: index.md
+- Installation: install.md
+- Configuration: config.md
+- Contributing: contributing.md
+- Translations: i18n.md
+- Make a Release: release_process.md
 theme: yeti
 repo_url: https://github.com/ideascube/ideascube
 site_description: Ideas Box server core application.
