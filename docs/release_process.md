@@ -29,19 +29,16 @@ Run the tests:
 
 And run the migrations:
 
-    $ python manage.py migrate --database=default
-    $ python manage.py migrate --database=transient
+    $ make migrate
 
 Let's make sure there are no migration conflicts:
 
     $ rm -fr storage
     $ git checkout $TAG_FOR_LATEST_RELEASE
-    $ python manage.py migrate --database=default
-    $ python manage.py migrate --database=transient
+    $ make migrate
     $ make dummydata
     $ git checkout master
-    $ python manage.py migrate --database=default
-    $ python manage.py migrate --database=transient
+    $ make migrate
 
 Ideally, in the above steps, it would be even better to use a real-world
 database (from a server running the latest release) instead of the dummy data.
