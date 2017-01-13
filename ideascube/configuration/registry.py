@@ -27,15 +27,6 @@ REGISTRY = {
             'default': ['ar', 'en', 'es', 'fr'],
         },
     },
-    'server': {
-        'site-name': {
-            'summary': 'The pretty name of the server, as seen by users of '
-                       'the web interface.',
-            'pretty_type': 'A string',
-            'type': str,
-            'default': getattr(settings, 'IDEASCUBE_NAME', 'Ideas Cube'),
-        },
-    },
     'home-page': {
         'displayed-package-ids': {
             'summary': 'The list of package-related cards displayed on the '
@@ -43,6 +34,15 @@ REGISTRY = {
             'pretty_type': 'A list of strings',
             'type': list,
             'default': [],
+        },
+    },
+    'server': {
+        'site-name': {
+            'summary': 'The pretty name of the server, as seen by users of '
+                       'the web interface.',
+            'pretty_type': 'A string',
+            'type': str,
+            'default': getattr(settings, 'IDEASCUBE_NAME', 'Ideas Cube'),
         },
     },
 }
