@@ -6,6 +6,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+from django.db.models import Q
 
 from ideascube.utils import TextIOWrapper
 
@@ -83,13 +84,21 @@ class InventorySpecimenForm(forms.ModelForm):
 
     def clean_specimen(self):
         barcode = clean_barcode(self.cleaned_data['specimen'])
+        specimen_query = Q(barcode=barcode)|Q(serial=barcode)
         try:
+            specimen = Specimen.objects.get(specimen_query)
+        except Specimen.MultipleObjectsReturned:
+            # Both barcode and serial are unique.
+            # So, if several specimens are returned, it means there is
+            # a speciment with barcode==barcode and another one with
+            # serial==barcode.
+            # So, the following request cannot fail.
             specimen = Specimen.objects.get(barcode=barcode)
         except Specimen.DoesNotExist:
             raise forms.ValidationError(
-                _('Barcode {barcode} not found').format(barcode=barcode))
-        else:
-            return specimen
+                _('Barcode {barcode} not found.').format(barcode=barcode))
+
+        return specimen
 
     class Meta:
         model = InventorySpecimen
