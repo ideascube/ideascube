@@ -301,7 +301,7 @@ class ZippedZim(Package):
         base_name, extension = self.id.rsplit('.', 1)
         if base_name in ("wikipedia", "wikivoyage", "vikidia"):
             return _("discover")
-        if base_name in ("gutemberg", "icd10", "wikisource", "wikibooks"):
+        if base_name in ("gutemberg", "icd10", "wikisource", "wikibooks", "bouquineux"):
             return _("read")
         return _("learn")
 
