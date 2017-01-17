@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 from .utils import TextIOWrapper
+from .widgets import ComboBoxEntry
 
 
 User = get_user_model()
@@ -22,9 +23,31 @@ class UserForm(forms.ModelForm):
                 # because of i10n.
                 field.widget = forms.DateInput(format='%Y-%m-%d')
 
+            elif name == 'current_occupation':
+                choices = self._get_choices(
+                    'OCCUPATION_CHOICES', 'current_occupation')
+                field.widget = ComboBoxEntry(choices=choices)
+
             if name == 'extra':
                 field.label = getattr(
                     settings, 'USER_EXTRA_FIELD_LABEL', _('Additional data'))
+
+    def _get_choices(self, attribute_defaults, attribute_used):
+        default_choices = getattr(User, attribute_defaults)
+
+        used_choices = User.objects.values_list(attribute_used, flat=True)
+        used_choices = set(used_choices.distinct())
+
+        # We can't simply get the union of default_choices and used_choices,
+        # because elements of the former are (db_value, pretty_value) tuples,
+        # while elements of the latter are a single value.
+        #
+        # Therefore we must first get only the used choices which are custom,
+        # that is not part of the defaults.
+        custom_choices = used_choices - {c[0] for c in default_choices}
+        custom_choices = sorted(custom_choices)
+
+        return tuple((c, c) for c in custom_choices) + default_choices
 
     class Meta:
         model = User

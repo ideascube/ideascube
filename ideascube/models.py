@@ -282,8 +282,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
                                        blank=True,
                                        null=True)
     current_occupation = models.CharField(
-        verbose_name=_('Current occupation'), choices=OCCUPATION_CHOICES,
-        blank=True, max_length=32)
+        verbose_name=_('Current occupation'), blank=True, max_length=32)
     country_of_origin_occupation = models.CharField(
         verbose_name=_('Occupation in the place of origin'),
         max_length=100,
