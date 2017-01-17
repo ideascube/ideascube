@@ -268,8 +268,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     children_above_18 = models.PositiveSmallIntegerField(
         verbose_name=_('Number of children above 18'), blank=True, null=True)
     school_level = models.CharField(
-                verbose_name=_('School level'), choices=SCHOOL_LEVEL_CHOICES,
-                blank=True, max_length=32)
+                verbose_name=_('School level'), blank=True, max_length=32)
     marital_status = models.CharField(
         verbose_name=_('Marital situation'), choices=MARITAL_STATUS_CHOICES,
         blank=True, max_length=32)

@@ -89,7 +89,7 @@ def test_does_not_import_with_empty_serial(staffapp, monkeypatch):
 
 
 def test_does_not_import_if_form_is_invalid(staffapp, monkeypatch):
-    data = (b'serial,full_name,school_level\n'
+    data = (b'serial,full_name,birth_year\n'
             b'12345,Gabriel Garcia Marquez,invalid')
     form = staffapp.get(reverse('user_import')).forms['import']
     form['source'] = Upload('users.csv', data, 'text/csv')

@@ -28,6 +28,11 @@ class UserForm(forms.ModelForm):
                     'OCCUPATION_CHOICES', 'current_occupation')
                 field.widget = ComboBoxEntry(choices=choices)
 
+            elif name == 'school_level':
+                choices = self._get_choices(
+                    'SCHOOL_LEVEL_CHOICES', 'school_level')
+                field.widget = ComboBoxEntry(choices=choices)
+
             if name == 'extra':
                 field.label = getattr(
                     settings, 'USER_EXTRA_FIELD_LABEL', _('Additional data'))
