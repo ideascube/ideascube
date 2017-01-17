@@ -61,7 +61,7 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
         return qs
 
     def get_context_data(self, **kwargs):
-        context = super(Index, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         self._set_available_langs(context)
         self._set_available_tags(context)
         self._set_available_kinds(context)
@@ -134,7 +134,7 @@ class BookImport(FormView):
         else:
             msg = _('You need to provide a file.')
             messages.add_message(self.request, messages.ERROR, msg)
-        return super(BookImport, self).form_valid(form)
+        return super().form_valid(form)
 
 book_import = staff_member_required(BookImport.as_view())
 

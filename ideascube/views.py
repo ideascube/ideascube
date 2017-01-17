@@ -104,7 +104,7 @@ class ByTag(ListView):
     paginate_by = 20
 
     def get_context_data(self, **kwargs):
-        context = super(ByTag, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['tags'] = self.request.GET.getlist('tags')
         return context
 
@@ -122,7 +122,7 @@ class UserList(ListView):
     paginate_by = 50
 
     def get_context_data(self, **kwargs):
-        context = super(UserList, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['USERS_LIST_EXTRA_FIELDS'] = settings.USERS_LIST_EXTRA_FIELDS
         context['q'] = self.request.GET.get('q', '')
         return context
@@ -132,7 +132,7 @@ class UserList(ListView):
         if query:
             return self.model.objects.search(query)
         else:
-            return super(UserList, self).get_queryset()
+            return super().get_queryset()
 
 user_list = staff_member_required(UserList.as_view())
 
@@ -147,7 +147,7 @@ user_detail = staff_member_required(UserDetail.as_view())
 class UserFormMixin(object):
 
     def get_context_data(self, *args, **kwargs):
-        context = super(UserFormMixin, self).get_context_data(*args, **kwargs)
+        context = super().get_context_data(*args, **kwargs)
         context['USER_FORM_FIELDS'] = settings.USER_FORM_FIELDS
         return context
 
@@ -199,7 +199,7 @@ class SetPassword(FormView):
     template_name = 'ideascube/set_password.html'
 
     def get_form_kwargs(self):
-        kwargs = super(SetPassword, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs['user'] = get_object_or_404(user_model, pk=self.kwargs['pk'])
         return kwargs
 
@@ -207,7 +207,7 @@ class SetPassword(FormView):
         form.save()
         msg = _('Password has been set for {user}').format(user=form.user)
         messages.add_message(self.request, messages.SUCCESS, msg)
-        return super(SetPassword, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('user_detail', kwargs=self.kwargs)
@@ -250,7 +250,7 @@ class UserImport(FormView):
             messages.success(self.request, msg)
         for error in errors:
             messages.error(self.request, error)
-        return super(UserImport, self).form_valid(form)
+        return super().form_valid(form)
 
 user_import = staff_member_required(UserImport.as_view())
 

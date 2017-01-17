@@ -65,7 +65,7 @@ class PackagedDocumentForm(forms.ModelForm):
         self.fields['preview'] = forms.FilePathField(path=path, required=False)
 
     def save(self, commit=True):
-        document = super(PackagedDocumentForm, self).save(commit=False)
+        document = super().save(commit=False)
         original = self.cleaned_data['original']
         original = os.path.relpath(original, settings.MEDIA_ROOT)
         document.original = original
