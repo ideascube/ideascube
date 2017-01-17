@@ -311,3 +311,81 @@ ID.viewablePassword = function () {
     button.addEventListener('click', show, false);
     form.addEventListener('submit', hide, false);
 };
+
+
+ID.initComboBoxEntries = function () {
+    function ComboBoxEntry(container) {
+        this.entry = container.querySelector('input[type="text"]');
+        this.hidden_entry = container.querySelector('input[type="hidden"]');
+        this.button = container.querySelector('button');
+        this.option_list = container.querySelector('ul');
+        this.options = this.option_list.querySelectorAll('li');
+
+        this.show_options = function() {
+            var text = this.entry.value.toLowerCase();
+            var visible = false;
+
+            for (var i = 0; i < this.options.length; i++) {
+                var option = this.options[i];
+
+                if (option.textContent.toLowerCase().indexOf(text) === 0) {
+                    option.style.display = 'block';
+                    visible = true;
+                } else {
+                    option.style.display = 'none';
+                }
+            }
+
+            if (visible) {
+                this.option_list.style.display = 'block';
+            } else {
+                this.hide_options();
+            }
+        };
+
+        this.hide_options = function() {
+            this.option_list.style.display = 'none';
+        };
+
+        this.hide_options_delayed = function() {
+            setTimeout(function() {
+                if (document.activeElement !== this.entry) {
+                    this.hide_options();
+                }
+            }.bind(this), 200);
+        };
+
+        this.button.onblur = this.hide_options_delayed.bind(this);
+        this.button.onclick = function() {
+            if (this.option_list.style.display === 'block') {
+                this.hide_options();
+            } else {
+                this.show_options();
+                this.entry.select();
+            }
+        }.bind(this);
+
+        this.entry.onblur = this.hide_options_delayed.bind(this);
+        this.entry.onfocus = this.show_options.bind(this);
+        this.entry.oninput = function() {
+            this.hidden_entry.value = this.entry.value;
+            this.show_options();
+        }.bind(this);
+
+        for (var i = 0; i < this.options.length; i++) {
+            var option = this.options[i];
+
+            option.onclick = function(e) {
+                this.entry.value = e.target.textContent;
+                this.hidden_entry.value = e.target.getAttribute('data-value');
+                this.hide_options();
+            }.bind(this);
+        }
+    };
+
+    var comboboxentries = document.querySelectorAll('.comboboxentry');
+
+    for (var i = 0; i < comboboxentries.length; i++) {
+        var comboboxentry = new ComboBoxEntry(comboboxentries[i]);
+    }
+};

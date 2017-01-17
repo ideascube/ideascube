@@ -3,6 +3,54 @@ from django.forms import widgets
 from ideascube.configuration import get_config
 
 
+class ComboBoxEntry(widgets.MultiWidget):
+    def __init__(self, choices, blank=False, attrs=None):
+        if blank:
+            choices = (('', '---------'), ) + choices
+
+        if attrs is None:
+            attrs = {}
+
+        attrs.setdefault('autocomplete', 'off')
+
+        self._choices = choices
+        _widgets = (
+            widgets.HiddenInput(attrs=attrs),
+            widgets.TextInput(attrs=attrs),
+        )
+
+        super().__init__(_widgets, attrs=attrs)
+
+    def decompress(self, value):
+        if value is not None:
+            for choice_id, choice_label in self._choices:
+                if value == choice_id:
+                    return [choice_id, choice_label]
+
+        return [None, None]
+
+    def value_from_datadict(self, data, files, name):
+        field_name = '%s_0' % name  # The hidden input has the real value
+
+        return data.get(field_name, '')
+
+    def format_output(self, rendered_widgets):
+        # We can't have any kind of white space between the input and the
+        # button, or else browsers display a space we can't remove :(
+        rendered_widgets[1] += (
+            '<button class="button" type="button">▾</button>')
+
+        rendered_widgets.insert(0, '<div class="comboboxentry">')
+        rendered_widgets.append('<ul>')
+        rendered_widgets.extend([
+            '<li data-value="%s">%s</li>' % (o[0], o[1]) for o in self._choices
+        ])
+        rendered_widgets.append('</ul>')
+        rendered_widgets.append('</div>')
+
+        return '\n'.join(rendered_widgets)
+
+
 class LangSelect(widgets.Select):
     def render_options(self, selected_choices):
         local_languages = get_config('content', 'local-languages')

@@ -301,6 +301,59 @@ label.strip + input[type="text"] {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
 }
+
+.comboboxentry {
+    position: relative;
+}
+.comboboxentry input[type="text"] {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+    width: 92%;
+}
+.comboboxentry button {
+    border: 1px solid #CCCCCC;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+            box-sizing: border-box;
+       -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: inline-block;
+    line-height: 20px;
+    margin: 0;
+    vertical-align: middle;
+    width: 8%;
+}
+.comboboxentry ul {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    display: none;
+    margin: 0 1%;
+    padding: 0;
+    position: absolute;
+    width: 90%;
+    z-index: 100;
+}
+.comboboxentry li {
+    padding: 5px 10px;
+    z-index: 200;
+}
+.comboboxentry li:hover {
+    background-color: #95A5A6;
+    color: #fff;
+    z-index: 200;
+}
+label.strip + .comboboxentry input[type="text"] {
+    border-top-left-radius: 0;
+}
+label.strip + .comboboxentry button {
+    border-top-right-radius: 0;
+}
+
 [contenteditable=true]:empty:before {
     content: attr(placeholder);
     display: block; /* For Firefox */
