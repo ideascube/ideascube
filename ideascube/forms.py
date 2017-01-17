@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
-from ideascube.utils import TextIOWrapper
+from .utils import TextIOWrapper
 
 
 User = get_user_model()
