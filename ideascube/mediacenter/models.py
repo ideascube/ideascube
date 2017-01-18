@@ -1,5 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models.signals import post_delete
+from django.db.transaction import on_commit
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 
 from taggit.managers import TaggableManager
@@ -7,6 +10,7 @@ from taggit.managers import TaggableManager
 from ideascube.models import (
     LanguageField, SortedTaggableManager, TimeStampedModel)
 from ideascube.search.models import SearchableQuerySet, SearchMixin
+from ideascube.utils import printerr
 
 
 class DocumentQuerySet(SearchableQuerySet, models.QuerySet):
@@ -108,3 +112,21 @@ class Document(SearchMixin, TimeStampedModel):
     @property
     def slug(self):
         return self.get_kind_display()
+
+
+@receiver(post_delete, sender=Document)
+def _delete_file_in_fs(sender, instance, using, **kwargs):
+    _file = instance.original
+    _preview = instance.preview
+    def real_delete():
+        try:
+            _file.delete(save=False)
+        except Exception as e:
+            printerr("ERROR while deleting {}".format(_file.path))
+            printerr("Exception is {}".format(e))
+        try:
+            _preview.delete(save=False)
+        except Exception as e:
+            printerr("ERROR while deleting {}".format(_preview.path))
+            printerr("Exception is {}".format(e))
+    on_commit(real_delete, using)
