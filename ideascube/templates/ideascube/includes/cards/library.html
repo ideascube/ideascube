@@ -1,7 +1,7 @@
 {% load i18n %}
 <a href="{% url 'library:index' %}" class="card tinted library">
   <h4>
-    <span class="theme read">read</span>
+    <span class="theme read">{% trans "read" %}</span>
     <span>{% trans "Library" %}</span>
   </h4>
   <p>{% trans "Browse books." %}</p>
