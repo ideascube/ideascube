@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
-from ideascube.utils import TextIOWrapper
+from .utils import TextIOWrapper
 
 
 User = get_user_model()
@@ -14,7 +14,8 @@ User = get_user_model()
 class UserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
-        super(UserForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+
         for name, field in self.fields.items():
             if isinstance(field, forms.DateField):
                 # Force date format on load, so date picker doesn't mess it up
@@ -58,7 +59,7 @@ class CreateStaffForm(forms.ModelForm):
         return password2
 
     def save(self, *args, **kwargs):
-        user = super(CreateStaffForm, self).save(*args, **kwargs)
+        user = super().save(*args, **kwargs)
         password = self.cleaned_data['password']
         user.set_password(password)
         user.is_staff = True
@@ -71,10 +72,12 @@ class UserImportForm(forms.Form):
 
     def save(self):
         source = TextIOWrapper(self.cleaned_data['source'].file)
+        qs = User.objects.all()
+
         users = []
         errors = []
+
         for idx, row in enumerate(csv.DictReader(source)):
-            qs = User.objects.all()
             try:
                 instance = qs.get(serial=row['serial'])
             except (User.DoesNotExist, KeyError):
@@ -86,6 +89,6 @@ class UserImportForm(forms.Form):
             else:
                 reason = ', '.join('{}: {}'.format(k, v.as_text())
                                    for k, v in form.errors.items())
-                errors.append(_('Invalid row at line {id}: {reason}'.format(
-                    id=idx + 1, reason=reason)))
+                errors.append(_('Invalid row at line {id}: {reason}').format(
+                    id=idx + 1, reason=reason))
         return users, errors[:10]

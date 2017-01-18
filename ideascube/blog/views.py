@@ -64,7 +64,7 @@ class ContentCreate(CreateView):
     form_class = ContentForm
 
     def get_initial(self):
-        initial = super(ContentCreate, self).get_initial()
+        initial = super().get_initial()
         initial['author'] = self.request.user
         return initial
 content_create = staff_member_required(ContentCreate.as_view())

@@ -74,7 +74,7 @@ class FilterableViewMixin:
         context['available_tags'] = Tag.objects.filter(slug__in=common)
 
     def get_context_data(self, **kwargs):
-        context = super(FilterableViewMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         for key in ('q', 'kind', 'lang', 'source'):
             context[key] = self.request.GET.get(key)
         context['tags'] = self.request.GET.getlist('tags')
@@ -87,7 +87,7 @@ class FilterableViewMixin:
         return context
 
     def get_queryset(self):
-        qs = super(FilterableViewMixin, self).get_queryset()
+        qs = super().get_queryset()
         query = self.request.GET.get('q')
         kind = self.request.GET.get('kind')
         lang = self.request.GET.get('lang')

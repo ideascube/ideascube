@@ -54,10 +54,10 @@ class EntryView(FormView):
         else:
             msg = _('No entry created.')
             messages.add_message(self.request, messages.WARNING, msg)
-        return super(EntryView, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
-        context = super(EntryView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['entries'] = Entry.objects.all()[:50]
         context['export_form'] = ExportEntryForm()
         context['MONITORING_ENTRY_EXPORT_FIELDS'] = settings.MONITORING_ENTRY_EXPORT_FIELDS  # noqa
@@ -130,7 +130,7 @@ class InventoryDetail(StockListMixin, DetailView):
     template_name = 'monitoring/inventory.html'
 
     def get_context_data(self, **kwargs):
-        context = super(InventoryDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['stock'] = self.get_stock()
         context['inventoryspecimen_form'] = InventorySpecimenForm(
             initial={'inventory': self.object})
@@ -205,7 +205,7 @@ class StockItemCreate(CreateView):
     fields = '__all__'
 
     def get_initial(self):
-        initial = super(StockItemCreate, self).get_initial()
+        initial = super().get_initial()
         initial['module'] = self.request.GET.get('module')
         return initial
 
@@ -378,7 +378,7 @@ class ItemLoan(TemplateView):
             'export_form': ExportLoanForm
         }
         defaults.update(kwargs)
-        return super(ItemLoan, self).get_context_data(**defaults)
+        return super().get_context_data(**defaults)
 
     def post(self, request, *args, **kwargs):
         context = {}
