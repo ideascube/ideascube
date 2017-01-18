@@ -176,10 +176,13 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     index_public = False  # Searchable only by staff.
 
     OCCUPATION_CHOICES = (
+        ('none', _('No occupation')),
         ('student', _('Student')),
         ('teacher', _('Teacher')),
+        ('researcher', _('Researcher')),
         ('no_profession', _('Without profession')),
         ('profit_profession', _('Profit profession')),
+        ('freelance', _('Freelance')),
         ('volunteering', _('Volunteering')),
         ('homemaker', _('Homemaker')),
         ('retired', _('Retired')),
@@ -219,6 +222,7 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     )
 
     SCHOOL_LEVEL_CHOICES = (
+        ('none', _('Did not go to school')),
         ('primary', _('Primary')),
         ('secondary', _('Secondary')),
         ('professional', _('Professional')),
