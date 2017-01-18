@@ -25,7 +25,10 @@
                 <th>{% trans 'status' %}</th>
             </tr>
         {% for item in module.objects  %}
-            <tr class="stockitem"><td colspan="3">{{ item }}</td></tr>
+            <tr class="stockitem">
+              <td>{% trans 'Total:' %} {{ item.specimens.physical|length }}</td>
+              <td colspan="3">{{ item }} <em>{{ item.description|truncatewords:10 }}</em></td>
+            </tr>
             {% for specimen in item.specimens.physical %}
                 {% get_inventory_specimen inventory specimen as inventoryspecimen %}
                 <tr class="specimen">

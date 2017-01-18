@@ -12,14 +12,15 @@
         <table class="stock {{ module.key }}">
             <caption>{% trans module.name %} <a href="{% url 'monitoring:stockitem_create' %}?module={{ module.key }}"><i class="fa fa-plus"></i> {% trans "Add stock item" %}</a></caption>
             <tr>
-                <th>{% trans 'Reference' %}</th>
                 <th>{% trans 'count' %}</th>
+                <th>{% trans 'barcode' %}</th>
+                <th>{% trans 'serial number' %}</th>
                 <th>{% trans 'Actions' %}</th>
             </tr>
         {% for item in module.objects  %}
             <tr class="stockitem" id="stockitem-{{ item.pk }}">
-                <td>{{ item }} <em>{{ item.description|truncatewords:10 }}</em></td>
                 <td>{% trans 'Total:' %} {{ item.specimens.physical|length }}</td>
+                <td colspan="2">{{ item }} <em>{{ item.description|truncatewords:10 }}</em></td>
                 <td class="actions">
                     <a href="{% url 'monitoring:stockitem_update' pk=item.pk %}" title="{% trans 'Edit' %}">
                         {% fa 'pencil-square' %}
@@ -31,8 +32,9 @@
             </tr>
             {% for specimen in item.specimens.physical %}
                 <tr class="specimen">
-                    <td>{{ specimen.barcode|default:'—' }}</td>
                     <td>{{ specimen.count }}</td>
+                    <td>{{ specimen.barcode|default:'—' }}</td>
+                    <td>{{ specimen.serial|default:'—' }}</td>
                     <td class="actions">
                         <a href="{% url 'monitoring:specimen_update' pk=specimen.pk %}" title="{% trans 'Edit this specimen' %}">
                             {% fa 'pencil-square' %}
