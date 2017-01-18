@@ -1,7 +1,7 @@
 {% load i18n %}
 <a href="{% url 'blog:index' %}" class="card tinted blog">
   <h4>
-    <span class="theme create">create</span>
+    <span class="theme create">{% trans "create" %}</span>
     <span>{% trans "Blog" %}</span>
   </h4>
   <p>{% trans "Browse blog posts." %}</p>
