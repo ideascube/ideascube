@@ -6,7 +6,7 @@ develop:
 	pip3 install -r requirements-dev.txt
 doc:
 	mkdocs serve
-dummydata:
+dummydata: migrate
 	python3 manage.py dummydata
 collect_translations:
 	python3 manage.py makemessages --all --no-obsolete --ignore=debian -d django
