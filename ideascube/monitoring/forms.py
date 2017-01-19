@@ -87,7 +87,7 @@ class InventorySpecimenForm(forms.ModelForm):
             specimen = Specimen.objects.get(barcode=barcode)
         except Specimen.DoesNotExist:
             raise forms.ValidationError(
-                _('Barcode {barcode} not found'.format(barcode=barcode)))
+                _('Barcode {barcode} not found').format(barcode=barcode))
         else:
             return specimen
 
@@ -117,7 +117,7 @@ class LoanForm(forms.ModelForm):
             specimen = Specimen.objects.get(barcode=barcode)
         except Specimen.DoesNotExist:
             raise forms.ValidationError(
-                _('Barcode {barcode} not found'.format(barcode=barcode)))
+                _('Barcode {barcode} not found').format(barcode=barcode))
         else:
             return specimen
 
@@ -127,7 +127,7 @@ class LoanForm(forms.ModelForm):
             user = user_model.objects.get(serial=serial)
         except user_model.DoesNotExist:
             raise forms.ValidationError(
-                _('Identifier {serial} not found'.format(serial=serial)))
+                _('Identifier {serial} not found').format(serial=serial))
         else:
             return user
 
