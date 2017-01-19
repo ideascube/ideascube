@@ -28,8 +28,7 @@ def test_login_page_should_return_form_in_GET_mode(app):
 
 @pytest.mark.usefixtures('user')
 def test_home_page_should_redirect_to_welcome_staff_if_no_staff(app):
-    response = app.get(reverse('index')).follow()
-    assert response.status_code == 200
+    response = app.get(reverse('index'), status=302).follow(status=200)
     assert response.forms['model_form']
 
 
@@ -39,37 +38,37 @@ def test_home_page_should_not_redirect_if_staff_exists(app):
 
 
 def test_welcome_staff_should_redirect_to_home_page_if_staff_exists(staffapp):
-    response = staffapp.get(reverse('welcome_staff'))
-    assert response.status_code == 302
+    response = staffapp.get(reverse('welcome_staff'), status=302)
     assert response.location == '/'
 
 
 def test_welcome_page_should_create_staff_user_on_POST(app):
-    form = app.get(reverse('welcome_staff')).forms['model_form']
+    form = app.get(reverse('welcome_staff'), status=200).forms['model_form']
     form['serial'] = 'myuser'
     form['password'] = 'password'
     form['password_confirm'] = 'password'
-    form.submit().follow()
+    response = form.submit(302)
+    assert response.location == '/'
     user = user_model.objects.last()
     assert user.is_staff
 
 
 def test_welcome_page_should_create_staff_user_with_unicode(app):
-    form = app.get(reverse('welcome_staff')).forms['model_form']
+    form = app.get(reverse('welcome_staff'), status=200).forms['model_form']
     name = 'كتبه'
     form['serial'] = name
     form['password'] = 'password'
     form['password_confirm'] = 'password'
-    response = form.submit().follow().follow()
+    response = form.submit(status=302).follow(status=302).follow(status=200)
     response.mustcontain(name)
 
 
 def test_welcome_page_does_not_create_staff_user_passwords_do_not_match(app):
-    form = app.get(reverse('welcome_staff')).forms['model_form']
+    form = app.get(reverse('welcome_staff'), status=200).forms['model_form']
     form['serial'] = 'myuser'
     form['password'] = 'password1'
     form['password_confirm'] = 'password2'
-    res = form.submit()
+    res = form.submit(status=200)
     assert 'The two passwords do not match' in res.text
     assert user_model.objects.count() == 0
 
@@ -119,13 +118,13 @@ def test_system_user_cannot_log_in(client, systemuser):
 
 @pytest.mark.usefixtures('staffuser')
 def test_login_from_link_should_redirect_to_previous(app, user):
-    mediacenter = app.get(reverse('mediacenter:index'))
+    mediacenter = app.get(reverse('mediacenter:index'), status=200)
     login = mediacenter.click('log in')
     form = login.forms['login']
     form['username'] = user.serial
     form['password'] = 'password'
-    resp = form.submit()
-    assert resp['Location'].endswith(reverse('mediacenter:index'))
+    resp = form.submit(status=302)
+    assert resp.location.endswith(reverse('mediacenter:index'))
 
 
 def test_user_list_page_should_not_be_accessible_to_anonymous(app):
@@ -152,23 +151,23 @@ def test_system_user_does_not_appear_in_list(staffapp, systemuser):
 def test_user_list_page_is_paginated(staffapp, monkeypatch):
     monkeypatch.setattr(UserList, 'paginate_by', 2)
     UserFactory.create_batch(size=3)  # There is also the staff user.
-    response = staffapp.get(reverse('user_list'))
+    response = staffapp.get(reverse('user_list'), status=200)
     # Count should be the full count, not only current page total.
     assert response.pyquery.find('caption')[0].text == 'Users (4)'
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = staffapp.get(reverse('user_list') + '?page=2')
+    response = staffapp.get(reverse('user_list') + '?page=2', status=200)
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    response = staffapp.get(reverse('user_list') + '?page=3', status=404)
+    staffapp.get(reverse('user_list') + '?page=3', status=404)
 
 
 def test_user_list_page_should_be_searchable(staffapp):
     user1 = UserFactory(full_name="user1")
     user2 = UserFactory(full_name="user2")
-    response = staffapp.get(reverse('user_list') + '?q=user1')
+    response = staffapp.get(reverse('user_list') + '?q=user1', status=200)
     response.mustcontain(str(user1), no=str(user2))
 
 
@@ -190,7 +189,8 @@ def test_non_staff_should_not_access_user_detail_page(loggedapp, user):
 
 
 def test_user_detail_page_should_be_accessible_to_staff(staffapp, user):
-    response = staffapp.get(reverse('user_detail', kwargs={'pk': user.pk}))
+    response = staffapp.get(
+        reverse('user_detail', kwargs={'pk': user.pk}), status=200)
     response.mustcontain(str(user))
 
 
@@ -212,7 +212,7 @@ def test_non_staff_should_not_access_user_create_page(loggedapp, user):
 def test_should_create_user_with_serial_only(staffapp):
     assert user_model.objects.count() == 1
     serial = '12345xz22'
-    form = staffapp.get(reverse('user_create')).forms['model_form']
+    form = staffapp.get(reverse('user_create'), status=200).forms['model_form']
     form['serial'] = serial
     form.submit()
     assert user_model.objects.count() == 2
@@ -221,16 +221,16 @@ def test_should_create_user_with_serial_only(staffapp):
 
 def test_should_not_create_user_without_serial(staffapp):
     assert user_model.objects.count() == 1
-    form = staffapp.get(reverse('user_create')).forms['model_form']
+    form = staffapp.get(reverse('user_create'), status=200).forms['model_form']
     form.submit()
     assert user_model.objects.count() == 1
 
 
 def test_system_serial_is_unique(staffapp, systemuser):
-    form = staffapp.get(reverse('user_create')).forms['model_form']
+    form = staffapp.get(reverse('user_create'), status=200).forms['model_form']
     form['serial'] = systemuser.serial
-    response = form.submit()
-    assert response.status_code == 200
+    response = form.submit(status=200)
+    assert response.request.path.endswith(reverse('user_create'))
 
 
 def test_user_update_page_should_not_be_accessible_to_anonymous(app, user):
@@ -249,17 +249,19 @@ def test_staff_should_be_able_to_update_user(staffapp, user):
     assert user_model.objects.count() == 2
     url = reverse('user_update', kwargs={'pk': user.pk})
     short_name = 'Denis'
-    form = staffapp.get(url).forms['model_form']
+    form = staffapp.get(url, status=200).forms['model_form']
     form['serial'] = user.serial
     form['short_name'] = short_name
-    form.submit().follow()
+    response = form.submit(status=302)
+    assert response.location.endswith(
+        reverse('user_detail', kwargs={'pk': user.pk}))
     assert user_model.objects.count() == 2
     assert user_model.objects.get(serial=user.serial).short_name == short_name
 
 
 def test_should_not_update_user_without_serial(app, staffapp, user):
     url = reverse('user_update', kwargs={'pk': user.pk})
-    form = staffapp.get(url).forms['model_form']
+    form = staffapp.get(url, status=200).forms['model_form']
     form['serial'] = ''
     form['short_name'] = 'ABCDEF'
     assert form.submit()
@@ -291,7 +293,7 @@ def test_non_staff_cannot_delete_user(loggedapp, user):
 def test_staff_user_can_delete_user(staffapp, user):
     assert user_model.objects.count() == 2  # staff user and normal user
     url = reverse('user_delete', kwargs={'pk': user.pk})
-    form = staffapp.get(url).forms['delete_form']
+    form = staffapp.get(url, status=200).forms['delete_form']
     form.submit()
     assert user_model.objects.count() == 1
 
@@ -318,9 +320,13 @@ def test_logged_user_cannot_access_toggle_staff_page(loggedapp, user):
 def test_staff_can_toggle_user_is_staff_flag(staffapp, user):
     assert not user.is_staff
     url = reverse('user_toggle_staff', kwargs={'pk': user.pk})
-    assert staffapp.get(url)
+    response = staffapp.get(url, status=302)
+    assert response.location.endswith(
+        reverse('user_detail', kwargs={'pk': user.pk}))
     assert user_model.objects.get(pk=user.pk).is_staff
-    assert staffapp.get(url)
+    response = staffapp.get(url, status=302)
+    assert response.location.endswith(
+        reverse('user_detail', kwargs={'pk': user.pk}))
     assert not user_model.objects.get(pk=user.pk).is_staff
 
 
@@ -339,13 +345,15 @@ def test_logged_user_cannot_access_set_password_page(loggedapp, user):
 def test_staff_can_set_password(staffapp, client, user):
     old_password = user.password
     url = reverse('user_set_password', kwargs={'pk': user.pk})
-    response = staffapp.get(url)
+    response = staffapp.get(url, status=200)
     response.mustcontain(str(user))
     form = response.forms['set_password']
     password = 'thisisanewpassword'
     form['new_password1'] = password
     form['new_password2'] = password
-    form.submit().follow()
+    response = form.submit(status=302)
+    assert response.location.endswith(
+        reverse('user_detail', kwargs={'pk': user.pk}))
     assert user_model.objects.get(pk=user.pk).password != old_password
 
 
@@ -467,11 +475,11 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     BookSpecimenFactory.create_batch(size=2, item__tags=['plane'])
     url = reverse('by_tag')
     url = url+"?tags=plane"
-    response = app.get(url)
+    response = app.get(url, status=200)
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(url + '&page=2')
+    response = app.get(url + '&page=2', status=200)
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
