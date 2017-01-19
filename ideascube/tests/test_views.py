@@ -22,7 +22,8 @@ user_model = get_user_model()
 
 
 def test_login_page_should_return_form_in_GET_mode(app):
-    assert app.get(reverse('login'), status=200)
+    response = app.get(reverse('login'), status=200)
+    assert response.forms['login']
 
 
 @pytest.mark.usefixtures('user')
@@ -40,6 +41,7 @@ def test_home_page_should_not_redirect_if_staff_exists(app):
 def test_welcome_staff_should_redirect_to_home_page_if_staff_exists(staffapp):
     response = staffapp.get(reverse('welcome_staff'))
     assert response.status_code == 302
+    assert response.location == '/'
 
 
 def test_welcome_page_should_create_staff_user_on_POST(app):
@@ -338,13 +340,11 @@ def test_systemuser_cannot_have_its_password_changed(staffapp, systemuser):
 
 
 def test_anonymous_cannot_export_users(app, user):
-    assert app.get(reverse('user_set_password', kwargs={'pk': user.pk}),
-                   status=302)
+    assert app.get(reverse('user_export'), status=302)
 
 
 def test_logged_user_cannot_export_users(loggedapp, user):
-    assert loggedapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
-                         status=302)
+    assert loggedapp.get(reverse('user_export'), status=302)
 
 
 def test_export_users_should_return_csv_with_users(staffapp, settings):
