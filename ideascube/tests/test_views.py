@@ -25,13 +25,15 @@ def test_login_page_should_return_form_in_GET_mode(app):
     assert app.get(reverse('login'), status=200)
 
 
-def test_home_page_should_redirect_to_welcome_staff_if_no_staff(app, user):
+@pytest.mark.usefixtures('user')
+def test_home_page_should_redirect_to_welcome_staff_if_no_staff(app):
     response = app.get(reverse('index')).follow()
     assert response.status_code == 200
     assert response.forms['model_form']
 
 
-def test_home_page_should_not_redirect_if_staff_exists(app, staffuser):
+@pytest.mark.usefixtures('staffuser')
+def test_home_page_should_not_redirect_if_staff_exists(app):
     app.get(reverse('index'), status=200)
 
 
@@ -70,9 +72,8 @@ def test_welcome_page_does_not_create_staff_user_passwords_do_not_match(app):
     assert user_model.objects.count() == 0
 
 
-def test_login_page_should_log_in_user_if_POST_data_is_correct(client, user,
-                                                               staffuser):
-    # Loading staffuser fixture so we don't fail into welcome_staff page.
+@pytest.mark.usefixtures('staffuser')
+def test_login_page_should_log_in_user_if_POST_data_is_correct(client, user):
     response = client.post(reverse('login'), {
         'username': user.serial,
         'password': 'password'
@@ -114,8 +115,8 @@ def test_system_user_cannot_log_in(client, systemuser):
     assert not response.context['user'].is_authenticated()
 
 
-def test_login_from_link_should_redirect_to_previous(app, user, staffuser):
-    # Loading staffuser fixture so we don't fail into welcome_staff page.
+@pytest.mark.usefixtures('staffuser')
+def test_login_from_link_should_redirect_to_previous(app, user):
     mediacenter = app.get(reverse('mediacenter:index'))
     login = mediacenter.click('log in')
     form = login.forms['login']
@@ -459,14 +460,14 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     response = app.get(url + '&page=3', status=404)
 
 
-def test_build_package_card_info_must_not_fail_for_no_package(app, systemuser):
+def test_build_package_card_info_must_not_fail_for_no_package(systemuser):
     from ideascube.configuration import set_config
     from ideascube.views import build_package_card_info
     set_config('home-page', 'displayed-package-ids', ['test.package1'], systemuser)
     assert build_package_card_info() == []
 
 
-def test_build_package_card_info(app, systemuser, catalog):
+def test_build_package_card_info(systemuser, catalog):
     from ideascube.configuration import set_config
     from ideascube.views import build_package_card_info
     from ideascube.serveradmin.catalog import ZippedZim, ZippedMedias
