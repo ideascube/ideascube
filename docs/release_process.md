@@ -73,4 +73,4 @@ Push the release:
     $ git push origin master x.x.x
 
 Make yourself a drink while you wait for Buildbot to finish building the Debian
-packages. Follow its progress at http://buildbot.ideascube.org/waterfall
+packages. Follow its progress at <http://buildbot.ideascube.org/waterfall>
