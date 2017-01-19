@@ -21,10 +21,6 @@ pytestmark = pytest.mark.django_db
 user_model = get_user_model()
 
 
-def test_home_page(app):
-    assert app.get('/')
-
-
 def test_login_page_should_return_form_in_GET_mode(app):
     assert app.get(reverse('login'), status=200)
 
@@ -203,10 +199,6 @@ def test_non_staff_should_not_access_user_create_page(loggedapp, user):
     assert loggedapp.get(reverse('user_create'), status=302)
 
 
-def test_user_create_page_should_be_accessible_to_staff(staffapp):
-    assert staffapp.get(reverse('user_create'), status=200)
-
-
 def test_should_create_user_with_serial_only(staffapp):
     assert len(user_model.objects.all()) == 1
     serial = '12345xz22'
@@ -240,11 +232,6 @@ def test_non_staff_should_not_access_user_update_page(loggedapp, user):
                          status=302)
 
 
-def test_staff_should_access_user_update_page(staffapp, user):
-    assert staffapp.get(reverse('user_update', kwargs={'pk': user.pk}),
-                        status=200)
-
-
 def test_staff_should_be_able_to_update_user(staffapp, user):
     assert len(user_model.objects.all()) == 2
     url = reverse('user_update', kwargs={'pk': user.pk})
@@ -270,20 +257,6 @@ def test_should_not_update_user_without_serial(app, staffapp, user):
 def test_system_user_cannot_be_updated(staffapp, systemuser):
     url = reverse('user_update', kwargs={'pk': systemuser.pk})
     staffapp.get(url, status=404)
-
-
-def test_delete_page_should_not_be_reachable_to_anonymous(app, user):
-    assert app.get(reverse('user_delete', kwargs={'pk': user.pk}), status=302)
-
-
-def test_delete_page_should_not_be_reachable_to_non_staff(loggedapp, user):
-    assert loggedapp.get(reverse('user_delete', kwargs={'pk': user.pk}),
-                         status=302)
-
-
-def test_staff_user_should_access_confirm_delete_page(staffapp, user):
-    assert staffapp.get(reverse('user_delete', kwargs={'pk': user.pk}),
-                        status=200)
 
 
 def test_anonymous_cannot_delete_user(app, user):
@@ -326,12 +299,6 @@ def test_logged_user_cannot_access_toggle_staff_page(loggedapp, user):
     assert not user_model.objects.get(pk=user.pk).is_staff
 
 
-def test_staff_can_access_toggle_staff_page(staffapp, user):
-    assert staffapp.get(reverse('user_toggle_staff', kwargs={'pk': user.pk}),
-                        status=302)
-    assert user_model.objects.get(pk=user.pk).is_staff
-
-
 def test_staff_can_toggle_user_is_staff_flag(staffapp, user):
     assert not user.is_staff
     url = reverse('user_toggle_staff', kwargs={'pk': user.pk})
@@ -349,11 +316,6 @@ def test_anonymous_cannot_access_set_password_page(app, user):
 def test_logged_user_cannot_access_set_password_page(loggedapp, user):
     assert loggedapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
                          status=302)
-
-
-def test_staff_can_access_set_password_page(staffapp, user):
-    assert staffapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
-                        status=200)
 
 
 def test_staff_can_set_password(staffapp, client, user):
@@ -383,11 +345,6 @@ def test_anonymous_cannot_export_users(app, user):
 def test_logged_user_cannot_export_users(loggedapp, user):
     assert loggedapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
                          status=302)
-
-
-def test_staff_can_export_users(staffapp, user):
-    assert staffapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
-                        status=200)
 
 
 def test_export_users_should_return_csv_with_users(staffapp, settings):
