@@ -25,20 +25,6 @@ def test_home_page(app):
     assert app.get('/')
 
 
-def test_anonymous_user_should_not_access_admin(app):
-    response = app.get(reverse('admin:index'), status=302)
-    assert 'login' in response['Location']
-
-
-def test_normal_user_should_not_access_admin(loggedapp, user):
-    response = loggedapp.get(reverse('admin:index'), status=302)
-    assert 'login' in response['Location']
-
-
-def test_staff_user_should_access_admin(staffapp):
-    assert staffapp.get(reverse('admin:index'), status=200)
-
-
 def test_login_page_should_return_form_in_GET_mode(app):
     assert app.get(reverse('login'), status=200)
 
