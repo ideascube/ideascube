@@ -139,6 +139,7 @@ def test_non_staff_should_not_access_user_list_page(loggedapp):
 def test_user_list_page_should_be_accessible_to_staff(staffapp, user):
     response = staffapp.get(reverse('user_list'), status=200)
     response.mustcontain(str(user))
+    response.mustcontain(str(staffapp.user))
 
 
 def test_system_user_does_not_appear_in_list(staffapp, systemuser):
