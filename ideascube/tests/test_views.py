@@ -363,7 +363,9 @@ def test_staff_can_set_password(staffapp, client, user):
     response = form.submit(status=302)
     assert response.location.endswith(
         reverse('user_detail', kwargs={'pk': user.pk}))
-    assert user_model.objects.get(pk=user.pk).password != old_password
+    dbuser = user_model.objects.get(pk=user.pk)
+    assert dbuser.password != old_password
+    assert dbuser.check_password(password)
 
 
 def test_systemuser_cannot_have_its_password_changed(staffapp, systemuser):
