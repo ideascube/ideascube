@@ -201,20 +201,20 @@ def test_non_staff_should_not_access_user_create_page(loggedapp, user):
 
 
 def test_should_create_user_with_serial_only(staffapp):
-    assert len(user_model.objects.all()) == 1
+    assert user_model.objects.count() == 1
     serial = '12345xz22'
     form = staffapp.get(reverse('user_create')).forms['model_form']
     form['serial'] = serial
     form.submit()
-    assert len(user_model.objects.all()) == 2
+    assert user_model.objects.count() == 2
     assert user_model.objects.filter(serial=serial)
 
 
 def test_should_not_create_user_without_serial(staffapp):
-    assert len(user_model.objects.all()) == 1
+    assert user_model.objects.count() == 1
     form = staffapp.get(reverse('user_create')).forms['model_form']
     form.submit()
-    assert len(user_model.objects.all()) == 1
+    assert user_model.objects.count() == 1
 
 
 def test_system_serial_is_unique(staffapp, systemuser):
@@ -234,14 +234,14 @@ def test_non_staff_should_not_access_user_update_page(loggedapp, user):
 
 
 def test_staff_should_be_able_to_update_user(staffapp, user):
-    assert len(user_model.objects.all()) == 2
+    assert user_model.objects.count() == 2
     url = reverse('user_update', kwargs={'pk': user.pk})
     short_name = 'Denis'
     form = staffapp.get(url).forms['model_form']
     form['serial'] = user.serial
     form['short_name'] = short_name
     form.submit().follow()
-    assert len(user_model.objects.all()) == 2
+    assert user_model.objects.count() == 2
     assert user_model.objects.get(serial=user.serial).short_name == short_name
 
 
@@ -261,25 +261,25 @@ def test_system_user_cannot_be_updated(staffapp, systemuser):
 
 
 def test_anonymous_cannot_delete_user(app, user):
-    assert len(user_model.objects.all()) == 1
+    assert user_model.objects.count() == 1
     url = reverse('user_delete', kwargs={'pk': user.pk})
     assert app.get(url, status=302)
-    assert len(user_model.objects.all()) == 1
+    assert user_model.objects.count() == 1
 
 
 def test_non_staff_cannot_delete_user(loggedapp, user):
-    assert len(user_model.objects.all()) == 1
+    assert user_model.objects.count() == 1
     url = reverse('user_delete', kwargs={'pk': user.pk})
     assert loggedapp.get(url, status=302)
-    assert len(user_model.objects.all()) == 1
+    assert user_model.objects.count() == 1
 
 
 def test_staff_user_can_delete_user(staffapp, user):
-    assert len(user_model.objects.all()) == 2  # staff user and normal user
+    assert user_model.objects.count() == 2  # staff user and normal user
     url = reverse('user_delete', kwargs={'pk': user.pk})
     form = staffapp.get(url).forms['delete_form']
     form.submit()
-    assert len(user_model.objects.all()) == 1
+    assert user_model.objects.count() == 1
 
 
 def test_system_user_cannot_be_deleted(staffapp, systemuser):
