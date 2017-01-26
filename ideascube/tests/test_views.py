@@ -283,8 +283,7 @@ def test_staff_user_can_delete_user(staffapp, user):
 
 def test_system_user_cannot_be_deleted(staffapp, systemuser):
     staffapp.get(
-        reverse('user_delete', kwargs={'pk': systemuser.pk}),
-        status=404)
+        reverse('user_delete', kwargs={'pk': systemuser.pk}), status=404)
 
 
 def test_anonymous_cannot_access_toggle_staff_page(app, user):
