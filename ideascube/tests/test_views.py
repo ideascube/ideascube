@@ -393,6 +393,8 @@ def test_export_users_should_return_csv_with_users(staffapp, settings):
             'short_name', user1.short_name, user2.short_name,
             'full_name', user1.full_name, user2.full_name,
             ])
+    assert resp.content_disposition.startswith('attachment; filename=')
+    assert resp.content_disposition.endswith('.csv"')
 
 
 def test_export_users_should_be_ok_in_arabic(staffapp, settings):
