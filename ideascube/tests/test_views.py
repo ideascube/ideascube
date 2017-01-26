@@ -129,11 +129,13 @@ def test_login_from_link_should_redirect_to_previous(app, user):
 
 
 def test_user_list_page_should_not_be_accessible_to_anonymous(app):
-    assert app.get(reverse('user_list'), status=302)
+    response = app.get(reverse('user_list'), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_non_staff_should_not_access_user_list_page(loggedapp):
-    assert loggedapp.get(reverse('user_list'), status=302)
+    response = loggedapp.get(reverse('user_list'), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_user_list_page_should_be_accessible_to_staff(staffapp, user):
@@ -176,13 +178,15 @@ def test_system_user_is_not_searchable(staffapp, systemuser):
 
 
 def test_user_detail_page_should_not_be_accessible_to_anonymous(app, user):
-    assert app.get(reverse('user_detail', kwargs={'pk': user.pk}),
-                   status=302)
+    response = app.get(
+        reverse('user_detail', kwargs={'pk': user.pk}), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_non_staff_should_not_access_user_detail_page(loggedapp, user):
-    assert loggedapp.get(reverse('user_detail', kwargs={'pk': user.pk}),
-                         status=302)
+    response = loggedapp.get(
+        reverse('user_detail', kwargs={'pk': user.pk}), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_user_detail_page_should_be_accessible_to_staff(staffapp, user):
@@ -196,11 +200,13 @@ def test_system_user_cannot_be_viewed(staffapp, systemuser):
 
 
 def test_user_create_page_should_not_be_accessible_to_anonymous(app):
-    assert app.get(reverse('user_create'), status=302)
+    response = app.get(reverse('user_create'), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_non_staff_should_not_access_user_create_page(loggedapp, user):
-    assert loggedapp.get(reverse('user_create'), status=302)
+    response = loggedapp.get(reverse('user_create'), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_should_create_user_with_serial_only(staffapp):
@@ -228,12 +234,15 @@ def test_system_serial_is_unique(staffapp, systemuser):
 
 
 def test_user_update_page_should_not_be_accessible_to_anonymous(app, user):
-    assert app.get(reverse('user_update', kwargs={'pk': user.pk}), status=302)
+    response = app.get(
+        reverse('user_update', kwargs={'pk': user.pk}), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_non_staff_should_not_access_user_update_page(loggedapp, user):
-    assert loggedapp.get(reverse('user_update', kwargs={'pk': user.pk}),
-                         status=302)
+    response = loggedapp.get(
+        reverse('user_update', kwargs={'pk': user.pk}), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_staff_should_be_able_to_update_user(staffapp, user):
@@ -265,15 +274,17 @@ def test_system_user_cannot_be_updated(staffapp, systemuser):
 
 def test_anonymous_cannot_delete_user(app, user):
     assert user_model.objects.count() == 1
-    url = reverse('user_delete', kwargs={'pk': user.pk})
-    assert app.get(url, status=302)
+    response = app.get(
+        reverse('user_delete', kwargs={'pk': user.pk}), status=302)
+    assert '/login/?next=' in response.location
     assert user_model.objects.count() == 1
 
 
 def test_non_staff_cannot_delete_user(loggedapp, user):
     assert user_model.objects.count() == 1
-    url = reverse('user_delete', kwargs={'pk': user.pk})
-    assert loggedapp.get(url, status=302)
+    response = loggedapp.get(
+        reverse('user_delete', kwargs={'pk': user.pk}), status=302)
+    assert '/login/?next=' in response.location
     assert user_model.objects.count() == 1
 
 
@@ -291,14 +302,16 @@ def test_system_user_cannot_be_deleted(staffapp, systemuser):
 
 
 def test_anonymous_cannot_access_toggle_staff_page(app, user):
-    assert app.get(reverse('user_toggle_staff', kwargs={'pk': user.pk}),
-                   status=302)
+    response = app.get(
+        reverse('user_toggle_staff', kwargs={'pk': user.pk}), status=302)
+    assert '/login/?next=' in response.location
     assert not user_model.objects.get(pk=user.pk).is_staff
 
 
 def test_logged_user_cannot_access_toggle_staff_page(loggedapp, user):
-    assert loggedapp.get(reverse('user_toggle_staff', kwargs={'pk': user.pk}),
-                         status=302)
+    response = loggedapp.get(
+        reverse('user_toggle_staff', kwargs={'pk': user.pk}), status=302)
+    assert '/login/?next=' in response.location
     assert not user_model.objects.get(pk=user.pk).is_staff
 
 
@@ -312,13 +325,15 @@ def test_staff_can_toggle_user_is_staff_flag(staffapp, user):
 
 
 def test_anonymous_cannot_access_set_password_page(app, user):
-    assert app.get(reverse('user_set_password', kwargs={'pk': user.pk}),
-                   status=302)
+    response = app.get(
+        reverse('user_set_password', kwargs={'pk': user.pk}), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_logged_user_cannot_access_set_password_page(loggedapp, user):
-    assert loggedapp.get(reverse('user_set_password', kwargs={'pk': user.pk}),
-                         status=302)
+    response = loggedapp.get(
+        reverse('user_set_password', kwargs={'pk': user.pk}), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_staff_can_set_password(staffapp, client, user):
@@ -341,11 +356,13 @@ def test_systemuser_cannot_have_its_password_changed(staffapp, systemuser):
 
 
 def test_anonymous_cannot_export_users(app, user):
-    assert app.get(reverse('user_export'), status=302)
+    response = app.get(reverse('user_export'), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_logged_user_cannot_export_users(loggedapp, user):
-    assert loggedapp.get(reverse('user_export'), status=302)
+    response = loggedapp.get(reverse('user_export'), status=302)
+    assert '/login/?next=' in response.location
 
 
 def test_export_users_should_return_csv_with_users(staffapp, settings):
