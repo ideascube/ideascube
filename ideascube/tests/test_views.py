@@ -49,6 +49,7 @@ def test_welcome_page_should_create_staff_user_on_POST(app):
     form['password_confirm'] = 'password'
     response = form.submit(302)
     assert response.location == '/'
+    assert user_model.objects.count() == 1
     user = user_model.objects.last()
     assert user.is_staff
 
@@ -61,6 +62,10 @@ def test_welcome_page_should_create_staff_user_with_unicode(app):
     form['password_confirm'] = 'password'
     response = form.submit(status=302).follow(status=302).follow(status=200)
     response.mustcontain(name)
+    assert user_model.objects.count() == 1
+    user = user_model.objects.last()
+    assert user.serial == name
+    assert user.is_staff
 
 
 def test_welcome_page_does_not_create_staff_user_passwords_do_not_match(app):
@@ -216,7 +221,7 @@ def test_should_create_user_with_serial_only(staffapp):
     form['serial'] = serial
     form.submit()
     assert user_model.objects.count() == 2
-    assert user_model.objects.filter(serial=serial)
+    user_model.objects.get(serial=serial)
 
 
 def test_should_not_create_user_without_serial(staffapp):
@@ -227,10 +232,12 @@ def test_should_not_create_user_without_serial(staffapp):
 
 
 def test_system_serial_is_unique(staffapp, systemuser):
+    assert user_model.objects.get_queryset_unfiltered().count() == 2
     form = staffapp.get(reverse('user_create'), status=200).forms['model_form']
     form['serial'] = systemuser.serial
     response = form.submit(status=200)
     assert response.request.path.endswith(reverse('user_create'))
+    assert user_model.objects.get_queryset_unfiltered().count() == 2
 
 
 def test_user_update_page_should_not_be_accessible_to_anonymous(app, user):
@@ -299,8 +306,10 @@ def test_staff_user_can_delete_user(staffapp, user):
 
 
 def test_system_user_cannot_be_deleted(staffapp, systemuser):
+    assert user_model.objects.get_queryset_unfiltered().count() == 2
     staffapp.get(
         reverse('user_delete', kwargs={'pk': systemuser.pk}), status=404)
+    assert user_model.objects.get_queryset_unfiltered().count() == 2
 
 
 def test_anonymous_cannot_access_toggle_staff_page(app, user):
