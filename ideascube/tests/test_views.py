@@ -59,7 +59,7 @@ def test_welcome_page_should_create_staff_user_with_unicode(app):
     form['password'] = 'password'
     form['password_confirm'] = 'password'
     response = form.submit().follow().follow()
-    response.mustcontain(name.encode())
+    response.mustcontain(name)
 
 
 def test_welcome_page_does_not_create_staff_user_passwords_do_not_match(app):
@@ -68,7 +68,7 @@ def test_welcome_page_does_not_create_staff_user_passwords_do_not_match(app):
     form['password'] = 'password1'
     form['password_confirm'] = 'password2'
     res = form.submit()
-    assert 'The two passwords do not match' in res.unicode_body
+    assert 'The two passwords do not match' in res.text
     assert user_model.objects.count() == 0
 
 
@@ -426,7 +426,7 @@ def test_valid_proxy_request(app):
     environ = {'SERVER_NAME': 'testserver'}
     response = app.get(url, params, headers, environ)
     assert response.status_code == 200
-    assert 'Example Domain' in response.content.decode()
+    assert 'Example Domain' in response.text
     assert "Vary" not in response.headers
 
 
@@ -436,10 +436,10 @@ def test_by_tag_page_should_be_filtered_by_tag(app):
     plane2 = BookSpecimenFactory(item__tags=['plane'])
     boat2 = BookSpecimenFactory(item__tags=['boat'])
     response = app.get(reverse('by_tag'), {'tags': 'plane'})
-    assert plane.title in response.content.decode()
-    assert plane2.item.name in response.content.decode()
-    assert boat.title not in response.content.decode()
-    assert boat2.item.name not in response.content.decode()
+    assert plane.title in response.text
+    assert plane2.item.name in response.text
+    assert boat.title not in response.text
+    assert boat2.item.name not in response.text
 
 
 def test_by_tag_page_is_paginated(app, monkeypatch):
@@ -517,4 +517,4 @@ def test_cards_properly_displayed(app):
             'id'         : 'kiwix'
         }]
         response = app.get(reverse('index'), status=200)
-        assert 'Test package1' in response.unicode_body
+        assert 'Test package1' in response.text
