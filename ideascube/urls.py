@@ -2,7 +2,6 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
-from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.decorators.cache import cache_control, cache_page
 from django.views.i18n import javascript_catalog
@@ -11,7 +10,6 @@ from django.views.i18n import javascript_catalog
 from . import views
 
 urlpatterns = i18n_patterns(
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('ideascube.blog.urls', namespace="blog")),
     url(r'^library/', include('ideascube.library.urls', namespace="library")),
     url(r'^search/', include('ideascube.search.urls', namespace="search")),
