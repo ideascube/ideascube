@@ -289,7 +289,6 @@ def test_staff_user_should_access_confirm_delete_page(staffapp, user):
 def test_anonymous_cannot_delete_user(app, user):
     assert len(user_model.objects.all()) == 1
     url = reverse('user_delete', kwargs={'pk': user.pk})
-    url = reverse('user_delete', kwargs={'pk': user.pk})
     assert app.get(url, status=302)
     assert len(user_model.objects.all()) == 1
 
