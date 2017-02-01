@@ -53,10 +53,10 @@ class Document(SearchMixin, TimeStampedModel):
     title = models.CharField(verbose_name=_('title'), max_length=100)
     summary = models.TextField(verbose_name=_('summary'))
     lang = LanguageField(verbose_name=_('Language'), max_length=10, blank=True)
-    original = models.FileField(verbose_name=_('original'),
+    original = models.FileField(verbose_name=_('Source file'),
                                 upload_to='mediacenter/document',
                                 max_length=10240)
-    preview = models.ImageField(verbose_name=_('preview'),
+    preview = models.ImageField(verbose_name=_('Preview picture'),
                                 upload_to='mediacenter/preview',
                                 max_length=10240,
                                 blank=True)
