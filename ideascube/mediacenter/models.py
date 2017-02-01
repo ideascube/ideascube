@@ -60,7 +60,7 @@ class Document(SearchMixin, TimeStampedModel):
                                 upload_to='mediacenter/preview',
                                 max_length=10240,
                                 blank=True)
-    credits = models.CharField(verbose_name=_('credit'), max_length=300)
+    credits = models.CharField(verbose_name=_('Authorship'), max_length=300)
     kind = models.CharField(verbose_name=_('type'),
                             max_length=5,
                             choices=KIND_CHOICES,
