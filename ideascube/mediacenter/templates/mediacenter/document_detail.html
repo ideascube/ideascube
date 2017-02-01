@@ -1,6 +1,6 @@
 {% extends 'two-third-third.html' %}
 
-{% load i18n ideascube_tags static %}
+{% load i18n ideascube_tags mediacenter_tags static %}
 
 {% block extra_head %}
     <link rel="stylesheet" type="text/css" href="{% static "mediacenter/mediacenter.css" %}">
@@ -18,7 +18,7 @@
     {% elif document.preview %}
         <a href="{% media document 'original' %}"><img src="{% media document 'preview' %}" /></a>
     {% endif %}
-    <div class="text">{{ document.summary }}</div>
+    <div class="text">{% autoescape off %}{% htmlize_description document.summary|force_escape %}{% endautoescape %}</div>
     <div>
         <a class="button" href="{% media document 'original' %}"><span class="fa fa-download fa-fw"></span>
             {% blocktrans with kind=document.KIND_DICT|getitem:document.kind %}
