@@ -67,7 +67,9 @@ class Document(SearchMixin, TimeStampedModel):
                             default=OTHER)
 
     objects = DocumentQuerySet.as_manager()
-    tags = TaggableManager(blank=True, manager=SortedTaggableManager)
+    tags = TaggableManager(verbose_name=_('Topics'),
+                           blank=True,
+                           manager=SortedTaggableManager)
 
     package_id = models.CharField(verbose_name=_('package'), max_length=100,
                                   blank=True)
