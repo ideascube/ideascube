@@ -1,0 +1,18 @@
+.setup: &setup_definition
+  image: ideascube/ideascube-ci:jessie-python34
+  before_script:
+  - pew in venv make develop
+
+.test: &test_definition
+  <<: *setup_definition
+  script:
+  - pew in venv make test
+
+
+"Tests: Jessie/Python-3.4":
+  <<: *test_definition
+
+"Tests: C locale":
+  <<: *test_definition
+  variables:
+    LC_ALL: "C"
