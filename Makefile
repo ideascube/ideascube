@@ -17,14 +17,6 @@ pull_translations:
 	tx pull
 compile_translations:
 	python3 manage.py compilemessages
-clean:
-	-mv builds/ideascube_* builds/old
-build:
-	mkdir -p builds && dpkg-buildpackage -us -uc -Ibuilds && mv ../ideascube_* builds/
-install:
-	sudo dpkg -i builds/*.deb
-uninstall:
-	sudo dpkg -r ideascube
 migrate:
 	python3 manage.py migrate --database=default
 	python3 manage.py migrate --database=transient
