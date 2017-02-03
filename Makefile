@@ -50,6 +50,9 @@ test:
 testcov:
 	py.test --cov=ideascube/ --cov-report=term-missing --migrations
 
+quality-check:
+	py.test --flakes -m flakes
+
 test-data-migration:
 	set -e ; \
 	BRANCH=$$(git rev-parse --abbrev-ref HEAD); \

@@ -16,3 +16,9 @@
   <<: *test_definition
   variables:
     LC_ALL: "C"
+
+
+Code Quality:
+  <<: *setup_definition
+  script:
+  - pew in venv make quality-check
