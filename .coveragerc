@@ -9,3 +9,6 @@ omit =
     ideascube/migrations/*
     ideascube/conf/*
     ideascube/settings.py
+
+[report]
+precision = 2
