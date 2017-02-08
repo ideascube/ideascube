@@ -119,16 +119,27 @@ class LoanForm(forms.ModelForm):
 
     def clean_specimen(self):
         barcode = self.cleaned_data['specimen']
-        if Loan.objects.due().filter(specimen__barcode=barcode).exists():
+        already_loaned_query = (Q(specimen__barcode=barcode)
+                               |Q(specimen__serial=barcode))
+        if Loan.objects.due().filter(already_loaned_query).exists():
             msg = _('Item with barcode {barcode} is already loaned.')
             raise forms.ValidationError(msg.format(barcode=barcode))
+
+        specimen_query = Q(barcode=barcode)|Q(serial=barcode)
         try:
+            specimen = Specimen.objects.get(specimen_query)
+        except Specimen.MultipleObjectsReturned:
+            # Both barcode and serial are unique.
+            # So, if several specimens are returned, it means there is
+            # a speciment with barcode==barcode and another one with
+            # serial==barcode.
+            # So, the following request cannot fail.
             specimen = Specimen.objects.get(barcode=barcode)
         except Specimen.DoesNotExist:
             raise forms.ValidationError(
                 _('Barcode {barcode} not found').format(barcode=barcode))
-        else:
-            return specimen
+
+        return specimen
 
     def clean_user(self):
         serial = self.cleaned_data['user']
@@ -152,14 +163,15 @@ class ReturnForm(forms.Form):
 
     def clean_loan(self):
         barcode = self.cleaned_data['loan']
+        specimen_query = Q(specimen__barcode=barcode)|Q(specimen__serial=barcode)
         try:
-            loan = Loan.objects.due().get(specimen__barcode=barcode)
+            loan = Loan.objects.due().get(specimen_query)
         except Loan.DoesNotExist:
             msg = _('Item with barcode {barcode} is not loaned.')
             raise forms.ValidationError(msg.format(barcode=barcode))
         except Loan.MultipleObjectsReturned:
             # Should araise only after migration 0.3.2 to 0.3.0.
-            loan = Loan.objects.due().filter(specimen__barcode=barcode).first()
+            loan = Loan.objects.due().filter(specimen_query).first()
         return loan
 
 
