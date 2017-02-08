@@ -25,6 +25,8 @@ class Command(BaseCommand):
                             help='Print the list of medias that would be '
                                  'removed. Do not actually remove them')
 
+        self.parser = parser
+
     def handle(self, *args, **options):
         if 'func' not in options:
             self.parser.print_help()
