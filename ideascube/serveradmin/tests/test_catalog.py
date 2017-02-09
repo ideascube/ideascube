@@ -16,6 +16,11 @@ from ideascube.mediacenter.models import Document
             'url': 'http://foo.fr/catalog.yml',
         },
         {
+            'id': 'bibliothèque',
+            'name': 'Le contenu de la bibliothèque',
+            'url': 'http://foo.fr/catalog.yml',
+        },
+        {
             'name': 'Content provided by Foo',
             'url': 'http://foo.fr/catalog.yml',
         },
@@ -30,6 +35,7 @@ from ideascube.mediacenter.models import Document
     ],
     ids=[
         'foo',
+        'utf8',
         'missing-id',
         'missing-name',
         'missing-url',
@@ -37,14 +43,18 @@ from ideascube.mediacenter.models import Document
 def input_file(tmpdir, request):
     path = tmpdir.join('foo.yml')
 
+    lines = []
+
     if 'id' in request.param:
-        path.write('id: {id}\n'.format(**request.param), mode='a')
+        lines.append('id: {id}'.format(**request.param))
 
     if 'name' in request.param:
-        path.write('name: {name}\n'.format(**request.param), mode='a')
+        lines.append('name: {name}'.format(**request.param))
 
     if 'url' in request.param:
-        path.write('url: {url}'.format(**request.param), mode='a')
+        lines.append('url: "{url}"'.format(**request.param))
+
+    path.write_text('\n'.join(lines), encoding='utf-8')
 
     return {'path': path.strpath, 'input': request.param}
 
@@ -128,6 +138,30 @@ def test_remote_to_file(tmpdir):
     assert lines == [
         'id: foo', 'name: Content provided by Foo',
         'url: http://foo.fr/catalog.yml']
+
+
+def test_remote_to_file_utf8(tmpdir):
+    from ideascube.serveradmin.catalog import Remote
+
+    path = tmpdir.join('foo.yml')
+
+    remote = Remote(
+        'bibliothèque', 'Le contenu de la bibliothèque',
+        'http://foo.fr/catalog.yml')
+    remote.to_file(path.strpath)
+
+    lines = path.read_text('utf-8').split('\n')
+    lines = filter(lambda x: len(x), lines)
+    lines = sorted(lines)
+
+    assert lines == [
+        'id: "biblioth\\xE8que"', 'name: "Le contenu de la biblioth\\xE8que"',
+        'url: http://foo.fr/catalog.yml']
+
+    # Try loading it back
+    remote = Remote.from_file(path.strpath)
+    assert remote.id == 'bibliothèque'
+    assert remote.name == 'Le contenu de la bibliothèque'
 
 
 def test_package():

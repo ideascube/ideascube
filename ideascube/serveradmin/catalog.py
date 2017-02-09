@@ -39,7 +39,7 @@ def rm(path):
 
 
 def load_from_file(path):
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f.read())
 
 
@@ -48,7 +48,7 @@ def persist_to_file(path, data):
 
     Note: The function assumes that the data is serializable.
     """
-    with open(path, 'w') as f:
+    with open(path, 'w', encoding='utf-8') as f:
         f.write(yaml.safe_dump(data, default_flow_style=False))
 
 

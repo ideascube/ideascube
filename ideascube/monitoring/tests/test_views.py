@@ -111,15 +111,15 @@ def test_books_are_not_exported(staffapp):
 
 def test_import_stock(staffapp, tmpdir):
     source = tmpdir.join('stock.csv')
-    source.write(
+    source.write_text(
         'module,name,description\n'
         'cinema,C\'est arrivé près de chez vous,"Conte féérique pour les '
         'petits et les grands, le film relate les aventures de Benoît, preux '
         'chevalier en quête de justice, et des ménestrels Rémy, André et '
         'Patrick.\n\nBenoît parviendra-t-il à leur enseigner le principe de '
         'la poussée d\'Archimède ? Patrick reverra-t-il Marie-Paule ?"\n'
-        'notamodule,Not a name,This is not a description.\n'
-        )
+        'notamodule,Not a name,This is not a description.\n',
+        encoding='utf-8')
 
     response = staffapp.get(reverse('monitoring:stock_import'))
     form = response.forms['import']
