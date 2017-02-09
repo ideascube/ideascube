@@ -1,6 +1,7 @@
 import io
 import sys
 import os
+import re
 
 from django.conf import locale
 from hashlib import sha256
@@ -87,3 +88,7 @@ def get_file_sha256(path):
 
 def get_file_size(path):
     return os.stat(path).st_size
+
+def tag_splitter(tag_string):
+    tags = set(t.strip() for t in re.split(r'[;,]+', tag_string) if t.strip())
+    return list(tags)

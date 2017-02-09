@@ -2,7 +2,7 @@ from io import BytesIO
 
 import pytest
 
-from ideascube.utils import to_unicode, get_file_sha256, get_file_size
+from ideascube.utils import to_unicode, get_file_sha256, get_file_size, tag_splitter
 from hashlib import sha256
 
 
@@ -55,3 +55,35 @@ def test_size(tmpdir):
     with file_path.open("wb") as f:
         f.write(content)
     assert get_file_size(str(file_path)) == len(content)
+
+
+@pytest.mark.parametrize('string', [
+    'foo,bar,stuff,fuzzy',
+    'foo, bar, stuff, fuzzy',
+    'bar, stuff; fuzzy, foo',
+    ';;;; bar,   stuff    ;,fuzzy,foo  '
+])
+def test_tag_splitter_simple_tags(string):
+    oracle = set(['foo', 'bar', 'stuff', 'fuzzy'])
+    tags = tag_splitter(string)
+    assert len(tags) == len(oracle)
+    assert set(tags) == oracle
+
+
+@pytest.mark.parametrize('string', [
+    'black & white,stuff,fuzzy',
+    'black & white;fuzzy;stuff',
+    ';stuff; black & white,stuff,fuzzy',
+    '    black & white   ,,,, stuff  ,fuzzy',
+])
+def test_tag_splitter_tags_with_spaces(string):
+    oracle = set(['black & white', 'stuff', 'fuzzy'])
+    tags = tag_splitter(string)
+    assert len(tags) == len(oracle)
+    assert set(tags) == oracle
+
+def test_different_cases_make_different_tags():
+    oracle = set(['bar', 'Bar', 'BAR', 'baR'])
+    tags = tag_splitter("bar, Bar, BAR, baR")
+    assert len(tags) == len(oracle)
+    assert set(tags) == oracle
