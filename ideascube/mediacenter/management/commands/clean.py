@@ -17,13 +17,17 @@ class Command(BaseCommand):
         subs = parser.add_subparsers(
             title='Commands', dest='cmd', metavar='',
             parser_class=argparse.ArgumentParser)
+
+        dry_run = argparse.ArgumentParser('dry_run', add_help=False)
+        dry_run.add_argument('--dry-run', action='store_true',
+                             help='Print the list of medias that would be '
+                                  'removed. Do not actually remove them')
+
         clean_leftover = subs.add_parser(
             'leftover-files',
+            parents = [dry_run],
             help='Clean mediacenter files not associated with a document.')
         clean_leftover.set_defaults(func=self.clean_leftover)
-        parser.add_argument('--dry-run', action='store_true',
-                            help='Print the list of medias that would be '
-                                 'removed. Do not actually remove them')
 
         self.parser = parser
 
