@@ -21,6 +21,8 @@
     <table>
         <tr>
             <th>{% trans "Item" %}</th>
+            <th>{% trans "Barcode" %}</th>
+            <th>{% trans "Serial number" %}</th>
             <th>{% trans "User" %}</th>
             <th>{% trans "Due date" %}</th>
             <th>{% trans "Comments" %}</th>
@@ -28,7 +30,9 @@
         </tr>
         {% for loan in loans %}
             <tr>
-                <td>{{ loan.specimen.item }} - {{ loan.specimen.barcode }}</td>
+                <td>{{ loan.specimen.item }}</td>
+                <td>{{ loan.specimen.barcode }}</td>
+                <td>{{ loan.specimen.serial }}</td>
                 <td>{{ loan.user }}</td>
                 <td>{% if loan.due %}{% fa 'exclamation' %} {% endif %}{{ loan.due_date }}</td>
                 <td>{{ loan.comments }}</td>

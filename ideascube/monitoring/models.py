@@ -119,7 +119,7 @@ class Specimen(models.Model):
                                unique=True, blank=True, null=True)
     # This is the serial number attributed by the manufacturer/distributor
     serial = models.CharField(verbose_name=_('Serial number'), max_length=100,
-                              blank=True, null=True)
+                              unique=True, blank=True, null=True)
     item = models.ForeignKey(StockItem, related_name='specimens',
                              verbose_name=_('item'))
     count = models.IntegerField(verbose_name=_('quantity'), default=1)

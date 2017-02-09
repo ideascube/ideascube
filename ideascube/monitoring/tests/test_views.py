@@ -196,12 +196,22 @@ def test_staff_can_update_stockitem(staffapp):
     assert StockItem.objects.get(pk=item.pk).module == StockItem.LIBRARY
 
 
-def test_staff_can_create_specimen(staffapp):
+def test_staff_can_create_specimen_with_barcode(staffapp):
     item = StockItemFactory()
     url = reverse('monitoring:specimen_create', kwargs={'item_pk': item.pk})
     form = staffapp.get(url).forms['model_form']
     assert not item.specimens.exists()
     form['barcode'] = '23135321'
+    form.submit().follow()
+    assert item.specimens.exists()
+
+
+def test_staff_can_create_specimen_with_serial(staffapp):
+    item = StockItemFactory()
+    url = reverse('monitoring:specimen_create', kwargs={'item_pk': item.pk})
+    form = staffapp.get(url).forms['model_form']
+    assert not item.specimens.exists()
+    form['serial'] = '23135321'
     form.submit().follow()
     assert item.specimens.exists()
 
@@ -283,6 +293,19 @@ def test_export_inventory_should_be_ok_in_arabic(staffapp, settings):
     translation.deactivate()
 
 
+def test_staff_cannot_create_non_existant_inventoryspecimen(staffapp):
+    inventory = InventoryFactory()
+    specimen = SpecimenFactory(serial='123456789')
+    assert not InventorySpecimen.objects.filter(inventory=inventory,
+                                                specimen=specimen).exists()
+    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = '00000000'
+    form.submit().follow()
+    assert not InventorySpecimen.objects.filter(inventory=inventory,
+                                                specimen=specimen).exists()
+
+
 def test_staff_can_create_inventoryspecimen_by_barcode(staffapp):
     inventory = InventoryFactory()
     specimen = SpecimenFactory()
@@ -312,8 +335,7 @@ def test_inventoryspecimen_by_barcode_should_clean_barcode_input(staffapp):
 def test_cant_create_inventoryspecimen_by_barcode_twice(staffapp):
     inventory = InventoryFactory()
     specimen = SpecimenFactory()
-    assert not InventorySpecimen.objects.filter(inventory=inventory,
-                                                specimen=specimen).exists()
+    assert not InventorySpecimen.objects.filter(inventory=inventory).exists()
     url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
     form = staffapp.get(url).forms['by_barcode']
     form['specimen'] = specimen.barcode
@@ -321,8 +343,89 @@ def test_cant_create_inventoryspecimen_by_barcode_twice(staffapp):
     form = staffapp.get(url).forms['by_barcode']
     form['specimen'] = specimen.barcode
     form.submit().follow()
+    assert InventorySpecimen.objects.filter(inventory=inventory).count() == 1
+
+
+def test_staff_can_create_inventoryspecimen_by_serial(staffapp):
+    inventory = InventoryFactory()
+    specimen = SpecimenFactory(serial='1234567890')
+    assert not InventorySpecimen.objects.filter(inventory=inventory,
+                                                specimen=specimen).exists()
+    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = specimen.serial
+    form.submit().follow()
     assert InventorySpecimen.objects.filter(inventory=inventory,
                                             specimen=specimen).count() == 1
+
+
+def test_inventoryspecimen_by_serial_should_clean_barcode_input(staffapp):
+    inventory = InventoryFactory()
+    specimen = SpecimenFactory(serial='1987654')
+    assert not InventorySpecimen.objects.filter(inventory=inventory,
+                                                specimen=specimen).exists()
+    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = '19.87654'
+    form.submit().follow()
+    assert InventorySpecimen.objects.filter(inventory=inventory,
+                                            specimen=specimen).count() == 1
+
+
+def test_cant_create_inventoryspecimen_by_serial_twice(staffapp):
+    inventory = InventoryFactory()
+    specimen = SpecimenFactory(serial='123456789')
+    assert not InventorySpecimen.objects.filter(inventory=inventory).exists()
+    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = specimen.serial
+    form.submit().follow()
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = specimen.serial
+    form.submit().follow()
+    assert InventorySpecimen.objects.filter(inventory=inventory).count() == 1
+
+
+def test_cant_create_inventoryspecimen_by_serial_equal_to_previous_barcode(staffapp):
+    inventory = InventoryFactory()
+    specimen = SpecimenFactory(serial='123456789')
+    assert not InventorySpecimen.objects.filter(inventory=inventory,
+                                                specimen=specimen).exists()
+    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = specimen.barcode
+    form.submit().follow()
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = specimen.serial
+    form.submit().follow()
+    assert InventorySpecimen.objects.filter(inventory=inventory).count() == 1
+
+
+def test_cant_create_inventoryspecimen_by_barcode_equal_to_previous_serial(staffapp):
+    inventory = InventoryFactory()
+    specimen = SpecimenFactory(serial='123456789')
+    assert not InventorySpecimen.objects.filter(inventory=inventory,
+                                                specimen=specimen).exists()
+    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = specimen.serial
+    form.submit().follow()
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = specimen.barcode
+    form.submit().follow()
+    assert InventorySpecimen.objects.filter(inventory=inventory).count() == 1
+
+
+def test_inventoryspecimen_select_barcode_first(staffapp):
+    inventory = InventoryFactory()
+    specimen_barcode = SpecimenFactory()
+    SpecimenFactory(serial=specimen_barcode.barcode)
+    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
+    form = staffapp.get(url).forms['by_barcode']
+    form['specimen'] = specimen_barcode.barcode
+    form.submit().follow()
+    specimen_added = InventorySpecimen.objects.get(inventory=inventory)
+    assert specimen_added.specimen == specimen_barcode
 
 
 def test_staff_can_create_inventoryspecimen_by_click_on_add_link(staffapp):
@@ -389,12 +492,34 @@ def test_can_decrease_inventoryspecimen_by_click_on_decrease_link(staffapp):
                                          specimen=specimen).count == 1
 
 
-def test_can_loan(staffapp, user):
+def test_cannot_loan_non_existant(staffapp, user):
+    assert not Loan.objects.exists()
+    SpecimenFactory(serial='123456789')
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = '000000000'
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert not Loan.objects.exists()
+
+
+def test_can_loan_from_barcode(staffapp, user):
     assert not Loan.objects.exists()
     specimen = SpecimenFactory()
     url = reverse('monitoring:loan')
     form = staffapp.get(url).forms['loan_form']
     form['specimen'] = specimen.barcode
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.count() == 1
+
+
+def test_can_loan_from_serial(staffapp, user):
+    assert not Loan.objects.exists()
+    specimen = SpecimenFactory(serial='123456789')
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.serial
     form['user'] = user.serial
     form.submit('do_loan')
     assert Loan.objects.count() == 1
@@ -408,7 +533,7 @@ def test_default_loan_duration_can_be_changed(staffapp, settings):
     assert form['due_date'].value == due_date
 
 
-def test_cannot_loan_twice_same_item(staffapp, user):
+def test_cannot_loan_twice_same_item_from_barcode(staffapp, user):
     assert not Loan.objects.exists()
     specimen = SpecimenFactory()
     url = reverse('monitoring:loan')
@@ -424,7 +549,55 @@ def test_cannot_loan_twice_same_item(staffapp, user):
     assert Loan.objects.due().count() == 1
 
 
-def test_can_loan_twice_same_item_when_first_is_returned(staffapp, user):
+def test_cannot_loan_twice_same_item_from_serial(staffapp, user):
+    assert not Loan.objects.exists()
+    specimen = SpecimenFactory(serial='123456789')
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.serial
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.serial
+    form['user'] = staffapp.user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+
+
+def test_cannot_loan_twice_same_item_from_barcode_and_serial(staffapp, user):
+    assert not Loan.objects.exists()
+    specimen = SpecimenFactory(serial="123456789")
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.barcode
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.serial
+    form['user'] = staffapp.user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+
+
+def test_cannot_loan_twice_same_item_from_serial_and_barcode(staffapp, user):
+    assert not Loan.objects.exists()
+    specimen = SpecimenFactory(serial='123456789')
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.serial
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.barcode
+    form['user'] = staffapp.user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+
+
+def test_can_loan_twice_same_item_when_first_is_returned_from_barcode(staffapp, user):
     assert not Loan.objects.exists()
     specimen = SpecimenFactory()
     url = reverse('monitoring:loan')
@@ -448,12 +621,94 @@ def test_can_loan_twice_same_item_when_first_is_returned(staffapp, user):
     assert Loan.objects.due().count() == 1
 
 
-def test_can_return_loan(staffapp, user):
+def test_can_loan_twice_same_item_when_first_is_returned_from_serial(staffapp, user):
+    assert not Loan.objects.exists()
+    specimen = SpecimenFactory(serial='123456789')
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.serial
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+
+    # Return it.
+    form = staffapp.get(url).forms['return_form']
+    form['loan'] = specimen.serial
+    form.submit('do_return')
+    assert Loan.objects.due().count() == 0
+
+    # Loan again same item.
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.serial
+    form['user'] = staffapp.user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+
+
+def test_cannot_return_non_existant_loan(staffapp, user):
+    specimen = SpecimenFactory(serial='123456789')
+    Loan.objects.create(user=user, specimen=specimen,
+                        by=staffapp.user)
+    assert Loan.objects.due().count() == 1
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['return_form']
+    form['loan'] = '0000000'
+    form.submit('do_return')
+    assert Loan.objects.due().count() == 1
+
+
+def test_can_return_loan_from_barcode(staffapp, user):
     specimen = SpecimenFactory()
     Loan.objects.create(user=user, specimen=specimen,
                         by=staffapp.user)
     assert Loan.objects.due().count() == 1
     url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['return_form']
+    form['loan'] = specimen.barcode
+    form.submit('do_return')
+    assert Loan.objects.due().count() == 0
+
+
+def test_can_return_loan_from_serial(staffapp, user):
+    specimen = SpecimenFactory(serial='123456789')
+    Loan.objects.create(user=user, specimen=specimen,
+                        by=staffapp.user)
+    assert Loan.objects.due().count() == 1
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['return_form']
+    form['loan'] = specimen.serial
+    form.submit('do_return')
+    assert Loan.objects.due().count() == 0
+
+
+def test_can_loan_item_by_barcode_and_return_it_by_serial(staffapp, user):
+    assert not Loan.objects.exists()
+    specimen = SpecimenFactory(serial='123456789')
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.barcode
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+
+    # Return it.
+    form = staffapp.get(url).forms['return_form']
+    form['loan'] = specimen.serial
+    form.submit('do_return')
+    assert Loan.objects.due().count() == 0
+
+
+def test_can_loan_item_by_serial_and_return_it_by_barcode(staffapp, user):
+    assert not Loan.objects.count()
+    specimen = SpecimenFactory(serial='123456789')
+    url = reverse('monitoring:loan')
+    form = staffapp.get(url).forms['loan_form']
+    form['specimen'] = specimen.serial
+    form['user'] = user.serial
+    form.submit('do_loan')
+    assert Loan.objects.due().count() == 1
+
+    # Return it.
     form = staffapp.get(url).forms['return_form']
     form['loan'] = specimen.barcode
     form.submit('do_return')
@@ -472,7 +727,7 @@ def test_can_export_loan(staffapp):
     LoanFactory(specimen=specimen)
     url = reverse('monitoring:export_loan')
     resp = staffapp.get(url, status=200)
-    assert resp.content.decode().startswith("item,barcode,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa
+    assert resp.content.decode().startswith("item,barcode,serial,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa
 
 
 def test_export_loan_should_be_ok_in_arabic(staffapp):
@@ -481,6 +736,6 @@ def test_export_loan_should_be_ok_in_arabic(staffapp):
     loan = LoanFactory(specimen=specimen, comments=u"النبي (كتاب)")
     url = reverse('monitoring:export_loan')
     resp = staffapp.get(url, status=200)
-    assert resp.content.decode().startswith("item,barcode,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa
+    assert resp.content.decode().startswith("item,barcode,serial,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa
     resp.mustcontain(loan.comments)
     translation.deactivate()

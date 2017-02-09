@@ -431,8 +431,8 @@ class ExportLoan(CSVExportMixin, View):
             return HttpResponseRedirect(reverse_lazy('monitoring:loan'))
 
     def get_headers(self):
-        self.fields = ['item', 'barcode', 'user', 'loaned at', 'due date',
-                       'returned at', 'comments']
+        self.fields = ['item', 'barcode', 'serial', 'user', 'loaned at',
+                       'due date', 'returned at', 'comments']
         return self.fields
 
     def get_items(self):
@@ -445,6 +445,7 @@ class ExportLoan(CSVExportMixin, View):
         return {
             'item': str(entry.specimen.item),
             'barcode': entry.specimen.barcode,
+            'serial': entry.specimen.serial,
             'user': entry.user.serial,
             'loaned at': entry.created_at,
             'due date': entry.due_date,
