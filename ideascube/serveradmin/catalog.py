@@ -163,7 +163,10 @@ class Kiwix(Handler):
 
                 book = books[0]
                 book.set('path', 'data/content/%s' % zimname)
-                book.set('indexPath', 'data/index/%s.idx' % zimname)
+
+                index_path = 'data/index/%s.idx' % zimname
+                if os.path.isdir(os.path.join(self._install_dir, index_path)):
+                    book.set('indexPath', index_path)
 
                 library.append(book)
 
