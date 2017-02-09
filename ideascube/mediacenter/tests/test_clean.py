@@ -138,3 +138,33 @@ def test_clean_leftover_should_correctly_clean_after_complex_situation(settings)
     for path in files_that_should_be_kept:
         assert os.path.exists(path)
 
+
+def test_clean_media_should_delete_all_media():
+    DocumentFactory.create_batch(size=4)
+    assert Document.objects.all().count() == 4
+    call_command('clean', 'media')
+    assert Document.objects.all().count() == 0
+
+
+def test_clean_media_should_delete_leftover_files():
+    document = DocumentFactory(original__from_path=os.path.join(DATA_PATH, 'a-video.mp4'),
+                               preview__from_path=os.path.join(DATA_PATH, 'an-image.jpg'))
+    files_to_delete = [document.original.path, document.preview.path]
+    call_command('clean', 'media')
+    for path in files_to_delete:
+        assert not os.path.exists(path)
+
+
+def test_clean_media_should_not_delete_media_from_packages(capsys):
+    DocumentFactory.create_batch(size=4)
+    DocumentFactory.create_batch(size=4, package_id='1')
+    assert Document.objects.all().count() == 8
+    call_command('clean', 'media')
+    assert Document.objects.all().count() == 4
+    for document in Document.objects.all():
+        assert document.package_id == '1'
+    out, _ = capsys.readouterr()
+    assert out == """4 media have been installed by packages. They have been not deleted.
+You must delete the corresponding package if you want to remove them. Use the command :
+catalog remove pkgid+
+"""

@@ -29,6 +29,12 @@ class Command(BaseCommand):
             help='Clean mediacenter files not associated with a document.')
         clean_leftover.set_defaults(func=self.clean_leftover)
 
+        clean_media = subs.add_parser(
+            'media',
+            parents = [dry_run],
+            help='Remove all medias')
+        clean_media.set_defaults(func=self.clean_media)
+
         self.parser = parser
 
     def handle(self, *args, **options):
@@ -37,6 +43,17 @@ class Command(BaseCommand):
             self.parser.exit(1)
 
         options['func'](options)
+
+    def clean_media(self, options):
+        Document.objects.filter(package_id='').delete()
+        left_media_count = Document.objects.all().count()
+        if left_media_count:
+            print("{} media have been installed by packages."
+                  " They have been not deleted.\n"
+                  "You must delete the corresponding package if you want to "
+                  "remove them. Use the command :\n"
+                  "catalog remove pkgid+".format(left_media_count))
+        self.clean_leftover(options)
 
     def clean_leftover(self, options):
         files_to_remove = self._get_leftover_files()
