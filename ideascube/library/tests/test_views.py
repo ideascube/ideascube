@@ -348,7 +348,7 @@ def test_import_from_files(staffapp, monkeypatch):
 def test_import_from_files_does_not_duplicate(staffapp, monkeypatch):
     monkeypatch.setattr('ideascube.library.utils.read_url', lambda x: None)
     path = 'ideascube/library/tests/data/moccam.csv'
-    with open(path) as f:
+    with open(path, encoding='utf-8') as f:
         isbn = f.read().split('\t')[0]
     # Create a book with same isbn as first entry of CSV.
     BookFactory(isbn=isbn)

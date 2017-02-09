@@ -1,27 +1,27 @@
 from ..utils import fetch_from_openlibrary, load_from_moccam_csv, load_unimarc
 
 
-def test_load_from_moccam_csv(monkeypatch):
+def test_load_from_moccam_csv(monkeypatch, testdatadir):
     monkeypatch.setattr('ideascube.library.utils.load_cover_from_url',
                         lambda x: 'xxx')
-    with open('ideascube/library/tests/data/moccam.csv') as f:
-        notices = list(load_from_moccam_csv(f.read()))
-        assert len(notices) == 2
-        notice, cover = notices[0]
-        assert notice['name'] == 'Les Enchanteurs'
-        assert notice['authors'] == 'Romain Gary'
-        assert notice['publisher'] == 'Gallimard'
-        assert notice['description'].startswith('Le narrateur')
-        assert cover == 'xxx'
+    moccam = testdatadir.join('moccam.csv').read_text('utf-8')
+    notices = list(load_from_moccam_csv(moccam))
+    assert len(notices) == 2
+    notice, cover = notices[0]
+    assert notice['name'] == 'Les Enchanteurs'
+    assert notice['authors'] == 'Romain Gary'
+    assert notice['publisher'] == 'Gallimard'
+    assert notice['description'].startswith('Le narrateur')
+    assert cover == 'xxx'
 
 
-def test_load_unimarc(monkeypatch):
-    with open('ideascube/library/tests/data/marc.dat') as f:
-        notices = [notice for notice, cover in load_unimarc(f.read())]
-        assert len(notices) == 20
-        assert notices[0]['name'] == 'The pragmatic programmer : from journeyman to master /'  # noqa
-        assert notices[0]['authors'] == 'Hunt, Andrew, 1964-'
-        assert notices[0]['publisher'] == 'Addison-Wesley,'
+def test_load_unimarc(monkeypatch, testdatadir):
+    unimarc = testdatadir.join('marc.dat').read_text('utf-8')
+    notices = [notice for notice, cover in load_unimarc(unimarc)]
+    assert len(notices) == 20
+    assert notices[0]['name'] == 'The pragmatic programmer : from journeyman to master /'  # noqa
+    assert notices[0]['authors'] == 'Hunt, Andrew, 1964-'
+    assert notices[0]['publisher'] == 'Addison-Wesley,'
 
 
 def test_fetch_from_openlibrary(monkeypatch):
