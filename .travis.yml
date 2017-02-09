@@ -1,6 +1,9 @@
 language: python
 python:
   - "3.4"
+env:
+  - LC_ALL=en_US.UTF-8
+  - LC_ALL=C
 sudo: false
 branches:
   only:
