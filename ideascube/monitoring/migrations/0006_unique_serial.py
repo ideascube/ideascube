@@ -17,12 +17,17 @@ def ensure_serial_is_unique(apps, schema_editor):
             # serial is unique
             continue
 
-        if not serial:
+        if serial is None:
             # empty (blank) serial. Ignore it.
             continue
 
         for index, specimen in enumerate(specimens):
-            specimen.serial = "{}~{}".format(serial, index)
+            if serial == '':
+                specimen.serial = None
+
+            else:
+                specimen.serial = "{}~{}".format(serial, index)
+
             specimen.save()
 
 
