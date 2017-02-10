@@ -3,7 +3,7 @@ test:
 testcov:
 	py.test --cov=ideascube/ --cov-report=term-missing --migrations
 develop:
-	pip3 install -r requirements-dev.txt
+	pip3 install --no-use-wheel -r requirements-dev.txt
 doc:
 	mkdocs serve
 dummydata: migrate
