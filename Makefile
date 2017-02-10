@@ -47,8 +47,8 @@ compile_translations:
 test:
 	py.test
 
-testcov:
-	py.test --cov=ideascube/ --cov-report=term-missing --migrations
+test-coverage:
+	py.test --cov=ideascube/ --cov-report=term-missing --cov-fail-under=92 --migrations
 
 quality-check:
 	py.test --flakes -m flakes
