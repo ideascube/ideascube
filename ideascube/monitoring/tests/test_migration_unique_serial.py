@@ -72,3 +72,27 @@ def test_migration_do_not_mix_between_unique_serial(migration):
     for specimen in specimens:
         assert specimen.serial.startswith(specimen.item.name)
 
+
+@migration_test(
+    migrate_from=[('monitoring', '0005_auto_20161027_0801')],
+    migrate_to=[('monitoring', '0006_unique_serial')]
+)
+def test_migration_with_empty_serials(migration):
+    Specimen = migration.old_apps.get_model('monitoring', 'Specimen')
+    StockItem = migration.old_apps.get_model('monitoring', 'StockItem')
+
+    stock_item = StockItem()
+    stock_item.save()
+
+    for i in range(5):
+        specimen = Specimen(item_id=stock_item.id, barcode=str(i), serial='')
+        specimen.save()
+
+    migration.run_migration()
+
+    Specimen = migration.new_apps.get_model('monitoring', 'Specimen')
+    specimens = Specimen.objects.order_by('barcode')
+    assert specimens.count() == 5
+
+    for specimen in specimens:
+        assert specimen.serial == None

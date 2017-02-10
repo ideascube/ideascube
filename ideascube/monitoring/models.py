@@ -139,6 +139,16 @@ class Specimen(models.Model):
     class Meta:
         ordering = ('barcode', )
 
+    def save(self, *args, **kwargs):
+        if self.serial == '':
+            # Set to None, otherwise the uniqueness constraint will fail. This
+            # is compatible with what Django >= 1.11 does, so we should be able
+            # to remove this when we upgrade
+            # https://code.djangoproject.com/ticket/4136
+            self.serial = None
+
+        return super().save(*args, **kwargs)
+
 
 class InventorySpecimen(models.Model):
     inventory = models.ForeignKey(Inventory)
