@@ -23,6 +23,10 @@ upgrade-deps:
 sync-deps:
 	pip-sync requirements-dev.txt
 
+ci-images:
+	docker build --file dockerfiles/ci-jessie-python34 --tag ideascube/ideascube-ci:jessie-python34 .
+	docker push ideascube/ideascube-ci:jessie-python34
+
 
 # -- Translations -------------------------------------------------------------
 collect_translations:
