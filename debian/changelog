@@ -1,3 +1,10 @@
+ideascube (0.20.1) unstable; urgency=low
+
+  * Fixed a migration introduced in 0.20.0, which was breaking on many boxes.
+  * Added a missing migration for some code we changed in 0.20.0.
+
+ -- Mathieu Bridon <bochecha@daitauha.fr> Fri, 10 Feb 2017 11:04:00 +0100
+
 ideascube (0.20.0) unstable; urgency=low
 
   * Added a command to clean the mediacenter, either removing the leftover
