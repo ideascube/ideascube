@@ -28,3 +28,8 @@ uninstall:
 migrate:
 	python3 manage.py migrate --database=default
 	python3 manage.py migrate --database=transient
+upgrade-deps:
+	pip-compile --rebuild --header --index --annotate  requirements.in
+	pip-compile --rebuild --header --index --annotate  requirements-dev.in
+sync-deps:
+	pip-sync requirements-dev.txt

@@ -1,0 +1,13 @@
+-r requirements.txt
+django-webtest
+factory-boy
+freezegun
+mkdocs
+pip-tools
+pyquery
+pytest
+pytest-cov
+pytest-django
+pytest-flakes
+pytest-mock
+transifex-client
