@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from unittest import mock
+
 import pytest
 
 from django.contrib.auth import get_user_model
@@ -14,8 +16,6 @@ from ideascube.library.tests.factories import BookSpecimenFactory
 
 from .factories import UserFactory
 from ..views import ByTag, UserList
-
-import mock
 
 pytestmark = pytest.mark.django_db
 user_model = get_user_model()
