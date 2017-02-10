@@ -26,6 +26,9 @@ sync-deps:
 ci-images:
 	docker build --file dockerfiles/ci-jessie-python34 --tag ideascube/ideascube-ci:jessie-python34 .
 	docker push ideascube/ideascube-ci:jessie-python34
+	
+	docker build --file dockerfiles/ci-stretch-python35 --tag ideascube/ideascube-ci:stretch-python35 .
+	docker push ideascube/ideascube-ci:stretch-python35
 
 
 # -- Translations -------------------------------------------------------------

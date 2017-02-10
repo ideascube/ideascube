@@ -12,6 +12,10 @@
 "Tests: Jessie/Python-3.4":
   <<: *test_definition
 
+"Tests: Stretch/Python-3.5":
+  <<: *test_definition
+  image: ideascube/ideascube-ci:stretch-python35
+
 "Tests: C locale":
   <<: *test_definition
   variables:
