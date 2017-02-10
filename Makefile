@@ -53,6 +53,10 @@ test-coverage:
 quality-check:
 	py.test --flakes -m flakes
 
+check-missing-migrations:
+	python manage.py makemigrations
+	git status --porcelain | grep -E '^\?\? ' && exit 1 || :
+
 test-data-migration:
 	set -e ; \
 	BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
