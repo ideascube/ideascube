@@ -94,7 +94,7 @@ class Command(BaseCommand):
             return
 
         path = os.path.join(self.ROOT, original)
-        if not os.path.exists(path):
+        if not os.path.isfile(path):
             self.report.error(u'Path not found', path)
             return
         with open(path, 'rb') as f:
