@@ -69,7 +69,8 @@ class Command(BaseCommand):
     def add(self, metadata):
         title = metadata.get('title')
         if not title:
-            return self.report.error('Missing title', metadata)
+            self.report.error('Missing title', metadata)
+            return
         title = smart_truncate(title)
         metadata['title'] = title
 
@@ -78,7 +79,8 @@ class Command(BaseCommand):
 
         original = metadata.get('path')
         if not original:
-            return self.report.error('Missing path', metadata)
+            self.report.error('Missing path', metadata)
+            return
         kind = metadata.get('kind')
         content_type, encoding = mimetypes.guess_type(original)
         if not kind or not hasattr(Document, kind.upper()):
@@ -87,12 +89,14 @@ class Command(BaseCommand):
 
         instance = Document.objects.filter(title=title, kind=kind).last()
         if instance and not self.update:
-            return self.report.warning('Document exists (Use --update for '
-                                       'reimport)', title)
+            self.report.warning('Document exists (Use --update for reimport)',
+                                title)
+            return
 
         path = os.path.join(self.ROOT, original)
         if not os.path.exists(path):
-            return self.report.error(u'Path not found', path)
+            self.report.error(u'Path not found', path)
+            return
         with open(path, 'rb') as f:
             original = File(f, name=original)
 
