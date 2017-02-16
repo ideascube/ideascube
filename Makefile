@@ -3,7 +3,7 @@ test:
 testcov:
 	py.test --cov=ideascube/ --cov-report=term-missing --migrations
 develop:
-	pip3 install -r requirements-dev.txt
+	pip3 install --no-use-wheel -r requirements-dev.txt
 doc:
 	mkdocs serve
 dummydata: migrate
@@ -28,3 +28,8 @@ uninstall:
 migrate:
 	python3 manage.py migrate --database=default
 	python3 manage.py migrate --database=transient
+upgrade-deps:
+	pip-compile --rebuild --header --index --annotate  requirements.in
+	pip-compile --rebuild --header --index --annotate  requirements-dev.in
+sync-deps:
+	pip-sync requirements-dev.txt

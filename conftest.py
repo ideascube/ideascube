@@ -1,7 +1,7 @@
 import pytest
 import django_webtest
 import os
-import mock
+from unittest import mock
 
 from django.core.urlresolvers import reverse
 
