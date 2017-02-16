@@ -394,11 +394,11 @@ class ZippedMedias(SimpleZipPackage):
         for media in manifest['medias']:
             try:
                 self._install_media(media, pseudo_install_dir)
-            except:
+            except Exception as e:
                 # This can lead to installed package with uninstall media.
                 # We sould handle this somehow.
-                printerr("Cannot install media {} from package {}".format(
-                    media['title'], self.id))
+                printerr("Cannot install media {} from package {} : {}".format(
+                    media['title'], self.id, e))
                 continue
 
     def _install_media(self, media_info, pseudo_install_dir):
