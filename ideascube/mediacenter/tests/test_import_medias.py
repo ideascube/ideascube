@@ -147,3 +147,34 @@ def test_should_honour_lang_if_given(settings):
     assert Document.objects.count() == 2
     assert Document.objects.get(title='my image').lang == 'fr'
     assert Document.objects.get(title='my video').lang == 'ar'
+
+
+@pytest.mark.parametrize('dry_run', [False, True])
+def test_should_fail_nicely_if_path_doesn_t_exist(capsys, dry_run):
+    assert not Document.objects.count()
+    metadata = ('title,summary,credits,path,preview\n'
+                'image, summary,BSF,an-image.jpg,not_existing0\n'
+                'image, summary,BSF,not_existing1,\n'
+                'image, summary,BSF,not_existing2,not_existing3\n')
+    write_metadata(metadata)
+    with pytest.raises(SystemExit):
+        call_command('import_medias', CSV_PATH, dry_run=dry_run)
+    assert not Document.objects.count()
+    out, _ = capsys.readouterr()
+    for i in range(4):
+        assert "not_existing{}".format(i) in out
+
+
+@pytest.mark.parametrize('dry_run', [False, True])
+def test_should_fail_nicely_if_path_is_a_dir(capsys, dry_run):
+    assert not Document.objects.count()
+    metadata = ('title,summary,credits,path,preview\n'
+                'image, summary,BSF,an-image.jpg,a-directory\n'
+                'image, summary,BSF,a-directory,\n'
+                'image, summary,BSF,a-directory,a-directory\n')
+    write_metadata(metadata)
+    with pytest.raises(SystemExit):
+        call_command('import_medias', CSV_PATH, dry_run=dry_run)
+    assert not Document.objects.count()
+    out, _ = capsys.readouterr()
+    assert out.count("a-directory") == 4
