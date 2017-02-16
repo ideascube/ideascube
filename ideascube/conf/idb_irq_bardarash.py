@@ -14,3 +14,19 @@ MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'birth_year', 'gender']
 
 
 ENTRY_ACTIVITY_CHOICES = []
+
+STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS  # pragma: no flakes
+                            if c['url'] not in ['server:battery']]
+
+HOME_CARDS = STAFF_HOME_CARDS + [
+    {
+        'id': 'blog',
+    },
+    {
+        'id': 'mediacenter',
+    },
+    {
+        'id': 'library',
+    }
+]
+
