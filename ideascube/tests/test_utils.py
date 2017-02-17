@@ -2,7 +2,7 @@ from io import BytesIO
 
 import pytest
 
-from ideascube.utils import to_unicode, get_file_sha256, get_file_size, tag_splitter
+from ideascube.utils import to_unicode, get_file_sha256, tag_splitter
 from hashlib import sha256
 
 
@@ -47,14 +47,6 @@ def test_sha256(tmpdir):
     with file_path.open("wb") as f:
         f.write(content)
     assert get_file_sha256(str(file_path)) == sha256(content).hexdigest()
-
-
-def test_size(tmpdir):
-    file_path = tmpdir.join("file")
-    content = b"abcdefghijklmnopqrstuvw"
-    with file_path.open("wb") as f:
-        f.write(content)
-    assert get_file_size(str(file_path)) == len(content)
 
 
 @pytest.mark.parametrize('string', [
