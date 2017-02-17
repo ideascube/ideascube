@@ -108,13 +108,13 @@ class UserImportForm(forms.Form):
         users = []
         errors = []
 
-        for idx, row in enumerate(reader(source)):
+        for idx, row in enumerate(reader(source), start=1):
             try:
                 row = mapper(row)
 
             except KeyError as e:
                 msg = _('Invalid row at line {id}: {field} missing')
-                errors.append(msg.format(id=idx + 1, field=e.args[0]))
+                errors.append(msg.format(id=idx, field=e.args[0]))
                 continue
 
             try:
@@ -129,5 +129,5 @@ class UserImportForm(forms.Form):
                 reason = ', '.join('{}: {}'.format(k, v.as_text())
                                    for k, v in form.errors.items())
                 errors.append(_('Invalid row at line {id}: {reason}').format(
-                    id=idx + 1, reason=reason))
+                    id=idx, reason=reason))
         return users, errors[:10]
