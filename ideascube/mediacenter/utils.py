@@ -5,7 +5,7 @@ def guess_kind_from_filename(filepath):
     """Return a document kind (image, audio...) guessed from a filename. If
     no kind can be guessed, returns None."""
     if filepath:
-        content_type, encoding = mimetypes.guess_type(filepath)
+        content_type, _ = mimetypes.guess_type(filepath)
         return guess_kind_from_content_type(content_type)
 
 
