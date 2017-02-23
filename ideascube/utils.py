@@ -95,5 +95,5 @@ def sanitize_tag_name(tag_name):
     return tag_name
 
 def tag_splitter(tag_string):
-    tags = set(t.strip() for t in re.split(r'[;,]+', tag_string) if t.strip())
-    return list(tags)
+    tags = set(sanitize_tag_name(t) for t in re.split(r'[;,]+', tag_string))
+    return list(tag for tag in tags if tag)

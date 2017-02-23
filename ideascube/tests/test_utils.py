@@ -58,13 +58,13 @@ def test_size(tmpdir):
 
 
 @pytest.mark.parametrize('string', [
-    'foo,bar,stuff,fuzzy',
-    'foo, bar, stuff, fuzzy',
-    'bar, stuff; fuzzy, foo',
-    ';;;; bar,   stuff    ;,fuzzy,foo  '
+    'foo,bar,stuff:fuzzy',
+    'foo, bar, stuff:fuzzy',
+    'bar, stuff:fuzzy; foo',
+    ';;;; bar,   *stuff:fuzzy---,foo  ',
 ])
 def test_tag_splitter_simple_tags(string):
-    oracle = set(['foo', 'bar', 'stuff', 'fuzzy'])
+    oracle = set(['foo', 'bar', 'stuff:fuzzy'])
     tags = tag_splitter(string)
     assert len(tags) == len(oracle)
     assert set(tags) == oracle
@@ -82,8 +82,8 @@ def test_tag_splitter_tags_with_spaces(string):
     assert len(tags) == len(oracle)
     assert set(tags) == oracle
 
-def test_different_cases_make_different_tags():
-    oracle = set(['bar', 'Bar', 'BAR', 'baR'])
+def test_different_cases_make_same_tags():
+    oracle = set(['bar'])
     tags = tag_splitter("bar, Bar, BAR, baR")
     assert len(tags) == len(oracle)
     assert set(tags) == oracle
