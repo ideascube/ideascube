@@ -1,19 +1,19 @@
+import glob
+import os
 import importlib
 
 import pytest
 
 
-def test_all_settings(request):
-    confdir = request.fspath.dirpath().dirpath().join('conf')
-    assert confdir.check(dir=True)
+@pytest.fixture(params=glob.glob('ideascube/conf/*.py'))
+def setting_module(request):
+    basename = os.path.basename(request.param)
 
-    for path in confdir.listdir():
-        if path.ext != '.py':
-            continue
+    module, _ = os.path.splitext(basename)
+    return '.conf.%s' % module
 
-        module = path.purebasename
-        module = '.conf.%s' % module
 
-        settings = importlib.import_module(module, package="ideascube")
+def test_setting_file(setting_module):
+    settings = importlib.import_module(setting_module, package="ideascube")
 
-        assert isinstance(getattr(settings, 'IDEASCUBE_NAME', ''), str)
+    assert isinstance(getattr(settings, 'IDEASCUBE_NAME', ''), str)
