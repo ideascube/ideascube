@@ -7,6 +7,7 @@ doc:
 
 dummydata: migrate
 	python3 manage.py dummydata
+	python3 manage.py reindex
 
 migrate:
 	python3 manage.py migrate --database=default
