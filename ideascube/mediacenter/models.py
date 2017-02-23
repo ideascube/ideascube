@@ -106,7 +106,7 @@ class Document(SearchMixin, TimeStampedModel):
 
     @property
     def index_tags(self):
-        return self.tags.slugs()
+        return list(self.tags.slugs()) + list(self.tags.names())
 
     @property
     def slug(self):

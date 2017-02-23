@@ -97,6 +97,18 @@ def test_search_Document_multiple_tag():
 
 
 @pytest.mark.usefixtures('cleansearch')
+def test_search_Document_on_tag_name_and_slug():
+    doc1 = DocumentFactory(tags=["aé"])
+    doc2 = DocumentFactory(tags=["ae"])
+
+    assert doc1 in Search.search(tags__match=["ae"])
+    assert doc2 in Search.search(tags__match=["ae"])
+
+    assert doc1 in Search.search(tags__match=["aé"])
+    assert doc2 not in Search.search(tags__match=["aé"])
+
+
+@pytest.mark.usefixtures('cleansearch')
 def test_more_relevant_should_come_first():
     second = ContentFactory(title="About music and music")
     third = ContentFactory(title="About music")
