@@ -1,3 +1,19 @@
+ideascube (0.21.0) unstable; urgency=low
+
+  * Remove Kalite until Arabic language is available
+  * Handle our dependencies with pip-tools
+  * Improve the coverage report precision
+  * Improve error handling of import_media command
+  * Report coverage of setting files
+  * Add a command to clean tags (and fix old boxes)
+  * All tags are now lower case
+  * Search is made case-insensitive
+  * Tag search better handle search of utf8 characters ('é' vs 'e')
+  * Import from llave del saber (only user serial for now)
+  * Accept document kind in any case in the catalog
+
+ -- Matthieu Gautier <mgautier@kymeria.fr> Fri, 24 Feb 2017 12:00:00 +0100
+
 ideascube (0.20.1) unstable; urgency=low
 
   * Fixed a migration introduced in 0.20.0, which was breaking on many boxes.
