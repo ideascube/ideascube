@@ -1,6 +1,5 @@
-ideascube: arch-dependent-file-in-usr-share usr/share/python/ideascube/*
-ideascube: duplicate-font-file usr/share/python/ideascube/lib/*
-ideascube: font-in-non-font-package usr/share/python/ideascube/lib/*
-ideascube: embedded-javascript-library usr/share/python/ideascube/lib/*
-ideascube: extra-license-file usr/share/python/ideascube/lib/*
-ideascube: wrong-path-for-interpreter usr/share/python/ideascube/bin/*
+ideascube: duplicate-font-file opt/venvs/ideascube/lib/*
+ideascube: font-in-non-font-package opt/venvs/ideascube/lib/*
+ideascube: embedded-javascript-library opt/venvs/ideascube/lib/*
+ideascube: extra-license-file opt/venvs/ideascube/lib/*
+ideascube: wrong-path-for-interpreter opt/venvs/ideascube/bin/*
