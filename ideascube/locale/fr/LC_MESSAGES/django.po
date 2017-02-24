@@ -1578,11 +1578,11 @@ msgid "browse"
 msgstr "parcourir"
 
 #: ideascube/search/templates/search/filter_by_kind.html:4
-msgid "by kind"
-msgstr "par genre"
+msgid "By kind"
+msgstr "Par genre"
 
 #: ideascube/search/templates/search/filter_by_lang.html:4
-msgid "by lang"
+msgid "By lang"
 msgstr "Par langue"
 
 #: ideascube/search/templates/search/filter_cloud.html:5
@@ -2062,7 +2062,7 @@ msgstr "Connexion"
 
 #: ideascube/templates/ideascube/includes/tag_cloud.html:4
 msgid "Topics"
-msgstr ""
+msgstr "Thèmes"
 
 #: ideascube/templates/ideascube/pagination.html:5
 msgid "previous"
