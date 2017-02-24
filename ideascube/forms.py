@@ -70,14 +70,53 @@ class CreateStaffForm(forms.ModelForm):
 class UserImportForm(forms.Form):
     source = forms.FileField(required=True)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        formats = getattr(settings, 'USER_IMPORT_FORMATS', None)
+
+        if formats is None:
+            self.fields['format'] = forms.CharField(
+                required=True, initial='ideascube', widget=forms.HiddenInput)
+
+        else:
+            self.fields['format'] = forms.ChoiceField(
+                required=True, initial=formats[0][0], choices=formats)
+
+    def _get_ideascube_reader(self, source):
+        return csv.DictReader(source)
+
+    def _get_ideascube_mapping(self, data):
+        return data
+
+    def _get_llavedelsaber_reader(self, source):
+        return csv.DictReader(source, delimiter=';', quoting=csv.QUOTE_ALL)
+
+    def _get_llavedelsaber_mapping(self, data):
+        # TODO: Implement the rest, once we hear back from Sergio
+        return {
+            'serial': data['serial'],
+        }
+
     def save(self):
+        format = self.cleaned_data['format']
         source = TextIOWrapper(self.cleaned_data['source'].file)
         qs = User.objects.all()
+        mapper = getattr(self, '_get_%s_mapping' % format)
+        reader = getattr(self, '_get_%s_reader' % format)
 
         users = []
         errors = []
 
-        for idx, row in enumerate(csv.DictReader(source)):
+        for idx, row in enumerate(reader(source), start=1):
+            try:
+                row = mapper(row)
+
+            except KeyError as e:
+                msg = _('Invalid row at line {id}: {field} missing')
+                errors.append(msg.format(id=idx, field=e.args[0]))
+                continue
+
             try:
                 instance = qs.get(serial=row['serial'])
             except (User.DoesNotExist, KeyError):
@@ -90,5 +129,5 @@ class UserImportForm(forms.Form):
                 reason = ', '.join('{}: {}'.format(k, v.as_text())
                                    for k, v in form.errors.items())
                 errors.append(_('Invalid row at line {id}: {reason}').format(
-                    id=idx + 1, reason=reason))
+                    id=idx, reason=reason))
         return users, errors[:10]

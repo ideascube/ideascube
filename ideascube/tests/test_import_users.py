@@ -220,3 +220,72 @@ def test_does_not_try_to_create_system_user(staffapp, monkeypatch):
     assert qs.count() == 2
     user = qs.get(serial='__system__')
     assert user.full_name != 'ANewFunkyName'
+
+
+def test_import_from_llavedelsaber_format(staffapp, settings):
+    settings.USER_IMPORT_FORMATS = (
+        ('llavedelsaber', 'Llave del Saber'),
+        ('ideascube', 'Ideascube'),
+    )
+
+    # TODO: The format of Llave del Saber exports is not finalized
+    data = '\n'.join([
+        '"serial";"a_field";"another_field";"a_third_field";"last_field"',
+        '"206678478";"";"";"";""',
+        '"206678201";"";"";"";""',
+    ])
+
+    form = staffapp.get(reverse('user_import')).forms['import']
+    form['format'] = 'llavedelsaber'
+    form['source'] = Upload('users.csv', data.encode('utf-8'), 'text/csv')
+    form.submit(status=302).follow(status=200)
+
+    users = User.objects.all().order_by('serial')
+    assert users.count() == 3  # The two imported, plus the staff
+
+    # TODO: Test the other imported fields eventually
+    serials = [u.serial for u in users]
+    assert serials == ['123456staff', '206678201', '206678478']
+
+
+def test_import_from_llavedelsaber_format_invalid_data(staffapp, settings):
+    settings.USER_IMPORT_FORMATS = (
+        ('llavedelsaber', 'Llave del Saber'),
+        ('ideascube', 'Ideascube'),
+    )
+
+    # TODO: The format of Llave del Saber exports is not finalized
+    data = '\n'.join([
+        '"llave";"a_field";"another_field";"a_third_field";"last_field"',
+        '"206678478";"";"";"";""',
+        '"206678201";"";"";"";""',
+    ])
+
+    form = staffapp.get(reverse('user_import')).forms['import']
+    form['format'] = 'llavedelsaber'
+    form['source'] = Upload('users.csv', data.encode('utf-8'), 'text/csv')
+    response = form.submit(status=302).follow(status=200)
+    assert 'Invalid row at line 1: serial missing' in response.text
+    assert 'Invalid row at line 2: serial missing' in response.text
+
+    users = User.objects.all()
+    assert users.count() == 1  # The staff
+
+
+def test_import_from_invalid_format(staffapp, settings):
+    settings.USER_IMPORT_FORMATS = (
+        ('llavedelsaber', 'Llave del Saber'),
+        ('ideascube', 'Ideascube'),
+    )
+    data = 'whatever, this will not be imported'
+
+    form = staffapp.get(reverse('user_import')).forms['import']
+    form['format'].force_value('no-such-format')
+    form['source'] = Upload('users.csv', data.encode('utf-8'), 'text/csv')
+    response = form.submit(status=200)
+    assert (
+        'Select a valid choice. no-such-format is not one of the available '
+        'choices.') in response.text
+
+    users = User.objects.all()
+    assert users.count() == 1  # The staff
