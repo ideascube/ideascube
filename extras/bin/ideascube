@@ -17,4 +17,4 @@ export DEBUG=$DEBUG
 export STORAGE_ROOT=$STORAGE_ROOT
 export IDEASCUBE_ID=$IDEASCUBE_ID
 
-/usr/share/python/$NAME/bin/django-admin "$@"
+/opt/venvs/$NAME/bin/django-admin "$@"
