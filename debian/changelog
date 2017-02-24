@@ -1,6 +1,12 @@
+ideascube (0.21.1) unstable; urgency=low
+
+  * Adapt the packaging to the last version of dh-virtualenv.
+
+ -- Matthieu Gautier <mgautier@kymeria.fr> Fri, 24 Feb 2017 14:50:00 +0100
+
 ideascube (0.21.0) unstable; urgency=low
 
-  * Remove Kalite until Arabic language is available
+  * Remove Kalite until Arabic language is available for some specific boxes
   * Handle our dependencies with pip-tools
   * Improve the coverage report precision
   * Improve error handling of import_media command
