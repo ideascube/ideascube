@@ -1,3 +1,9 @@
+ideascube (0.21.2) unstable; urgency=low
+
+  * Remove '-e' option in requirements(-dev).txt
+
+ -- Matthieu Gautier <mgautier@kymeria.fr> Fri, 24 Feb 2017 16:05:00 +0100
+
 ideascube (0.21.1) unstable; urgency=low
 
   * Adapt the packaging to the last version of dh-virtualenv.
