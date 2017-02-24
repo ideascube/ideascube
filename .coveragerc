@@ -7,7 +7,6 @@ omit =
     ideascube/management/commands/dummydata.py
     ideascube/management/commands/import_legacy.py
     ideascube/migrations/*
-    ideascube/conf/*
     ideascube/settings.py
 
 [report]
