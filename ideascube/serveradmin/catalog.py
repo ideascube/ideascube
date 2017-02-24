@@ -16,11 +16,10 @@ from progressist import ProgressBar
 from resumable import DownloadCheck, DownloadError, urlretrieve
 from requests import ConnectionError
 import yaml
-import mimetypes
 
 from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.forms import PackagedDocumentForm
-from ideascube.mediacenter.utils import guess_kind_from_content_type
+from ideascube.mediacenter.utils import guess_kind_from_filename
 from ideascube.templatetags.ideascube_tags import smart_truncate
 from ideascube.configuration import get_config, set_config
 from ideascube.models import User
@@ -413,11 +412,10 @@ class ZippedMedias(SimpleZipPackage):
             # LANGUAGE_CODE from the settings.
             media_info['lang'] = settings.LANGUAGE_CODE
 
-        kind = media_info.get('kind')
+        kind = media_info.get('kind', '').lower()
         if not kind or not hasattr(Document, kind.upper()):
-            content_type, _ = mimetypes.guess_type(media_info['path'])
-            media_info['kind'] = guess_kind_from_content_type(content_type) \
-                or Document.OTHER
+            kind = guess_kind_from_filename(media_info['path'])
+            media_info['kind'] = kind or Document.OTHER
 
         media_info['package_id'] = self.id
         media_info['original'] = os.path.join(pseudo_install_dir,
