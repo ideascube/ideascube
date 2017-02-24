@@ -36,7 +36,7 @@ class TagMatch(models.Lookup):
         out = '({0} LIKE {1})'.format(lhs, rhs)
         out = ' AND '.join([out]*len(params))
         out = '({})'.format(out)
-        return out, ['%|{}|%'.format(p) for p in params]
+        return out, ['%|{}|%'.format(p.lower()) for p in params]
 
 
 class SearchTagField(models.Field):

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import pytest
 
+from operator import attrgetter
+
 from ideascube.blog.tests.factories import ContentFactory
 from ideascube.blog.models import Content
 from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.tests.factories import DocumentFactory
+from ideascube.utils import sanitize_tag_name
 from ..models import Search
 
 
@@ -94,6 +97,35 @@ def test_search_Document_multiple_tag():
         assert d in Search.search(tags__match=["foo", "bar"])
     for d in (doc, doc_foo, doc_bar):
         assert d not in Search.search(tags__match=["foo", "bar"])
+
+
+@pytest.mark.usefixtures('cleansearch')
+def test_search_Document_on_tag_name_and_slug():
+    doc1 = DocumentFactory(tags=["aé"])
+    doc2 = DocumentFactory(tags=["ae"])
+
+    assert doc1 in Search.search(tags__match=["ae"])
+    assert doc2 in Search.search(tags__match=["ae"])
+
+    assert doc1 in Search.search(tags__match=["aé"])
+    assert doc2 not in Search.search(tags__match=["aé"])
+
+
+@pytest.mark.usefixtures('cleansearch')
+def test_search_Document_is_case_insensitive():
+    # The custom function to parse tag string (and so sanitize tag's names)
+    # is used is form only, not if we use `tag.set()` or `tag.add()`.
+    # DocumentFactory use `tag.add()` to set the tags of the document and so
+    # the tag's names are not sanitized.
+    doc1 = DocumentFactory(tags=[sanitize_tag_name("aé")])
+    doc2 = DocumentFactory(tags=[sanitize_tag_name("AÉ")])
+    doc3 = DocumentFactory(tags=[sanitize_tag_name("Bar")])
+
+    assert sorted(Search.search(tags__match=["aé"]), key=attrgetter('id')) \
+        == [doc1, doc2]
+    assert sorted(Search.search(tags__match=["AÉ"]), key=attrgetter('id')) \
+        == [doc1, doc2]
+    assert doc3 in Search.search(tags__match=["baR"])
 
 
 @pytest.mark.usefixtures('cleansearch')

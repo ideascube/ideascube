@@ -79,3 +79,36 @@ def test_list_should_list_tags_and_slugs(capsys):
     out, err = capsys.readouterr()
     assert tag.name in out
     assert tag.slug in out
+
+
+def test_sanitize_tags():
+    foo = Tag.objects.create(name='foo')
+    Foo = Tag.objects.create(name='Foo')
+    Bar = Tag.objects.create(name='Bar') # Create a tag with upper case first.
+    bar = Tag.objects.create(name='bar')
+    bar_ = Tag.objects.create(name='bar;')
+    Bar_ = Tag.objects.create(name='Bar;')
+    tag_to_delete = Tag.objects.create(name=':')
+    clean = Tag.objects.create(name="Other:")
+    half_clean1 = Tag.objects.create(name="Other:Foo,")
+    half_clean2 = Tag.objects.create(name="Other:foo")
+
+    doc1 = DocumentFactory(tags=[foo, bar, clean])
+    doc2 = DocumentFactory(tags=[foo, Bar, clean, half_clean2])
+    doc3 = DocumentFactory(tags=[Foo, bar])
+    doc4 = DocumentFactory(tags=[Foo, Bar_, half_clean1, half_clean2])
+    doc5 = DocumentFactory(tags=[Foo, foo, bar_, Bar])
+    doc6 = DocumentFactory(tags=[Foo, foo, Bar_, tag_to_delete])
+
+    call_command('tags', 'sanitize')
+
+    all_tag_names = list(Tag.objects.all().order_by('name')
+                             .values_list('name', flat=True))
+    assert all_tag_names == ['bar', 'foo', 'other', 'other:foo']
+    assert sorted(doc1.tags.names()) == ['bar', 'foo', 'other']
+    assert sorted(doc2.tags.names()) == ['bar', 'foo', 'other', 'other:foo']
+    assert sorted(doc3.tags.names()) == ['bar', 'foo']
+    assert sorted(doc4.tags.names()) == ['bar', 'foo', 'other:foo']
+    assert sorted(doc5.tags.names()) == ['bar', 'foo']
+    assert sorted(doc6.tags.names()) == ['bar', 'foo']
+
