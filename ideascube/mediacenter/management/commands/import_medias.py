@@ -69,7 +69,8 @@ class Command(BaseCommand):
     def add(self, metadata):
         title = metadata.get('title')
         if not title:
-            return self.report.error('Missing title', metadata)
+            self.report.error('Missing title', metadata)
+            return
         title = smart_truncate(title)
         metadata['title'] = title
 
@@ -78,7 +79,8 @@ class Command(BaseCommand):
 
         original = metadata.get('path')
         if not original:
-            return self.report.error('Missing path', metadata)
+            self.report.error('Missing path', metadata)
+            return
         kind = metadata.get('kind')
         content_type, encoding = mimetypes.guess_type(original)
         if not kind or not hasattr(Document, kind.upper()):
@@ -87,23 +89,42 @@ class Command(BaseCommand):
 
         instance = Document.objects.filter(title=title, kind=kind).last()
         if instance and not self.update:
-            return self.report.warning('Document exists (Use --update for '
-                                       'reimport)', title)
+            self.report.warning('Document exists (Use --update for reimport)',
+                                title)
+            return
 
-        path = os.path.join(self.ROOT, original)
-        if not os.path.exists(path):
-            return self.report.error(u'Path not found', path)
-        with open(path, 'rb') as f:
-            original = File(f, name=original)
+        original_path = os.path.join(self.ROOT, original)
+        preview = metadata.get('preview')
+        preview_path = os.path.join(self.ROOT, preview) if preview else None
+        of = pf = None
+        try:
+            try:
+                of = open(original_path, 'rb')
+            except OSError as e:
+                self.report.error("Cannot open path", e)
 
-            preview = metadata.get('preview')
             if preview:
-                path = os.path.join(self.ROOT, preview)
-                with open(path, 'rb') as f:
-                    preview = File(f, name=preview)
-                    self.save(metadata, original, instance, preview)
+                try:
+                    pf = open(preview_path, 'rb')
+                except OSError as e:
+                    self.report.error("Cannot open path", e)
+
+            if not of:
+                return
+            if preview and not pf:
+                return
+
+            original = File(of, name=original)
+            if pf:
+                preview = File(pf, name=preview)
+                self.save(metadata, original, instance, preview)
             else:
                 self.save(metadata, original, instance)
+        finally:
+            if of is not None:
+                of.close()
+            if pf is not None:
+                pf.close()
 
     def save(self, metadata, original, instance, preview=None):
         files = dict(original=original, preview=preview)
