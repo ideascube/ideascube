@@ -1,6 +1,6 @@
 import pytest
 
-from ideascube.widgets import LangSelect
+from ideascube.widgets import LangSelect, RichTextEntry
 from ideascube.configuration import set_config
 
 
@@ -54,3 +54,36 @@ def test_filtered_lang_select_with_pre_selected(user):
         ])
     rendered = widget.render_options(['fr'])
     assert rendered == expected
+
+
+def test_richtext_entry():
+    rte = RichTextEntry()
+
+    rendered_rte = rte.render('richtextentry', None)
+    assert rendered_rte == '\n'.join([
+        '<div class="tinymce_editor" id="richtextentry"></div>',
+        ('<input name="richtextentry" type="hidden"'
+         ' value="" />')
+    ])
+
+
+def test_richtext_entry_with_content():
+    rte = RichTextEntry()
+
+    rendered_rte = rte.render('richtextentry', "<p>A text</p>")
+    assert rendered_rte == '\n'.join([
+        '<div class="tinymce_editor" id="richtextentry"><p>A text</p></div>',
+        ('<input name="richtextentry" type="hidden"'
+         ' value="&lt;p&gt;A text&lt;/p&gt;" />')
+    ])
+
+
+def test_richtext_entry_with_media():
+    rte = RichTextEntry(with_media=True)
+
+    rendered_rte = rte.render('richtextentry', None)
+    assert rendered_rte == '\n'.join([
+        '<div class="tinymce_editor" id="richtextentry" tinymce_use_media></div>',
+        ('<input name="richtextentry" type="hidden"'
+         ' value="" />')
+    ])

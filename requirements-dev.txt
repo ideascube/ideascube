@@ -6,10 +6,12 @@
 #
 -e git+https://github.com/ideascube/dbus-python.git@pipified-1.1.1#egg=dbus-python
 -e git+https://github.com/ideascube/django-select-multiple-field@remove-dj110-warning#egg=django-select-multiple-field
+-e git+https://github.com/html5lib/html5lib-python@17499b9763a090f7715af49555d21fe4b558958b#egg=html5lib
 apipkg==1.4               # via execnet
 appdirs==1.4.3            # via setuptools
 batinfo==0.4.2
 beautifulsoup4==4.5.3     # via webtest
+bleach==2.0.0
 click==6.7                # via mkdocs, pip-tools
 coverage==4.3.4           # via pytest-cov
 cssselect==1.0.1          # via pyquery
@@ -55,6 +57,7 @@ transifex-client==0.12.4
 Unidecode==0.4.20
 urllib3==1.20             # via transifex-client
 waitress==1.0.2           # via webtest
+webencodings==0.5
 WebOb==1.7.2              # via webtest
 webtest==2.0.27           # via django-webtest
 

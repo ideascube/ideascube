@@ -33,6 +33,20 @@ ID.http = {
 
 };
 
+ID.PROVIDERS = {
+    '^(http(s)?://)?(www\.)?(youtube\.com|youtu\.be)': 'http://www.youtube.com/oembed',
+    '^(http(s)?://)?(www\.)?dailymotion\.com': 'http://www.dailymotion.com/services/oembed',
+    '^(https?://)?vimeo.com/': 'http://vimeo.com/api/oembed.json',
+    '^(https?://)?(www\.)?flickr.com/': 'https://www.flickr.com/services/oembed/'
+};
+
+ID.matchProvider = function (value) {
+    ID.PROVIDERS['^(https?://)?((www\.)?' + ID.DOMAIN + '/|localhost)'] = window.location.origin + window.location.pathname.slice(0, 3) + '/mediacenter/oembed/';
+    for (var provider in ID.PROVIDERS) {
+        if (value.match(provider)) return ID.PROVIDERS[provider];
+    }
+};
+
 ID.OembedDialog = Minislate.Class(Minislate.controls.Dialog, {
     show: function (node) {
         var control = this.control,
@@ -85,13 +99,6 @@ ID.Oembed = Minislate.Class(Minislate.controls.Button, {
 
     CONTAINER_CLASS: 'minislate-oembed-container',
 
-    PROVIDERS: {
-        '^(http(s)?://)?(www\.)?(youtube\.com|youtu\.be)': 'http://www.youtube.com/oembed',
-        '^(http(s)?://)?(www\.)?dailymotion\.com': 'http://www.dailymotion.com/services/oembed',
-        '^(https?://)?vimeo.com/': 'http://vimeo.com/api/oembed.json',
-        '^(https?://)?(www\.)?flickr.com/': 'https://www.flickr.com/services/oembed/'
-    },
-
     filterContainer: function (node) {
         return node.nodeName.toLowerCase() === 'div' && node.className === this.CONTAINER_CLASS;
     },
@@ -116,13 +123,6 @@ ID.Oembed = Minislate.Class(Minislate.controls.Button, {
 
     click: function () {
         (new ID.OembedDialog(this)).show(this.getContainer());
-    },
-
-    matchProvider: function (value) {
-        this.PROVIDERS['^(https?://)?((www\.)?' + ID.DOMAIN + '/|localhost)'] = window.location.origin + window.location.pathname.slice(0, 3) + '/mediacenter/oembed/';
-        for (var provider in this.PROVIDERS) {
-            if (value.match(provider)) return this.PROVIDERS[provider];
-        }
     },
 
     saveOembed: function (node, url) {
@@ -164,7 +164,7 @@ ID.Oembed = Minislate.Class(Minislate.controls.Button, {
                 editor.showToolbar();
             }
         };
-        var providerUrl = this.matchProvider(url);
+        var providerUrl = ID.matchProvider(url);
         if (providerUrl) {
             var finalUrl = providerUrl + '?' + ID.http.queryString({url: url, format: 'json', maxwidth: '800'});
             var proxyUrl = '/ajax-proxy/?' + ID.http.queryString({url: finalUrl});
@@ -220,6 +220,40 @@ ID.initEditor = function (name) {
         input.innerHTML = element.innerHTML;
     };
 };
+
+ID.image_url_resolver = function(data, resolve, reject) {
+    var callback = function (status, resp) {
+        if (status === 200) {
+            try {
+                resp = JSON.parse(resp);
+            } catch (e) {
+                reject({msg: ''});
+                return;
+            }
+            if (resp.type === 'photo') {
+                var img = document.createElement('IMG');
+                img.setAttribute('src', resp.url);
+                resolve({html: img.html});
+            } else if (resp.type === 'video' || resp.type === 'rich') {
+                resolve({html: resp.html});
+            } else {
+                reject({msg: 'Media type not supported'});
+            }
+        }
+    };
+    var providerUrl = ID.matchProvider(data.url);
+    if (providerUrl) {
+        var finalUrl = providerUrl + '?' + ID.http.queryString({url: data.url, format: 'json', maxwidth: '800'});
+        var proxyUrl = '/ajax-proxy/?' + ID.http.queryString({url: finalUrl});
+        ID.http.get(proxyUrl, {
+            callback: callback
+        });
+    }
+    else {
+        reject({msg: 'Media provider not supported'});
+    }
+};
+
 
 ID.initDatepicker = function (name) {
     new Pikaday({
@@ -310,4 +344,34 @@ ID.viewablePassword = function () {
     };
     button.addEventListener('click', show, false);
     form.addEventListener('submit', hide, false);
+};
+
+ID.initEditors = function () {
+    var editors = document.querySelectorAll(".tinymce_editor");
+    for (var i = 0; i < editors.length; i++) {
+        var editor = editors[i];
+        var use_media = editor.hasAttribute('tinymce_use_media');
+        var options = {
+            target : editor,
+            inline: true,
+            theme: "inlite",
+            hidden_input: false,
+            menubar: false,
+            toolbar: false,
+            selection_toolbar: "numlist bullist bold italic | quicklink h2 h3 blockquote",
+            media_url_resolver: ID.image_url_resolver,
+            media_alt_source: false,
+            media_poster: false,
+            insert_toolbar: "numlist bullist bold italic | quicklink h2 h3 blockquote",
+            contextmenu: "link",
+            plugins: "autolink textpattern contextmenu lists"
+        };
+        if ( use_media )
+        {
+            options['insert_toolbar'] += " media";
+            options['contextmenu'] += " media";
+            options['plugins'] += " media";
+        }
+        tinymce.init(options);
+   }
 };

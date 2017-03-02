@@ -303,7 +303,7 @@ def test_text_is_kept_on_invalid_form(staffapp, published):
     form['text'] = text
     form['summary'] = ''  # Make form invalid.
     response = form.submit()
-    assert response.pyquery.find('[data-editable-for="text"]').text() == text
+    assert response.pyquery.find('div[id="text"]').text() == text
 
 
 def test_create_content_with_default_values(staffapp):
