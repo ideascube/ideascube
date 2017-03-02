@@ -13,8 +13,8 @@ migrate:
 	python3 manage.py migrate --database=transient
 
 upgrade-deps:
-	pip-compile --rebuild --header --index --annotate  requirements.in
-	pip-compile --rebuild --header --index --annotate  requirements-dev.in
+	pip-compile --rebuild --header --index --annotate --upgrade requirements.in
+	pip-compile --rebuild --header --index --annotate --upgrade requirements-dev.in
 	# Remove -e in the requirements.txt.
 	# See issue : https://github.com/spotify/dh-virtualenv/issues/200
 	sed -i 's/^-e //g' requirements.txt
