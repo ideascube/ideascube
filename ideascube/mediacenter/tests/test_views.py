@@ -619,3 +619,27 @@ def test_can_update_document_tags(staffapp, pdf):
     doc = Document.objects.get(pk=pdf.pk)
     assert doc.tags.count() == 2
     assert doc.tags.first().name == 'tag1'
+
+
+def test_content_summary_is_not_cleaned_from_wanted_html_tags(staffapp):
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
+    form['title'] = 'my content title'
+    form['summary'] = 'my content summary <a href="foo">link</a>'
+    form['credits'] = 'my document credits'
+    form['original'] = Upload('image.jpg', b'xxxxxx', 'image/jpeg')
+    form.submit().follow()
+    document = Document.objects.first()
+    assert document.summary == ('my content summary <a href="foo">link</a>')
+
+
+def test_content_summary_is_cleaned_from_unwanted_html_tags(staffapp):
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
+    form['title'] = 'my content title'
+    form['summary'] = 'my content summary <img src="foo" />'
+    form['credits'] = 'my document credits'
+    form['original'] = Upload('image.jpg', b'xxxxxx', 'image/jpeg')
+    form.submit().follow()
+    document = Document.objects.first()
+    assert document.summary == ('my content summary &lt;img src="foo"&gt;')

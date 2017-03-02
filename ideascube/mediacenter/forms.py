@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 
-from ideascube.widgets import LangSelect
+from ideascube.widgets import LangSelect, RichTextEntry
 
 from .models import Document
 from .utils import guess_kind_from_content_type, guess_kind_from_filename
@@ -16,6 +16,7 @@ class DocumentForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'lang': LangSelect,
+            'summary': RichTextEntry
         }
         exclude = ['package_id']
 
