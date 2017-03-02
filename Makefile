@@ -33,7 +33,7 @@ push_translations:
 	tx push -s
 
 pull_translations:
-	tx pull
+	tx pull --all --force
 
 compile_translations:
 	python3 manage.py compilemessages
