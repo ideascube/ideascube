@@ -15,10 +15,9 @@ migrate:
 upgrade-deps:
 	pip-compile --rebuild --header --index --annotate  requirements.in
 	pip-compile --rebuild --header --index --annotate  requirements-dev.in
-	# Remove -e in the requirements(-dev).txt.
+	# Remove -e in the requirements.txt.
 	# See issue : https://github.com/spotify/dh-virtualenv/issues/200
 	sed -i 's/^-e //g' requirements.txt
-	sed -i 's/^-e //g' requirements-dev.txt
 
 sync-deps:
 	pip-sync requirements-dev.txt
