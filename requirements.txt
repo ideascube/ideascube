@@ -7,17 +7,17 @@
 git+https://github.com/ideascube/dbus-python.git@pipified-1.1.1#egg=dbus-python
 git+https://github.com/ideascube/django-select-multiple-field@remove-dj110-warning#egg=django-select-multiple-field
 batinfo==0.4.2
-django-countries==4.0
-django-taggit==0.21.3
-django==1.10.5
-lxml==3.7.1
+django-countries==4.1
+django-taggit==0.22.0
+Django==1.10.6
+lxml==3.7.3
 olefile==0.44             # via pillow
-pillow==4.0.0
+Pillow==4.0.0
 progressist==0.0.6
 pymarc==3.1.5
 python-networkmanager==1.2.1
-pyyaml==3.12
+PyYAML==3.12
 requests==2.13.0          # via resumable-urlretrieve
 resumable-urlretrieve==0.1.5
 six==1.10.0               # via pymarc
-unidecode==0.4.19
+Unidecode==0.4.20
