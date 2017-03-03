@@ -62,7 +62,7 @@ check-missing-migrations:
 
 test-data-migration:
 	set -e ; \
-	BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	BRANCH=$$CI_BUILD_REF_NAME; if [ -z $$BRANCH ]; then BRANCH=$$(git rev-parse --abbrev-ref HEAD); fi; \
 	LATEST_TAG=$$(git describe --abbrev=0 --tags); \
 	\
 	echo "# Loading some data at $$LATEST_TAG"; \

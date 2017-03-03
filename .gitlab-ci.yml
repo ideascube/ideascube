@@ -34,6 +34,11 @@ Code Quality:
   - pew in venv make quality-check
 
 
+Data Migration:
+  <<: *setup_definition
+  script:
+  - pew in venv make test-data-migration
+
 Missing Migrations:
   <<: *setup_definition
   script:
