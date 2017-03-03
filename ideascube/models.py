@@ -364,6 +364,10 @@ class JSONField(models.TextField):
     def get_prep_value(self, value):
         return json.dumps(value)
 
+    def value_to_string(self, obj):
+        value = self.value_from_object(obj)
+        return self.get_prep_value(value)
+
 
 class LanguageField(models.CharField):
     def __init__(self, *args, **kwargs):
