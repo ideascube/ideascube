@@ -170,8 +170,10 @@ class LoanQuerySet(models.QuerySet):
 
 class Loan(TimeStampedModel):
     specimen = models.ForeignKey(Specimen, verbose_name=_('specimen'))
+    # The user who borrowed the specimen
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans',
                              verbose_name=_('user'))
+    # The staff who registered the loan
     by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='loans_made',
                            verbose_name=_('by'))
     due_date = models.DateField(verbose_name=_('Due date'), default=date.today)
