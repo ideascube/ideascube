@@ -345,7 +345,7 @@ class SortedTaggableManager(_TaggableManager):
 
 
 class JSONField(models.TextField):
-    def from_db_value(self, value, expression, connection, context):
+    def _parse_value(self, value):
         if value is None:
             return
 
@@ -355,8 +355,11 @@ class JSONField(models.TextField):
         except TypeError as e:
             raise ValidationError('Could not decode JSON value: %r' % value)
 
+    def from_db_value(self, value, expression, connection, context):
+        return self._parse_value(value)
+
     def to_python(self, value):
-        return self.from_db_value(value)
+        return self._parse_value(value)
 
     def get_prep_value(self, value):
         return json.dumps(value)
