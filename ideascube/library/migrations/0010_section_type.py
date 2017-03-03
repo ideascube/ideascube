@@ -40,10 +40,6 @@ class Migration(migrations.Migration):
             field=models.CharField(choices=[('digital', 'digital'), ('children-cartoons', 'children - cartoons'), ('children-novels', 'children - novels'), ('children-poetry', 'children - poetry'), ('children-theatre', 'children - theatre'), ('children-documentary', 'children - documentary'), ('children-comics', 'children - comics'), ('adults-novels', 'adults - novels'), ('adults-poetry', 'adults - poetry'), ('adults-theatre', 'adults - theatre'), ('adults-documentary', 'adults - documentary'), ('adults-comics', 'adults - comics'), ('game', 'game'), ('other', 'other')], default='other', max_length=50, verbose_name='section'),
             preserve_default=False
         ),
-        # We need to make this migration revertible for tests.
-        # We do not support real backward migration, test will revert this
-        # migration on an empty database, so we do not have to do a real
-        # backward data migration. So just use a noop a backward migration.
         migrations.RunPython(migrate_data, migrations.RunPython.noop),
         migrations.RemoveField(model_name='book',
                                name='section'),

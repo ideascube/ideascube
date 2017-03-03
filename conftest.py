@@ -8,11 +8,6 @@ from django.core.urlresolvers import reverse
 from ideascube.tests.factories import UserFactory
 from ideascube.search.utils import create_index_table
 
-
-from django.apps import apps
-from django.db.migrations.executor import MigrationExecutor
-from django.db import connection
-
 import logging
 # This Handler always use sys.stderr and do not cache it.
 # Let's configure logging to always use it when we are testing.
@@ -187,31 +182,3 @@ def catalog():
     mocker = CatalogMocker()
     with mocker:
         yield mocker
-
-
-class Migrator:
-    def __init__(self, migrate_from, migrate_to):
-        self.migrate_from = migrate_from
-        self.migrate_to = migrate_to
-
-        self.executor = MigrationExecutor(connection)
-        self.executor.loader.build_graph()  # reload.
-        self.executor.migrate(self.migrate_from)
-
-    def run_migration(self):
-        self.executor.loader.build_graph()  # reload.
-        self.executor.migrate(self.migrate_to)
-
-    @property
-    def old_apps(self):
-        return self.executor.loader.project_state(self.migrate_from).apps
-
-    @property
-    def new_apps(self):
-        return self.executor.loader.project_state(self.migrate_to).apps
-
-
-@pytest.fixture(scope='function')
-def migration(db, request):
-    migrate_from, migrate_to = request.param
-    return Migrator(migrate_from, migrate_to)
