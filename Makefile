@@ -45,3 +45,19 @@ test:
 
 testcov:
 	py.test --cov=ideascube/ --cov-report=term-missing --migrations
+
+test-data-migration:
+	set -e ; \
+	BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	LATEST_TAG=$$(git describe --abbrev=0 --tags); \
+	\
+	echo "# Loading some data at $$LATEST_TAG"; \
+	git checkout $$LATEST_TAG; \
+	rm -fr storage; \
+	make migrate; \
+	python3 manage.py loaddata --database=default test-data/data.json; \
+	python3 manage.py reindex; \
+	\
+	echo "# Running migrations on $$BRANCH"; \
+	git checkout $$BRANCH; \
+	make migrate
