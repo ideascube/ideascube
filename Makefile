@@ -51,7 +51,7 @@ test:
 	py.test
 
 test-coverage:
-	py.test --cov=ideascube/ --cov-report=term-missing --cov-fail-under=92 --migrations
+	py.test --cov=ideascube/ --cov-report=term-missing --cov-fail-under=92
 
 quality-check:
 	py.test --flakes -m flakes
@@ -75,3 +75,4 @@ test-data-migration:
 	echo "# Running migrations on $$BRANCH"; \
 	git checkout $$BRANCH; \
 	make migrate
+	py.test --migrations
