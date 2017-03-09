@@ -63,7 +63,8 @@ class Command(BaseCommandWithSubcommands):
                 "them with the command:\n"
                 "catalog remove pkgid+".format(from_packages_count, have_not))
 
-        self.clean_leftover(options)
+        if not options['dry_run']:
+            self.clean_leftover(options)
 
     def clean_leftover(self, options):
         files_to_remove = self._get_leftover_files()
