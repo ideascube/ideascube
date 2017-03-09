@@ -37,11 +37,12 @@ class Command(BaseCommandWithSubcommands):
         Document.objects.filter(package_id='').delete()
         left_media_count = Document.objects.all().count()
         if left_media_count:
-            print("{} media have been installed by packages."
-                  " They have been not deleted.\n"
-                  "You must delete the corresponding package if you want to "
-                  "remove them. Use the command :\n"
-                  "catalog remove pkgid+".format(left_media_count))
+            self.stdout.write(
+                "{} media have been installed by packages and have not been deleted.\n"
+                "Remove the corresponding package(s) if you want to delete "
+                "them with the command:\n"
+                "catalog remove pkgid+".format(left_media_count))
+
         self.clean_leftover(options)
 
     def clean_leftover(self, options):
