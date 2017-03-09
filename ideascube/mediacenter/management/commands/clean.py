@@ -27,17 +27,33 @@ class Command(BaseCommandWithSubcommands):
             help='Clean mediacenter files not associated with a document.')
         clean_leftover.set_defaults(func=self.clean_leftover)
 
+        document_types = [choice[0] for choice in Document.KIND_CHOICES]
+
         clean_media = self.subs.add_parser(
             'media',
             parents = [dry_run],
             help='Remove all medias')
+        clean_media.add_argument(
+            '--type', action='append', choices=document_types,
+            help='The type of media to remove, e.g "--types=image". Can be '
+                 'specified multiple times to clean multiple types.')
         clean_media.set_defaults(func=self.clean_media)
+
+    def _get_filtered_queryset(self, queryset, options):
+        type_ = options['type']
+
+        if type_:
+            queryset = queryset.filter(kind__in=type_)
+
+        return queryset
 
     def clean_media(self, options):
         documents = Document.objects.filter(package_id='')
+        documents = self._get_filtered_queryset(documents, options)
         documents_count = documents.count()
 
         from_packages = Document.objects.exclude(package_id='')
+        from_packages = self._get_filtered_queryset(from_packages, options)
         from_packages_count = from_packages.count()
 
         if not options['dry_run']:

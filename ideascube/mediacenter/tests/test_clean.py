@@ -186,3 +186,20 @@ def test_clean_media_should_not_delete_media_from_packages(capsys):
 Remove the corresponding package(s) if you want to delete them with the command:
 catalog remove pkgid+
 """
+
+
+def test_clean_media_by_type():
+    DocumentFactory.create_batch(size=2, kind=Document.AUDIO)
+    DocumentFactory.create_batch(size=2, kind=Document.VIDEO)
+    DocumentFactory.create_batch(size=2, kind=Document.OTHER)
+    DocumentFactory.create_batch(size=2, kind=Document.TEXT)
+    assert Document.objects.all().count() == 8
+
+    call_command('clean', 'media', '--type=other')
+    assert Document.objects.all().count() == 6
+    assert Document.objects.filter(kind=Document.OTHER).count() == 0
+
+    call_command('clean', 'media', '--type=audio', '--type=video')
+    assert Document.objects.all().count() == 2
+    assert Document.objects.filter(kind=Document.AUDIO).count() == 0
+    assert Document.objects.filter(kind=Document.VIDEO).count() == 0
