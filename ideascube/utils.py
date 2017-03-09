@@ -1,6 +1,5 @@
 import io
 import sys
-import os
 import re
 
 from django.conf import locale
@@ -86,8 +85,6 @@ def get_file_sha256(path):
 
     return sha.hexdigest()
 
-def get_file_size(path):
-    return os.stat(path).st_size
 
 def sanitize_tag_name(tag_name):
     tag_name = tag_name.strip(';:.,?!+-@+-/* \t')
