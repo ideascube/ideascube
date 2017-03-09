@@ -40,16 +40,28 @@ class Command(BaseCommandWithSubcommands):
         from_packages = Document.objects.exclude(package_id='')
         from_packages_count = from_packages.count()
 
-        documents.delete()
-        self.stdout.write(
-            '{} documents have been deleted.'.format(documents_count))
+        if not options['dry_run']:
+            documents.delete()
+            self.stdout.write(
+                '{} documents have been deleted.'.format(documents_count))
+            have_not = 'have not been'
+
+        else:
+            self.stdout.write(
+                '{} documents would have been deleted:'.format(
+                    documents_count))
+
+            for document in documents:
+                self.stdout.write('- {0.title} ({0.kind})'.format(document))
+
+            have_not = 'would not have been'
 
         if from_packages_count:
             self.stdout.write(
-                "{} media have been installed by packages and have not been deleted.\n"
+                "{} media have been installed by packages and {} deleted.\n"
                 "Remove the corresponding package(s) if you want to delete "
                 "them with the command:\n"
-                "catalog remove pkgid+".format(from_packages_count))
+                "catalog remove pkgid+".format(from_packages_count, have_not))
 
         self.clean_leftover(options)
 

@@ -1,3 +1,4 @@
+import io
 import os, stat
 import pytest
 
@@ -144,6 +145,22 @@ def test_clean_media_should_delete_all_media():
     assert Document.objects.all().count() == 4
     call_command('clean', 'media')
     assert Document.objects.all().count() == 0
+
+
+def test_clean_media_does_not_do_anything_with_dryrun():
+    out = io.StringIO()
+
+    DocumentFactory.create_batch(size=4)
+    assert Document.objects.all().count() == 4
+    call_command('clean', 'media', '--dry-run', stdout=out)
+    assert Document.objects.all().count() == 4
+    assert out.getvalue().strip() == '\n'.join([
+        '4 documents would have been deleted:',
+        '- Test document 17 (other)',
+        '- Test document 16 (other)',
+        '- Test document 15 (other)',
+        '- Test document 14 (other)',
+    ])
 
 
 def test_clean_media_should_delete_leftover_files():
