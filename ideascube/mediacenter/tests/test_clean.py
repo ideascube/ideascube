@@ -181,7 +181,7 @@ def test_clean_media_should_not_delete_media_from_packages(capsys):
     for document in Document.objects.all():
         assert document.package_id == '1'
     out, _ = capsys.readouterr()
-    assert out == """4 documents have been deleted.
+    assert out == """4 documents have been deleted.\n
 4 media have been installed by packages and have not been deleted.
 Remove the corresponding package(s) if you want to delete them with the command:
 catalog remove pkgid+

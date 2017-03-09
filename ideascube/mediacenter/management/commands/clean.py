@@ -58,7 +58,7 @@ class Command(BaseCommandWithSubcommands):
 
         if from_packages_count:
             self.stdout.write(
-                "{} media have been installed by packages and {} deleted.\n"
+                "\n{} media have been installed by packages and {} deleted.\n"
                 "Remove the corresponding package(s) if you want to delete "
                 "them with the command:\n"
                 "catalog remove pkgid+".format(from_packages_count, have_not))
