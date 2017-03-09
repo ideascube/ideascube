@@ -34,7 +34,13 @@ class Command(BaseCommandWithSubcommands):
         clean_media.set_defaults(func=self.clean_media)
 
     def clean_media(self, options):
-        Document.objects.filter(package_id='').delete()
+        documents = Document.objects.filter(package_id='')
+        documents_count = documents.count()
+
+        documents.delete()
+        self.stdout.write(
+            '{} documents have been deleted.'.format(documents_count))
+
         from_packages_count = Document.objects.exclude(package_id='').count()
 
         if from_packages_count:
