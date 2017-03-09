@@ -40,8 +40,18 @@ Let's make sure there are no migration conflicts with the previous release:
     $ git checkout master
     $ make migrate
 
-Ideally, in the above steps, it would be even better to use a real-world
-database (from a server running the latest release) instead of the dummy data.
+Starting with Ideascube 0.22.0, you can instead run:
+
+    $ make test-data-migrations
+
+Still with releases after Ideascube 0.22.0, if the above succeeded, you should
+update the test data file so it can be used by the CI after this release:
+
+    $ python manage.py dumpdata --database=default \
+          --natural-foreign -e sessions -e contenttypes -e auth.Permission \
+          --format=json --indent=4 -o test-data/data.json
+    $ git add test-data/data.json
+    $ git commit -m "Update the migration test data"
 
 ## Release
 
