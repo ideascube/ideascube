@@ -6,6 +6,7 @@ import glob
 from django.conf import settings
 
 from ideascube.management.base import BaseCommandWithSubcommands
+from ideascube.management.args import date_argument
 from ideascube.mediacenter.models import Document
 from ideascube.utils import printerr
 
@@ -37,13 +38,27 @@ class Command(BaseCommandWithSubcommands):
             '--type', action='append', choices=document_types,
             help='The type of media to remove, e.g "--types=image". Can be '
                  'specified multiple times to clean multiple types.')
+        clean_media.add_argument(
+            '--created-after', type=date_argument,
+            help='Only remove media created on or after this date.')
+        clean_media.add_argument(
+            '--created-before', type=date_argument,
+            help='Only remove media created before this date.')
         clean_media.set_defaults(func=self.clean_media)
 
     def _get_filtered_queryset(self, queryset, options):
         type_ = options['type']
+        created_after = options['created_after']
+        created_before = options['created_before']
 
         if type_:
             queryset = queryset.filter(kind__in=type_)
+
+        if created_after:
+            queryset = queryset.filter(created_at__gte=created_after)
+
+        if created_before:
+            queryset = queryset.filter(created_at__lt=created_before)
 
         return queryset
 

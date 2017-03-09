@@ -1,5 +1,8 @@
 import io
 import os, stat
+from datetime import datetime, timezone
+
+import freezegun
 import pytest
 
 from django.core.management import call_command
@@ -203,3 +206,66 @@ def test_clean_media_by_type():
     assert Document.objects.all().count() == 2
     assert Document.objects.filter(kind=Document.AUDIO).count() == 0
     assert Document.objects.filter(kind=Document.VIDEO).count() == 0
+
+
+def test_clean_media_by_dates():
+    dt1 = datetime(2017, 3, 1, tzinfo=timezone.utc)
+    dt2 = datetime(2017, 3, 2, tzinfo=timezone.utc)
+    dt3 = datetime(2017, 3, 3, tzinfo=timezone.utc)
+    dt4 = datetime(2017, 3, 4, tzinfo=timezone.utc)
+    dt5 = datetime(2017, 3, 5, tzinfo=timezone.utc)
+    dt7 = datetime(2017, 3, 7, tzinfo=timezone.utc)
+
+    for dt in (dt1, dt3, dt5, dt7):
+        with freezegun.freeze_time(dt):
+            DocumentFactory.create_batch(size=2)
+
+    documents = Document.objects
+    assert documents.all().count() == 8
+
+    call_command(
+        'clean', 'media', '--created-before=%s' % dt2.strftime('%Y-%m-%d'))
+    assert documents.all().count() == 6
+    assert documents.filter(created_at__lt=dt2).count() == 0
+
+    call_command(
+        'clean', 'media', '--created-after=%s' % dt7.strftime('%Y-%m-%d'))
+    assert documents.all().count() == 4
+    assert documents.filter(created_at__gt=dt7).count() == 0
+
+    call_command(
+        'clean', 'media',
+        '--created-after=%s' % dt2.strftime('%Y-%m-%d'),
+        '--created-before=%s' % dt4.strftime('%Y-%m-%d'))
+    assert documents.all().count() == 2
+    assert (
+        documents.filter(created_at__gt=dt2).filter(created_at__lt=dt4).count()
+        == 0)
+
+
+def test_clean_media_by_type_and_dates():
+    dt1 = datetime(2017, 3, 1, tzinfo=timezone.utc)
+    dt2 = datetime(2017, 3, 2, tzinfo=timezone.utc)
+    dt3 = datetime(2017, 3, 3, tzinfo=timezone.utc)
+
+    with freezegun.freeze_time(dt2):
+        DocumentFactory.create_batch(size=2, kind=Document.AUDIO)
+        DocumentFactory.create_batch(size=2, kind=Document.OTHER)
+        DocumentFactory.create_batch(size=2, kind=Document.VIDEO)
+
+    DocumentFactory.create_batch(size=2, kind=Document.AUDIO)
+    DocumentFactory.create_batch(size=2, kind=Document.OTHER)
+    DocumentFactory.create_batch(size=2, kind=Document.VIDEO)
+    assert Document.objects.all().count() == 12
+
+    call_command(
+        'clean', 'media', '--type=audio', '--type=video',
+        '--created-after=%s' % dt1.strftime('%Y-%m-%d'),
+        '--created-before=%s' % dt3.strftime('%Y-%m-%d'))
+    assert Document.objects.all().count() == 8
+    assert Document.objects.filter(created_at__gt=dt3).count() == 6
+
+    dt2_documents = Document.objects.filter(created_at=dt2)
+    assert dt2_documents.filter(kind=Document.AUDIO).count() == 0
+    assert dt2_documents.filter(kind=Document.OTHER).count() == 2
+    assert dt2_documents.filter(kind=Document.VIDEO).count() == 0
