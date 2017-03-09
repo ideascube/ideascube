@@ -37,11 +37,12 @@ class Command(BaseCommandWithSubcommands):
         documents = Document.objects.filter(package_id='')
         documents_count = documents.count()
 
+        from_packages = Document.objects.exclude(package_id='')
+        from_packages_count = from_packages.count()
+
         documents.delete()
         self.stdout.write(
             '{} documents have been deleted.'.format(documents_count))
-
-        from_packages_count = Document.objects.exclude(package_id='').count()
 
         if from_packages_count:
             self.stdout.write(
