@@ -1,3 +1,16 @@
+ideascube (0.22.0) unstable; urgency=low
+
+  * Removed the csv2pkg command, it now lives in its own project;
+  * A specific configuration for kb_cod_kinlab was added;
+  * The translations were updated;
+  * Fixed and improved the model JSONField;
+  * Added a reindexation step after inserting dummy data to the database;
+  * Upgraded our dependencies;
+  * Added some test data in the dumpdata/loaddata format, which will help us
+    better test our data migrations in the future;
+
+ -- Mathieu Bridon <bochecha@daitauha.fr> Thu, 9 Mar 2017 17:01:00 +0100
+
 ideascube (0.21.2) unstable; urgency=low
 
   * Remove '-e' option in requirements(-dev).txt
