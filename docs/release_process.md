@@ -31,7 +31,7 @@ And run the migrations:
 
     $ make migrate
 
-Let's make sure there are no migration conflicts:
+Let's make sure there are no migration conflicts with the previous release:
 
     $ rm -fr storage
     $ git checkout $TAG_FOR_LATEST_RELEASE
