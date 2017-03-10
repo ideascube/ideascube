@@ -650,7 +650,7 @@ def test_mediacenter_installs_zippedmedia(settings, zippedmedia_path):
     for document in packaged_documents:
         path = os.path.realpath(document.original.path)
         dirname = os.path.dirname(path)
-        assert dirname == install_root.join('test-media').strpath
+        assert dirname.startswith(install_root.join('test-media').strpath)
 
 
 @pytest.mark.usefixtures('db')
