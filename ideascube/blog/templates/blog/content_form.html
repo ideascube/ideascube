@@ -19,13 +19,14 @@
                     {% csrf_token %}
                     <h3>{% trans 'Metadatas' %}</h3>
                     {% for field in form %}
-                        {% form_field field %}
+                        {% if field.name != 'text'  %}
+                            {% form_field field %}
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <div class="col two-third">
                     <h3>{% trans 'Content' %}</h3>
-                    <label class="strip required">Content</label>
-                    <div data-editable-for="text" placeholder="{% trans 'Type your text here…' %}">{{ form.text.value|default:''|safe }}</div>
+                    {% form_field form.text %}
                 </div>
         </div>
         <div class="row">
@@ -36,7 +37,7 @@
 {% block extra_foot %}
     <script type="text/javascript">
         ID.focusOn('[name=title]');
-        ID.initEditor('text');
-        ID.initDatepicker('published_at')
+        ID.initDatepicker('published_at');
+        ID.initEditors();
     </script>
 {% endblock extra_foot %}
