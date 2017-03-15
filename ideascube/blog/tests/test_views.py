@@ -263,6 +263,17 @@ def test_content_text_is_cleaned_from_unwanted_html_tags(staffapp):
                             '&lt;&lt;/div&gt;')
 
 
+def test_content_summary_is_cleaned_from_unwanted_html_tags(staffapp):
+    form = staffapp.get(reverse('blog:content_create')).forms['model_form']
+    form['title'] = 'my content title'
+    form['summary'] = 'my content summary <img src="foo" />'
+    form['text'] = ('my content text')
+    form['published_at'] = '2014-12-10'
+    form.submit().follow()
+    content = Content.objects.first()
+    assert content.summary == ('my content summary &lt;img src="foo"&gt;')
+
+
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = ContentFactory(status=Content.PUBLISHED, tags=['plane'])
     boat = ContentFactory(status=Content.PUBLISHED, tags=['boat'])
