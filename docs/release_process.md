@@ -33,19 +33,10 @@ And run the migrations:
 
 Let's make sure there are no migration conflicts with the previous release:
 
-    $ rm -fr storage
-    $ git checkout $TAG_FOR_LATEST_RELEASE
-    $ make migrate
-    $ make dummydata
-    $ git checkout master
-    $ make migrate
-
-Starting with Ideascube 0.22.0, you can instead run:
-
     $ make test-data-migrations
 
-Still with releases after Ideascube 0.22.0, if the above succeeded, you should
-update the test data file so it can be used by the CI after this release:
+If the above succeeded, you should update the test data file so it can be used
+by the CI after this release:
 
     $ python manage.py dumpdata --database=default \
           --natural-foreign -e sessions -e contenttypes -e auth.Permission \
