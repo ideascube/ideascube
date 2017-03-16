@@ -1,19 +1,18 @@
 import argparse
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
 
+from ideascube.management.base import BaseCommandWithSubcommands
 from ideascube.serveradmin.catalog import (Catalog,
                                            NoSuchPackage,
                                            ExistingRemoteError)
 
 
-class Command(BaseCommand):
+class Command(BaseCommandWithSubcommands):
     help = 'Manage apps and content'
 
     def add_arguments(self, parser):
-        subs = parser.add_subparsers(
-            title='Commands', dest='cmd', metavar='',
-            parser_class=argparse.ArgumentParser)
+        super().add_arguments(parser)
 
         required_ids = argparse.ArgumentParser('required_ids', add_help=False)
         required_ids.add_argument(
@@ -33,7 +32,7 @@ class Command(BaseCommand):
                  ' can be found, in addition to the default package cache')
 
         # -- Manage content ---------------------------------------------------
-        list = subs.add_parser(
+        list = self.subs.add_parser(
             'list', parents=[optional_ids], help='List packages')
         group = list.add_mutually_exclusive_group()
         group.add_argument(
@@ -55,27 +54,27 @@ class Command(BaseCommand):
             help='List unhandled packages.')
         list.set_defaults(filter='all', func=self.list_packages)
 
-        install = subs.add_parser(
+        install = self.subs.add_parser(
             'install', parents=[package_cache, required_ids],
             help='Install packages')
         install.set_defaults(func=self.install_packages)
 
-        reinstall = subs.add_parser(
+        reinstall = self.subs.add_parser(
             'reinstall', parents=[package_cache, required_ids],
             help='Reinstall packages')
         reinstall.set_defaults(func=self.reinstall_packages)
 
-        remove = subs.add_parser(
+        remove = self.subs.add_parser(
             'remove', parents=[required_ids], help='Remove packages')
         remove.set_defaults(func=self.remove_packages)
 
-        upgrade = subs.add_parser(
+        upgrade = self.subs.add_parser(
             'upgrade', aliases=['update'],
             parents=[package_cache, optional_ids], help='Upgrade packages')
         upgrade.set_defaults(func=self.upgrade_packages)
 
         # -- Manage local cache -----------------------------------------------
-        cache = subs.add_parser('cache', help='Manage cache')
+        cache = self.subs.add_parser('cache', help='Manage cache')
 
         cachesubs = cache.add_subparsers(title='Commands', dest='cachecmd')
         cachesubs.required = True
@@ -87,7 +86,7 @@ class Command(BaseCommand):
         clear.set_defaults(func=self.clear_cache)
 
         # -- Manage remote sources --------------------------------------------
-        remote = subs.add_parser('remotes', help='Manage remote sources')
+        remote = self.subs.add_parser('remotes', help='Manage remote sources')
 
         remotesubs = remote.add_subparsers(title='Commands', dest='remotecmd')
         remotesubs.required = True
@@ -105,15 +104,10 @@ class Command(BaseCommand):
         rm.add_argument('id', help='The id of the remote source to remove')
         rm.set_defaults(func=self.remove_remote)
 
-        self.parser = parser
-
     def handle(self, *args, **options):
-        if 'func' not in options:
-            self.parser.print_help()
-            self.parser.exit(1)
-
         self.catalog = Catalog()
-        options['func'](options)
+
+        return super().handle(*args, **options)
 
     # -- Manage content -------------------------------------------------------
     def list_packages(self, options):

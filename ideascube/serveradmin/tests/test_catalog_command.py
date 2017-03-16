@@ -8,15 +8,6 @@ import pytest
 import yaml
 
 
-def test_no_command(tmpdir, capsys):
-    with pytest.raises(SystemExit):
-        call_command('catalog')
-
-    out, err = capsys.readouterr()
-    assert out.strip().startswith('usage: ')
-    assert err.strip() == ''
-
-
 def test_add_remote(tmpdir, settings, capsys, monkeypatch):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(

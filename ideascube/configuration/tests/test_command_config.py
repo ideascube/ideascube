@@ -7,15 +7,6 @@ from ideascube.configuration import get_config, set_config
 from ideascube.configuration.models import Configuration
 
 
-def test_no_command(capsys):
-    with pytest.raises(SystemExit):
-        call_command('config')
-
-    out, err = capsys.readouterr()
-    assert out.strip().startswith('usage: ')
-    assert err.strip() == ''
-
-
 @pytest.mark.usefixtures('db')
 @pytest.mark.parametrize(
     'value, expected, default',

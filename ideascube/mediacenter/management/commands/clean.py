@@ -4,45 +4,34 @@ import argparse
 import glob
 
 from django.conf import settings
-from django.core.management.base import BaseCommand
 
+from ideascube.management.base import BaseCommandWithSubcommands
 from ideascube.mediacenter.models import Document
 from ideascube.utils import printerr
 
 
-class Command(BaseCommand):
+class Command(BaseCommandWithSubcommands):
     help = 'Remove files from the mediacenter.'
 
     def add_arguments(self, parser):
-        subs = parser.add_subparsers(
-            title='Commands', dest='cmd', metavar='',
-            parser_class=argparse.ArgumentParser)
+        super().add_arguments(parser)
 
         dry_run = argparse.ArgumentParser('dry_run', add_help=False)
         dry_run.add_argument('--dry-run', action='store_true',
                              help='Print the list of medias that would be '
                                   'removed. Do not actually remove them')
 
-        clean_leftover = subs.add_parser(
+        clean_leftover = self.subs.add_parser(
             'leftover-files',
             parents = [dry_run],
             help='Clean mediacenter files not associated with a document.')
         clean_leftover.set_defaults(func=self.clean_leftover)
 
-        clean_media = subs.add_parser(
+        clean_media = self.subs.add_parser(
             'media',
             parents = [dry_run],
             help='Remove all medias')
         clean_media.set_defaults(func=self.clean_media)
-
-        self.parser = parser
-
-    def handle(self, *args, **options):
-        if 'func' not in options:
-            self.parser.print_help()
-            self.parser.exit(1)
-
-        options['func'](options)
 
     def clean_media(self, options):
         Document.objects.filter(package_id='').delete()

@@ -1,12 +1,12 @@
-import argparse
 import sys
 from itertools import groupby
 from operator import itemgetter
 
-from django.core.management.base import BaseCommand
 from django.utils.termcolors import colorize
 
 from taggit.models import Tag, TaggedItem
+
+from ideascube.management.base import BaseCommandWithSubcommands
 from ideascube.utils import sanitize_tag_name
 
 
@@ -23,51 +23,44 @@ def exit(text, **kwargs):
     sys.exit(1)
 
 
-class Command(BaseCommand):
+class Command(BaseCommandWithSubcommands):
     help = "Manage tags"
 
     def add_arguments(self, parser):
-        self.parser = parser
-        subs = parser.add_subparsers(
-            title='Commands', dest='cmd', metavar='',
-            parser_class=argparse.ArgumentParser)
+        super().add_arguments(parser)
 
-        count = subs.add_parser('count', help='Count tag usage')
+        count = self.subs.add_parser('count', help='Count tag usage')
         count.add_argument('name', help='Tag name we want to count.')
         count.set_defaults(func=self.count)
 
-        delete = subs.add_parser('delete', help='Delete tag')
+        delete = self.subs.add_parser('delete', help='Delete tag')
         delete.add_argument('name', help='Tag name we want to delete.')
         delete.add_argument('--force', action='store_true',
                             help='Force delete even if tag is still used.')
         delete.set_defaults(func=self.delete)
 
-        rename = subs.add_parser('rename', help='Rename a tag')
+        rename = self.subs.add_parser('rename', help='Rename a tag')
         rename.add_argument('old', help='Old name.')
         rename.add_argument('new', help='New name.')
         rename.set_defaults(func=self.rename)
 
-        replace = subs.add_parser('replace',
+        replace = self.subs.add_parser('replace',
                                   help='Replace tag by another and delete it')
         replace.add_argument('old', help='Old tag name.')
         replace.add_argument('new', help='New tag name.')
         replace.set_defaults(func=self.replace)
 
-        sanitize = subs.add_parser('sanitize',
+        sanitize = self.subs.add_parser('sanitize',
             help=('Sanitize existing tags.\n'
                   'Remove duplicates, clean characters...'))
         sanitize.set_defaults(func=self.sanitize)
 
-        list_ = subs.add_parser('list', help='List tags')
+        list_ = self.subs.add_parser('list', help='List tags')
         list_.set_defaults(func=self.list)
 
     def handle(self, *args, **options):
-        if 'func' not in options:
-            self.parser.print_help()
-            self.parser.exit(1)
-
         log('-'*80, fg='white')
-        options['func'](options)
+        return super().handle(*args, **options)
 
     def _count(self, name):
         return TaggedItem.objects.filter(tag__name=name).count()

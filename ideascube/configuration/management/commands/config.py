@@ -1,8 +1,7 @@
-import argparse
 import ast
 
 from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
 
 from ideascube.configuration import get_config, reset_config, set_config
 from ideascube.configuration.exceptions import (
@@ -14,60 +13,50 @@ from ideascube.configuration.registry import (
     get_all_namespaces, get_config_data, get_default_value,
     get_namespaced_configs,
     )
+from ideascube.management.base import BaseCommandWithSubcommands
 
 
-class Command(BaseCommand):
+class Command(BaseCommandWithSubcommands):
     help = 'Manage server configuration'
 
     def add_arguments(self, parser):
-        subs = parser.add_subparsers(
-            title='Commands', dest='cmd', metavar='',
-            parser_class=argparse.ArgumentParser)
+        super().add_arguments(parser)
 
-        get = subs.add_parser(
+        get = self.subs.add_parser(
             'get', help='Get the current value of a configuration option')
         get.add_argument('namespace', help='The configuration namespace')
         get.add_argument('key', help='The configuration key')
         get.set_defaults(func=self.get_config)
 
-        describe = subs.add_parser(
+        describe = self.subs.add_parser(
             'describe', help='Describe a configuration option')
         describe.add_argument('namespace', help='The configuration namespace')
         describe.add_argument('key', help='The configuration key')
         describe.set_defaults(func=self.describe_config)
 
-        list = subs.add_parser(
+        list = self.subs.add_parser(
             'list', help='List configuration namespaces and keys')
         list.add_argument(
             'namespace', nargs='?',
             help='Only list configuration keys for this namespace')
         list.set_defaults(func=self.list_configs)
 
-        report = subs.add_parser(
+        report = self.subs.add_parser(
             'report', help='Print a full report of the current configuration.')
         report.set_defaults(func=self.report_config)
 
-        reset = subs.add_parser(
+        reset = self.subs.add_parser(
             'reset', help='Reset a configuration option to its default value')
         reset.add_argument('namespace', help='The configuration namespace')
         reset.add_argument('key', help='The configuration key')
         reset.set_defaults(func=self.reset_config)
 
-        set = subs.add_parser(
+        set = self.subs.add_parser(
             'set', help='Set the value of a configuration option')
         set.add_argument('namespace', help='The configuration namespace')
         set.add_argument('key', help='The configuration key')
         set.add_argument('value', help='The new value')
         set.set_defaults(func=self.set_config)
-
-        self.parser = parser
-
-    def handle(self, *_, **options):
-        if 'func' not in options:
-            self.parser.print_help()
-            self.parser.exit(1)
-
-        options['func'](options)
 
     def _evaluate_value(self, value):
         if value in ('true', 'false'):
