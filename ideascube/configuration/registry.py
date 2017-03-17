@@ -1,7 +1,5 @@
 from __future__ import unicode_literals
 
-from django.conf import settings
-
 from .exceptions import (
     NoSuchConfigurationKeyError,
     NoSuchConfigurationNamespaceError,
@@ -42,7 +40,7 @@ REGISTRY = {
                        'the web interface.',
             'pretty_type': 'A string',
             'type': str,
-            'default': getattr(settings, 'IDEASCUBE_NAME', 'Ideas Cube'),
+            'default': 'Ideas Cube',
         },
     },
 }
