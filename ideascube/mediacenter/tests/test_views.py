@@ -25,18 +25,18 @@ def test_index_page_is_paginated(app, monkeypatch):
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(reverse('mediacenter:index'), {'page': 2})
+    response = app.get(reverse('mediacenter:index'), params={'page': 2})
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
     response = app.get(
-        reverse('mediacenter:index'), {'page': 3}, status=404)
+        reverse('mediacenter:index'), params={'page': 3}, status=404)
 
 
 def test_pagination_should_keep_querystring(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
     DocumentFactory.create_batch(size=4, kind=Document.IMAGE)
-    response = app.get(reverse('mediacenter:index'), {'kind': 'image'})
+    response = app.get(reverse('mediacenter:index'), params={'kind': 'image'})
     link = response.pyquery.find('.next')
     assert link
     assert 'kind=image' in link[0].attrib['href']
@@ -86,7 +86,7 @@ def test_should_take_sort_parameter_into_account(app):
                                                26, 16, 16))
     Document.objects.filter(pk=doc3.pk).update(modified_at=datetime(2016, 6,
                                                26, 16, 15))
-    response = app.get(reverse('mediacenter:index'), {'sort': 'asc'})
+    response = app.get(reverse('mediacenter:index'), params={'sort': 'asc'})
     titles = response.pyquery.find('.document-list h3')
     assert doc3.title in titles[0].text_content()
     assert doc2.title in titles[1].text_content()
@@ -97,8 +97,8 @@ def test_should_take_order_by_parameter_into_account(app):
     doc3 = DocumentFactory(title='C is the third letter')
     doc1 = DocumentFactory(title='A is the first letter')
     doc2 = DocumentFactory(title='b can be lower case')
-    response = app.get(reverse('mediacenter:index'), {'sort': 'asc',
-                                                      'order_by': 'title'})
+    response = app.get(reverse('mediacenter:index'), params={
+        'sort': 'asc', 'order_by': 'title'})
     titles = response.pyquery.find('.document-list h3')
     assert doc1.title in titles[0].text_content()
     assert doc2.title in titles[1].text_content()
@@ -107,7 +107,7 @@ def test_should_take_order_by_parameter_into_account(app):
 
 def test_search_box_should_update_querystring(app):
     response = app.get(reverse('mediacenter:index'),
-                       {'kind': 'image', 'q': 'bar'})
+                       params={'kind': 'image', 'q': 'bar'})
     form = response.forms['search']
     form['q'] = "foo"
     response = form.submit()
@@ -144,14 +144,14 @@ def test_kind_link_should_be_displayed_depending_other_filters(app):
     DocumentFactory(kind='image', title='bar')
 
     response = app.get(reverse('mediacenter:index'),
-                       {'kind': 'image', 'q': 'bar'})
+                       params={'kind': 'image', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
     assert len(links) == 0
 
     DocumentFactory(kind='pdf', title='bar')
 
     response = app.get(reverse('mediacenter:index'),
-                       {'kind': 'image', 'q': 'bar'})
+                       params={'kind': 'image', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
     assert len(links) == 1
 
@@ -162,14 +162,14 @@ def test_lang_link_should_be_displayed_depending_other_filters(app):
     DocumentFactory(lang='fr', title='bar')
 
     response = app.get(reverse('mediacenter:index'),
-                       {'lang': 'fr', 'q': 'bar'})
+                       params={'lang': 'fr', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, el: el.text == 'English')
     assert len(links) == 0
 
     DocumentFactory(lang='en', title='bar')
 
     response = app.get(reverse('mediacenter:index'),
-                       {'lang': 'fr', 'q': 'bar'})
+                       params={'lang': 'fr', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, el: el.text == 'English')
     assert len(links) == 1
 
@@ -178,7 +178,7 @@ def test_kind_link_should_update_querystring(app):
     DocumentFactory(kind='image', title='bar')
     DocumentFactory(kind='pdf', title='bar')
     response = app.get(reverse('mediacenter:index'),
-                       {'kind': 'image', 'q': 'bar'})
+                       params={'kind': 'image', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, elem: elem.text == 'pdf')
     response = app.get("{}{}".format(reverse('mediacenter:index'),
                                      links[0].attrib['href']),
@@ -190,7 +190,7 @@ def test_lang_link_should_update_querystring(app):
     DocumentFactory(lang='fr', title='bar')
     DocumentFactory(lang='en', title='bar')
     response = app.get(reverse('mediacenter:index'),
-                       {'lang': 'en', 'q': 'bar'})
+                       params={'lang': 'en', 'q': 'bar'})
     links = response.pyquery('a').filter(lambda i, el: el.text == 'français')
     response = app.get("{}{}".format(reverse('mediacenter:index'),
                                      links[0].attrib['href']),
@@ -200,7 +200,7 @@ def test_lang_link_should_update_querystring(app):
 
 def test_tags_link_should_update_querystring(app):
     DocumentFactory(lang='en', tags=['tag1', 'tag2', 'tag3'])
-    response = app.get(reverse('mediacenter:index'), {'lang': 'en'})
+    response = app.get(reverse('mediacenter:index'), params={'lang': 'en'})
 
     links = response.pyquery('.card:not(.filters) a').filter(
         lambda i, elem: (elem.text or '').strip() == 'tag1')
@@ -238,12 +238,10 @@ def test_remove_filter_should_be_present(app, catalog):
         'language':'fr',
         'staff_only':False}))
 
-    response = app.get(reverse('mediacenter:index'),
-                       {'lang': 'en',
-                        'q': 'foo',
-                        'tags': ['tag1', 'tag2'],
-                        'kind': 'video',
-                        'source': 'test.package1'})
+    response = app.get(
+        reverse('mediacenter:index'), params={
+            'lang': 'en', 'q': 'foo', 'tags': ['tag1', 'tag2'],
+            'kind': 'video', 'source': 'test.package1'})
 
     links = response.pyquery('.filters.card a').filter(
         lambda i, elem: "English" in (elem.text or ''))
@@ -539,7 +537,7 @@ def test_oembed_should_return_pdf_oembed_extract(app, pdf):
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = DocumentFactory(tags=['plane'])
     boat = DocumentFactory(tags=['boat'])
-    response = app.get(reverse('mediacenter:index'), {'tags': 'plane'})
+    response = app.get(reverse('mediacenter:index'), params={'tags': 'plane'})
     assert plane.title in response.content.decode()
     assert boat.title not in response.content.decode()
 
@@ -549,16 +547,16 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     DocumentFactory.create_batch(size=4, tags=['plane'])
     DocumentFactory.create_batch(size=2)
     url = reverse('mediacenter:index')
-    response = app.get(url, {'tags': 'plane'})
+    response = app.get(url, params={'tags': 'plane'})
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(url, {'tags': 'plane', 'page': 2})
+    response = app.get(url, params={'tags': 'plane', 'page': 2})
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    app.get(url, {'tags': 'plane', 'page': 3}, status=404)
-    app.get(url, {'page': 3}, status=200)
+    app.get(url, params={'tags': 'plane', 'page': 3}, status=404)
+    app.get(url, params={'page': 3}, status=200)
 
 
 def test_changing_filter_reset_page_parameter(app, monkeypatch):
@@ -568,7 +566,7 @@ def test_changing_filter_reset_page_parameter(app, monkeypatch):
     DocumentFactory.create_batch(size=4, tags=['plane'], kind=Document.IMAGE)
     DocumentFactory.create_batch(size=2)
     url = reverse('mediacenter:index')
-    response = app.get(url, {'page': 2, 'tags': 'plane', 'kind': 'pdf'})
+    response = app.get(url, params={'page': 2, 'tags': 'plane', 'kind': 'pdf'})
     find = response.pyquery.find
     # Removing 'tags' filter.
     assert 'page' not in find("a.flatlist:contains('plane')")[0].attrib['href']
