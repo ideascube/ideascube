@@ -25,11 +25,12 @@ def test_index_page_is_paginated(app, monkeypatch):
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(reverse('mediacenter:index') + '?page=2')
+    response = app.get(reverse('mediacenter:index'), {'page': 2})
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    response = app.get(reverse('mediacenter:index') + '?page=3', status=404)
+    response = app.get(
+        reverse('mediacenter:index'), {'page': 3}, status=404)
 
 
 def test_pagination_should_keep_querystring(app, monkeypatch):
@@ -552,12 +553,12 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(url + '?tags=plane&page=2')
+    response = app.get(url, {'tags': 'plane', 'page': 2})
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    app.get(url + '?tags=plane&page=3', status=404)
-    app.get(url + '?page=3', status=200)
+    app.get(url, {'tags': 'plane', 'page': 3}, status=404)
+    app.get(url, {'page': 3}, status=200)
 
 
 def test_changing_filter_reset_page_parameter(app, monkeypatch):

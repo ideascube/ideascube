@@ -252,11 +252,11 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(url + '?page=2')
+    response = app.get(url, {'tags': 'plane', 'page': 2})
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    response = app.get(url + '?page=3', status=404)
+    response = app.get(url, {'tags': 'plane', 'page': 3}, status=404)
 
 
 def test_can_create_content_with_tags(staffapp):

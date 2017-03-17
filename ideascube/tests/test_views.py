@@ -162,22 +162,25 @@ def test_user_list_page_is_paginated(staffapp, monkeypatch):
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = staffapp.get(reverse('user_list') + '?page=2', status=200)
+    response = staffapp.get(
+        reverse('user_list'), {'page': 2}, status=200)
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    staffapp.get(reverse('user_list') + '?page=3', status=404)
+    staffapp.get(
+        reverse('user_list'), {'page': 3}, status=404)
 
 
 def test_user_list_page_should_be_searchable(staffapp):
     user1 = UserFactory(full_name="user1")
     user2 = UserFactory(full_name="user2")
-    response = staffapp.get(reverse('user_list') + '?q=user1', status=200)
+    response = staffapp.get(
+        reverse('user_list'), {'q': 'user1'}, status=200)
     response.mustcontain(str(user1), no=str(user2))
 
 
 def test_system_user_is_not_searchable(staffapp, systemuser):
-    response = staffapp.get(reverse('user_list') + '?q=system')
+    response = staffapp.get(reverse('user_list'), {'q': 'system'})
     response.mustcontain(no=str(systemuser))
 
 
@@ -492,11 +495,11 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(url + '&page=2', status=200)
+    response = app.get(url, {'page': 2}, status=200)
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    response = app.get(url + '&page=3', status=404)
+    response = app.get(url, {'page': 3}, status=404)
 
 
 def test_build_package_card_info_must_not_fail_for_no_package(systemuser):
