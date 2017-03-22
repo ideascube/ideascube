@@ -80,7 +80,7 @@ def test_should_take_sort_parameter_into_account(app):
                                             26, 16, 16))
     Book.objects.filter(pk=book3.pk).update(created_at=datetime(2016, 6,
                                             26, 16, 15))
-    response = app.get(reverse('library:index'), {'sort': 'asc'})
+    response = app.get(reverse('library:index'), params={'sort': 'asc'})
     titles = response.pyquery.find('.book-list h3')
     assert book3.name in titles[0].text_content()
     assert book2.name in titles[1].text_content()
@@ -94,8 +94,8 @@ def test_should_take_order_by_parameter_into_account(app):
     BookSpecimenFactory(item=book1)
     BookSpecimenFactory(item=book2)
     BookSpecimenFactory(item=book3)
-    response = app.get(reverse('library:index'), {'sort': 'asc',
-                                                  'order_by': 'authors'})
+    response = app.get(reverse('library:index'), params={
+        'sort': 'asc', 'order_by': 'authors'})
     titles = response.pyquery.find('.book-list h3')
     assert book1.name in titles[0].text_content()
     assert book2.name in titles[1].text_content()
@@ -404,7 +404,7 @@ def test_import_from_ideascube_export(staffapp, monkeypatch):
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = BookSpecimenFactory(item__tags=['plane'])
     boat = BookSpecimenFactory(item__tags=['boat'])
-    response = app.get(reverse('library:index'), {'tags': 'plane'})
+    response = app.get(reverse('library:index'), params={'tags': 'plane'})
     assert plane.item.name in response.content.decode()
     assert boat.item.name not in response.content.decode()
 
@@ -412,7 +412,7 @@ def test_by_tag_page_should_be_filtered_by_tag(app):
 def test_by_kind_page_should_be_filtered_by_section_kind(app):
     digital = BookSpecimenFactory(item__section='digital')
     myth = BookSpecimenFactory(item__section='adults-myths')
-    response = app.get(reverse('library:index'), {'kind': 'digital'})
+    response = app.get(reverse('library:index'), params={'kind': 'digital'})
     assert digital.item.name in response.content.decode()
     assert myth.item.name not in response.content.decode()
 
@@ -421,15 +421,15 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
     BookSpecimenFactory.create_batch(size=4, item__tags=['plane'])
     url = reverse('library:index')
-    response = app.get(url, {'tags': 'plane'})
+    response = app.get(url, params={'tags': 'plane'})
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(url + '?page=2')
+    response = app.get(url, params={'tags': 'plane', 'page': 2})
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    response = app.get(url + '?page=3', status=404)
+    response = app.get(url, params={'tags': 'plane', 'page': 3}, status=404)
 
 
 def test_can_create_book_with_tags(staffapp):

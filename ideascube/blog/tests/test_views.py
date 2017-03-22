@@ -78,7 +78,7 @@ def test_should_take_sort_parameter_into_account(app):
                               published_at=datetime(2016, 6, 26, 16, 17))
     content2 = ContentFactory(status=Content.PUBLISHED,
                               published_at=datetime(2016, 6, 26, 16, 16))
-    response = app.get(reverse('blog:index'), {'sort': 'asc'})
+    response = app.get(reverse('blog:index'), params={'sort': 'asc'})
     titles = response.pyquery.find('.card.blog h3')
     assert titles[0].text == content3.title
     assert titles[1].text == content2.title
@@ -238,7 +238,7 @@ def test_can_create_content_without_image(staffapp):
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = ContentFactory(status=Content.PUBLISHED, tags=['plane'])
     boat = ContentFactory(status=Content.PUBLISHED, tags=['boat'])
-    response = app.get(reverse('blog:index'), {'tags': 'plane'})
+    response = app.get(reverse('blog:index'), params={'tags': 'plane'})
     assert plane.title in response.content.decode()
     assert boat.title not in response.content.decode()
 
@@ -248,15 +248,15 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
     ContentFactory.create_batch(size=4, status=Content.PUBLISHED,
                                 tags=['plane'])
     url = reverse('blog:index')
-    response = app.get(url, {'tags': 'plane'})
+    response = app.get(url, params={'tags': 'plane'})
     assert response.pyquery.find('.pagination')
     assert response.pyquery.find('.next')
     assert not response.pyquery.find('.previous')
-    response = app.get(url + '?page=2')
+    response = app.get(url, params={'tags': 'plane', 'page': 2})
     assert response.pyquery.find('.pagination')
     assert not response.pyquery.find('.next')
     assert response.pyquery.find('.previous')
-    response = app.get(url + '?page=3', status=404)
+    response = app.get(url, params={'tags': 'plane', 'page': 3}, status=404)
 
 
 def test_can_create_content_with_tags(staffapp):
