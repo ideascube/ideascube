@@ -11,4 +11,19 @@
         <li>{% blocktrans with name=IDEASCUBE_HOSTNAME %}Hostname: {{ name }}{% endblocktrans %}</li>
     </ul>
 
+    <hr>
+
+    <h3>{% trans "Change Server Name" %}</h3>
+
+    <form id="server_name" method="POST" action="">
+        {% csrf_token %}
+        <input type="text" id="server_name" name="server_name" value="{{ server_name }}" />
+        <input type="submit" value="{% trans 'Submit' %}" />
+    </form>
 {% endblock %}
+
+{% block extra_foot %}
+    <script type="text/javascript">
+        ID.focusOn('[name=server_name]');
+    </script>
+{% endblock extra_foot %}
