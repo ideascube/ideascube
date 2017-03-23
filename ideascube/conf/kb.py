@@ -8,7 +8,7 @@ STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS  # pragma: no flakes
                     if c['url'] in ['user_list', 'server:power',
                                     'server:wifi']]
 
-HOME_CARDS = STAFF_HOME_CARDS + [
+HOME_CARDS = [
     {
         'id': 'blog',
     },
