@@ -49,21 +49,6 @@ def languages(request):
 
 
 @staff_member_required
-def server_name(request):
-    if request.method == 'POST':
-        new_name = request.POST.get('server_name')
-
-        if new_name:
-            set_config('server', 'site-name', new_name, request.user)
-            messages.success(request, _('Server name changed successfully'))
-
-        else:
-            messages.error(request, _('Server name cannot be empty'))
-
-    return render(request, 'serveradmin/name.html')
-
-
-@staff_member_required
 def services(request):
     services = settings.SERVICES
     manager = Manager()
@@ -242,4 +227,14 @@ def home_page(request):
 
 @staff_member_required
 def server_info(request):
+    if request.method == 'POST':
+        new_name = request.POST.get('server_name')
+
+        if new_name:
+            set_config('server', 'site-name', new_name, request.user)
+            messages.success(request, _('Server name changed successfully'))
+
+        else:
+            messages.error(request, _('Server name cannot be empty'))
+
     return render(request, 'serveradmin/settings.html')
