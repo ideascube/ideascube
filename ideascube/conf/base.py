@@ -308,7 +308,7 @@ STAFF_HOME_CARDS = [
     },
 ]
 
-HOME_CARDS = STAFF_HOME_CARDS + [
+HOME_CARDS = [
     {
         'id': 'blog',
     },
