@@ -32,6 +32,7 @@ class Document(SearchMixin, TimeStampedModel):
     VIDEO = 'video'
     PDF = 'pdf'
     EPUB = 'epub'
+    MOBI = 'mobi'
     TEXT = 'text'
     AUDIO = 'audio'
     APP = 'app'
@@ -44,6 +45,7 @@ class Document(SearchMixin, TimeStampedModel):
         (PDF, _('pdf')),
         (TEXT, _('text')),
         (EPUB, _('epub')),
+        (MOBI, _('mobi')),
         (APP, _('app')),
         (OTHER, _('other')),
     )
