@@ -380,6 +380,7 @@ class ZippedMedias(SimpleZipPackage):
             raise InvalidPackageContent('Missing manifest file in {}'.format(
                 self.id))
 
+        os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
         catalog_path = os.path.join(settings.MEDIA_ROOT, "catalog")
         try:
             os.symlink(install_dir, catalog_path)
