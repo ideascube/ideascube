@@ -15,7 +15,7 @@ MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'birth_year', 'gender']
 
 ENTRY_ACTIVITY_CHOICES = []
 
-HOME_CARDS = STAFF_HOME_CARDS + [  # pragma: no flakes
+HOME_CARDS = [
     {
         'id': 'blog',
     },
