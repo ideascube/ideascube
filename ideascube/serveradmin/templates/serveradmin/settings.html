@@ -1,0 +1,14 @@
+{% extends 'serveradmin/index.html' %}
+{% load i18n %}
+
+{% block twothird %}
+
+    <h2>{% trans 'Server info' %}</h4>
+
+    <ul>
+        <li>{% blocktrans with version=IDEASCUBE_VERSION %}Version: {{ version }}{% endblocktrans %}</li>
+        <li>{% blocktrans with id=IDEASCUBE_ID %}ID: {{ id }}{% endblocktrans %}</li>
+        <li>{% blocktrans with name=IDEASCUBE_HOSTNAME %}Hostname: {{ name }}{% endblocktrans %}</li>
+    </ul>
+
+{% endblock %}
