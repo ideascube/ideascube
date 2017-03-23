@@ -1,3 +1,14 @@
+ideascube (0.23.0) unstable; urgency=low
+
+  * Add configuration for kb_bfa_bsfcampus;
+  * Update release process documentation;
+  * Upgrade our dependencies;
+  * Add handling of .mobi format in the mediacenter;
+  * Ensure MEDIA_ROOT exists before installation of mediacenter packages;
+  * Remove few unnecessary setting for HOME_CARDS;
+
+ -- Matthieu Gautier <mgautier@kymeria.fr> Thu, 23 Mar 2017 17:04:00 +0100
+
 ideascube (0.22.0) unstable; urgency=low
 
   * Removed the csv2pkg command, it now lives in its own project;
