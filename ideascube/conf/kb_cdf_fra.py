@@ -3,7 +3,7 @@ from .kb import *  # pragma: no flakes
 
 LANGUAGE_CODE = 'fr'
 IDEASCUBE_NAME = 'Coeur de Forêt'
-HOME_CARDS = STAFF_HOME_CARDS + [  # pragma: no flakes
+HOME_CARDS = [
     {
         'id': 'blog',
     },
