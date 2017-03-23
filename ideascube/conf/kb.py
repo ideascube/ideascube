@@ -5,8 +5,7 @@ TIME_ZONE = None
 DOMAIN = 'koombook.lan'
 BACKUP_FORMAT = 'gztar'
 STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS  # pragma: no flakes
-                    if c['url'] in ['user_list', 'server:power',
-                                    'server:wifi']]
+                    if c['url'] in ['user_list', 'server:settings']]
 
 BUILTIN_APP_CARDS = [
     {
