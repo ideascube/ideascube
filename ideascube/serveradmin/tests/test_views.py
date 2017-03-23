@@ -20,7 +20,7 @@ pytestmark = pytest.mark.django_db
 
 
 @pytest.mark.parametrize("page", [
-    ("name"),
+    ("settings"),
     ("languages"),
     ("services"),
     ("power"),
@@ -35,7 +35,7 @@ def test_anonymous_user_should_not_access_server(app, page):
 
 
 @pytest.mark.parametrize("page", [
-    ("name"),
+    ("settings"),
     ("languages"),
     ("services"),
     ("power"),
@@ -50,7 +50,7 @@ def test_normals_user_should_not_access_server(loggedapp, page):
 
 
 def test_staff_can_change_server_name(staffapp):
-    res = staffapp.get(reverse('server:name'), status=200)
+    res = staffapp.get(reverse('server:settings'), status=200)
     form = res.forms['server_name']
     assert form['server_name'].value == 'Ideas Cube'
 
@@ -61,7 +61,7 @@ def test_staff_can_change_server_name(staffapp):
 
 
 def test_staff_app_cannot_set_empty_server_name(staffapp):
-    res = staffapp.get(reverse('server:name'), status=200)
+    res = staffapp.get(reverse('server:settings'), status=200)
     form = res.forms['server_name']
     assert form['server_name'].value == 'Ideas Cube'
 
@@ -73,7 +73,7 @@ def test_staff_app_cannot_set_empty_server_name(staffapp):
 
 
 def test_staff_is_presented_with_default_server_name(staffapp, settings):
-    res = staffapp.get(reverse('server:name'), status=200)
+    res = staffapp.get(reverse('server:settings'), status=200)
     form = res.forms['server_name']
     assert form['server_name'].value == 'Ideas Cube'
 
