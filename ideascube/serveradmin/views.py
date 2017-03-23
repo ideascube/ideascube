@@ -238,3 +238,8 @@ def home_page(request):
     return render(request, 'serveradmin/home_page.html',
         {'installed_packages': installed_packages,
          'displayed_packages': displayed_packages})
+
+
+@staff_member_required
+def server_info(request):
+    return render(request, 'serveradmin/settings.html')

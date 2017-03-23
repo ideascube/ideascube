@@ -9,14 +9,8 @@
 
 {% block third %}
     <div class="card tinted admin">
-        <h4>{% trans 'Server info' %}</h4>
         <ul>
-            <li>{% blocktrans with version=IDEASCUBE_VERSION %}Version: {{ version }}{% endblocktrans %}</li>
-            <li>{% blocktrans with id=IDEASCUBE_ID %}ID: {{ id }}{% endblocktrans %}</li>
-            <li>{% blocktrans with name=IDEASCUBE_HOSTNAME %}Hostname: {{ name }}{% endblocktrans %}</li>
-        </ul>
-        <hr />
-        <ul>
+            <li>{% fa 'info-circle' 'fa-fw' %} <a href="{% url 'server:settings' %}">{% trans "Server Info" %}</a></li>
             <li>{% fa 'info-circle' 'fa-fw' %} <a href="{% url 'server:name' %}">{% trans "Server name" %}</a></li>
             <li>{% fa 'language' 'fa-fw' %} <a href="{% url 'server:languages' %}">{% trans "Languages" %}</a></li>
             <li>{% fa 'cogs' 'fa-fw' %} <a href="{% url 'server:services' %}">{% trans "Manage services" %}</a></li>
