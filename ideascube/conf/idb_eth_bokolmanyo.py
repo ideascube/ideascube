@@ -17,18 +17,3 @@ USER_FORM_FIELDS = (
     (_('Language skills'), ['ar_level', 'en_level']),
     (_('National residents'), ['id_card_number']),
 )
-
-HOME_CARDS = STAFF_HOME_CARDS + [  # pragma: no flakes
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'library',
-    },
-    {
-        'id': 'khanacademy',
-    },
-]
