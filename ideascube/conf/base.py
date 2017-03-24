@@ -322,6 +322,18 @@ BUILTIN_APP_CARDS = [
 
 EXTRA_APP_CARDS = [
     # {
+    #     'id': 'appinventor',
+    # },
+    # {
+    #     'id': 'bsfcampus',
+    # },
+    # {
+    #     'id': 'khanacademy',
+    # },
+    # {
+    #     'id': 'koombookedu',
+    # },
+    # {
     #     'category': 'learn',
     #     'url': 'http://mydomain.fr',
     #     'title': 'The title of my custom card',
