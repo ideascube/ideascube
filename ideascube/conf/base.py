@@ -318,9 +318,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'mediacenter',
     },
-    {
-        'id': 'khanacademy',
-    },
     # {
     #     'category': 'learn',
     #     'url': 'http://mydomain.fr',
