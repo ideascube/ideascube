@@ -5,7 +5,10 @@ import importlib
 import pytest
 
 
-@pytest.fixture(params=glob.glob('ideascube/conf/*.py'))
+@pytest.fixture(params=sorted([
+    f for f in glob.glob('ideascube/conf/*.py')
+    if not f.endswith('/__init__.py')
+]))
 def setting_module(request):
     basename = os.path.basename(request.param)
 
