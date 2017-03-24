@@ -8,13 +8,16 @@ STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS  # pragma: no flakes
                     if c['url'] in ['user_list', 'server:power',
                                     'server:wifi']]
 
-HOME_CARDS = [
+BUILTIN_APP_CARDS = [
     {
         'id': 'blog',
     },
     {
         'id': 'mediacenter',
     },
+]
+
+EXTRA_APP_CARDS = [
     {
         'id': 'khanacademy',
     },

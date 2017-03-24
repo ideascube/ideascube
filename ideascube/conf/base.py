@@ -308,7 +308,7 @@ STAFF_HOME_CARDS = [
     },
 ]
 
-HOME_CARDS = [
+BUILTIN_APP_CARDS = [
     {
         'id': 'blog',
     },
@@ -318,6 +318,9 @@ HOME_CARDS = [
     {
         'id': 'mediacenter',
     },
+]
+
+EXTRA_APP_CARDS = [
     # {
     #     'category': 'learn',
     #     'url': 'http://mydomain.fr',
