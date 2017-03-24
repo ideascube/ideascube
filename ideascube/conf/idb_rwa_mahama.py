@@ -1,13 +1,10 @@
 from .idb import *  # pragma: no flakes
 
-HOME_CARDS = [
+BUILTIN_APP_CARDS = [
     {
         'id': 'mediacenter',
     },
     {
         'id': 'library',
     },
-    {
-        'id': 'khanacademy',
-    }
 ]

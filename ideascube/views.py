@@ -67,8 +67,12 @@ def index(request):
     random_book = Book.objects.available().order_by('?').first()
     random_doc = Document.objects.order_by('?').first()
 
+    staff_cards = settings.STAFF_HOME_CARDS
+    builtin_cards = settings.BUILTIN_APP_CARDS
+    extra_cards = settings.EXTRA_APP_CARDS
     package_cards = build_package_card_info()
-    cards = settings.STAFF_HOME_CARDS + settings.HOME_CARDS + package_cards
+
+    cards = staff_cards + builtin_cards + extra_cards + package_cards
 
     context = {
         'blog_content': content,
