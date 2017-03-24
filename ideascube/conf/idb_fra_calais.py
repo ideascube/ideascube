@@ -3,17 +3,3 @@ from .idb_fra import *  # pragma: no flakes
 
 
 IDEASCUBE_NAME = u"CALAIS BIBLIOTHEQUE"
-HOME_CARDS = STAFF_HOME_CARDS + [  # pragma: no flakes
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'library',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'khanacademy',
-    },
-]
