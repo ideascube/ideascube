@@ -29,15 +29,6 @@ HOME_CARDS = STAFF_HOME_CARDS + [  # pragma: no flakes
         'id': 'library',
     },
     {
-        'id': 'wikipedia.old',
-    },
-    {
         'id': 'khanacademy',
-    },
-    {
-        'id': 'vikidia.old',
-    },
-    {
-        'id': 'gutenberg.old',
     },
 ]
