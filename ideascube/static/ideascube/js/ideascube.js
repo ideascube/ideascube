@@ -185,6 +185,7 @@ ID.initEditors = function () {
             menubar: false,
             toolbar: false,
             selection_toolbar: "numlist bullist bold italic | quicklink h2 h3 blockquote",
+            language: editor.getAttribute('tinymce_language_code'),
             media_url_resolver: ID.image_url_resolver,
             media_alt_source: false,
             media_poster: false,

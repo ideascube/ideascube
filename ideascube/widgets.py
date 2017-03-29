@@ -4,8 +4,14 @@ from ideascube.configuration import get_config
 from django.utils.html import mark_safe, escape
 from django.utils.encoding import force_text
 from django.forms.utils import flatatt
+from django.utils.translation import get_language
 
 import bleach
+
+
+_ideascube_to_tinyMCE_language_map = {
+    'fr': 'fr_FR'
+}
 
 
 class RichTextEntry(widgets.Widget):
@@ -25,6 +31,11 @@ class RichTextEntry(widgets.Widget):
         if with_media:
             self.authorized_tags += ['img', 'iframe']
 
+    def get_language(self):
+        ideascube_language = get_language()
+        return _ideascube_to_tinyMCE_language_map.get(
+            ideascube_language, ideascube_language)
+
     def render(self, name, value, attrs=None):
         if value is None:
             value = ''
@@ -32,7 +43,8 @@ class RichTextEntry(widgets.Widget):
         # The widget displayed to the user
         div_attrs = {'id': name,
                      'class': 'tinymce_editor',
-                     'tinymce_use_media': self.with_media
+                     'tinymce_use_media': self.with_media,
+                     'tinymce_language_code': self.get_language()
                     }
         div_html = '<div{}>{}</div>'.format(
             flatatt(div_attrs),
