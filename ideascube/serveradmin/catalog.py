@@ -408,7 +408,7 @@ class ZippedMedias(SimpleZipPackage):
             raise InvalidPackageContent('Missing title in {}'.format(
                 media_info))
 
-        lang = media_info.get('lang', '').strip()
+        lang = media_info.get('lang', '').strip().lower()
 
         if not lang:
             # Unsure if we shouldn't use `get_language()` instead of
