@@ -408,12 +408,14 @@ class ZippedMedias(SimpleZipPackage):
             raise InvalidPackageContent('Missing title in {}'.format(
                 media_info))
 
-        if 'lang' not in media_info:
+        lang = media_info.get('lang', '').strip().lower()
+
+        if not lang:
             # Unsure if we shouldn't use `get_language()` instead of
             # LANGUAGE_CODE from the settings.
             media_info['lang'] = settings.LANGUAGE_CODE
 
-        kind = media_info.get('kind', '').lower()
+        kind = media_info.get('kind', '').strip().lower()
         if not kind or not hasattr(Document, kind.upper()):
             kind = guess_kind_from_filename(media_info['path'])
             media_info['kind'] = kind or Document.OTHER
