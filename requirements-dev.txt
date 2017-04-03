@@ -45,7 +45,7 @@ pytest-flakes==1.0.1
 pytest-mock==1.5.0
 pytest==3.0.7
 python-dateutil==2.6.0    # via faker, freezegun
-python-networkmanager==2.0.0
+python-networkmanager==1.2.1
 PyYAML==3.12              # via mkdocs
 requests==2.13.0
 resumable-urlretrieve==0.1.5
