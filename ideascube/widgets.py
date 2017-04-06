@@ -41,8 +41,8 @@ class RichTextEntry(widgets.Widget):
         # The widget displayed to the user
         div_attrs = {'id': name,
                      'class': 'tinymce-editor',
-                     'tinymce_use_media': self.with_media,
-                     'tinymce_language_code': self.get_language()
+                     'data-tinymce-use-media': self.with_media,
+                     'data-tinymce-language-code': self.get_language()
                     }
         div_html = '<div{}>{}</div>'.format(
             flatatt(div_attrs),

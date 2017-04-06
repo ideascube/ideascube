@@ -176,7 +176,7 @@ ID.initEditors = function () {
     var editors = document.querySelectorAll(".tinymce-editor");
     for (var i = 0; i < editors.length; i++) {
         var editor = editors[i];
-        var use_media = editor.hasAttribute('tinymce_use_media');
+        var use_media = editor.hasAttribute('data-tinymce-use-media');
         var options = {
             target : editor,
             inline: true,
@@ -185,7 +185,7 @@ ID.initEditors = function () {
             menubar: false,
             toolbar: false,
             selection_toolbar: "numlist bullist bold italic | quicklink h2 h3 blockquote",
-            language: editor.getAttribute('tinymce_language_code'),
+            language: editor.getAttribute('data-tinymce-language-code'),
             media_url_resolver: ID.image_url_resolver,
             media_alt_source: false,
             media_poster: false,
