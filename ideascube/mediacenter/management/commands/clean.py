@@ -6,6 +6,7 @@ import glob
 from django.conf import settings
 
 from ideascube.management.base import BaseCommandWithSubcommands
+from ideascube.management.args import date_argument
 from ideascube.mediacenter.models import Document
 from ideascube.utils import printerr
 
@@ -27,22 +28,74 @@ class Command(BaseCommandWithSubcommands):
             help='Clean mediacenter files not associated with a document.')
         clean_leftover.set_defaults(func=self.clean_leftover)
 
+        document_types = [choice[0] for choice in Document.KIND_CHOICES]
+
         clean_media = self.subs.add_parser(
             'media',
             parents = [dry_run],
             help='Remove all medias')
+        clean_media.add_argument(
+            '--type', action='append', choices=document_types,
+            help='The type of media to remove, e.g "--types=image". Can be '
+                 'specified multiple times to clean multiple types.')
+        clean_media.add_argument(
+            '--created-after', type=date_argument,
+            help='Only remove media created on or after this date.')
+        clean_media.add_argument(
+            '--created-before', type=date_argument,
+            help='Only remove media created before this date.')
         clean_media.set_defaults(func=self.clean_media)
 
+    def _get_filtered_queryset(self, queryset, options):
+        type_ = options['type']
+        created_after = options['created_after']
+        created_before = options['created_before']
+
+        if type_:
+            queryset = queryset.filter(kind__in=type_)
+
+        if created_after:
+            queryset = queryset.filter(created_at__gte=created_after)
+
+        if created_before:
+            queryset = queryset.filter(created_at__lt=created_before)
+
+        return queryset
+
     def clean_media(self, options):
-        Document.objects.filter(package_id='').delete()
-        left_media_count = Document.objects.all().count()
-        if left_media_count:
-            print("{} media have been installed by packages."
-                  " They have been not deleted.\n"
-                  "You must delete the corresponding package if you want to "
-                  "remove them. Use the command :\n"
-                  "catalog remove pkgid+".format(left_media_count))
-        self.clean_leftover(options)
+        documents = Document.objects.filter(package_id='')
+        documents = self._get_filtered_queryset(documents, options)
+        documents_count = documents.count()
+
+        from_packages = Document.objects.exclude(package_id='')
+        from_packages = self._get_filtered_queryset(from_packages, options)
+        from_packages_count = from_packages.count()
+
+        if not options['dry_run']:
+            documents.delete()
+            self.stdout.write(
+                '{} documents have been deleted.'.format(documents_count))
+            have_not = 'have not been'
+
+        else:
+            self.stdout.write(
+                '{} documents would have been deleted:'.format(
+                    documents_count))
+
+            for document in documents:
+                self.stdout.write('- {0.title} ({0.kind})'.format(document))
+
+            have_not = 'would not have been'
+
+        if from_packages_count:
+            self.stdout.write(
+                "\n{} media have been installed by packages and {} deleted.\n"
+                "Remove the corresponding package(s) if you want to delete "
+                "them with the command:\n"
+                "catalog remove pkgid+".format(from_packages_count, have_not))
+
+        if not options['dry_run']:
+            self.clean_leftover(options)
 
     def clean_leftover(self, options):
         files_to_remove = self._get_leftover_files()
