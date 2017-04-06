@@ -15,9 +15,7 @@ _ideascube_to_tinyMCE_language_map = {
 
 
 class RichTextEntry(widgets.Widget):
-    def __init__(self, *,
-            with_media = False,
-            attrs=None):
+    def __init__(self, *, with_media=False, attrs=None):
         super().__init__(attrs=attrs)
         self.with_media = with_media
 
