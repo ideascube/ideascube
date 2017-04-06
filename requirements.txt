@@ -15,9 +15,9 @@ olefile==0.44             # via pillow
 Pillow==4.0.0
 progressist==0.0.6
 pymarc==3.1.5
-python-networkmanager==2.0.0
+python-networkmanager==1.2.1
 PyYAML==3.12
 requests==2.13.0          # via resumable-urlretrieve
 resumable-urlretrieve==0.1.5
-six==1.10.0               # via pymarc, python-networkmanager
+six==1.10.0               # via pymarc
 Unidecode==0.4.20
