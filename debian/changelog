@@ -1,3 +1,13 @@
+ideascube (0.24.0) unstable; urgency=low
+
+  * Relaxed the validation of media packages metadata, so that bad case and
+    trailing whitespaces don't cause hard failures;
+  * Allowed subfolders in media packages;
+  * Allowed filtering medias to clean by date or by type;
+  * Downgraded our python-NetworkManager dependency;
+
+ -- Mathieu Bridon <bochecha@daitauha.fr> Thu, 6 Mar 2016 XX:XX:00 +0200
+
 ideascube (0.23.0) unstable; urgency=low
 
   * Add configuration for kb_bfa_bsfcampus;
