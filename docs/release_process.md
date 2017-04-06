@@ -33,7 +33,7 @@ And run the migrations:
 
 Let's make sure there are no migration conflicts with the previous release:
 
-    $ make test-data-migrations
+    $ make test-data-migration
 
 If the above succeeded, you should update the test data file so it can be used
 by the CI after this release:
