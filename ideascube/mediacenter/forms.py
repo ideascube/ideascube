@@ -61,8 +61,10 @@ class PackagedDocumentForm(forms.ModelForm):
 
     def __init__(self, path, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['original'] = forms.FilePathField(path=path)
-        self.fields['preview'] = forms.FilePathField(path=path, required=False)
+        self.fields['original'] = forms.FilePathField(
+            path=path, recursive=True)
+        self.fields['preview'] = forms.FilePathField(
+            path=path, recursive=True, required=False)
 
     def save(self, commit=True):
         document = super().save(commit=False)
