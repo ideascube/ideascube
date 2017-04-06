@@ -184,12 +184,12 @@ ID.initEditors = function () {
             hidden_input: false,
             menubar: false,
             toolbar: false,
-            selection_toolbar: "numlist bullist bold italic | quicklink h2 h3 blockquote",
+            selection_toolbar: "numlist bullist bold italic | quicklink h1 h2 h3 blockquote",
             language: editor.getAttribute('data-tinymce-language-code'),
             media_url_resolver: ID.image_url_resolver,
             media_alt_source: false,
             media_poster: false,
-            insert_toolbar: "numlist bullist bold italic | quicklink h2 h3 blockquote",
+            insert_toolbar: "numlist bullist bold italic | quicklink h1 h2 h3 blockquote",
             contextmenu: "link",
             plugins: "autolink textpattern contextmenu lists"
         };

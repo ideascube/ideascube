@@ -19,8 +19,12 @@ class RichTextEntry(widgets.Widget):
         super().__init__(attrs=attrs)
         self.with_media = with_media
 
-        self.authorized_tags = ['p', 'a', 'ul', 'ol', 'li', 'br',
-                                'h2', 'h3', 'h4', 'h5']
+        self.authorized_tags = [
+            'p', 'a', 'ul', 'ol', 'li',
+            'h1', 'h2', 'h3', 'h4', 'h5',
+            'strong', 'em',
+            'br',
+        ]
         self.authorized_attributes = {
             'a': ['href', 'title'],
             'img': ['src', 'width', 'height', 'alt'],
