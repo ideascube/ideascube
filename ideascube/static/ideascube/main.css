@@ -360,6 +360,11 @@ form h3 {
     padding: 0 30px;
 }
 
+.tinymce-editor {
+    min-height: 150px;
+    max-height: 450px;
+    overflow: auto;
+}
 
 /* ************************************************* */
 /* *************** HEADER & FOOTER ***************** */
