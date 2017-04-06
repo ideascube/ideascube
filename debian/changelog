@@ -6,7 +6,7 @@ ideascube (0.24.0) unstable; urgency=low
   * Allowed filtering medias to clean by date or by type;
   * Downgraded our python-NetworkManager dependency;
 
- -- Mathieu Bridon <bochecha@daitauha.fr> Thu, 6 Mar 2016 XX:XX:00 +0200
+ -- Mathieu Bridon <bochecha@daitauha.fr> Thu, 6 Mar 2016 13:55:00 +0200
 
 ideascube (0.23.0) unstable; urgency=low
 
