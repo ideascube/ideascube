@@ -61,7 +61,7 @@ def test_richtext_entry():
 
     rendered_rte = rte.render('richtextentry', None)
     assert rendered_rte == '\n'.join([
-        '<div class="tinymce_editor" id="richtextentry" tinymce_language_code="en"></div>',
+        '<div class="tinymce-editor" id="richtextentry" tinymce_language_code="en"></div>',
         ('<input name="richtextentry" type="hidden"'
          ' value="" />')
     ])
@@ -72,7 +72,7 @@ def test_richtext_entry_with_content():
 
     rendered_rte = rte.render('richtextentry', "<p>A text</p>")
     assert rendered_rte == '\n'.join([
-        '<div class="tinymce_editor" id="richtextentry" tinymce_language_code="en"><p>A text</p></div>',
+        '<div class="tinymce-editor" id="richtextentry" tinymce_language_code="en"><p>A text</p></div>',
         ('<input name="richtextentry" type="hidden"'
          ' value="&lt;p&gt;A text&lt;/p&gt;" />')
     ])
@@ -83,7 +83,7 @@ def test_richtext_entry_with_media():
 
     rendered_rte = rte.render('richtextentry', None)
     assert rendered_rte == '\n'.join([
-        '<div class="tinymce_editor" id="richtextentry" tinymce_language_code="en" tinymce_use_media></div>',
+        '<div class="tinymce-editor" id="richtextentry" tinymce_language_code="en" tinymce_use_media></div>',
         ('<input name="richtextentry" type="hidden"'
          ' value="" />')
     ])

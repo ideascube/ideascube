@@ -42,7 +42,7 @@ class RichTextEntry(widgets.Widget):
 
         # The widget displayed to the user
         div_attrs = {'id': name,
-                     'class': 'tinymce_editor',
+                     'class': 'tinymce-editor',
                      'tinymce_use_media': self.with_media,
                      'tinymce_language_code': self.get_language()
                     }

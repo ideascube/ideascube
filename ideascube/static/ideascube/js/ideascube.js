@@ -173,7 +173,7 @@ ID.viewablePassword = function () {
 };
 
 ID.initEditors = function () {
-    var editors = document.querySelectorAll(".tinymce_editor");
+    var editors = document.querySelectorAll(".tinymce-editor");
     for (var i = 0; i < editors.length; i++) {
         var editor = editors[i];
         var use_media = editor.hasAttribute('tinymce_use_media');
