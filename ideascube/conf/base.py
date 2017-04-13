@@ -308,7 +308,7 @@ STAFF_HOME_CARDS = [
     },
 ]
 
-HOME_CARDS = STAFF_HOME_CARDS + [
+BUILTIN_APP_CARDS = [
     {
         'id': 'blog',
     },
@@ -318,9 +318,21 @@ HOME_CARDS = STAFF_HOME_CARDS + [
     {
         'id': 'mediacenter',
     },
-    {
-        'id': 'khanacademy',
-    },
+]
+
+EXTRA_APP_CARDS = [
+    # {
+    #     'id': 'appinventor',
+    # },
+    # {
+    #     'id': 'bsfcampus',
+    # },
+    # {
+    #     'id': 'khanacademy',
+    # },
+    # {
+    #     'id': 'koombookedu',
+    # },
     # {
     #     'category': 'learn',
     #     'url': 'http://mydomain.fr',
