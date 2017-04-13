@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file requirements-dev.txt requirements-dev.in
 #
--e git+https://github.com/ideascube/dbus-python.git@pipified-1.1.1#egg=dbus-python
+#-e git+https://github.com/ideascube/dbus-python.git@pipified-1.1.1#egg=dbus-python
 -e git+https://github.com/ideascube/django-select-multiple-field@remove-dj110-warning#egg=django-select-multiple-field
 apipkg==1.4               # via execnet
 appdirs==1.4.3            # via setuptools
@@ -45,7 +45,7 @@ pytest-flakes==1.0.1
 pytest-mock==1.5.0
 pytest==3.0.7
 python-dateutil==2.6.0    # via faker, freezegun
-python-networkmanager==1.2.1
+python-networkmanager==2.0.0
 PyYAML==3.12              # via mkdocs
 requests==2.13.0
 resumable-urlretrieve==0.1.5
