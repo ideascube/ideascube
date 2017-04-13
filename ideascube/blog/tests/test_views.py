@@ -234,6 +234,45 @@ def test_can_create_content_without_image(staffapp):
     form.submit().follow()
     assert Content.objects.count()
 
+def test_content_text_is_not_cleaned_from_wanted_html_tags(staffapp):
+    form = staffapp.get(reverse('blog:content_create')).forms['model_form']
+    form['title'] = 'my content title'
+    form['summary'] = 'my content summary'
+    form['text'] = ('<h2>A title</h2>'
+                    '<p>Some text <a href="exemple.com">A link</a></p>')
+    form['published_at'] = '2014-12-10'
+    form.submit().follow()
+    content = Content.objects.first()
+    assert content.text == ('<h2>A title</h2>'
+                            '<p>Some text <a href="exemple.com">A link</a></p>')
+
+
+def test_content_text_is_cleaned_from_unwanted_html_tags(staffapp):
+    form = staffapp.get(reverse('blog:content_create')).forms['model_form']
+    form['title'] = 'my content title'
+    form['summary'] = 'my content summary'
+    form['text'] = ('</div><script type="text/javascript">'
+                    'alert("boo");</script><div><p>'
+                    '<a href="exemple.com">A link</a></p><')
+    form['published_at'] = '2014-12-10'
+    form.submit().follow()
+    content = Content.objects.first()
+    assert content.text == ('&lt;script type="text/javascript"&gt;'
+                            'alert("boo");&lt;/script&gt;&lt;div&gt;<p>'
+                            '<a href="exemple.com">A link</a></p>'
+                            '&lt;&lt;/div&gt;')
+
+
+def test_content_summary_is_cleaned_from_unwanted_html_tags(staffapp):
+    form = staffapp.get(reverse('blog:content_create')).forms['model_form']
+    form['title'] = 'my content title'
+    form['summary'] = 'my content summary <img src="foo" />'
+    form['text'] = ('my content text')
+    form['published_at'] = '2014-12-10'
+    form.submit().follow()
+    content = Content.objects.first()
+    assert content.summary == ('my content summary &lt;img src="foo"&gt;')
+
 
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = ContentFactory(status=Content.PUBLISHED, tags=['plane'])
@@ -303,7 +342,7 @@ def test_text_is_kept_on_invalid_form(staffapp, published):
     form['text'] = text
     form['summary'] = ''  # Make form invalid.
     response = form.submit()
-    assert response.pyquery.find('[data-editable-for="text"]').text() == text
+    assert response.pyquery.find('div[id="text"]').text() == text
 
 
 def test_create_content_with_default_values(staffapp):

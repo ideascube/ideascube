@@ -1,7 +1,7 @@
 {% load i18n ideascube_tags mediacenter_tags static %}
 {% if document.kind == document.IMAGE %}
     <img src="{% media document 'original' %}" />
-    <p>{{ document.summary }} - {{ document.credits }}</p>
+    <p>{{ document.summary|safe }} - {{ document.credits }}</p>
 {% elif document.kind == document.VIDEO %}
     <video controls width="100%">
         <source src="{% media document 'original' %}">

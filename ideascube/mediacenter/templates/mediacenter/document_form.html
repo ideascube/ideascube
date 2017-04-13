@@ -13,3 +13,8 @@
         <a class="button" href="{{ document.get_absolute_url }}">{% trans 'cancel' %}</a>
     {% endif %}
 {% endblock col %}
+{% block extra_foot %}
+    <script type="text/javascript">
+        ID.initEditors();
+    </script>
+{% endblock extra_foot %}

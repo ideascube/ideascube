@@ -1,6 +1,6 @@
 from django import forms
 
-from ideascube.widgets import LangSelect
+from ideascube.widgets import LangSelect, RichTextEntry
 
 from .models import Content
 
@@ -15,6 +15,8 @@ class ContentForm(forms.ModelForm):
             # control over the format to bypass L10N.
             "published_at": forms.DateInput(format='%Y-%m-%d'),
             "lang": LangSelect,
+            "summary": RichTextEntry,
+            "text": RichTextEntry(with_media=True)
         }
         fields = "__all__"
 

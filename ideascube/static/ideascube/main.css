@@ -221,7 +221,7 @@ input[type="text"], input[type="password"], input[type="date"],
 input[type="datetime"], input[type="email"], input[type="number"],
 input[type="search"], input[type="tel"], input[type="time"],
 input[type="url"], input[type="file"], textarea,
-[contenteditable] {
+[contenteditable="true"] {
     background-color: white;
     border: 1px solid #CCCCCC;
     border-radius: 2px 2px 2px 2px;
@@ -360,6 +360,11 @@ form h3 {
     padding: 0 30px;
 }
 
+.tinymce-editor {
+    min-height: 150px;
+    max-height: 450px;
+    overflow: auto;
+}
 
 /* ************************************************* */
 /* *************** HEADER & FOOTER ***************** */

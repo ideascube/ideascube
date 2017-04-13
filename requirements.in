@@ -1,4 +1,5 @@
 batinfo
+bleach
 Django
 django-countries
 django-taggit
@@ -41,3 +42,10 @@ Unidecode
 # However, even with that applied we still seem to encounter issues. So for
 # now, we've decided to stick with the older version.
 python-networkmanager==1.2.1
+
+# We do not directly depend on html5lib-python but bleach does.
+# However the published "pre-release" of html5lib declares a dependency to
+# setuptools and we don't want it.
+# So until https://github.com/html5lib/html5lib-python/issues/328 is fixed
+# we directly use the master branch of html5lib-python. Sadly :/
+-e git+https://github.com/html5lib/html5lib-python@17499b9763a090f7715af49555d21fe4b558958b#egg=html5lib
