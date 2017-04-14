@@ -10,6 +10,22 @@ More details about the server in the [overview](https://github.com/ideascube/ide
 
 [ideascube is free software, published under the terms of GNU Affero General Public License](https://github.com/ideascube/ideascube/LICENSE.md).
 
+## Try it
+You can try it using docker:
+
+On a Linux box:
+
+- Install docker (www.docker.com)
+- launch `docker run -p 8000:8000 -d ideascube/ideascube`
+- Go to `http://localhost:8000`
+
+On Windows or MacOS:
+
+- Install Docker Toolbox (https://www.docker.com/products/docker-toolbox)
+- Launch Kitematic which should have been installed
+- Search for ``ideascube`` image and click on `Create`
+- Click on the icon next to `Web preview` to open your web browser
+
 ## How can I give a hand?
 
 Welcome! There are many ways you can help. See details in
