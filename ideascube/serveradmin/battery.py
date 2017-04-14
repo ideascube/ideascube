@@ -18,7 +18,7 @@ def get_batteries():
     batteries = batinfo.batteries()
 
     if batteries:
-        return batteries.stat
+        return sorted(batteries.stat, key=lambda b: b.name.lower())
 
     try:
         # We might be running on a Lime2 Koombook
