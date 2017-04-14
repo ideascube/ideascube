@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% load i18n static %}
+
+{% block extra_head %}
+<style>
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-flow: column;
+}
+iframe {
+  flex: 1 1 auto;
+}
+
+#kiwixtoolbar {
+    /*padding: .5em;*/
+    left:0;
+    right:0;
+    top: 0;
+    z-index:100;
+    flex: 0 1 auto;
+  display: flex;
+  flex-flow: row;
+}
+
+#kiwixtoolbar #spacer {
+    flex: 1;
+}
+
+#kiwixtoolbar img {
+    width: 250px;
+    height: 2.8em;
+}
+
+#kiwixsearchbox {
+    width: 20em;
+    display: inline-block;
+}
+
+.kiwixsearch {
+   margin: 0;
+}
+
+li.ui-state-focus {
+    font-weight: bold;
+}
+
+
+#mainFrame {
+  width: 100%;
+  height: 100%;
+}
+
+/* Specific CSS for Bookeen Cybook device (800x600 B&W ereader) */
+.cybook #kiwixtoolbar button, .cybook #kiwixtoolbar input {
+	font-size: 1.5em;
+}
+.cybook #kiwixsearchbox {
+	width: 7em;
+}
+.cybook a {
+	text-decoration: underline;
+}
+/*
+@media only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 1.5/1),
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio: 1.5) {
+    #kiwixtoolbar button, #kiwixtoolbar input {
+    	font-size: 2em;
+    }
+    #kiwixsearchbox {
+		width: 7em;
+	}
+}*/
+</style>
+<link rel="stylesheet" href="/static/ideascube/vendor/awesomplete/awesomplete.css">
+<script src="/static/ideascube/vendor/awesomplete/awesomplete.min.js"></script>
+<script>
+  document.domain = "{{ domain }}";
+  function update_autocomplete() {
+    var request = new XMLHttpRequest();
+    url = '/suggest?content='+zimName+'&term='+this.value;
+    request.open('GET', url, true);
+    request.onreadystatechange = function() {
+      if (this.readyState === 4) {
+        if (this.status >= 200 && this.status < 400) {
+          var data = JSON.parse(this.responseText);
+          completer.list = data;
+        } else {
+          completer.list = [];
+        }
+      }
+    };
+
+    request.send();
+    request = null;
+  };
+
+  function on_iframe_ref_changed(iframe){
+    /*alert("changed");*/
+    var location = iframe.contentWindow.location;
+    
+    var new_url = location.protocol + "//" + hostName + "/kiwix" + location.pathname + location.search;
+    var title = iframe.contentDocument.title;
+    document.title = title;
+    if (window.location != new_url) {
+      /*alert("pushState " + title + " | " + new_url);*/
+      window.history.pushState({'iframe_location': ""+location}, title, new_url);
+    }
+  };
+  
+  window.onpopstate = function(event) {
+    /*alert("on popstate " + event);*/
+    if (event.state) {
+      /*alert("on popstate " + event.state.iframe_location);*/
+      var iframe = document.getElementById("mainFrame");
+      iframe.setAttribute("src", event.state.iframe_location);
+    }
+  };
+  
+  function init() {
+    var zimName = "{{ zimName }}";
+    
+    alert("init "+window.location.pathname);
+    alert("hostname "+window.location.host);
+    hostName = window.location.host;
+    var scheme = window.location.protocol;
+    var pathName = window.location.pathname.substring(6);
+    zimName = pathName.split('/')[1];
+    var search_ = window.location.search;
+    alert(scheme + " " + hostName + " " + pathName + " " + " " + search_);
+    var new_iframe_src = scheme + "//kiwix." + hostName + pathName + search_;
+    if ( zimName == "random" || zimName == "search" )
+    {
+      /* This is a random request (random?content=zimname)
+         or a search request (search?content=zimname&pattern=foo)
+       */
+      var args = search_.substring(1).split("&");
+      for (var i in args)
+      {
+        var splitted = args[i].split("=");
+        if (splitted[0] == "content")
+        {
+          zimName = splitted[1];
+          break;
+        }
+      }    
+    }
+    var searchBox = document.getElementById("kiwixsearchbox");
+    /*completer = new Awesomplete(searchBox, {
+      minChars: 1,
+      autoFirst: true
+    });
+    searchBox.addEventListener("keyup", update_autocomplete); */
+
+    var iframe = document.getElementById("mainFrame")
+    alert("setting iframe to " + new_iframe_src);
+    iframe.setAttribute("src", new_iframe_src);
+    iframe.setAttribute("onload", "on_iframe_ref_changed(this)");
+  }
+</script>
+{% endblock %}
+
+
+{% block content %}
+<body onload="init()">
+<div id="kiwixtoolbar" class="ui-widget-header">
+  <a id="rootBookButton" class="button" href="/kiwix/{{ zimName }}/">Home</a>
+  <a id="randomButton" class="button" href="/kiwix/random?content={{ zimName }}">Random</a>
+  <div id="spacer"></div>
+  <form class="kiwixsearch" method="GET" action="http://kiwix.{{ domain }}/search" id="kiwixsearchform">
+    <input id="contentInput" type="hidden" name="content" value="{{ zimName }}" />
+    <input id="kiwixsearchbox" name="pattern" type="text">
+    <input type="submit" value="Search">
+  </form>
+</div>
+<iframe id="mainFrame"
+        src="http://kiwix.{{ domain }}/{{ zimName }}/{{ article }}?{{ search }}"
+        ></iframe>
+{% endblock %}
