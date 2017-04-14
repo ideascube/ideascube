@@ -18,8 +18,6 @@ def test_setting_file(setting_module):
 
     settings = importlib.import_module(setting_module, package="ideascube")
 
-    assert isinstance(getattr(settings, 'IDEASCUBE_NAME', ''), str)
-
     for name, _ in getattr(settings, 'USER_IMPORT_FORMATS', []):
         assert hasattr(UserImportForm, '_get_{}_mapping'.format(name))
         assert hasattr(UserImportForm, '_get_{}_reader'.format(name))
