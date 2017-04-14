@@ -4,9 +4,15 @@
 {% block twothird %}
 <h2>{% trans "Battery monitoring" %}</h2>
 {% for battery in batteries %}
+  {% if batteries|length > 1 %}
+    <h3>{{ battery.name }}</h3>
+  {% endif %}
   <ul>
     <li><strong>{% trans 'Status' %}</strong> {{ battery.status }}</li>
     <li><strong>{% trans 'Capacity' %}</strong> {{ battery.capacity|default:0|min:100 }}%</li>
   </ul>
+  {% if not forloop.last %}
+    <hr>
+  {% endif %}
 {% endfor %}
 {% endblock twothird %}
