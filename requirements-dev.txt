@@ -4,7 +4,6 @@
 #
 #    pip-compile --output-file requirements-dev.txt requirements-dev.in
 #
--e git+https://github.com/ideascube/dbus-python.git@pipified-1.1.1#egg=dbus-python
 -e git+https://github.com/ideascube/django-select-multiple-field@remove-dj110-warning#egg=django-select-multiple-field
 -e git+https://github.com/html5lib/html5lib-python@17499b9763a090f7715af49555d21fe4b558958b#egg=html5lib
 apipkg==1.4               # via execnet
@@ -16,6 +15,7 @@ click==6.7                # via mkdocs, pip-tools
 coverage==4.3.4           # via pytest-cov
 cssselect==1.0.1          # via pyquery
 django-countries==4.2
+dbus-python==1.2.4
 django-taggit==0.22.0
 django-webtest==1.9.1
 Django==1.10.6

@@ -23,6 +23,13 @@ upgrade-deps:
 sync-deps:
 	pip-sync requirements-dev.txt
 
+ci-images:
+	docker build --file dockerfiles/ci-jessie-python34 --tag ideascube/ideascube-ci:jessie-python34 .
+	docker push ideascube/ideascube-ci:jessie-python34
+	
+	docker build --file dockerfiles/ci-stretch-python35 --tag ideascube/ideascube-ci:stretch-python35 .
+	docker push ideascube/ideascube-ci:stretch-python35
+
 
 # -- Translations -------------------------------------------------------------
 collect_translations:
@@ -43,8 +50,15 @@ compile_translations:
 test:
 	py.test
 
-testcov:
-	py.test --cov=ideascube/ --cov-report=term-missing --migrations
+test-coverage:
+	py.test --cov=ideascube/ --cov-report=term-missing --cov-fail-under=92 --migrations
+
+quality-check:
+	py.test --flakes -m flakes
+
+check-missing-migrations:
+	python manage.py makemigrations
+	git status --porcelain | grep -E '^\?\? ' && exit 1 || :
 
 test-data-migration:
 	set -e ; \
