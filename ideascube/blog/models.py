@@ -51,8 +51,6 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.PROTECT,
                                verbose_name=_('author'))
-    author_text = models.CharField(verbose_name=_('author text'), max_length=300,
-                                   blank=True)
     summary = models.CharField(verbose_name=_('summary'), max_length=300)
     image = models.ImageField(verbose_name=_('image'),
                               upload_to='blog/image',
@@ -75,12 +73,9 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
     def get_absolute_url(self):
         return reverse('blog:content_detail', kwargs={'pk': self.pk})
 
-    def get_author_display(self):
-        return self.author_text or str(self.author)
-
     @property
     def index_strings(self):
-        return (self.title, self.text, self.author_text, str(self.author),
+        return (self.title, self.text, str(self.author),
                 u' '.join(self.tags.names()))
 
     @property
