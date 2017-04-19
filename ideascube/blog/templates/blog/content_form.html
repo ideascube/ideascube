@@ -18,7 +18,6 @@
                 <div class="col third">
                     {% csrf_token %}
                     <h3>{% trans 'Metadatas' %}</h3>
-                    {% form_field form.title %}
                     {% form_field form.author %}
                     {% form_field form.image %}
                     {% form_field form.published_at %}
@@ -28,6 +27,7 @@
                 </div>
                 <div class="col two-third">
                     <h3>{% trans 'Content' %}</h3>
+                    {% form_field form.title %}
                     {% form_field form.text %}
                     {% form_field form.summary %}
                 </div>
