@@ -229,7 +229,6 @@ def test_can_create_content_without_image(staffapp):
     form['title'] = 'my content title'
     form['summary'] = 'my content summary'
     form['text'] = 'my content text'
-    form['author'] = staffapp.user.pk
     form['published_at'] = '2014-12-10'
     form.submit().follow()
     assert Content.objects.count()
@@ -304,7 +303,6 @@ def test_can_create_content_with_tags(staffapp):
     form['title'] = 'my content title'
     form['summary'] = 'my content summary'
     form['text'] = 'my content text'
-    form['author'] = staffapp.user.pk
     form['published_at'] = '2014-12-10'
     form['tags'] = 'tag1, tag2'
     form.submit().follow()
