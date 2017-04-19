@@ -51,7 +51,8 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.PROTECT,
                                verbose_name=_('author'))
-    summary = models.CharField(verbose_name=_('summary'), max_length=300)
+    summary = models.CharField(
+        verbose_name=_('summary'), max_length=300, blank=True)
     image = models.ImageField(verbose_name=_('image'),
                               upload_to='blog/image',
                               blank=True)
