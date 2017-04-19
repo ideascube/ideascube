@@ -338,8 +338,8 @@ def test_text_is_kept_on_invalid_form(staffapp, published):
     form = staffapp.get(url).forms['model_form']
     text = "this is my new text"
     form['text'] = text
-    form['summary'] = ''  # Make form invalid.
-    response = form.submit()
+    form['title'] = ''  # Make form invalid.
+    response = form.submit(status=200)
     assert response.pyquery.find('div[id="text"]').text() == text
 
 
