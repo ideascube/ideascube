@@ -14,6 +14,10 @@
                 <img src="{% media content 'image' %}">
             </a>
         {% endif %}
-        {{ content.summary|safe }}
+	{% if content.summary %}
+          {{ content.summary|safe }}
+	{% else %}
+	  {{ content.text|truncatechars_html:300|safe }}
+	{% endif %}
     </div>
 </div>
