@@ -66,7 +66,8 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
                          default=settings.LANGUAGE_CODE)
 
     objects = ContentQuerySet.as_manager()
-    tags = TaggableManager(blank=True, manager=SortedTaggableManager)
+    tags = TaggableManager(
+        blank=True, manager=SortedTaggableManager, verbose_name=_('Topics'))
 
     def __str__(self):
         return self.title
