@@ -6,7 +6,7 @@
     </a>
     <h5>
         {% if content.status == content.DRAFT %}draft ⚫ {% endif %}
-        {{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.get_author_display }}
+        {{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.author }}
     </h5>
     <div>
         {% if content.image %}
