@@ -51,7 +51,7 @@ test:
 	py.test
 
 test-coverage:
-	py.test --cov=ideascube/ --cov-report=term-missing --cov-fail-under=92 --migrations
+	py.test --cov=ideascube/ --cov-report=term-missing --cov-fail-under=92
 
 quality-check:
 	py.test --flakes -m flakes
@@ -62,7 +62,7 @@ check-missing-migrations:
 
 test-data-migration:
 	set -e ; \
-	BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	BRANCH=$$CI_BUILD_REF_NAME; if [ -z $$BRANCH ]; then BRANCH=$$(git rev-parse --abbrev-ref HEAD); fi; \
 	LATEST_TAG=$$(git describe --abbrev=0 --tags); \
 	\
 	echo "# Loading some data at $$LATEST_TAG"; \
@@ -75,3 +75,4 @@ test-data-migration:
 	echo "# Running migrations on $$BRANCH"; \
 	git checkout $$BRANCH; \
 	make migrate
+	py.test --migrations
