@@ -3,6 +3,13 @@ upstream ideascube {
     server unix:///tmp/ideascube.sock;
 }
 
+#add server_name at line start
+log_format vhost_combined '$server_name $remote_addr - $remote_user [$time_local] '
+                          '"$request" $status $body_bytes_sent '
+                          '"$http_referer" "$http_user_agent"';
+                    
+access_log /var/log/nginx/access.log vhost_combined;
+                    
 # configuration of the server
 server {
     # the port your site will be served on
