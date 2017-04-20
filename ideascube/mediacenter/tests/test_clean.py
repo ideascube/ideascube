@@ -153,16 +153,19 @@ def test_clean_media_should_delete_all_media():
 def test_clean_media_does_not_do_anything_with_dryrun():
     out = io.StringIO()
 
-    DocumentFactory.create_batch(size=4)
+    DocumentFactory(title="Test document 1")
+    DocumentFactory(title="Test document 2")
+    DocumentFactory(title="Test document 3")
+    DocumentFactory(title="Test document 4")
     assert Document.objects.all().count() == 4
     call_command('clean', 'media', '--dry-run', stdout=out)
     assert Document.objects.all().count() == 4
     assert out.getvalue().strip() == '\n'.join([
         '4 documents would have been deleted:',
-        '- Test document 17 (other)',
-        '- Test document 16 (other)',
-        '- Test document 15 (other)',
-        '- Test document 14 (other)',
+        '- Test document 4 (other)',
+        '- Test document 3 (other)',
+        '- Test document 2 (other)',
+        '- Test document 1 (other)',
     ])
 
 
