@@ -1,6 +1,7 @@
 import io
 import os, stat
 from datetime import datetime, timezone
+from pathlib import Path
 
 import freezegun
 import pytest
@@ -9,6 +10,7 @@ from django.core.management import call_command
 from django.core.files import File
 
 from ideascube.mediacenter.models import Document
+from ideascube.mediacenter.forms import DocumentForm
 from .factories import DocumentFactory
 
 pytestmark = pytest.mark.django_db
@@ -141,6 +143,47 @@ def test_clean_leftover_should_correctly_clean_after_complex_situation(settings)
         assert not os.path.exists(path)
     for path in files_that_should_be_kept:
         assert os.path.exists(path)
+
+
+def test_clean_media_should_handle_subdirectory(settings):
+    doc1_metadata = {
+        'title': "My video",
+        'kind': 'video',
+        'lang': 'fr',
+        'credits':'BSF',
+        'summary': 'summary'}
+    doc1_files = dict(
+        original=File(
+            open(os.path.join(DATA_PATH, 'subdir', 'a-video.mp4'), 'rb'),
+            name='subdir/a-video.mp4'),
+        preview=File(
+            open(os.path.join(DATA_PATH, 'subdir', 'an-image.jpg'), 'rb'),
+            name='subdir/an-image.jpg')
+    )
+    form = DocumentForm(data=doc1_metadata, files=doc1_files)
+    doc1 = form.save()
+
+    doc2_metadata = {
+        'title': "My document",
+        'kind': 'pdf',
+        'lang': 'fr',
+        'credits': 'BSF',
+        'summary': 'summary'}
+    doc2_files = dict(
+        original=File(
+            open(os.path.join(DATA_PATH, 'subdir', 'a-pdf.pdf'), 'rb'),
+            name='subdir/a-pdf.pdf'),
+        preview=File(
+            open(os.path.join(DATA_PATH, 'an-image.jpg'), 'rb'),
+            name='subdir/a-pdf.pdf')
+    )
+    form = DocumentForm(data=doc2_metadata, files=doc2_files)
+    doc2 = form.save()
+
+    call_command('clean', 'media')
+    left_files = Path(settings.MEDIA_ROOT, 'mediacenter/document').glob('**/*')
+    left_files = {f for f in left_files if not f.is_dir()}
+    assert not left_files
 
 
 def test_clean_media_should_delete_all_media():
