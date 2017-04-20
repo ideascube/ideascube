@@ -178,3 +178,16 @@ def test_should_fail_nicely_if_path_is_a_dir(capsys, dry_run):
     assert not Document.objects.count()
     out, _ = capsys.readouterr()
     assert out.count("a-directory") == 4
+
+
+def test_import_media_allow_subdir():
+    assert not Document.objects.count()
+    metadata = ('title,summary,credits,path,preview\n'
+                'video,summary,BSF,subdir/a-video.mp4,subdir/an-image.jpg\n'
+                'pdf,summary,BSF,subdir/a-pdf.pdf,subdir/an-image.jpg\n')
+    write_metadata(metadata)
+    call_command('import_medias', CSV_PATH)
+    assert Document.objects.count() == 2
+    for document in Document.objects.all():
+        assert os.path.dirname(document.original.path).endswith('/subdir')
+        assert os.path.dirname(document.preview.path).endswith('/subdir')
