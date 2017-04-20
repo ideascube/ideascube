@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import argparse
-import glob
+from pathlib import Path
 
 from django.conf import settings
 
@@ -106,7 +106,7 @@ class Command(BaseCommandWithSubcommands):
         else:
             for f in files_to_remove:
                 try:
-                    os.unlink(f)
+                    f.unlink()
                 except Exception as e:
                     printerr("ERROR while deleting {}".format(f))
                     printerr("Exception is {}".format(e))
@@ -116,24 +116,26 @@ class Command(BaseCommandWithSubcommands):
         original_files_root_dir = os.path.join(settings.MEDIA_ROOT,
                                                'mediacenter/document')
         files_in_fs = set(
-            glob.iglob(os.path.join(original_files_root_dir, '*')))
+            Path(original_files_root_dir).glob('**/*'))
 
         preview_files_root_dir = os.path.join(settings.MEDIA_ROOT,
                                     'mediacenter/preview')
         files_in_fs.update(
-            glob.iglob(os.path.join(preview_files_root_dir, '*')))
+            Path(preview_files_root_dir).glob('**/*'))
+
+        files_in_fs = {p for p in files_in_fs if not p.is_dir()}
 
         # Remove known original paths.
         original_pathes = Document.objects.all().values_list(
             'original', flat=True)
-        original_pathes = (os.path.join(settings.MEDIA_ROOT, path)
+        original_pathes = (Path(settings.MEDIA_ROOT, path)
                            for path in original_pathes)
         files_in_fs.difference_update(original_pathes)
 
         # Remove known preview paths.
         preview_pathes = Document.objects.all().values_list(
             'preview', flat=True)
-        preview_pathes = (os.path.join(settings.MEDIA_ROOT, path)
+        preview_pathes = (Path(settings.MEDIA_ROOT, path)
                           for path in preview_pathes if path)
         files_in_fs.difference_update(preview_pathes)
 
