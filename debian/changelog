@@ -1,3 +1,17 @@
+ideascube (0.25.0) unstable; urgency=low
+
+  * Move to tinyMCE editor for blog application;
+  * Allow rich text in document summary in the media center application;
+  * [CI] Move to GitlabCI (Framagit);
+  * [CI] Check for missing migration;
+  * [CI] Add a job dedicated to quality checks;
+  * [CI] Run tests on Debian Stretch;
+  * [CI] Verify code coverage;
+  * The `clean media` command now works if media have been installed with
+    sub-directories.
+
+ -- Matthieu Gautier <mgautier@kymeria.fr> Thu, 20 Mar 2017 17:00:00 +0200
+
 ideascube (0.24.0) unstable; urgency=low
 
   * Relaxed the validation of media packages metadata, so that bad case and
@@ -6,7 +20,7 @@ ideascube (0.24.0) unstable; urgency=low
   * Allowed filtering medias to clean by date or by type;
   * Downgraded our python-NetworkManager dependency;
 
- -- Mathieu Bridon <bochecha@daitauha.fr> Thu, 6 Mar 2016 13:55:00 +0200
+ -- Mathieu Bridon <bochecha@daitauha.fr> Thu, 6 Mar 2017 13:55:00 +0200
 
 ideascube (0.23.0) unstable; urgency=low
 
