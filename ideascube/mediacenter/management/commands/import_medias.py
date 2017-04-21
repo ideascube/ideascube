@@ -72,7 +72,7 @@ class Command(BaseCommand):
             self.report.error('Missing title', metadata)
             return
         title = smart_truncate(title)
-        metadata['title'] = title
+        metadata['title'] = title.strip()
 
         if not metadata.get('lang'):
             metadata['lang'] = settings.LANGUAGE_CODE

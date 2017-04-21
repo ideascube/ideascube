@@ -403,7 +403,7 @@ class ZippedMedias(SimpleZipPackage):
 
     def _install_media(self, media_info, pseudo_install_dir):
         try:
-            media_info['title'] = smart_truncate(media_info['title'])
+            media_info['title'] = smart_truncate(media_info['title']).strip()
         except KeyError:
             raise InvalidPackageContent('Missing title in {}'.format(
                 media_info))
