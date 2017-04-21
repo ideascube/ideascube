@@ -167,9 +167,32 @@ def test_clean_media_should_handle_subdirectory(settings):
     create_document('subdir', 'subdir')
     create_document('subdir')
     call_command('clean', 'media')
-    left_files = Path(settings.MEDIA_ROOT, 'mediacenter/document').glob('**/*')
-    left_files = {f for f in left_files if not f.is_dir()}
+
+    left_files = set(Path(settings.MEDIA_ROOT, 'mediacenter/document').glob('**/*'))
     assert not left_files
+
+
+def test_clean_media_should_clean_leftover_subdirectory(settings):
+    doc1 = create_document('')
+    doc2 = create_document('dir1')
+    doc3 = create_document(os.path.join('dir1', 'dir2'))
+    doc4 = create_document(os.path.join('dir1', 'dir2'))
+    doc5 = create_document(os.path.join('dir1', 'dir3'))
+    doc6 = create_document(os.path.join('dir2', 'dir2'))
+
+    doc4.delete()
+    doc5.delete()
+    doc6.delete()
+
+    call_command('clean', 'leftover-files')
+    root_dir = Path(settings.MEDIA_ROOT, 'mediacenter/document')
+    left_files = set(root_dir.glob('**/*'))
+    left_files = { p.relative_to(root_dir) for p in left_files }
+    assert left_files == { Path(p) for p in ('a-video.mp4', # doc1
+                                             os.path.join('dir1', 'a-video.mp4'), #doc2
+                                             os.path.join('dir1', 'dir2', 'a-video.mp4'), #doc3
+                                             'dir1',
+                                             os.path.join('dir1', 'dir2')) }
 
 
 def test_clean_media_should_delete_all_media():
