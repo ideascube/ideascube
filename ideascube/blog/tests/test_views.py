@@ -233,6 +233,7 @@ def test_can_create_content_without_image(staffapp):
     form.submit().follow()
     assert Content.objects.count()
 
+
 def test_content_text_is_not_cleaned_from_wanted_html_tags(staffapp):
     form = staffapp.get(reverse('blog:content_create')).forms['model_form']
     form['title'] = 'my content title'
