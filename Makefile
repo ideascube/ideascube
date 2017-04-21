@@ -75,5 +75,6 @@ test-data-migration:
 	echo "# Running migrations on $$BRANCH"; \
 	git checkout $$BRANCH; \
 	git rev-parse HEAD; \
+	git log --oneline --graph --decorate --all; \
 	make migrate
 	py.test --migrations
