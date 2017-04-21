@@ -183,10 +183,11 @@ class CatalogMocker:
 
 
 @pytest.yield_fixture()
-def catalog():
-    mocker = CatalogMocker()
-    with mocker:
-        yield mocker
+def catalog(mocker):
+    catalog_mocker = CatalogMocker()
+    mocker.patch('ideascube.views.gcatalog', None)
+    with catalog_mocker:
+        yield catalog_mocker
 
 
 class Migrator:

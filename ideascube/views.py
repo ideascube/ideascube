@@ -38,12 +38,15 @@ from .forms import UserForm, CreateStaffForm, UserImportForm
 from .mixins import CSVExportMixin
 
 user_model = get_user_model()
+gcatalog = None
 
 
 def build_package_card_info():
+    global gcatalog
     package_card_info = []
-    catalog = catalog_mod.Catalog()
-    packages_to_display = catalog.list_installed(get_config('home-page', 'displayed-package-ids'))
+    if gcatalog is None:
+        gcatalog = catalog_mod.Catalog()
+    packages_to_display = gcatalog.list_installed(get_config('home-page', 'displayed-package-ids'))
 
     for package in packages_to_display:
         card_info = {
