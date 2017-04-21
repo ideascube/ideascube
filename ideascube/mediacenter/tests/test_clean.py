@@ -145,41 +145,27 @@ def test_clean_leftover_should_correctly_clean_after_complex_situation(settings)
         assert os.path.exists(path)
 
 
+def create_document(original_dir, preview_dir=''):
+   form = DocumentForm(
+       data = {
+           'title': "A title",
+           'kind': 'video',
+           'lang': 'fr',
+           'credits':'BSF',
+           'summary': 'summary'},
+       files = {
+           'original': File(open(os.path.join(DATA_PATH, 'a-video.mp4'), 'rb'),
+                            name=os.path.join(original_dir, 'a-video.mp4')),
+           'preview': File(open(os.path.join(DATA_PATH, 'an-image.jpg'), 'rb'),
+                           name=os.path.join(preview_dir, 'an-image.jpg'))
+       }
+   )
+   return form.save()
+
+
 def test_clean_media_should_handle_subdirectory(settings):
-    doc1_metadata = {
-        'title': "My video",
-        'kind': 'video',
-        'lang': 'fr',
-        'credits':'BSF',
-        'summary': 'summary'}
-    doc1_files = dict(
-        original=File(
-            open(os.path.join(DATA_PATH, 'subdir', 'a-video.mp4'), 'rb'),
-            name='subdir/a-video.mp4'),
-        preview=File(
-            open(os.path.join(DATA_PATH, 'subdir', 'an-image.jpg'), 'rb'),
-            name='subdir/an-image.jpg')
-    )
-    form = DocumentForm(data=doc1_metadata, files=doc1_files)
-    form.save()
-
-    doc2_metadata = {
-        'title': "My document",
-        'kind': 'pdf',
-        'lang': 'fr',
-        'credits': 'BSF',
-        'summary': 'summary'}
-    doc2_files = dict(
-        original=File(
-            open(os.path.join(DATA_PATH, 'subdir', 'a-pdf.pdf'), 'rb'),
-            name='subdir/a-pdf.pdf'),
-        preview=File(
-            open(os.path.join(DATA_PATH, 'an-image.jpg'), 'rb'),
-            name='subdir/a-pdf.pdf')
-    )
-    form = DocumentForm(data=doc2_metadata, files=doc2_files)
-    form.save()
-
+    create_document('subdir', 'subdir')
+    create_document('subdir')
     call_command('clean', 'media')
     left_files = Path(settings.MEDIA_ROOT, 'mediacenter/document').glob('**/*')
     left_files = {f for f in left_files if not f.is_dir()}
