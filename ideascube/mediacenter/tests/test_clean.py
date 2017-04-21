@@ -145,45 +145,54 @@ def test_clean_leftover_should_correctly_clean_after_complex_situation(settings)
         assert os.path.exists(path)
 
 
+def create_document(original_dir, preview_dir=''):
+   form = DocumentForm(
+       data = {
+           'title': "A title",
+           'kind': 'video',
+           'lang': 'fr',
+           'credits':'BSF',
+           'summary': 'summary'},
+       files = {
+           'original': File(open(os.path.join(DATA_PATH, 'a-video.mp4'), 'rb'),
+                            name=os.path.join(original_dir, 'a-video.mp4')),
+           'preview': File(open(os.path.join(DATA_PATH, 'an-image.jpg'), 'rb'),
+                           name=os.path.join(preview_dir, 'an-image.jpg'))
+       }
+   )
+   return form.save()
+
+
 def test_clean_media_should_handle_subdirectory(settings):
-    doc1_metadata = {
-        'title': "My video",
-        'kind': 'video',
-        'lang': 'fr',
-        'credits':'BSF',
-        'summary': 'summary'}
-    doc1_files = dict(
-        original=File(
-            open(os.path.join(DATA_PATH, 'subdir', 'a-video.mp4'), 'rb'),
-            name='subdir/a-video.mp4'),
-        preview=File(
-            open(os.path.join(DATA_PATH, 'subdir', 'an-image.jpg'), 'rb'),
-            name='subdir/an-image.jpg')
-    )
-    form = DocumentForm(data=doc1_metadata, files=doc1_files)
-    form.save()
-
-    doc2_metadata = {
-        'title': "My document",
-        'kind': 'pdf',
-        'lang': 'fr',
-        'credits': 'BSF',
-        'summary': 'summary'}
-    doc2_files = dict(
-        original=File(
-            open(os.path.join(DATA_PATH, 'subdir', 'a-pdf.pdf'), 'rb'),
-            name='subdir/a-pdf.pdf'),
-        preview=File(
-            open(os.path.join(DATA_PATH, 'an-image.jpg'), 'rb'),
-            name='subdir/a-pdf.pdf')
-    )
-    form = DocumentForm(data=doc2_metadata, files=doc2_files)
-    form.save()
-
+    create_document('subdir', 'subdir')
+    create_document('subdir')
     call_command('clean', 'media')
-    left_files = Path(settings.MEDIA_ROOT, 'mediacenter/document').glob('**/*')
-    left_files = {f for f in left_files if not f.is_dir()}
+
+    left_files = set(Path(settings.MEDIA_ROOT, 'mediacenter/document').glob('**/*'))
     assert not left_files
+
+
+def test_clean_media_should_clean_leftover_subdirectory(settings):
+    create_document('') # doc1
+    create_document('dir1') # doc2
+    create_document(os.path.join('dir1', 'dir2')) # doc3
+    doc4 = create_document(os.path.join('dir1', 'dir2'))
+    doc5 = create_document(os.path.join('dir1', 'dir3'))
+    doc6 = create_document(os.path.join('dir2', 'dir2'))
+
+    doc4.delete()
+    doc5.delete()
+    doc6.delete()
+
+    call_command('clean', 'leftover-files')
+    root_dir = Path(settings.MEDIA_ROOT, 'mediacenter/document')
+    left_files = set(root_dir.glob('**/*'))
+    left_files = { p.relative_to(root_dir) for p in left_files }
+    assert left_files == { Path(p) for p in ('a-video.mp4', # doc1
+                                             os.path.join('dir1', 'a-video.mp4'), #doc2
+                                             os.path.join('dir1', 'dir2', 'a-video.mp4'), #doc3
+                                             'dir1',
+                                             os.path.join('dir1', 'dir2')) }
 
 
 def test_clean_media_should_delete_all_media():
