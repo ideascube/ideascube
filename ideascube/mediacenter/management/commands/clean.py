@@ -98,7 +98,7 @@ class Command(BaseCommandWithSubcommands):
             self.clean_leftover(options)
 
     def clean_leftover(self, options):
-        files_to_remove = self._get_leftover_files()
+        files_to_remove, dirs_in_fs = self._get_leftover_files()
         if options['dry_run']:
             print("Files to remove are :")
             for _file in files_to_remove:
@@ -110,6 +110,11 @@ class Command(BaseCommandWithSubcommands):
                 except Exception as e:
                     printerr("ERROR while deleting {}".format(f))
                     printerr("Exception is {}".format(e))
+            for d in sorted(dirs_in_fs, reverse=True):
+                try:
+                    d.rmdir()
+                except OSError:
+                    pass
 
     def _get_leftover_files(self):
         # List all (original and preview) files in the fs
@@ -123,7 +128,8 @@ class Command(BaseCommandWithSubcommands):
         files_in_fs.update(
             Path(preview_files_root_dir).glob('**/*'))
 
-        files_in_fs = {p for p in files_in_fs if not p.is_dir()}
+        dirs_in_fs = {p for p in files_in_fs if p.is_dir()}
+        files_in_fs.difference_update(dirs_in_fs)
 
         # Remove known original paths.
         original_pathes = Document.objects.all().values_list(
@@ -139,4 +145,4 @@ class Command(BaseCommandWithSubcommands):
                           for path in preview_pathes if path)
         files_in_fs.difference_update(preview_pathes)
 
-        return files_in_fs
+        return files_in_fs, dirs_in_fs
