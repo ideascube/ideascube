@@ -67,7 +67,7 @@ class Command(BaseCommand):
             sys.exit(1)
 
     def add(self, metadata):
-        title = metadata.get('title')
+        title = metadata.get('title').strip()
         if not title:
             self.report.error('Missing title', metadata)
             return
