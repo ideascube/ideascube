@@ -62,6 +62,8 @@ check-missing-migrations:
 
 test-data-migration:
 	set -e ; \
+	git branch | grep -E '^\*'; \
+	git log --oneline --graph --decorate --all | head -20; \
 	BRANCH=$$CI_BUILD_REF_NAME; if [ -z $$BRANCH ]; then BRANCH=$$(git rev-parse --abbrev-ref HEAD); fi; \
 	LATEST_TAG=$$(git describe --abbrev=0 --tags); \
 	\
@@ -75,5 +77,6 @@ test-data-migration:
 	echo "# Running migrations on $$BRANCH"; \
 	git checkout $$BRANCH; \
 	git rev-parse HEAD; \
+	git log --oneline --graph --decorate --all | head -20; \
 	make migrate
 	py.test --migrations
