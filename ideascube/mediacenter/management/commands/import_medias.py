@@ -74,14 +74,16 @@ class Command(BaseCommand):
         title = smart_truncate(title)
         metadata['title'] = title
 
-        if not metadata.get('lang'):
+        lang = metadata.get('lang', '').strip().lower()
+
+        if not lang:
             metadata['lang'] = settings.LANGUAGE_CODE
 
         original = metadata.get('path')
         if not original:
             self.report.error('Missing path', metadata)
             return
-        kind = metadata.get('kind')
+        kind = metadata.get('kind', '').strip().lower()
         content_type, encoding = mimetypes.guess_type(original)
         if not kind or not hasattr(Document, kind.upper()):
             kind = guess_kind_from_content_type(content_type) or Document.OTHER
