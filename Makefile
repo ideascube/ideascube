@@ -62,7 +62,7 @@ check-missing-migrations:
 
 test-data-migration:
 	set -e ; \
-	BRANCH=$$CI_BUILD_REF_NAME; if [ -z $$BRANCH ]; then BRANCH=$$(git rev-parse --abbrev-ref HEAD); fi; \
+	COMMIT=$$(git rev-parse HEAD); \
 	LATEST_TAG=$$(git describe --abbrev=0 --tags); \
 	\
 	echo "# Loading some data at $$LATEST_TAG"; \
@@ -72,7 +72,7 @@ test-data-migration:
 	python3 manage.py loaddata --database=default test-data/data.json; \
 	python3 manage.py reindex; \
 	\
-	echo "# Running migrations on $$BRANCH"; \
-	git checkout $$BRANCH; \
+	echo "# Running migrations on $$COMMIT"; \
+	git checkout $$COMMIT; \
 	make migrate
 	py.test --migrations
