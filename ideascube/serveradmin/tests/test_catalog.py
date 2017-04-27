@@ -827,7 +827,7 @@ def test_catalog_update_cache_updates_installed_metadata(tmpdir, monkeypatch):
     assert c._installed == {}
 
     # Let's pretend we've installed stuff here
-    c._installed = c._available.copy()
+    c._installed_value = c._available.copy()
     c._persist_catalog()
     assert c._available == {'foovideos': {
         'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
@@ -880,7 +880,7 @@ def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir, monkeyp
     assert c._installed == {}
 
     # Let's pretend we've installed stuff here
-    c._installed = c._available.copy()
+    c._installed_value = c._available.copy()
     c._persist_catalog()
     assert c._available == {'foovideos': {
         'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
