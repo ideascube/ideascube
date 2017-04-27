@@ -1977,6 +1977,19 @@ def test_catalog_list_nothandled_packages(
     assert len(pkgs) == 1
 
 
+def test_catalog_doesn_t_try_to_read_file_at_instanciation(settings, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+    from unittest.mock import mock_open
+    m = mock_open()
+    mocker.patch('builtins.open', m)
+
+    c = Catalog()
+    assert not m.called
+
+    c._available
+    assert m.called
+
+
 def test_catalog_update_displayed_package(systemuser):
     from ideascube.configuration import get_config, set_config
     from ideascube.serveradmin.catalog import Catalog
