@@ -16,6 +16,9 @@ user_model = get_user_model()
 
 
 def clean_barcode(barcode):
+    if barcode is None:
+        return None
+
     # Keep only integers
     barcode = re.sub(r'\W', '', barcode)
 

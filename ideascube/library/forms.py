@@ -20,6 +20,9 @@ class BookSpecimenForm(forms.ModelForm):
     def clean_barcode(self):
         barcode = self.cleaned_data['barcode']
 
+        if barcode is None:
+            return None
+
         # Keep only letters
         barcode = re.sub(r'\s', '', barcode)
 
@@ -164,6 +167,9 @@ class BookForm(forms.ModelForm):
 
     def clean_isbn(self):
         isbn = self.cleaned_data['isbn']
+
+        if isbn is None:
+            return None
 
         # Keep only integers
         isbn = re.sub(r'\D', '', isbn)
