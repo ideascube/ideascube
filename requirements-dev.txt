@@ -14,51 +14,52 @@ bleach==2.0.0
 click==6.7                # via mkdocs, pip-tools
 coverage==4.3.4           # via pytest-cov
 cssselect==1.0.1          # via pyquery
-django-countries==4.2
 dbus-python==1.2.4
-django-taggit==0.22.0
+django-countries==4.5
+django-taggit==0.22.1
 django-webtest==1.9.1
-Django==1.10.6
+Django==1.11
 execnet==1.4.1            # via pytest-cache
 factory-boy==2.8.1
-Faker==0.7.10             # via factory-boy
+Faker==0.7.11             # via factory-boy
 first==2.0.1              # via pip-tools
 freezegun==0.3.8
-Jinja2==2.9.5             # via mkdocs
+Jinja2==2.9.6             # via mkdocs
 livereload==2.5.1         # via mkdocs
 lxml==3.7.3
 Markdown==2.6.8           # via mkdocs
 MarkupSafe==1.0           # via jinja2
-mkdocs==0.16.2
+mkdocs==0.16.3
 olefile==0.44
 packaging==16.8           # via setuptools
-Pillow==4.0.0
-pip-tools==1.8.0
+Pillow==4.1.0
+pip-tools==1.9.0
 progressist==0.0.6
 py==1.4.33                # via pytest
 pyflakes==1.5.0           # via pytest-flakes
-pymarc==3.1.5
+pymarc==3.1.6
 pyparsing==2.2.0          # via packaging
 pyquery==1.2.17
 pytest-cache==1.0         # via pytest-flakes
 pytest-cov==2.4.0
 pytest-django==3.1.2
 pytest-flakes==1.0.1
-pytest-mock==1.5.0
+pytest-mock==1.6.0
 pytest==3.0.7
 python-dateutil==2.6.0    # via faker, freezegun
 python-networkmanager==1.2.1
+pytz==2017.2
 PyYAML==3.12              # via mkdocs
 requests==2.13.0
 resumable-urlretrieve==0.1.5
 six==1.10.0
-tornado==4.4.2            # via livereload, mkdocs
+tornado==4.5.1            # via livereload, mkdocs
 transifex-client==0.12.4
 typing==3.6.1
 Unidecode==0.4.20
-urllib3==1.20             # via transifex-client
+urllib3==1.21             # via transifex-client
 waitress==1.0.2           # via webtest
-webencodings==0.5
+webencodings==0.5.1
 WebOb==1.7.2              # via webtest
 webtest==2.0.27           # via django-webtest
 

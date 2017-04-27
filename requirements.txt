@@ -8,20 +8,21 @@ git+https://github.com/ideascube/django-select-multiple-field@remove-dj110-warni
 git+https://github.com/html5lib/html5lib-python@17499b9763a090f7715af49555d21fe4b558958b#egg=html5lib
 batinfo==0.4.2
 bleach==2.0.0
-django-countries==4.2
 dbus-python==1.2.4
-django-taggit==0.22.0
-Django==1.10.6
+django-countries==4.5
+django-taggit==0.22.1
+Django==1.11
 lxml==3.7.3
 olefile==0.44             # via pillow
-Pillow==4.0.0
+Pillow==4.1.0
 progressist==0.0.6
-pymarc==3.1.5
+pymarc==3.1.6
 python-networkmanager==1.2.1
+pytz==2017.2              # via django
 PyYAML==3.12
 requests==2.13.0          # via resumable-urlretrieve
 resumable-urlretrieve==0.1.5
 six==1.10.0               # via bleach, pymarc
 typing==3.6.1
 Unidecode==0.4.20
-webencodings==0.5
+webencodings==0.5.1
