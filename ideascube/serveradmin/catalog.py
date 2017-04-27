@@ -467,7 +467,7 @@ class Catalog:
         self._remote_storage = os.path.join(self._storage_root, 'remotes')
         os.makedirs(self._remote_storage, exist_ok=True)
 
-        self._load_remotes()
+        self._remotes_value = None
         self._load_catalog()
         self._package_caches = [self._local_package_cache]
 
@@ -869,14 +869,20 @@ class Catalog:
         self._persist_catalog()
 
     # -- Manage remote sources ------------------------------------------------
+    @property
+    def _remotes(self):
+        if self._remotes_value is None:
+            self._load_remotes()
+        return self._remotes_value
+
     def _load_remotes(self):
-        self._remotes = {}
+        self._remotes_value = {}
 
         for path in glob(os.path.join(self._remote_storage, '*.yml')):
             r = Remote.from_file(path)
-            self._remotes[r.id] = r
+            self._remotes_value[r.id] = r
 
-        if self._remotes:
+        if self._remotes_value:
             return
 
         # We might have remotes in the old location
@@ -886,7 +892,7 @@ class Catalog:
             r = Remote.from_file(path)
             self.add_remote(r.id, r.name, r.url)
 
-        if self._remotes:
+        if self._remotes_value:
             # So we did have old remotes after all...
             shutil.rmtree(old_remote_cache)
 
