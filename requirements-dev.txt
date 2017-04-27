@@ -54,6 +54,7 @@ resumable-urlretrieve==0.1.5
 six==1.10.0
 tornado==4.4.2            # via livereload, mkdocs
 transifex-client==0.12.4
+typing==3.6.1
 Unidecode==0.4.20
 urllib3==1.20             # via transifex-client
 waitress==1.0.2           # via webtest
