@@ -468,7 +468,8 @@ class Catalog:
         os.makedirs(self._remote_storage, exist_ok=True)
 
         self._remotes_value = None
-        self._load_catalog()
+        self._available_value = None
+        self._installed_value = None
         self._package_caches = [self._local_package_cache]
 
         self._bar = Bar()
@@ -750,41 +751,64 @@ class Catalog:
             handler.commit()
 
     # -- Manage local cache ---------------------------------------------------
-    def _load_catalog(self):
-        self._available = {}
-        self._installed = {}
+    @property
+    def _available(self):
+        if self._available_value is None:
+            self._available_value = {}
+            try:
+                catalog = load_from_file(self._catalog_cache)
 
-        try:
-            catalog = load_from_file(self._catalog_cache)
+            except FileNotFoundError:
+                # That's ok.
+                pass
 
-        except FileNotFoundError:
-            # That's ok
-            pass
+            else:
+                # load_from_file returns None for empty files
+                if catalog is not None:
+                    if 'available' in catalog and 'installed' in catalog:
+                        # The cache on file is in the old format
+                        # https://github.com/ideascube/ideascube/issues/376
+                        self._available_value = catalog['available']
+                        self._installed_value = catalog['installed']
 
-        else:
-            # load_from_file returns None for empty files
-            if catalog is not None:
-                if 'available' in catalog and 'installed' in catalog:
-                    # The cache on file is in the old format
-                    # https://github.com/ideascube/ideascube/issues/376
-                    self._available = catalog['available']
-                    self._installed = catalog['installed']
+                    else:
+                        self._available_value = catalog
+        return self._available_value
+
+    @property
+    def _installed(self):
+        if self._installed_value is None:
+            self._installed_value = {}
+
+            try:
+                installed = load_from_file(self._installed_storage)
+
+            except FileNotFoundError:
+                # Try compatible old format
+                try:
+                    catalog = load_from_file(self._catalog_cache)
+                except FileNotFoundError:
+                    # That's ok
+                    pass
 
                 else:
-                    self._available = catalog
+                    # load_from_file returns None for empty files
+                    if catalog is not None:
+                        if 'available' in catalog and 'installed' in catalog:
+                            # The cache on file is in the old format
+                            # https://github.com/ideascube/ideascube/issues/376
+                            self._available_value = catalog['available']
+                            self._installed_value = catalog['installed']
+                        elif self._available_value is None:
+                            # Now we have load the catalog, let's save it.
+                            self._available_value = catalog
 
-        try:
-            installed = load_from_file(self._installed_storage)
+            else:
+                # load_from_file returns None for empty files
+                if installed is not None:
+                    self._installed_value = installed
 
-        except FileNotFoundError:
-            # That's ok
-            pass
-
-        else:
-            # load_from_file returns None for empty files
-            if installed is not None:
-                self._installed = installed
-
+        return self._installed_value
 
     def _persist_catalog(self):
         persist_to_file(self._catalog_cache, self._available)
@@ -822,7 +846,7 @@ class Catalog:
         self._package_caches.append(os.path.abspath(path))
 
     def update_cache(self):
-        self._available = {}
+        self._available_value = {}
 
         for remote in self._remotes.values():
             # TODO: Get resumable.urlretrieve to accept a file-like object?
@@ -865,7 +889,7 @@ class Catalog:
         shutil.rmtree(self._local_package_cache)
         os.mkdir(self._local_package_cache)
 
-        self._available = {}
+        self._available_value = {}
         self._persist_catalog()
 
     # -- Manage remote sources ------------------------------------------------
