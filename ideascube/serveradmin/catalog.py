@@ -469,6 +469,7 @@ class Catalog:
 
         self._load_remotes()
         self._load_catalog()
+        self._package_caches = [self._local_package_cache]
 
         self._bar = Bar()
 
@@ -784,7 +785,6 @@ class Catalog:
             if installed is not None:
                 self._installed = installed
 
-        self._package_caches = [self._local_package_cache]
 
     def _persist_catalog(self):
         persist_to_file(self._catalog_cache, self._available)
