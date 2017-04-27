@@ -42,6 +42,9 @@ class RichTextEntry(widgets.Widget):
         if value is None:
             value = ''
 
+        if attrs is None:
+            attrs = {}
+
         # The widget displayed to the user
         div_attrs = {'id': name,
                      'class': 'tinymce-editor',
@@ -54,8 +57,9 @@ class RichTextEntry(widgets.Widget):
         )
 
         # The input used by django
-        input_attrs = self.build_attrs(attrs, name=name, value=escape(value),
-                                       type='hidden')
+        attrs.update({'name': name, 'value': escape(value), 'type': 'hidden'})
+
+        input_attrs = self.build_attrs(attrs)
         input_html = '<input{} />'.format(
             flatatt(input_attrs)
         )
