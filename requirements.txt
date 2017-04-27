@@ -11,7 +11,7 @@ bleach==2.0.0
 dbus-python==1.2.4
 django-countries==4.5
 django-taggit==0.22.1
-Django==1.10.6
+django==1.11
 lxml==3.7.3
 olefile==0.44             # via pillow
 pillow==4.1.0
