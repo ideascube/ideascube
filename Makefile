@@ -24,10 +24,10 @@ sync-deps:
 	pip-sync requirements-dev.txt
 
 ci-images:
-	docker build --file dockerfiles/ci-jessie-python34 --tag ideascube/ideascube-ci:jessie-python34 .
+	docker build --no-cache --file dockerfiles/ci-jessie-python34 --tag ideascube/ideascube-ci:jessie-python34 .
 	docker push ideascube/ideascube-ci:jessie-python34
 	
-	docker build --file dockerfiles/ci-stretch-python35 --tag ideascube/ideascube-ci:stretch-python35 .
+	docker build --no-cache --file dockerfiles/ci-stretch-python35 --tag ideascube/ideascube-ci:stretch-python35 .
 	docker push ideascube/ideascube-ci:stretch-python35
 
 
