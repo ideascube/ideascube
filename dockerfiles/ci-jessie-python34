@@ -3,6 +3,7 @@ FROM debian:jessie-slim
 ENV LANG C.UTF-8
 
 RUN apt update -q
+RUN apt full-upgrade --purge -q -y
 
 # Install our dependencies
 RUN apt install -q -y --no-install-recommends \
