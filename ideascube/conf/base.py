@@ -112,7 +112,7 @@ LANG_INFO.update({
         'bidi': False,
         'name': 'Amharic',
         'code': 'am',
-        'name_local': u'አማርኛ'
+        'name_local': 'አማርኛ'
     },
     'bm': {
         'bidi': False,
@@ -154,7 +154,7 @@ LANG_INFO.update({
         'bidi': False,
         'name': 'Somali',
         'code': 'so',
-        'name_local': u'Af-Soomaali'
+        'name_local': 'Af-Soomaali'
     },
     'ti': {
         'bidi': False,
