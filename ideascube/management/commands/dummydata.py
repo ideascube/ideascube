@@ -79,21 +79,21 @@ class Command(BaseCommand):
         path = 'ideascube/tests/data/deering-of-deal.jpg'
         book = BookFactory(name='Deering of Deal', description=summary,
                            subtitle='The Spirit of the School',
-                           authors=u'Latta Griswold', lang='en',
+                           authors='Latta Griswold', lang='en',
                            cover__from_path=path, tags=['plane', 'aviation'])
         BookSpecimenFactory(item=book, barcode="1234567")
-        summary = (u"Le roman raconte les aventures d'un Gascon impécunieux "
-                   u"de 18 ans, d'Artagnan, venu à Paris pour faire carrière "
-                   u"dans le corps des mousquetaires. Il se lie d'amitié avec "
-                   u"Athos, Porthos et Aramis, mousquetaires du roi Louis "
-                   u"XIII. Ces quatre hommes vont s'opposer au premier "
-                   u"ministre, le cardinal de Richelieu et à ses agents, dont "
-                   u"le comte de Rochefort et la belle et mystérieuse Milady "
-                   u"de Winter, pour sauver l'honneur de la reine de France "
-                   u"Anne d'Autriche.")
+        summary = ("Le roman raconte les aventures d'un Gascon impécunieux "
+                   "de 18 ans, d'Artagnan, venu à Paris pour faire carrière "
+                   "dans le corps des mousquetaires. Il se lie d'amitié avec "
+                   "Athos, Porthos et Aramis, mousquetaires du roi Louis "
+                   "XIII. Ces quatre hommes vont s'opposer au premier "
+                   "ministre, le cardinal de Richelieu et à ses agents, dont "
+                   "le comte de Rochefort et la belle et mystérieuse Milady "
+                   "de Winter, pour sauver l'honneur de la reine de France "
+                   "Anne d'Autriche.")
         path = 'ideascube/tests/data/les-trois-mousquetaires.jpg'
         book = BookFactory(name='Les Trois Mousquetaires', description=summary,
-                           authors=u'Alexandre Dumas', lang='fr',
+                           authors='Alexandre Dumas', lang='fr',
                            cover__from_path=path, tags=['roman', 'aventure'])
         BookSpecimenFactory(item=book, barcode="98765479")
         summary = ("With the title of Sense and Sensibility is connected one "
@@ -112,43 +112,43 @@ class Command(BaseCommand):
                    "novel.")
         path = 'ideascube/tests/data/sense-and-sensibility.jpg'
         book = BookFactory(name='Sense and Sensibility', description=summary,
-                           authors=u'Jane Austen', lang='en',
+                           authors='Jane Austen', lang='en',
                            cover__from_path=path, tags=['19th-century'])
         BookSpecimenFactory(item=book, barcode="32657324")
-        summary = (u"النبي (1923) أشهر كتب جبران كتبه بالإنجليزية وترجم إلى "
-                   u"أكثر من خمسين لغة، وهو يعتبر بحق رائعة جبران العالمية، "
-                   u"مضمونه اجتماعي، مثالي وتأملي فلسفي، وهو يحوي خلاصة "
-                   u"الاراء الجبرانية في الحب والزواج والأولاد والبيوت "
-                   u"والثياب والبيع والشراء والحرية والثانون والرحمة والعقاب "
-                   u"والدين والأخلاق والحياة والموت واللذة والجمال والكرم "
-                   u"والشرائع وغيرها، وقد وردت على لسان نبي سمي المصطفى "
-                   u"ورسالة النبي رسالة المتصوف المؤمن بوحدة الوجود، وبأن "
-                   u"الروح تتعطش للعودة إلى مصدرها، وبأن الحب جوهر الحياة. "
-                   u"وفي كتاب النبي يعبر جبران عن آرائه في الحياة عن طريق "
-                   u"معالجته للعلاقات الإنسانية التي تربط الإنسان بالإنسان.")
+        summary = ("النبي (1923) أشهر كتب جبران كتبه بالإنجليزية وترجم إلى "
+                   "أكثر من خمسين لغة، وهو يعتبر بحق رائعة جبران العالمية، "
+                   "مضمونه اجتماعي، مثالي وتأملي فلسفي، وهو يحوي خلاصة "
+                   "الاراء الجبرانية في الحب والزواج والأولاد والبيوت "
+                   "والثياب والبيع والشراء والحرية والثانون والرحمة والعقاب "
+                   "والدين والأخلاق والحياة والموت واللذة والجمال والكرم "
+                   "والشرائع وغيرها، وقد وردت على لسان نبي سمي المصطفى "
+                   "ورسالة النبي رسالة المتصوف المؤمن بوحدة الوجود، وبأن "
+                   "الروح تتعطش للعودة إلى مصدرها، وبأن الحب جوهر الحياة. "
+                   "وفي كتاب النبي يعبر جبران عن آرائه في الحياة عن طريق "
+                   "معالجته للعلاقات الإنسانية التي تربط الإنسان بالإنسان.")
         path = 'ideascube/tests/data/the-prophet.jpg'
-        book = BookFactory(name=u'النبي (كتاب)', description=summary,
-                           authors=u'جبران خليل جبران', lang='ar',
+        book = BookFactory(name='النبي (كتاب)', description=summary,
+                           authors='جبران خليل جبران', lang='ar',
                            cover__from_path=path)
         BookSpecimenFactory(item=book, barcode="3213542")
-        title = (u"Déclaration des droits de l'homme et du citoyen "
-                 u"du 26 août 1789")
-        summary = (u"Les Représentants du Peuple Français, constitués en "
-                   u"Assemblée Nationale, considérant que l'ignorance, "
-                   u"l'oubli ou le mépris des droits de l'Homme sont les "
-                   u"seules causes des malheurs publics et de la corruption "
-                   u"des Gouvernements, ont résolu d'exposer, dans une "
-                   u"Déclaration solennelle, les droits naturels, "
-                   u"inaliénables et sacrés de l'Homme, afin que cette "
-                   u"Déclaration, constamment présente à tous les Membres du "
-                   u"corps social, leur rappelle sans cesse leurs droits et "
-                   u"leurs devoirs ; afin que leurs actes du pouvoir "
-                   u"législatif, et ceux du pouvoir exécutif, pouvant être à "
-                   u"chaque instant comparés avec le but de toute institution "
-                   u"politique, en soient plus respectés ; afin que les "
-                   u"réclamations des citoyens, fondées désormais sur des "
-                   u"principes simples et incontestables, tournent toujours "
-                   u"au maintien de la Constitution et au bonheur de tous.")
+        title = ("Déclaration des droits de l'homme et du citoyen "
+                 "du 26 août 1789")
+        summary = ("Les Représentants du Peuple Français, constitués en "
+                   "Assemblée Nationale, considérant que l'ignorance, "
+                   "l'oubli ou le mépris des droits de l'Homme sont les "
+                   "seules causes des malheurs publics et de la corruption "
+                   "des Gouvernements, ont résolu d'exposer, dans une "
+                   "Déclaration solennelle, les droits naturels, "
+                   "inaliénables et sacrés de l'Homme, afin que cette "
+                   "Déclaration, constamment présente à tous les Membres du "
+                   "corps social, leur rappelle sans cesse leurs droits et "
+                   "leurs devoirs ; afin que leurs actes du pouvoir "
+                   "législatif, et ceux du pouvoir exécutif, pouvant être à "
+                   "chaque instant comparés avec le but de toute institution "
+                   "politique, en soient plus respectés ; afin que les "
+                   "réclamations des citoyens, fondées désormais sur des "
+                   "principes simples et incontestables, tournent toujours "
+                   "au maintien de la Constitution et au bonheur de tous.")
         path = 'ideascube/tests/data/declaration-1789.pdf'
         DocumentFactory(title=title, original__from_path=path, summary=summary,
                         tags=['history', 'France'])

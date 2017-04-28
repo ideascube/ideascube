@@ -285,7 +285,7 @@ def test_can_export_inventory(staffapp):
 def test_export_inventory_should_be_ok_in_arabic(staffapp, settings):
     translation.activate('ar')
     inventory = InventoryFactory()
-    specimen = SpecimenFactory(item__name="an item", comments=u"النبي (كتاب)")
+    specimen = SpecimenFactory(item__name="an item", comments="النبي (كتاب)")
     InventorySpecimen.objects.create(inventory=inventory, specimen=specimen)
     url = reverse('monitoring:inventory_export', kwargs={'pk': inventory.pk})
     resp = staffapp.get(url, status=200)
@@ -733,7 +733,7 @@ def test_can_export_loan(staffapp):
 def test_export_loan_should_be_ok_in_arabic(staffapp):
     translation.activate('ar')
     specimen = SpecimenFactory(item__name="an item", barcode="123")
-    loan = LoanFactory(specimen=specimen, comments=u"النبي (كتاب)")
+    loan = LoanFactory(specimen=specimen, comments="النبي (كتاب)")
     url = reverse('monitoring:export_loan')
     resp = staffapp.get(url, status=200)
     assert resp.content.decode().startswith("item,barcode,serial,user,loaned at,due date,returned at,comments\r\nan item,123")  # noqa

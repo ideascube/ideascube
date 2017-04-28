@@ -2,4 +2,4 @@
 from .idb_fra import *  # pragma: no flakes
 
 
-IDEASCUBE_NAME = u"CALAIS BIBLIOTHEQUE"
+IDEASCUBE_NAME = "CALAIS BIBLIOTHEQUE"
