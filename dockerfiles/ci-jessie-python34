@@ -2,10 +2,10 @@ FROM debian:jessie-slim
 
 ENV LANG C.UTF-8
 
-RUN apt update
+RUN apt update -q
 
 # Install our dependencies
-RUN apt install -y --no-install-recommends \
+RUN apt install -q -y --no-install-recommends \
 	autoconf \
 	automake \
 	cython3 \
