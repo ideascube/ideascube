@@ -2,10 +2,11 @@ FROM debian:jessie-slim
 
 ENV LANG C.UTF-8
 
-RUN apt update
+RUN apt update -q
+RUN apt full-upgrade --purge -q -y
 
 # Install our dependencies
-RUN apt install -y --no-install-recommends \
+RUN apt install -q -y --no-install-recommends \
 	autoconf \
 	automake \
 	cython3 \
@@ -44,3 +45,15 @@ ENV PATH="~/.local/bin:${PATH}"
 
 # Create a virtual environment to use in the CI
 RUN ~/.local/bin/pew new -d -p python3 venv
+
+# Pre-install the dependencies in the virtual environment
+RUN ~/.local/bin/pew in venv pip install --upgrade pip setuptools
+RUN git clone https://framagit.org/ideascube/ideascube
+RUN ~/.local/bin/pew in venv make -C ideascube develop
+RUN rm -fr ideascube
+
+# Make some space
+RUN rm -fr \
+	~/.cache \
+	~/.local/share/virtualenvs/venv/src \
+	~/.local/share/virtualenvs/venv/lib/python-wheels
