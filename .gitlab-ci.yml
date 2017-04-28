@@ -17,9 +17,9 @@
   image: ideascube/ideascube-ci:stretch-python35
 
 "Tests: C locale":
-  <<: *test_definition
-  variables:
-    LC_ALL: "C"
+  <<: *setup_definition
+  script:
+  - LC_ALL=C pew in venv make test
 
 
 Code Coverage:
