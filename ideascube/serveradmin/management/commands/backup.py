@@ -77,5 +77,5 @@ class Command(BaseCommand):
     def add(self, filepath):
         with open(filepath, 'rb') as f:
             backup = Backup.load(f)
-            self.stdout.write(u"✔ Imported backup {}.".format(backup))
+            self.stdout.write("✔ Imported backup {}.".format(backup))
             return backup

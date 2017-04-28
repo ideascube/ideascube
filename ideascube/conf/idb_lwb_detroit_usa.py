@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from tzlocal import get_localzone
 
 
-IDEASCUBE_NAME = u"Library Whitout Border Detroit"
+IDEASCUBE_NAME = "Library Whitout Border Detroit"
 IDEASCUBE_PLACE_NAME = _("city")
 COUNTRIES_FIRST = ['US']
 TIME_ZONE = get_localzone().zone
