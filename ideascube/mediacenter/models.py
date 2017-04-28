@@ -92,7 +92,7 @@ class Document(SearchMixin, TimeStampedModel):
     @property
     def index_strings(self):
         return (self.title, self.summary, self.credits,
-                u' '.join(self.tags.names()))
+                ' '.join(self.tags.names()))
 
     @property
     def index_lang(self):

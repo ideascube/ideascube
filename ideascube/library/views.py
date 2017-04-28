@@ -119,7 +119,7 @@ class BookImport(FormView):
             try:
                 notices = handler()
             except (ValueError, AssertionError) as e:
-                msg = _(u'Unable to process notices: {}'.format(str(e)))
+                msg = _('Unable to process notices: {}'.format(str(e)))
                 messages.add_message(self.request, messages.ERROR, msg)
             else:
                 if notices:

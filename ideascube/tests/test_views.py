@@ -390,7 +390,7 @@ def test_logged_user_cannot_export_users(loggedapp, user):
 
 def test_export_users_should_return_csv_with_users(staffapp, settings):
     user1 = UserFactory(short_name="user1", full_name="I'm user1")
-    user2 = UserFactory(short_name="user2", full_name=u"I'm user2 with é")
+    user2 = UserFactory(short_name="user2", full_name="I'm user2 with é")
     resp = staffapp.get(reverse('user_export'), status=200)
     resp.mustcontain(
         'serial', user1.serial, user2.serial, no=[
