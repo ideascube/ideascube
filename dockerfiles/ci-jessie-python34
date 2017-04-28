@@ -45,3 +45,15 @@ ENV PATH="~/.local/bin:${PATH}"
 
 # Create a virtual environment to use in the CI
 RUN ~/.local/bin/pew new -d -p python3 venv
+
+# Pre-install the dependencies in the virtual environment
+RUN ~/.local/bin/pew in venv pip install --upgrade pip setuptools
+RUN git clone https://framagit.org/ideascube/ideascube
+RUN ~/.local/bin/pew in venv make -C ideascube develop
+RUN rm -fr ideascube
+
+# Make some space
+RUN rm -fr \
+	~/.cache \
+	~/.local/share/virtualenvs/venv/src \
+	~/.local/share/virtualenvs/venv/lib/python-wheels

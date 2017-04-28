@@ -1,7 +1,7 @@
 .setup: &setup_definition
   image: ideascube/ideascube-ci:jessie-python34
   before_script:
-  - pew in venv make develop
+  - pew in venv make sync-deps
 
 .test: &test_definition
   <<: *setup_definition
