@@ -15,15 +15,4 @@ MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'birth_year', 'gender']
 
 ENTRY_ACTIVITY_CHOICES = []
 
-HOME_CARDS = STAFF_HOME_CARDS + [  # pragma: no flakes
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'mediacenter',
-    },
-    {
-        'id': 'library',
-    }
-]
-
+EXTRA_APP_CARDS = []

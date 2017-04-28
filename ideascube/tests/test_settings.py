@@ -1,11 +1,15 @@
 import glob
-import os
 import importlib
+import os
+import sys
 
 import pytest
 
 
-@pytest.fixture(params=glob.glob('ideascube/conf/*.py'))
+@pytest.fixture(params=sorted([
+    f for f in glob.glob('ideascube/conf/*.py')
+    if not f.endswith('/__init__.py')
+]))
 def setting_module(request):
     basename = os.path.basename(request.param)
 
@@ -23,3 +27,8 @@ def test_setting_file(setting_module):
     for name, _ in getattr(settings, 'USER_IMPORT_FORMATS', []):
         assert hasattr(UserImportForm, '_get_{}_mapping'.format(name))
         assert hasattr(UserImportForm, '_get_{}_reader'.format(name))
+
+    # Avoid side-effects between configuration files
+    for module_name in list(sys.modules):
+        if module_name.startswith('ideascube.conf.'):
+            del sys.modules[module_name]
