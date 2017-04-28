@@ -16,10 +16,15 @@ user_model = get_user_model()
 
 
 def clean_barcode(barcode):
-    # Keep only integers and letters, and make sure empty values are mapped
-    # to None, not empty string (we need NULL values in db, not empty
-    # strings, for uniqueness constraints).
-    return re.sub(r'\W', '', barcode) or None
+    if barcode is None:
+        return None
+
+    # Keep only integers
+    barcode = re.sub(r'\W', '', barcode)
+
+    # Make sure empty values are mapped to None, not empty strings (we need
+    # NULL values in db, not empty strings, for uniqueness constraints).
+    return barcode or None
 
 
 class EntryForm(forms.Form):

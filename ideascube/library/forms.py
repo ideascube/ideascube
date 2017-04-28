@@ -18,10 +18,17 @@ from .utils import (fetch_from_openlibrary, load_from_ideascube,
 class BookSpecimenForm(forms.ModelForm):
 
     def clean_barcode(self):
-        # Keep only letters, and make sure empty values are mapped to None,
-        # not empty string (we need NULL values in db, not empty strings, for
-        # uniqueness constraints).
-        return re.sub(r'\s', '', self.cleaned_data['barcode']) or None
+        barcode = self.cleaned_data['barcode']
+
+        if barcode is None:
+            return None
+
+        # Keep only letters
+        barcode = re.sub(r'\s', '', barcode)
+
+        # Make sure empty values are mapped to None, not empty strings (we need
+        # NULL values in db, not empty strings, for uniqueness constraints).
+        return barcode or None
 
     def clean_file(self):
         # Ensure specimenfile and barcode are not both filled or both set to
@@ -159,10 +166,17 @@ class BookForm(forms.ModelForm):
         }
 
     def clean_isbn(self):
-        # Keep only integers, and make sure empty values are mapped to None,
-        # not empty string (we need NULL values in db, not empty strings, for
-        # uniqueness constraints).
-        return re.sub(r'\D', '', self.cleaned_data['isbn']) or None
+        isbn = self.cleaned_data['isbn']
+
+        if isbn is None:
+            return None
+
+        # Keep only integers
+        isbn = re.sub(r'\D', '', isbn)
+
+        # Make sure empty values are mapped to None, not empty strings (we need
+        # NULL values in db, not empty strings, for uniqueness constraints).
+        return isbn or None
 
     def save(self, commit=True):
         book = super().save()

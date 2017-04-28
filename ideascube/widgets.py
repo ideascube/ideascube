@@ -42,6 +42,9 @@ class RichTextEntry(widgets.Widget):
         if value is None:
             value = ''
 
+        if attrs is None:
+            attrs = {}
+
         # The widget displayed to the user
         div_attrs = {'id': name,
                      'class': 'tinymce-editor',
@@ -54,8 +57,9 @@ class RichTextEntry(widgets.Widget):
         )
 
         # The input used by django
-        input_attrs = self.build_attrs(attrs, name=name, value=escape(value),
-                                       type='hidden')
+        attrs.update({'name': name, 'value': escape(value), 'type': 'hidden'})
+
+        input_attrs = self.build_attrs(attrs)
         input_html = '<input{} />'.format(
             flatatt(input_attrs)
         )
@@ -73,28 +77,30 @@ class RichTextEntry(widgets.Widget):
 
 
 class LangSelect(widgets.Select):
-    def render_options(self, selected_choices):
+    option_template_name = 'ideascube/includes/widgets/langselect_option.html'
+
+    def optgroups(self, name, value, attrs=None):
+        optgroups = super().optgroups(name, value, attrs=attrs)
         local_languages = get_config('content', 'local-languages')
 
-        if local_languages is not None:
-            tmp = []
+        if local_languages is None:
+            return optgroups
 
-            for code, name in self.choices:
-                if code is '':
-                    tmp.append((code, name))
+        result = []
 
-                elif code in local_languages:
-                    tmp.append((code, name))
+        for group_name, group_choices, group_index in optgroups:
+            choices = []
 
-                elif code in selected_choices:
-                    tmp.append((code, name))
+            for option in group_choices:
+                if option['value'] == '':
+                    choices.append(option)
 
-            self.choices = tmp
+                elif option['value'] in local_languages:
+                    choices.append(option)
 
-        return super().render_options(selected_choices)
+                elif option['selected']:
+                    choices.append(option)
 
-    def render_option(self, selected_choices, option_value, option_label):
-        if option_value:
-            option_label = '{} ({})'.format(option_label, option_value)
-        return super().render_option(selected_choices, option_value,
-                                     option_label)
+            result.append((group_name, choices, group_index))
+
+        return result
