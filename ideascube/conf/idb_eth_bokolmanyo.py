@@ -2,7 +2,7 @@
 from .idb import *  # pragma: no flakes
 from django.utils.translation import ugettext_lazy as _
 
-IDEASCUBE_NAME = u"Bokolmanyo"
+IDEASCUBE_NAME = "Bokolmanyo"
 COUNTRIES_FIRST = ['SO', 'ET']
 TIME_ZONE = 'Africa/Addis_Ababa'
 LANGUAGE_CODE = 'en'

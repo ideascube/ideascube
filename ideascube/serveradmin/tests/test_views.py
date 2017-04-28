@@ -388,8 +388,8 @@ def test_staff_accesses_wifi_without_wireless(mocker, staffapp):
     NM.WirelessHardwareEnabled = False
 
     res = staffapp.get(reverse("server:wifi"), status=200)
-    assert u'Wi-Fi hardware is disabled' in res.unicode_body
-    assert u'No Wi-Fi available' in res.unicode_body
+    assert 'Wi-Fi hardware is disabled' in res.unicode_body
+    assert 'No Wi-Fi available' in res.unicode_body
 
 
 def test_staff_lists_wifi_networks(mocker, staffapp):
@@ -401,11 +401,11 @@ def test_staff_lists_wifi_networks(mocker, staffapp):
     NMSettings.ListConnections.side_effect = lambda: []
 
     res = staffapp.get(reverse("server:wifi"), status=200)
-    assert u'Wi-Fi hardware is disabled' not in res.unicode_body
-    assert u'Wi-Fi is disabled' not in res.unicode_body
-    assert u'No Wi-Fi available' not in res.unicode_body
-    assert u'my home network' in res.unicode_body
-    assert u'random open network' in res.unicode_body
+    assert 'Wi-Fi hardware is disabled' not in res.unicode_body
+    assert 'Wi-Fi is disabled' not in res.unicode_body
+    assert 'No Wi-Fi available' not in res.unicode_body
+    assert 'my home network' in res.unicode_body
+    assert 'random open network' in res.unicode_body
 
 
 def test_staff_connects_to_known_open_network(mocker, staffapp):
@@ -427,8 +427,8 @@ def test_staff_connects_to_known_open_network(mocker, staffapp):
 
     res = staffapp.get(reverse(
         "server:wifi", kwargs={'ssid': 'random open network'}), status=200)
-    assert u'No Wi-Fi available' not in res.unicode_body
-    assert u"Connected to random open network" in res.unicode_body
+    assert 'No Wi-Fi available' not in res.unicode_body
+    assert "Connected to random open network" in res.unicode_body
 
 
 def test_staff_connects_to_new_open_network(mocker, staffapp):
@@ -452,8 +452,8 @@ def test_staff_connects_to_new_open_network(mocker, staffapp):
 
     res = staffapp.get(reverse(
         "server:wifi", kwargs={'ssid': 'random open network'}), status=200)
-    assert u'No Wi-Fi available' not in res.unicode_body
-    assert u"Connected to random open network" in res.unicode_body
+    assert 'No Wi-Fi available' not in res.unicode_body
+    assert "Connected to random open network" in res.unicode_body
     assert NMSettings.AddConnection.call_count == 1
 
 
@@ -476,8 +476,8 @@ def test_staff_connects_to_known_wpa_network(mocker, staffapp):
 
     res = staffapp.get(reverse(
         "server:wifi", kwargs={'ssid': 'my home network'}), status=200)
-    assert u'No Wi-Fi available' not in res.unicode_body
-    assert u"Connected to my home network" in res.unicode_body
+    assert 'No Wi-Fi available' not in res.unicode_body
+    assert "Connected to my home network" in res.unicode_body
 
 
 def test_staff_connects_to_new_wpa_network(mocker, staffapp):
@@ -503,7 +503,7 @@ def test_staff_connects_to_new_wpa_network(mocker, staffapp):
         "server:wifi", kwargs={'ssid': 'my home network'}),
         params={'csrfmiddlewaretoken': staffapp.cookies['csrftoken']},
         status=200)
-    assert u'A key is required to connect to this network' in res.unicode_body
+    assert 'A key is required to connect to this network' in res.unicode_body
     assert NMSettings.AddConnection.call_count == 0
 
     res = staffapp.post(reverse(
@@ -513,7 +513,7 @@ def test_staff_connects_to_new_wpa_network(mocker, staffapp):
             'csrfmiddlewaretoken': staffapp.cookies['csrftoken'],
             },
         status=200)
-    assert u"Connected to my home network" in res.unicode_body
+    assert "Connected to my home network" in res.unicode_body
     assert NMSettings.AddConnection.call_count == 1
 
 
@@ -531,8 +531,8 @@ def test_staff_connects_to_non_existing_network(mocker, staffapp):
 
     res = staffapp.get(reverse(
         "server:wifi", kwargs={'ssid': 'no such network'}), status=200)
-    assert u'No Wi-Fi available' not in res.unicode_body
-    assert u"No such network: no such network" in res.unicode_body
+    assert 'No Wi-Fi available' not in res.unicode_body
+    assert "No such network: no such network" in res.unicode_body
 
 
 def test_staff_accesses_wifi_history_without_wireless(mocker, staffapp):
@@ -541,8 +541,8 @@ def test_staff_accesses_wifi_history_without_wireless(mocker, staffapp):
 
     res = staffapp.get(reverse("server:wifi_history"), status=200)
     print(res.unicode_body)
-    assert u'Wi-Fi hardware is disabled' in res.unicode_body
-    assert u'No known Wi-Fi networks' in res.unicode_body
+    assert 'Wi-Fi hardware is disabled' in res.unicode_body
+    assert 'No known Wi-Fi networks' in res.unicode_body
 
 
 def test_staff_accesses_wifi_history(mocker, staffapp):
@@ -557,10 +557,10 @@ def test_staff_accesses_wifi_history(mocker, staffapp):
         ]
 
     res = staffapp.get(reverse("server:wifi_history"), status=200)
-    assert u'Wi-Fi hardware is disabled' not in res.unicode_body
-    assert u'No known Wi-Fi networks' not in res.unicode_body
-    assert u'my home network' in res.unicode_body
-    assert u'random open network' in res.unicode_body
+    assert 'Wi-Fi hardware is disabled' not in res.unicode_body
+    assert 'No known Wi-Fi networks' not in res.unicode_body
+    assert 'my home network' in res.unicode_body
+    assert 'random open network' in res.unicode_body
 
 
 def test_staff_forgets_wifi_connection(mocker, staffapp):
@@ -585,10 +585,10 @@ def test_staff_forgets_wifi_connection(mocker, staffapp):
     res = form.submit()
 
     assert res.status_int == 200
-    assert u'Wi-Fi hardware is disabled' not in res.unicode_body
-    assert u'No known Wi-Fi networks' not in res.unicode_body
-    assert u'my home network' not in res.unicode_body
-    assert u'random open network' in res.unicode_body
+    assert 'Wi-Fi hardware is disabled' not in res.unicode_body
+    assert 'No known Wi-Fi networks' not in res.unicode_body
+    assert 'my home network' not in res.unicode_body
+    assert 'random open network' in res.unicode_body
 
 
 def test_staff_forgets_all_wifi_connections(mocker, staffapp):
@@ -616,9 +616,9 @@ def test_staff_forgets_all_wifi_connections(mocker, staffapp):
     res = form.submit()
 
     assert res.status_int == 200
-    assert u'No known Wi-Fi networks' in res.unicode_body
-    assert u'my home network' not in res.unicode_body
-    assert u'random open network' not in res.unicode_body
+    assert 'No known Wi-Fi networks' in res.unicode_body
+    assert 'my home network' not in res.unicode_body
+    assert 'random open network' not in res.unicode_body
 
 
 def test_staff_forgets_non_existing_connection(mocker, staffapp):
@@ -641,10 +641,10 @@ def test_staff_forgets_non_existing_connection(mocker, staffapp):
     res = form.submit()
 
     assert res.status_int == 200
-    assert u'Wi-Fi hardware is disabled' not in res.unicode_body
-    assert u'No known Wi-Fi networks' not in res.unicode_body
-    assert u'my home network' in res.unicode_body
-    assert u'random open network' in res.unicode_body
+    assert 'Wi-Fi hardware is disabled' not in res.unicode_body
+    assert 'No known Wi-Fi networks' not in res.unicode_body
+    assert 'my home network' in res.unicode_body
+    assert 'random open network' in res.unicode_body
 
 
 def test_staff_should_see_packages_with_cards(staffapp, systemuser, catalog):

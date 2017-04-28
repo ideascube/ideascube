@@ -78,7 +78,7 @@ def test_physical_after_removing_file():
 def test_unicode_returns_digital_specimen_of_book():
     book = BookFactory()
     specimen = DigitalBookSpecimenFactory(item=book)
-    assert str(specimen).startswith(u'Digital specimen of')
+    assert str(specimen).startswith('Digital specimen of')
 
 
 def test_specimen_extension():

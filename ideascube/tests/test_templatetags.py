@@ -80,21 +80,21 @@ def test_do_min(left, right, expected):
 
 
 @pytest.mark.parametrize('given,expected,length,suffix', [
-    [u'Ceci est une longue phrase qui pourrait éventuellement servir de titre à billet de blog mais est vraiment beaucoup trop longue',  # noqa
-     u'Ceci est une longue phrase qui pourrait éventuellement servir de titre à billet de blog mais est…', None, None],  # noqa
+    ['Ceci est une longue phrase qui pourrait éventuellement servir de titre à billet de blog mais est vraiment beaucoup trop longue',  # noqa
+     'Ceci est une longue phrase qui pourrait éventuellement servir de titre à billet de blog mais est…', None, None],  # noqa
     ['A short sentence', 'A short sentence', None, None],
-    ['A short sentence', u'A short…', 10, None],
-    ['A short sentence', u'A short.', 10, '.'],
-    ['A short sentence', u'A short', 10, ''],
-    [u"أكثر من خمسين لغة،", u"أكثر من خمسين لغة،", None, None],
-    [u"أكثر من خمسين لغة،", u"أكثر…", 5, None],
+    ['A short sentence', 'A short…', 10, None],
+    ['A short sentence', 'A short.', 10, '.'],
+    ['A short sentence', 'A short', 10, ''],
+    ["أكثر من خمسين لغة،", "أكثر من خمسين لغة،", None, None],
+    ["أكثر من خمسين لغة،", "أكثر…", 5, None],
     ["I'm 17 chars long", "I'm 17 chars long", 17, None],
-    ["I've a space at 13", u"I've a space…", 13, None],
-    ["I've a space at 13", u"I've a space…", 14, None],
-    ["I've a space at 13", u"I've a…", 12, None],
-    ['Anticonstitutionnellement', u'Anticon…', 8, None],
-    ["I've a comma, at 13", u"I've a comma…", 14, None],
-    ["", u"", None, None],
+    ["I've a space at 13", "I've a space…", 13, None],
+    ["I've a space at 13", "I've a space…", 14, None],
+    ["I've a space at 13", "I've a…", 12, None],
+    ['Anticonstitutionnellement', 'Anticon…', 8, None],
+    ["I've a comma, at 13", "I've a comma…", 14, None],
+    ["", "", None, None],
 ])
 def test_smart_struncate(given, expected, length, suffix):
     kwargs = {}

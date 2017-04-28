@@ -51,9 +51,9 @@ def test_search_is_case_unsensitive(published):
 
 @pytest.mark.usefixtures('cleansearch')
 def test_we_can_search_arabic_content(published):
-    published.title = u"أكثر من خمسين لغة،"
+    published.title = "أكثر من خمسين لغة،"
     published.save()
-    assert Content.objects.search(u"خمسين").count() == 1
+    assert Content.objects.search("خمسين").count() == 1
 
 
 @pytest.mark.usefixtures('cleansearch')

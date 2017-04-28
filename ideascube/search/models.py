@@ -116,8 +116,8 @@ class SearchMixin(models.Model):
     def index(self):
         if not self.is_indexable():
             return
-        text = u" ".join([s for s in self.index_strings if s])
-        tags = u"|{}|".format(u"|".join(self.index_tags))
+        text = " ".join([s for s in self.index_strings if s])
+        tags = "|{}|".format("|".join(self.index_tags))
         defaults = {
             'text': text,
             'public': self.index_public,

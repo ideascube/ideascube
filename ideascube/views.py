@@ -73,7 +73,7 @@ def welcome_staff(request):
             user = authenticate(serial=user.serial,
                                 password=request.POST['password'])
             login(request, user)
-            msg = _(u'Welcome to {}, {}!').format(
+            msg = _('Welcome to {}, {}!').format(
                 get_config('server', 'site-name'), user)
             messages.add_message(request, messages.SUCCESS, msg)
             return HttpResponseRedirect('/')
