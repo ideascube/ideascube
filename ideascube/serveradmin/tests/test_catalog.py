@@ -827,7 +827,7 @@ def test_catalog_update_cache_updates_installed_metadata(tmpdir, monkeypatch):
     assert c._installed == {}
 
     # Let's pretend we've installed stuff here
-    c._installed = c._available.copy()
+    c._installed_value = c._available.copy()
     c._persist_catalog()
     assert c._available == {'foovideos': {
         'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
@@ -880,7 +880,7 @@ def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir, monkeyp
     assert c._installed == {}
 
     # Let's pretend we've installed stuff here
-    c._installed = c._available.copy()
+    c._installed_value = c._available.copy()
     c._persist_catalog()
     assert c._available == {'foovideos': {
         'sha256sum': 'abcdef', 'type': 'zipped-zim', 'version': '1.0.0',
@@ -1975,6 +1975,19 @@ def test_catalog_list_nothandled_packages(
     assert len(pkgs) == 1
     pkgs = c.list_installed(['*'])
     assert len(pkgs) == 1
+
+
+def test_catalog_doesn_t_try_to_read_file_at_instanciation(settings, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+    from unittest.mock import mock_open
+    m = mock_open()
+    mocker.patch('builtins.open', m)
+
+    c = Catalog()
+    assert not m.called
+
+    c._available
+    assert m.called
 
 
 def test_catalog_update_displayed_package(systemuser):
