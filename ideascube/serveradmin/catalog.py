@@ -781,30 +781,27 @@ class Catalog:
             self._installed_value = {}
 
             try:
-                catalog = load_from_file(self._catalog_cache)
-
-            except FileNotFoundError:
-                # That's ok
-                pass
-
-            else:
-                # load_from_file returns None for empty files
-                if catalog is not None:
-                    if 'available' in catalog and 'installed' in catalog:
-                        # The cache on file is in the old format
-                        # https://github.com/ideascube/ideascube/issues/376
-                        self._available_value = catalog['available']
-                        self._installed_value = catalog['installed']
-                    elif self._available_value is None:
-                        # Now we have load the catalog, let's save it.
-                        self._available_value = catalog
-
-            try:
                 installed = load_from_file(self._installed_storage)
 
             except FileNotFoundError:
-                # That's ok
-                pass
+                # Try compatible old format
+                try:
+                    catalog = load_from_file(self._catalog_cache)
+                except FileNotFoundError:
+                    # That's ok
+                    pass
+
+                else:
+                    # load_from_file returns None for empty files
+                    if catalog is not None:
+                        if 'available' in catalog and 'installed' in catalog:
+                            # The cache on file is in the old format
+                            # https://github.com/ideascube/ideascube/issues/376
+                            self._available_value = catalog['available']
+                            self._installed_value = catalog['installed']
+                        elif self._available_value is None:
+                            # Now we have load the catalog, let's save it.
+                            self._available_value = catalog
 
             else:
                 # load_from_file returns None for empty files
