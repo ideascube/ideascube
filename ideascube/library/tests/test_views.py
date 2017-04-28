@@ -381,8 +381,8 @@ def test_import_from_ideascube_export(staffapp, monkeypatch):
         'authors': 'Marcel Pagnol',
         'serie': "L'Eau des collines",
         'name': 'Jean de Florette',
-        'description': u"Les Bastides Blanches, c'était une paroisse de cent cinquante habitants, perchée sur la proue de l'un des derniers contreforts du massif de l'Étoile, à deux lieues d'Aubagne… Une route de terre y conduisait par une montée si abrupte que de loin elle paraissait verticale : mais du côté des collines il n'en sortait qu'un chemin muletier d'où partaient quelques sentiers qui menaient au ciel.",  # noqa
-        'publisher': u'Éditions de Provence',
+        'description': "Les Bastides Blanches, c'était une paroisse de cent cinquante habitants, perchée sur la proue de l'un des derniers contreforts du massif de l'Étoile, à deux lieues d'Aubagne… Une route de terre y conduisait par une montée si abrupte que de loin elle paraissait verticale : mais du côté des collines il n'en sortait qu'un chemin muletier d'où partaient quelques sentiers qui menaient au ciel.",  # noqa
+        'publisher': 'Éditions de Provence',
         'lang': 'fr',
     }
     BookFactory(**expected)
@@ -507,7 +507,7 @@ def test_non_staff_cannot_export_book_notices(loggedapp):
 
 def test_export_book_notices(staffapp, monkeypatch):
     book1 = BookFactory(isbn="123456", name="my book title")
-    name_utf8 = u'النبي (كتاب)'
+    name_utf8 = 'النبي (كتاب)'
     BookFactory(isbn="654321", name=name_utf8)
     monkeypatch.setattr(BookExport, 'get_filename', lambda s: 'myfilename')
     resp = staffapp.get(reverse('library:book_export'))
