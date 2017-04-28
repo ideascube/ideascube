@@ -34,8 +34,8 @@ def test_textio_wrapper(input, expected, encoding):
 
 
 @pytest.mark.parametrize('string', [
-    u'éééé'.encode('latin-1'),
-    u'éééé'
+    'éééé'.encode('latin-1'),
+    'éééé'
 ])
 def test_to_unicode(string):
     assert isinstance(to_unicode(string), str)

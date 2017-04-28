@@ -118,11 +118,11 @@ def do_min(left, right):
 
 
 @register.filter()
-def smart_truncate(s, length=100, suffix=u'…'):
+def smart_truncate(s, length=100, suffix='…'):
     if len(s) > length:
         s = s[:length+1-len(suffix)]
         if ' ' in s:
-            s = u' '.join(s.split(u' ')[0:-1])
+            s = ' '.join(s.split(' ')[0:-1])
         else:
             s = s[:-1]
         # We don't want to add a punctuation after another punctuation.
