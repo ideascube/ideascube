@@ -3,6 +3,7 @@ bleach
 dbus-python
 Django
 django-countries
+django-multiselectfield
 django-taggit
 lxml
 Pillow
@@ -12,13 +13,6 @@ PyYAML
 resumable-urlretrieve
 tzlocal
 Unidecode
-
-# Upstream isn't compatible with Django 1.10, and they are taking a long time
-# to merge in a fix.
-#     https://github.com/kelvinwong-ca/django-select-multiple-field/issues/12
-#
-# So we forked, and took the branch someone had submitted as a pull request.
--e git+https://github.com/ideascube/django-select-multiple-field@remove-dj110-warning#egg=django-select-multiple-field
 
 # The latest releases are giving us trouble. Version 2.0.0 is a full rewrite,
 # which seems to have broken compatibility with the old NetworkManager on
