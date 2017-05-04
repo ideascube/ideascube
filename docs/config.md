@@ -14,7 +14,7 @@ This can be done in three ways:
 Good reading:
 
 - Django documentation about [settings](https://docs.djangoproject.com/en/1.10/ref/settings/)
-- examples of local [settings](https://github.com/ideas-box/ideascube/tree/master/ideascube/conf)
+- examples of local [settings](https://framagit.org/ideascube/ideascube/tree/master/ideascube/conf)
 
 ### Main settings
 
