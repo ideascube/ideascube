@@ -5,4 +5,5 @@ Ideascube is owned and maintained by
 published under the terms of AGPLv3+ license (see
 [LICENSE](https://github.com/ideascube/ideascube/blob/master/LICENSE)).
 
-See also contributors on [Github repository](https://github.com/ideascube/ideascube/graphs/contributors).
+Find more details on contributors at the
+[graphs page](https://github.com/ideascube/ideascube/graphs/contributors).
