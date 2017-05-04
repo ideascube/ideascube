@@ -1,6 +1,6 @@
 # Contributing to ideascube
 
-Do you like to make the ideascube project better? Welcome! This document
+Would you like to make the ideascube project better? Welcome! This document
 will try to provide guidelines about what and how you can help.
 
 
@@ -29,7 +29,7 @@ Here are online resources you may find useful to contribute to the project:
 
 ## How can I give a hand?
 
-* Join the brainstorming: report or comment issues; join IRC chan
+* Join the brainstorming: report or comment issues; join the IRC channel
 * Review [pull requests](https://github.com/ideascube/ideascube/pulls)
 * Take an [issue](https://github.com/ideascube/ideascube/issues) and code :)
 * What about a sprint?
