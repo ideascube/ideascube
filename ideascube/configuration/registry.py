@@ -24,7 +24,7 @@ REGISTRY = {
                        'content.',
             'pretty_type': 'A list of ISO language codes',
             'type': list,
-            'default': ['ar', 'en', 'es', 'fr'],
+            'default': ['411', 'ar', 'en', 'es', 'fr'],
         },
     },
     'home-page': {
