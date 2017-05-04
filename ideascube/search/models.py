@@ -146,7 +146,10 @@ class SearchableQuerySet(object):
         if kind:
             kwargs['kind'] = kind
         if lang:
-            kwargs['lang'] = lang
+            if isinstance(lang, list):
+                kwargs['lang__in'] = lang
+            else:
+                kwargs['lang'] = lang
         if source:
             kwargs['source'] = source
         if tags:
