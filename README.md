@@ -6,8 +6,6 @@ This Django repository is the main application of the Ideas Box server.
 
 More about the Ideas Box concept: http://www.ideas-box.org/
 
-More details about the server in the [overview](https://github.com/ideascube/ideascube/wiki/Server-Overview).
-
 [Ideascube is free software, published under the terms of GNU Affero General Public License](https://github.com/ideascube/ideascube/LICENSE).
 
 ## How can I give a hand?
