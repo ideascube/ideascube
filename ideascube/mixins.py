@@ -93,6 +93,11 @@ class FilterableViewMixin:
         lang = self.request.GET.get('lang')
         tags = self.request.GET.getlist('tags')
         source = self.request.GET.get('source')
+
+        if lang and lang != '411':
+            # Content suitable for all languages matches every language
+            lang = [lang, '411']
+
         if any((query, kind, lang, tags, source)):
             qs = qs.search(query=query, lang=lang, kind=kind, tags=tags, source=source)
         return qs
