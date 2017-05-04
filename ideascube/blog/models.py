@@ -13,7 +13,7 @@ from ideascube.search.models import SearchableQuerySet, SearchMixin
 
 
 # Monkeypatch TagBase.slugify, see:
-# https://github.com/ideascube/ideascube/issues/118
+# https://framagit.org/ideascube/ideascube/issues/118
 original_slugify = TagBase.slugify
 
 
