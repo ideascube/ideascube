@@ -50,7 +50,7 @@ On a Debian-based system, you may use:
     sudo apt-get install python3-pip python-virtualenv virtualenvwrapper python3-dev libjpeg-dev libxml2-dev libxslt1-dev zlib1g-dev build-essential autoconf automake libtool libdbus-glib-1-dev git
     sudo apt-get build-dep python3-dbus
 
-### Download the souce code
+### Download the source code
 
 Get project's source code from
 [project's code repository](https://github.com/ideascube/ideascube)
