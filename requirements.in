@@ -25,13 +25,6 @@ Unidecode
 # now, we've decided to stick with the older version.
 python-networkmanager==1.2.1
 
-# We do not directly depend on html5lib-python but bleach does.
-# However the published "pre-release" of html5lib declares a dependency to
-# setuptools and we don't want it.
-# So until https://github.com/html5lib/html5lib-python/issues/328 is fixed
-# we directly use the master branch of html5lib-python. Sadly :/
--e git+https://github.com/html5lib/html5lib-python@17499b9763a090f7715af49555d21fe4b558958b#egg=html5lib
-
 # We do not directly depend on typing, but resumable-urlretrieve does... on
 # Python 3.4 which is our deployment target (Debian Jessie). But if we run
 # pip-compile on Python >= 3.5, typing won't be added to the requirements.txt
