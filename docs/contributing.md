@@ -1,6 +1,6 @@
 # Contributing to ideascube
 
-Do you like to make the ideascube project better? Welcome! This document
+Would you like to make the ideascube project better? Welcome! This document
 will try to provide guidelines about what and how you can help.
 
 
