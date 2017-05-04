@@ -9,18 +9,18 @@ batinfo==0.4.2
 bleach==2.0.0
 dbus-python==1.2.4
 django-countries==4.5
-django-multiselectfield==0.1.5
+django-multiselectfield==0.1.6
 django-taggit==0.22.1
-django==1.11              # via django-multiselectfield
+django==1.11.1            # via django-multiselectfield
 lxml==3.7.3
 olefile==0.44             # via pillow
-pillow==4.1.0
+pillow==4.1.1
 progressist==0.0.6
 pymarc==3.1.6
 python-networkmanager==1.2.1
-pytz==2017.2              # via django
+pytz==2017.2              # via django, tzlocal
 pyyaml==3.12
-requests==2.13.0          # via resumable-urlretrieve
+requests==2.14.2          # via resumable-urlretrieve
 resumable-urlretrieve==0.1.5
 six==1.10.0               # via bleach, pymarc
 typing==3.6.1
