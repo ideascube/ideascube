@@ -5,9 +5,9 @@
     {% for lang, label in available_langs %}
         {% is_in_qs 'lang' lang as in_qs %}
         {% if in_qs %}
-            <a href="{% remove_qs lang=lang %}" class="flatlist active">{{ label }}</a>
+            <a href="{% remove_qs lang=lang %}" class="flatlist active">{{ label|capfirst }}</a>
         {% else %}
-            <a href="{% replace_qs lang=lang %}" class="flatlist">{{ label }}</a>
+            <a href="{% replace_qs lang=lang %}" class="flatlist">{{ label|capfirst }}</a>
         {% endif %}
     {% endfor %}
 </div>
