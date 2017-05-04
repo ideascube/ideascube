@@ -5,7 +5,7 @@
 {% block twothird %}
     <h5><a href="{% url 'blog:index' %}">&lt; {% trans 'View all posts' %}</a></h5>
     <h2><span class="theme create">{% trans 'Blog' %}</span> {{ content }}</h2>
-    <h5>{{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.get_author_display }}</h5>
+    <h5>{{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.author }}</h5>
     <div class="text">{{ content.text|safe }}</div>
 {% endblock twothird %}
 {% block third %}
