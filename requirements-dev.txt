@@ -30,7 +30,7 @@ markdown==2.6.8           # via mkdocs
 markupsafe==1.0           # via jinja2
 mkdocs==0.16.3
 olefile==0.44
-pillow==4.1.0
+pillow==4.1.1
 pip-tools==1.9.0
 progressist==0.0.6
 py==1.4.33                # via pytest
@@ -55,7 +55,7 @@ transifex-client==0.12.4
 typing==3.6.1
 tzlocal==1.4
 unidecode==0.4.20
-urllib3==1.21             # via transifex-client
+urllib3==1.21.1           # via transifex-client
 waitress==1.0.2           # via webtest
 webencodings==0.5.1
 webob==1.7.2              # via webtest

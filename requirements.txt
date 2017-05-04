@@ -14,7 +14,7 @@ django-taggit==0.22.1
 django==1.11              # via django-multiselectfield
 lxml==3.7.3
 olefile==0.44             # via pillow
-pillow==4.1.0
+pillow==4.1.1
 progressist==0.0.6
 pymarc==3.1.6
 python-networkmanager==1.2.1
