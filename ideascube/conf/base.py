@@ -108,6 +108,10 @@ USE_TZ = True
 
 # Add languages we're missing from Django
 LANG_INFO.update({
+    '411': {
+        'code': '411',
+        'name_local': _('Suitable for all languages'),
+    },
     'am': {
         'bidi': False,
         'name': 'Amharic',
