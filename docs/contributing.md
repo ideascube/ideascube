@@ -15,23 +15,23 @@ project's maintainers:
   just click "Start" then chat!
 
 * Ask questions, report issues or propose ideas as
-  [tickets](https://github.com/ideascube/ideascube/issues).
+  [tickets](https://framagit.org/ideascube/ideascube/issues).
 
 Here are online resources you may find useful to contribute to the project:
 
 * Homepage: <http://www.ideas-box.org/>
-* Code repository: <https://github.com/ideascube/ideascube>
+* Code repository: <https://framagit.org/ideascube/ideascube/>
 * Issues, questions and feature requests:
-  <https://github.com/ideascube/ideascube/issues>
-* Continuous integration: <https://travis-ci.org/ideascube/ideascube>
-* Documentation: <https://github.com/ideascube/ideascube/blob/master/docs/index.md>
+  <https://framagit.org/ideascube/ideascube/issues>
+* Continuous integration: <https://framagit.org/ideascube/ideascube/pipelines>
+* Documentation: <http://ideascube.readthedocs.org/>
 
 
 ## How can I give a hand?
 
-* Join the brainstorming: report or comment issues; edit wiki; join IRC chan
-* Review [pull requests](https://github.com/ideascube/ideascube/pulls)
-* Take an [issue](https://github.com/ideascube/ideascube/issues) and code :)
+* Join the brainstorming: report or comment issues; join the IRC channel
+* Review [merge requests](https://framagit.org/ideascube/ideascube/merge_requests)
+* Take an [issue](https://framagit.org/ideascube/ideascube/issues) and code :)
 * What about a sprint?
 
 
@@ -53,10 +53,10 @@ On a Debian-based system, you may use:
 ### Download the source code
 
 Get project's source code from
-[project's code repository](https://github.com/ideascube/ideascube)
+[project's code repository](https://framagit.org/ideascube/ideascube/)
 (you may use your own fork):
 
-    git clone git@github.com:ideascube/ideascube.git
+    git clone git@framagit.org:ideascube/ideascube.git
     cd ideascube/
 
 ### Setup project
