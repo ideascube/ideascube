@@ -29,7 +29,7 @@ Here are online resources you may find useful to contribute to the project:
 
 ## How can I give a hand?
 
-* Join the brainstorming: report or comment issues; edit wiki; join IRC chan
+* Join the brainstorming: report or comment issues; join IRC chan
 * Review [pull requests](https://github.com/ideascube/ideascube/pulls)
 * Take an [issue](https://github.com/ideascube/ideascube/issues) and code :)
 * What about a sprint?
