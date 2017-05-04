@@ -4,7 +4,6 @@
 #
 #    pip-compile --output-file requirements-dev.txt requirements-dev.in
 #
--e git+https://github.com/html5lib/html5lib-python@17499b9763a090f7715af49555d21fe4b558958b#egg=html5lib
 apipkg==1.4               # via execnet
 batinfo==0.4.2
 beautifulsoup4==4.6.0     # via webtest
@@ -23,6 +22,7 @@ factory-boy==2.8.1
 faker==0.7.12             # via factory-boy
 first==2.0.1              # via pip-tools
 freezegun==0.3.8
+html5lib==0.999999999
 jinja2==2.9.6             # via mkdocs
 livereload==2.5.1         # via mkdocs
 lxml==3.7.3

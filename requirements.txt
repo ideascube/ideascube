@@ -4,7 +4,6 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-git+https://github.com/html5lib/html5lib-python@17499b9763a090f7715af49555d21fe4b558958b#egg=html5lib
 batinfo==0.4.2
 bleach==2.0.0
 dbus-python==1.2.4
@@ -12,6 +11,7 @@ django-countries==4.5
 django-multiselectfield==0.1.6
 django-taggit==0.22.1
 django==1.11.1            # via django-multiselectfield
+html5lib==0.999999999     # via bleach
 lxml==3.7.3
 olefile==0.44             # via pillow
 pillow==4.1.1
@@ -22,8 +22,8 @@ pytz==2017.2              # via django, tzlocal
 pyyaml==3.12
 requests==2.14.2          # via resumable-urlretrieve
 resumable-urlretrieve==0.1.5
-six==1.10.0               # via bleach, pymarc
+six==1.10.0               # via bleach, html5lib, pymarc
 typing==3.6.1
 tzlocal==1.4
 unidecode==0.4.20
-webencodings==0.5.1
+webencodings==0.5.1       # via html5lib
