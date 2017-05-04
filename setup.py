@@ -18,7 +18,7 @@ setup(
     description=('This Django repository is the main application of the Ideas '
                  'Box server.'),
     long_description=long_description,
-    url='https://github.com/ideascube/ideascube',
+    url='https://framagit.org/ideascube/ideascube/',
     author='BSF IT Team',
     author_email='it@bibliosansfrontieres.org',
     license='MIT',

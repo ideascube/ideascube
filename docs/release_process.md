@@ -13,7 +13,7 @@ Finally, here are the steps to follow.
 Create a new virtual environment (`pew` makes this trivial), then get the code:
 
     $ pew mktmpenv -p python3
-    $ git clone ssh://git@github.com/ideascube/ideascube
+    $ git clone git@framagit.org:ideascube/ideascube.git
     $ cd ideascube
     $ git checkout master
 
