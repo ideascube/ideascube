@@ -1,6 +1,6 @@
 # Authors and contributors
 
-ideascube is owned and maintained by
+Ideascube is owned and maintained by
 [Bibliothèques Sans Frontières](http://www.bibliosansfrontieres.org/), and
 published under the terms of AGPLv3+ license (see
 [LICENSE](https://github.com/ideascube/ideascube/blob/master/LICENSE)).

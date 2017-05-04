@@ -1,6 +1,6 @@
 [![Requirements Status](https://requires.io/github/ideascube/ideascube/requirements.svg?branch=master)](https://requires.io/github/ideascube/ideascube/requirements/?branch=master) [![Build Status](https://framagit.org/ideascube/ideascube/badges/master/build.svg)](https://framagit.org/ideascube/ideascube/commits/master) [![Documentation Status](http://readthedocs.org/projects/ideascube/badge/?version=latest)](http://ideascube.readthedocs.org/en/latest/?badge=latest) [![Coverage Status](https://framagit.org/ideascube/ideascube/badges/master/coverage.svg)](https://framagit.org/ideascube/ideascube/commits/master)
 
-# ideascube
+# Ideascube
 
 This Django repository is the main application of the Ideas Box server.
 
@@ -8,7 +8,7 @@ More about the Ideas Box concept: http://www.ideas-box.org/
 
 More details about the server in the [overview](https://github.com/ideascube/ideascube/wiki/Server-Overview).
 
-[ideascube is free software, published under the terms of GNU Affero General Public License](https://github.com/ideascube/ideascube/LICENSE).
+[Ideascube is free software, published under the terms of GNU Affero General Public License](https://github.com/ideascube/ideascube/LICENSE).
 
 ## How can I give a hand?
 
