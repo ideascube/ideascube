@@ -1,3 +1,20 @@
+ideascube (0.26.0) unstable; urgency=low
+
+  * Ideascube is now available in two more languages: Farsi and Kurdish;
+  * Made the catalog initialization lazy, so that it only loads its cache of
+    available/installed packages and configured remotes when needed, which
+    dramatically speeds up the home page;
+  * Improved the UX of the blog article creation form with multiple changes;
+  * Made the battery reporting page nicer, especially for devices with
+    multiple batteries;
+  * Relaxed even more the validation of media metadata when importing them;
+  * Improved the `clean` command so that it doesn't leave empty directories
+    any more;
+  * Reworked the home cards configurations;
+  * Upgraded our dependencies, including Django 1.11;
+
+ -- Mathieu bridon <bochecha@daitauha.fr> Thu, 4 May 2017 15:17:00 +0200
+
 ideascube (0.25.0) unstable; urgency=low
 
   * Move to tinyMCE editor for blog application;
