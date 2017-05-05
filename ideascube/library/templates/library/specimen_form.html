@@ -2,12 +2,15 @@
 {% load i18n %}
 
 {% block heading %}
-    {% if specimen %}
-        <h2>{% trans "Edit book specimen" %} "{{ specimen }}"</h2>
-    {% else %}
-        <h2>{% trans "New book specimen" %}</h2>
-    {% endif %}
+    <h2>
+        {% if specimen %}
+            {% trans "Edit book specimen" %} "{{ specimen }}"
+        {% else %}
+            {% trans "New book specimen" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
+
 {% block col %}
     {% if specimen %}
         <a href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</a>
