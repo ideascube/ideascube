@@ -180,6 +180,13 @@ html[dir='rtl'] .col + .col {
     padding-left: 0;
     padding-right: 40px;
 }
+.spaced + .spaced {
+    margin-left: 40px;
+}
+html[dir='rtl'] .spaced + .spaced {
+    margin-left: 0;
+    margin-right: 40px;
+}
 .half {
     width: 50%;
 }
@@ -214,6 +221,9 @@ html[dir='rtl'] .flow * + * {
 }
 .layout-element {
     padding: 0 10px;
+}
+.right-align {
+   justify-content: flex-end;
 }
 
 

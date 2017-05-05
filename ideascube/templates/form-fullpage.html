@@ -19,13 +19,13 @@
                         {% form_field field %}
                     {% endfor %}
                 {% endblock form %}
+                <div class="row right-align">
+                    <input type="submit" class="spaced" value="{% trans 'submit' %}" />
+                </div>
             </div>
             <div class="col third">
                 {% block col %}{% endblock col %}
             </div>
-        </div>
-        <div class="row">
-            <input type="submit" value="{% trans 'submit' %}" />
         </div>
     </form>
 {% endblock content %}
