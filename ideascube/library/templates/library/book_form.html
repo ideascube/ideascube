@@ -5,14 +5,16 @@
     <link rel="stylesheet" type="text/css" href="{% static "library/library.css" %}">
 {% endblock %}
 
-
 {% block heading %}
-    {% if book %}
-        <h2>{% trans "Edit book" %} "{{ book }}"</h2>
-    {% else %}
-        <h2>{% trans "New book" %}</h2>
-    {% endif %}
+    <h2>
+        {% if book %}
+            {% trans "Edit book" %} "{{ book }}"
+        {% else %}
+            {% trans "New book" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
+
 {% block col %}
     {% if book %}
         <a class="button" href="{{ book.get_absolute_url }}">{% trans 'cancel' %}</a>
