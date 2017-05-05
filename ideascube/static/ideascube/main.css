@@ -166,6 +166,9 @@ table tr th {
 .row + .row {
     margin-top: 40px;
 }
+.row + .row.no-margin {
+    margin-top: 0px;
+}
 .col {
     flex: 0 1 auto;
     -webkit-flex: 0 1 auto;
@@ -350,11 +353,6 @@ html[dir='rtl'] .show-password {
     margin-left: auto;
     margin-right: -25px;
 }
-
-form h3 {
-  margin-top: 1.8em;
-}
-
 
 .content {
     padding: 0 30px;
