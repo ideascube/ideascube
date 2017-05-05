@@ -1,6 +1,9 @@
 {% extends 'form-fullpage.html' %}
 {% load i18n %}
 
+{# Deactivate side column #}
+{% block side_col %}{% endblock side_col %}
+
 {% block heading %}
     <h2>
         {% if specimen %}
