@@ -5,6 +5,8 @@
     <h2>
         {% if specimen %}
             {% trans "Edit book specimen" %} "{{ specimen }}"
+        {% elif book %}
+            {% trans "New book specimen for" %} "{{ book }}"
         {% else %}
             {% trans "New book specimen" %}
         {% endif %}
@@ -15,6 +17,8 @@
     {% if specimen %}
         <a class="spaced button neutral" href="{{ specimen.get_absolute_url }}">{% trans 'cancel' %}</a>
         <a class="spaced button warning" href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</a>
+    {% elif book %}
+        <a class="spaced button neutral" href="{{ book.get_absolute_url }}">{% trans 'cancel' %}</a>
     {% else %}
         <a class="spaced button neutral" href="{% url 'library:index' %}">{% trans 'cancel' %}</a>
     {% endif %}

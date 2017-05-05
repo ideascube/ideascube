@@ -149,6 +149,11 @@ class SpecimenCreate(CreateView):
 
         return {'item': book, 'location': get_config('server', 'site-name')}
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['book'] = context['form'].initial['item']
+        return context
+
 specimen_create = staff_member_required(SpecimenCreate.as_view())
 
 
