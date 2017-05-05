@@ -2,9 +2,12 @@
 from .idb import *  # pragma: no flakes
 from django.utils.translation import ugettext_lazy as _
 
+from tzlocal import get_localzone
+
+
 IDEASCUBE_PLACE_NAME = _("city")
 COUNTRIES_FIRST = ['FR']
-TIME_ZONE = None
+TIME_ZONE = get_localzone().zone
 LANGUAGE_CODE = 'fr'
 LOAN_DURATION = 14
 MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'user_id', 'birth_year', 'gender']

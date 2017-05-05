@@ -53,6 +53,7 @@ six==1.10.0
 tornado==4.5.1            # via livereload, mkdocs
 transifex-client==0.12.4
 typing==3.6.1
+tzlocal==1.4
 unidecode==0.4.20
 urllib3==1.21             # via transifex-client
 waitress==1.0.2           # via webtest
