@@ -212,6 +212,9 @@ html[dir='rtl'] .flow * + * {
 .layout-element {
     padding: 0 10px;
 }
+.right-align {
+   justify-content: flex-end;
+}
 
 
 /* ************************************************* */
