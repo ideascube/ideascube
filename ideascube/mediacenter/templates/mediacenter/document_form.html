@@ -1,5 +1,5 @@
 {% extends 'form-fullpage.html' %}
-{% load i18n %}
+{% load i18n static ideascube_tags %}
 
 {% block heading %}
     <h2>
@@ -10,6 +10,22 @@
         {% endif %}
     </h2>
 {% endblock heading %}
+
+{% block form %}
+    <h3>{% trans 'Content' %}</h3>
+    {% form_field form.title %}
+    {% form_field form.original %}
+    {% form_field form.summary %}
+{% endblock form %}
+
+{% block col %}
+    <h3>{% trans 'Metadatas' %}</h3>
+    {% form_field form.credits %}
+    {% form_field form.lang %}
+    {% form_field form.kind %}
+    {% form_field form.tags %}
+    {% form_field form.preview %}
+{% endblock col %}
 
 {% block extra_form_foot %}
     {% if document %}
