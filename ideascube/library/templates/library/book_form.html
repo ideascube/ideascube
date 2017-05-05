@@ -18,6 +18,8 @@
 {% block extra_form_foot %}
     {% if book %}
         <a class="col button neutral" href="{{ book.get_absolute_url }}">{% trans 'cancel' %}</a>
+    {% else %}
+        <a class="col button neutral" href="{% url 'library:index' %}">{% trans 'cancel' %}</a>
     {% endif %}
 {% endblock extra_form_foot %}
 

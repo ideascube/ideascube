@@ -14,6 +14,8 @@
 {% block extra_form_foot %}
     {% if document %}
         <a class="col button neutral" href="{{ document.get_absolute_url }}">{% trans 'cancel' %}</a>
+    {% else %}
+        <a class="col button neutral" href="{% url 'mediacenter:index' %}">{% trans 'cancel' %}</a>
     {% endif %}
 {% endblock extra_form_foot %}
 

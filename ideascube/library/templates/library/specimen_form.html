@@ -13,7 +13,10 @@
 
 {% block extra_form_foot %}
     {% if specimen %}
+        <a class="col button neutral" href="{{ specimen.get_absolute_url }}">{% trans 'cancel' %}</a>
         <a class="col button warning" href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</a>
+    {% else %}
+        <a class="col button neutral" href="{% url 'library:index' %}">{% trans 'cancel' %}</a>
     {% endif %}
 {% endblock extra_form_foot %}
 
