@@ -20,6 +20,14 @@
     {% endfor %}
 {% endblock form %}
 
+{% block extra_form_foot %}
+    {% if user_obj %}
+        <a class="spaced button neutral" href="{{ user_obj.get_absolute_url }}">{% trans 'cancel' %}</a>
+    {% else %}
+        <a class="spaced button neutral" href="{% url 'user_list' %}">{% trans 'cancel' %}</a>
+    {% endif %}
+{% endblock extra_form_foot %}
+
 {% block extra_foot %}
     <script type="text/javascript">
     ID.focusOn('[name=serial]')
