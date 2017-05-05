@@ -8,12 +8,13 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
 from django_countries.fields import CountryField
+from multiselectfield import MultiSelectField
 from taggit.managers import _TaggableManager
 
 from ideascube.search.models import SearchMixin, SearchableQuerySet
 
-from .fields import CommaSeparatedCharField
 from .utils import classproperty, get_all_languages
 
 
@@ -294,14 +295,14 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     is_sent_to_school = models.BooleanField(
         verbose_name=_('Sent to school in the country of origin (if under 18)'),
         default=False)
-    camp_activities = CommaSeparatedCharField(
+    camp_activities = MultiSelectField(
         verbose_name=_('Activities in the camp'),
         max_length=512,
         choices=CAMP_ACTIVITY_CHOICES,
         blank=True)
     camp_address = models.CharField(verbose_name=_('Address in the camp'),
                                     max_length=200, blank=True)
-    disabilities = CommaSeparatedCharField(
+    disabilities = MultiSelectField(
         verbose_name=_('Disabilities'), max_length=128,
         choices=DISABILITY_CHOICES, blank=True)
     phone = models.CharField(
@@ -310,28 +311,28 @@ class User(SearchMixin, TimeStampedModel, AbstractBaseUser):
     email = models.EmailField(verbose_name=_('Email address (optional)'),
                               null=True, blank=True)
 
-    en_level = CommaSeparatedCharField(
+    en_level = MultiSelectField(
         verbose_name=_('English knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
-    ar_level = CommaSeparatedCharField(
+    ar_level = MultiSelectField(
         verbose_name=_('Arabic knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
-    fa_level = CommaSeparatedCharField(
+    fa_level = MultiSelectField(
         verbose_name=_('Persian knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
-    rn_level = CommaSeparatedCharField(
+    rn_level = MultiSelectField(
         verbose_name=_('Kirundi knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
-    fr_level = CommaSeparatedCharField(
+    fr_level = MultiSelectField(
         verbose_name=_('French knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
-    sw_level = CommaSeparatedCharField(
+    sw_level = MultiSelectField(
         verbose_name=_('Swahili knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
-    ku_level = CommaSeparatedCharField(
+    ku_level = MultiSelectField(
         verbose_name=_('Kurdish knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
-    sdb_level = CommaSeparatedCharField(
+    sdb_level = MultiSelectField(
         verbose_name=_('Shabak knowledge'), choices=LANG_KNOWLEDGE_CHOICES,
         blank=True, max_length=32)
 

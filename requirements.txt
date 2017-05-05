@@ -4,14 +4,14 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-git+https://github.com/ideascube/django-select-multiple-field@remove-dj110-warning#egg=django-select-multiple-field
 git+https://github.com/html5lib/html5lib-python@17499b9763a090f7715af49555d21fe4b558958b#egg=html5lib
 batinfo==0.4.2
 bleach==2.0.0
 dbus-python==1.2.4
 django-countries==4.5
+django-multiselectfield==0.1.5
 django-taggit==0.22.1
-django==1.11
+django==1.11              # via django-multiselectfield
 lxml==3.7.3
 olefile==0.44             # via pillow
 pillow==4.1.0

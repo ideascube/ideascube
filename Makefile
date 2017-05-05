@@ -68,11 +68,13 @@ test-data-migration:
 	echo "# Loading some data at $$LATEST_TAG"; \
 	git checkout $$LATEST_TAG; \
 	rm -fr storage; \
+	make sync-deps; \
 	make migrate; \
 	python3 manage.py loaddata --database=default test-data/data.json; \
 	python3 manage.py reindex; \
 	\
 	echo "# Running migrations on $$COMMIT"; \
 	git checkout $$COMMIT; \
+	make sync-deps; \
 	make migrate
 	py.test --migrations

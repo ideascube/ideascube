@@ -2,8 +2,13 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import ideascube.fields
 import django_countries.fields
+
+from multiselectfield import MultiSelectField
+
+
+class CommaSeparatedCharField(MultiSelectField):
+    pass
 
 
 class Migration(migrations.Migration):
@@ -42,13 +47,13 @@ class Migration(migrations.Migration):
                 ('country_of_origin_occupation', models.CharField(max_length=100, verbose_name='Occupation in the country of origin', blank=True)),
                 ('family_status', models.CharField(blank=True, max_length=32, verbose_name='Family status', choices=[(b'with_family', 'Lives with family in the camp'), (b'no_family', 'Lives without family in the camp'), (b'without_family', 'Has family in the camp but lives without')])),
                 ('is_sent_to_school', models.BooleanField(default=False, verbose_name='Sent to school in the country of origin (if under 18)')),
-                ('camp_activities', ideascube.fields.CommaSeparatedCharField(blank=True, max_length=512, verbose_name='Activities in the camp', choices=[(b'1', 'Comitees, representation groups'), (b'2', 'Music, dance, singing'), (b'3', 'Other cultural activities'), (b'4', 'Informatic workshops'), (b'5', 'Literacy working group'), (b'6', 'Talking group'), (b'7', 'Recreational'), (b'8', 'Volunteering'), (b'9', 'Psycosocial'), (b'10', 'Educational'), (b'11', 'Sport')])),
+                ('camp_activities', CommaSeparatedCharField(blank=True, max_length=512, verbose_name='Activities in the camp', choices=[(b'1', 'Comitees, representation groups'), (b'2', 'Music, dance, singing'), (b'3', 'Other cultural activities'), (b'4', 'Informatic workshops'), (b'5', 'Literacy working group'), (b'6', 'Talking group'), (b'7', 'Recreational'), (b'8', 'Volunteering'), (b'9', 'Psycosocial'), (b'10', 'Educational'), (b'11', 'Sport')])),
                 ('camp_address', models.CharField(max_length=200, verbose_name='Address in the camp', blank=True)),
-                ('en_level', ideascube.fields.CommaSeparatedCharField(blank=True, max_length=32, verbose_name='English knowledge', choices=[(b'u', 'Understood'), (b'w', 'Written'), (b's', 'Spoken'), (b'r', 'Read')])),
-                ('ar_level', ideascube.fields.CommaSeparatedCharField(blank=True, max_length=32, verbose_name='Arabic knowledge', choices=[(b'u', 'Understood'), (b'w', 'Written'), (b's', 'Spoken'), (b'r', 'Read')])),
-                ('rn_level', ideascube.fields.CommaSeparatedCharField(blank=True, max_length=32, verbose_name='Kirundi knowledge', choices=[(b'u', 'Understood'), (b'w', 'Written'), (b's', 'Spoken'), (b'r', 'Read')])),
-                ('fr_level', ideascube.fields.CommaSeparatedCharField(blank=True, max_length=32, verbose_name='French knowledge', choices=[(b'u', 'Understood'), (b'w', 'Written'), (b's', 'Spoken'), (b'r', 'Read')])),
-                ('sw_level', ideascube.fields.CommaSeparatedCharField(blank=True, max_length=32, verbose_name='Swahili knowledge', choices=[(b'u', 'Understood'), (b'w', 'Written'), (b's', 'Spoken'), (b'r', 'Read')])),
+                ('en_level', CommaSeparatedCharField(blank=True, max_length=32, verbose_name='English knowledge', choices=[(b'u', 'Understood'), (b'w', 'Written'), (b's', 'Spoken'), (b'r', 'Read')])),
+                ('ar_level', CommaSeparatedCharField(blank=True, max_length=32, verbose_name='Arabic knowledge', choices=[(b'u', 'Understood'), (b'w', 'Written'), (b's', 'Spoken'), (b'r', 'Read')])),
+                ('rn_level', CommaSeparatedCharField(blank=True, max_length=32, verbose_name='Kirundi knowledge', choices=[(b'u', 'Understood'), (b'w', 'Written'), (b's', 'Spoken'), (b'r', 'Read')])),
+                ('fr_level', CommaSeparatedCharField(blank=True, max_length=32, verbose_name='French knowledge', choices=[(b'u', 'Understood'), (b'w', 'Written'), (b's', 'Spoken'), (b'r', 'Read')])),
+                ('sw_level', CommaSeparatedCharField(blank=True, max_length=32, verbose_name='Swahili knowledge', choices=[(b'u', 'Understood'), (b'w', 'Written'), (b's', 'Spoken'), (b'r', 'Read')])),
             ],
             options={
                 'ordering': ['-modified_at'],

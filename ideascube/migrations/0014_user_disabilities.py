@@ -3,7 +3,12 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-import ideascube.fields
+
+from multiselectfield import MultiSelectField
+
+
+class CommaSeparatedCharField(MultiSelectField):
+    pass
 
 
 class Migration(migrations.Migration):
@@ -16,6 +21,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='disabilities',
-            field=ideascube.fields.CommaSeparatedCharField(blank=True, choices=[('visual', 'Visual'), ('auditive', 'Auditive'), ('physical', 'Physical'), ('cognitive', 'Cognitive'), ('mental', 'Mental')], max_length=128, verbose_name='Disabilities'),
+            field=CommaSeparatedCharField(blank=True, choices=[('visual', 'Visual'), ('auditive', 'Auditive'), ('physical', 'Physical'), ('cognitive', 'Cognitive'), ('mental', 'Mental')], max_length=128, verbose_name='Disabilities'),
         ),
     ]

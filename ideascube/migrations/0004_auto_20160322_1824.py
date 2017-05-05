@@ -2,7 +2,12 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import ideascube.fields
+
+from multiselectfield import MultiSelectField
+
+
+class CommaSeparatedCharField(MultiSelectField):
+    pass
 
 
 class Migration(migrations.Migration):
@@ -15,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='ar_level',
-            field=ideascube.fields.CommaSeparatedCharField(blank=True, verbose_name='Arabic knowledge', choices=[('u', 'Understood'), ('w', 'Written'), ('s', 'Spoken'), ('r', 'Read')], max_length=32),
+            field=CommaSeparatedCharField(blank=True, verbose_name='Arabic knowledge', choices=[('u', 'Understood'), ('w', 'Written'), ('s', 'Spoken'), ('r', 'Read')], max_length=32),
         ),
         migrations.AlterField(
             model_name='user',
@@ -25,7 +30,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='camp_activities',
-            field=ideascube.fields.CommaSeparatedCharField(blank=True, verbose_name='Activities in the camp', choices=[('1', 'Comitees, representation groups'), ('2', 'Music, dance, singing'), ('3', 'Other cultural activities'), ('4', 'Informatic workshops'), ('5', 'Literacy working group'), ('6', 'Talking group'), ('7', 'Recreational'), ('8', 'Volunteering'), ('9', 'Psycosocial'), ('10', 'Educational'), ('11', 'Sport')], max_length=512),
+            field=CommaSeparatedCharField(blank=True, verbose_name='Activities in the camp', choices=[('1', 'Comitees, representation groups'), ('2', 'Music, dance, singing'), ('3', 'Other cultural activities'), ('4', 'Informatic workshops'), ('5', 'Literacy working group'), ('6', 'Talking group'), ('7', 'Recreational'), ('8', 'Volunteering'), ('9', 'Psycosocial'), ('10', 'Educational'), ('11', 'Sport')], max_length=512),
         ),
         migrations.AlterField(
             model_name='user',
@@ -35,7 +40,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='en_level',
-            field=ideascube.fields.CommaSeparatedCharField(blank=True, verbose_name='English knowledge', choices=[('u', 'Understood'), ('w', 'Written'), ('s', 'Spoken'), ('r', 'Read')], max_length=32),
+            field=CommaSeparatedCharField(blank=True, verbose_name='English knowledge', choices=[('u', 'Understood'), ('w', 'Written'), ('s', 'Spoken'), ('r', 'Read')], max_length=32),
         ),
         migrations.AlterField(
             model_name='user',
@@ -45,7 +50,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='fr_level',
-            field=ideascube.fields.CommaSeparatedCharField(blank=True, verbose_name='French knowledge', choices=[('u', 'Understood'), ('w', 'Written'), ('s', 'Spoken'), ('r', 'Read')], max_length=32),
+            field=CommaSeparatedCharField(blank=True, verbose_name='French knowledge', choices=[('u', 'Understood'), ('w', 'Written'), ('s', 'Spoken'), ('r', 'Read')], max_length=32),
         ),
         migrations.AlterField(
             model_name='user',
@@ -60,7 +65,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='rn_level',
-            field=ideascube.fields.CommaSeparatedCharField(blank=True, verbose_name='Kirundi knowledge', choices=[('u', 'Understood'), ('w', 'Written'), ('s', 'Spoken'), ('r', 'Read')], max_length=32),
+            field=CommaSeparatedCharField(blank=True, verbose_name='Kirundi knowledge', choices=[('u', 'Understood'), ('w', 'Written'), ('s', 'Spoken'), ('r', 'Read')], max_length=32),
         ),
         migrations.AlterField(
             model_name='user',
@@ -70,6 +75,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='sw_level',
-            field=ideascube.fields.CommaSeparatedCharField(blank=True, verbose_name='Swahili knowledge', choices=[('u', 'Understood'), ('w', 'Written'), ('s', 'Spoken'), ('r', 'Read')], max_length=32),
+            field=CommaSeparatedCharField(blank=True, verbose_name='Swahili knowledge', choices=[('u', 'Understood'), ('w', 'Written'), ('s', 'Spoken'), ('r', 'Read')], max_length=32),
         ),
     ]
