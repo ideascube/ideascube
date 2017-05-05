@@ -10,6 +10,7 @@ progressist
 pymarc
 PyYAML
 resumable-urlretrieve
+tzlocal
 Unidecode
 
 # Upstream isn't compatible with Django 1.10, and they are taking a long time

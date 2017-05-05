@@ -24,5 +24,6 @@ requests==2.13.0          # via resumable-urlretrieve
 resumable-urlretrieve==0.1.5
 six==1.10.0               # via bleach, pymarc
 typing==3.6.1
+tzlocal==1.4
 unidecode==0.4.20
 webencodings==0.5.1

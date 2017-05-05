@@ -98,7 +98,7 @@ LOGIN_URL = 'login'
 
 LANGUAGE_CODE = 'en'
 
-TIME_ZONE = os.environ.get('TIME_ZONE', 'UTC')
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
