@@ -12,6 +12,7 @@
             {% block heading %}{% endblock heading %}
         </div>
         <div class="row no-margin">
+            {% block _form_content %}
             <div class="col two-third">
                 {% csrf_token %}
                 {% block form %}
@@ -25,9 +26,7 @@
                     <input type="submit" class="spaced" value="{% trans 'submit' %}" />
                 </div>
             </div>
-            <div class="col third">
-                {% block col %}{% endblock col %}
-            </div>
+            {% endblock _form_content %}
         </div>
     </form>
 {% endblock content %}
