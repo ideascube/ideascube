@@ -1,5 +1,5 @@
-{% extends 'form-fullpage.html' %}
-{% load i18n %}
+{% extends 'form-sidebar.html' %}
+{% load i18n ideascube_tags %}
 
 {% block heading %}
     <h2>
@@ -12,6 +12,17 @@
         {% endif %}
     </h2>
 {% endblock heading %}
+
+{% block form %}
+    {% form_field form.barcode %}
+    {% form_field form.comments %}
+{% endblock form %}
+
+{% block sidebar %}
+    {% form_field form.file %}
+    {% form_field form.location %}
+    {% form_field form.item %}
+{% endblock sidebar %}
 
 {% block extra_form_foot %}
     {% if specimen %}

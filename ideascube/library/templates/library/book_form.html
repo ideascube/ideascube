@@ -1,5 +1,5 @@
-{% extends 'form-fullpage.html' %}
-{% load i18n static %}
+{% extends 'form-sidebar.html' %}
+{% load i18n static ideascube_tags %}
 
 {% block extra_head %}
     <link rel="stylesheet" type="text/css" href="{% static "library/library.css" %}">
@@ -14,6 +14,25 @@
         {% endif %}
     </h2>
 {% endblock heading %}
+
+{% block form %}
+    <h3>{% trans 'Content' %}</h3>
+    {% form_field form.name %}
+    {% form_field form.subtitle %}
+    {% form_field form.authors %}
+    {% form_field form.description %}
+    {% form_field form.cover %}
+{% endblock form %}
+
+{% block sidebar %}
+    <h3>{% trans 'Metadatas' %}</h3>
+    {% form_field form.section %}
+    {% form_field form.lang %}
+    {% form_field form.isbn %}
+    {% form_field form.series %}
+    {% form_field form.publisher %}
+    {% form_field form.tags %}
+{% endblock sidebar %}
 
 {% block extra_form_foot %}
     {% if book %}
