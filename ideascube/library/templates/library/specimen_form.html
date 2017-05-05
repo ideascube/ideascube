@@ -11,11 +11,11 @@
     </h2>
 {% endblock heading %}
 
-{% block col %}
+{% block extra_form_foot %}
     {% if specimen %}
-        <a href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</a>
+        <a class="col button warning" href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</a>
     {% endif %}
-{% endblock col %}
+{% endblock extra_form_foot %}
 
 {% block extra_foot %}
     <script type="text/javascript">

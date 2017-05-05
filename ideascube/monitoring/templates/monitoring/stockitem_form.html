@@ -11,9 +11,9 @@
     </h2>
 {% endblock heading %}
 
-{% block col %}
+{% block extra_form_foot %}
     {% if stockitem %}
-        <a class="button" href="{{ stockitem.get_absolute_url }}">{% trans 'cancel' %}</a>
-        <a class="button warning" href="{% url 'monitoring:stockitem_delete' pk=stockitem.pk %}">{% trans 'delete' %}</a>
+        <a class="col button neutral" href="{{ stockitem.get_absolute_url }}">{% trans 'cancel' %}</a>
+        <a class="col button warning" href="{% url 'monitoring:stockitem_delete' pk=stockitem.pk %}">{% trans 'delete' %}</a>
     {% endif %}
-{% endblock col %}
+{% endblock extra_form_foot %}
