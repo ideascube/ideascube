@@ -171,11 +171,11 @@ table tr th {
     -webkit-flex: 0 1 auto;
 }
 .col + .col {
-    padding-left: 40px;
+    margin-left: 40px;
 }
 html[dir='rtl'] .col + .col {
-    padding-left: 0;
-    padding-right: 40px;
+    margin-left: 0;
+    margin-right: 40px;
 }
 .half {
     width: 50%;
