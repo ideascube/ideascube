@@ -15,5 +15,7 @@
     {% if stockitem %}
         <a class="spaced button neutral" href="{{ stockitem.get_absolute_url }}">{% trans 'cancel' %}</a>
         <a class="spaced button warning" href="{% url 'monitoring:stockitem_delete' pk=stockitem.pk %}">{% trans 'delete' %}</a>
+    {% else %}
+        <a class="spaced button neutral" href="{% url 'monitoring:stock' %}">{% trans 'cancel' %}</a>
     {% endif %}
 {% endblock extra_form_foot %}
