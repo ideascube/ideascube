@@ -21,6 +21,8 @@
                 {% endblock form %}
                 <div class="row right-align">
                     {% block form_foot %}
+                        {% block extra_form_foot %}
+                        {% endblock extra_form_foot %}
                         <input type="submit" class="spaced" value="{% trans 'submit' %}" />
                     {% endblock form_foot %}
                 </div>
