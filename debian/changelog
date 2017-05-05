@@ -3,7 +3,7 @@ ideascube (0.26.1) unstable; urgency=low
   * Fixed an issue with timezone handling in Django 1.11, which crashed many
     boxes at startup;
 
- -- Mathieu Bridon <bochecha@daitauha.fr> Fri 5 May 2017 10:50:00 +0200
+ -- Mathieu Bridon <bochecha@daitauha.fr> Fri, 5 May 2017 10:50:00 +0200
 
 ideascube (0.26.0) unstable; urgency=low
 
