@@ -2,12 +2,15 @@
 {% load i18n %}
 
 {% block heading %}
-    {% if inventory %}
-        <h2>{% blocktrans with date=inventory.made_at %}Edit inventory from {{ date }}{% endblocktrans %}</h2>
-    {% else %}
-        <h2>{% trans "Start new inventory" %}</h2>
-    {% endif %}
+    <h2>
+        {% if inventory %}
+            {% blocktrans with date=inventory.made_at %}Edit inventory from {{ date }}{% endblocktrans %}
+        {% else %}
+            {% trans "Start new inventory" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
+
 {% block col %}
     {% if inventory %}
         <a class="button" href="{{ inventory.get_absolute_url }}">{% trans 'cancel' %}</a>

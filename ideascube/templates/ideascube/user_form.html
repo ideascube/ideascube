@@ -2,11 +2,13 @@
 {% load i18n ideascube_tags %}
 
 {% block heading %}
-    {% if user_obj %}
-        <h2>{% trans "Edit user" %} {{ user_obj }}</h2>
-    {% else %}
-        <h2>{% trans "New User" %}</h2>
-    {% endif %}
+    <h2>
+        {% if user_obj %}
+            {% trans "Edit user" %} {{ user_obj }}
+        {% else %}
+            {% trans "New User" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
 
 {% block form %}

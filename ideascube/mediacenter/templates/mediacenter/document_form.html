@@ -2,17 +2,21 @@
 {% load i18n %}
 
 {% block heading %}
-    {% if document %}
-        <h2>{% trans "Edit document" %} "{{ document }}"</h2>
-    {% else %}
-        <h2>{% trans "New document" %}</h2>
-    {% endif %}
+    <h2>
+        {% if document %}
+            {% trans "Edit document" %} "{{ document }}"
+        {% else %}
+            {% trans "New document" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
+
 {% block col %}
     {% if document %}
         <a class="button" href="{{ document.get_absolute_url }}">{% trans 'cancel' %}</a>
     {% endif %}
 {% endblock col %}
+
 {% block extra_foot %}
     <script type="text/javascript">
         ID.initEditors();

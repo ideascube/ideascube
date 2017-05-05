@@ -2,12 +2,15 @@
 {% load i18n %}
 
 {% block heading %}
-    {% if specimen %}
-        <h2>{% blocktrans with item=specimen.item %}Edit specimen of {{item}}{% endblocktrans %}</h2>
-    {% else %}
-        <h2>{% trans "Add new specimen" %}</h2>
-    {% endif %}
+    <h2>
+        {% if specimen %}
+            {% blocktrans with item=specimen.item %}Edit specimen of {{item}}{% endblocktrans %}
+        {% else %}
+            {% trans "Add new specimen" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
+
 {% block col %}
     {% if specimen %}
         <a class="button" href="{{ specimen.get_absolute_url }}">{% trans 'cancel' %}</a>

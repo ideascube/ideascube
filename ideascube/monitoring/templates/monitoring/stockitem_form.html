@@ -2,12 +2,15 @@
 {% load i18n %}
 
 {% block heading %}
-    {% if stockitem %}
-        <h2>{% trans "Edit item" %} "{{ stockitem }}"</h2>
-    {% else %}
-        <h2>{% trans "Add new item" %}</h2>
-    {% endif %}
+    <h2>
+        {% if stockitem %}
+            {% trans "Edit item" %} "{{ stockitem }}"
+        {% else %}
+            {% trans "Add new item" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
+
 {% block col %}
     {% if stockitem %}
         <a class="button" href="{{ stockitem.get_absolute_url }}">{% trans 'cancel' %}</a>
