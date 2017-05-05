@@ -9,8 +9,10 @@
 {% block content %}
     <form method="POST" enctype="multipart/form-data" id="{% block form_id %}model_form{% endblock %}">
         <div class="row">
+            {% block heading %}{% endblock heading %}
+        </div>
+        <div class="row no-margin">
             <div class="col two-third">
-                {% block heading %}{% endblock heading %}
                 {% csrf_token %}
                 {% block form %}
                     {% for field in form %}
