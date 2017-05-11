@@ -17,6 +17,11 @@ def build_builtin_card_info():
     return [{'id': i} for i in card_ids]
 
 
+def build_extra_app_card_info():
+    card_ids = settings.EXTRA_APP_CARDS
+    return [{'id': i} for i in card_ids]
+
+
 def build_package_card_info():
     package_card_info = []
     catalog = catalog_mod.Catalog()

@@ -315,18 +315,10 @@ STAFF_HOME_CARDS = [
 BUILTIN_APP_CARDS = ['blog', 'library', 'mediacenter']
 
 EXTRA_APP_CARDS = [
-    # {
-    #     'id': 'appinventor',
-    # },
-    # {
-    #     'id': 'bsfcampus',
-    # },
-    # {
-    #     'id': 'khanacademy',
-    # },
-    # {
-    #     'id': 'koombookedu',
-    # },
+    # 'appinventor',
+    # 'bsfcampus',
+    # 'khanacademy',
+    # 'koombookedu',
 ]
 CUSTOM_CARDS = [
     # {
