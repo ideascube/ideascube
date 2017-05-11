@@ -1,4 +1,7 @@
+import enum
+
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 from ideascube.configuration import get_config
 
@@ -12,9 +15,69 @@ from ideascube.configuration import get_config
 from ideascube.serveradmin import catalog as catalog_mod
 
 
+class Category(enum.Enum):
+    create = _('create')
+    discover = _('discover')
+    read = _('read')
+
+
+class Card:
+    """The representation of a card on the Ideascube home page
+
+    This class, and its subclasses, are expected to have the following
+    attributes:
+
+    * id: the unique identifier of the card;
+    * name: the user-visible name of the card;
+    * description: the user-visible description of the card;
+    * category: the category of the card, which is guaranteed to be a member of
+        the Category enumeration;
+    * template: the path to the Django template used to render the card;
+    * url: the URL of the page pointed to by a click on the card;
+    * css_class: the CSS class given to the class DOM element;
+
+    Those attributes will always be readable on all instances of this class and
+    its subclasses, and are read when building the home page.
+    """
+    id = None
+    name = None
+    description = None
+    category = None
+    template = 'ideascube/includes/cards/builtin.html'
+    url = None
+    css_class = None
+
+
+class BuiltinCard(Card):
+    def __init__(self, id, name, description, category):
+        self.id = id
+        self.name = name
+        self.description = description
+        self.category = category
+
+    @property
+    def url(self):
+        return '%s:index' % self.id
+
+    @property
+    def css_class(self):
+        return self.id
+
+
+BUILTIN_APP_CARDS = {
+    'blog': BuiltinCard(
+        'blog', _('Blog'), _('Browse blog posts.'), Category.create),
+    'library': BuiltinCard(
+        'library', _('Library'), _('Browse books.'), Category.read),
+    'mediacenter': BuiltinCard(
+        'mediacenter', _('Medias center'),
+        _('Browse videos, sounds, images, pdf…'), Category.discover),
+}
+
+
 def build_builtin_card_info():
     card_ids = settings.BUILTIN_APP_CARDS
-    return [{'id': i} for i in card_ids]
+    return [BUILTIN_APP_CARDS[i] for i in card_ids]
 
 
 def build_extra_app_card_info():

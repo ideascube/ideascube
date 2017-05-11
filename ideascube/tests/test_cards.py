@@ -2,9 +2,27 @@ def test_build_builtin_card_info(settings):
     from ideascube.cards import build_builtin_card_info
 
     settings.BUILTIN_APP_CARDS = ['library', 'mediacenter']
-    assert build_builtin_card_info() == [
-        {'id': 'library'}, {'id': 'mediacenter'}
-    ]
+
+    cards = build_builtin_card_info()
+    assert len(cards) == 2
+
+    library = cards[0]
+    assert library.id == 'library'
+    assert library.name == 'Library'
+    assert library.description == 'Browse books.'
+    assert library.category.name == 'read'
+    assert library.template == 'ideascube/includes/cards/builtin.html'
+    assert library.url == 'library:index'
+    assert library.css_class == 'library'
+
+    mediacenter = cards[1]
+    assert mediacenter.id == 'mediacenter'
+    assert mediacenter.name == 'Medias center'
+    assert mediacenter.description == 'Browse videos, sounds, images, pdf…'
+    assert mediacenter.category.name == 'discover'
+    assert mediacenter.template == 'ideascube/includes/cards/builtin.html'
+    assert mediacenter.url == 'mediacenter:index'
+    assert mediacenter.css_class == 'mediacenter'
 
 
 def test_build_extra_app_card_info(settings):
