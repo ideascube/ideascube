@@ -7,6 +7,15 @@ def test_build_builtin_card_info(settings):
     ]
 
 
+def test_build_extra_app_card_info(settings):
+    from ideascube.cards import build_extra_app_card_info
+
+    settings.EXTRA_APP_CARDS = ['bsfcampus', 'koombookedu']
+    assert build_extra_app_card_info() == [
+        {'id': 'bsfcampus'}, {'id': 'koombookedu'}
+    ]
+
+
 def test_build_package_card_info_must_not_fail_for_no_package(systemuser):
     from ideascube.configuration import set_config
     from ideascube.cards import build_package_card_info

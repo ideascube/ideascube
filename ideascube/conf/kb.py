@@ -12,9 +12,4 @@ STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS  # pragma: no flakes
                                     'server:wifi']]
 
 BUILTIN_APP_CARDS = ['blog', 'mediacenter']
-
-EXTRA_APP_CARDS = [
-    {
-        'id': 'khanacademy',
-    },
-]
+EXTRA_APP_CARDS = ['khanacademy']
