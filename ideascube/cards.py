@@ -1,4 +1,7 @@
+import enum
+
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 from ideascube.configuration import get_config
 
@@ -12,9 +15,59 @@ from ideascube.configuration import get_config
 from ideascube.serveradmin import catalog as catalog_mod
 
 
+class Category(enum.Enum):
+    create = _('create')
+    discover = _('discover')
+    read = _('read')
+
+
+class Card:
+    id = None
+    name = None
+    description = None
+    category = None
+    template = 'ideascube/includes/cards/builtin.html'
+
+    @property
+    def css_class(self):
+        return self.id
+
+    @property
+    def url(self):
+        return '%s:index' % self.id
+
+
+class BlogCard(Card):
+    id = 'blog'
+    name = _('Blog')
+    description = _('Browse blog posts.')
+    category = Category.create
+
+
+class LibraryCard(Card):
+    id = 'library'
+    name = _('Library')
+    description = _('Browse books.')
+    category = Category.read
+
+
+class MediaCenterCard(Card):
+    id = 'mediacenter'
+    name = _('Medias center')
+    description = _('Browse videos, sounds, images, pdf…')
+    category = Category.discover
+
+
+BUILTIN_APP_CARDS = {
+    'blog': BlogCard(),
+    'library': LibraryCard(),
+    'mediacenter': MediaCenterCard(),
+}
+
+
 def build_builtin_card_info():
     card_ids = settings.BUILTIN_APP_CARDS
-    return [{'id': i} for i in card_ids]
+    return [BUILTIN_APP_CARDS[i] for i in card_ids]
 
 
 def build_extra_app_card_info():

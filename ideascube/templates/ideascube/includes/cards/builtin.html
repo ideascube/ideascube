@@ -1,0 +1,7 @@
+<a href="{% url card.url %}" class="card tinted {{ card.css_class }}">
+  <h4>
+    <span class="theme {{ card.category.name }}">{{ card.category.value }}</span>
+    <span>{{ card.name }}</span>
+  </h4>
+  <p>{{ card.description }}</p>
+</a>
