@@ -18,6 +18,7 @@ from ideascube.serveradmin import catalog as catalog_mod
 class Category(enum.Enum):
     create = _('create')
     discover = _('discover')
+    manage = _('manage')
     read = _('read')
 
 
@@ -32,6 +33,8 @@ class Card:
     * description: the user-visible description of the card;
     * category: the category of the card, which is guaranteed to be a member of
         the Category enumeration;
+    * picto: the name of a Font Awesome glyph, without the "fa-" prefix;
+    * is_staff: whether or not the card is only visible to the staff;
     * template: the path to the Django template used to render the card;
     * url: the URL of the page pointed to by a click on the card;
     * css_class: the CSS class given to the class DOM element;
@@ -43,6 +46,8 @@ class Card:
     name = None
     description = None
     category = None
+    picto = None
+    is_staff = False
     template = 'ideascube/includes/cards/builtin.html'
     url = None
     css_class = None
@@ -64,6 +69,19 @@ class BuiltinCard(Card):
         return self.id
 
 
+class StaffCard(Card):
+    is_staff = True
+    css_class = ''
+    category = Category.manage
+
+    def __init__(self, id, name, description, picto, url):
+        self.id = id
+        self.name = name
+        self.description = description
+        self.picto = picto
+        self.url = url
+
+
 BUILTIN_APP_CARDS = {
     'blog': BuiltinCard(
         'blog', _('Blog'), _('Browse blog posts.'), Category.create),
@@ -73,11 +91,32 @@ BUILTIN_APP_CARDS = {
         'mediacenter', _('Medias center'),
         _('Browse videos, sounds, images, pdf…'), Category.discover),
 }
+STAFF_CARDS = {
+    'entry': StaffCard(
+        'entry', _('Entries'), _('Manage user entries.'), 'sign-in',
+        'monitoring:entry'),
+    'loan': StaffCard(
+        'loan', _('Loans'), _('Manage loans.'), 'exchange', 'monitoring:loan'),
+    'stock': StaffCard(
+        'stock', _('Stock'), _('Manage stock.'), 'barcode',
+        'monitoring:stock'),
+    'users': StaffCard(
+        'users', _('Users'), _('Create, remove or modify users.'), 'users',
+        'user_list'),
+    'settings': StaffCard(
+        'settings', _('Settings'), _('Configure the server.'), 'cog',
+        'server:settings'),
+}
 
 
 def build_builtin_card_info():
     card_ids = settings.BUILTIN_APP_CARDS
     return [BUILTIN_APP_CARDS[i] for i in card_ids]
+
+
+def build_staff_card_info():
+    card_ids = settings.STAFF_HOME_CARDS
+    return [STAFF_CARDS[i] for i in card_ids]
 
 
 def build_extra_app_card_info():

@@ -237,49 +237,7 @@ USER_FORM_FIELDS = (
 ENTRY_ACTIVITY_CHOICES = [
 ]
 
-STAFF_HOME_CARDS = [
-    {
-        'is_staff': True,
-        'category': 'manage',
-        'url': 'user_list',
-        'title': _('Users'),
-        'description': _('Create, remove or modify users.'),
-        'fa': 'users',
-    },
-    {
-        'is_staff': True,
-        'category': 'manage',
-        'url': 'monitoring:entry',
-        'title': _('Entries'),
-        'description': _('Manage user entries.'),
-        'fa': 'sign-in',
-    },
-    {
-        'is_staff': True,
-        'category': 'manage',
-        'url': 'monitoring:stock',
-        'title': _('Stock'),
-        'description': _('Manage stock.'),
-        'fa': 'barcode',
-    },
-    {
-        'is_staff': True,
-        'category': 'manage',
-        'url': 'monitoring:loan',
-        'title': _('Loans'),
-        'description': _('Manage loans.'),
-        'fa': 'exchange',
-    },
-    {
-        'is_staff': True,
-        'category': 'manage',
-        'url': 'server:settings',
-        'title': _('Settings'),
-        'description': _('Configure the server'),
-        'fa': 'cog',
-    },
-]
-
+STAFF_HOME_CARDS = ['users', 'entry', 'stock', 'loan', 'settings']
 BUILTIN_APP_CARDS = ['blog', 'library', 'mediacenter']
 
 EXTRA_APP_CARDS = [

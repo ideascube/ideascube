@@ -29,6 +29,7 @@ from .cards import (
     build_builtin_card_info,
     build_extra_app_card_info,
     build_package_card_info,
+    build_staff_card_info,
 )
 from .forms import UserForm, CreateStaffForm, UserImportForm
 from .mixins import CSVExportMixin
@@ -43,7 +44,7 @@ def index(request):
     random_book = Book.objects.available().order_by('?').first()
     random_doc = Document.objects.order_by('?').first()
 
-    staff_cards = settings.STAFF_HOME_CARDS
+    staff_cards = build_staff_card_info()
     builtin_cards = build_builtin_card_info()
     extra_cards = build_extra_app_card_info()
     custom_cards = settings.CUSTOM_CARDS

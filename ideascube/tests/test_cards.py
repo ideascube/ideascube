@@ -11,6 +11,8 @@ def test_build_builtin_card_info(settings):
     assert library.name == 'Library'
     assert library.description == 'Browse books.'
     assert library.category.name == 'read'
+    assert library.picto is None
+    assert library.is_staff is False
     assert library.template == 'ideascube/includes/cards/builtin.html'
     assert library.url == 'library:index'
     assert library.css_class == 'library'
@@ -20,9 +22,53 @@ def test_build_builtin_card_info(settings):
     assert mediacenter.name == 'Medias center'
     assert mediacenter.description == 'Browse videos, sounds, images, pdf…'
     assert mediacenter.category.name == 'discover'
+    assert mediacenter.picto is None
+    assert mediacenter.is_staff is False
     assert mediacenter.template == 'ideascube/includes/cards/builtin.html'
     assert mediacenter.url == 'mediacenter:index'
     assert mediacenter.css_class == 'mediacenter'
+
+
+def test_build_staff_card_info(settings):
+    from ideascube.cards import build_staff_card_info
+
+    settings.STAFF_HOME_CARDS = ['settings', 'users', 'stock']
+
+    cards = build_staff_card_info()
+    assert len(cards) == 3
+
+    settings = cards[0]
+    assert settings.id == 'settings'
+    assert settings.name == 'Settings'
+    assert settings.description == 'Configure the server.'
+    assert settings.category.name == 'manage'
+    assert settings.picto == 'cog'
+    assert settings.is_staff is True
+    assert settings.template == 'ideascube/includes/cards/builtin.html'
+    assert settings.url == 'server:settings'
+    assert settings.css_class == ''
+
+    users = cards[1]
+    assert users.id == 'users'
+    assert users.name == 'Users'
+    assert users.description == 'Create, remove or modify users.'
+    assert users.category.name == 'manage'
+    assert users.picto == 'users'
+    assert users.is_staff is True
+    assert users.template == 'ideascube/includes/cards/builtin.html'
+    assert users.url == 'user_list'
+    assert users.css_class == ''
+
+    stock = cards[2]
+    assert stock.id == 'stock'
+    assert stock.name == 'Stock'
+    assert stock.description == 'Manage stock.'
+    assert stock.category.name == 'manage'
+    assert stock.picto == 'barcode'
+    assert stock.is_staff is True
+    assert stock.template == 'ideascube/includes/cards/builtin.html'
+    assert stock.url == 'monitoring:stock'
+    assert stock.css_class == ''
 
 
 def test_build_extra_app_card_info(settings):
