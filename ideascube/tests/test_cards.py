@@ -1,3 +1,12 @@
+def test_build_builtin_card_info(settings):
+    from ideascube.cards import build_builtin_card_info
+
+    settings.BUILTIN_APP_CARDS = ['library', 'mediacenter']
+    assert build_builtin_card_info() == [
+        {'id': 'library'}, {'id': 'mediacenter'}
+    ]
+
+
 def test_build_package_card_info_must_not_fail_for_no_package(systemuser):
     from ideascube.configuration import set_config
     from ideascube.cards import build_package_card_info
