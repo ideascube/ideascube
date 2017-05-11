@@ -18,6 +18,7 @@ from ideascube.serveradmin import catalog as catalog_mod
 class Category(enum.Enum):
     create = _('create')
     discover = _('discover')
+    manage = _('manage')
     read = _('read')
 
 
@@ -26,6 +27,8 @@ class Card:
     name = None
     description = None
     category = None
+    picto = None
+    is_staff = False
     template = 'ideascube/includes/cards/builtin.html'
 
     @property
@@ -58,16 +61,74 @@ class MediaCenterCard(Card):
     category = Category.discover
 
 
+class StaffCard(Card):
+    is_staff = True
+    css_class = ''
+    category = Category.manage
+
+
+class EntriesCard(StaffCard):
+    id = 'entry'
+    name = _('Entries')
+    description = _('Manage user entries.')
+    picto = 'sign-in'
+    url = 'monitoring:entry'
+
+
+class LoansCard(StaffCard):
+    id = 'loan'
+    name = _('Loans')
+    description = _('Manage loans.')
+    picto = 'exchange'
+    url = 'monitoring:loan'
+
+
+class StockCard(StaffCard):
+    id = 'stock'
+    name = _('Stock')
+    description = _('Manage stock.')
+    picto = 'barcode'
+    url = 'monitoring:stock'
+
+
+class UsersCard(StaffCard):
+    id = 'user'
+    name = _('Users')
+    description = _('Create, remove or modify users.')
+    picto = 'users'
+    url = 'user_list'
+
+
+class SettingsCard(StaffCard):
+    id = 'settings'
+    name = _('Settings')
+    description = _('Configure the server')
+    picto = 'cog'
+    url = 'server:settings'
+
+
 BUILTIN_APP_CARDS = {
     'blog': BlogCard(),
     'library': LibraryCard(),
     'mediacenter': MediaCenterCard(),
+}
+STAFF_CARDS = {
+    'entry': EntriesCard(),
+    'loan': LoansCard(),
+    'stock': StockCard(),
+    'user': UsersCard(),
+    'settings': SettingsCard(),
 }
 
 
 def build_builtin_card_info():
     card_ids = settings.BUILTIN_APP_CARDS
     return [BUILTIN_APP_CARDS[i] for i in card_ids]
+
+
+def build_staff_card_info():
+    card_ids = settings.STAFF_HOME_CARDS
+    return [STAFF_CARDS[i] for i in card_ids]
 
 
 def build_extra_app_card_info():
