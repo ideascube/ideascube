@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from ideascube.configuration import get_config
 
 # For unittesting purpose, we need to mock the Catalog class.
@@ -8,6 +10,11 @@ from ideascube.configuration import get_config
 # Catalog class directly but reference it from ideascube.serveradmin.catalog
 # module.
 from ideascube.serveradmin import catalog as catalog_mod
+
+
+def build_builtin_card_info():
+    card_ids = settings.BUILTIN_APP_CARDS
+    return [{'id': i} for i in card_ids]
 
 
 def build_package_card_info():
