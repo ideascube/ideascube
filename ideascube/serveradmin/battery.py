@@ -22,7 +22,7 @@ def get_batteries():
 
     try:
         # We might be running on a Lime2 Koombook
-        # https://github.com/ideascube/ideascube/issues/446#issuecomment-244143565
+        # https://framagit.org/ideascube/ideascube/issues/446#note_90215
         return [Lime2Battery(path='/sys/power/axp_pmu', name='battery')]
 
     except FileNotFoundError:

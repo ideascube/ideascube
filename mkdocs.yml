@@ -7,5 +7,5 @@ pages:
 - Translations: i18n.md
 - Make a Release: release_process.md
 theme: yeti
-repo_url: https://github.com/ideascube/ideascube
+repo_url: https://framagit.org/ideascube/ideascube/
 site_description: Ideas Box server core application.

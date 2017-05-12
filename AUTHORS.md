@@ -1,8 +1,9 @@
 # Authors and contributors
 
-ideascube is owned and maintained by
+Ideascube is owned and maintained by
 [Bibliothèques Sans Frontières](http://www.bibliosansfrontieres.org/), and
-published under the terms of MIT license (see
-[LICENSE.md](https://github.com/ideascube/ideascube/blob/master/LICENSE.md)).
+published under the terms of AGPLv3+ license (see
+[LICENSE](https://framagit.org/ideascube/ideascube/blob/master/LICENSE)).
 
-See also contributors on [Github repository](https://github.com/ideascube/ideascube/graphs/contributors).
+Find more details on contributors at the
+[graphs page](https://framagit.org/ideascube/ideascube/graphs/master).

@@ -5,7 +5,7 @@
 <policyconfig>
 
   <vendor>The Ideascube Project</vendor>
-  <vendor_url>https://github.com/ideascube</vendor_url>
+  <vendor_url>https://framagit.org/ideascube/ideascube/</vendor_url>
 
   <action id="org.bsf.ideascube.pkexec.systemctl">
     <description>Manage systemd units with systemctl</description>

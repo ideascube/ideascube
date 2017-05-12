@@ -767,7 +767,7 @@ class Catalog:
                 if catalog is not None:
                     if 'available' in catalog and 'installed' in catalog:
                         # The cache on file is in the old format
-                        # https://github.com/ideascube/ideascube/issues/376
+                        # https://framagit.org/ideascube/ideascube/issues/376
                         self._available_value = catalog['available']
                         self._installed_value = catalog['installed']
 
@@ -796,7 +796,7 @@ class Catalog:
                     if catalog is not None:
                         if 'available' in catalog and 'installed' in catalog:
                             # The cache on file is in the old format
-                            # https://github.com/ideascube/ideascube/issues/376
+                            # https://framagit.org/ideascube/ideascube/issues/376
                             self._available_value = catalog['available']
                             self._installed_value = catalog['installed']
                         elif self._available_value is None:

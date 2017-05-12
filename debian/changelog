@@ -555,8 +555,8 @@ ideascube (0.7.0-1) unstable; urgency=low
 
 ideascube (0.6.0-1) unstable; urgency=low
 
-  * services are now using systemd (https://github.com/ideascube/ideascube/pull/213)
-  * conf is factorized (https://github.com/ideascube/ideascube/pull/217)
+  * services are now using systemd (https://framagit.org/ideascube/ideascube/merge_requests/213)
+  * conf is factorized (https://framagit.org/ideascube/ideascube/merge_requests/217)
   * upgraded django-taggit to 0.17.5
   * added conf for Ethiopian boxes and new Jordan one
 
@@ -564,19 +564,19 @@ ideascube (0.6.0-1) unstable; urgency=low
 
 ideascube (0.5.0-1) unstable; urgency=low
 
-  * wifi management [#197](https://github.com/ideascube/ideascube/pull/197)
-  * do not export user names in user dumps [#212](https://github.com/ideascube/ideascube/pull/212)
-  * rework home page [#164](https://github.com/ideascube/ideascube/pull/164)
-  * add import/export of libary books and specimens [#204](https://github.com/ideascube/ideascube/pull/204)
-  * add import media management command [#29](https://github.com/ideascube/ideascube/pull/29)
-  * add backup management command [#166](https://github.com/ideascube/ideascube/pull/166)
+  * wifi management [#197](https://framagit.org/ideascube/ideascube/merge_requests/197)
+  * do not export user names in user dumps [#212](https://framagit.org/ideascube/ideascube/merge_requests/212)
+  * rework home page [#164](https://framagit.org/ideascube/ideascube/issues/164)
+  * add import/export of libary books and specimens [#204](https://framagit.org/ideascube/ideascube/issues/204)
+  * add import media management command [#29](https://framagit.org/ideascube/ideascube/issues/29)
+  * add backup management command [#166](https://framagit.org/ideascube/ideascube/issues/166)
   * add staff creation page at first ideascube run
   * add "confirm" to server stop and restart buttons
-  * switched from gunicorn to uwsgi [#161](https://github.com/ideascube/ideascube/pull/161)
-  * allow tar, bztar and gztar formats for backup [#171](https://github.com/ideascube/ideascube/pull/171)
-  * use our own login page after staff_member_required decorator [#87](https://github.com/ideascube/ideascube/pull/87)
-  * Add page for media filtering by kind [#183](https://github.com/ideascube/ideascube/pull/183)
-  * more responsive CSS [#162](https://github.com/ideascube/ideascube/pull/162)
+  * switched from gunicorn to uwsgi [#161](https://framagit.org/ideascube/ideascube/issues/161)
+  * allow tar, bztar and gztar formats for backup [#171](https://framagit.org/ideascube/ideascube/issues/171)
+  * use our own login page after staff_member_required decorator [#87](https://framagit.org/ideascube/ideascube/issues/87)
+  * Add page for media filtering by kind [#183](https://framagit.org/ideascube/ideascube/issues/183)
+  * more responsive CSS [#162](https://framagit.org/ideascube/ideascube/merge_requests/162)
 
  -- Yohan Boniface <hi@yohanboniface.me>  Sat, 24 Nov 2015 11:25:27 +0100
 
