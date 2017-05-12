@@ -37,6 +37,7 @@ RUN rm -fr \
 RUN useradd --create-home ideascube
 USER ideascube
 WORKDIR /home/ideascube
+COPY Makefile requirements-dev.txt ./
 
 # Unfortunately pew is not in Debian Stretch
 RUN pip3 install --user pew
@@ -47,10 +48,7 @@ RUN ~/.local/bin/pew new -d -p python3 venv
 
 # Pre-install the dependencies in the virtual environment
 RUN ~/.local/bin/pew in venv pip install --upgrade pip setuptools
-RUN git clone https://framagit.org/ideascube/ideascube
-RUN ~/.local/bin/pew in venv make -C ideascube develop
-RUN rm -fr ideascube
-
+RUN ~/.local/bin/pew in venv make develop
 
 # Make some space
 RUN rm -fr \
