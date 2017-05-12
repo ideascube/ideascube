@@ -24,6 +24,9 @@ Master Debian Package:
   image: ideascube/ideascube-ci:jessie-deb-builder
   script:
   - dpkg-buildpackage -us -uc
+  - pwd
+  - ls -la
+  - ls -la ..
   artifacts:
     name: "ideascube-debian-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}"
     expire_in: "1 month"
