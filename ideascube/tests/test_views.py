@@ -506,14 +506,16 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
 
 @pytest.mark.usefixtures('staffuser')
 def test_cards_properly_displayed(app):
+    from ideascube.cards import PackagedZimCard
+    from ideascube.serveradmin.catalog import ZippedZim
+
     with mock.patch('ideascube.views.build_package_card_info') as Mocker:
-        Mocker.return_value = [{
-            'package_id' : 'wikipedia.fr',
-            'name'       : 'Test package1',
-            'description': 'Test package1 description',
-            'lang'       : 'fr',
-            'is_staff'   : False,
-            'id'         : 'kiwix'
-        }]
+        Mocker.return_value = [
+            PackagedZimCard(ZippedZim('wikipedia.fr', {
+                'name': 'Test package1',
+                'description': 'Test package1 description',
+                'lang': 'fr',
+            }))
+        ]
         response = app.get(reverse('index'), status=200)
         assert 'Test package1' in response.text

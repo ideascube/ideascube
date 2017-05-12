@@ -90,7 +90,9 @@ def test_build_package_card_info_must_not_fail_for_no_package(systemuser):
 def test_build_package_card_info(systemuser, catalog):
     from ideascube.configuration import set_config
     from ideascube.cards import build_package_card_info
-    from ideascube.serveradmin.catalog import ZippedZim, ZippedMedias
+    from ideascube.serveradmin.catalog import (
+        StaticSite, ZippedZim, ZippedMedias)
+
     catalog.add_mocked_package(ZippedZim('test.package1.fr', {
         'name':'Test package1',
         'description':'Test package1 description',
@@ -101,25 +103,45 @@ def test_build_package_card_info(systemuser, catalog):
         'description':'Test package2 description',
         'language':'fr',
         'staff_only':False}))
-    set_config('home-page', 'displayed-package-ids', ['test.package1.fr', 'test.package2.fr'], systemuser)
+    catalog.add_mocked_package(StaticSite('test.package3.fr', {
+        'name': 'Test package3',
+        'description': 'Test package3 description',
+        'language': 'fr',
+        'staff_only': False}))
+    set_config('home-page', 'displayed-package-ids', ['test.package1.fr', 'test.package2.fr', 'test.package3.fr'], systemuser)
 
-    assert build_package_card_info() == [{
-        'package_id' : 'test.package1.fr',
-        'name'       : 'Test package1',
-        'description': 'Test package1 description',
-        'lang'       : 'fr',
-        'is_staff'   : False,
-        'id'         : 'kiwix',
-        'css_class'  : 'test.package1',
-        'theme'      : 'learn'
-    },
-    {
-        'package_id' : 'test.package2.fr',
-        'name'       : 'Test package2',
-        'description': 'Test package2 description',
-        'lang'       : 'fr',
-        'is_staff'   : False,
-        'id'         : 'media-package',
-        'css_class'  : None,
-        'theme'      : None
-    }]
+    cards = build_package_card_info()
+    assert len(cards) == 3
+
+    pkg1 = cards[0]
+    assert pkg1.id == 'test.package1.fr'
+    assert pkg1.name == 'Test package1'
+    assert pkg1.description == 'Test package1 description'
+    assert pkg1.category.name == 'learn'
+    assert pkg1.picto is None
+    assert pkg1.is_staff is False
+    assert pkg1.template == 'ideascube/includes/cards/external.html'
+    assert pkg1.url == 'http://kiwix.ideascube.lan/test.package1.fr/'
+    assert pkg1.css_class == 'test.package1'
+
+    pkg2 = cards[1]
+    assert pkg2.id == 'test.package2.fr'
+    assert pkg2.name == 'Test package2'
+    assert pkg2.description == 'Test package2 description'
+    assert pkg2.category.name == 'discover'
+    assert pkg2.picto is None
+    assert pkg2.is_staff is False
+    assert pkg2.template == 'ideascube/includes/cards/media-package.html'
+    assert pkg2.url is None
+    assert pkg2.css_class == 'mediacenter'
+
+    pkg3 = cards[2]
+    assert pkg3.id == 'test.package3.fr'
+    assert pkg3.name == 'Test package3'
+    assert pkg3.description == 'Test package3 description'
+    assert pkg3.category.name == 'info'
+    assert pkg3.picto is None
+    assert pkg3.is_staff is False
+    assert pkg3.template == 'ideascube/includes/cards/external.html'
+    assert pkg3.url == 'http://sites.ideascube.lan/test.package3.fr/'
+    assert pkg3.css_class == 'test'

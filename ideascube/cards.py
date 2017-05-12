@@ -18,6 +18,8 @@ from ideascube.serveradmin import catalog as catalog_mod
 class Category(enum.Enum):
     create = _('create')
     discover = _('discover')
+    info = _('info')
+    learn = _('learn')
     manage = _('manage')
     read = _('read')
 
@@ -82,6 +84,85 @@ class StaffCard(Card):
         self.url = url
 
 
+class PackageCard(Card):
+    def __init__(self, package):
+        self._package = package
+
+    @property
+    def id(self):
+        return self._package.id
+
+    @property
+    def name(self):
+        return self._package.name
+
+    @property
+    def description(self):
+        return getattr(self._package, 'description', '')
+
+
+class PackagedMediasCard(PackageCard):
+    category = Category.discover
+    css_class = 'mediacenter'
+    template = 'ideascube/includes/cards/media-package.html'
+
+
+class PackagedStaticSiteCard(PackageCard):
+    template = 'ideascube/includes/cards/external.html'
+
+    # FIXME: This is a fragile hack, and should be a package metadata
+    @property
+    def category(self):
+        if '.map' in self.id or self.id in ['maguare.es', 'cinescuela.es']:
+            return Category.discover
+
+        return Category.info
+
+    @property
+    def url(self):
+        return 'http://sites.%s/%s/' % (settings.DOMAIN, self.id)
+
+    # FIXME: This is a fragile hack, and should be a package metadata
+    @property
+    def css_class(self):
+        if '.map' in self.id:
+            return 'maps'
+
+        base_name, *_ = self.id.split('.')
+        return base_name
+
+
+class PackagedZimCard(PackageCard):
+    template = 'ideascube/includes/cards/external.html'
+
+    # FIXME: This is a fragile hack, and should be a package metadata
+    @property
+    def category(self):
+        base_name, _ = self.id.rsplit('.', 1)
+
+        if base_name in ("wikipedia", "wikivoyage", "vikidia"):
+            return Category.discover
+
+        if base_name in ("gutemberg", "icd10", "wikisource", "wikibooks", "bouquineux"):
+            return Category.read
+
+        return Category.learn
+
+    @property
+    def url(self):
+        return 'http://kiwix.%s/%s/' % (settings.DOMAIN, self.id)
+
+    # FIXME: This is a fragile hack, and should be a package metadata
+    @property
+    def css_class(self):
+        base_name, _ = self.id.rsplit('.', 1)
+
+        if base_name.startswith('ted'):
+            return 'ted'
+
+        return base_name
+
+
 BUILTIN_APP_CARDS = {
     'blog': BuiltinCard(
         'blog', _('Blog'), _('Browse blog posts.'), Category.create),
@@ -107,6 +188,11 @@ STAFF_CARDS = {
         'settings', _('Settings'), _('Configure the server.'), 'cog',
         'server:settings'),
 }
+PACKAGED_CARDS = {
+    'static-site': PackagedStaticSiteCard,
+    'zipped-medias': PackagedMediasCard,
+    'zipped-zim': PackagedZimCard,
+}
 
 
 def build_builtin_card_info():
@@ -125,20 +211,10 @@ def build_extra_app_card_info():
 
 
 def build_package_card_info():
-    package_card_info = []
     catalog = catalog_mod.Catalog()
     packages_to_display = catalog.list_installed(get_config('home-page', 'displayed-package-ids'))
 
-    for package in packages_to_display:
-        card_info = {
-            'id': package.template_id,
-            'name': package.name,
-            'description': getattr(package, 'description', ''),
-            'lang': getattr(package, 'language', ''),
-            'package_id': package.id,
-            'is_staff': getattr(package, 'staff_only', False),
-            'theme': getattr(package, 'theme', None),
-            'css_class': getattr(package, 'css_class', None)
-        }
-        package_card_info.append(card_info)
-    return package_card_info
+    return [
+        PACKAGED_CARDS[package.typename](package)
+        for package in packages_to_display
+    ]
