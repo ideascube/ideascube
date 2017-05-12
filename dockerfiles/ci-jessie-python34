@@ -28,10 +28,10 @@ RUN apt install -q -y --no-install-recommends \
     zlib1g-dev
 
 # Make some space
+RUN apt-get clean -y
 RUN rm -fr \
     /usr/share/doc/* \
-    /var/cache/debconf/* \
-    /var/lib/apt/lists/*
+    /var/cache/debconf/*
 
 # Add a user to run the CI as
 RUN useradd --create-home ideascube
