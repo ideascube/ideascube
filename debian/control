@@ -15,7 +15,6 @@ Build-Depends:
   libxml2-dev,
   libxslt1-dev,
 # For dbus-python
-  git,
   libdbus-glib-1-dev,
   autoconf,
   automake,
