@@ -109,6 +109,45 @@ class SettingsCard(StaffCard):
     url = 'server:settings'
 
 
+class ExtraAppCard(Card):
+    template = 'ideascube/includes/cards/external.html'
+
+    @property
+    def url(self):
+        return 'http://%s.%s/' % (self.id, settings.DOMAIN)
+
+
+class AppInventorCard(ExtraAppCard):
+    id = 'appinventor'
+    name = 'App Inventor'
+    description = _('Create your own apps for Android.')
+    category = Category.create
+
+
+class BSFCampusCard(ExtraAppCard):
+    id = 'bsfcampus'
+    name = 'BSF Campus'
+    description = (  # This is only for French-speaking people at the moment
+        'Renforcer les capacités des bibliothèques.')
+    category = Category.learn
+
+
+class KhanAcademyCard(ExtraAppCard):
+    id = 'khanacademy'
+    name = 'Khan Academy'
+    description = _('Learn with videos and exercises.')
+    category = Category.learn
+
+
+class KoomBookEduCard(ExtraAppCard):
+    id = 'koombookedu'
+    name = 'KoomBook EDU'
+    description = (  # This is only for French-speaking people at the moment
+        "Plateforme d'e-learning ouverte aux <br /> "
+        "étudiants et aux professeurs.")
+    category = Category.learn
+
+
 class PackageCard(Card):
     def __init__(self, package):
         self._package = package
@@ -169,6 +208,12 @@ STAFF_CARDS = {
     'user': UsersCard(),
     'settings': SettingsCard(),
 }
+EXTRA_APP_CARDS = {
+    'appinventor': AppInventorCard(),
+    'bsfcampus': BSFCampusCard(),
+    'khanacademy': KhanAcademyCard(),
+    'koombookedu': KoomBookEduCard(),
+}
 PACKAGED_CARDS = {
     'static-site': PackagedStaticSiteCard,
     'zipped-medias': PackagedMediasCard,
@@ -187,8 +232,11 @@ def build_staff_card_info():
 
 
 def build_extra_app_card_info():
+    # FIXME: Eventually this needs to know whether the extra app is installed,
+    #        and get the metadata from there, like the packaged apps.
+    #        https://framagit.org/ideascube/ideascube/issues/810
     card_ids = settings.EXTRA_APP_CARDS
-    return [{'id': i} for i in card_ids]
+    return [EXTRA_APP_CARDS[i] for i in card_ids]
 
 
 def build_package_card_info():
