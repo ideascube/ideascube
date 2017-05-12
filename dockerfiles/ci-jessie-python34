@@ -2,11 +2,11 @@ FROM debian:jessie-slim
 
 ENV LANG C.UTF-8
 
-RUN apt update -q
-RUN apt full-upgrade --purge -q -y
-
 # Install our dependencies
-RUN apt install -q -y --no-install-recommends \
+RUN \
+  apt update -q; \
+  apt full-upgrade --purge -q -y; \
+  apt install -q -y --no-install-recommends \
     autoconf \
     automake \
     cython3 \
@@ -25,11 +25,11 @@ RUN apt install -q -y --no-install-recommends \
     python3-virtualenv \
     python3-wheel \
     virtualenv \
-    zlib1g-dev
+    zlib1g-dev; \
 
-# Make some space
-RUN apt-get clean -y
-RUN rm -fr \
+  # Make some space
+  apt-get clean -y; \
+  rm -fr \
     /usr/share/doc/* \
     /var/cache/debconf/*
 
@@ -40,19 +40,19 @@ WORKDIR /home/ideascube
 COPY Makefile requirements-dev.txt ./
 
 # Unfortunately pew is not in Debian Jessie
-RUN pip3 install --user appdirs packaging
-RUN pip3 install --user pew
+RUN \
+  pip3 install --user appdirs packaging; \
+  pip3 install --user pew
 ENV PATH="~/.local/bin:${PATH}"
 
 # Create a virtual environment to use in the CI
-RUN ~/.local/bin/pew new -d -p python3 venv
+RUN \
+  ~/.local/bin/pew new -d -p python3 venv; \
+  ~/.local/bin/pew in venv pip install --upgrade pip setuptools; \
+  ~/.local/bin/pew in venv make develop; \
 
-# Pre-install the dependencies in the virtual environment
-RUN ~/.local/bin/pew in venv pip install --upgrade pip setuptools
-RUN ~/.local/bin/pew in venv make develop
-
-# Make some space
-RUN rm -fr \
+  # Make some space
+  rm -fr \
     ~/.cache \
     ~/.local/share/virtualenvs/venv/src \
     ~/.local/share/virtualenvs/venv/lib/python-wheels
