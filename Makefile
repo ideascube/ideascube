@@ -1,6 +1,6 @@
 # -- Development --------------------------------------------------------------
 develop:
-	pip3 install --no-use-wheel -r requirements-dev.txt
+	pip3 install --no-binary :all: -r requirements-dev.txt
 
 doc:
 	mkdocs serve
