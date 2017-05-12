@@ -1,3 +1,7 @@
+stages:
+- test
+- deploy
+
 .setup: &setup_definition
   image: ideascube/ideascube-ci:jessie-python34
   before_script:
@@ -43,3 +47,15 @@ Missing Migrations:
   <<: *setup_definition
   script:
   - pew in venv make check-missing-migrations
+
+
+Master Debian Package:
+  stage: deploy
+  image: ideascube/ideascube-ci:jessie-deb-builder
+  script:
+  - dpkg-buildpackage -us -uc
+  artifacts:
+    paths:
+    - *.deb
+#  only:
+#  - master
