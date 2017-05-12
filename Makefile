@@ -24,6 +24,12 @@ sync-deps:
 	pip-sync requirements-dev.txt
 
 ci-images:
+	@BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	if [ "$$BRANCH" != "master" ]; then \
+	    echo "ERROR: This command must be run on master"; \
+	    exit 1; \
+	fi
+	
 	docker build --no-cache --file dockerfiles/ci-jessie-python34 --tag ideascube/ideascube-ci:jessie-python34 .
 	docker push ideascube/ideascube-ci:jessie-python34
 	
