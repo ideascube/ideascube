@@ -74,10 +74,34 @@ def test_build_staff_card_info(settings):
 def test_build_extra_app_card_info(settings):
     from ideascube.cards import build_extra_app_card_info
 
-    settings.EXTRA_APP_CARDS = ['bsfcampus', 'koombookedu']
-    assert build_extra_app_card_info() == [
-        {'id': 'bsfcampus'}, {'id': 'koombookedu'}
-    ]
+    settings.EXTRA_APP_CARDS = ['bsfcampus', 'appinventor']
+
+    cards = build_extra_app_card_info()
+    assert len(cards) == 2
+
+    bsfcampus = cards[0]
+    assert bsfcampus.id == 'bsfcampus'
+    assert bsfcampus.name == 'BSF Campus'
+    assert bsfcampus.description == (
+        'Renforcer les capacités des bibliothèques.')
+    assert bsfcampus.category.name == 'learn'
+    assert bsfcampus.picto is None
+    assert bsfcampus.is_staff is False
+    assert bsfcampus.template == 'ideascube/includes/cards/external.html'
+    assert bsfcampus.url == 'http://bsfcampus.ideascube.lan/'
+    assert bsfcampus.css_class == 'bsfcampus'
+
+    appinventor = cards[1]
+    assert appinventor.id == 'appinventor'
+    assert appinventor.name == 'App Inventor'
+    assert appinventor.description == (
+        'Create your own apps for Android.')
+    assert appinventor.category.name == 'create'
+    assert appinventor.picto is None
+    assert appinventor.is_staff is False
+    assert appinventor.template == 'ideascube/includes/cards/external.html'
+    assert appinventor.url == 'http://appinventor.ideascube.lan/'
+    assert appinventor.css_class == 'appinventor'
 
 
 def test_build_package_card_info_must_not_fail_for_no_package(systemuser):

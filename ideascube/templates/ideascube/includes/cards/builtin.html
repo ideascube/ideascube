@@ -4,5 +4,5 @@
     <span class="theme {{ card.category.name }}">{{ card.category.value }}</span>
     <span>{{ card.name }}</span>
   </h4>
-  <p>{{ card.description }}</p>
+  <p>{{ card.description|safe }}</p>
 </a>

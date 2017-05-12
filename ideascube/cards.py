@@ -84,6 +84,14 @@ class StaffCard(Card):
         self.url = url
 
 
+class ExtraAppCard(BuiltinCard):
+    template = 'ideascube/includes/cards/external.html'
+
+    @property
+    def url(self):
+        return 'http://%s.%s/' % (self.id, settings.DOMAIN)
+
+
 class PackageCard(Card):
     def __init__(self, package):
         self._package = package
@@ -188,6 +196,25 @@ STAFF_CARDS = {
         'settings', _('Settings'), _('Configure the server.'), 'cog',
         'server:settings'),
 }
+EXTRA_APP_CARDS = {
+    'appinventor': ExtraAppCard(
+        'appinventor', 'App Inventor', _('Create your own apps for Android.'),
+        Category.create),
+    'bsfcampus': ExtraAppCard(
+        'bsfcampus', 'BSF Campus',
+        # This is only for French-speaking people at the moment
+        'Renforcer les capacités des bibliothèques.',
+        Category.learn
+        ),
+    'khanacademy': ExtraAppCard(
+        'khanacademy', 'Khan Academy', _('Learn with videos and exercises.'),
+        Category.learn),
+    'koombookedu': ExtraAppCard(
+        'koombookedu', 'KoomBook EDU',
+        # This is only for French-speaking people at the moment
+        "Plateforme d'e-learning ouverte aux<br />étudiants et aux "
+        "professeurs.", Category.learn),
+}
 PACKAGED_CARDS = {
     'static-site': PackagedStaticSiteCard,
     'zipped-medias': PackagedMediasCard,
@@ -206,8 +233,11 @@ def build_staff_card_info():
 
 
 def build_extra_app_card_info():
+    # FIXME: Eventually this needs to know whether the extra app is installed,
+    #        and get the metadata from there, like the packaged apps.
+    #        https://framagit.org/ideascube/ideascube/issues/810
     card_ids = settings.EXTRA_APP_CARDS
-    return [{'id': i} for i in card_ids]
+    return [EXTRA_APP_CARDS[i] for i in card_ids]
 
 
 def build_package_card_info():
