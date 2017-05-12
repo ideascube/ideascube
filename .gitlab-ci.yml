@@ -1,3 +1,7 @@
+stages:
+- test
+- deploy
+
 .setup: &setup_definition
   image: ideascube/ideascube-ci:jessie-python34
   before_script:
@@ -5,6 +9,7 @@
 
 .test: &test_definition
   <<: *setup_definition
+  stage: test
   script:
   - pew in venv make test
 
@@ -18,28 +23,49 @@
 
 "Tests: C locale":
   <<: *setup_definition
+  stage: test
   script:
   - LC_ALL=C pew in venv make test
 
 
 Code Coverage:
   <<: *setup_definition
+  stage: test
   script:
   - pew in venv make test-coverage
 
 
 Code Quality:
   <<: *setup_definition
+  stage: test
   script:
   - pew in venv make quality-check
 
 
 Data Migration:
   <<: *setup_definition
+  stage: test
   script:
   - pew in venv make test-data-migration
 
 Missing Migrations:
   <<: *setup_definition
+  stage: test
   script:
   - pew in venv make check-missing-migrations
+
+
+Master Debian Package:
+  stage: deploy
+  image: ideascube/ideascube-ci:jessie-deb-builder
+  script:
+  - sed -i "1 s|^ideascube [(]\(.*\)[)] \(.*\)$|ideascube (\1+${CI_COMMIT_SHA}) \2|" debian/changelog
+  - dpkg-buildpackage -us -uc
+  - mv ../ideascube_*.deb .
+  artifacts:
+    name: "ideascube-debian-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}"
+    expire_in: "2 weeks"
+    paths:
+    - ideascube_*.deb
+  only:
+  - master
