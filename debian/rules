@@ -7,3 +7,6 @@ export DH_PIP_EXTRA_ARGS=--no-use-wheel
 
 %:
 	dh $@ --with python3 --buildsystem dh_virtualenv
+
+override_dh_auto_test:
+	:
