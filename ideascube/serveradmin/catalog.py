@@ -250,7 +250,6 @@ class Package(metaclass=MetaRegistry):
 class ZippedZim(Package):
     typename = 'zipped-zim'
     handler = Kiwix
-    template_id = "kiwix"
 
     def install(self, download_path, install_dir):
         self.assert_is_zipfile(download_path)
@@ -296,16 +295,12 @@ class ZippedZim(Package):
     # For now, use special cases.
     @property
     def theme(self):
-        # Strings "discover", "read" and "learn" must be marked as translatable.
-        # For this we use a dummy function who do nothing.
-        # As the function is named _, gettext will mark the strings.
-        _ = lambda t: t
         base_name, extension = self.id.rsplit('.', 1)
         if base_name in ("wikipedia", "wikivoyage", "vikidia"):
-            return _("discover")
+            return "discover"
         if base_name in ("gutemberg", "icd10", "wikisource", "wikibooks", "bouquineux"):
-            return _("read")
-        return _("learn")
+            return "read"
+        return "learn"
 
     @property
     def css_class(self):
@@ -334,19 +329,14 @@ class SimpleZipPackage(Package):
 
 class StaticSite(SimpleZipPackage):
     typename = 'static-site'
-    template_id = 'static-site'
     handler = Nginx
 
     # [FIXME] This propertie looks like hacks.
     @property
     def theme(self):
-        # theme string must be marked as translatable.
-        # For this we use a dummy function who do nothing.
-        # As the function is named _, gettext will mark the strings.
-        _ = lambda t: t
         if '.map' in self.id or self.id in ['maguare.es', 'cinescuela.es']:
-            return _('discover')
-        return _('info')
+            return 'discover'
+        return 'info'
 
     @property
     def css_class(self):
@@ -359,7 +349,6 @@ class StaticSite(SimpleZipPackage):
 class ZippedMedias(SimpleZipPackage):
     typename = 'zipped-medias'
     handler = MediaCenter
-    template_id = "media-package"
 
     def remove(self, install_dir):
         # Easy part here. Just delete documents from the package.
