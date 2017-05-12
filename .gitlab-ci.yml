@@ -1,3 +1,7 @@
+stages:
+- test
+- deploy
+
 .setup: &setup_definition
   image: ideascube/ideascube-ci:jessie-python34
   before_script:
@@ -43,3 +47,19 @@ Missing Migrations:
   <<: *setup_definition
   script:
   - pew in venv make check-missing-migrations
+
+
+Master Debian Package:
+  stage: deploy
+  image: ideascube/ideascube-ci:jessie-deb-builder
+  script:
+  - sed -i "1 s|^ideascube [(]\(.*\)[)] \(.*\)$|ideascube (\1+${CI_COMMIT_SHA}) \2|" debian/changelog
+  - dpkg-buildpackage -us -uc
+  - mv ../ideascube_*.deb .
+  artifacts:
+    name: "ideascube-debian-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}"
+    expire_in: "2 weeks"
+    paths:
+    - ideascube_*.deb
+#  only:
+#  - master
