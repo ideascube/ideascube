@@ -67,5 +67,3 @@ Master Debian Package:
     expire_in: "2 weeks"
     paths:
     - ideascube_*.deb
-  only:
-  - master
