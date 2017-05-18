@@ -1,42 +1,41 @@
-{% extends 'base.html' %}
+{% extends 'form-sidebar.html' %}
 {% load i18n ideascube_tags %}
 
-{% block extra_head %}
-    {% include 'ideascube/includes/form_statics.html' %}
-{% endblock extra_head %}
+{% block heading %}
+    <h2>
+        {% if content %}
+            {% fa 'pencil' %} {% trans "Edit post" %} "{{ content }}"
+        {% else %}
+            {% trans "New post" %}
+        {% endif %}
+    </h2>
+{% endblock heading %}
 
-{% block content %}
-    <form method="POST" enctype="multipart/form-data" id="model_form">
-        <div class="row">
-            {% if content %}
-                <h2>{% fa 'pencil' %} {% trans "Edit post" %} "{{ content }}"</h2>
-            {% else %}
-                <h2>{% trans "New post" %}</h2>
-            {% endif %}
-        </div>
-        <div class="row">
-            <div class="col third">
-                {% csrf_token %}
-                <h3>{% trans 'Metadatas' %}</h3>
-                {% form_field form.author %}
-                {% form_field form.image %}
-                {% form_field form.published_at %}
-                {% form_field form.status %}
-                {% form_field form.lang %}
-                {% form_field form.tags %}
-            </div>
-            <div class="col two-third">
-                <h3>{% trans 'Content' %}</h3>
-                {% form_field form.title %}
-                {% form_field form.text %}
-                {% form_field form.summary %}
-            </div>
-        </div>
-        <div class="row">
-            <input type="submit" value="{% trans 'submit' %}" />
-        </div>
-    </form>
-{% endblock content %}
+{% block form %}
+    <h3>{% trans 'Content' %}</h3>
+    {% form_field form.title %}
+    {% form_field form.text %}
+    {% form_field form.summary %}
+{% endblock form %}
+
+{% block sidebar %}
+    <h3>{% trans 'Metadatas' %}</h3>
+    {% form_field form.author %}
+    {% form_field form.image %}
+    {% form_field form.published_at %}
+    {% form_field form.status %}
+    {% form_field form.lang %}
+    {% form_field form.tags %}
+{% endblock sidebar %}
+
+{% block extra_form_foot %}
+    {% if content %}
+        <a class="spaced button neutral" href="{{ content.get_absolute_url }}">{% trans 'cancel' %}</a>
+    {% else %}
+        <a class="spaced button neutral" href="{% url 'blog:index' %}">{% trans 'cancel' %}</a>
+    {% endif %}
+{% endblock extra_form_foot %}
+
 {% block extra_foot %}
     <script type="text/javascript">
         ID.focusOn('[name=title]');
