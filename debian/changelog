@@ -1,3 +1,17 @@
+ideascube (0.27.0) unstable; urgency=low
+
+  * Homogenize and fix ideascube forms;
+  * Add support for 'all' language contents;
+  * Move to django-multiselecfield;
+  * Update documentation to reflect the move to framagit
+    (and remove travis-ci integration);
+  * Simplify docker configuration files;
+  * Build a debian package on `master` changes;
+  * Clean cards settings;
+  * Upgraded our dependencies.
+
+ -- Matthieu Gautier <mgautier@kymeria.fr>  Thu, 18 May 2017 17:25:00 +0200
+
 ideascube (0.26.1) unstable; urgency=low
 
   * Fixed an issue with timezone handling in Django 1.11, which crashed many
