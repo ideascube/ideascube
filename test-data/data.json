@@ -29,33 +29,19 @@
         "country_of_origin_occupation": "g\u68eegh",
         "family_status": "no_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "n\u00f4\u00fb\u68ee\u6728k",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user0@ideascube.org",
-        "en_level": [
-            "s",
-            "u"
-        ],
-        "ar_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [
-            "r",
-            "s"
-        ],
-        "ku_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "sdb_level": [],
+        "en_level": "s,u",
+        "ar_level": "r,s,w",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "r,s",
+        "ku_level": "r,u,w",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -89,23 +75,19 @@
         "country_of_origin_occupation": "zvh\u00fb.\u00e0l",
         "family_status": "no_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "ixz\u00e8\u6728",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "av\u6728pk\u00e0tylm,s\u00ea.n\u00e0\u00e2\u00eexlm,p\u6728czqxhqby",
         "email": "test.user1@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [
-            "s"
-        ],
-        "rn_level": [
-            "w"
-        ],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "s",
+        "rn_level": "w",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": "la\u00e2mf"
     }
 },
@@ -139,29 +121,19 @@
         "country_of_origin_occupation": "\u00f4j\u00e9\u6728",
         "family_status": "without_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "h\u00e0",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user2@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [
-            "s",
-            "u"
-        ],
-        "rn_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [
-            "s",
-            "u"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "s,u",
+        "rn_level": "r,s,w",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "s,u",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -195,39 +167,19 @@
         "country_of_origin_occupation": "bkpkya",
         "family_status": "no_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "1",
-            "11",
-            "2",
-            "3",
-            "4",
-            "5",
-            "9"
-        ],
+        "camp_activities": "1,11,2,3,4,5,9",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user3@ideascube.org",
-        "en_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "sw_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "r,u,w",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "r,u,w",
+        "sw_level": "r,s,u",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -261,43 +213,19 @@
         "country_of_origin_occupation": "",
         "family_status": "with_family",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "2",
-            "3",
-            "5",
-            "6",
-            "7"
-        ],
+        "camp_activities": "2,3,5,6,7",
         "camp_address": ".rn\u00fb\u00e0\u00eec",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "\u00e9fdbyb\u00fb\u00eayn,wy\u68eeh\u00e2bb\u6728m\u00e9",
         "email": "test.user4@ideascube.org",
-        "en_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "ar_level": [
-            "s",
-            "w"
-        ],
-        "fa_level": [
-            "u"
-        ],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [
-            "s",
-            "u"
-        ],
-        "ku_level": [
-            "s"
-        ],
-        "sdb_level": [
-            "r",
-            "s",
-            "w"
-        ],
+        "en_level": "r,u,w",
+        "ar_level": "s,w",
+        "fa_level": "u",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "s,u",
+        "ku_level": "s",
+        "sdb_level": "r,s,w",
         "extra": "filv\u00e9t"
     }
 },
@@ -331,27 +259,19 @@
         "country_of_origin_occupation": "",
         "family_status": "without_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "gobj\u00e8",
-        "disabilities": [
-            "auditive",
-            "mental",
-            "physical"
-        ],
+        "disabilities": "auditive,mental,physical",
         "phone": "",
         "email": "test.user5@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "r,s,w",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": "zxq\u00e2ob"
     }
 },
@@ -385,40 +305,19 @@
         "country_of_origin_occupation": "",
         "family_status": "no_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "7"
-        ],
+        "camp_activities": "1,2,3,4,5,7",
         "camp_address": "nopo\u00ea\u00ea",
-        "disabilities": [
-            "cognitive",
-            "physical",
-            "visual"
-        ],
+        "disabilities": "cognitive,physical,visual",
         "phone": "hukx\u00fbthota,gp\u68eee\u00fbs\u00e0tgp,a\u00f4m\u00e0k\u00e0ypuy",
         "email": "test.user6@ideascube.org",
-        "en_level": [
-            "u",
-            "w"
-        ],
-        "ar_level": [
-            "s",
-            "u"
-        ],
-        "fa_level": [
-            "s",
-            "u",
-            "w"
-        ],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "u,w",
+        "ar_level": "s,u",
+        "fa_level": "s,u,w",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -452,39 +351,19 @@
         "country_of_origin_occupation": "",
         "family_status": "without_family",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "1",
-            "4",
-            "6",
-            "7"
-        ],
+        "camp_activities": "1,4,6,7",
         "camp_address": "nt\u00e2n",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user7@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "s",
-            "u"
-        ],
-        "fa_level": [],
-        "rn_level": [
-            "w"
-        ],
-        "fr_level": [
-            "s",
-            "u"
-        ],
-        "sw_level": [
-            "s",
-            "u",
-            "w"
-        ],
-        "ku_level": [],
-        "sdb_level": [
-            "u",
-            "w"
-        ],
+        "en_level": "",
+        "ar_level": "s,u",
+        "fa_level": "",
+        "rn_level": "w",
+        "fr_level": "s,u",
+        "sw_level": "s,u,w",
+        "ku_level": "",
+        "sdb_level": "u,w",
         "extra": "\u00ee\u00fbm."
     }
 },
@@ -518,45 +397,19 @@
         "country_of_origin_occupation": "",
         "family_status": "with_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "1",
-            "11",
-            "4",
-            "6",
-            "9"
-        ],
+        "camp_activities": "1,11,4,6,9",
         "camp_address": "lj\u00eaopf",
-        "disabilities": [
-            "auditive",
-            "cognitive",
-            "physical"
-        ],
+        "disabilities": "auditive,cognitive,physical",
         "phone": "\u00e0nx\u00e0qqrh\u00fbk,s\u68ee\u00e0xt\u00f4\u00e0\u00e8\u68eet,\u00eahypuiil\u00fb.",
         "email": "test.user8@ideascube.org",
-        "en_level": [
-            "r",
-            "s"
-        ],
-        "ar_level": [
-            "r",
-            "s",
-            "u",
-            "w"
-        ],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "ku_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "sdb_level": [],
+        "en_level": "r,s",
+        "ar_level": "r,s,u,w",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "r,s,w",
+        "ku_level": "r,s,u",
+        "sdb_level": "",
         "extra": "xkp\u00e9tb"
     }
 },
@@ -590,30 +443,19 @@
         "country_of_origin_occupation": "",
         "family_status": "without_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "scniompuwd,eru\u00e0j\u00ee\u00f4spa",
         "email": "test.user9@ideascube.org",
-        "en_level": [
-            "u"
-        ],
-        "ar_level": [
-            "u",
-            "w"
-        ],
-        "fa_level": [],
-        "rn_level": [
-            "s",
-            "w"
-        ],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [
-            "r",
-            "s"
-        ],
+        "en_level": "u",
+        "ar_level": "u,w",
+        "fa_level": "",
+        "rn_level": "s,w",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "r,s",
         "extra": "\u6728xk\u00e0fl"
     }
 },
@@ -647,32 +489,19 @@
         "country_of_origin_occupation": "\u00e2n\u68ee.\u00ea",
         "family_status": "no_family",
         "is_sent_to_school": true,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [
-            "auditive",
-            "cognitive",
-            "visual"
-        ],
+        "disabilities": "auditive,cognitive,visual",
         "phone": "ejwgthe\u00eerq,ssxbfyl\u00e0gr",
         "email": "test.user10@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [
-            "r"
-        ],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [
-            "u",
-            "w"
-        ],
-        "ku_level": [],
-        "sdb_level": [
-            "r",
-            "s",
-            "w"
-        ],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "r",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "u,w",
+        "ku_level": "",
+        "sdb_level": "r,s,w",
         "extra": "zweoo"
     }
 },
@@ -706,28 +535,19 @@
         "country_of_origin_occupation": "bakn\u00eaq",
         "family_status": "no_family",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "2",
-            "4",
-            "5",
-            "7",
-            "8",
-            "9"
-        ],
+        "camp_activities": "2,4,5,7,8,9",
         "camp_address": "",
-        "disabilities": [
-            "cognitive"
-        ],
+        "disabilities": "cognitive",
         "phone": "qrwt\u00f4ne\u00eag\u00fb",
         "email": "test.user11@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": "p\u00ee\u00e8t"
     }
 },
@@ -761,35 +581,19 @@
         "country_of_origin_occupation": "esjwm\u6797",
         "family_status": "without_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "\u00f4bs\u00fb\u00e8dgf\u6797\u00fb",
         "email": "test.user12@ideascube.org",
-        "en_level": [
-            "s",
-            "u",
-            "w"
-        ],
-        "ar_level": [],
-        "fa_level": [
-            "s",
-            "w"
-        ],
-        "rn_level": [],
-        "fr_level": [
-            "w"
-        ],
-        "sw_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "ku_level": [],
-        "sdb_level": [
-            "s",
-            "u"
-        ],
+        "en_level": "s,u,w",
+        "ar_level": "",
+        "fa_level": "s,w",
+        "rn_level": "",
+        "fr_level": "w",
+        "sw_level": "r,s,u",
+        "ku_level": "",
+        "sdb_level": "s,u",
         "extra": "\u00eev\u00fbyeh"
     }
 },
@@ -823,44 +627,19 @@
         "country_of_origin_occupation": "cz\u6797nbzm",
         "family_status": "with_family",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "1",
-            "10",
-            "11",
-            "2",
-            "5"
-        ],
+        "camp_activities": "1,10,11,2,5",
         "camp_address": "",
-        "disabilities": [
-            "cognitive",
-            "mental",
-            "visual"
-        ],
+        "disabilities": "cognitive,mental,visual",
         "phone": "nyfw\u68ee\u00ee\u00e2xn\u6728",
         "email": "test.user13@ideascube.org",
-        "en_level": [
-            "s",
-            "u",
-            "w"
-        ],
-        "ar_level": [],
-        "fa_level": [
-            "s",
-            "w"
-        ],
-        "rn_level": [],
-        "fr_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "sw_level": [],
-        "ku_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "sdb_level": [],
+        "en_level": "s,u,w",
+        "ar_level": "",
+        "fa_level": "s,w",
+        "rn_level": "",
+        "fr_level": "r,s,w",
+        "sw_level": "",
+        "ku_level": "r,u,w",
+        "sdb_level": "",
         "extra": "\u00fbp"
     }
 },
@@ -894,49 +673,19 @@
         "country_of_origin_occupation": "",
         "family_status": "without_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "1",
-            "10",
-            "11",
-            "3",
-            "4",
-            "7",
-            "9"
-        ],
+        "camp_activities": "1,10,11,3,4,7,9",
         "camp_address": "r\u00e9k",
-        "disabilities": [
-            "auditive",
-            "cognitive",
-            "physical"
-        ],
+        "disabilities": "auditive,cognitive,physical",
         "phone": "\u00ee\u00e0\u68ee\u00e2\u6728oc\u00eeps,\u68eeiqnrp\u00e9r\u6797y,lge.\u00e8y.g\u00e8q",
         "email": "test.user14@ideascube.org",
-        "en_level": [
-            "r",
-            "s"
-        ],
-        "ar_level": [
-            "w"
-        ],
-        "fa_level": [
-            "u"
-        ],
-        "rn_level": [],
-        "fr_level": [
-            "r",
-            "u"
-        ],
-        "sw_level": [],
-        "ku_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "sdb_level": [
-            "r",
-            "u",
-            "w"
-        ],
+        "en_level": "r,s",
+        "ar_level": "w",
+        "fa_level": "u",
+        "rn_level": "",
+        "fr_level": "r,u",
+        "sw_level": "",
+        "ku_level": "r,s,u",
+        "sdb_level": "r,u,w",
         "extra": "tjk\u00f4ompx"
     }
 },
@@ -970,34 +719,19 @@
         "country_of_origin_occupation": "\u68eeegk",
         "family_status": "no_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "11",
-            "7",
-            "8"
-        ],
+        "camp_activities": "11,7,8",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user15@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "sw_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "ku_level": [
-            "s",
-            "w"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "r,u,w",
+        "sw_level": "r,s,w",
+        "ku_level": "s,w",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -1031,37 +765,19 @@
         "country_of_origin_occupation": "wd\u00eeu",
         "family_status": "no_family",
         "is_sent_to_school": true,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [
-            "mental",
-            "physical",
-            "visual"
-        ],
+        "disabilities": "mental,physical,visual",
         "phone": "",
         "email": "test.user16@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "fa_level": [],
-        "rn_level": [
-            "s",
-            "w"
-        ],
-        "fr_level": [
-            "r",
-            "w"
-        ],
-        "sw_level": [],
-        "ku_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "r,s,w",
+        "fa_level": "",
+        "rn_level": "s,w",
+        "fr_level": "r,w",
+        "sw_level": "",
+        "ku_level": "r,s,u",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -1095,25 +811,19 @@
         "country_of_origin_occupation": "",
         "family_status": "without_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user17@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [
-            "s",
-            "w"
-        ],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [
-            "s",
-            "w"
-        ],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "s,w",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "s,w",
         "extra": "\u00e2sah\u00e2zd"
     }
 },
@@ -1147,38 +857,19 @@
         "country_of_origin_occupation": "",
         "family_status": "",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user18@ideascube.org",
-        "en_level": [
-            "r",
-            "s"
-        ],
-        "ar_level": [
-            "u",
-            "w"
-        ],
-        "fa_level": [
-            "r",
-            "s",
-            "u",
-            "w"
-        ],
-        "rn_level": [],
-        "fr_level": [
-            "s",
-            "u"
-        ],
-        "sw_level": [
-            "w"
-        ],
-        "ku_level": [],
-        "sdb_level": [
-            "s",
-            "w"
-        ],
+        "en_level": "r,s",
+        "ar_level": "u,w",
+        "fa_level": "r,s,u,w",
+        "rn_level": "",
+        "fr_level": "s,u",
+        "sw_level": "w",
+        "ku_level": "",
+        "sdb_level": "s,w",
         "extra": "\u00e9ygdop"
     }
 },
@@ -1212,29 +903,19 @@
         "country_of_origin_occupation": "",
         "family_status": "",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "ayw\u6728",
-        "disabilities": [
-            "auditive",
-            "mental"
-        ],
+        "disabilities": "auditive,mental",
         "phone": "",
         "email": "test.user19@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [
-            "w"
-        ],
-        "ku_level": [
-            "r",
-            "s",
-            "u",
-            "w"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "w",
+        "ku_level": "r,s,u,w",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -1268,42 +949,19 @@
         "country_of_origin_occupation": "\u00ee\u00fbdl",
         "family_status": "without_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [
-            "auditive",
-            "mental",
-            "visual"
-        ],
+        "disabilities": "auditive,mental,visual",
         "phone": "",
         "email": "test.user20@ideascube.org",
-        "en_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "ar_level": [],
-        "fa_level": [
-            "r",
-            "s",
-            "u",
-            "w"
-        ],
-        "rn_level": [],
-        "fr_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "sw_level": [],
-        "ku_level": [
-            "r",
-            "u"
-        ],
-        "sdb_level": [
-            "r",
-            "u"
-        ],
+        "en_level": "r,s,w",
+        "ar_level": "",
+        "fa_level": "r,s,u,w",
+        "rn_level": "",
+        "fr_level": "r,s,w",
+        "sw_level": "",
+        "ku_level": "r,u",
+        "sdb_level": "r,u",
         "extra": "\u00e0\u68ee\u68eehg\u6728"
     }
 },
@@ -1337,40 +995,19 @@
         "country_of_origin_occupation": "",
         "family_status": "no_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "n\u00fb",
-        "disabilities": [
-            "cognitive",
-            "mental",
-            "visual"
-        ],
+        "disabilities": "cognitive,mental,visual",
         "phone": "b\u00eeg\u00e2j\u00e8.eid",
         "email": "test.user21@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "fa_level": [],
-        "rn_level": [
-            "u",
-            "w"
-        ],
-        "fr_level": [
-            "s",
-            "u",
-            "w"
-        ],
-        "sw_level": [
-            "u"
-        ],
-        "ku_level": [],
-        "sdb_level": [
-            "s",
-            "u",
-            "w"
-        ],
+        "en_level": "",
+        "ar_level": "r,s,u",
+        "fa_level": "",
+        "rn_level": "u,w",
+        "fr_level": "s,u,w",
+        "sw_level": "u",
+        "ku_level": "",
+        "sdb_level": "s,u,w",
         "extra": ""
     }
 },
@@ -1404,42 +1041,19 @@
         "country_of_origin_occupation": "",
         "family_status": "without_family",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "1",
-            "10",
-            "3",
-            "5",
-            "6",
-            "7",
-            "9"
-        ],
+        "camp_activities": "1,10,3,5,6,7,9",
         "camp_address": "ge\u00f4\u00e2on",
-        "disabilities": [
-            "auditive",
-            "cognitive",
-            "mental",
-            "physical"
-        ],
+        "disabilities": "auditive,cognitive,mental,physical",
         "phone": "",
         "email": "test.user22@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "r",
-            "s",
-            "u",
-            "w"
-        ],
-        "fa_level": [
-            "u"
-        ],
-        "rn_level": [
-            "r",
-            "u"
-        ],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "r,s,u,w",
+        "fa_level": "u",
+        "rn_level": "r,u",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": "rymb\u00e2\u00ea"
     }
 },
@@ -1473,37 +1087,19 @@
         "country_of_origin_occupation": "xtjr\u00e9\u00e2",
         "family_status": "with_family",
         "is_sent_to_school": true,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "mywsja",
-        "disabilities": [
-            "auditive",
-            "cognitive",
-            "visual"
-        ],
+        "disabilities": "auditive,cognitive,visual",
         "phone": "",
         "email": "test.user23@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "s",
-            "w"
-        ],
-        "fa_level": [
-            "w"
-        ],
-        "rn_level": [
-            "r"
-        ],
-        "fr_level": [],
-        "sw_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "ku_level": [],
-        "sdb_level": [
-            "r",
-            "w"
-        ],
+        "en_level": "",
+        "ar_level": "s,w",
+        "fa_level": "w",
+        "rn_level": "r",
+        "fr_level": "",
+        "sw_level": "r,s,w",
+        "ku_level": "",
+        "sdb_level": "r,w",
         "extra": "fk\u00e0gob"
     }
 },
@@ -1537,43 +1133,19 @@
         "country_of_origin_occupation": "",
         "family_status": "with_family",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "10",
-            "2",
-            "4",
-            "6",
-            "7",
-            "8",
-            "9"
-        ],
+        "camp_activities": "10,2,4,6,7,8,9",
         "camp_address": "",
-        "disabilities": [
-            "auditive",
-            "cognitive",
-            "mental",
-            "physical"
-        ],
+        "disabilities": "auditive,cognitive,mental,physical",
         "phone": "",
         "email": "test.user24@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "u"
-        ],
-        "fa_level": [
-            "r",
-            "u"
-        ],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [
-            "u",
-            "w"
-        ],
-        "sdb_level": [
-            "s",
-            "u"
-        ],
+        "en_level": "",
+        "ar_level": "u",
+        "fa_level": "r,u",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "u,w",
+        "sdb_level": "s,u",
         "extra": "\u6797\u6728\u6797oh"
     }
 },
@@ -1607,36 +1179,19 @@
         "country_of_origin_occupation": "",
         "family_status": "no_family",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "10",
-            "11",
-            "2",
-            "3",
-            "4",
-            "5"
-        ],
+        "camp_activities": "10,11,2,3,4,5",
         "camp_address": "okkaua\u00ea",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user25@ideascube.org",
-        "en_level": [
-            "r",
-            "s"
-        ],
-        "ar_level": [],
-        "fa_level": [
-            "s",
-            "u",
-            "w"
-        ],
-        "rn_level": [
-            "s",
-            "w"
-        ],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "r,s",
+        "ar_level": "",
+        "fa_level": "s,u,w",
+        "rn_level": "s,w",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": "j\u00e2aot"
     }
 },
@@ -1670,47 +1225,19 @@
         "country_of_origin_occupation": "wl\u00e9\u00e2ue",
         "family_status": "without_family",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "1",
-            "10",
-            "2",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
-        ],
+        "camp_activities": "1,10,2,4,5,6,7,8,9",
         "camp_address": "mql\u00e0",
-        "disabilities": [
-            "auditive",
-            "mental",
-            "physical",
-            "visual"
-        ],
+        "disabilities": "auditive,mental,physical,visual",
         "phone": "kxhn.ii\u68ee\u68eeu,axr\u6728dch\u00e8zt",
         "email": "test.user26@ideascube.org",
-        "en_level": [
-            "s"
-        ],
-        "ar_level": [],
-        "fa_level": [
-            "s",
-            "w"
-        ],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "ku_level": [],
-        "sdb_level": [
-            "r",
-            "u",
-            "w"
-        ],
+        "en_level": "s",
+        "ar_level": "",
+        "fa_level": "s,w",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "r,s,u",
+        "ku_level": "",
+        "sdb_level": "r,u,w",
         "extra": "pud"
     }
 },
@@ -1744,35 +1271,19 @@
         "country_of_origin_occupation": "",
         "family_status": "without_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "1",
-            "10",
-            "11",
-            "4",
-            "8"
-        ],
+        "camp_activities": "1,10,11,4,8",
         "camp_address": "xd\u00f4jlj",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "znjjipov\u00e0y,cswa.hjoj\u00ee",
         "email": "test.user27@ideascube.org",
-        "en_level": [
-            "w"
-        ],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [
-            "s"
-        ],
-        "fr_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [
-            "s"
-        ],
+        "en_level": "w",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "s",
+        "fr_level": "r,s,w",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "s",
         "extra": ""
     }
 },
@@ -1806,26 +1317,19 @@
         "country_of_origin_occupation": "",
         "family_status": "",
         "is_sent_to_school": true,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "ss\u00e0er",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user28@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [
-            "r",
-            "u"
-        ],
-        "ku_level": [
-            "s",
-            "u",
-            "w"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "r,u",
+        "ku_level": "s,u,w",
+        "sdb_level": "",
         "extra": "xk\u00e8l\u00fbpq"
     }
 },
@@ -1859,26 +1363,19 @@
         "country_of_origin_occupation": "sqz",
         "family_status": "no_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user29@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [
-            "u",
-            "w"
-        ],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "r,u,w",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "u,w",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": "rd\u00e0s\u68eez"
     }
 },
@@ -1912,35 +1409,19 @@
         "country_of_origin_occupation": "fu\u00f4a",
         "family_status": "no_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [
-            "cognitive",
-            "mental",
-            "physical"
-        ],
+        "disabilities": "cognitive,mental,physical",
         "phone": "\u6728irigfp\u00e8rp,an\u6797p\u00e8p\u00e8ddx",
         "email": "test.user30@ideascube.org",
-        "en_level": [
-            "u",
-            "w"
-        ],
-        "ar_level": [
-            "r",
-            "u"
-        ],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [
-            "r",
-            "s"
-        ],
-        "sw_level": [
-            "r",
-            "w"
-        ],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "u,w",
+        "ar_level": "r,u",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "r,s",
+        "sw_level": "r,w",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -1974,39 +1455,19 @@
         "country_of_origin_occupation": "is\u00f4i.q",
         "family_status": "",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "1",
-            "11",
-            "3",
-            "4",
-            "7",
-            "8"
-        ],
+        "camp_activities": "1,11,3,4,7,8",
         "camp_address": "lccl",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "ztkk.\u00f4n\u00e2\u00een",
         "email": "test.user31@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "r",
-            "s"
-        ],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [
-            "u",
-            "w"
-        ],
-        "sw_level": [],
-        "ku_level": [
-            "r",
-            "u"
-        ],
-        "sdb_level": [
-            "r",
-            "u",
-            "w"
-        ],
+        "en_level": "",
+        "ar_level": "r,s",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "u,w",
+        "sw_level": "",
+        "ku_level": "r,u",
+        "sdb_level": "r,u,w",
         "extra": ""
     }
 },
@@ -2040,26 +1501,19 @@
         "country_of_origin_occupation": "",
         "family_status": "",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "10",
-            "11",
-            "6"
-        ],
+        "camp_activities": "10,11,6",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "o\u00eemtbh\u00e0uy\u00fb,fb.ofc\u00e8\u00e0xg",
         "email": "test.user32@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [
-            "r",
-            "s"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "r,s",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -2093,30 +1547,19 @@
         "country_of_origin_occupation": "\u00fbzsnoy",
         "family_status": "",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "4",
-            "9"
-        ],
+        "camp_activities": "4,9",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user33@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "fa_level": [
-            "r"
-        ],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [
-            "r"
-        ],
+        "en_level": "",
+        "ar_level": "r,u,w",
+        "fa_level": "r",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "r",
         "extra": "\u00ee"
     }
 },
@@ -2150,40 +1593,19 @@
         "country_of_origin_occupation": "pwnv\u6797o",
         "family_status": "no_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "1",
-            "2",
-            "4",
-            "9"
-        ],
+        "camp_activities": "1,2,4,9",
         "camp_address": "azhpqkj",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user34@ideascube.org",
-        "en_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [
-            "u"
-        ],
-        "fr_level": [],
-        "sw_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "ku_level": [
-            "u"
-        ],
-        "sdb_level": [
-            "r",
-            "u",
-            "w"
-        ],
+        "en_level": "r,s,w",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "u",
+        "fr_level": "",
+        "sw_level": "r,u,w",
+        "ku_level": "u",
+        "sdb_level": "r,u,w",
         "extra": "\u00f4\u00e2b"
     }
 },
@@ -2217,46 +1639,19 @@
         "country_of_origin_occupation": "\u00e2\u00fbkihq",
         "family_status": "with_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "1",
-            "10",
-            "11",
-            "5",
-            "8"
-        ],
+        "camp_activities": "1,10,11,5,8",
         "camp_address": "tatcr",
-        "disabilities": [
-            "cognitive",
-            "physical",
-            "visual"
-        ],
+        "disabilities": "cognitive,physical,visual",
         "phone": "",
         "email": "test.user35@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "fa_level": [
-            "s",
-            "u",
-            "w"
-        ],
-        "rn_level": [],
-        "fr_level": [
-            "s",
-            "w"
-        ],
-        "sw_level": [
-            "r",
-            "s"
-        ],
-        "ku_level": [
-            "r",
-            "s"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "r,s,u",
+        "fa_level": "s,u,w",
+        "rn_level": "",
+        "fr_level": "s,w",
+        "sw_level": "r,s",
+        "ku_level": "r,s",
+        "sdb_level": "",
         "extra": "rm\u00eec"
     }
 },
@@ -2290,37 +1685,19 @@
         "country_of_origin_occupation": "",
         "family_status": "with_family",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "1",
-            "3",
-            "4",
-            "8",
-            "9"
-        ],
+        "camp_activities": "1,3,4,8,9",
         "camp_address": "nlzz",
-        "disabilities": [
-            "physical"
-        ],
+        "disabilities": "physical",
         "phone": "\u00e0s\u6728\u00ealgw\u00eebg,meim\u00e9luj\u00fbe,\u00e9l.n\u6728deu\u00f4\u00e9",
         "email": "test.user36@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [
-            "r",
-            "s",
-            "u",
-            "w"
-        ],
-        "fr_level": [
-            "r",
-            "s"
-        ],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [
-            "w"
-        ],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "r,s,u,w",
+        "fr_level": "r,s",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "w",
         "extra": ""
     }
 },
@@ -2354,45 +1731,19 @@
         "country_of_origin_occupation": "\u00f4swk",
         "family_status": "with_family",
         "is_sent_to_school": true,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "\u00fb\u00eatcw\u00e9\u00f4\u00e2",
-        "disabilities": [
-            "auditive"
-        ],
+        "disabilities": "auditive",
         "phone": ".\u00fbq.\u00e0dvze\u00e2,\u00ea\u00eexma\u00e8ni\u00fbm",
         "email": "test.user37@ideascube.org",
-        "en_level": [
-            "w"
-        ],
-        "ar_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "fa_level": [],
-        "rn_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "fr_level": [
-            "r",
-            "s"
-        ],
-        "sw_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "ku_level": [
-            "r",
-            "w"
-        ],
-        "sdb_level": [
-            "s",
-            "u",
-            "w"
-        ],
+        "en_level": "w",
+        "ar_level": "r,s,u",
+        "fa_level": "",
+        "rn_level": "r,s,w",
+        "fr_level": "r,s",
+        "sw_level": "r,u,w",
+        "ku_level": "r,w",
+        "sdb_level": "s,u,w",
         "extra": "v\u00e9\u00e9\u6728j\u6728"
     }
 },
@@ -2426,27 +1777,19 @@
         "country_of_origin_occupation": "",
         "family_status": "with_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user38@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "rn_level": [
-            "s"
-        ],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [
-            "w"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "r,s,u",
+        "rn_level": "s",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "w",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -2480,43 +1823,19 @@
         "country_of_origin_occupation": "uwwjn",
         "family_status": "with_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "1",
-            "10",
-            "2",
-            "3",
-            "4",
-            "5",
-            "8",
-            "9"
-        ],
+        "camp_activities": "1,10,2,3,4,5,8,9",
         "camp_address": "",
-        "disabilities": [
-            "physical",
-            "visual"
-        ],
+        "disabilities": "physical,visual",
         "phone": "",
         "email": "test.user39@ideascube.org",
-        "en_level": [
-            "w"
-        ],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [
-            "r",
-            "w"
-        ],
-        "fr_level": [],
-        "sw_level": [
-            "r"
-        ],
-        "ku_level": [
-            "r",
-            "s",
-            "u",
-            "w"
-        ],
-        "sdb_level": [],
+        "en_level": "w",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "r,w",
+        "fr_level": "",
+        "sw_level": "r",
+        "ku_level": "r,s,u,w",
+        "sdb_level": "",
         "extra": "\u00e9\u00e0\u00e2no"
     }
 },
@@ -2550,22 +1869,19 @@
         "country_of_origin_occupation": "",
         "family_status": "without_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user40@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "r",
-            "w"
-        ],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "r,w",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": "\u00eeq\u6797t\u00e8"
     }
 },
@@ -2599,36 +1915,19 @@
         "country_of_origin_occupation": "bha\u00e9\u00e9\u6728m",
         "family_status": "with_family",
         "is_sent_to_school": true,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "cht\u6728\u00e8\u00e8",
-        "disabilities": [
-            "mental",
-            "physical",
-            "visual"
-        ],
+        "disabilities": "mental,physical,visual",
         "phone": "u\u00e2rkgh\u00f4j\u00fbw",
         "email": "test.user41@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "s"
-        ],
-        "fa_level": [],
-        "rn_level": [
-            "s",
-            "u"
-        ],
-        "fr_level": [],
-        "sw_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "ku_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "s",
+        "fa_level": "",
+        "rn_level": "s,u",
+        "fr_level": "",
+        "sw_level": "r,u,w",
+        "ku_level": "r,s,w",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -2662,34 +1961,19 @@
         "country_of_origin_occupation": "",
         "family_status": "without_family",
         "is_sent_to_school": false,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "\u00eas.",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "\u00ea\u00f4\u00e9zn\u00e0e\u00eaj\u68ee,\u00f4mdsrscd\u00f4f,bkirp\u00eebca\u00f4",
         "email": "test.user42@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [
-            "w"
-        ],
-        "fr_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "sw_level": [
-            "r",
-            "s",
-            "u",
-            "w"
-        ],
-        "ku_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "w",
+        "fr_level": "r,u,w",
+        "sw_level": "r,s,u,w",
+        "ku_level": "r,s,u",
+        "sdb_level": "",
         "extra": "xe\u00ea"
     }
 },
@@ -2723,30 +2007,19 @@
         "country_of_origin_occupation": "q",
         "family_status": "no_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "4",
-            "5",
-            "7",
-            "9"
-        ],
+        "camp_activities": "4,5,7,9",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "wp\u68ee.ogkbz\u6728",
         "email": "test.user43@ideascube.org",
-        "en_level": [],
-        "ar_level": [],
-        "fa_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [
-            "u"
-        ],
+        "en_level": "",
+        "ar_level": "",
+        "fa_level": "r,u,w",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "u",
         "extra": ""
     }
 },
@@ -2780,32 +2053,19 @@
         "country_of_origin_occupation": "\u68eezzfy\u00eacu",
         "family_status": "with_family",
         "is_sent_to_school": true,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "\u6728\u00f4odk\u68eef",
-        "disabilities": [
-            "auditive",
-            "cognitive",
-            "physical"
-        ],
+        "disabilities": "auditive,cognitive,physical",
         "phone": "",
         "email": "test.user44@ideascube.org",
-        "en_level": [
-            "u",
-            "w"
-        ],
-        "ar_level": [],
-        "fa_level": [
-            "r",
-            "s"
-        ],
-        "rn_level": [],
-        "fr_level": [],
-        "sw_level": [
-            "r",
-            "s"
-        ],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "u,w",
+        "ar_level": "",
+        "fa_level": "r,s",
+        "rn_level": "",
+        "fr_level": "",
+        "sw_level": "r,s",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -2839,37 +2099,19 @@
         "country_of_origin_occupation": "",
         "family_status": "with_family",
         "is_sent_to_school": true,
-        "camp_activities": [],
+        "camp_activities": "",
         "camp_address": "",
-        "disabilities": [
-            "cognitive",
-            "physical"
-        ],
+        "disabilities": "cognitive,physical",
         "phone": "xr\u00e9\u00fbafhya\u00ea,us.\u00eez\u00e0x\u6797.j",
         "email": "test.user45@ideascube.org",
-        "en_level": [],
-        "ar_level": [
-            "w"
-        ],
-        "fa_level": [
-            "s",
-            "u"
-        ],
-        "rn_level": [
-            "r",
-            "u"
-        ],
-        "fr_level": [],
-        "sw_level": [
-            "r",
-            "u",
-            "w"
-        ],
-        "ku_level": [
-            "r",
-            "s"
-        ],
-        "sdb_level": [],
+        "en_level": "",
+        "ar_level": "w",
+        "fa_level": "s,u",
+        "rn_level": "r,u",
+        "fr_level": "",
+        "sw_level": "r,u,w",
+        "ku_level": "r,s",
+        "sdb_level": "",
         "extra": "r\u6728y\u00ea"
     }
 },
@@ -2903,45 +2145,19 @@
         "country_of_origin_occupation": "uyv",
         "family_status": "no_family",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "1",
-            "11",
-            "3",
-            "4",
-            "6",
-            "9"
-        ],
+        "camp_activities": "1,11,3,4,6,9",
         "camp_address": "jhos\u00e9\u00f4ea",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user46@ideascube.org",
-        "en_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [
-            "u"
-        ],
-        "fr_level": [
-            "r",
-            "s",
-            "u",
-            "w"
-        ],
-        "sw_level": [
-            "w"
-        ],
-        "ku_level": [
-            "r",
-            "w"
-        ],
-        "sdb_level": [
-            "r",
-            "w"
-        ],
+        "en_level": "r,s,u",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "u",
+        "fr_level": "r,s,u,w",
+        "sw_level": "w",
+        "ku_level": "r,w",
+        "sdb_level": "r,w",
         "extra": ""
     }
 },
@@ -2975,33 +2191,19 @@
         "country_of_origin_occupation": "qnjdtu",
         "family_status": "with_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "7"
-        ],
+        "camp_activities": "7",
         "camp_address": "",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user47@ideascube.org",
-        "en_level": [
-            "s"
-        ],
-        "ar_level": [
-            "r",
-            "u"
-        ],
-        "fa_level": [
-            "r",
-            "s",
-            "u"
-        ],
-        "rn_level": [
-            "r",
-            "w"
-        ],
-        "fr_level": [],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "s",
+        "ar_level": "r,u",
+        "fa_level": "r,s,u",
+        "rn_level": "r,w",
+        "fr_level": "",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": "\u00f4d\u00e2\u00fbpnm"
     }
 },
@@ -3035,28 +2237,19 @@
         "country_of_origin_occupation": "uqw\u00e9\u00fb\u00e8",
         "family_status": "with_family",
         "is_sent_to_school": false,
-        "camp_activities": [
-            "3"
-        ],
+        "camp_activities": "3",
         "camp_address": "ow\u00fby",
-        "disabilities": [],
+        "disabilities": "",
         "phone": "",
         "email": "test.user48@ideascube.org",
-        "en_level": [
-            "s",
-            "u"
-        ],
-        "ar_level": [],
-        "fa_level": [],
-        "rn_level": [],
-        "fr_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "sw_level": [],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "s,u",
+        "ar_level": "",
+        "fa_level": "",
+        "rn_level": "",
+        "fr_level": "r,s,w",
+        "sw_level": "",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": ""
     }
 },
@@ -3090,43 +2283,19 @@
         "country_of_origin_occupation": "s",
         "family_status": "",
         "is_sent_to_school": true,
-        "camp_activities": [
-            "10",
-            "11",
-            "4",
-            "5",
-            "6",
-            "7"
-        ],
+        "camp_activities": "10,11,4,5,6,7",
         "camp_address": "u\u00e2\u00e0\u68eeh\u00e2",
-        "disabilities": [
-            "auditive",
-            "cognitive",
-            "mental",
-            "physical"
-        ],
+        "disabilities": "auditive,cognitive,mental,physical",
         "phone": "hbfe\u00eajmhwo,.\u00e8v\u00f4uloy\u00fbx,\u00ee.dguse.ie",
         "email": "test.user49@ideascube.org",
-        "en_level": [
-            "s",
-            "u",
-            "w"
-        ],
-        "ar_level": [
-            "r",
-            "s",
-            "w"
-        ],
-        "fa_level": [],
-        "rn_level": [
-            "r"
-        ],
-        "fr_level": [],
-        "sw_level": [
-            "u"
-        ],
-        "ku_level": [],
-        "sdb_level": [],
+        "en_level": "s,u,w",
+        "ar_level": "r,s,w",
+        "fa_level": "",
+        "rn_level": "r",
+        "fr_level": "",
+        "sw_level": "u",
+        "ku_level": "",
+        "sdb_level": "",
         "extra": "\u68eeki\u6797\u6797c"
     }
 },
