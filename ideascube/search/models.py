@@ -177,9 +177,9 @@ class SearchMixin(models.Model, metaclass=MetaSearchMixin):
 
 
 class SearchableQuerySet(object):
-    def search(self, query=None, kind=None, lang=None, tags=[], source=None, **kwargs):
-        if query:
-            kwargs['text__match'] = query
+    def search(self, text__match=None, kind=None, lang=None, tags=[], source=None, **kwargs):
+        if text__match:
+            kwargs['text__match'] = text__match
         if kind:
             kwargs['kind'] = kind
         if lang:

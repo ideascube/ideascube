@@ -26,11 +26,11 @@ def test_deleted_is_indexed(deleted):
 def test_published_is_indexed(published):
     assert Content.objects.count() == 1
     assert len(list(Content.SearchModel.search(public=True))) == 1
-    assert Content.objects.search(query="Ikinyugunyugu").count() == 0
+    assert Content.objects.search(text__match="Ikinyugunyugu").count() == 0
     published.title = "Ikinyugunyugu"
     published.save()
     assert Content.objects.count() == 1
-    assert Content.objects.search(query="Ikinyugunyugu").count() == 1
+    assert Content.objects.search(text__match="Ikinyugunyugu").count() == 1
 
 
 @pytest.mark.usefixtures('cleansearch')
@@ -44,21 +44,21 @@ def test_hard_delete_is_deindexed(published):
 def test_search_is_case_unsensitive(published):
     published.title = "Ikinyugunyugu"
     published.save()
-    assert Content.objects.search(query="ikinyugunyugu").count() == 1
+    assert Content.objects.search(text__match="ikinyugunyugu").count() == 1
 
 
 @pytest.mark.usefixtures('cleansearch')
 def test_we_can_search_arabic_content(published):
     published.title = "أكثر من خمسين لغة،"
     published.save()
-    assert Content.objects.search(query="خمسين").count() == 1
+    assert Content.objects.search(text__match="خمسين").count() == 1
 
 
 @pytest.mark.usefixtures('cleansearch')
 def test_we_can_search_with_joker(published):
     published.title = "Ikinyugunyugu"
     published.save()
-    assert Content.objects.search(query="Ikinyug*").count() == 1
+    assert Content.objects.search(text__match="Ikinyug*").count() == 1
 
 
 @pytest.mark.usefixtures('cleansearch')
@@ -67,7 +67,7 @@ def test_we_can_filter_search(published, draft):
     published.save()
     draft.title = "A moon in the title"
     draft.save()
-    assert Content.objects.search(query='moon').count() == 2
-    assert Content.objects.search(query='moon').published().count() == 1
-    assert Content.objects.search(query='moon', public=True).count() == 1
-    assert published in Content.objects.search(query='moon').published()
+    assert Content.objects.search(text__match='moon').count() == 2
+    assert Content.objects.search(text__match='moon').published().count() == 1
+    assert Content.objects.search(text__match='moon', public=True).count() == 1
+    assert published in Content.objects.search(text__match='moon').published()
