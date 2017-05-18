@@ -139,10 +139,10 @@ class SearchMixin(models.Model):
 
 
 class SearchableQuerySet(object):
-    def search(self, query=None, kind=None, lang=None, tags=[], source=None, **kwargs):
+    def search(self, text__match=None, kind=None, lang=None, tags=[], source=None, **kwargs):
         kwargs['model'] = self.model.__name__
-        if query:
-            kwargs['text__match'] = query
+        if text__match:
+            kwargs['text__match'] = text__match
         if kind:
             kwargs['kind'] = kind
         if lang:
