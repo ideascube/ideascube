@@ -12,11 +12,11 @@ pytestmark = pytest.mark.django_db
 def test_document_are_indexed(video):
     assert Search.objects.count() == 1
     assert len(list(Search.search(public=True))) == 1
-    assert Document.objects.search("Ikinyugunyugu").count() == 0
+    assert Document.objects.search(query="Ikinyugunyugu").count() == 0
     video.title = "Ikinyugunyugu"
     video.save()
     assert Search.objects.count() == 1
-    assert Document.objects.search("Ikinyugunyugu").count() == 1
+    assert Document.objects.search(query="Ikinyugunyugu").count() == 1
 
 
 @pytest.mark.usefixtures('cleansearch')

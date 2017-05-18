@@ -113,7 +113,7 @@ class UserList(ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query:
-            return self.model.objects.search(query)
+            return self.model.objects.search(query=query)
         else:
             return super().get_queryset()
 
