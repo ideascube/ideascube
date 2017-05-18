@@ -86,13 +86,17 @@ class FilterableViewMixin:
 
     def get_queryset(self):
         qs = super().get_queryset()
-        query = self.request.GET.get('q')
-        kind = self.request.GET.get('kind')
-        lang = self.request.GET.get('lang')
+        search_args = {}
+        for key in ('q', 'kind', 'lang', 'source'):
+            v = self.request.GET.get(key)
+            if v :
+                key = 'text__match' if key=='q' else key
+                search_args[key] = v
         tags = self.request.GET.getlist('tags')
-        source = self.request.GET.get('source')
-        if any((query, kind, lang, tags, source)):
-            qs = qs.search(text__match=query, lang=lang, kind=kind, tags__match=tags, source=source)
+        if tags:
+            search_args['tags__match'] = tags
+        if search_args:
+            qs = qs.search(**search_args)
         return qs
 
 
