@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-28 09:53+0000\n"
-"PO-Revision-Date: 2017-04-28 11:11+0000\n"
-"Last-Translator: mansur tayfuri <tayfuri.mansur@bibliosansfrontieres.org>\n"
+"POT-Creation-Date: 2017-05-18 15:42+0000\n"
+"PO-Revision-Date: 2017-05-18 15:28+0000\n"
+"Last-Translator: Matthieu Gautier <mgautier@kymeria.fr>\n"
 "Language-Team: Kurdish (http://www.transifex.com/ideascube/ideascube/language/ku/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,8 +30,8 @@ msgstr "بڵاوکراوە"
 msgid "deleted"
 msgstr "سڕدراوە"
 
-#: ideascube/blog/models.py:50 ideascube/library/forms.py:155
-#: ideascube/mediacenter/models.py:53
+#: ideascube/blog/models.py:50 ideascube/library/forms.py:162
+#: ideascube/mediacenter/models.py:55
 msgid "title"
 msgstr "ناونیشان"
 
@@ -39,327 +39,349 @@ msgstr "ناونیشان"
 msgid "author"
 msgstr "دانەر"
 
-#: ideascube/blog/models.py:54
-msgid "author text"
-msgstr ""
-
-#: ideascube/blog/models.py:56 ideascube/mediacenter/models.py:54
+#: ideascube/blog/models.py:55 ideascube/mediacenter/models.py:56
 msgid "summary"
 msgstr "کورتە"
 
-#: ideascube/blog/models.py:57 ideascube/mediacenter/models.py:41
+#: ideascube/blog/models.py:56 ideascube/mediacenter/models.py:42
 msgid "image"
-msgstr ""
+msgstr "وێنە"
 
-#: ideascube/blog/models.py:60 ideascube/mediacenter/models.py:45
+#: ideascube/blog/models.py:59 ideascube/mediacenter/models.py:46
 msgid "text"
-msgstr ""
+msgstr "دەق"
 
-#: ideascube/blog/models.py:61
+#: ideascube/blog/models.py:60
 msgid "publication date"
-msgstr ""
+msgstr "کاتی بڵاوبوونەوە"
 
-#: ideascube/blog/models.py:63
-#: ideascube/serveradmin/templates/serveradmin/battery.html:8
+#: ideascube/blog/models.py:62
+#: ideascube/serveradmin/templates/serveradmin/battery.html:11
 msgid "Status"
-msgstr ""
+msgstr "پێگە"
 
-#: ideascube/blog/models.py:66 ideascube/library/models.py:59
+#: ideascube/blog/models.py:65 ideascube/library/models.py:59
 #: ideascube/library/templates/library/book_detail.html:23
-#: ideascube/mediacenter/models.py:55
+#: ideascube/mediacenter/models.py:57
 msgid "Language"
-msgstr ""
+msgstr "زمان"
+
+#: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:73
+#: ideascube/templates/ideascube/includes/tag_cloud.html:4
+msgid "Topics"
+msgstr "بابەت"
 
 #: ideascube/blog/templates/blog/content_detail.html:6
 msgid "View all posts"
-msgstr ""
+msgstr "بینینی هەموو پۆستەکان"
 
 #: ideascube/blog/templates/blog/content_detail.html:7
 #: ideascube/blog/templates/blog/index.html:6
 #: ideascube/templates/ideascube/includes/cards/blog.html:5
 msgid "Blog"
-msgstr ""
+msgstr "بلۆگ"
 
-#: ideascube/blog/templates/blog/content_form.html:12
+#: ideascube/blog/templates/blog/content_form.html:7
 msgid "Edit post"
-msgstr ""
+msgstr "پێداچوونەوە بە پۆستێکدا"
 
-#: ideascube/blog/templates/blog/content_form.html:14
+#: ideascube/blog/templates/blog/content_form.html:9
 msgid "New post"
-msgstr ""
+msgstr "پۆستی نوێ"
 
-#: ideascube/blog/templates/blog/content_form.html:20
-msgid "Metadatas"
-msgstr ""
-
-#: ideascube/blog/templates/blog/content_form.html:26
+#: ideascube/blog/templates/blog/content_form.html:15
+#: ideascube/library/templates/library/book_form.html:19
+#: ideascube/mediacenter/templates/mediacenter/document_form.html:15
 msgid "Content"
-msgstr ""
+msgstr "ناوەرۆک"
 
-#: ideascube/blog/templates/blog/content_form.html:28
-msgid "Type your text here…"
-msgstr ""
+#: ideascube/blog/templates/blog/content_form.html:22
+#: ideascube/library/templates/library/book_form.html:28
+#: ideascube/mediacenter/templates/mediacenter/document_form.html:22
+msgid "Metadatas"
+msgstr "مێتا داتا"
 
-#: ideascube/blog/templates/blog/content_form.html:32
-#: ideascube/templates/form-fullpage.html:26
-msgid "submit"
-msgstr ""
+#: ideascube/blog/templates/blog/content_form.html:33
+#: ideascube/blog/templates/blog/content_form.html:35
+#: ideascube/library/templates/library/book_form.html:39
+#: ideascube/library/templates/library/book_form.html:41
+#: ideascube/library/templates/library/specimen_form.html:29
+#: ideascube/library/templates/library/specimen_form.html:32
+#: ideascube/library/templates/library/specimen_form.html:34
+#: ideascube/mediacenter/templates/mediacenter/document_form.html:32
+#: ideascube/mediacenter/templates/mediacenter/document_form.html:34
+#: ideascube/monitoring/templates/monitoring/inventory_form.html:16
+#: ideascube/monitoring/templates/monitoring/inventory_form.html:19
+#: ideascube/monitoring/templates/monitoring/specimen_form.html:16
+#: ideascube/monitoring/templates/monitoring/specimen_form.html:19
+#: ideascube/monitoring/templates/monitoring/stockitem_form.html:16
+#: ideascube/monitoring/templates/monitoring/stockitem_form.html:19
+#: ideascube/templates/ideascube/set_password.html:9
+#: ideascube/templates/ideascube/user_form.html:25
+#: ideascube/templates/ideascube/user_form.html:27
+#: ideascube/templates/ideascube/user_import.html:10
+msgid "cancel"
+msgstr "هەڵوەشاندنەوە"
 
 #: ideascube/blog/templates/blog/index.html:17
 msgid "Add content"
-msgstr ""
+msgstr "هێنانی ناوەرۆک"
 
 #: ideascube/blog/views.py:17
 msgid "Last published"
+msgstr "دوایین بڵاوکراوەکان"
+
+#: ideascube/conf/base.py:113
+msgid "Suitable for all languages"
 msgstr ""
 
-#: ideascube/conf/base.py:215
+#: ideascube/conf/base.py:219
 msgid "the camp"
-msgstr ""
+msgstr "کەمپ"
 
-#: ideascube/conf/base.py:230
+#: ideascube/conf/base.py:234
 msgid "Basic informations"
-msgstr ""
+msgstr "زانیاریی بنەڕەتی"
 
-#: ideascube/conf/base.py:241 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:245 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
-msgstr ""
+msgstr "بەکارهێنەر"
 
-#: ideascube/conf/base.py:242
+#: ideascube/conf/base.py:246
 msgid "Create, remove or modify users."
-msgstr ""
+msgstr "درووستکردن، سڕینەوە یان گۆڕینی بەکارهێنەر"
 
-#: ideascube/conf/base.py:249
+#: ideascube/conf/base.py:253
 msgid "Entries"
-msgstr ""
+msgstr "؟"
 
-#: ideascube/conf/base.py:250
+#: ideascube/conf/base.py:254
 msgid "Manage user entries."
 msgstr ""
 
-#: ideascube/conf/base.py:257
+#: ideascube/conf/base.py:261
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
-msgstr ""
+msgstr "ئەمبار"
 
-#: ideascube/conf/base.py:258
+#: ideascube/conf/base.py:262
 msgid "Manage stock."
-msgstr ""
+msgstr "رێکخستنی ئەمبار"
 
-#: ideascube/conf/base.py:265
+#: ideascube/conf/base.py:269
 msgid "Loans"
-msgstr ""
+msgstr "قەرزەکان"
 
-#: ideascube/conf/base.py:266
+#: ideascube/conf/base.py:270
 msgid "Manage loans."
-msgstr ""
+msgstr "رێکخستنی قەرزەکان"
 
-#: ideascube/conf/base.py:273
+#: ideascube/conf/base.py:277
 msgid "Stop/Restart"
-msgstr ""
+msgstr "راگرتن/داگیرساندنەوە"
 
-#: ideascube/conf/base.py:274
+#: ideascube/conf/base.py:278
 msgid "Stop or restart the server."
-msgstr ""
+msgstr "راگرتن یان داگیرساندنەوەی سێرڤێر"
 
-#: ideascube/conf/base.py:281
+#: ideascube/conf/base.py:285
 msgid "Wi-Fi"
-msgstr ""
+msgstr "وای - فای"
 
-#: ideascube/conf/base.py:282
+#: ideascube/conf/base.py:286
 msgid "Manage Wi-Fi connections."
-msgstr ""
+msgstr "رێکخستنی پێوەندیی وای - فای"
 
-#: ideascube/conf/base.py:289
+#: ideascube/conf/base.py:293
 msgid "Server Name"
-msgstr ""
+msgstr "ناوی سێرڤێر"
 
-#: ideascube/conf/base.py:290
+#: ideascube/conf/base.py:294
 msgid "Change the server name."
-msgstr ""
+msgstr "گۆڕینی ناوی سێرڤێر"
 
-#: ideascube/conf/base.py:297
+#: ideascube/conf/base.py:301
 msgid "Home page"
-msgstr ""
+msgstr "لاپەڕەی سەرەکی"
 
-#: ideascube/conf/base.py:298
+#: ideascube/conf/base.py:302
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:5
 #: ideascube/serveradmin/templates/serveradmin/index.html:26
 msgid "Manage home page"
-msgstr ""
+msgstr "رێکخستنی لاپەڕەی سەرەکی"
 
-#: ideascube/conf/base.py:305
+#: ideascube/conf/base.py:309
 #: ideascube/serveradmin/templates/serveradmin/index.html:21
 msgid "Languages"
-msgstr ""
+msgstr "زمانەکان"
 
-#: ideascube/conf/base.py:306
+#: ideascube/conf/base.py:310
 msgid "Enable or disable languages."
-msgstr ""
+msgstr "کاراکردن یان لەکارخستنی زمانەکان"
 
-#: ideascube/conf/base.py:338
+#: ideascube/conf/base.py:354
 msgid "Python web server"
 msgstr ""
 
-#: ideascube/conf/base.py:339
+#: ideascube/conf/base.py:355
 msgid "Global proxy"
 msgstr ""
 
-#: ideascube/conf/base.py:342
+#: ideascube/conf/base.py:358
 msgid "Daemon which provides KhanAcademy on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:345
+#: ideascube/conf/base.py:361
 msgid "Daemon which provides Wikipedia on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:347
+#: ideascube/conf/base.py:363
 msgid "Daemon which provides Gutenberg on lan"
 msgstr ""
 
-#: ideascube/conf/base.py:349
+#: ideascube/conf/base.py:365
 msgid "Daemon used for distant connexion to server"
 msgstr ""
 
 #: ideascube/conf/idb_aus_queensland.py:6 ideascube/conf/idb_aus_slwa.py:5
 msgid "the community"
-msgstr ""
+msgstr "کۆمەڵ"
 
 #: ideascube/conf/idb_aus_queensland.py:14 ideascube/conf/idb_aus_slwa.py:13
 #: ideascube/conf/idb_bdi.py:7 ideascube/conf/idb_col_llavedelsaber.py:10
-#: ideascube/conf/idb_deu_dusseldorf.py:14
-#: ideascube/conf/idb_eth_bokolmanyo.py:13 ideascube/conf/idb_fra.py:13
+#: ideascube/conf/idb_deu_dusseldorf.py:17
+#: ideascube/conf/idb_eth_bokolmanyo.py:13 ideascube/conf/idb_fra.py:16
 #: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_grc_eleonas.py:12
 #: ideascube/conf/idb_irq_bardarash.py:8 ideascube/conf/idb_jor_alhashmi.py:7
-#: ideascube/conf/idb_jor_azraq.py:12 ideascube/conf/idb_lwb_detroit_usa.py:15
-#: ideascube/conf/idb_sen_fap.py:15
+#: ideascube/conf/idb_jor_azraq.py:12 ideascube/conf/idb_lwb_detroit_usa.py:18
+#: ideascube/conf/idb_sen_fap.py:18
 msgid "Personal informations"
-msgstr ""
+msgstr "زانیاریی تاکەکەسی"
 
 #: ideascube/conf/idb_aus_queensland.py:15 ideascube/conf/idb_aus_slwa.py:14
-#: ideascube/conf/idb_bdi.py:8 ideascube/conf/idb_deu_dusseldorf.py:15
-#: ideascube/conf/idb_eth_bokolmanyo.py:14 ideascube/conf/idb_fra.py:14
+#: ideascube/conf/idb_bdi.py:8 ideascube/conf/idb_deu_dusseldorf.py:18
+#: ideascube/conf/idb_eth_bokolmanyo.py:14 ideascube/conf/idb_fra.py:17
 #: ideascube/conf/idb_irq_bardarash.py:9 ideascube/conf/idb_jor_alhashmi.py:8
-#: ideascube/conf/idb_jor_azraq.py:13 ideascube/conf/idb_lwb_detroit_usa.py:16
-#: ideascube/conf/idb_sen_fap.py:16
+#: ideascube/conf/idb_jor_azraq.py:13 ideascube/conf/idb_lwb_detroit_usa.py:19
+#: ideascube/conf/idb_sen_fap.py:19
 msgid "Family"
-msgstr ""
+msgstr "خێزان"
 
 #: ideascube/conf/idb_aus_queensland.py:16 ideascube/conf/idb_aus_slwa.py:15
-#: ideascube/conf/idb_deu_dusseldorf.py:16 ideascube/conf/idb_fra.py:15
+#: ideascube/conf/idb_deu_dusseldorf.py:19 ideascube/conf/idb_fra.py:18
 #: ideascube/conf/idb_grc_eleonas.py:13
-#: ideascube/conf/idb_lwb_detroit_usa.py:17 ideascube/conf/idb_sen_fap.py:17
+#: ideascube/conf/idb_lwb_detroit_usa.py:20 ideascube/conf/idb_sen_fap.py:20
 msgid "In the town"
-msgstr ""
+msgstr "لە شارۆچکە"
 
 #: ideascube/conf/idb_aus_queensland.py:17 ideascube/conf/idb_aus_slwa.py:16
-#: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_deu_dusseldorf.py:17
-#: ideascube/conf/idb_eth_bokolmanyo.py:17 ideascube/conf/idb_fra.py:16
+#: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_deu_dusseldorf.py:20
+#: ideascube/conf/idb_eth_bokolmanyo.py:17 ideascube/conf/idb_fra.py:19
 #: ideascube/conf/idb_grc_eleonas.py:14 ideascube/conf/idb_irq_bardarash.py:11
 #: ideascube/conf/idb_jor_alhashmi.py:10 ideascube/conf/idb_jor_azraq.py:16
-#: ideascube/conf/idb_lwb_detroit_usa.py:18 ideascube/conf/idb_sen_fap.py:18
+#: ideascube/conf/idb_lwb_detroit_usa.py:21 ideascube/conf/idb_sen_fap.py:21
 msgid "Language skills"
-msgstr ""
+msgstr "شارەزایی لە زماندا"
 
 #: ideascube/conf/idb_bdi.py:9 ideascube/conf/idb_eth_bokolmanyo.py:15
 #: ideascube/conf/idb_irq_bardarash.py:10 ideascube/conf/idb_jor_azraq.py:14
 msgid "In the camp"
-msgstr ""
+msgstr "لە نێو کەمپدا"
 
 #: ideascube/conf/idb_bdi.py:10 ideascube/conf/idb_eth_bokolmanyo.py:16
 #: ideascube/conf/idb_jor_alhashmi.py:9 ideascube/conf/idb_jor_azraq.py:15
 msgid "Origin"
-msgstr ""
+msgstr "ریشە"
 
 #: ideascube/conf/idb_bdi.py:12 ideascube/conf/idb_eth_bokolmanyo.py:18
 #: ideascube/conf/idb_jor_alhashmi.py:11 ideascube/conf/idb_jor_azraq.py:17
 msgid "National residents"
-msgstr ""
+msgstr "دانیشتوانی نەتەوەیی"
 
-#: ideascube/conf/idb_deu_dusseldorf.py:6 ideascube/conf/idb_fra.py:5
-#: ideascube/conf/idb_lwb_detroit_usa.py:7 ideascube/conf/idb_sen_fap.py:7
+#: ideascube/conf/idb_deu_dusseldorf.py:9 ideascube/conf/idb_fra.py:8
+#: ideascube/conf/idb_lwb_detroit_usa.py:10 ideascube/conf/idb_sen_fap.py:10
 msgid "city"
-msgstr ""
+msgstr "شار"
 
 #: ideascube/conf/idb_grc_eleonas.py:6
 msgid "camp"
-msgstr ""
+msgstr "کەمپ"
 
 #: ideascube/conf/idb_jor_azraq.py:21
 msgid "16 Days of Activism"
-msgstr ""
+msgstr "١٦ رۆژ چالاکڤانی"
 
 #: ideascube/conf/idb_jor_azraq.py:22
 msgid "AMANI Campaign"
-msgstr ""
+msgstr "کەمپپەینی ئەممان"
 
 #: ideascube/conf/idb_jor_azraq.py:23
 msgid "Anger Management Training"
-msgstr ""
+msgstr "راهێنان بۆ زاڵبوون بە سەر تووڕەییدا"
 
 #: ideascube/conf/idb_jor_azraq.py:24
 msgid "Basic Computer Training"
-msgstr ""
+msgstr "راهێنانی بنچینەیی لە کۆپیۆتەردا"
 
 #: ideascube/conf/idb_jor_azraq.py:25
 msgid "Beauty Training"
-msgstr ""
+msgstr "راهێنانی جوانی"
 
 #: ideascube/conf/idb_jor_azraq.py:26
 msgid "Book Club"
-msgstr ""
+msgstr "بووک کلۆب"
 
 #: ideascube/conf/idb_jor_azraq.py:27
 msgid "Conflict Resolution Training"
-msgstr ""
+msgstr "راهێنانی چارەکردنی ناکۆکیەکان"
 
 #: ideascube/conf/idb_jor_azraq.py:28
 msgid "Coping Skills and Mechanisms Training"
-msgstr ""
+msgstr "راهێنانی شارەزایی لە کۆپی و میکانیزمەکان"
 
 #: ideascube/conf/idb_jor_azraq.py:29
 msgid "EDRAAK"
-msgstr ""
+msgstr "؟"
 
 #: ideascube/conf/idb_jor_azraq.py:30
 msgid "Emotional intelligence Training"
-msgstr ""
+msgstr "راهێنانی وریایی هەستەوەرانە"
 
 #: ideascube/conf/idb_jor_azraq.py:31
 msgid "Handicrafts"
-msgstr ""
+msgstr "دەستکارەکان"
 
 #: ideascube/conf/idb_jor_azraq.py:32
 msgid "How to be a Psychosocial Counselor Training"
-msgstr ""
+msgstr "راهێنانی راوێژکاریی دەروونیی"
 
 #: ideascube/conf/idb_jor_azraq.py:33
 msgid "I am Woman"
-msgstr ""
+msgstr "من ژنم"
 
 #: ideascube/conf/idb_jor_azraq.py:34
 msgid "International Children Day"
-msgstr ""
+msgstr "رۆژی جیهانی منداڵان"
 
 #: ideascube/conf/idb_jor_azraq.py:35
 msgid "International Refugee Day"
-msgstr ""
+msgstr "رۆژی جیهانی پەنابەران"
 
 #: ideascube/conf/idb_jor_azraq.py:36
 msgid "Marathon"
-msgstr ""
+msgstr "ماراتۆن"
 
 #: ideascube/conf/idb_jor_azraq.py:37
 msgid "Mother's day celebration"
-msgstr ""
+msgstr "جێژنی رۆژی دایک"
 
 #: ideascube/conf/idb_jor_azraq.py:38
 msgid "Parenting Skills Training"
-msgstr ""
+msgstr "راهێنانی شارەزاییەکانی باوانداریی"
 
 #: ideascube/conf/idb_jor_azraq.py:39
 msgid "Peer Support Group"
-msgstr ""
+msgstr "گرووپی یارمەتیدانی یەکتر بە پێی ئەزموون"
 
 #: ideascube/conf/idb_jor_azraq.py:40
 msgid "Psychosocial ART Interventions Training"
@@ -367,39 +389,39 @@ msgstr ""
 
 #: ideascube/conf/idb_jor_azraq.py:41
 msgid "Puppets and Theatre"
-msgstr ""
+msgstr "بووکەڵە و شانۆ"
 
 #: ideascube/conf/idb_jor_azraq.py:42
 msgid "Sewing and stitching"
-msgstr ""
+msgstr "بەرگدروون و تەقەڵکاریی"
 
 #: ideascube/conf/idb_jor_azraq.py:43
 msgid "SIMSIM Club"
-msgstr ""
+msgstr "کلۆبی SIMSIM "
 
 #: ideascube/conf/idb_jor_azraq.py:44
 msgid "Social Work Training"
-msgstr ""
+msgstr "راهێنانی کاری کۆمەڵایەتی"
 
 #: ideascube/conf/idb_jor_azraq.py:45
 msgid "Stress Management Training"
-msgstr ""
+msgstr "راهێنان بۆ زاڵبوون بە"
 
 #: ideascube/conf/idb_jor_azraq.py:46
 msgid "Training of Trainers"
-msgstr ""
+msgstr "راهێنانی راهێنەران"
 
 #: ideascube/conf/idb_jor_azraq.py:47
 msgid "World Mental Health Day"
-msgstr ""
+msgstr "رۆژی جیهانیی سەلامەتیی زەینی"
 
 #: ideascube/forms.py:27
 msgid "Additional data"
-msgstr ""
+msgstr "پێدراوی زیادکراو"
 
 #: ideascube/forms.py:35
 msgid "Username"
-msgstr ""
+msgstr "ناوی بەکارهێنەر"
 
 #: ideascube/forms.py:37
 msgid "Password"
@@ -410,388 +432,383 @@ msgid ""
 "To create a strong password, forget about passwords, and think rather about "
 "a passphrase. For instance: \"The boat is flowing on the water\" is a strong"
 " and easy to remember passphrase. Now choose your own passphrase!"
-msgstr ""
+msgstr "بۆ دروستکردنی وشەنهێنییەکی بەهێز، لە باتی وشەی نهێنی زیاتر هەوڵ بدەن رستەیەکی نهێنیی بنووسن. بۆ نموونە :\" گەمیەکە بە سەر ئاودا دەڕوات\" رستەیەکی نهێنیی بەهێزە کە لە بیریش ناچێتەوە. ئێستە رستەنهێنییەکەی خۆتان هەڵبژێرن!"
 
 #: ideascube/forms.py:46
 msgid "Confirm password"
-msgstr ""
+msgstr "دووبارەکردنەوەی وشەی نهێنی"
 
 #: ideascube/forms.py:116
 #, python-brace-format
 msgid "Invalid row at line {id}: {field} missing"
-msgstr ""
+msgstr "?"
 
 #: ideascube/forms.py:131
 #, python-brace-format
 msgid "Invalid row at line {id}: {reason}"
 msgstr ""
 
-#: ideascube/library/forms.py:30
+#: ideascube/library/forms.py:37
 msgid "You can't have both a file and a barcode"
-msgstr ""
+msgstr "ناتوانی هاوکات فایلێک و بارکۆدێکت پێکەوە هەبێت"
 
-#: ideascube/library/forms.py:32
+#: ideascube/library/forms.py:39
 msgid "You must add a file or a barcode"
-msgstr ""
+msgstr "پێویستە فایل یان بارکۆدێک زیاد بکەیت"
 
-#: ideascube/library/forms.py:42 ideascube/monitoring/forms.py:185
+#: ideascube/library/forms.py:49 ideascube/monitoring/forms.py:190
 msgid "CSV File"
-msgstr ""
+msgstr "فایلی CSV"
 
-#: ideascube/library/forms.py:46
+#: ideascube/library/forms.py:53
 msgid "Uploaded file is not a Zip archive"
-msgstr ""
+msgstr "فایلی باکراو ئەرشیڤی زیپ نییە"
 
-#: ideascube/library/forms.py:55
+#: ideascube/library/forms.py:62
 msgid "Archive does not contain a CSV"
-msgstr ""
+msgstr "ئەرشیڤەکە CSV  ی لەگەڵ نییە"
 
-#: ideascube/library/forms.py:83 ideascube/monitoring/forms.py:200
+#: ideascube/library/forms.py:90 ideascube/monitoring/forms.py:205
 msgid "Missing column \"{}\" on line {}"
 msgstr ""
 
-#: ideascube/library/forms.py:97
+#: ideascube/library/forms.py:104
 msgid "Could not import line {}: no book with ISBN \"{}\""
 msgstr ""
 
-#: ideascube/library/forms.py:107
+#: ideascube/library/forms.py:114
 msgid "Could not import line {}: no \"{}\" book"
-msgstr ""
+msgstr "ئایدیاکووب ZIP"
 
-#: ideascube/library/forms.py:113
+#: ideascube/library/forms.py:120
 msgid "Could not import line {}: found multiple \"{}\" books"
 msgstr ""
 
-#: ideascube/library/forms.py:128
+#: ideascube/library/forms.py:135
 msgid "Could not import line {}: file {} is missing from the archive"
 msgstr ""
 
-#: ideascube/library/forms.py:143 ideascube/monitoring/forms.py:214
+#: ideascube/library/forms.py:150 ideascube/monitoring/forms.py:219
 msgid "Could not import line {}: {}"
 msgstr ""
 
-#: ideascube/library/forms.py:179
+#: ideascube/library/forms.py:193
 msgid "CSV from \"MoCCam-en-ligne\""
 msgstr ""
 
-#: ideascube/library/forms.py:181
+#: ideascube/library/forms.py:195
 msgid "Ideascube ZIP"
 msgstr ""
 
-#: ideascube/library/forms.py:199
+#: ideascube/library/forms.py:213
 msgid "Unknown file format"
-msgstr ""
+msgstr "جۆری فایلەکە نەناسراوە"
 
 #: ideascube/library/models.py:24
 msgid "digital"
-msgstr ""
+msgstr "دیجیتال"
 
 #: ideascube/library/models.py:25
 msgid "children - cartoons"
-msgstr ""
+msgstr "کارتۆن- منداڵان"
 
 #: ideascube/library/models.py:26
 msgid "children - novels"
-msgstr ""
+msgstr "چیرۆکی درێژ- منداڵان"
 
 #: ideascube/library/models.py:27
 msgid "children - poetry"
-msgstr ""
+msgstr "شیعر-منداڵان"
 
 #: ideascube/library/models.py:28
 msgid "children - theatre"
-msgstr ""
+msgstr "شانۆ-منداڵان"
 
 #: ideascube/library/models.py:29
 msgid "children - documentary"
-msgstr ""
+msgstr "بەڵگەنامەیی-منداڵان"
 
 #: ideascube/library/models.py:30
 msgid "children - comics"
-msgstr ""
+msgstr "کۆمیک- منداڵان"
 
 #: ideascube/library/models.py:31
 msgid "children - tales"
-msgstr ""
+msgstr "حەکایەت- منداڵان"
 
 #: ideascube/library/models.py:32
 msgid "chirdren - myths and legends"
-msgstr ""
+msgstr "ئەفسانە و داستان- منداڵان"
 
 #: ideascube/library/models.py:33
 msgid "adults - novels"
-msgstr ""
+msgstr "گەورەسالان- چیرۆکی درێژ"
 
 #: ideascube/library/models.py:34
 msgid "adults - poetry"
-msgstr ""
+msgstr "گەورەساڵان- شیعر"
 
 #: ideascube/library/models.py:35
 msgid "adults - theatre"
-msgstr ""
+msgstr "شانۆ-گەورەساڵان"
 
 #: ideascube/library/models.py:36
 msgid "adults - documentary"
-msgstr ""
+msgstr "بەڵگەنامەیی-گەورەساڵان"
 
 #: ideascube/library/models.py:37
 msgid "adults - comics"
-msgstr ""
+msgstr "کۆمیک-گەورەساڵان"
 
 #: ideascube/library/models.py:38
 msgid "adults - tales"
-msgstr ""
+msgstr "حەکایەت-منداڵان"
 
 #: ideascube/library/models.py:39
 msgid "adults - myths and legends"
-msgstr ""
+msgstr "ئەفسانە و داستان-گەورە ساڵان"
 
 #: ideascube/library/models.py:40
 msgid "game"
-msgstr ""
+msgstr "یاریی"
 
-#: ideascube/library/models.py:41 ideascube/mediacenter/models.py:48
+#: ideascube/library/models.py:41 ideascube/mediacenter/models.py:50
 msgid "other"
-msgstr ""
+msgstr "ئەویدی"
 
 #: ideascube/library/models.py:47
 msgid "isbn"
-msgstr ""
+msgstr "ژمارەی ستانداردی نێونەتەوەیی کتێب"
 
 #: ideascube/library/models.py:49
 msgid "authors"
-msgstr ""
+msgstr "ئەوانیدی"
 
 #: ideascube/library/models.py:51
 msgid "serie"
-msgstr ""
+msgstr "زنجیرە"
 
 #: ideascube/library/models.py:53
 msgid "subtitle"
-msgstr ""
+msgstr "ژێرنووس"
 
 #: ideascube/library/models.py:55
 msgid "publisher"
-msgstr ""
+msgstr "بڵاوکەرەوە"
 
 #: ideascube/library/models.py:57
 msgid "section"
-msgstr ""
+msgstr "لق"
 
 #: ideascube/library/models.py:60
 msgid "cover"
-msgstr ""
+msgstr "بەرگ"
 
 #: ideascube/library/models.py:104
 msgid "location"
-msgstr ""
+msgstr "شوێنگە"
 
 #: ideascube/library/models.py:106
 msgid "digital file"
-msgstr ""
+msgstr "فایلی دیجیتال"
 
 #: ideascube/library/templates/library/book_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete book \"%(book)s\" and all its specimens?"
-msgstr ""
+msgstr "دڵنیایت دەتەوێت کتێب \"%(book)s\" و هەموو نموونەکانی بسڕیتەوە؟"
 
 #: ideascube/library/templates/library/book_detail.html:11
 msgid "View all books"
-msgstr ""
+msgstr "بینینی هەموو کتێبەکان"
 
 #: ideascube/library/templates/library/book_detail.html:15
 #: ideascube/library/templates/library/index.html:9
 #: ideascube/serveradmin/catalog.py:307
-#: ideascube/templates/ideascube/includes/cards/gutenberg.old.html:4
 #: ideascube/templates/ideascube/includes/cards/library.html:4
-#: ideascube/templates/ideascube/includes/cards/ubuntudoc.old.html:4
-#: ideascube/templates/ideascube/includes/cards/wikisource.old.html:4
 msgid "read"
-msgstr ""
+msgstr "خوێندنەوە"
 
 #: ideascube/library/templates/library/book_detail.html:19
 #: ideascube/library/views.py:40
 msgid "Author"
-msgstr ""
+msgstr "دانەر"
 
 #: ideascube/library/templates/library/book_detail.html:20
 msgid "Publisher"
-msgstr ""
+msgstr "بڵاوکەرەوە"
 
 #: ideascube/library/templates/library/book_detail.html:21
 msgid "Serie"
-msgstr ""
+msgstr "زنجیرە"
 
 #: ideascube/library/templates/library/book_detail.html:24
 msgid "ISBN"
-msgstr ""
+msgstr "ژمارەی ستانداردی نێونەتەوەیی کتێب"
 
 #: ideascube/library/templates/library/book_detail.html:26
 msgid "Section"
-msgstr ""
+msgstr "لق"
 
 #: ideascube/library/templates/library/book_detail.html:34
 msgid "Add a specimen"
-msgstr ""
+msgstr "زیادکردنی نمونەیەک"
 
 #: ideascube/library/templates/library/book_detail.html:35
 msgid "Delete this book"
-msgstr ""
+msgstr "سڕینەوەی ئەم کتێبە"
 
 #: ideascube/library/templates/library/book_detail.html:36
 msgid "Edit this book"
-msgstr ""
+msgstr "چوونەوە بەم کتێبەدا"
 
 #: ideascube/library/templates/library/book_detail.html:39
 msgid "Specimens"
-msgstr ""
+msgstr "نمونەکان"
 
 #: ideascube/library/templates/library/book_detail.html:41
 msgid "Edit specimen"
-msgstr ""
+msgstr "چوونەوە بە نموونەدا"
 
 #: ideascube/library/templates/library/book_detail.html:43
 msgid "No specimen for this book."
-msgstr ""
+msgstr "ئەم کتێبە نموونەی لێ نەدراوە"
 
 #: ideascube/library/templates/library/book_detail.html:49
 msgid "Digital specimens"
-msgstr ""
+msgstr "نموونەی دیجیتالی"
 
 #: ideascube/library/templates/library/book_detail.html:51
 msgid "Download specimen"
-msgstr ""
+msgstr "داگرتنی نموونە"
 
 #: ideascube/library/templates/library/book_detail.html:51
 #, python-format
 msgid "Download %(extension)s"
-msgstr ""
+msgstr "داگرتنی %(extension)s"
 
 #: ideascube/library/templates/library/book_form.html:11
 msgid "Edit book"
-msgstr ""
+msgstr "چوونەوە بە کتێبدا"
 
 #: ideascube/library/templates/library/book_form.html:13
 msgid "New book"
-msgstr ""
-
-#: ideascube/library/templates/library/book_form.html:18
-#: ideascube/mediacenter/templates/mediacenter/document_form.html:13
-#: ideascube/monitoring/templates/monitoring/inventory_form.html:13
-#: ideascube/monitoring/templates/monitoring/specimen_form.html:13
-#: ideascube/monitoring/templates/monitoring/stockitem_form.html:13
-msgid "cancel"
-msgstr ""
+msgstr "کتێبی نوێ"
 
 #: ideascube/library/templates/library/import.html:10
 msgid "Import books notices"
-msgstr ""
+msgstr "زیادکردنی یاداشتەکانی کتێب"
 
 #: ideascube/library/templates/library/import.html:19
 msgid "From files"
-msgstr ""
+msgstr "لە فایلەکانەوە"
 
 #: ideascube/library/templates/library/import.html:22
 msgid "Load notices from files"
-msgstr ""
+msgstr "داگرتنی یاداشتەکان لە فایلەکانەوە"
 
 #: ideascube/library/templates/library/import.html:25
 msgid "From ISBN"
-msgstr ""
+msgstr "لە ژمارە ستانداردی نێونەتەوەیی کتێبەوە"
 
 #: ideascube/library/templates/library/import.html:26
 msgid "An Internet connection is needed."
-msgstr ""
+msgstr "پێویستت بە پێوەندییە بە ئەنتەرنێتەوە"
 
 #: ideascube/library/templates/library/import.html:28
 msgid "Load notices from ISBN"
-msgstr ""
+msgstr "یاداشتەکان لە  ISBN ەوە دابگرە"
 
 #: ideascube/library/templates/library/index.html:9
 #: ideascube/monitoring/models.py:17 ideascube/monitoring/models.py:71
 #: ideascube/templates/ideascube/includes/cards/library.html:5
 msgid "Library"
-msgstr ""
+msgstr "کتێبخانە"
 
 #: ideascube/library/templates/library/index.html:17
 msgid "No books yet."
-msgstr ""
+msgstr "لە ئیستەدا کتێب نا"
 
 #: ideascube/library/templates/library/index.html:26
 msgid "Add a book"
-msgstr ""
+msgstr "زیادکردنی کتێبێک"
 
 #: ideascube/library/templates/library/index.html:27
 msgid "Import notices"
-msgstr ""
+msgstr "دەستووری هاوردەکردن"
 
 #: ideascube/library/templates/library/index.html:28
 msgid "Export notices"
-msgstr ""
+msgstr "دەستووری هەناردەکردن"
 
 #: ideascube/library/templates/library/index.html:29
 msgid "Import specimens"
-msgstr ""
+msgstr "هاوردەکردنی نموونەکان"
 
 #: ideascube/library/templates/library/index.html:30
 msgid "Export specimens"
-msgstr ""
+msgstr "هەناردەکردنی نموونەکان"
 
 #: ideascube/library/templates/library/index.html:38
 msgid "by section"
-msgstr ""
+msgstr "لە رێگەی لقەوە"
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete \"%(name)s\"?"
-msgstr ""
+msgstr "دڵنیایت دەتەوێت \"%(name)s\" بسڕیتەوە؟ "
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:5
 #, python-format
 msgid "This will not delete book \"%(name)s\""
+msgstr "ئەمە \"%(name)s\" ی کتێب پاک ناکاتەوە"
+
+#: ideascube/library/templates/library/specimen_form.html:7
+#, python-format
+msgid "Edit book specimen %(specimen)s"
 msgstr ""
 
-#: ideascube/library/templates/library/specimen_form.html:6
-msgid "Edit book specimen"
+#: ideascube/library/templates/library/specimen_form.html:9
+#, python-format
+msgid "New book specimen for %(book)s"
 msgstr ""
 
-#: ideascube/library/templates/library/specimen_form.html:8
+#: ideascube/library/templates/library/specimen_form.html:11
 msgid "New book specimen"
-msgstr ""
+msgstr "نموونەی نوێی کتێب"
 
-#: ideascube/library/templates/library/specimen_form.html:13
+#: ideascube/library/templates/library/specimen_form.html:30
 msgid "Delete specimen"
-msgstr ""
+msgstr "سڕینەوەی نموونە"
 
 #: ideascube/library/templates/library/specimen_import.html:8
 msgid "Import Book Specimens"
-msgstr ""
+msgstr "هاوردەکردنی نموونەی کتێب"
 
 #: ideascube/library/templates/library/specimen_import.html:19
 #: ideascube/monitoring/templates/monitoring/stock.html:56
 #: ideascube/monitoring/templates/monitoring/stock_import.html:16
 msgid "Import"
-msgstr ""
+msgstr "هاوردەکردن"
 
 #: ideascube/library/utils.py:87
 msgid "Badly formatted file"
-msgstr ""
+msgstr "فایلی خراپ فۆرمەت کراو"
 
 #: ideascube/library/utils.py:134
 msgid "Not a zip file"
-msgstr ""
+msgstr "فایلێکی ZIP نییە"
 
 #: ideascube/library/utils.py:141
 msgid "Missing CSV file in zip"
-msgstr ""
+msgstr "فایلی SCV  ی ونبوو لە ZIP دا"
 
 #: ideascube/library/views.py:28
 msgid "Last added"
-msgstr ""
+msgstr "دوایین زیادکراو"
 
 #: ideascube/library/views.py:34 ideascube/mediacenter/views.py:39
 msgid "Title"
-msgstr ""
+msgstr "ناونیشان"
 
 #: ideascube/library/views.py:80
 msgid "Please add a specimen, or the book won't be available for the users"
@@ -814,72 +831,71 @@ msgstr ""
 msgid "You need to provide a file."
 msgstr ""
 
-#: ideascube/library/views.py:253 ideascube/monitoring/views.py:253
+#: ideascube/library/views.py:258 ideascube/monitoring/views.py:253
 msgid "Successfully imported {} items"
 msgstr ""
 
-#: ideascube/mediacenter/models.py:42
-msgid "sound"
-msgstr ""
-
 #: ideascube/mediacenter/models.py:43
-msgid "video"
-msgstr ""
+msgid "sound"
+msgstr "دەنگ"
 
 #: ideascube/mediacenter/models.py:44
-msgid "pdf"
-msgstr ""
+msgid "video"
+msgstr "ڤیدیۆ"
 
-#: ideascube/mediacenter/models.py:46
-msgid "epub"
-msgstr ""
+#: ideascube/mediacenter/models.py:45
+msgid "pdf"
+msgstr "پی دی ئێف"
 
 #: ideascube/mediacenter/models.py:47
+msgid "epub"
+msgstr "بڵاوکراوەی ئێلێکترۆنیکی Epub"
+
+#: ideascube/mediacenter/models.py:48
+msgid "mobi"
+msgstr "فۆرمەتی مۆبی"
+
+#: ideascube/mediacenter/models.py:49
 msgid "app"
-msgstr ""
+msgstr "ئاژانسی پاراستنی پرۆگرامەکان APP"
 
-#: ideascube/mediacenter/models.py:56
+#: ideascube/mediacenter/models.py:58
 msgid "Source file"
-msgstr ""
+msgstr "فایلی سەرچاوە"
 
-#: ideascube/mediacenter/models.py:59
+#: ideascube/mediacenter/models.py:61
 msgid "Maximum size : 500 Mo."
-msgstr ""
+msgstr "دوارادەی فایل : "
 
-#: ideascube/mediacenter/models.py:60
+#: ideascube/mediacenter/models.py:62
 msgid "Preview picture"
-msgstr ""
+msgstr "بینینی پێشتری وێنەکە"
 
-#: ideascube/mediacenter/models.py:64
+#: ideascube/mediacenter/models.py:66
 msgid "Authorship"
-msgstr ""
+msgstr "مۆڵەتی دانەر"
 
-#: ideascube/mediacenter/models.py:65
+#: ideascube/mediacenter/models.py:67
 msgid "type"
-msgstr ""
+msgstr "جۆر"
 
-#: ideascube/mediacenter/models.py:71
-#: ideascube/templates/ideascube/includes/tag_cloud.html:4
-msgid "Topics"
-msgstr ""
-
-#: ideascube/mediacenter/models.py:75
+#: ideascube/mediacenter/models.py:77
 msgid "package"
-msgstr ""
+msgstr "بەستە"
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5
 #, python-format
 msgid "Are you sure you want to delete document \"%(document)s\"?"
-msgstr ""
+msgstr "دڵنیات دەتەوێت بەڵگەکە \"%(document)s\" بسڕیتەوە؟"
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:9
 #: ideascube/templates/ideascube/form_confirm_delete.html:10
 msgid "yes"
-msgstr ""
+msgstr "ئەرێ"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:10
 msgid "View all medias"
-msgstr ""
+msgstr "بینینی هەموو میدیاکان"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:24
 #, python-format
@@ -903,457 +919,455 @@ msgstr ""
 #: ideascube/monitoring/templates/monitoring/stock.html:25
 #: ideascube/templates/ideascube/user_detail.html:14
 msgid "Edit"
-msgstr ""
+msgstr "پێداچوونەوە"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:41
 #: ideascube/templates/ideascube/user_detail.html:15
 msgid "Delete"
-msgstr ""
+msgstr "سرێنەوە"
 
-#: ideascube/mediacenter/templates/mediacenter/document_form.html:6
+#: ideascube/mediacenter/templates/mediacenter/document_form.html:7
 msgid "Edit document"
-msgstr ""
+msgstr "چوونەوە بە بەڵگەدا"
 
-#: ideascube/mediacenter/templates/mediacenter/document_form.html:8
+#: ideascube/mediacenter/templates/mediacenter/document_form.html:9
 msgid "New document"
-msgstr ""
+msgstr "بەڵگەی نوێ"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
 #: ideascube/serveradmin/catalog.py:305 ideascube/serveradmin/catalog.py:348
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
-#: ideascube/templates/ideascube/includes/cards/vikidia.old.html:4
-#: ideascube/templates/ideascube/includes/cards/wikipedia.old.html:4
 msgid "discover"
-msgstr ""
+msgstr "دۆزینەوە"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
 msgid "Medias Center"
-msgstr ""
+msgstr "ناوەندی میدیاکان"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:19
 msgid "No documents yet."
-msgstr ""
+msgstr "هێشتا بەڵگە دانەنراوە"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:28
 msgid "Add a document"
-msgstr ""
+msgstr "زیادکردنی بەڵگەیەک"
 
 #: ideascube/mediacenter/templates/mediacenter/oembed.html:16
 msgid "Download document"
-msgstr ""
+msgstr "داگرتنی بەڵگە"
 
 #: ideascube/mediacenter/views.py:33
 msgid "Last modification"
-msgstr ""
+msgstr "دوایین دەستکاریی"
 
-#: ideascube/models.py:28
+#: ideascube/models.py:29
 msgid "creation date"
-msgstr ""
+msgstr "رۆژی خولقاندن"
 
-#: ideascube/models.py:30
+#: ideascube/models.py:31
 msgid "modification date"
-msgstr ""
-
-#: ideascube/models.py:78
-msgid "Understood"
-msgstr ""
+msgstr "رۆژی چاککردنەوە"
 
 #: ideascube/models.py:79
-msgid "Written"
-msgstr ""
+msgid "Understood"
+msgstr "فامکراو"
 
 #: ideascube/models.py:80
-msgid "Spoken"
-msgstr ""
+msgid "Written"
+msgstr "نووسراو"
 
 #: ideascube/models.py:81
+msgid "Spoken"
+msgstr "گوتراو"
+
+#: ideascube/models.py:82
 msgid "Read"
-msgstr ""
+msgstr "خوێنراوە"
 
-#: ideascube/models.py:86
+#: ideascube/models.py:87
 msgid "identifier"
-msgstr ""
+msgstr "ناسراوە"
 
-#: ideascube/models.py:88
+#: ideascube/models.py:89
 msgid "usual name"
-msgstr ""
+msgstr "ناوی کارپێکراو"
 
-#: ideascube/models.py:90
+#: ideascube/models.py:91
 msgid "full name"
-msgstr ""
+msgstr "ناوی تەواو"
 
-#: ideascube/models.py:92
+#: ideascube/models.py:93
 msgid "staff status"
-msgstr ""
+msgstr "پێگەی ستاف"
 
-#: ideascube/models.py:94
+#: ideascube/models.py:95
 msgid "Designates whether the user can log into this admin site."
 msgstr ""
 
-#: ideascube/models.py:131
+#: ideascube/models.py:132
 msgid "User with this identifier already exists."
-msgstr ""
-
-#: ideascube/models.py:179
-msgid "Student"
-msgstr ""
+msgstr "بەکارهێنەری بەم ناوەوە پێشتر هەیە"
 
 #: ideascube/models.py:180
-msgid "Teacher"
-msgstr ""
+msgid "Student"
+msgstr "قوتابی"
 
 #: ideascube/models.py:181
-msgid "Without profession"
-msgstr ""
+msgid "Teacher"
+msgstr "وانەبێژ"
 
 #: ideascube/models.py:182
+msgid "Without profession"
+msgstr "بێ شارەزایی"
+
+#: ideascube/models.py:183
 msgid "Profit profession"
 msgstr ""
 
-#: ideascube/models.py:183 ideascube/models.py:206
+#: ideascube/models.py:184 ideascube/models.py:207
 msgid "Volunteering"
-msgstr ""
-
-#: ideascube/models.py:184
-msgid "Homemaker"
-msgstr ""
+msgstr "خۆبەخشانە"
 
 #: ideascube/models.py:185
-msgid "Retired"
-msgstr ""
+msgid "Homemaker"
+msgstr "ماڵدار"
 
-#: ideascube/models.py:186 ideascube/models.py:218
+#: ideascube/models.py:186
+msgid "Retired"
+msgstr "خانەنشین"
+
+#: ideascube/models.py:187 ideascube/models.py:219
 #: ideascube/monitoring/models.py:74
 msgid "Other"
-msgstr ""
+msgstr "دیکە"
 
-#: ideascube/models.py:190
+#: ideascube/models.py:191
 #, python-brace-format
 msgid "Lives with family in {place}"
-msgstr ""
+msgstr "ژیان لەگەڵ خێزان لە { شوێن}"
 
-#: ideascube/models.py:192
+#: ideascube/models.py:193
 #, python-brace-format
 msgid "Lives without family in {place}"
-msgstr ""
+msgstr "ژیان بە بێ خێزان لە { شوێن}"
 
-#: ideascube/models.py:194
+#: ideascube/models.py:195
 #, python-brace-format
 msgid "Has family in {place} but lives without"
 msgstr ""
 
-#: ideascube/models.py:199
-msgid "Comitees, representation groups"
-msgstr ""
-
 #: ideascube/models.py:200
-msgid "Music, dance, singing"
-msgstr ""
+msgid "Comitees, representation groups"
+msgstr "کۆمیتە، گرووپی نوێنەرایەتی"
 
 #: ideascube/models.py:201
-msgid "Other cultural activities"
-msgstr ""
+msgid "Music, dance, singing"
+msgstr "مووزیک. سەما، گۆرانی"
 
 #: ideascube/models.py:202
-msgid "Informatic workshops"
-msgstr ""
+msgid "Other cultural activities"
+msgstr "چالاکیی کولتووریی دیکە"
 
 #: ideascube/models.py:203
-msgid "Literacy working group"
-msgstr ""
+msgid "Informatic workshops"
+msgstr "کارگەی ئەنفۆرماتیک"
 
 #: ideascube/models.py:204
-msgid "Talking group"
-msgstr ""
+msgid "Literacy working group"
+msgstr "گرووپی کاریی فێرکردنی خوێنەواری"
 
 #: ideascube/models.py:205
-msgid "Recreational"
-msgstr ""
+msgid "Talking group"
+msgstr "گرووپی ئاخافتن"
 
-#: ideascube/models.py:207
-msgid "Psycosocial"
-msgstr ""
+#: ideascube/models.py:206
+msgid "Recreational"
+msgstr "حەسانەوە"
 
 #: ideascube/models.py:208
-msgid "Educational"
-msgstr ""
+msgid "Psycosocial"
+msgstr "دەروونی کۆمەڵایەتی"
 
 #: ideascube/models.py:209
-msgid "Sport"
-msgstr ""
+msgid "Educational"
+msgstr "پەروەردەکارانە"
 
-#: ideascube/models.py:213
-msgid "Seen the Box"
-msgstr ""
+#: ideascube/models.py:210
+msgid "Sport"
+msgstr "وەرزش"
 
 #: ideascube/models.py:214
-msgid "Has been informed by partner organization"
-msgstr ""
+msgid "Seen the Box"
+msgstr "بینینی باکس"
 
 #: ideascube/models.py:215
-msgid "Has been informed by other organization"
-msgstr ""
+msgid "Has been informed by partner organization"
+msgstr "لە رێگەی رێکخراوی هاوکارە ئاگادار کراوەتەوە"
 
 #: ideascube/models.py:216
-msgid "Word of mouth"
-msgstr ""
+msgid "Has been informed by other organization"
+msgstr "لە رێگەی رێکخراوی دیکەوە ئاگادار کراوەتەوە"
 
 #: ideascube/models.py:217
-msgid "Poster campaign"
-msgstr ""
+msgid "Word of mouth"
+msgstr "وشەی مانگ"
 
-#: ideascube/models.py:222
-msgid "Primary"
-msgstr ""
+#: ideascube/models.py:218
+msgid "Poster campaign"
+msgstr "هەرەوەزی پۆستەر"
 
 #: ideascube/models.py:223
-msgid "Secondary"
-msgstr ""
+msgid "Primary"
+msgstr "بەرایی"
 
 #: ideascube/models.py:224
-msgid "Professional"
-msgstr ""
+msgid "Secondary"
+msgstr "دوایی"
 
 #: ideascube/models.py:225
-msgid "Higher education"
-msgstr ""
+msgid "Professional"
+msgstr "پسپۆڕ"
 
-#: ideascube/models.py:229
-msgid "Couple"
-msgstr ""
+#: ideascube/models.py:226
+msgid "Higher education"
+msgstr "خوێندنی باڵا"
 
 #: ideascube/models.py:230
-msgid "Single"
-msgstr ""
+msgid "Couple"
+msgstr "جووت"
 
 #: ideascube/models.py:231
-msgid "Widowed"
-msgstr ""
+msgid "Single"
+msgstr "تاک"
 
-#: ideascube/models.py:235
-msgid "Undefined"
-msgstr ""
+#: ideascube/models.py:232
+msgid "Widowed"
+msgstr "بێوە"
 
 #: ideascube/models.py:236
-msgid "Male"
-msgstr ""
+msgid "Undefined"
+msgstr "پێناسەنەکراو"
 
 #: ideascube/models.py:237
-msgid "Female"
-msgstr ""
+msgid "Male"
+msgstr "نێر"
 
-#: ideascube/models.py:241
-msgid "Visual"
-msgstr ""
+#: ideascube/models.py:238
+msgid "Female"
+msgstr "مێ"
 
 #: ideascube/models.py:242
-msgid "Auditive"
-msgstr ""
+msgid "Visual"
+msgstr "بینیاری"
 
 #: ideascube/models.py:243
-msgid "Physical"
-msgstr ""
+msgid "Auditive"
+msgstr "بیستیاری"
 
 #: ideascube/models.py:244
-msgid "Cognitive"
-msgstr ""
+msgid "Physical"
+msgstr "فیزیکی"
 
 #: ideascube/models.py:245
+msgid "Cognitive"
+msgstr "ناسینەکی"
+
+#: ideascube/models.py:246
 msgid "Mental"
-msgstr ""
+msgstr "زەینی"
 
-#: ideascube/models.py:248
+#: ideascube/models.py:249
 msgid "Latin written name"
-msgstr ""
+msgstr "ناوی بە لاتینی نووسراو"
 
-#: ideascube/models.py:251
+#: ideascube/models.py:252
 msgid "Birth year"
-msgstr ""
+msgstr "ساڵی لە دایک بوون"
 
-#: ideascube/models.py:254
+#: ideascube/models.py:255
 msgid "Gender"
-msgstr ""
+msgstr "رەگەز"
 
-#: ideascube/models.py:257
+#: ideascube/models.py:258
 msgid "Country of origin"
-msgstr ""
+msgstr "زێد وڵات"
 
-#: ideascube/models.py:259
+#: ideascube/models.py:260
 msgid "City of origin"
-msgstr ""
+msgstr "زێد شار"
 
-#: ideascube/models.py:261
+#: ideascube/models.py:262
 msgid "ID card number"
-msgstr ""
+msgstr "ژمارەی کارتی نەتەوەیی"
 
-#: ideascube/models.py:265
+#: ideascube/models.py:266
 msgid "Number of children under 12"
-msgstr ""
+msgstr "ژمارەی منداڵی ژێر ١٢ ساڵ"
 
-#: ideascube/models.py:267
+#: ideascube/models.py:268
 msgid "Number of children under 18"
-msgstr ""
+msgstr "ژمارەی منداڵی ژێر ١٨ ساڵ"
 
-#: ideascube/models.py:269
+#: ideascube/models.py:270
 msgid "Number of children above 18"
-msgstr ""
+msgstr "ژمارەی منداڵی سەرووی ١٨ ساڵ"
 
-#: ideascube/models.py:271
+#: ideascube/models.py:272
 msgid "School level"
-msgstr ""
+msgstr "ئاستی خوێندن"
 
-#: ideascube/models.py:274
+#: ideascube/models.py:275
 msgid "Marital situation"
-msgstr ""
+msgstr "دۆخی ماددی"
 
-#: ideascube/models.py:277
+#: ideascube/models.py:278
 msgid "Ideas Box awareness"
-msgstr ""
+msgstr "ئاگاداریی ئایدیاس بۆکس"
 
-#: ideascube/models.py:279
+#: ideascube/models.py:280
 msgid "Refugee ID"
-msgstr ""
+msgstr "ژمارەی پەنابەری"
 
-#: ideascube/models.py:281
+#: ideascube/models.py:282
 msgid "Camp entry date"
-msgstr ""
+msgstr "رۆژی هاتنە نێو کەمپ"
 
-#: ideascube/models.py:285
+#: ideascube/models.py:286
 msgid "Current occupation"
-msgstr ""
+msgstr "کاری ئێستە"
 
-#: ideascube/models.py:288
+#: ideascube/models.py:289
 msgid "Occupation in the place of origin"
-msgstr ""
+msgstr "کارەکەی لە زێدی خۆی"
 
-#: ideascube/models.py:292
+#: ideascube/models.py:293
 msgid "Family status"
-msgstr ""
+msgstr "دۆخی خێزانی"
 
-#: ideascube/models.py:295
+#: ideascube/models.py:296
 msgid "Sent to school in the country of origin (if under 18)"
-msgstr ""
+msgstr "لە وڵاتی خۆی خوێندوویەتی ( ئەگەر تەمەنی ژێر ١٨ ساڵە)"
 
-#: ideascube/models.py:298
+#: ideascube/models.py:299
 msgid "Activities in the camp"
-msgstr ""
+msgstr "چالاکییەکان لە کەمپ"
 
-#: ideascube/models.py:302
+#: ideascube/models.py:303
 msgid "Address in the camp"
-msgstr ""
+msgstr "ناونیشان لە کەمپ"
 
-#: ideascube/models.py:305
+#: ideascube/models.py:306
 msgid "Disabilities"
-msgstr ""
+msgstr "کەم چالاکیی"
 
-#: ideascube/models.py:308
+#: ideascube/models.py:309
 msgid "Phone number (use comma to register more than one)"
-msgstr ""
+msgstr "ژمارەی تەلەفوون ( ئەگەر چەند ژمارە بن، بە نیشانەی ، جیا بکرێنەوە)"
 
-#: ideascube/models.py:310
+#: ideascube/models.py:311
 msgid "Email address (optional)"
-msgstr ""
+msgstr "ئادرەسی ئیمایل (  بە دڵخواز)"
 
-#: ideascube/models.py:314
+#: ideascube/models.py:315
 msgid "English knowledge"
-msgstr ""
+msgstr "زانینی ئینگلیسی"
 
-#: ideascube/models.py:317
+#: ideascube/models.py:318
 msgid "Arabic knowledge"
-msgstr ""
+msgstr "زانینی عەرەبی"
 
-#: ideascube/models.py:320
+#: ideascube/models.py:321
 msgid "Persian knowledge"
-msgstr ""
+msgstr "زانینی فارسی"
 
-#: ideascube/models.py:323
+#: ideascube/models.py:324
 msgid "Kirundi knowledge"
-msgstr ""
+msgstr "زانینی کرووندی"
 
-#: ideascube/models.py:326
+#: ideascube/models.py:327
 msgid "French knowledge"
-msgstr ""
+msgstr "زانینی فەرەنسی"
 
-#: ideascube/models.py:329
+#: ideascube/models.py:330
 msgid "Swahili knowledge"
-msgstr ""
+msgstr "زانینی سەواحیلی"
 
-#: ideascube/models.py:332
+#: ideascube/models.py:333
 msgid "Kurdish knowledge"
-msgstr ""
+msgstr "زانینی کوردی"
 
-#: ideascube/models.py:335
+#: ideascube/models.py:336
 msgid "Shabak knowledge"
-msgstr ""
-
-#: ideascube/monitoring/forms.py:28
-msgid "Enter user identifiers"
-msgstr ""
+msgstr "زانینی شەبەک"
 
 #: ideascube/monitoring/forms.py:33
-msgid "Custom activity name"
-msgstr ""
+msgid "Enter user identifiers"
+msgstr "ناوی بەکار هێنەر بنووسە"
 
-#: ideascube/monitoring/forms.py:35
+#: ideascube/monitoring/forms.py:38
+msgid "Custom activity name"
+msgstr "ناوی باوی چالاکی"
+
+#: ideascube/monitoring/forms.py:40
 msgid "Partner involved in activity"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:46
+#: ideascube/monitoring/forms.py:51
 msgid "Missing module name"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:55
+#: ideascube/monitoring/forms.py:60
 msgid "since"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:81 ideascube/monitoring/forms.py:110
-#: ideascube/monitoring/forms.py:160 ideascube/monitoring/models.py:172
+#: ideascube/monitoring/forms.py:86 ideascube/monitoring/forms.py:115
+#: ideascube/monitoring/forms.py:165 ideascube/monitoring/models.py:172
 msgid "specimen"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:83
+#: ideascube/monitoring/forms.py:88
 msgid "Enter a barcode"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:99
+#: ideascube/monitoring/forms.py:104
 #, python-brace-format
 msgid "Barcode {barcode} not found."
 msgstr ""
 
-#: ideascube/monitoring/forms.py:112 ideascube/monitoring/forms.py:162
+#: ideascube/monitoring/forms.py:117 ideascube/monitoring/forms.py:167
 msgid "Enter an item barcode"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:113 ideascube/monitoring/models.py:27
-#: ideascube/monitoring/models.py:174
+#: ideascube/monitoring/forms.py:118 ideascube/monitoring/models.py:27
+#: ideascube/monitoring/models.py:175
 msgid "user"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:115
+#: ideascube/monitoring/forms.py:120
 msgid "Enter a user identifier"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:116
+#: ideascube/monitoring/forms.py:121
 msgid "due date"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:125
+#: ideascube/monitoring/forms.py:130
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
 msgstr ""
 
-#: ideascube/monitoring/forms.py:140
+#: ideascube/monitoring/forms.py:145
 #, python-brace-format
 msgid "Barcode {barcode} not found"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:150
+#: ideascube/monitoring/forms.py:155
 #, python-brace-format
 msgid "Identifier {serial} not found"
 msgstr ""
 
-#: ideascube/monitoring/forms.py:170
+#: ideascube/monitoring/forms.py:175
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
 msgstr ""
@@ -1423,20 +1437,20 @@ msgstr ""
 msgid "quantity"
 msgstr ""
 
-#: ideascube/monitoring/models.py:176
+#: ideascube/monitoring/models.py:178
 msgid "by"
 msgstr ""
 
-#: ideascube/monitoring/models.py:177
+#: ideascube/monitoring/models.py:179
 #: ideascube/monitoring/templates/monitoring/loan.html:27
 msgid "Due date"
 msgstr ""
 
-#: ideascube/monitoring/models.py:178
+#: ideascube/monitoring/models.py:180
 msgid "Return time"
 msgstr ""
 
-#: ideascube/monitoring/models.py:181
+#: ideascube/monitoring/models.py:183
 #: ideascube/monitoring/templates/monitoring/loan.html:28
 msgid "Comments"
 msgstr ""
@@ -1528,18 +1542,18 @@ msgstr ""
 msgid "Are you sure you want to delete the inventory of %(date)s?"
 msgstr ""
 
-#: ideascube/monitoring/templates/monitoring/inventory_form.html:6
+#: ideascube/monitoring/templates/monitoring/inventory_form.html:7
 #, python-format
 msgid "Edit inventory from %(date)s"
 msgstr ""
 
-#: ideascube/monitoring/templates/monitoring/inventory_form.html:8
+#: ideascube/monitoring/templates/monitoring/inventory_form.html:9
 msgid "Start new inventory"
 msgstr ""
 
-#: ideascube/monitoring/templates/monitoring/inventory_form.html:14
-#: ideascube/monitoring/templates/monitoring/specimen_form.html:14
-#: ideascube/monitoring/templates/monitoring/stockitem_form.html:14
+#: ideascube/monitoring/templates/monitoring/inventory_form.html:17
+#: ideascube/monitoring/templates/monitoring/specimen_form.html:17
+#: ideascube/monitoring/templates/monitoring/stockitem_form.html:17
 msgid "delete"
 msgstr ""
 
@@ -1582,12 +1596,12 @@ msgstr ""
 msgid "Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s\"?"
 msgstr ""
 
-#: ideascube/monitoring/templates/monitoring/specimen_form.html:6
+#: ideascube/monitoring/templates/monitoring/specimen_form.html:7
 #, python-format
 msgid "Edit specimen of %(item)s"
 msgstr ""
 
-#: ideascube/monitoring/templates/monitoring/specimen_form.html:8
+#: ideascube/monitoring/templates/monitoring/specimen_form.html:9
 msgid "Add new specimen"
 msgstr ""
 
@@ -1633,11 +1647,11 @@ msgstr ""
 msgid "Are you sure you want to delete the stockitem \"%(item)s\"?"
 msgstr ""
 
-#: ideascube/monitoring/templates/monitoring/stockitem_form.html:6
+#: ideascube/monitoring/templates/monitoring/stockitem_form.html:7
 msgid "Edit item"
 msgstr ""
 
-#: ideascube/monitoring/templates/monitoring/stockitem_form.html:8
+#: ideascube/monitoring/templates/monitoring/stockitem_form.html:9
 msgid "Add new item"
 msgstr ""
 
@@ -1746,10 +1760,8 @@ msgstr ""
 
 #: ideascube/serveradmin/catalog.py:308
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:4
-#: ideascube/templates/ideascube/includes/cards/cpassorcier.old.html:4
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:4
 #: ideascube/templates/ideascube/includes/cards/koombookedu.html:4
-#: ideascube/templates/ideascube/includes/cards/ted.old.html:4
 msgid "learn"
 msgstr ""
 
@@ -1824,7 +1836,7 @@ msgstr ""
 msgid "Battery monitoring"
 msgstr ""
 
-#: ideascube/serveradmin/templates/serveradmin/battery.html:9
+#: ideascube/serveradmin/templates/serveradmin/battery.html:12
 msgid "Capacity"
 msgstr ""
 
@@ -2031,6 +2043,10 @@ msgstr ""
 msgid "Found more than one Wi-Fi device, this is not supported"
 msgstr ""
 
+#: ideascube/templates/form-fullpage.html:26
+msgid "submit"
+msgstr "تۆمارکردن"
+
 #: ideascube/templates/ideascube/by_tag.html:7
 #, python-format
 msgid "Browse topic \"%(topic)s\""
@@ -2043,7 +2059,6 @@ msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:4
 #: ideascube/templates/ideascube/includes/cards/blog.html:4
-#: ideascube/templates/ideascube/includes/cards/software.html:4
 msgid "create"
 msgstr ""
 
@@ -2065,22 +2080,6 @@ msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:7
 msgid "Renforcer les capacités des bibliothèques."
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/cpassorcier.old.html:5
-msgid "C'est pas sorcier"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/cpassorcier.old.html:7
-msgid "Le magazine de vulgarisation scientifique."
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/gutenberg.old.html:5
-msgid "Gutenberg project"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/gutenberg.old.html:7
-msgid "Read and download e-books."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:5
@@ -2110,54 +2109,6 @@ msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:7
 msgid "Browse videos, sounds, images, pdf…"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/software.html:5
-msgid "Free software"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/software.html:7
-msgid "Free software for windows."
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/ted.old.html:5
-msgid "Ted Talks"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/ted.old.html:7
-msgid "Set of videos conference on innovation."
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/ubuntudoc.old.html:5
-msgid "Ubuntu documentation"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/ubuntudoc.old.html:7
-msgid "La documentation du célèbre système d'exploitation Ubuntu."
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/vikidia.old.html:5
-msgid "Vikidia"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/vikidia.old.html:7
-msgid "Browse the encyclopedia for children."
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/wikipedia.old.html:5
-msgid "wikipedia"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/wikipedia.old.html:7
-msgid "Browse the free encyclopedia."
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/wikisource.old.html:5
-msgid "Wikisource"
-msgstr ""
-
-#: ideascube/templates/ideascube/includes/cards/wikisource.old.html:7
-msgid "Bibliothèque de textes libres et gratuits."
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/footer.html:19
@@ -2217,11 +2168,11 @@ msgstr ""
 msgid "Add user"
 msgstr ""
 
-#: ideascube/templates/ideascube/user_form.html:6
+#: ideascube/templates/ideascube/user_form.html:7
 msgid "Edit user"
 msgstr ""
 
-#: ideascube/templates/ideascube/user_form.html:8
+#: ideascube/templates/ideascube/user_form.html:9
 msgid "New User"
 msgstr ""
 
@@ -2254,16 +2205,16 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: ideascube/views.py:93
+#: ideascube/views.py:98
 msgid "Welcome to {}, {}!"
 msgstr ""
 
-#: ideascube/views.py:208
+#: ideascube/views.py:213
 #, python-brace-format
 msgid "Password has been set for {user}"
 msgstr ""
 
-#: ideascube/views.py:248
+#: ideascube/views.py:258
 #, python-brace-format
 msgid "Successfully processed {count} users."
 msgstr ""
