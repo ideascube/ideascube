@@ -1,18 +1,40 @@
-{% extends 'form-fullpage.html' %}
-{% load i18n %}
+{% extends 'form-sidebar.html' %}
+{% load i18n static ideascube_tags %}
 
 {% block heading %}
-    {% if document %}
-        <h2>{% trans "Edit document" %} "{{ document }}"</h2>
-    {% else %}
-        <h2>{% trans "New document" %}</h2>
-    {% endif %}
+    <h2>
+        {% if document %}
+            {% trans "Edit document" %} "{{ document }}"
+        {% else %}
+            {% trans "New document" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
-{% block col %}
+
+{% block form %}
+    <h3>{% trans 'Content' %}</h3>
+    {% form_field form.title %}
+    {% form_field form.original %}
+    {% form_field form.summary %}
+{% endblock form %}
+
+{% block sidebar %}
+    <h3>{% trans 'Metadatas' %}</h3>
+    {% form_field form.credits %}
+    {% form_field form.lang %}
+    {% form_field form.kind %}
+    {% form_field form.tags %}
+    {% form_field form.preview %}
+{% endblock sidebar %}
+
+{% block extra_form_foot %}
     {% if document %}
-        <a class="button" href="{{ document.get_absolute_url }}">{% trans 'cancel' %}</a>
+        <a class="spaced button neutral" href="{{ document.get_absolute_url }}">{% trans 'cancel' %}</a>
+    {% else %}
+        <a class="spaced button neutral" href="{% url 'mediacenter:index' %}">{% trans 'cancel' %}</a>
     {% endif %}
-{% endblock col %}
+{% endblock extra_form_foot %}
+
 {% block extra_foot %}
     <script type="text/javascript">
         ID.initEditors();

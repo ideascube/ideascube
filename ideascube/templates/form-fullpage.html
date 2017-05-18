@@ -9,21 +9,24 @@
 {% block content %}
     <form method="POST" enctype="multipart/form-data" id="{% block form_id %}model_form{% endblock %}">
         <div class="row">
-                <div class="col two-third">
-                    {% block heading %}{% endblock heading %}
-                    {% csrf_token %}
-                    {% block form %}
-                        {% for field in form %}
-                            {% form_field field %}
-                        {% endfor %}
-                    {% endblock form %}
-                </div>
-                <div class="col third">
-                    {% block col %}{% endblock col %}
-                </div>
+            {% block heading %}{% endblock heading %}
         </div>
-        <div class="row">
-          <input type="submit" value="{% trans 'submit' %}" />
+        <div class="row no-margin">
+            {% block _form_content %}
+            <div class="col two-third">
+                {% csrf_token %}
+                {% block form %}
+                    {% for field in form %}
+                        {% form_field field %}
+                    {% endfor %}
+                {% endblock form %}
+                <div class="row right-align">
+                    {% block extra_form_foot %}
+                    {% endblock extra_form_foot %}
+                    <input type="submit" class="spaced" value="{% trans 'submit' %}" />
+                </div>
+            </div>
+            {% endblock _form_content %}
         </div>
     </form>
 {% endblock content %}

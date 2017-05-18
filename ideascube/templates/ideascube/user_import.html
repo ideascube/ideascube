@@ -6,4 +6,8 @@
     <h2>{% trans "Import users" %}</h2>
 {% endblock %}
 
+{% block extra_form_foot %}
+    <a class="spaced button neutral" href="{% url 'user_list' %}">{% trans 'cancel' %}</a>
+{% endblock extra_form_foot %}
+
 {% block form_id %}import{% endblock %}

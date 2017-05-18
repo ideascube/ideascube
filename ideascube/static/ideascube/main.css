@@ -166,6 +166,9 @@ table tr th {
 .row + .row {
     margin-top: 40px;
 }
+.row + .row.no-margin {
+    margin-top: 0px;
+}
 .col {
     flex: 0 1 auto;
     -webkit-flex: 0 1 auto;
@@ -176,6 +179,13 @@ table tr th {
 html[dir='rtl'] .col + .col {
     padding-left: 0;
     padding-right: 40px;
+}
+.spaced + .spaced {
+    margin-left: 40px;
+}
+html[dir='rtl'] .spaced + .spaced {
+    margin-left: 0;
+    margin-right: 40px;
 }
 .half {
     width: 50%;
@@ -211,6 +221,9 @@ html[dir='rtl'] .flow * + * {
 }
 .layout-element {
     padding: 0 10px;
+}
+.right-align {
+   justify-content: flex-end;
 }
 
 
@@ -350,11 +363,6 @@ html[dir='rtl'] .show-password {
     margin-left: auto;
     margin-right: -25px;
 }
-
-form h3 {
-  margin-top: 1.8em;
-}
-
 
 .content {
     padding: 0 30px;

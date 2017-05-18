@@ -217,6 +217,11 @@ class SetPassword(FormView):
     def get_success_url(self):
         return reverse_lazy('user_detail', kwargs=self.kwargs)
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['user'] = context['form'].user
+        return context
+
 set_password = staff_member_required(SetPassword.as_view())
 
 

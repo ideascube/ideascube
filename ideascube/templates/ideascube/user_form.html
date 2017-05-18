@@ -2,11 +2,13 @@
 {% load i18n ideascube_tags %}
 
 {% block heading %}
-    {% if user_obj %}
-        <h2>{% trans "Edit user" %} {{ user_obj }}</h2>
-    {% else %}
-        <h2>{% trans "New User" %}</h2>
-    {% endif %}
+    <h2>
+        {% if user_obj %}
+            {% trans "Edit user" %} {{ user_obj }}
+        {% else %}
+            {% trans "New User" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
 
 {% block form %}
@@ -17,6 +19,14 @@
         {% endfor %}
     {% endfor %}
 {% endblock form %}
+
+{% block extra_form_foot %}
+    {% if user_obj %}
+        <a class="spaced button neutral" href="{{ user_obj.get_absolute_url }}">{% trans 'cancel' %}</a>
+    {% else %}
+        <a class="spaced button neutral" href="{% url 'user_list' %}">{% trans 'cancel' %}</a>
+    {% endif %}
+{% endblock extra_form_foot %}
 
 {% block extra_foot %}
     <script type="text/javascript">

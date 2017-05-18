@@ -2,18 +2,23 @@
 {% load i18n %}
 
 {% block heading %}
-    {% if inventory %}
-        <h2>{% blocktrans with date=inventory.made_at %}Edit inventory from {{ date }}{% endblocktrans %}</h2>
-    {% else %}
-        <h2>{% trans "Start new inventory" %}</h2>
-    {% endif %}
+    <h2>
+        {% if inventory %}
+            {% blocktrans with date=inventory.made_at %}Edit inventory from {{ date }}{% endblocktrans %}
+        {% else %}
+            {% trans "Start new inventory" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
-{% block col %}
+
+{% block extra_form_foot %}
     {% if inventory %}
-        <a class="button" href="{{ inventory.get_absolute_url }}">{% trans 'cancel' %}</a>
-        <a class="button warning" href="{% url 'monitoring:inventory_delete' pk=inventory.pk %}">{% trans 'delete' %}</a>
+        <a class="spaced button neutral" href="{{ inventory.get_absolute_url }}">{% trans 'cancel' %}</a>
+        <a class="spaced button warning" href="{% url 'monitoring:inventory_delete' pk=inventory.pk %}">{% trans 'delete' %}</a>
+    {% else %}
+        <a class="spaced button neutral" href="{% url 'monitoring:stock' %}">{% trans 'cancel' %}</a>
     {% endif %}
-{% endblock col %}
+{% endblock extra_form_foot %}
 
 {% block extra_foot %}
     <script type="text/javascript">

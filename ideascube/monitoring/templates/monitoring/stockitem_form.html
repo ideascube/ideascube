@@ -2,15 +2,20 @@
 {% load i18n %}
 
 {% block heading %}
-    {% if stockitem %}
-        <h2>{% trans "Edit item" %} "{{ stockitem }}"</h2>
-    {% else %}
-        <h2>{% trans "Add new item" %}</h2>
-    {% endif %}
+    <h2>
+        {% if stockitem %}
+            {% trans "Edit item" %} "{{ stockitem }}"
+        {% else %}
+            {% trans "Add new item" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
-{% block col %}
+
+{% block extra_form_foot %}
     {% if stockitem %}
-        <a class="button" href="{{ stockitem.get_absolute_url }}">{% trans 'cancel' %}</a>
-        <a class="button warning" href="{% url 'monitoring:stockitem_delete' pk=stockitem.pk %}">{% trans 'delete' %}</a>
+        <a class="spaced button neutral" href="{{ stockitem.get_absolute_url }}">{% trans 'cancel' %}</a>
+        <a class="spaced button warning" href="{% url 'monitoring:stockitem_delete' pk=stockitem.pk %}">{% trans 'delete' %}</a>
+    {% else %}
+        <a class="spaced button neutral" href="{% url 'monitoring:stock' %}">{% trans 'cancel' %}</a>
     {% endif %}
-{% endblock col %}
+{% endblock extra_form_foot %}

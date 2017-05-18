@@ -1,18 +1,39 @@
-{% extends 'form-fullpage.html' %}
-{% load i18n %}
+{% extends 'form-sidebar.html' %}
+{% load i18n ideascube_tags %}
 
 {% block heading %}
-    {% if specimen %}
-        <h2>{% trans "Edit book specimen" %} "{{ specimen }}"</h2>
-    {% else %}
-        <h2>{% trans "New book specimen" %}</h2>
-    {% endif %}
+    <h2>
+        {% if specimen %}
+            {% blocktrans %}Edit book specimen {{ specimen }}{% endblocktrans %}
+        {% elif book %}
+            {% blocktrans %}New book specimen for {{ book }}{% endblocktrans %}
+        {% else %}
+            {% trans "New book specimen" %}
+        {% endif %}
+    </h2>
 {% endblock heading %}
-{% block col %}
+
+{% block form %}
+    {% form_field form.barcode %}
+    {% form_field form.comments %}
+{% endblock form %}
+
+{% block sidebar %}
+    {% form_field form.file %}
+    {% form_field form.location %}
+    {% form_field form.item %}
+{% endblock sidebar %}
+
+{% block extra_form_foot %}
     {% if specimen %}
-        <a href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</a>
+        <a class="spaced button neutral" href="{{ specimen.get_absolute_url }}">{% trans 'cancel' %}</a>
+        <a class="spaced button warning" href="{% url 'library:specimen_delete' pk=specimen.pk %}">{% trans "Delete specimen" %}</a>
+    {% elif book %}
+        <a class="spaced button neutral" href="{{ book.get_absolute_url }}">{% trans 'cancel' %}</a>
+    {% else %}
+        <a class="spaced button neutral" href="{% url 'library:index' %}">{% trans 'cancel' %}</a>
     {% endif %}
-{% endblock col %}
+{% endblock extra_form_foot %}
 
 {% block extra_foot %}
     <script type="text/javascript">

@@ -1,0 +1,10 @@
+{% extends 'form-fullpage.html' %}
+
+{% load i18n ideascube_tags %}
+
+{% block _form_content %}
+    <div class="col third">
+        {% block sidebar %}{% endblock sidebar %}
+    </div>
+    {{ block.super }}
+{% endblock _form_content %}
