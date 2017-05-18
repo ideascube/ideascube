@@ -41,7 +41,7 @@ def test_it_should_not_be_possible_to_have_twice_the_same_isbn():
 
 def test_can_search_books_by_tags():
     BookFactory(tags=['jordan', 'dead sea'])
-    assert Book.objects.search("jordan")
+    assert Book.objects.search(query="jordan")
 
 
 def test_it_should_be_allowed_to_create_more_than_one_digital_specimen():
