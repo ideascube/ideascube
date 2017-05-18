@@ -139,7 +139,7 @@ class SearchMixin(models.Model):
 
 
 class SearchableQuerySet(object):
-    def search(self, text__match=None, kind=None, lang=None, tags=[], source=None, **kwargs):
+    def search(self, text__match=None, kind=None, lang=None, tags__match=[], source=None, **kwargs):
         kwargs['model'] = self.model.__name__
         if text__match:
             kwargs['text__match'] = text__match
@@ -149,8 +149,8 @@ class SearchableQuerySet(object):
             kwargs['lang'] = lang
         if source:
             kwargs['source'] = source
-        if tags:
-            kwargs['tags__match'] = tags
+        if tags__match:
+            kwargs['tags__match'] = tags__match
         ids = Search.ids(**kwargs).distinct()
         # Force the execution of the request here
         # as we can request on several db in the same time.
