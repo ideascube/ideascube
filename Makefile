@@ -1,6 +1,6 @@
 # -- Development --------------------------------------------------------------
 develop:
-	pip3 install --no-use-wheel -r requirements-dev.txt
+	pip3 install --no-binary=:all: -r requirements-dev.txt
 
 doc:
 	mkdocs serve
@@ -35,6 +35,9 @@ ci-images:
 	
 	docker build --no-cache --file dockerfiles/ci-stretch-python35 --tag ideascube/ideascube-ci:stretch-python35 .
 	docker push ideascube/ideascube-ci:stretch-python35
+	
+	docker build --no-cache --file dockerfiles/ci-jessie-deb-builder --tag ideascube/ideascube-ci:jessie-deb-builder .
+	docker push ideascube/ideascube-ci:jessie-deb-builder
 
 
 # -- Translations -------------------------------------------------------------
