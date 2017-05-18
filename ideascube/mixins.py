@@ -92,7 +92,7 @@ class FilterableViewMixin:
         tags = self.request.GET.getlist('tags')
         source = self.request.GET.get('source')
         if any((query, kind, lang, tags, source)):
-            qs = qs.search(query=query, lang=lang, kind=kind, tags=tags, source=source)
+            qs = qs.search(text__match=query, lang=lang, kind=kind, tags=tags, source=source)
         return qs
 
 
