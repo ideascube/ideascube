@@ -604,7 +604,7 @@ def test_mediacenter_installs_zippedmedia(settings, zippedmedia_path):
     video = Document.objects.get(title='my video')
     assert video.summary == 'my video summary'
     assert video.kind == Document.VIDEO
-    assert Document.objects.search(query='summary').count() == 3
+    assert Document.objects.search(text__match='summary').count() == 3
 
     documents_tag1 = Document.objects.search(tags=['tag1'])
     documents_tag1 = set(d.title for d in documents_tag1)
