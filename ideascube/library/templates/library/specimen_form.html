@@ -4,7 +4,7 @@
 {% block heading %}
     <h2>
         {% if specimen %}
-            {% trans "Edit book specimen" %} "{{ specimen }}"
+            {% blocktrans %}Edit book specimen {{ specimen }}{% endblocktrans %}
         {% else %}
             {% trans "New book specimen" %}
         {% endif %}
