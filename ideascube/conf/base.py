@@ -340,11 +340,15 @@ EXTRA_APP_CARDS = [
 ]
 CUSTOM_CARDS = [
     # {
+    #     # Must be one of create, discover, info, learn, manage, read
     #     'category': 'learn',
     #     'url': 'http://mydomain.fr',
     #     'title': 'The title of my custom card',
     #     'description': 'The description of my custom card',
+    #     # The name of a Font Awesome glyph
     #     'fa': 'fax',
+    #     # True if the card should only be visible by the staff
+    #     'is_staff': False
     # },
 ]
 
