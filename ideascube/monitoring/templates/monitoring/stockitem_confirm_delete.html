@@ -6,3 +6,7 @@
          Are you sure you want to delete the stockitem "{{ item }}"?
     {% endblocktrans %}
 {% endblock %}
+
+{% block cancel_url %}
+    {% url 'monitoring:stockitem_update' pk=stockitem.pk %}
+{% endblock cancel_url %}

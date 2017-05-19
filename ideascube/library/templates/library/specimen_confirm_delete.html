@@ -12,3 +12,7 @@
         This will not delete book "{{ name }}"
     {% endblocktrans %}
 {% endblock %}
+
+{% block cancel_url %}
+    {% url 'library:specimen_update' pk=specimen.instance.pk %}
+{% endblock cancel_url %}
