@@ -27,6 +27,7 @@ from ideascube.mediacenter.models import Document
 
 from .cards import (
     build_builtin_card_info,
+    build_custom_card_info,
     build_extra_app_card_info,
     build_package_card_info,
     build_staff_card_info,
@@ -47,7 +48,7 @@ def index(request):
     staff_cards = build_staff_card_info()
     builtin_cards = build_builtin_card_info()
     extra_cards = build_extra_app_card_info()
-    custom_cards = settings.CUSTOM_CARDS
+    custom_cards = build_custom_card_info()
     package_cards = build_package_card_info()
 
     cards = (
