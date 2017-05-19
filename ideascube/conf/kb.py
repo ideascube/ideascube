@@ -10,17 +10,5 @@ BACKUP_FORMAT = 'gztar'
 STAFF_HOME_CARDS = [c for c in STAFF_HOME_CARDS  # pragma: no flakes
                     if c['url'] in ['user_list', 'server:settings']]
 
-BUILTIN_APP_CARDS = [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'mediacenter',
-    },
-]
-
-EXTRA_APP_CARDS = [
-    {
-        'id': 'khanacademy',
-    },
-]
+BUILTIN_APP_CARDS = ['blog', 'mediacenter']
+EXTRA_APP_CARDS = ['khanacademy']

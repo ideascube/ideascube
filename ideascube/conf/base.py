@@ -280,38 +280,25 @@ STAFF_HOME_CARDS = [
     },
 ]
 
-BUILTIN_APP_CARDS = [
-    {
-        'id': 'blog',
-    },
-    {
-        'id': 'library',
-    },
-    {
-        'id': 'mediacenter',
-    },
-]
+BUILTIN_APP_CARDS = ['blog', 'library', 'mediacenter']
 
 EXTRA_APP_CARDS = [
+    # 'appinventor',
+    # 'bsfcampus',
+    # 'khanacademy',
+    # 'koombookedu',
+]
+CUSTOM_CARDS = [
     # {
-    #     'id': 'appinventor',
-    # },
-    # {
-    #     'id': 'bsfcampus',
-    # },
-    # {
-    #     'id': 'khanacademy',
-    # },
-    # {
-    #     'id': 'koombookedu',
-    # },
-    # {
+    #     # Must be one of create, discover, info, learn, manage, read
     #     'category': 'learn',
     #     'url': 'http://mydomain.fr',
     #     'title': 'The title of my custom card',
     #     'description': 'The description of my custom card',
-    #     'img': '/img/wikipedia.png',
+    #     # The name of a Font Awesome glyph
     #     'fa': 'fax',
+    #     # True if the card should only be visible by the staff
+    #     'is_staff': False
     # },
 ]
 
