@@ -6,3 +6,7 @@
         Are you sure you want to delete the inventory of {{ date }}?
     {% endblocktrans %}
 {% endblock %}
+
+{% block cancel_url %}
+    {% url 'monitoring:inventory_update' pk=inventory.pk %}
+{% endblock cancel_url %}

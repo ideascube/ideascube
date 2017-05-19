@@ -6,3 +6,7 @@
         Are you sure you want to delete the specimen "{{ specimen }}" of "{{ item }}"?
     {% endblocktrans %}
 {% endblock %}
+
+{% block cancel_url %}
+    {% url 'monitoring:specimen_update' pk=specimen.pk %}
+{% endblock cancel_url %}

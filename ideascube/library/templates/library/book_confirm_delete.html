@@ -6,3 +6,7 @@
          Are you sure you want to delete book "{{ book }}" and all its specimens?
     {% endblocktrans %}
 {% endblock %}
+
+{% block cancel_url %}
+    {{ book.get_absolute_url }}
+{% endblock cancel_url %}
