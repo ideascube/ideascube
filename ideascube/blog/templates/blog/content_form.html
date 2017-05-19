@@ -28,13 +28,13 @@
     {% form_field form.tags %}
 {% endblock sidebar %}
 
-{% block extra_form_foot %}
+{% block cancel_url %}
     {% if content %}
-        <a class="spaced button neutral" href="{{ content.get_absolute_url }}">{% trans 'cancel' %}</a>
+        {{ content.get_absolute_url }}
     {% else %}
-        <a class="spaced button neutral" href="{% url 'blog:index' %}">{% trans 'cancel' %}</a>
+        {% url 'blog:index' %}
     {% endif %}
-{% endblock extra_form_foot %}
+{% endblock cancel_url %}
 
 {% block extra_foot %}
     <script type="text/javascript">
