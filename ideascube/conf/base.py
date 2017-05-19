@@ -305,6 +305,8 @@ EXTRA_APP_CARDS = [
     # {
     #     'id': 'koombookedu',
     # },
+]
+CUSTOM_CARDS = [
     # {
     #     'category': 'learn',
     #     'url': 'http://mydomain.fr',
