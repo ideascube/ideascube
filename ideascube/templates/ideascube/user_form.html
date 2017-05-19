@@ -20,13 +20,13 @@
     {% endfor %}
 {% endblock form %}
 
-{% block extra_form_foot %}
+{% block cancel_url %}
     {% if user_obj %}
-        <a class="spaced button neutral" href="{{ user_obj.get_absolute_url }}">{% trans 'cancel' %}</a>
+        {{ user_obj.get_absolute_url }}
     {% else %}
-        <a class="spaced button neutral" href="{% url 'user_list' %}">{% trans 'cancel' %}</a>
+        {% url 'user_list' %}
     {% endif %}
-{% endblock extra_form_foot %}
+{% endblock cancel_url %}
 
 {% block extra_foot %}
     <script type="text/javascript">

@@ -21,9 +21,12 @@
                     {% endfor %}
                 {% endblock form %}
                 <div class="row right-align">
-                    {% block extra_form_foot %}
-                    {% endblock extra_form_foot %}
-                    <input type="submit" class="spaced" value="{% trans 'submit' %}" />
+                    {% block form_foot %}
+                        <a class="spaced button neutral" href="{% block cancel_url %}{% endblock %}">{% trans 'cancel' %}</a>
+                        {% block extra_form_foot %}
+                        {% endblock extra_form_foot %}
+                        <input type="submit" class="spaced" value="{% trans 'submit' %}" />
+                    {% endblock form_foot %}
                 </div>
             </div>
             {% endblock _form_content %}

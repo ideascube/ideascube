@@ -13,6 +13,10 @@
     {% endfor %}
 {% endblock form %}
 
+{% block form_foot %}
+    <input type="submit" class="spaced" value="{% trans 'submit' %}" />
+{% endblock form_foot %}
+
 {% block extra_foot %}
     <script type="text/javascript">
         ID.focusOn('serial');

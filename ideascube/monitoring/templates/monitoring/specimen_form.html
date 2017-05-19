@@ -11,12 +11,17 @@
     </h2>
 {% endblock heading %}
 
+{% block cancel_url %}
+    {% if specimen %}
+        {{ specimen.get_absolute_url }}
+    {% else %}
+        {% url 'monitoring:stock' %}
+    {% endif %}
+{% endblock cancel_url %}
+
 {% block extra_form_foot %}
     {% if specimen %}
-        <a class="spaced button neutral" href="{{ specimen.get_absolute_url }}">{% trans 'cancel' %}</a>
         <a class="spaced button warning" href="{% url 'monitoring:specimen_delete' pk=specimen.pk %}">{% trans 'delete' %}</a>
-    {% else %}
-        <a class="spaced button neutral" href="{% url 'monitoring:stock' %}">{% trans 'cancel' %}</a>
     {% endif %}
 {% endblock extra_form_foot %}
 

@@ -27,13 +27,13 @@
     {% form_field form.preview %}
 {% endblock sidebar %}
 
-{% block extra_form_foot %}
+{% block cancel_url %}
     {% if document %}
-        <a class="spaced button neutral" href="{{ document.get_absolute_url }}">{% trans 'cancel' %}</a>
+        {{ document.get_absolute_url }}
     {% else %}
-        <a class="spaced button neutral" href="{% url 'mediacenter:index' %}">{% trans 'cancel' %}</a>
+        {% url 'mediacenter:index' %}
     {% endif %}
-{% endblock extra_form_foot %}
+{% endblock cancel_url %}
 
 {% block extra_foot %}
     <script type="text/javascript">

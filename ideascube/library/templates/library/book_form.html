@@ -34,13 +34,13 @@
     {% form_field form.tags %}
 {% endblock sidebar %}
 
-{% block extra_form_foot %}
+{% block cancel_url %}
     {% if book %}
-        <a class="spaced button neutral" href="{{ book.get_absolute_url }}">{% trans 'cancel' %}</a>
+        {{ book.get_absolute_url }}
     {% else %}
-        <a class="spaced button neutral" href="{% url 'library:index' %}">{% trans 'cancel' %}</a>
+        {% url 'library:index' %}
     {% endif %}
-{% endblock extra_form_foot %}
+{% endblock cancel_url %}
 
 {% block extra_foot %}
     <script type="text/javascript">
