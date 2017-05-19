@@ -15,7 +15,7 @@
                 <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3 pure-u-xl-1-4 pure-u">
                 {% if card.id %}
                     {% with 'ideascube/includes/cards/'|add:card.id|add:'.html' as template %}
-                        {% include template with domain=domain card=card %}
+                        {% include template with card=card %}
                     {% endwith %}
                 {% else %}
                     {% include 'ideascube/includes/cards/custom.html' with card=card %}
