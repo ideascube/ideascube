@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-18 15:42+0000\n"
-"PO-Revision-Date: 2017-05-18 15:28+0000\n"
+"PO-Revision-Date: 2017-05-19 09:22+0000\n"
 "Last-Translator: Matthieu Gautier <mgautier@kymeria.fr>\n"
 "Language-Team: Spanish (http://www.transifex.com/ideascube/ideascube/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -1546,7 +1546,7 @@ msgstr "Gestión de inventario"
 #: ideascube/monitoring/templates/monitoring/inventory_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete the inventory of %(date)s?"
-msgstr "Está segudo que quiere eliminar el inventario de %(date)s?"
+msgstr ""
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:7
 #, python-format

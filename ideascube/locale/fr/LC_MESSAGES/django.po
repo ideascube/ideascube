@@ -7,6 +7,7 @@
 # Grégoire <gregoire.pouget@bibliosansfrontieres.org>, 2017
 # Grégoire <gregoire.pouget@bibliosansfrontieres.org>, 2016
 # Quentin Drouet <kent1@arscenic.info>, 2015
+# Mathieu Bridon <bochecha@daitauha.fr>, 2017
 # Romain Berthier <romain.berthier@bibliosansfrontieres.org>, 2016
 # Yoann Vincent <yovincent.21@gmail.com>, 2014
 # yohanboniface <yohanboniface@free.fr>, 2014-2016
@@ -15,7 +16,7 @@ msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-18 15:42+0000\n"
-"PO-Revision-Date: 2017-05-18 15:28+0000\n"
+"PO-Revision-Date: 2017-05-19 09:22+0000\n"
 "Last-Translator: Matthieu Gautier <mgautier@kymeria.fr>\n"
 "Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -512,7 +513,7 @@ msgstr "Format inconnu"
 
 #: ideascube/library/models.py:24
 msgid "digital"
-msgstr "digital"
+msgstr "numérique"
 
 #: ideascube/library/models.py:25
 msgid "children - cartoons"
@@ -714,7 +715,7 @@ msgstr "Charger des notices depuis un fichier"
 
 #: ideascube/library/templates/library/import.html:25
 msgid "From ISBN"
-msgstr "Depuis ISBN"
+msgstr "À partir d'un ISBN"
 
 #: ideascube/library/templates/library/import.html:26
 msgid "An Internet connection is needed."
@@ -989,7 +990,7 @@ msgstr "Parlé"
 
 #: ideascube/models.py:82
 msgid "Read"
-msgstr "Lire"
+msgstr "Lu"
 
 #: ideascube/models.py:87
 msgid "identifier"
@@ -1366,7 +1367,7 @@ msgstr "L'exemplaire avec le code-barre {barcode} est déjà prêté."
 #: ideascube/monitoring/forms.py:145
 #, python-brace-format
 msgid "Barcode {barcode} not found"
-msgstr "Le core-barres {barcode} n'existe pas."
+msgstr "Le code-barres {barcode} n'existe pas."
 
 #: ideascube/monitoring/forms.py:155
 #, python-brace-format
@@ -1546,7 +1547,7 @@ msgstr "Gérer le stock"
 #: ideascube/monitoring/templates/monitoring/inventory_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete the inventory of %(date)s?"
-msgstr "Êtes-vous sûr de vouloir supprimer l'inventaire de %(date)s ?"
+msgstr ""
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:7
 #, python-format
@@ -1932,7 +1933,7 @@ msgstr "Redémarrer"
 
 #: ideascube/serveradmin/templates/serveradmin/service_form.html:15
 msgid "Start"
-msgstr "Commencer"
+msgstr "Démarrer"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:22
 msgid "History"
@@ -1948,7 +1949,7 @@ msgstr "Identification nécessaire"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:33
 msgid "An encryption key is required to access this network."
-msgstr "Une clé de cryptage est nécessaire pour accéder à ce réseau."
+msgstr "Une clé de chiffrement est nécessaire pour accéder à ce réseau."
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:37
 msgid "Connect"
