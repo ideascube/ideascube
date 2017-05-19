@@ -70,6 +70,7 @@ def index(request):
     staff_cards = settings.STAFF_HOME_CARDS
     builtin_cards = settings.BUILTIN_APP_CARDS
     extra_cards = settings.EXTRA_APP_CARDS
+    custom_cards = settings.CUSTOM_CARDS
     package_cards = build_package_card_info()
 
     cards = staff_cards + builtin_cards + extra_cards + package_cards
