@@ -1,4 +1,12 @@
-{% extends 'ideascube/form_confirm_delete.html' %}
+{% extends 'form-confirm-delete.html' %}
 {% load i18n %}
 
-{% block confirm_message %}{% blocktrans %}Are you sure you want to delete user "{{ user_obj }}"?{% endblocktrans %}{% endblock %}
+{% block confirm_message %}
+    {% blocktrans %}
+        Are you sure you want to delete user "{{ user_obj }}"?
+    {% endblocktrans %}
+{% endblock %}
+
+{% block cancel_url %}
+    {{ user_obj.get_absolute_url }}
+{% endblock cancel_url %}

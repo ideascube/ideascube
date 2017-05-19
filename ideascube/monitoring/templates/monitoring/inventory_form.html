@@ -11,12 +11,17 @@
     </h2>
 {% endblock heading %}
 
+{% block cancel_url %}
+    {% if inventory %}
+        {{ inventory.get_absolute_url }}
+    {% else %}
+        {% url 'monitoring:stock' %}
+    {% endif %}
+{% endblock cancel_url %}
+
 {% block extra_form_foot %}
     {% if inventory %}
-        <a class="spaced button neutral" href="{{ inventory.get_absolute_url }}">{% trans 'cancel' %}</a>
         <a class="spaced button warning" href="{% url 'monitoring:inventory_delete' pk=inventory.pk %}">{% trans 'delete' %}</a>
-    {% else %}
-        <a class="spaced button neutral" href="{% url 'monitoring:stock' %}">{% trans 'cancel' %}</a>
     {% endif %}
 {% endblock extra_form_foot %}
 

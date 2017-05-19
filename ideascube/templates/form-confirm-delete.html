@@ -1,0 +1,20 @@
+{% extends 'form-fullpage.html' %}
+{% load i18n %}
+
+{% block form_id %}delete_form{% endblock %}
+
+{% block heading %}
+    <div>
+        <h2>{% block confirm_message %}{% endblock %}</h2>
+        <p>{% block confirm_warning %}{% endblock %}</p>
+    </div>
+{% endblock heading %}
+
+{% block form %}
+    {{ form.as_p }}
+{% endblock form %}
+
+{% block form_foot %}
+    <a class="spaced button neutral" href="{% block cancel_url %}{% endblock %}">{% trans 'no' %}</a>
+    <input type="submit" class="spaced warning" name="confirm" value="{% trans 'yes' %}" />
+{% endblock form_foot %}

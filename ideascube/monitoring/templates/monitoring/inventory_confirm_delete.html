@@ -1,4 +1,12 @@
-{% extends 'ideascube/form_confirm_delete.html' %}
+{% extends 'form-confirm-delete.html' %}
 {% load i18n %}
 
-{% block confirm_message %}{% blocktrans with date=inventory.made_at %}Are you sure you want to delete the inventory of {{ date }}?{% endblocktrans %}{% endblock %}
+{% block confirm_message %}
+    {% blocktrans with date=inventory.made_at %}
+        Are you sure you want to delete the inventory of {{ date }}?
+    {% endblocktrans %}
+{% endblock %}
+
+{% block cancel_url %}
+    {% url 'monitoring:inventory_update' pk=inventory.pk %}
+{% endblock cancel_url %}
