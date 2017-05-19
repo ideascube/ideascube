@@ -79,7 +79,6 @@ def index(request):
         'random_book': random_book,
         'random_doc': random_doc,
         'cards': cards,
-        'domain': settings.DOMAIN,
     }
     return render(request, 'index.html', context)
 
