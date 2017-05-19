@@ -1,5 +1,14 @@
 {% extends 'ideascube/form_confirm_delete.html' %}
 {% load i18n %}
 
-{% block confirm_message %}{% blocktrans with name=specimen %}Are you sure you want to delete "{{ name }}"?{% endblocktrans %}{% endblock %}
-{% block confirm_warning %}{% blocktrans with name=specimen.item %}This will not delete book "{{ name }}"{% endblocktrans %}{% endblock %}
+{% block confirm_message %}
+    {% blocktrans with name=specimen %}
+        Are you sure you want to delete "{{ name }}"?
+    {% endblocktrans %}
+{% endblock %}
+
+{% block confirm_warning %}
+    {% blocktrans with name=specimen.item %}
+        This will not delete book "{{ name }}"
+    {% endblocktrans %}
+{% endblock %}
