@@ -43,7 +43,7 @@ ci-images:
 # -- Translations -------------------------------------------------------------
 collect_translations:
 	python3 manage.py makemessages --all --no-obsolete --ignore=debian -d django
-	python3 manage.py makemessages --all --no-obsolete --ignore=debian -d djangojs
+	python3 manage.py makemessages --all --no-obsolete --ignore=debian --ignore=tinymce -d djangojs
 
 push_translations:
 	tx push -s

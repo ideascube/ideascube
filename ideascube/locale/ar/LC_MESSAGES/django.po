@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-18 15:42+0000\n"
-"PO-Revision-Date: 2017-05-18 15:28+0000\n"
+"PO-Revision-Date: 2017-05-19 09:22+0000\n"
 "Last-Translator: Matthieu Gautier <mgautier@kymeria.fr>\n"
 "Language-Team: Arabic (http://www.transifex.com/ideascube/ideascube/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -1544,7 +1544,7 @@ msgstr "ادارة المحتويات"
 #: ideascube/monitoring/templates/monitoring/inventory_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete the inventory of %(date)s?"
-msgstr "هل أنت متأكد من أنك تريد حذف الجرد في تاريخ %(date)s ؟"
+msgstr ""
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:7
 #, python-format
