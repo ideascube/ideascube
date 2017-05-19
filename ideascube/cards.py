@@ -248,3 +248,13 @@ def build_package_card_info():
         PACKAGED_CARDS[package.typename](package)
         for package in packages_to_display
     ]
+
+
+def build_custom_card_info():
+    cards = settings.CUSTOM_CARDS
+
+    for card in cards:
+        card['category'] = getattr(Category, card['category'])
+        card['template'] = 'ideascube/includes/cards/external.html'
+
+    return cards
