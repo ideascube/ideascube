@@ -344,7 +344,6 @@ CUSTOM_CARDS = [
     #     'url': 'http://mydomain.fr',
     #     'title': 'The title of my custom card',
     #     'description': 'The description of my custom card',
-    #     'img': '/img/wikipedia.png',
     #     'fa': 'fax',
     # },
 ]
