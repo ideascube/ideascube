@@ -19,6 +19,9 @@ def test_index_table_is_not_in_default_db():
 
     cursor = connections['transient'].cursor()
     cursor.execute("SELECT count(*) FROM sqlite_master "
-                   "WHERE type='table' AND name='idx';")
+                   "WHERE type='table' AND name LIKE 'search_idx_%';")
     count = cursor.fetchone()[0]
-    assert count == 1
+    # The virtual table create 5 other internal tables per TABLE creation :
+    # TABLE_content; TABLE_segments; TABLE_segdir; TABLE_docsize and TABLE_stat
+    # As we have 4 tables created, we should find 4*6 tables in the database.
+    assert count == 4*6

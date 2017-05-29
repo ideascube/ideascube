@@ -8,7 +8,6 @@ from webtest import Upload
 from ..views import Index
 from ..models import Document
 from .factories import DocumentFactory
-from ideascube.search.models import Search
 
 pytestmark = pytest.mark.django_db
 
@@ -597,7 +596,7 @@ def test_can_create_document_with_tags(staffapp):
 
 @pytest.mark.usefixtures('cleansearch')
 def test_tags_are_indexed_on_document_creation(staffapp):
-    assert Search.objects.filter(tags__match=['tag1']).count() == 0
+    assert Document.SearchModel.objects.filter(tags__match=['tag1']).count() == 0
     url = reverse('mediacenter:document_create')
     form = staffapp.get(url).forms['model_form']
     form['title'] = 'my document title'
@@ -606,7 +605,7 @@ def test_tags_are_indexed_on_document_creation(staffapp):
     form['original'] = Upload('image.jpg', b'xxxxxx', 'image/jpeg')
     form['tags'] = 'tag1, tag2'
     form.submit().follow()
-    assert Search.objects.filter(tags__match=['tag1']).count() == 1
+    assert Document.SearchModel.objects.filter(tags__match=['tag1']).count() == 1
 
 
 @pytest.mark.usefixtures('cleansearch')

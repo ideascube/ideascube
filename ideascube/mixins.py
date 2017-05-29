@@ -9,8 +9,6 @@ from django.conf.locale import LANG_INFO
 from django.http import HttpResponse
 from taggit.models import Tag
 
-from ideascube.search.models import Search
-
 
 class OrderableViewMixin:
 
@@ -44,7 +42,7 @@ class OrderableViewMixin:
 class FilterableViewMixin:
 
     def _search_for_attr_from_context(self, attr, context):
-        search = {'model': self.model.__name__}
+        search = {}
         if context.get('q'):
             search['text__match'] = context['q']
         if context.get('kind') and attr != 'kind':
@@ -55,7 +53,7 @@ class FilterableViewMixin:
             search['source'] = context['source']
         if context.get('tags'):
             search['tags__match'] = context['tags']
-        return Search.objects.filter(**search).values_list(attr, flat=True).distinct()
+        return self.model.SearchModel.objects.filter(**search).values_list(attr, flat=True).distinct()
 
     def _set_available_langs(self, context):
         available_langs = self._search_for_attr_from_context('lang', context)
