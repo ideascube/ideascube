@@ -56,7 +56,7 @@ class Search(models.Model):
     """Model that handle the search."""
     rowid = models.IntegerField(primary_key=True)
     model = models.CharField(max_length=64)
-    model_id = models.IntegerField()
+    object_id = models.IntegerField()
     public = models.BooleanField(default=True)
     text = SearchField()
     lang = models.Field()
@@ -73,12 +73,12 @@ class Search(models.Model):
     @classmethod
     def ids(cls, **kwargs):
         qs = Search.objects.filter(**kwargs).order_by_relevancy()
-        return qs.values_list('model_id', flat=True)
+        return qs.values_list('object_id', flat=True)
 
     @classmethod
     def search(cls, **kwargs):
         qs = Search.objects.filter(**kwargs).order_by_relevancy()
-        return (SearchMixin.registered_types[r.model].objects.get(pk=r.model_id) for r in qs)
+        return (SearchMixin.registered_types[r.model].objects.get(pk=r.object_id) for r in qs)
 
 
 class MetaSearchMixin(MetaRegistry, ModelBase):
@@ -133,14 +133,14 @@ class SearchMixin(models.Model, metaclass=MetaSearchMixin):
         }
         Search.objects.update_or_create(
             model=self.__class__.__name__,
-            model_id=self.pk,
+            object_id=self.pk,
             defaults=defaults
         )
 
     def deindex(self):
         Search.objects.filter(
             model=self.__class__.__name__,
-            model_id=self.pk).delete()
+            object_id=self.pk).delete()
 
 
 class SearchableQuerySet(object):
