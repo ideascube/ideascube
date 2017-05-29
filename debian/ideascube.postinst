@@ -5,9 +5,7 @@ set -e
 
 case "$1" in
     configure)
-        # Create ideascube user if not existing
         if ! getent passwd "$DPKG_MAINTSCRIPT_PACKAGE" > /dev/null 2>&1 ; then
-            echo -n "Creating $DPKG_MAINTSCRIPT_PACKAGE user..."
             adduser --quiet \
                     --system \
                     --no-create-home \
@@ -15,20 +13,17 @@ case "$1" in
                     --disabled-password \
                     --shell /bin/false \
                     "$DPKG_MAINTSCRIPT_PACKAGE"
-            echo " OK"
         fi
+
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE/main
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/cache/$DPKG_MAINTSCRIPT_PACKAGE
-        echo "Running migration"
+
         sudo -u $DPKG_MAINTSCRIPT_PACKAGE /usr/bin/ideascube migrate --noinput -v 1 --database=default
         sudo -u $DPKG_MAINTSCRIPT_PACKAGE /usr/bin/ideascube migrate --noinput -v 1 --database=transient
-        echo "Running collectstatic"
         sudo -u $DPKG_MAINTSCRIPT_PACKAGE /usr/bin/ideascube collectstatic --noinput -v 1
-        # Nginx
-        echo "Linking Nginx VHost"
+
         ln -fs /etc/nginx/sites-available/$DPKG_MAINTSCRIPT_PACKAGE /etc/nginx/sites-enabled/$DPKG_MAINTSCRIPT_PACKAGE
-        echo "Linking uWSGI app"
         ln -fs /etc/uwsgi/apps-available/$DPKG_MAINTSCRIPT_PACKAGE.ini /etc/uwsgi/apps-enabled/$DPKG_MAINTSCRIPT_PACKAGE.ini
         ;;
 esac
