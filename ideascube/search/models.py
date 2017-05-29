@@ -48,14 +48,13 @@ SearchTagField.register_lookup(TagMatch)
 
 class SearchQuerySet(models.QuerySet):
     def order_by_relevancy(self):
-        extra = {'relevancy': 'rank(matchinfo(idx))'}
+        extra = {'relevancy': 'rank(matchinfo({}))'.format(self.model.__name__)}
         return self.extra(select=extra).order_by('-relevancy')
 
 
 class Search(models.Model):
     """Model that handle the search."""
     rowid = models.IntegerField(primary_key=True)
-    model = models.CharField(max_length=64)
     object_id = models.IntegerField()
     public = models.BooleanField(default=True)
     text = SearchField()
@@ -67,22 +66,49 @@ class Search(models.Model):
     objects = SearchQuerySet.as_manager()
 
     class Meta:
-        db_table = 'idx'
-        managed = False
+        abstract = True
 
     @classmethod
     def ids(cls, **kwargs):
-        qs = Search.objects.filter(**kwargs).order_by_relevancy()
+        qs = cls.objects.filter(**kwargs).order_by_relevancy()
         return qs.values_list('object_id', flat=True)
 
     @classmethod
     def search(cls, **kwargs):
-        qs = Search.objects.filter(**kwargs).order_by_relevancy()
-        return (SearchMixin.registered_types[r.model].objects.get(pk=r.object_id) for r in qs)
+        qs = cls.objects.filter(**kwargs).order_by_relevancy()
+        return (cls.model.objects.get(pk=r.object_id) for r in qs)
 
 
 class MetaSearchMixin(MetaRegistry, ModelBase):
-    pass
+    def __new__(cls, name, bases, attrs):
+        if name == 'SearchMixin':
+            # Here we must use the default model creation system.
+            return super().__new__(cls, name, bases, attrs)
+
+        # The ModelBase metaclass will `pop` the '__module__' attributes, so
+        # we have to store it before creating the class.
+        module = attrs['__module__']
+        table_name = 'search_idx_{}'.format(name)
+
+        # Now we want to create another "search" Model byside of the Model we
+        # want to create.
+        # This "search" model will inherit from the Search model.
+        class search_meta:
+            db_table = table_name
+            managed = False
+
+        Model = super().__new__(cls, name, bases, attrs)
+        SearchModel = type(
+            table_name,
+            (Search,),
+            {
+                '__module__': module,
+                'Meta': search_meta,
+                'model': Model
+            }
+        )
+        Model.SearchModel = SearchModel
+        return Model
 
 
 class SearchMixin(models.Model, metaclass=MetaSearchMixin):
@@ -131,21 +157,17 @@ class SearchMixin(models.Model, metaclass=MetaSearchMixin):
             'source': self.index_source,
             'tags': tags
         }
-        Search.objects.update_or_create(
-            model=self.__class__.__name__,
+        self.SearchModel.objects.update_or_create(
             object_id=self.pk,
             defaults=defaults
         )
 
     def deindex(self):
-        Search.objects.filter(
-            model=self.__class__.__name__,
-            object_id=self.pk).delete()
+        self.SearchModel.objects.filter(object_id=self.pk).delete()
 
 
 class SearchableQuerySet(object):
     def search(self, query=None, kind=None, lang=None, tags=[], source=None, **kwargs):
-        kwargs['model'] = self.model.__name__
         if query:
             kwargs['text__match'] = query
         if kind:
@@ -156,7 +178,7 @@ class SearchableQuerySet(object):
             kwargs['source'] = source
         if tags:
             kwargs['tags__match'] = tags
-        ids = Search.ids(**kwargs).distinct()
+        ids = self.model.SearchModel.ids(**kwargs).distinct()
         # Force the execution of the request here
         # as we can request on several db in the same time.
         ids = list(ids)
