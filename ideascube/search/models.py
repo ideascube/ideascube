@@ -76,8 +76,7 @@ class Search(models.Model):
     @classmethod
     def search(cls, **kwargs):
         qs = Search.objects.filter(**kwargs).order_by_relevancy()
-        for row in qs:
-            yield SEARCHABLE[row.model].objects.get(pk=row.model_id)
+        return (SEARCHEABLE[r.model].objects.get(pk=r.model_id) for r in qs)
 
 
 class SearchMixin(models.Model):
