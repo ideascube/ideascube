@@ -35,6 +35,10 @@ def rm(path):
     except IsADirectoryError:
         shutil.rmtree(path)
 
+    except FileNotFoundError:
+        # That's fine
+        pass
+
 
 def load_from_file(path):
     with open(path, 'r', encoding='utf-8') as f:
@@ -242,7 +246,7 @@ class Package(metaclass=MetaRegistry):
 
     def assert_is_zipfile(self, path):
         if not zipfile.is_zipfile(path):
-            os.unlink(path)
+            rm(path)
             raise InvalidFile('{} is not a zip file'.format(path))
 
 
@@ -556,7 +560,7 @@ class Catalog:
                               " {package.title}({package.url}).\n{error}\n"
                               "Ignoring this package."
                               .format(package=package, error=error))
-                        os.unlink(path)
+                        rm(path)
                 else:
                     try:
                         # This might be an incomplete download, try finishing it
@@ -574,7 +578,7 @@ class Catalog:
                             msg = 'Error downloading the file: {}'.format(e)
 
                         printerr(msg)
-                        os.unlink(path)
+                        rm(path)
 
         path = os.path.join(self._local_package_cache, filename)
         if urlparsed.scheme in ['file', '']:
@@ -885,7 +889,7 @@ class Catalog:
         self._persist_catalog()
 
     def clear_cache(self):
-        shutil.rmtree(self._local_package_cache)
+        rm(self._local_package_cache)
         os.mkdir(self._local_package_cache)
 
         self._available_value = {}
@@ -917,7 +921,7 @@ class Catalog:
 
         if self._remotes_value:
             # So we did have old remotes after all...
-            shutil.rmtree(old_remote_cache)
+            rm(old_remote_cache)
 
     def list_remotes(self):
         return sorted(self._remotes.values(), key=attrgetter('id'))
@@ -937,4 +941,4 @@ class Catalog:
             raise ValueError('There is no "{}" remote'.format(id))
 
         del(self._remotes[id])
-        os.unlink(os.path.join(self._remote_storage, '{}.yml'.format(id)))
+        rm(os.path.join(self._remote_storage, '{}.yml'.format(id)))
