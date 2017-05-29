@@ -19,6 +19,8 @@ Build-Depends:
   autoconf,
   automake,
   libtool,
+# For PyYAML
+  libyaml-dev,
 Standards-Version: 3.9.6
 
 Package: ideascube
