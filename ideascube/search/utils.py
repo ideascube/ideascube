@@ -11,7 +11,7 @@ def create_index_table(force=True):
     if not count or force:
         cursor_transient.execute("DROP TABLE IF EXISTS idx")
         cursor_transient.execute("CREATE VIRTUAL TABLE idx using "
-                                 "FTS4(id, model, model_id, public, text, "
+                                 "FTS4(id, model, object_id, public, text, "
                                  "lang, kind, tags, source)")
 
 
