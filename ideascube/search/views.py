@@ -10,7 +10,8 @@ def search(request):
         search_kwargs = {'text__match': query}
         if not request.user.is_staff:
             search_kwargs['public'] = True
-        results = Search.search(**search_kwargs)
+        for model in Search.SearchableModels:
+            results.extend(model.SearchModel.search(**search_kwargs))
     context = {
         'results': results,
         'q': query

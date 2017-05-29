@@ -4,22 +4,30 @@ from django.db import connections
 
 
 def create_index_table(force=True):
+    from ideascube.search.models import Search
     cursor_transient = connections['transient'].cursor()
+    for model in Search.SearchableModels:
+        table = model.SearchModel.__name__
+        cursor_transient.execute("SELECT count(*) FROM sqlite_master "
+                                 "WHERE type='table' AND name='{}';".format(table))
+        count = cursor_transient.fetchone()[0]
+        if not count or force:
+            cursor_transient.execute("DROP TABLE IF EXISTS {}".format(table))
+            cursor_transient.execute(("CREATE VIRTUAL TABLE {} using "
+                                      "FTS4(id, object_id, public, text, "
+                                      "lang, kind, tags, source)").format(table))
     cursor_transient.execute("SELECT count(*) FROM sqlite_master "
                              "WHERE type='table' AND name='idx';")
     count = cursor_transient.fetchone()[0]
     if not count or force:
         cursor_transient.execute("DROP TABLE IF EXISTS idx")
-        cursor_transient.execute("CREATE VIRTUAL TABLE idx using "
-                                 "FTS4(id, model, object_id, public, text, "
-                                 "lang, kind, tags, source)")
 
 
 def reindex_content(force=True):
     from ideascube.search.models import Search
     create_index_table(force=force)
     indexed = {}
-    for model in Search.SearchableModels.values():
+    for model in Search.SearchableModels:
         count = 0
         for inst in model.objects.all():
             inst.index()
