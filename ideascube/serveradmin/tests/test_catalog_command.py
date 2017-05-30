@@ -641,6 +641,35 @@ def test_remove_package(tmpdir, capsys, settings, staticsite_path):
     assert install_dir.join('the-site').check(exists=False)
 
 
+def test_remove_uninstalled_package(tmpdir, capsys, settings, staticsite_path):
+    sha256sum = get_file_sha256(staticsite_path.strpath)
+
+    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
+    remote_catalog_file.write_text(
+        'all:\n'
+        '  the-site:\n'
+        '    name: A great web site\n'
+        '    version: 2017-06\n'
+        '    sha256sum: {sha256sum}\n'
+        '    size: 3027988\n'
+        '    url: file://{staticsite_path}\n'
+        '    type: static-site'.format(sha256sum=sha256sum, staticsite_path=staticsite_path),
+        'utf-8')
+
+    call_command(
+        'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+
+    install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
+    assert install_dir.join('the-site').check(exists=False)
+
+    call_command('catalog', 'remove', 'the-site')
+    out, err = capsys.readouterr()
+    assert out.strip() == ''
+    assert err.strip() == 'the-site is not installed'
+    assert install_dir.join('the-site').check(exists=False)
+
+
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_reinstall_package(tmpdir, capsys, settings, staticsite_path):
     sha256sum = get_file_sha256(staticsite_path.strpath)
@@ -713,6 +742,37 @@ def test_reinstall_unavailable_package(tmpdir, capsys, settings, staticsite_path
         call_command('catalog', 'reinstall', 'the-site')
 
     assert 'No such package: the-site' in excinfo.exconly()
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_reinstall_not_installed_package(tmpdir, capsys, settings, staticsite_path):
+    sha256sum = get_file_sha256(staticsite_path.strpath)
+
+    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
+    remote_catalog_file.write_text(
+        'all:\n'
+        '  the-site:\n'
+        '    name: A great web site\n'
+        '    version: 2017-06\n'
+        '    sha256sum: {sha256sum}\n'
+        '    size: 3027988\n'
+        '    url: file://{staticsite_path}\n'
+        '    type: static-site'.format(sha256sum=sha256sum, staticsite_path=staticsite_path),
+        'utf-8')
+
+    call_command(
+        'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+
+    install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
+    assert install_dir.join('the-site').check(exists=False)
+
+    call_command('catalog', 'reinstall', 'the-site')
+    out, err = capsys.readouterr()
+    assert out.strip() == 'Installing the-site-2017-06'
+    assert err.strip() == 'the-site is not installed'
+    assert install_dir.join('the-site').join('index.html').read_binary() == (
+        b'<html></html>')
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
