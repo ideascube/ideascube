@@ -2,6 +2,7 @@ from django.db import models
 from django.db.backends.signals import connection_created
 from django.db.models.signals import class_prepared, post_save, pre_delete
 from django.db.models.base import ModelBase
+from django.db.models import Case, When
 from django.dispatch import receiver
 
 from .utils import rank
@@ -67,16 +68,6 @@ class Search(models.Model):
 
     class Meta:
         abstract = True
-
-    @classmethod
-    def ids(cls, **kwargs):
-        qs = cls.objects.filter(**kwargs).order_by_relevancy()
-        return qs.values_list('object_id', flat=True)
-
-    @classmethod
-    def search(cls, **kwargs):
-        qs = cls.objects.filter(**kwargs).order_by_relevancy()
-        return (cls.model.objects.get(pk=r.object_id) for r in qs)
 
 
 class MetaSearchMixin(ModelBase):
@@ -177,12 +168,16 @@ class SearchMixin(models.Model, metaclass=MetaSearchMixin):
 
 
 class SearchableQuerySet(object):
+    def ids(self, **kwargs):
+        qs = self.model.SearchModel.objects.filter(**kwargs).order_by_relevancy()
+        return qs.values_list('object_id', flat=True)
+
     def search(self, **kwargs):
-        ids = self.model.SearchModel.ids(**kwargs).distinct()
         # Force the execution of the request here
         # as we can request on several db in the same time.
-        ids = list(ids)
-        return self.filter(pk__in=ids)
+        ids = list(self.ids(**kwargs).distinct())
+        preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(ids)])
+        return self.filter(pk__in=ids).order_by(preserved)
 
 
 @receiver(post_save)
