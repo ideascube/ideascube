@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.backends.signals import connection_created
 from django.db.models.signals import class_prepared, post_save, pre_delete
+from django.db.models.base import ModelBase
 from django.dispatch import receiver
 
 from .utils import rank
@@ -80,7 +81,25 @@ class Search(models.Model):
         return (cls.SearchableModels[r.model].objects.get(pk=r.model_id) for r in qs)
 
 
-class SearchMixin(models.Model):
+class MetaSearchMixin(ModelBase):
+    def __new__(cls, name, bases, attrs):
+
+        if name == 'MetaSearchMixin':
+            # We want to create the metaclass itself and not a "class".
+            # However, we inherite from `ModelBase` and so we must bypass
+            # the specific `__new__` of `ModelBase` as it will assume that
+            # class creations other than `ModelBase` are model creations.
+            return type(cls, name, bases, attrs)
+
+        Model = super().__new__(cls, name, bases, attrs)
+        if name == 'SearchMixin':
+            return Model
+
+        Search.SearchableModels[name] = Model
+        return Model
+
+
+class SearchMixin(models.Model, metaclass=MetaSearchMixin):
     """Inherit from this mixin to make your model searchable."""
 
     class Meta:
@@ -173,9 +192,3 @@ def deindex(sender, instance, **kwargs):
 @receiver(connection_created)
 def add_rank_function(sender, connection, **kwargs):
     connection.connection.create_function("rank", 1, rank)
-
-
-@receiver(class_prepared)
-def register_searchable_model(sender, **kwargs):
-    if issubclass(sender, SearchMixin):
-        Search.SearchableModels[sender.__name__] = sender
