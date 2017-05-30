@@ -550,7 +550,11 @@ class Catalog:
             except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
                 continue
 
-            upkg = self._get_package(ipkg.id, self._available)
+            try:
+                upkg = self._get_package(ipkg.id, self._available)
+
+            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+                continue
 
             if ipkg != upkg:
                 pkgs.append(upkg)
