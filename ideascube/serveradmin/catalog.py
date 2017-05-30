@@ -23,21 +23,9 @@ from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.utils import guess_kind_from_filename
 from ideascube.models import User
 from ideascube.templatetags.ideascube_tags import smart_truncate
-from ideascube.utils import get_file_sha256, printerr
+from ideascube.utils import get_file_sha256, printerr, rm
 
 from .systemd import Manager as SystemManager, NoSuchUnit
-
-
-def rm(path):
-    try:
-        os.unlink(path)
-
-    except IsADirectoryError:
-        shutil.rmtree(path)
-
-    except FileNotFoundError:
-        # That's fine
-        pass
 
 
 def load_from_file(path):
