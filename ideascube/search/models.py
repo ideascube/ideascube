@@ -52,6 +52,7 @@ class SearchQuerySet(models.QuerySet):
 
 class Search(models.Model):
     """Model that handle the search."""
+    SearchableModels = dict()
     rowid = models.IntegerField(primary_key=True)
     model = models.CharField(max_length=64)
     model_id = models.IntegerField()
@@ -76,7 +77,7 @@ class Search(models.Model):
     @classmethod
     def search(cls, **kwargs):
         qs = Search.objects.filter(**kwargs).order_by_relevancy()
-        return (SEARCHEABLE[r.model].objects.get(pk=r.model_id) for r in qs)
+        return (cls.SearchableModels[r.model].objects.get(pk=r.model_id) for r in qs)
 
 
 class SearchMixin(models.Model):
@@ -177,5 +178,4 @@ def add_rank_function(sender, connection, **kwargs):
 @receiver(class_prepared)
 def register_searchable_model(sender, **kwargs):
     if issubclass(sender, SearchMixin):
-        SEARCHABLE[sender.__name__] = sender
-SEARCHABLE = {}
+        Search.SearchableModels[sender.__name__] = sender
