@@ -464,37 +464,15 @@ class Catalog:
         except KeyError:
             raise InvalidPackageType(type)
 
-    def _get_packages(
-        self, id_patterns, source,
-        fail_if_no_match=True, fail_if_invalid=True):
-
-        pkgs = []
-
+    def _get_package_ids(self, id_patterns, source):
         for id_pattern in id_patterns:
             if '*' in id_pattern:
-                for id in source:
-                    if fnmatch(id, id_pattern):
-                        try:
-                            pkgs.append(self._get_package(id, source))
-                        except InvalidPackageType as e:
-                            if fail_if_invalid:
-                                raise e
+                for pkg_id in source:
+                    if fnmatch(pkg_id, id_pattern):
+                        yield pkg_id
 
             else:
-                try:
-                    try:
-                        pkgs.append(self._get_package(id_pattern, source))
-                    except InvalidPackageType as e:
-                        if fail_if_invalid:
-                            raise e
-                        print("Package {} is present but not handled"
-                              .format(id_pattern))
-
-                except NoSuchPackage as e:
-                    if fail_if_no_match:
-                        raise e
-
-        return pkgs
+                yield id_pattern
 
     def _get_handler(self, package):
         return package.handler()
@@ -533,23 +511,42 @@ class Catalog:
         return path
 
     def list_installed(self, ids):
-        pkgs = self._get_packages(
-            ids, self._installed,
-            fail_if_no_match=False, fail_if_invalid=False)
+        ids = self._get_package_ids(ids, self._installed)
+        pkgs = []
+
+        for pkg_id in ids:
+            try:
+                pkgs.append(self._get_package(pkg_id, self._installed))
+
+            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+                continue
+
         return sorted(pkgs, key=attrgetter('id'))
 
     def list_available(self, ids):
-        pkgs = self._get_packages(
-            ids, self._available,
-            fail_if_no_match=False, fail_if_invalid=False)
+        ids = self._get_package_ids(ids, self._available)
+        pkgs = []
+
+        for pkg_id in ids:
+            try:
+                pkgs.append(self._get_package(pkg_id, self._available))
+
+            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+                continue
+
         return sorted(pkgs, key=attrgetter('id'))
 
     def list_upgradable(self, ids):
+        ids = self._get_package_ids(ids, self._installed)
         pkgs = []
 
-        for ipkg in self._get_packages(
-                ids, self._installed,
-                fail_if_no_match=False, fail_if_invalid=False):
+        for pkg_id in ids:
+            try:
+                ipkg = self._get_package(pkg_id, self._installed)
+
+            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+                continue
+
             upkg = self._get_package(ipkg.id, self._available)
 
             if ipkg != upkg:
@@ -580,11 +577,14 @@ class Catalog:
                    displayed_packages, User.objects.get_system_user())
 
     def install_packages(self, ids):
+        ids = self._get_package_ids(ids, self._available)
         used_handlers = {}
         downloaded = []
         installed_ids = []
 
-        for pkg in self._get_packages(ids, self._available):
+        for pkg_id in ids:
+            pkg = self._get_package(pkg_id, self._available)
+
             if pkg.id in self._installed:
                 printerr('{0.id} is already installed'.format(pkg))
                 continue
@@ -616,9 +616,11 @@ class Catalog:
             handler.commit()
 
     def remove_packages(self, ids, commit=True):
+        ids = self._get_package_ids(ids, self._installed)
         used_handlers = {}
 
-        for pkg in self._get_packages(ids, self._installed):
+        for pkg_id in ids:
+            pkg = self._get_package(pkg_id, self._installed)
             handler = self._get_handler(pkg)
             print('Removing {0.id}'.format(pkg))
             try:
@@ -644,10 +646,12 @@ class Catalog:
         self.install_packages(ids)
 
     def upgrade_packages(self, ids):
+        ids = self._get_package_ids(ids, self._available)
         used_handlers = {}
         downloaded = []
 
-        for ipkg in self._get_packages(ids, self._installed):
+        for pkg_id in ids:
+            ipkg = self._get_package(pkg_id, self._installed)
             upkg = self._get_package(ipkg.id, self._available)
 
             if ipkg == upkg:
