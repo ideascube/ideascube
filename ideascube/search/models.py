@@ -160,13 +160,13 @@ class SearchableQuerySet(object):
 
 @receiver(post_save)
 def index(sender, instance, **kwargs):
-    if SearchMixin in sender.__mro__:
+    if issubclass(sender, SearchMixin):
         instance.index()
 
 
 @receiver(pre_delete)
 def deindex(sender, instance, **kwargs):
-    if SearchMixin in sender.__mro__:
+    if issubclass(sender, SearchMixin):
         instance.deindex()
 
 
