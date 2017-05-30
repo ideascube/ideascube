@@ -3,9 +3,14 @@ import os
 import re
 import shutil
 import sys
+import urllib.error, urllib.parse
 
 from django.conf import locale
 from hashlib import sha256
+from resumable import (
+    DownloadCheck, DownloadError,
+    urlretrieve as resumable_urlretrieve,
+)
 
 
 class MetaRegistry(type):
@@ -111,6 +116,47 @@ def get_file_sha256(path):
             sha.update(data)
 
     return sha.hexdigest()
+
+
+class URLRetrieveError(urllib.error.URLError):
+    def __str__(self):
+        return '{self.filename}: {self.reason}'.format(self=self)
+
+
+def urlretrieve(url, dest_path, sha256sum=None, reporthook=None):
+    parsed_url = urllib.parse.urlparse(url)
+
+    if parsed_url.scheme not in ('file', 'http', 'https'):
+        raise ValueError('Unsupported URL scheme: {url}'.format(url=url))
+
+    if parsed_url.scheme == 'file':
+        shutil.copyfile(parsed_url.path, dest_path)
+
+        if sha256sum is not None:
+            sha = get_file_sha256(dest_path)
+
+            if sha != sha256sum:
+                rm(dest_path)
+                raise URLRetrieveError(
+                    'Invalid checksum: expected {sha256sum}, got {sha}'
+                    .format(sha256sum=sha256sum, sha=sha))
+
+    else:
+        try:
+            resumable_urlretrieve(
+                url, dest_path, sha256sum=sha256sum, reporthook=reporthook)
+
+        except DownloadError as e:
+            if e.args[0] is DownloadCheck.checksum_mismatch:
+                # We don't get the computed sha unfortunately :(
+                msg = 'Invalid checksum: expected {sha256sum}'.format(
+                    sha256sum=sha256sum)
+
+            else:
+                msg = 'Download error: {e}'.format(e=e)
+
+            rm(dest_path)
+            raise URLRetrieveError(msg, filename=url)
 
 
 def rm(path):
