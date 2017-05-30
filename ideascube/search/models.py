@@ -1,9 +1,11 @@
 from django.db import models
 from django.db.backends.signals import connection_created
-from django.db.models.signals import class_prepared, post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete
+from django.db.models.base import ModelBase
 from django.dispatch import receiver
 
 from .utils import rank
+from ..utils import MetaRegistry
 
 
 class Match(models.Lookup):
@@ -52,7 +54,6 @@ class SearchQuerySet(models.QuerySet):
 
 class Search(models.Model):
     """Model that handle the search."""
-    SearchableModels = dict()
     rowid = models.IntegerField(primary_key=True)
     model = models.CharField(max_length=64)
     model_id = models.IntegerField()
@@ -77,10 +78,14 @@ class Search(models.Model):
     @classmethod
     def search(cls, **kwargs):
         qs = Search.objects.filter(**kwargs).order_by_relevancy()
-        return (cls.SearchableModels[r.model].objects.get(pk=r.model_id) for r in qs)
+        return (SearchMixin.registered_types[r.model].objects.get(pk=r.model_id) for r in qs)
 
 
-class SearchMixin(models.Model):
+class MetaSearchMixin(MetaRegistry, ModelBase):
+    pass
+
+
+class SearchMixin(models.Model, metaclass=MetaSearchMixin):
     """Inherit from this mixin to make your model searchable."""
 
     class Meta:
@@ -173,9 +178,3 @@ def deindex(sender, instance, **kwargs):
 @receiver(connection_created)
 def add_rank_function(sender, connection, **kwargs):
     connection.connection.create_function("rank", 1, rank)
-
-
-@receiver(class_prepared)
-def register_searchable_model(sender, **kwargs):
-    if issubclass(sender, SearchMixin):
-        Search.SearchableModels[sender.__name__] = sender
