@@ -13,19 +13,19 @@ def test_nothing_is_indexed_without_any_fixture():
 @pytest.mark.usefixtures('cleansearch')
 def test_draft_is_indexed(draft):
     assert Content.objects.count() == 1
-    assert len(list(Content.SearchModel.search(public=True))) == 0
+    assert len(list(Content.objects.search(public=True))) == 0
 
 
 @pytest.mark.usefixtures('cleansearch')
 def test_deleted_is_indexed(deleted):
     assert Content.objects.count() == 1
-    assert len(list(Content.SearchModel.search(public=True))) == 0
+    assert len(list(Content.objects.search(public=True))) == 0
 
 
 @pytest.mark.usefixtures('cleansearch')
 def test_published_is_indexed(published):
     assert Content.objects.count() == 1
-    assert len(list(Content.SearchModel.search(public=True))) == 1
+    assert len(list(Content.objects.search(public=True))) == 1
     assert Content.objects.search(text__match="Ikinyugunyugu").count() == 0
     published.title = "Ikinyugunyugu"
     published.save()
