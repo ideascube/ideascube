@@ -11,7 +11,7 @@ def search(request):
         if not request.user.is_staff:
             search_kwargs['public'] = True
         for model in Search.SearchableModels:
-            results.extend(model.SearchModel.search(**search_kwargs))
+            results.extend(model.objects.search(**search_kwargs))
     context = {
         'results': results,
         'q': query
