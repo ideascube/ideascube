@@ -1,6 +1,8 @@
 import io
-import sys
+import os
 import re
+import shutil
+import sys
 
 from django.conf import locale
 from hashlib import sha256
@@ -111,10 +113,23 @@ def get_file_sha256(path):
     return sha.hexdigest()
 
 
+def rm(path):
+    try:
+        os.unlink(path)
+
+    except IsADirectoryError:
+        shutil.rmtree(path)
+
+    except FileNotFoundError:
+        # That's fine
+        pass
+
+
 def sanitize_tag_name(tag_name):
     tag_name = tag_name.strip(';:.,?!+-@+-/* \t')
     tag_name = tag_name.lower()
     return tag_name
+
 
 def tag_splitter(tag_string):
     tags = set(sanitize_tag_name(t) for t in re.split(r'[;,]+', tag_string))
