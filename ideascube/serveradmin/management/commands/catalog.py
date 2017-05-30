@@ -172,11 +172,7 @@ class Command(BaseCommandWithSubcommands):
             raise CommandError('No such package: {}'.format(e))
 
     def remove_packages(self, options):
-        try:
-            self.catalog.remove_packages(options['ids'])
-
-        except NoSuchPackage as e:
-            raise CommandError('No such package: {}'.format(e))
+        self.catalog.remove_packages(options['ids'])
 
     def reinstall_packages(self, options):
         try:
