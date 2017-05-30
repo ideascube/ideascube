@@ -23,7 +23,7 @@ def test_searchable_model_is_indexed():
     assert Content.objects.count() == 0
     content = ContentFactory(title="music")
     assert Content.objects.count() == 1
-    assert content in Content.SearchModel.search(text__match="music")
+    assert content in Content.objects.search(text__match="music")
 
 
 @pytest.mark.usefixtures('cleansearch')
@@ -31,8 +31,8 @@ def test_search_Document_on_lang():
     assert Document.objects.count() == 0
     document = DocumentFactory(lang="FR")
     assert Document.objects.count() == 1
-    assert document in Document.SearchModel.search(lang="FR")
-    assert document not in Document.SearchModel.search(lang="EN")
+    assert document in Document.objects.search(lang="FR")
+    assert document not in Document.objects.search(lang="EN")
 
 
 @pytest.mark.usefixtures('cleansearch')
@@ -40,8 +40,8 @@ def test_search_Document_on_kind():
     assert Document.objects.count() == 0
     document = DocumentFactory(kind="video")
     assert Document.objects.count() == 1
-    assert document in Document.SearchModel.search(kind="video")
-    assert document not in Document.SearchModel.search(kind="pdf")
+    assert document in Document.objects.search(kind="video")
+    assert document not in Document.objects.search(kind="pdf")
 
 
 @pytest.mark.usefixtures('cleansearch')
@@ -51,11 +51,11 @@ def test_search_Document_on_tag():
     document_no_tag = DocumentFactory()
     assert Document.objects.count() == 2
 
-    assert document in Document.SearchModel.search(tags__match=["foo"])
-    assert document_no_tag not in Document.SearchModel.search(tags__match=["foo"])
+    assert document in Document.objects.search(tags__match=["foo"])
+    assert document_no_tag not in Document.objects.search(tags__match=["foo"])
 
-    assert document not in Document.SearchModel.search(tags__match=["bar"])
-    assert document_no_tag not in Document.SearchModel.search(tags__match=["bar"])
+    assert document not in Document.objects.search(tags__match=["bar"])
+    assert document_no_tag not in Document.objects.search(tags__match=["bar"])
 
 
 @pytest.mark.usefixtures('cleansearch')
@@ -65,8 +65,8 @@ def test_search_Document_on_no_tag():
     document_no_tag = DocumentFactory()
     assert Document.objects.count() == 2
 
-    assert document not in Document.SearchModel.search(tags__match=[])
-    assert document_no_tag in Document.SearchModel.search(tags__match=[])
+    assert document not in Document.objects.search(tags__match=[])
+    assert document_no_tag in Document.objects.search(tags__match=[])
 
 
 @pytest.mark.usefixtures('cleansearch')
@@ -78,24 +78,24 @@ def test_search_Document_multiple_tag():
     doc = DocumentFactory()
 
     for d in (doc_foo, doc_foo_bar, doc_bar_foo):
-        assert d in Document.SearchModel.search(tags__match=["foo"])
+        assert d in Document.objects.search(tags__match=["foo"])
     for d in (doc, doc_bar):
-        assert d not in Document.SearchModel.search(tags__match=["foo"])
+        assert d not in Document.objects.search(tags__match=["foo"])
 
     for d in (doc_bar, doc_foo_bar, doc_bar_foo):
-        assert d in Document.SearchModel.search(tags__match=["bar"])
+        assert d in Document.objects.search(tags__match=["bar"])
     for d in (doc, doc_foo):
-        assert d not in Document.SearchModel.search(tags__match=["bar"])
+        assert d not in Document.objects.search(tags__match=["bar"])
 
     for d in (doc_foo_bar, doc_bar_foo):
-        assert d in Document.SearchModel.search(tags__match=["bar", "foo"])
+        assert d in Document.objects.search(tags__match=["bar", "foo"])
     for d in (doc, doc_foo, doc_bar):
-        assert d not in Document.SearchModel.search(tags__match=["bar", "foo"])
+        assert d not in Document.objects.search(tags__match=["bar", "foo"])
 
     for d in (doc_foo_bar, doc_bar_foo):
-        assert d in Document.SearchModel.search(tags__match=["foo", "bar"])
+        assert d in Document.objects.search(tags__match=["foo", "bar"])
     for d in (doc, doc_foo, doc_bar):
-        assert d not in Document.SearchModel.search(tags__match=["foo", "bar"])
+        assert d not in Document.objects.search(tags__match=["foo", "bar"])
 
 
 @pytest.mark.usefixtures('cleansearch')
@@ -103,11 +103,11 @@ def test_search_Document_on_tag_name_and_slug():
     doc1 = DocumentFactory(tags=["aé"])
     doc2 = DocumentFactory(tags=["ae"])
 
-    assert doc1 in Document.SearchModel.search(tags__match=["ae"])
-    assert doc2 in Document.SearchModel.search(tags__match=["ae"])
+    assert doc1 in Document.objects.search(tags__match=["ae"])
+    assert doc2 in Document.objects.search(tags__match=["ae"])
 
-    assert doc1 in Document.SearchModel.search(tags__match=["aé"])
-    assert doc2 not in Document.SearchModel.search(tags__match=["aé"])
+    assert doc1 in Document.objects.search(tags__match=["aé"])
+    assert doc2 not in Document.objects.search(tags__match=["aé"])
 
 
 @pytest.mark.usefixtures('cleansearch')
@@ -120,11 +120,11 @@ def test_search_Document_is_case_insensitive():
     doc2 = DocumentFactory(tags=[sanitize_tag_name("AÉ")])
     doc3 = DocumentFactory(tags=[sanitize_tag_name("Bar")])
 
-    assert sorted(Document.SearchModel.search(tags__match=["aé"]), key=attrgetter('id')) \
+    assert sorted(Document.objects.search(tags__match=["aé"]), key=attrgetter('id')) \
         == [doc1, doc2]
-    assert sorted(Document.SearchModel.search(tags__match=["AÉ"]), key=attrgetter('id')) \
+    assert sorted(Document.objects.search(tags__match=["AÉ"]), key=attrgetter('id')) \
         == [doc1, doc2]
-    assert doc3 in Document.SearchModel.search(tags__match=["baR"])
+    assert doc3 in Document.objects.search(tags__match=["baR"])
 
 
 @pytest.mark.usefixtures('cleansearch')
@@ -133,18 +133,18 @@ def test_more_relevant_should_come_first():
     third = ContentFactory(title="About music")
     first = ContentFactory(title="About music and music but also music")
     assert Content.objects.count() == 3
-    assert first == list(Content.SearchModel.search(text__match="music"))[0]
-    assert second == list(Content.SearchModel.search(text__match="music"))[1]
-    assert third == list(Content.SearchModel.search(text__match="music"))[2]
+    assert first == list(Content.objects.search(text__match="music"))[0]
+    assert second == list(Content.objects.search(text__match="music"))[1]
+    assert third == list(Content.objects.search(text__match="music"))[2]
 
 
 @pytest.mark.usefixtures('cleansearch')
 def test_ids_only_returns_ids():
     content = ContentFactory(title="music")
-    assert content.pk in Content.SearchModel.ids(text__match="music")
+    assert content.pk in Content.objects.ids(text__match="music")
 
 
 @pytest.mark.usefixtures('cleansearch')
 def test_we_can_search_on_non_fts_fields_only():
     content = ContentFactory(title="music")
-    assert content in Content.SearchModel.search(public=False)
+    assert content in Content.objects.search(public=False)
