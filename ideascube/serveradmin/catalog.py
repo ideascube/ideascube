@@ -637,7 +637,14 @@ class Catalog:
         removed_ids = []
 
         for pkg_id in sorted(ids):
-            pkg = self._get_package(pkg_id, self._installed)
+            try:
+                pkg = self._get_package(pkg_id, self._installed)
+
+            except NoSuchPackage:
+                # The package is not installed, that's fine
+                printerr('{pkg_id} is not installed'.format(pkg_id=pkg_id))
+                continue
+
             handler = pkg.handler
 
             try:
