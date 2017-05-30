@@ -638,7 +638,14 @@ class Catalog:
         used_handlers = set()
 
         for pkg_id in sorted(ids):
-            pkg = self._get_package(pkg_id, self._installed)
+            try:
+                pkg = self._get_package(pkg_id, self._installed)
+
+            except NoSuchPackage as e:
+                # The package is not installed, that's fine
+                printerr(e)
+                continue
+
             handler = pkg.handler
 
             try:
