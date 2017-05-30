@@ -7,13 +7,11 @@ from pathlib import Path
 import shutil
 import tempfile
 import zipfile
-from urllib.parse import urlparse
 
 from django.conf import settings
 from django.template.defaultfilters import filesizeformat
 from lxml import etree
 from progressist import ProgressBar
-from resumable import DownloadCheck, DownloadError, urlretrieve
 from requests import ConnectionError
 import yaml
 
@@ -23,7 +21,7 @@ from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.utils import guess_kind_from_filename
 from ideascube.models import User
 from ideascube.templatetags.ideascube_tags import smart_truncate
-from ideascube.utils import get_file_sha256, printerr, rm
+from ideascube.utils import get_file_sha256, printerr, rm, urlretrieve
 
 from .systemd import Manager as SystemManager, NoSuchUnit
 
@@ -532,7 +530,6 @@ class Catalog:
             self._progress(' {}'.format(package.id), *args)
 
         filename = '{0.id}-{0.version}'.format(package)
-        urlparsed = urlparse(package.url)
 
         for cache in self._package_caches:
             path = os.path.join(cache, filename)
@@ -540,47 +537,21 @@ class Catalog:
             if os.path.isfile(path):
                 if self._verify_sha256(path, package.sha256sum):
                     return path
-                if urlparsed.scheme in ['file', '']:
-                    try:
-                        shutil.copyfile(urlparsed.path, path)
-                    except Exception as error:
-                        print("Warning: Impossible to fetch the package file"
-                              " {package.title}({package.url}).\n{error}\n"
-                              "Ignoring this package."
-                              .format(package=package, error=error))
-                        rm(path)
-                else:
-                    try:
-                        # This might be an incomplete download, try finishing it
-                        urlretrieve(
-                            package.url, path, sha256sum=package.sha256sum,
-                            reporthook=_progress)
-                        return path
 
-                    except DownloadError as e:
-                        # File was too busted, could not finish the download
-                        if e.args[0] is DownloadCheck.checksum_mismatch:
-                            msg = 'Downloaded file has invalid checksum'
+                # This might be an incomplete download, try finishing it
+                try:
+                    urlretrieve(
+                        package.url, path, sha256sum=package.sha256sum,
+                        reporthook=_progress)
 
-                        else:
-                            msg = 'Error downloading the file: {}'.format(e)
-
-                        printerr(msg)
-                        rm(path)
+                except Exception as e:
+                    printerr(e)
 
         path = os.path.join(self._local_package_cache, filename)
-        if urlparsed.scheme in ['file', '']:
-            try:
-                shutil.copyfile(urlparsed.path, path)
-            except Exception as error:
-                print("Warning: Impossible to fetch the package file"
-                      " {package.title}({package.url}).\n{error}\n"
-                      "Ignoring this package."
-                      .format(package=package, error=error))
-        else:
-            urlretrieve(
-                package.url, path, sha256sum=package.sha256sum,
-                reporthook=_progress)
+        urlretrieve(
+            package.url, path, sha256sum=package.sha256sum,
+            reporthook=_progress)
+
         return path
 
     def list_installed(self, ids):
@@ -642,11 +613,10 @@ class Catalog:
 
             try:
                 download_path = self._fetch_package(pkg)
-            except DownloadError as e:
-                printerr("Failed downloading {0.id}".format(pkg))
-                printerr(e)
-            else:
                 downloaded.append((pkg, download_path))
+
+            except Exception as e:
+                printerr(e)
 
         for pkg, download_path in downloaded:
             handler = self._get_handler(pkg)
@@ -708,11 +678,10 @@ class Catalog:
 
             try:
                 download_path = self._fetch_package(upkg)
-            except DownloadError as e:
-                printerr("Failed downloading {0.id}".format(upkg))
-                printerr(e)
-            else:
                 downloaded.append((ipkg, upkg, download_path))
+
+            except Exception as e:
+                printerr(e)
 
         for ipkg, upkg, download_path in downloaded:
             ihandler = self._get_handler(ipkg)
@@ -848,25 +817,14 @@ class Catalog:
                     self._progress(' {}'.format(remote.name), *args)
 
                 # TODO: Verify the download with sha256sum? Crypto signature?
-                urlparsed = urlparse(remote.url)
-                if urlparsed.scheme in ['file', '']:
-                    try:
-                        shutil.copyfile(urlparsed.path, tmppath)
-                    except Exception as error:
-                        print("Warning: Impossible to fetch the catalog file"
-                              " {remote.name}({remote.url}).\n{error}\n"
-                              "Continue anyway without this remote."
-                              .format(remote=remote, error=error))
-                        continue
-                else:
-                    try:
-                        urlretrieve(remote.url, tmppath, reporthook=_progress)
-                    except ConnectionError:
-                        print("Warning: Impossible to connect to the remote"
-                              " {remote.name}({remote.url}).\n"
-                              "Continue anyway without this remote."
-                              .format(remote=remote))
-                        continue
+                try:
+                    urlretrieve(remote.url, tmppath, reporthook=_progress)
+
+                except ConnectionError:
+                    print("Warning: Impossible to connect to the remote "
+                          "{remote.name}({remote.url}).\n"
+                          "Continuing without it.".format(remote=remote))
+                    continue
 
                 catalog = load_from_file(tmppath)
 
