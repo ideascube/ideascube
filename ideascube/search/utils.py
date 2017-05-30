@@ -16,10 +16,10 @@ def create_index_table(force=True):
 
 
 def reindex_content(force=True):
-    from ideascube.search.models import SEARCHABLE
+    from ideascube.search.models import Search
     create_index_table(force=force)
     indexed = {}
-    for model in SEARCHABLE.values():
+    for model in Search.SearchableModels.values():
         count = 0
         for inst in model.objects.all():
             inst.index()
