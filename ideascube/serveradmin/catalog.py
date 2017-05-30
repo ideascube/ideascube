@@ -26,19 +26,7 @@ from ideascube.models import User
 
 from .systemd import Manager as SystemManager, NoSuchUnit
 
-from ..utils import printerr, get_file_sha256
-
-
-def rm(path):
-    try:
-        os.unlink(path)
-
-    except IsADirectoryError:
-        shutil.rmtree(path)
-
-    except FileNotFoundError:
-        # That's fine
-        pass
+from ..utils import printerr, get_file_sha256, rm
 
 
 def load_from_file(path):

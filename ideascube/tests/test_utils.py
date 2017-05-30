@@ -79,3 +79,37 @@ def test_different_cases_make_same_tags():
     tags = tag_splitter("bar, Bar, BAR, baR")
     assert len(tags) == len(oracle)
     assert set(tags) == oracle
+
+
+def test_rm_file(tmpdir):
+    from ideascube.utils import rm
+
+    path = tmpdir.join('to-remove')
+    path.write_text('REMOVE ME!', 'utf-8')
+    assert path.check(file=True)
+
+    rm(path.strpath)
+    assert path.check(exists=False)
+
+
+def test_rm_tree(tmpdir):
+    from ideascube.utils import rm
+
+    dirpath = tmpdir.mkdir('to-remove')
+    subdirpath = dirpath.mkdir('subdir')
+    subfilepath = subdirpath.join('file')
+    subfilepath.write_text('REMOVE ME!', 'utf-8')
+    assert subfilepath.check(file=True)
+
+    rm(dirpath.strpath)
+    assert dirpath.check(exists=False)
+
+
+def test_rm_inexistent_file(tmpdir):
+    from ideascube.utils import rm
+
+    path = tmpdir.join('does-not-exist')
+    assert path.check(exists=False)
+
+    rm(path.strpath)
+    assert path.check(exists=False)
