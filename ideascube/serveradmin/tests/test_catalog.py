@@ -1855,6 +1855,43 @@ def test_catalog_list_upgradable_packages(tmpdir, testdatadir, mocker):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
+def test_catalog_list_upgradable_with_bad_packages(tmpdir, testdatadir):
+    from ideascube.serveradmin.catalog import Catalog
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  missing-metadata:\n')
+        f.write('    size: 200KB\n')
+        f.write('  invalid-type:\n')
+        f.write('    type: unknown-type\n')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    # Pretend we've installed some packages previously, but at some point the
+    # remote was updated and...
+    c._installed_value = {
+        'missing-metadata': {  # ... this now misses metadata in the remote
+            'type': 'static-site',
+        },
+        'invalid-type': {  # ... this now has an invalid type in the remote
+            'type': 'zipped-medias',
+        },
+        'unavailable': {  # ... this got removed from the remote
+            'type': 'zipped-zim',
+        },
+    }
+    assert len(c.list_installed(['*'])) == 3
+
+    # Ensure invalid packages are not reported as upgradable
+    assert len(c.list_upgradable(['*'])) == 0
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_list_nothandled_packages(tmpdir, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 

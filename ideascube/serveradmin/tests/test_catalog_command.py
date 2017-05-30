@@ -491,6 +491,34 @@ def test_list_no_upgradable_packages(tmpdir, capsys, settings):
     assert err.strip() == ''
 
 
+def test_list_upgradable_removed_from_remote(tmpdir, capsys, settings):
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write_text('all: {}', 'utf-8')
+
+    remote = {
+        'id': 'foo', 'name': 'Content from Foo',
+        'url': 'file://{}'.format(remote_catalog_file.strpath),
+        }
+    call_command(
+        'catalog', 'remotes', 'add', remote['id'], remote['name'],
+        remote['url'])
+
+    # Pretend we installed something which has since disapeared from the remote
+    Path(settings.CATALOG_STORAGE_ROOT).join('installed.yml').write_text(
+        'foovideos:\n'
+        '  name: Videos from Foo\n'
+        '  version: 2017-05\n'
+        '  size: 3027988\n'
+        '  type: zipped-medias',
+        'utf-8')
+
+    call_command('catalog', 'list', '--upgradable')
+
+    out, err = capsys.readouterr()
+    assert out.strip() == ''
+    assert err.strip() == ''
+
+
 def test_list_with_unknown_package_must_no_fail(tmpdir, capsys):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write('''all:
