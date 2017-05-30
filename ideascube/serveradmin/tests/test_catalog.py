@@ -1454,6 +1454,20 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
         "<?xml version='1.0' encoding='utf-8'?>\n<library/>")
 
 
+def test_catalog_remove_uninstalled_package(capsys):
+    from ideascube.serveradmin.catalog import Catalog
+
+    c = Catalog()
+    c.update_cache()
+    assert len(c.list_installed(['*'])) == 0
+
+    c.remove_packages(['foobar'])
+
+    out, err = capsys.readouterr()
+    assert out.strip() == ''
+    assert err.strip() == 'foobar is not installed'
+
+
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
