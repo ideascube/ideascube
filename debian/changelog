@@ -1,3 +1,18 @@
+ideascube (0.28.0) unstable; urgency=low
+
+  * Ideascube is now available in two more languages: Farsi and Kurdish; This
+    had been incorrectly announced for 0.26.0, but this time it's true!
+  * Greatly improved the UX of the deletion confirmation forms;
+  * Merged the various settings cards into a single Settings app;
+  * Simplified the way the home card settings are defined and handled;
+  * Added libyaml-dev as a build-time dependency for the Debian package, which
+    might speed the YAML parsing a bit;
+  * Improved and simplified the Debian package;
+  * Removed the TinyMCE strings from translations, which had been incorrectly
+    added;
+
+ -- Mathieu Bridon <bochecha@daitauha.fr>  Wed, 31 May 2017 17:17:00 +0200
+
 ideascube (0.27.1) unstable; urgency=low
 
   * Force the LANG env var to C.UTF-8 when building deb package.
