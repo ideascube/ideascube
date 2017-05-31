@@ -3,13 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# mansur tayfuri <tayfuri.mansur@bibliosansfrontieres.org>, 2017
+# Matthieu Gautier <mgautier@kymeria.fr>, 2017
+# tayfuri mansur <mansur.tayfuri@bibliosansfrontieres.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-18 15:42+0000\n"
-"PO-Revision-Date: 2017-05-19 09:22+0000\n"
-"Last-Translator: Matthieu Gautier <mgautier@kymeria.fr>\n"
+"PO-Revision-Date: 2017-05-30 14:58+0000\n"
+"Last-Translator: tayfuri mansur <mansur.tayfuri@bibliosansfrontieres.org>\n"
 "Language-Team: Persian (Iran) (http://www.transifex.com/ideascube/ideascube/language/fa_IR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,86 +22,86 @@ msgstr ""
 
 #: ideascube/blog/models.py:45
 msgid "draft"
-msgstr ""
+msgstr "درافت"
 
 #: ideascube/blog/models.py:46
 msgid "published"
-msgstr ""
+msgstr "نشر شدە"
 
 #: ideascube/blog/models.py:47
 msgid "deleted"
-msgstr ""
+msgstr "حذف شدە"
 
 #: ideascube/blog/models.py:50 ideascube/library/forms.py:162
 #: ideascube/mediacenter/models.py:55
 msgid "title"
-msgstr ""
+msgstr "عنوان"
 
 #: ideascube/blog/models.py:53
 msgid "author"
-msgstr ""
+msgstr "مولف"
 
 #: ideascube/blog/models.py:55 ideascube/mediacenter/models.py:56
 msgid "summary"
-msgstr ""
+msgstr "خلاصە"
 
 #: ideascube/blog/models.py:56 ideascube/mediacenter/models.py:42
 msgid "image"
-msgstr ""
+msgstr "تصویر"
 
 #: ideascube/blog/models.py:59 ideascube/mediacenter/models.py:46
 msgid "text"
-msgstr ""
+msgstr "متن "
 
 #: ideascube/blog/models.py:60
 msgid "publication date"
-msgstr ""
+msgstr "تاریخ انتشار"
 
 #: ideascube/blog/models.py:62
 #: ideascube/serveradmin/templates/serveradmin/battery.html:11
 msgid "Status"
-msgstr ""
+msgstr "موقعیت"
 
 #: ideascube/blog/models.py:65 ideascube/library/models.py:59
 #: ideascube/library/templates/library/book_detail.html:23
 #: ideascube/mediacenter/models.py:57
 msgid "Language"
-msgstr ""
+msgstr "زبان"
 
 #: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:73
 #: ideascube/templates/ideascube/includes/tag_cloud.html:4
 msgid "Topics"
-msgstr ""
+msgstr "موضوعها"
 
 #: ideascube/blog/templates/blog/content_detail.html:6
 msgid "View all posts"
-msgstr ""
+msgstr "دیدن تمام پستها"
 
 #: ideascube/blog/templates/blog/content_detail.html:7
 #: ideascube/blog/templates/blog/index.html:6
 #: ideascube/templates/ideascube/includes/cards/blog.html:5
 msgid "Blog"
-msgstr ""
+msgstr "بلاگ"
 
 #: ideascube/blog/templates/blog/content_form.html:7
 msgid "Edit post"
-msgstr ""
+msgstr "ویرایش پست"
 
 #: ideascube/blog/templates/blog/content_form.html:9
 msgid "New post"
-msgstr ""
+msgstr "پست جدید"
 
 #: ideascube/blog/templates/blog/content_form.html:15
 #: ideascube/library/templates/library/book_form.html:19
 #: ideascube/mediacenter/templates/mediacenter/document_form.html:15
 msgid "Content"
-msgstr ""
+msgstr "محتوا"
 
 #: ideascube/blog/templates/blog/content_form.html:22
 #: ideascube/library/templates/library/book_form.html:28
 #: ideascube/mediacenter/templates/mediacenter/document_form.html:22
 msgid "Metadatas"
-msgstr ""
+msgstr "فرا دادە"
 
 #: ideascube/blog/templates/blog/content_form.html:33
 #: ideascube/blog/templates/blog/content_form.html:35
@@ -120,131 +123,131 @@ msgstr ""
 #: ideascube/templates/ideascube/user_form.html:27
 #: ideascube/templates/ideascube/user_import.html:10
 msgid "cancel"
-msgstr ""
+msgstr "کنسل"
 
 #: ideascube/blog/templates/blog/index.html:17
 msgid "Add content"
-msgstr ""
+msgstr "افزودن محتوا"
 
 #: ideascube/blog/views.py:17
 msgid "Last published"
-msgstr ""
+msgstr "آخرین کارهای منتشر شدە"
 
 #: ideascube/conf/base.py:113
 msgid "Suitable for all languages"
-msgstr ""
+msgstr "متناسب با تمام زبانها"
 
 #: ideascube/conf/base.py:219
 msgid "the camp"
-msgstr ""
+msgstr "کمپ"
 
 #: ideascube/conf/base.py:234
 msgid "Basic informations"
-msgstr ""
+msgstr "اطلاعات اساسی"
 
 #: ideascube/conf/base.py:245 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
-msgstr ""
+msgstr "کاربر"
 
 #: ideascube/conf/base.py:246
 msgid "Create, remove or modify users."
-msgstr ""
+msgstr "ایجاد، حذف یا تغییر کاربران"
 
 #: ideascube/conf/base.py:253
 msgid "Entries"
-msgstr ""
+msgstr "مدخلها"
 
 #: ideascube/conf/base.py:254
 msgid "Manage user entries."
-msgstr ""
+msgstr "مدیریت مداخل کاربری"
 
 #: ideascube/conf/base.py:261
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
-msgstr ""
+msgstr "انبار"
 
 #: ideascube/conf/base.py:262
 msgid "Manage stock."
-msgstr ""
+msgstr "مدیریت انبار"
 
 #: ideascube/conf/base.py:269
 msgid "Loans"
-msgstr ""
+msgstr "امانتها"
 
 #: ideascube/conf/base.py:270
 msgid "Manage loans."
-msgstr ""
+msgstr "مدیریت امانتها"
 
 #: ideascube/conf/base.py:277
 msgid "Stop/Restart"
-msgstr ""
+msgstr "توقف/ رستارت"
 
 #: ideascube/conf/base.py:278
 msgid "Stop or restart the server."
-msgstr ""
+msgstr "متوقف یا رستارت کردن سرور"
 
 #: ideascube/conf/base.py:285
 msgid "Wi-Fi"
-msgstr ""
+msgstr "وای-فای"
 
 #: ideascube/conf/base.py:286
 msgid "Manage Wi-Fi connections."
-msgstr ""
+msgstr "مدیریت کانکشنهای وای-فای"
 
 #: ideascube/conf/base.py:293
 msgid "Server Name"
-msgstr ""
+msgstr "عنوان سرور"
 
 #: ideascube/conf/base.py:294
 msgid "Change the server name."
-msgstr ""
+msgstr "تغییر عنوان سرور"
 
 #: ideascube/conf/base.py:301
 msgid "Home page"
-msgstr ""
+msgstr "صفحەی اصلی"
 
 #: ideascube/conf/base.py:302
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:5
 #: ideascube/serveradmin/templates/serveradmin/index.html:26
 msgid "Manage home page"
-msgstr ""
+msgstr "مدیریت صفحەی اصلی"
 
 #: ideascube/conf/base.py:309
 #: ideascube/serveradmin/templates/serveradmin/index.html:21
 msgid "Languages"
-msgstr ""
+msgstr "زبان‌ها"
 
 #: ideascube/conf/base.py:310
 msgid "Enable or disable languages."
-msgstr ""
+msgstr "فعال یا غیرفعال کردن زبا‌ن‌ها"
 
 #: ideascube/conf/base.py:354
 msgid "Python web server"
-msgstr ""
+msgstr "Pythonوب سرور"
 
 #: ideascube/conf/base.py:355
 msgid "Global proxy"
-msgstr ""
+msgstr "گلوبال پروکسی"
 
 #: ideascube/conf/base.py:358
 msgid "Daemon which provides KhanAcademy on lan"
-msgstr ""
+msgstr "دایمون کە کان آکادمی را در زبان فراهم میكند"
 
 #: ideascube/conf/base.py:361
 msgid "Daemon which provides Wikipedia on lan"
-msgstr ""
+msgstr "دایمون کە ویکیپیدیا را در زبان فراهم میکند"
 
 #: ideascube/conf/base.py:363
 msgid "Daemon which provides Gutenberg on lan"
-msgstr ""
+msgstr "دایمون کە گوتنبورگ را در زبان فراهم می‌کند"
 
 #: ideascube/conf/base.py:365
 msgid "Daemon used for distant connexion to server"
-msgstr ""
+msgstr "دایمون مورد استفادە برای اتصال از راه دور بە سرور "
 
 #: ideascube/conf/idb_aus_queensland.py:6 ideascube/conf/idb_aus_slwa.py:5
 msgid "the community"
-msgstr ""
+msgstr "اجتماع"
 
 #: ideascube/conf/idb_aus_queensland.py:14 ideascube/conf/idb_aus_slwa.py:13
 #: ideascube/conf/idb_bdi.py:7 ideascube/conf/idb_col_llavedelsaber.py:10
@@ -255,7 +258,7 @@ msgstr ""
 #: ideascube/conf/idb_jor_azraq.py:12 ideascube/conf/idb_lwb_detroit_usa.py:18
 #: ideascube/conf/idb_sen_fap.py:18
 msgid "Personal informations"
-msgstr ""
+msgstr "اطلاعات شخصی"
 
 #: ideascube/conf/idb_aus_queensland.py:15 ideascube/conf/idb_aus_slwa.py:14
 #: ideascube/conf/idb_bdi.py:8 ideascube/conf/idb_deu_dusseldorf.py:18
@@ -264,14 +267,14 @@ msgstr ""
 #: ideascube/conf/idb_jor_azraq.py:13 ideascube/conf/idb_lwb_detroit_usa.py:19
 #: ideascube/conf/idb_sen_fap.py:19
 msgid "Family"
-msgstr ""
+msgstr "خانوادە"
 
 #: ideascube/conf/idb_aus_queensland.py:16 ideascube/conf/idb_aus_slwa.py:15
 #: ideascube/conf/idb_deu_dusseldorf.py:19 ideascube/conf/idb_fra.py:18
 #: ideascube/conf/idb_grc_eleonas.py:13
 #: ideascube/conf/idb_lwb_detroit_usa.py:20 ideascube/conf/idb_sen_fap.py:20
 msgid "In the town"
-msgstr ""
+msgstr "در شهرک"
 
 #: ideascube/conf/idb_aus_queensland.py:17 ideascube/conf/idb_aus_slwa.py:16
 #: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_deu_dusseldorf.py:20
@@ -280,621 +283,621 @@ msgstr ""
 #: ideascube/conf/idb_jor_alhashmi.py:10 ideascube/conf/idb_jor_azraq.py:16
 #: ideascube/conf/idb_lwb_detroit_usa.py:21 ideascube/conf/idb_sen_fap.py:21
 msgid "Language skills"
-msgstr ""
+msgstr "مهارتهای زبانی"
 
 #: ideascube/conf/idb_bdi.py:9 ideascube/conf/idb_eth_bokolmanyo.py:15
 #: ideascube/conf/idb_irq_bardarash.py:10 ideascube/conf/idb_jor_azraq.py:14
 msgid "In the camp"
-msgstr ""
+msgstr "در اردوگاه"
 
 #: ideascube/conf/idb_bdi.py:10 ideascube/conf/idb_eth_bokolmanyo.py:16
 #: ideascube/conf/idb_jor_alhashmi.py:9 ideascube/conf/idb_jor_azraq.py:15
 msgid "Origin"
-msgstr ""
+msgstr "ریشە"
 
 #: ideascube/conf/idb_bdi.py:12 ideascube/conf/idb_eth_bokolmanyo.py:18
 #: ideascube/conf/idb_jor_alhashmi.py:11 ideascube/conf/idb_jor_azraq.py:17
 msgid "National residents"
-msgstr ""
+msgstr "ساکنین ملی"
 
 #: ideascube/conf/idb_deu_dusseldorf.py:9 ideascube/conf/idb_fra.py:8
 #: ideascube/conf/idb_lwb_detroit_usa.py:10 ideascube/conf/idb_sen_fap.py:10
 msgid "city"
-msgstr ""
+msgstr "شهر"
 
 #: ideascube/conf/idb_grc_eleonas.py:6
 msgid "camp"
-msgstr ""
+msgstr "کمپ"
 
 #: ideascube/conf/idb_jor_azraq.py:21
 msgid "16 Days of Activism"
-msgstr ""
+msgstr "16روز از فعالیت"
 
 #: ideascube/conf/idb_jor_azraq.py:22
 msgid "AMANI Campaign"
-msgstr ""
+msgstr "کمپین امانی"
 
 #: ideascube/conf/idb_jor_azraq.py:23
 msgid "Anger Management Training"
-msgstr ""
+msgstr "آموزش مدیریت خشم"
 
 #: ideascube/conf/idb_jor_azraq.py:24
 msgid "Basic Computer Training"
-msgstr ""
+msgstr "آموزش مقدماتی کامپیوتر"
 
 #: ideascube/conf/idb_jor_azraq.py:25
 msgid "Beauty Training"
-msgstr ""
+msgstr "آموزش زیبایی"
 
 #: ideascube/conf/idb_jor_azraq.py:26
 msgid "Book Club"
-msgstr ""
+msgstr "باشگاه کتاب"
 
 #: ideascube/conf/idb_jor_azraq.py:27
 msgid "Conflict Resolution Training"
-msgstr ""
+msgstr "آموزش حل منازعە"
 
 #: ideascube/conf/idb_jor_azraq.py:28
 msgid "Coping Skills and Mechanisms Training"
-msgstr ""
+msgstr "آموزش مهارتها و مکانیسمهای کپی "
 
 #: ideascube/conf/idb_jor_azraq.py:29
 msgid "EDRAAK"
-msgstr ""
+msgstr "ادراک"
 
 #: ideascube/conf/idb_jor_azraq.py:30
 msgid "Emotional intelligence Training"
-msgstr ""
+msgstr "آموزش هوشمندی عاطفی"
 
 #: ideascube/conf/idb_jor_azraq.py:31
 msgid "Handicrafts"
-msgstr ""
+msgstr "صنایع دستی"
 
 #: ideascube/conf/idb_jor_azraq.py:32
 msgid "How to be a Psychosocial Counselor Training"
-msgstr ""
+msgstr "آموزش چگونە یک مشاور روانکاوی اجتماعی باشیم"
 
 #: ideascube/conf/idb_jor_azraq.py:33
 msgid "I am Woman"
-msgstr ""
+msgstr "من زن هستم"
 
 #: ideascube/conf/idb_jor_azraq.py:34
 msgid "International Children Day"
-msgstr ""
+msgstr "روز بین‌المللی کودکان"
 
 #: ideascube/conf/idb_jor_azraq.py:35
 msgid "International Refugee Day"
-msgstr ""
+msgstr "روز بین‌المللی پناهندگان"
 
 #: ideascube/conf/idb_jor_azraq.py:36
 msgid "Marathon"
-msgstr ""
+msgstr "ماراتون"
 
 #: ideascube/conf/idb_jor_azraq.py:37
 msgid "Mother's day celebration"
-msgstr ""
+msgstr "جشن روز مادر"
 
 #: ideascube/conf/idb_jor_azraq.py:38
 msgid "Parenting Skills Training"
-msgstr ""
+msgstr "آموزش مهارتهای فرزندپروری"
 
 #: ideascube/conf/idb_jor_azraq.py:39
 msgid "Peer Support Group"
-msgstr ""
+msgstr "گروه پیر ساپورت"
 
 #: ideascube/conf/idb_jor_azraq.py:40
 msgid "Psychosocial ART Interventions Training"
-msgstr ""
+msgstr "‌آموزش مداخلەی روانی اجتماعی از طریق هنر"
 
 #: ideascube/conf/idb_jor_azraq.py:41
 msgid "Puppets and Theatre"
-msgstr ""
+msgstr "عروسک و تئاتر"
 
 #: ideascube/conf/idb_jor_azraq.py:42
 msgid "Sewing and stitching"
-msgstr ""
+msgstr "دوزندگی و خیاطی"
 
 #: ideascube/conf/idb_jor_azraq.py:43
 msgid "SIMSIM Club"
-msgstr ""
+msgstr "باشگاە SIMSIM"
 
 #: ideascube/conf/idb_jor_azraq.py:44
 msgid "Social Work Training"
-msgstr ""
+msgstr "‌آموزش خدمات اجتماعی"
 
 #: ideascube/conf/idb_jor_azraq.py:45
 msgid "Stress Management Training"
-msgstr ""
+msgstr "‌آموزش مدیریت اضطراب"
 
 #: ideascube/conf/idb_jor_azraq.py:46
 msgid "Training of Trainers"
-msgstr ""
+msgstr "آموزش مربیان"
 
 #: ideascube/conf/idb_jor_azraq.py:47
 msgid "World Mental Health Day"
-msgstr ""
+msgstr "روز جهانی سلامت روانی"
 
 #: ideascube/forms.py:27
 msgid "Additional data"
-msgstr ""
+msgstr "دادەی افزودە"
 
 #: ideascube/forms.py:35
 msgid "Username"
-msgstr ""
+msgstr "نام کاربری"
 
 #: ideascube/forms.py:37
 msgid "Password"
-msgstr ""
+msgstr "رمز عبور"
 
 #: ideascube/forms.py:38
 msgid ""
 "To create a strong password, forget about passwords, and think rather about "
 "a passphrase. For instance: \"The boat is flowing on the water\" is a strong"
 " and easy to remember passphrase. Now choose your own passphrase!"
-msgstr ""
+msgstr "برای ایجاد یک رمز عبور، بیش از رمز عبور سعی کنید یک جملەی عبور وارد کنید. برای مثال: \" قایق روی آب شناور است\" هم یک رمز عبور قوی است و هم بە یاد آوری آن آسان است. حال جملە‌عبور خود را انتخاب کنید!"
 
 #: ideascube/forms.py:46
 msgid "Confirm password"
-msgstr ""
+msgstr "تایید رمز عبور"
 
 #: ideascube/forms.py:116
 #, python-brace-format
 msgid "Invalid row at line {id}: {field} missing"
-msgstr ""
+msgstr "ردیف نامعتبر در خط {id}: {field} یافت نشد"
 
 #: ideascube/forms.py:131
 #, python-brace-format
 msgid "Invalid row at line {id}: {reason}"
-msgstr ""
+msgstr "ردیف نامعتبر در خط {id}: {reason}"
 
 #: ideascube/library/forms.py:37
 msgid "You can't have both a file and a barcode"
-msgstr ""
+msgstr "نمی‌توانید فایل و بارکد را همزمان داشتە باشید"
 
 #: ideascube/library/forms.py:39
 msgid "You must add a file or a barcode"
-msgstr ""
+msgstr "باید یک فایل یا یک بارکد اضافە کنید"
 
 #: ideascube/library/forms.py:49 ideascube/monitoring/forms.py:190
 msgid "CSV File"
-msgstr ""
+msgstr "فایل CSV"
 
 #: ideascube/library/forms.py:53
 msgid "Uploaded file is not a Zip archive"
-msgstr ""
+msgstr "فایل افزودە شدە یک زیپ آرشیو نیست"
 
 #: ideascube/library/forms.py:62
 msgid "Archive does not contain a CSV"
-msgstr ""
+msgstr "آرشیو حاوی یک CSV  نیست"
 
 #: ideascube/library/forms.py:90 ideascube/monitoring/forms.py:205
 msgid "Missing column \"{}\" on line {}"
-msgstr ""
+msgstr "ستون گم‌شدە \"{}\" روی خط {}"
 
 #: ideascube/library/forms.py:104
 msgid "Could not import line {}: no book with ISBN \"{}\""
-msgstr ""
+msgstr "امتناع از واردکردن خط{}: کتابی با شابک \"{}\" پیدا نشد"
 
 #: ideascube/library/forms.py:114
 msgid "Could not import line {}: no \"{}\" book"
-msgstr ""
+msgstr "قادر بە واردکردن خط {} نیست : کتاب\" {}\" موجود نیست"
 
 #: ideascube/library/forms.py:120
 msgid "Could not import line {}: found multiple \"{}\" books"
-msgstr ""
+msgstr "قادر بە واردکردن خط {} نیست: چندین کتاب \"{}\" پیدا شد"
 
 #: ideascube/library/forms.py:135
 msgid "Could not import line {}: file {} is missing from the archive"
-msgstr ""
+msgstr "قادر بە واردکردن خط{}نیست: فایل {}در آرشیو پیدا نشد"
 
 #: ideascube/library/forms.py:150 ideascube/monitoring/forms.py:219
 msgid "Could not import line {}: {}"
-msgstr ""
+msgstr "قادر بە واردکردن خط {}نیست : {}"
 
 #: ideascube/library/forms.py:193
 msgid "CSV from \"MoCCam-en-ligne\""
-msgstr ""
+msgstr "CSV از \" MoCCam-en ligne\" "
 
 #: ideascube/library/forms.py:195
 msgid "Ideascube ZIP"
-msgstr ""
+msgstr "زیپ آیدیاس کیوب"
 
 #: ideascube/library/forms.py:213
 msgid "Unknown file format"
-msgstr ""
+msgstr "فرمت فایل شناختە نشد"
 
 #: ideascube/library/models.py:24
 msgid "digital"
-msgstr ""
+msgstr "دیجیتال"
 
 #: ideascube/library/models.py:25
 msgid "children - cartoons"
-msgstr ""
+msgstr "کودک- کارتون"
 
 #: ideascube/library/models.py:26
 msgid "children - novels"
-msgstr ""
+msgstr "کودک- رمان"
 
 #: ideascube/library/models.py:27
 msgid "children - poetry"
-msgstr ""
+msgstr "کودک-شعر"
 
 #: ideascube/library/models.py:28
 msgid "children - theatre"
-msgstr ""
+msgstr "کودک-تئاتر"
 
 #: ideascube/library/models.py:29
 msgid "children - documentary"
-msgstr ""
+msgstr "کودک-مستند"
 
 #: ideascube/library/models.py:30
 msgid "children - comics"
-msgstr ""
+msgstr "کودک- کمیک"
 
 #: ideascube/library/models.py:31
 msgid "children - tales"
-msgstr ""
+msgstr "کودک-قصە"
 
 #: ideascube/library/models.py:32
 msgid "chirdren - myths and legends"
-msgstr ""
+msgstr "کودک- اسطورە و افسانە"
 
 #: ideascube/library/models.py:33
 msgid "adults - novels"
-msgstr ""
+msgstr "بزرگسال-رمان"
 
 #: ideascube/library/models.py:34
 msgid "adults - poetry"
-msgstr ""
+msgstr "بزرگسال- شعر"
 
 #: ideascube/library/models.py:35
 msgid "adults - theatre"
-msgstr ""
+msgstr "بزرگسال-تئاتر"
 
 #: ideascube/library/models.py:36
 msgid "adults - documentary"
-msgstr ""
+msgstr "بزرگسال-مستند"
 
 #: ideascube/library/models.py:37
 msgid "adults - comics"
-msgstr ""
+msgstr "بزرگسال-کمیک"
 
 #: ideascube/library/models.py:38
 msgid "adults - tales"
-msgstr ""
+msgstr "بزرگسال-قصە"
 
 #: ideascube/library/models.py:39
 msgid "adults - myths and legends"
-msgstr ""
+msgstr "بزرگسال-اسطورە و افسانە"
 
 #: ideascube/library/models.py:40
 msgid "game"
-msgstr ""
+msgstr "بازی"
 
 #: ideascube/library/models.py:41 ideascube/mediacenter/models.py:50
 msgid "other"
-msgstr ""
+msgstr "دیگر"
 
 #: ideascube/library/models.py:47
 msgid "isbn"
-msgstr ""
+msgstr "شمارەی انتشارات بین‌المللی کتاب"
 
 #: ideascube/library/models.py:49
 msgid "authors"
-msgstr ""
+msgstr "مولفین"
 
 #: ideascube/library/models.py:51
 msgid "serie"
-msgstr ""
+msgstr "سری"
 
 #: ideascube/library/models.py:53
 msgid "subtitle"
-msgstr ""
+msgstr "زیرنویس"
 
 #: ideascube/library/models.py:55
 msgid "publisher"
-msgstr ""
+msgstr "ناشر"
 
 #: ideascube/library/models.py:57
 msgid "section"
-msgstr ""
+msgstr "بخش"
 
 #: ideascube/library/models.py:60
 msgid "cover"
-msgstr ""
+msgstr "جلد"
 
 #: ideascube/library/models.py:104
 msgid "location"
-msgstr ""
+msgstr "موقعیت"
 
 #: ideascube/library/models.py:106
 msgid "digital file"
-msgstr ""
+msgstr "فایل دیجیتال"
 
 #: ideascube/library/templates/library/book_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete book \"%(book)s\" and all its specimens?"
-msgstr ""
+msgstr "آیا مطمئن هستید کە میخواهید کتاب \"%(book)s\" و تمام آزمونەهایش را حذف کنید؟"
 
 #: ideascube/library/templates/library/book_detail.html:11
 msgid "View all books"
-msgstr ""
+msgstr "دیدن تمام کتابها"
 
 #: ideascube/library/templates/library/book_detail.html:15
 #: ideascube/library/templates/library/index.html:9
 #: ideascube/serveradmin/catalog.py:307
 #: ideascube/templates/ideascube/includes/cards/library.html:4
 msgid "read"
-msgstr ""
+msgstr "خواندن"
 
 #: ideascube/library/templates/library/book_detail.html:19
 #: ideascube/library/views.py:40
 msgid "Author"
-msgstr ""
+msgstr "مولف"
 
 #: ideascube/library/templates/library/book_detail.html:20
 msgid "Publisher"
-msgstr ""
+msgstr "ناشر"
 
 #: ideascube/library/templates/library/book_detail.html:21
 msgid "Serie"
-msgstr ""
+msgstr "سری"
 
 #: ideascube/library/templates/library/book_detail.html:24
 msgid "ISBN"
-msgstr ""
+msgstr "شمارەی انتشارات بین‌المللی کتاب _ شابک"
 
 #: ideascube/library/templates/library/book_detail.html:26
 msgid "Section"
-msgstr ""
+msgstr "بخش"
 
 #: ideascube/library/templates/library/book_detail.html:34
 msgid "Add a specimen"
-msgstr ""
+msgstr "افزودن یک آزمونە"
 
 #: ideascube/library/templates/library/book_detail.html:35
 msgid "Delete this book"
-msgstr ""
+msgstr "حذف این کتاب"
 
 #: ideascube/library/templates/library/book_detail.html:36
 msgid "Edit this book"
-msgstr ""
+msgstr "ویرایش این کتاب"
 
 #: ideascube/library/templates/library/book_detail.html:39
 msgid "Specimens"
-msgstr ""
+msgstr "‌آزمونە"
 
 #: ideascube/library/templates/library/book_detail.html:41
 msgid "Edit specimen"
-msgstr ""
+msgstr "ویرایش آزمونە"
 
 #: ideascube/library/templates/library/book_detail.html:43
 msgid "No specimen for this book."
-msgstr ""
+msgstr "آزمونەای برای این کتاب موجود نیست"
 
 #: ideascube/library/templates/library/book_detail.html:49
 msgid "Digital specimens"
-msgstr ""
+msgstr "آزمونەی دیجیتال"
 
 #: ideascube/library/templates/library/book_detail.html:51
 msgid "Download specimen"
-msgstr ""
+msgstr "دانلود آزمونە"
 
 #: ideascube/library/templates/library/book_detail.html:51
 #, python-format
 msgid "Download %(extension)s"
-msgstr ""
+msgstr "دانلود %(extension)s"
 
 #: ideascube/library/templates/library/book_form.html:11
 msgid "Edit book"
-msgstr ""
+msgstr "ویرایش کتاب"
 
 #: ideascube/library/templates/library/book_form.html:13
 msgid "New book"
-msgstr ""
+msgstr "کتاب جدید"
 
 #: ideascube/library/templates/library/import.html:10
 msgid "Import books notices"
-msgstr ""
+msgstr "واردکردن شناسەی کتابها"
 
 #: ideascube/library/templates/library/import.html:19
 msgid "From files"
-msgstr ""
+msgstr "از فایلها"
 
 #: ideascube/library/templates/library/import.html:22
 msgid "Load notices from files"
-msgstr ""
+msgstr "افزودن شناسەها از فایلها"
 
 #: ideascube/library/templates/library/import.html:25
 msgid "From ISBN"
-msgstr ""
+msgstr "از شابک"
 
 #: ideascube/library/templates/library/import.html:26
 msgid "An Internet connection is needed."
-msgstr ""
+msgstr "اتصال بە اینترنت ضروری است"
 
 #: ideascube/library/templates/library/import.html:28
 msgid "Load notices from ISBN"
-msgstr ""
+msgstr "افزودن شناسە از شابک"
 
 #: ideascube/library/templates/library/index.html:9
 #: ideascube/monitoring/models.py:17 ideascube/monitoring/models.py:71
 #: ideascube/templates/ideascube/includes/cards/library.html:5
 msgid "Library"
-msgstr ""
+msgstr "کتابخانە"
 
 #: ideascube/library/templates/library/index.html:17
 msgid "No books yet."
-msgstr ""
+msgstr "هنوز کتابی موجود نیست"
 
 #: ideascube/library/templates/library/index.html:26
 msgid "Add a book"
-msgstr ""
+msgstr "افزودن یک کتاب"
 
 #: ideascube/library/templates/library/index.html:27
 msgid "Import notices"
-msgstr ""
+msgstr "واردکردن شناسەها"
 
 #: ideascube/library/templates/library/index.html:28
 msgid "Export notices"
-msgstr ""
+msgstr "فرستادن شناسەها"
 
 #: ideascube/library/templates/library/index.html:29
 msgid "Import specimens"
-msgstr ""
+msgstr "واردکردن آزمونەها"
 
 #: ideascube/library/templates/library/index.html:30
 msgid "Export specimens"
-msgstr ""
+msgstr "فرستادن آزمونەها"
 
 #: ideascube/library/templates/library/index.html:38
 msgid "by section"
-msgstr ""
+msgstr "بر اساس بخش"
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete \"%(name)s\"?"
-msgstr ""
+msgstr "آیا مطمئن هستید کە می‌خواهید \"%(name)s\"را حذف کنید؟"
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:5
 #, python-format
 msgid "This will not delete book \"%(name)s\""
-msgstr ""
+msgstr "کتاب \"%(name)s\" را حذف نخواهد کرد"
 
 #: ideascube/library/templates/library/specimen_form.html:7
 #, python-format
 msgid "Edit book specimen %(specimen)s"
-msgstr ""
+msgstr "ویرایش آزمونەی %(specimen)s کتاب"
 
 #: ideascube/library/templates/library/specimen_form.html:9
 #, python-format
 msgid "New book specimen for %(book)s"
-msgstr ""
+msgstr "آزمونەی جدید برای %(book)s"
 
 #: ideascube/library/templates/library/specimen_form.html:11
 msgid "New book specimen"
-msgstr ""
+msgstr "آزمونەی جدید کتاب"
 
 #: ideascube/library/templates/library/specimen_form.html:30
 msgid "Delete specimen"
-msgstr ""
+msgstr "حذف آزمونە"
 
 #: ideascube/library/templates/library/specimen_import.html:8
 msgid "Import Book Specimens"
-msgstr ""
+msgstr "واردکردن آزمونەی کتاب"
 
 #: ideascube/library/templates/library/specimen_import.html:19
 #: ideascube/monitoring/templates/monitoring/stock.html:56
 #: ideascube/monitoring/templates/monitoring/stock_import.html:16
 msgid "Import"
-msgstr ""
+msgstr "واردکردن"
 
 #: ideascube/library/utils.py:87
 msgid "Badly formatted file"
-msgstr ""
+msgstr "فایل بد فرمت شدە"
 
 #: ideascube/library/utils.py:134
 msgid "Not a zip file"
-msgstr ""
+msgstr "این یک فایل زیپ نیست"
 
 #: ideascube/library/utils.py:141
 msgid "Missing CSV file in zip"
-msgstr ""
+msgstr "فایل CSV در زیپ یافت نشد"
 
 #: ideascube/library/views.py:28
 msgid "Last added"
-msgstr ""
+msgstr "آخرین افزودە"
 
 #: ideascube/library/views.py:34 ideascube/mediacenter/views.py:39
 msgid "Title"
-msgstr ""
+msgstr "عنوان"
 
 #: ideascube/library/views.py:80
 msgid "Please add a specimen, or the book won't be available for the users"
-msgstr ""
+msgstr "لطفن یک آزمونە اضافە کنید، اگر نە کتاب برای کاربران قابل دسترسی نخواهد بود"
 
 #: ideascube/library/views.py:122
 msgid "Unable to process notices: {}"
-msgstr ""
+msgstr "قادر بە پردازش شناسەها نیست: {}"
 
 #: ideascube/library/views.py:126
 #, python-brace-format
 msgid "Successfully processed {count} notices."
-msgstr ""
+msgstr "پردازش{count} شناسە با موفقیت انجام شد"
 
 #: ideascube/library/views.py:132
 msgid "No notice processed"
-msgstr ""
+msgstr "هیچ شناسەای پردازش نشد"
 
 #: ideascube/library/views.py:135
 msgid "You need to provide a file."
-msgstr ""
+msgstr "لازم است فایلی را تهیە دهید"
 
 #: ideascube/library/views.py:258 ideascube/monitoring/views.py:253
 msgid "Successfully imported {} items"
-msgstr ""
+msgstr "موارد {} با موفقیت وارد شدند"
 
 #: ideascube/mediacenter/models.py:43
 msgid "sound"
-msgstr ""
+msgstr "صدا"
 
 #: ideascube/mediacenter/models.py:44
 msgid "video"
-msgstr ""
+msgstr "ویدیو"
 
 #: ideascube/mediacenter/models.py:45
 msgid "pdf"
-msgstr ""
+msgstr "پی دی اف"
 
 #: ideascube/mediacenter/models.py:47
 msgid "epub"
-msgstr ""
+msgstr "ای پاب"
 
 #: ideascube/mediacenter/models.py:48
 msgid "mobi"
-msgstr ""
+msgstr "موبی"
 
 #: ideascube/mediacenter/models.py:49
 msgid "app"
-msgstr ""
+msgstr "آپلیکیشن "
 
 #: ideascube/mediacenter/models.py:58
 msgid "Source file"
-msgstr ""
+msgstr "فایل منبع"
 
 #: ideascube/mediacenter/models.py:61
 msgid "Maximum size : 500 Mo."
-msgstr ""
+msgstr "حداکثر حجم :500 Mo"
 
 #: ideascube/mediacenter/models.py:62
 msgid "Preview picture"
-msgstr ""
+msgstr "پیش‌نمایش تصویر"
 
 #: ideascube/mediacenter/models.py:66
 msgid "Authorship"
-msgstr ""
+msgstr "حق تالیف"
 
 #: ideascube/mediacenter/models.py:67
 msgid "type"
-msgstr ""
+msgstr "نوع"
 
 #: ideascube/mediacenter/models.py:77
 msgid "package"
-msgstr ""
+msgstr "بستە"
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5
 #, python-format
 msgid "Are you sure you want to delete document \"%(document)s\"?"
-msgstr ""
+msgstr "آیا مطمئن هستیدکە می‌خواهید سند \"%(document)s\" را حذف کنید؟"
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:9
 #: ideascube/templates/ideascube/form_confirm_delete.html:10
 msgid "yes"
-msgstr ""
+msgstr "آری"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:10
 msgid "View all medias"
-msgstr ""
+msgstr "دیدن همەی رسانەها"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:24
 #, python-format
@@ -902,7 +905,7 @@ msgid ""
 "\n"
 "                Download %(kind)s\n"
 "            "
-msgstr ""
+msgstr "\nدانلود %(kind)s"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:33
 #, python-format
@@ -911,585 +914,585 @@ msgid ""
 "                   Cannot edit or delete this document.\n"
 "                   It is installed by the \"%(package_id)s\" package.\n"
 "               "
-msgstr ""
+msgstr "\n                   Cannot edit or delete this document.\n                   It is installed by the \"%(package_id)s\" package.\n               "
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:40
 #: ideascube/monitoring/templates/monitoring/inventory.html:54
 #: ideascube/monitoring/templates/monitoring/stock.html:25
 #: ideascube/templates/ideascube/user_detail.html:14
 msgid "Edit"
-msgstr ""
+msgstr "ویرایش"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:41
 #: ideascube/templates/ideascube/user_detail.html:15
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: ideascube/mediacenter/templates/mediacenter/document_form.html:7
 msgid "Edit document"
-msgstr ""
+msgstr "ویرایش سند"
 
 #: ideascube/mediacenter/templates/mediacenter/document_form.html:9
 msgid "New document"
-msgstr ""
+msgstr "سند جدید"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
 #: ideascube/serveradmin/catalog.py:305 ideascube/serveradmin/catalog.py:348
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "discover"
-msgstr ""
+msgstr "یافتن"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
 msgid "Medias Center"
-msgstr ""
+msgstr "مرکز رسانەها"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:19
 msgid "No documents yet."
-msgstr ""
+msgstr "هنوز سندی موجود نیست"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:28
 msgid "Add a document"
-msgstr ""
+msgstr "افزودن یک سند"
 
 #: ideascube/mediacenter/templates/mediacenter/oembed.html:16
 msgid "Download document"
-msgstr ""
+msgstr "دانلود سند"
 
 #: ideascube/mediacenter/views.py:33
 msgid "Last modification"
-msgstr ""
+msgstr "آخرین اصلاح"
 
 #: ideascube/models.py:29
 msgid "creation date"
-msgstr ""
+msgstr "تاریخ ایجاد"
 
 #: ideascube/models.py:31
 msgid "modification date"
-msgstr ""
+msgstr "تاریخ اصلاح"
 
 #: ideascube/models.py:79
 msgid "Understood"
-msgstr ""
+msgstr "فهمیدە شدە"
 
 #: ideascube/models.py:80
 msgid "Written"
-msgstr ""
+msgstr "نوشتە"
 
 #: ideascube/models.py:81
 msgid "Spoken"
-msgstr ""
+msgstr "گفتە"
 
 #: ideascube/models.py:82
 msgid "Read"
-msgstr ""
+msgstr "خواندن"
 
 #: ideascube/models.py:87
 msgid "identifier"
-msgstr ""
+msgstr "هویت‌گذاری"
 
 #: ideascube/models.py:89
 msgid "usual name"
-msgstr ""
+msgstr "نام معمول"
 
 #: ideascube/models.py:91
 msgid "full name"
-msgstr ""
+msgstr "نام کامل"
 
 #: ideascube/models.py:93
 msgid "staff status"
-msgstr ""
+msgstr "موقعیت کارکنان"
 
 #: ideascube/models.py:95
 msgid "Designates whether the user can log into this admin site."
-msgstr ""
+msgstr "مشخص کردن این کە کدام کاربر می‌تواند بە مدیریت سایت وارد شود."
 
 #: ideascube/models.py:132
 msgid "User with this identifier already exists."
-msgstr ""
+msgstr "کاربری با این هویت قبلن موجود است"
 
 #: ideascube/models.py:180
 msgid "Student"
-msgstr ""
+msgstr "دانشجو"
 
 #: ideascube/models.py:181
 msgid "Teacher"
-msgstr ""
+msgstr "معلم"
 
 #: ideascube/models.py:182
 msgid "Without profession"
-msgstr ""
+msgstr "بدون تخصص"
 
 #: ideascube/models.py:183
 msgid "Profit profession"
-msgstr ""
+msgstr "سود حرفە"
 
 #: ideascube/models.py:184 ideascube/models.py:207
 msgid "Volunteering"
-msgstr ""
+msgstr "داوطلبانە"
 
 #: ideascube/models.py:185
 msgid "Homemaker"
-msgstr ""
+msgstr "خانەدار"
 
 #: ideascube/models.py:186
 msgid "Retired"
-msgstr ""
+msgstr "بازنشستە"
 
 #: ideascube/models.py:187 ideascube/models.py:219
 #: ideascube/monitoring/models.py:74
 msgid "Other"
-msgstr ""
+msgstr "دیگر"
 
 #: ideascube/models.py:191
 #, python-brace-format
 msgid "Lives with family in {place}"
-msgstr ""
+msgstr "زندگی با خانوادە در {place}"
 
 #: ideascube/models.py:193
 #, python-brace-format
 msgid "Lives without family in {place}"
-msgstr ""
+msgstr "زندگی بدون خانوادە در {place}"
 
 #: ideascube/models.py:195
 #, python-brace-format
 msgid "Has family in {place} but lives without"
-msgstr ""
+msgstr "خانوادە داشتەاست در {place} اما بدون آنها زندگی می‌کند"
 
 #: ideascube/models.py:200
 msgid "Comitees, representation groups"
-msgstr ""
+msgstr "کمیتەها، گروههای نمایندگی"
 
 #: ideascube/models.py:201
 msgid "Music, dance, singing"
-msgstr ""
+msgstr "موسیقی، رقص، آوازخواندن"
 
 #: ideascube/models.py:202
 msgid "Other cultural activities"
-msgstr ""
+msgstr "دیگر فعالیتهای فرهنگی"
 
 #: ideascube/models.py:203
 msgid "Informatic workshops"
-msgstr ""
+msgstr "کارگاه اطلاعاتی"
 
 #: ideascube/models.py:204
 msgid "Literacy working group"
-msgstr ""
+msgstr "گروه کاری سواد آموزی"
 
 #: ideascube/models.py:205
 msgid "Talking group"
-msgstr ""
+msgstr "گروه سخن  گفتن"
 
 #: ideascube/models.py:206
 msgid "Recreational"
-msgstr ""
+msgstr "تفریحی"
 
 #: ideascube/models.py:208
 msgid "Psycosocial"
-msgstr ""
+msgstr "روانی اجتماعی"
 
 #: ideascube/models.py:209
 msgid "Educational"
-msgstr ""
+msgstr "‌آموزشی"
 
 #: ideascube/models.py:210
 msgid "Sport"
-msgstr ""
+msgstr "ورزش"
 
 #: ideascube/models.py:214
 msgid "Seen the Box"
-msgstr ""
+msgstr "دیدن باکس"
 
 #: ideascube/models.py:215
 msgid "Has been informed by partner organization"
-msgstr ""
+msgstr "سازمان همکار اطلاع دادە است"
 
 #: ideascube/models.py:216
 msgid "Has been informed by other organization"
-msgstr ""
+msgstr "از طریق سازمان دیگری اطلاع دادە شدە است"
 
 #: ideascube/models.py:217
 msgid "Word of mouth"
-msgstr ""
+msgstr "کلمات مصطلح"
 
 #: ideascube/models.py:218
 msgid "Poster campaign"
-msgstr ""
+msgstr "کمپین پوستر"
 
 #: ideascube/models.py:223
 msgid "Primary"
-msgstr ""
+msgstr "مقدماتی"
 
 #: ideascube/models.py:224
 msgid "Secondary"
-msgstr ""
+msgstr "ثانوی"
 
 #: ideascube/models.py:225
 msgid "Professional"
-msgstr ""
+msgstr "حرفەای"
 
 #: ideascube/models.py:226
 msgid "Higher education"
-msgstr ""
+msgstr "تحصیلات عالی"
 
 #: ideascube/models.py:230
 msgid "Couple"
-msgstr ""
+msgstr "زوج"
 
 #: ideascube/models.py:231
 msgid "Single"
-msgstr ""
+msgstr "مجرد"
 
 #: ideascube/models.py:232
 msgid "Widowed"
-msgstr ""
+msgstr "بیوە"
 
 #: ideascube/models.py:236
 msgid "Undefined"
-msgstr ""
+msgstr "تعریف نشدە"
 
 #: ideascube/models.py:237
 msgid "Male"
-msgstr ""
+msgstr "مذکر"
 
 #: ideascube/models.py:238
 msgid "Female"
-msgstr ""
+msgstr "مونث"
 
 #: ideascube/models.py:242
 msgid "Visual"
-msgstr ""
+msgstr "بصری"
 
 #: ideascube/models.py:243
 msgid "Auditive"
-msgstr ""
+msgstr "سمعی"
 
 #: ideascube/models.py:244
 msgid "Physical"
-msgstr ""
+msgstr "روانی"
 
 #: ideascube/models.py:245
 msgid "Cognitive"
-msgstr ""
+msgstr "شناختی"
 
 #: ideascube/models.py:246
 msgid "Mental"
-msgstr ""
+msgstr "ذهنی"
 
 #: ideascube/models.py:249
 msgid "Latin written name"
-msgstr ""
+msgstr "اسم بە الفبای لاتینی"
 
 #: ideascube/models.py:252
 msgid "Birth year"
-msgstr ""
+msgstr "سال تولد"
 
 #: ideascube/models.py:255
 msgid "Gender"
-msgstr ""
+msgstr "جنسیت"
 
 #: ideascube/models.py:258
 msgid "Country of origin"
-msgstr ""
+msgstr "کشور اصلی"
 
 #: ideascube/models.py:260
 msgid "City of origin"
-msgstr ""
+msgstr "شهر اصلی"
 
 #: ideascube/models.py:262
 msgid "ID card number"
-msgstr ""
+msgstr "شمارەی کارت ملی"
 
 #: ideascube/models.py:266
 msgid "Number of children under 12"
-msgstr ""
+msgstr "تعداد کودکان زیر 12 سال"
 
 #: ideascube/models.py:268
 msgid "Number of children under 18"
-msgstr ""
+msgstr "تعداد کودکان زیر 18 سال"
 
 #: ideascube/models.py:270
 msgid "Number of children above 18"
-msgstr ""
+msgstr "تعداد کودکان بالای 18 سال"
 
 #: ideascube/models.py:272
 msgid "School level"
-msgstr ""
+msgstr "سطح مدرسە"
 
 #: ideascube/models.py:275
 msgid "Marital situation"
-msgstr ""
+msgstr "وضعیت تاهل"
 
 #: ideascube/models.py:278
 msgid "Ideas Box awareness"
-msgstr ""
+msgstr "هشدار آیدیاس باکس"
 
 #: ideascube/models.py:280
 msgid "Refugee ID"
-msgstr ""
+msgstr "شمارەی پناهندگی"
 
 #: ideascube/models.py:282
 msgid "Camp entry date"
-msgstr ""
+msgstr "تاریخ ورود بە کمپ"
 
 #: ideascube/models.py:286
 msgid "Current occupation"
-msgstr ""
+msgstr "شغل کنونی"
 
 #: ideascube/models.py:289
 msgid "Occupation in the place of origin"
-msgstr ""
+msgstr "شغل در مکان اصلی"
 
 #: ideascube/models.py:293
 msgid "Family status"
-msgstr ""
+msgstr "وضعیت خانوادگی"
 
 #: ideascube/models.py:296
 msgid "Sent to school in the country of origin (if under 18)"
-msgstr ""
+msgstr "در کشور خود بە مدرسە رفتە است ( اگر کمتر از 18 سال سن دارد)"
 
 #: ideascube/models.py:299
 msgid "Activities in the camp"
-msgstr ""
+msgstr "فعالیت‌ها در کمپ"
 
 #: ideascube/models.py:303
 msgid "Address in the camp"
-msgstr ""
+msgstr "آدرس در کمپ"
 
 #: ideascube/models.py:306
 msgid "Disabilities"
-msgstr ""
+msgstr "معلولیت"
 
 #: ideascube/models.py:309
 msgid "Phone number (use comma to register more than one)"
-msgstr ""
+msgstr "شمارە تلفن ( برای ثبت بیشتر از یک شمارە تلفن از نشانەی کاما ،  استفادە کنید)"
 
 #: ideascube/models.py:311
 msgid "Email address (optional)"
-msgstr ""
+msgstr "آدرس ایمیل ( اختیاری)"
 
 #: ideascube/models.py:315
 msgid "English knowledge"
-msgstr ""
+msgstr "دانش انگلیسی"
 
 #: ideascube/models.py:318
 msgid "Arabic knowledge"
-msgstr ""
+msgstr "دانش عربی"
 
 #: ideascube/models.py:321
 msgid "Persian knowledge"
-msgstr ""
+msgstr "دانش فارسی"
 
 #: ideascube/models.py:324
 msgid "Kirundi knowledge"
-msgstr ""
+msgstr "دانش کروندی"
 
 #: ideascube/models.py:327
 msgid "French knowledge"
-msgstr ""
+msgstr "دانش فرانسە"
 
 #: ideascube/models.py:330
 msgid "Swahili knowledge"
-msgstr ""
+msgstr "دانش سواحلی"
 
 #: ideascube/models.py:333
 msgid "Kurdish knowledge"
-msgstr ""
+msgstr "دانش کردی"
 
 #: ideascube/models.py:336
 msgid "Shabak knowledge"
-msgstr ""
+msgstr "دانش شبک"
 
 #: ideascube/monitoring/forms.py:33
 msgid "Enter user identifiers"
-msgstr ""
+msgstr "هویت کاربر را وارد کنید"
 
 #: ideascube/monitoring/forms.py:38
 msgid "Custom activity name"
-msgstr ""
+msgstr "نام کوستوم اکتیویتی"
 
 #: ideascube/monitoring/forms.py:40
 msgid "Partner involved in activity"
-msgstr ""
+msgstr "شریک منتفع در فعالیت"
 
 #: ideascube/monitoring/forms.py:51
 msgid "Missing module name"
-msgstr ""
+msgstr "نام مودول پیدا نشدە است"
 
 #: ideascube/monitoring/forms.py:60
 msgid "since"
-msgstr ""
+msgstr "از زمان"
 
 #: ideascube/monitoring/forms.py:86 ideascube/monitoring/forms.py:115
 #: ideascube/monitoring/forms.py:165 ideascube/monitoring/models.py:172
 msgid "specimen"
-msgstr ""
+msgstr "آزمونە"
 
 #: ideascube/monitoring/forms.py:88
 msgid "Enter a barcode"
-msgstr ""
+msgstr "واردکردن یک بارکد"
 
 #: ideascube/monitoring/forms.py:104
 #, python-brace-format
 msgid "Barcode {barcode} not found."
-msgstr ""
+msgstr "بارکد {barcode}  یافت نشد."
 
 #: ideascube/monitoring/forms.py:117 ideascube/monitoring/forms.py:167
 msgid "Enter an item barcode"
-msgstr ""
+msgstr "بارکد یک مورد را وارد کنید"
 
 #: ideascube/monitoring/forms.py:118 ideascube/monitoring/models.py:27
 #: ideascube/monitoring/models.py:175
 msgid "user"
-msgstr ""
+msgstr "کاربر"
 
 #: ideascube/monitoring/forms.py:120
 msgid "Enter a user identifier"
-msgstr ""
+msgstr "شناسەی یک کاربر را وارد کنید"
 
 #: ideascube/monitoring/forms.py:121
 msgid "due date"
-msgstr ""
+msgstr "زمان انقضاء"
 
 #: ideascube/monitoring/forms.py:130
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
-msgstr ""
+msgstr "موردی با این بارکد  {barcode} قبلن امانت دادە شدە است"
 
 #: ideascube/monitoring/forms.py:145
 #, python-brace-format
 msgid "Barcode {barcode} not found"
-msgstr ""
+msgstr "بارکد  {barcode} پیدا نشد"
 
 #: ideascube/monitoring/forms.py:155
 #, python-brace-format
 msgid "Identifier {serial} not found"
-msgstr ""
+msgstr "شناسا{serial}یافت نشد"
 
 #: ideascube/monitoring/forms.py:175
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
-msgstr ""
+msgstr "موردی با بارکد{barcode} در امانت نیست"
 
 #: ideascube/monitoring/models.py:16 ideascube/monitoring/models.py:70
 msgid "Cinema"
-msgstr ""
+msgstr "سینما"
 
 #: ideascube/monitoring/models.py:18 ideascube/monitoring/models.py:72
 msgid "Multimedia"
-msgstr ""
+msgstr "چند رسانەای"
 
 #: ideascube/monitoring/models.py:20 ideascube/monitoring/models.py:76
 msgid "module"
-msgstr ""
+msgstr "مودول"
 
 #: ideascube/monitoring/models.py:22
 msgid "activity"
-msgstr ""
+msgstr "فعالیت"
 
 #: ideascube/monitoring/models.py:24
 msgid "partner"
-msgstr ""
+msgstr "شریک"
 
 #: ideascube/monitoring/models.py:30
 msgid "entry"
-msgstr ""
+msgstr "ورودی"
 
 #: ideascube/monitoring/models.py:31
 msgid "entries"
-msgstr ""
+msgstr "مدخلها"
 
 #: ideascube/monitoring/models.py:43
 msgid "date"
-msgstr ""
+msgstr "زمان"
 
 #: ideascube/monitoring/models.py:44 ideascube/monitoring/models.py:126
 msgid "comments"
-msgstr ""
+msgstr "شرح "
 
 #: ideascube/monitoring/models.py:73
 msgid "Administration"
-msgstr ""
+msgstr "مدیریت"
 
 #: ideascube/monitoring/models.py:78
 msgid "name"
-msgstr ""
+msgstr "اسم"
 
 #: ideascube/monitoring/models.py:79
 msgid "description"
-msgstr ""
+msgstr "توصیف"
 
 #: ideascube/monitoring/models.py:117
 msgid "ideascube bar code"
-msgstr ""
+msgstr "بارکد ‌آیدیاس باکس"
 
 #: ideascube/monitoring/models.py:121
 #: ideascube/monitoring/templates/monitoring/loan.html:25
 msgid "Serial number"
-msgstr ""
+msgstr "شمارە سریال"
 
 #: ideascube/monitoring/models.py:124
 msgid "item"
-msgstr ""
+msgstr "مورد"
 
 #: ideascube/monitoring/models.py:125
 msgid "quantity"
-msgstr ""
+msgstr "تعداد"
 
 #: ideascube/monitoring/models.py:178
 msgid "by"
-msgstr ""
+msgstr "از طریق"
 
 #: ideascube/monitoring/models.py:179
 #: ideascube/monitoring/templates/monitoring/loan.html:27
 msgid "Due date"
-msgstr ""
+msgstr "زمان انقضاء"
 
 #: ideascube/monitoring/models.py:180
 msgid "Return time"
-msgstr ""
+msgstr "تاریخ برگشت"
 
 #: ideascube/monitoring/models.py:183
 #: ideascube/monitoring/templates/monitoring/loan.html:28
 msgid "Comments"
-msgstr ""
+msgstr "شرح"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:15
 msgid "Specific activity (optional)"
-msgstr ""
+msgstr "فعالیت خاص ( اختیاری)"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:18
 msgid "Partner (optional)"
-msgstr ""
+msgstr "شریک ( اختیاری)"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:21
 msgid "To the cinema module"
-msgstr ""
+msgstr "بە مودول سینما"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:22
 msgid "To the library module"
-msgstr ""
+msgstr "بە مودول کتابخانە"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:23
 msgid "To the digital module"
-msgstr ""
+msgstr "بە مودول دیجیتال"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:28
 msgid "Module"
-msgstr ""
+msgstr "مودول"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:29
 msgid "Member"
-msgstr ""
+msgstr "عضو"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:30
 msgid "When"
-msgstr ""
+msgstr "چە وقت"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:39
 #, python-format
 msgid "%(time)s ago"
-msgstr ""
+msgstr "   %(time)s پیش "
 
 #: ideascube/monitoring/templates/monitoring/entry.html:49
 #: ideascube/monitoring/templates/monitoring/entry.html:52
@@ -1497,723 +1500,723 @@ msgstr ""
 #: ideascube/monitoring/templates/monitoring/loan.html:60
 #: ideascube/monitoring/templates/monitoring/stock.html:55
 msgid "Export"
-msgstr ""
+msgstr "صدور"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:22
 #: ideascube/monitoring/templates/monitoring/stock.html:15
 msgid "count"
-msgstr ""
+msgstr "شمار"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:23
 #: ideascube/monitoring/templates/monitoring/stock.html:16
 msgid "barcode"
-msgstr ""
+msgstr "بارکد"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:24
 #: ideascube/monitoring/templates/monitoring/stock.html:17
 msgid "serial number"
-msgstr ""
+msgstr "شمارە سریال"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:25
 msgid "status"
-msgstr ""
+msgstr "جایگاه"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:29
 #: ideascube/monitoring/templates/monitoring/stock.html:22
 msgid "Total:"
-msgstr ""
+msgstr "مجموع:"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:46
 #: ideascube/monitoring/templates/monitoring/stock.html:46
 msgid "Stock is empty for this module."
-msgstr ""
+msgstr "از این مودول در انبار چیزی یافت نمی‌شود."
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:55
 msgid "Export in CSV"
-msgstr ""
+msgstr "صدور بە CSV"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:56
 msgid "Manage stock"
-msgstr ""
+msgstr "مدیریت انبار"
 
 #: ideascube/monitoring/templates/monitoring/inventory_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete the inventory of %(date)s?"
-msgstr ""
+msgstr "آیا مطمئن هستیدکە می‌خواهید فهرست  %(date)s را حذف کنید؟"
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:7
 #, python-format
 msgid "Edit inventory from %(date)s"
-msgstr ""
+msgstr "ویرایش فهرست از %(date)s"
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:9
 msgid "Start new inventory"
-msgstr ""
+msgstr "شروع فهرست جدید"
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:17
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:17
 #: ideascube/monitoring/templates/monitoring/stockitem_form.html:17
 msgid "delete"
-msgstr ""
+msgstr "حذف کردن"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:11
 msgid "Loan"
-msgstr ""
+msgstr "امانت دادن"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:17
 #: ideascube/monitoring/templates/monitoring/loan.html:51
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:17
 msgid "Validate"
-msgstr ""
+msgstr "معتبر ساختن"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:20
 msgid "Ongoing loans"
-msgstr ""
+msgstr "امانتهای جاری"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:23
 msgid "Item"
-msgstr ""
+msgstr "مورد"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:24
 msgid "Barcode"
-msgstr ""
+msgstr "بارکد"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:26
 msgid "User"
-msgstr ""
+msgstr "کاربر"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:29
 msgid "By"
-msgstr ""
+msgstr "بە وسیلەی"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:45
 msgid "Return"
-msgstr ""
+msgstr "بازگشت"
 
 #: ideascube/monitoring/templates/monitoring/specimen_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s\"?"
-msgstr ""
+msgstr "آیا مطمئن هستید کە می‌خواهید آزمونە \"%(specimen)s\" ی  \"%(item)s\" را حذف کنید؟"
 
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:7
 #, python-format
 msgid "Edit specimen of %(item)s"
-msgstr ""
+msgstr "ویرایش آزمونەی %(item)s"
 
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:9
 msgid "Add new specimen"
-msgstr ""
+msgstr "افزودن آزمونەی جدید"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:13
 #: ideascube/monitoring/templates/monitoring/stock.html:54
 msgid "Add stock item"
-msgstr ""
+msgstr "افزودن مورد انبار"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:18
 msgid "Actions"
-msgstr ""
+msgstr "کنشها"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:28
 msgid "Add new specimen of this item"
-msgstr ""
+msgstr "افزودن آزمونەی جدید از این مورد"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:39
 msgid "Edit this specimen"
-msgstr ""
+msgstr "ویرایش این آزمونە"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:57
 msgid "Start inventory"
-msgstr ""
+msgstr "شروع بە فهرست کردن"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:60
 msgid "Inventories"
-msgstr ""
+msgstr "موجودی"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:64
 msgid "No inventory yet."
-msgstr ""
+msgstr "هیچ موجودی‌ای نیست"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:64
 msgid "Start one now"
-msgstr ""
+msgstr "شروع کردن بە مورد جدید"
 
 #: ideascube/monitoring/templates/monitoring/stock_import.html:8
 msgid "Import Stock"
-msgstr ""
+msgstr "واردکردن موجودی انبار"
 
 #: ideascube/monitoring/templates/monitoring/stockitem_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete the stockitem \"%(item)s\"?"
-msgstr ""
+msgstr "آیا مطمئن هستید کە می‌خواهید آزمونەی \"%(item)s\" را حذف کنید؟"
 
 #: ideascube/monitoring/templates/monitoring/stockitem_form.html:7
 msgid "Edit item"
-msgstr ""
+msgstr "ویرایش مورد"
 
 #: ideascube/monitoring/templates/monitoring/stockitem_form.html:9
 msgid "Add new item"
-msgstr ""
+msgstr "افزودن مورد جدید"
 
 #: ideascube/monitoring/views.py:43
 #, python-brace-format
 msgid "No user found with serial {serial}"
-msgstr ""
+msgstr "هیچ کاربری با سریال  {serial} یافت نشد"
 
 #: ideascube/monitoring/views.py:51
 #, python-brace-format
 msgid "Created {count} entries"
-msgstr ""
+msgstr "ایجاد {count} مدخلها"
 
 #: ideascube/monitoring/views.py:55
 msgid "No entry created."
-msgstr ""
+msgstr "هیچ مدخلی ایجاد نشد"
 
 #: ideascube/monitoring/views.py:77
 msgid "Error while processing entries export"
-msgstr ""
+msgstr "اخلال در حین فرایند مدخل صدور"
 
 #: ideascube/monitoring/views.py:311
 #, python-brace-format
 msgid "Specimen {specimen} has been added to {inventory} inventory"
-msgstr ""
+msgstr "آزمونە {specimen} بە {inventory} فهرست افزودە شدە است"
 
 #: ideascube/monitoring/views.py:318
 #, python-brace-format
 msgid "Specimen {specimen} not found or already done."
-msgstr ""
+msgstr "آزمونە {specimen} پیدا نشد یا قبلن انجام شدە است"
 
 #: ideascube/monitoring/views.py:396
 #, python-brace-format
 msgid "Item {item} has been loaned to {user}"
-msgstr ""
+msgstr "مورد{item} امانت دادە شدە است بە {user}"
 
 #: ideascube/monitoring/views.py:407
 #, python-brace-format
 msgid "Item {item} has been returned"
-msgstr ""
+msgstr "مورد {item}برگشت دادە شدە است"
 
 #: ideascube/monitoring/views.py:411
 msgid "Item not found"
-msgstr ""
+msgstr "مورد پیدا نشد"
 
 #: ideascube/monitoring/views.py:428
 msgid "Error while processing loans export"
-msgstr ""
+msgstr "اخلال در حین فرایند امانت دادن"
 
 #: ideascube/search/templates/search/box.html:6
 #: ideascube/search/templates/search/box.html:10
 msgid "search"
-msgstr ""
+msgstr "جستجو"
 
 #: ideascube/search/templates/search/filter_by_kind.html:4
 #: ideascube/search/templates/search/filter_by_lang.html:4
 #: ideascube/templates/ideascube/includes/tag_cloud.html:4
 msgid "browse"
-msgstr ""
+msgstr "جستجو"
 
 #: ideascube/search/templates/search/filter_by_kind.html:4
 msgid "by kind"
-msgstr ""
+msgstr "بر حسب نوع"
 
 #: ideascube/search/templates/search/filter_by_lang.html:4
 msgid "by lang"
-msgstr ""
+msgstr "بر حسب زبان"
 
 #: ideascube/search/templates/search/filter_cloud.html:5
 msgid "Filters"
-msgstr ""
+msgstr "فیلترها"
 
 #: ideascube/search/templates/search/order_by.html:4
 msgid "Order by"
-msgstr ""
+msgstr "تنظیم شدە بر اساس"
 
 #: ideascube/search/templates/search/search.html:9
 msgid "Search in the box"
-msgstr ""
+msgstr "جستجو در باکس"
 
 #: ideascube/search/templates/search/search.html:16
 #, python-format
 msgid "No result for \"%(query)s\"."
-msgstr ""
+msgstr "جوابی برای \"%(query)s\" یافت نشد"
 
 #: ideascube/serveradmin/backup.py:36
 #, python-brace-format
 msgid "backup name must end with one of {extensions}"
-msgstr ""
+msgstr "اسم پشتیبان باید با یکی از {extensions} پایان یابد."
 
 #: ideascube/serveradmin/backup.py:78
 msgid "Zip is no more supported to create backup"
-msgstr ""
+msgstr "زیپ دیگر برای ایجاد پشتیبان حمایت نشدە است"
 
 #: ideascube/serveradmin/backup.py:121
 msgid "Unkown format for file {}"
-msgstr ""
+msgstr "فرمت فایل{}ناشناس است"
 
 #: ideascube/serveradmin/backup.py:134
 msgid "Format {} is not supported at creation"
-msgstr ""
+msgstr "فرمت {}برای ایجاد، پشتیبانی نشدە است"
 
 #: ideascube/serveradmin/backup.py:176
 msgid "Not a {} file"
-msgstr ""
+msgstr "یک{} فایل نیست"
 
 #: ideascube/serveradmin/catalog.py:308
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:4
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:4
 #: ideascube/templates/ideascube/includes/cards/koombookedu.html:4
 msgid "learn"
-msgstr ""
+msgstr "‌آموختن"
 
 #: ideascube/serveradmin/catalog.py:349
 msgid "info"
-msgstr ""
+msgstr "اطلاعات"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:5
 msgid "Manage server backups"
-msgstr ""
+msgstr "مدیریت پشتیبانهای سرور"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:8
 msgid "Backup"
-msgstr ""
+msgstr "پشتیبان"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:9
 msgid "Backup now"
-msgstr ""
+msgstr "ایجاد پشتیبان"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:11
 msgid "Restore"
-msgstr ""
+msgstr "بازگرداندن"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Source"
-msgstr ""
+msgstr "منبع"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Version"
-msgstr ""
+msgstr "نسخە"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Date"
-msgstr ""
+msgstr "زمان"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Size"
-msgstr ""
+msgstr "اندازە"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Format"
-msgstr ""
+msgstr "فرمت"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:25
 msgid "Download selected"
-msgstr ""
+msgstr "دانلود انتخاب شد"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:26
 msgid "Restore selected"
-msgstr ""
+msgstr "بازگرداندن انتخاب شد"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:27
 msgid "Delete selected"
-msgstr ""
+msgstr "حذف انتخاب شد"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:29
 msgid "Upload"
-msgstr ""
+msgstr "آپلود"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:31
 #, python-brace-format
 msgid ""
 "File must be a zip, and file name must be in the form "
 "{source}-{version}-{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
-msgstr ""
+msgstr "لازم است فایل زیپ باشد، و نام فایل لازم است در فرم  {source}-{version}-{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:32
 msgid "Upload backup file"
-msgstr ""
+msgstr "آپلود فایل پشتیبان"
 
 #: ideascube/serveradmin/templates/serveradmin/battery.html:5
 msgid "Battery monitoring"
-msgstr ""
+msgstr "مانیتورینگ باتری"
 
 #: ideascube/serveradmin/templates/serveradmin/battery.html:12
 msgid "Capacity"
-msgstr ""
+msgstr "گنجایش"
 
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:9
 msgid "Card name"
-msgstr ""
+msgstr "نام کارت"
 
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:9
 msgid "Displayed"
-msgstr ""
+msgstr "نمایش دادە شدە"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:12
 msgid "Server info"
-msgstr ""
+msgstr "اطلاعات سرور"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:14
 #, python-format
 msgid "Version: %(version)s"
-msgstr ""
+msgstr "نسخە : %(version)s"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:15
 #, python-format
 msgid "ID: %(id)s"
-msgstr ""
+msgstr "ئای دی : %(id)s"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:16
 #, python-format
 msgid "Hostname: %(name)s"
-msgstr ""
+msgstr "نام میهمان : %(name)s"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:20
 msgid "Server name"
-msgstr ""
+msgstr "نام سرور"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:22
 #: ideascube/serveradmin/templates/serveradmin/services.html:6
 msgid "Manage services"
-msgstr ""
+msgstr "مدیریت سرویسها"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:23
 msgid "Restart server"
-msgstr ""
+msgstr "رستارت سرور"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:24
 msgid "Monitor battery"
-msgstr ""
+msgstr "مونیتور باتری"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:25
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:5
 msgid "Manage Wi-Fi"
-msgstr ""
+msgstr "مدیریت وای-فای"
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:6
 msgid "Select Languages"
-msgstr ""
+msgstr "انتخاب زبانها"
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:8
 msgid ""
 "Select here the languages which will be available when uploading content"
-msgstr ""
+msgstr "اینجا زبانی را کە زمان آپلود محتوا قابل دسترش خواهند بود، انتخاب کنید."
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:23
 msgid "Save"
-msgstr ""
+msgstr "ذخیرەکردن"
 
 #: ideascube/serveradmin/templates/serveradmin/name.html:5
 msgid "Change Server Name"
-msgstr ""
+msgstr "تغییر اسم سرور"
 
 #: ideascube/serveradmin/templates/serveradmin/name.html:10
 msgid "Submit"
-msgstr ""
+msgstr "ثبت کردن"
 
 #: ideascube/serveradmin/templates/serveradmin/power.html:5
 msgid "Stop or restart the server"
-msgstr ""
+msgstr "متوقف یا رستارت کردن سرور"
 
 #: ideascube/serveradmin/templates/serveradmin/power.html:8
 #: ideascube/serveradmin/templates/serveradmin/service_form.html:13
 msgid "Stop"
-msgstr ""
+msgstr "توقف"
 
 #: ideascube/serveradmin/templates/serveradmin/power.html:9
 #: ideascube/serveradmin/templates/serveradmin/service_form.html:12
 msgid "Restart"
-msgstr ""
+msgstr "رستارت"
 
 #: ideascube/serveradmin/templates/serveradmin/service_form.html:15
 msgid "Start"
-msgstr ""
+msgstr "شروع"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:22
 msgid "History"
-msgstr ""
+msgstr "تاریخ"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:25
 msgid "No Wi-Fi available"
-msgstr ""
+msgstr "وای-فای در دسترس نیست"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:30
 msgid "Authentication required"
-msgstr ""
+msgstr "تصدیق هویت لازم است"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:33
 msgid "An encryption key is required to access this network."
-msgstr ""
+msgstr "کلید رمزگذاری برای دسترسی بە این شبکە ضروری است"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:37
 msgid "Connect"
-msgstr ""
+msgstr "اتصال"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi_history.html:5
 msgid "Wi-Fi History"
-msgstr ""
+msgstr "تاریخ وای-فای"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi_history.html:21
 msgid "Forget Selected"
-msgstr ""
+msgstr "فراموش کردن انتخاب شدە است"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi_history.html:25
 msgid "No known Wi-Fi networks"
-msgstr ""
+msgstr "هیچ شبکەی وای-فای شناختە نشد."
 
 #: ideascube/serveradmin/views.py:41
 msgid "Please select at least one language"
-msgstr ""
+msgstr "لطفن حداقل یک زبان را انتخاب کنید"
 
 #: ideascube/serveradmin/views.py:58
 msgid "Server name changed successfully"
-msgstr ""
+msgstr "نام سرور با موفقیت تغییر دادە شد."
 
 #: ideascube/serveradmin/views.py:61
 msgid "Server name cannot be empty"
-msgstr ""
+msgstr "نام سرور قابل حذف نیست"
 
 #: ideascube/serveradmin/views.py:120
 #, python-brace-format
 msgid "Succesfully created backup {filename}"
-msgstr ""
+msgstr "فایل پشتیبان {filename} با موفقیت ایجاد شد."
 
 #: ideascube/serveradmin/views.py:130
 msgid "Unable to load file:"
-msgstr ""
+msgstr "قادر بە لود فایل نیست: "
 
 #: ideascube/serveradmin/views.py:134
 #, python-brace-format
 msgid "File {name} has been loaded."
-msgstr ""
+msgstr "فایل{name} بارگذاری شدە است"
 
 #: ideascube/serveradmin/views.py:139
 msgid "No file found to upload."
-msgstr ""
+msgstr "فایلی برای آپلود یافت نشد"
 
 #: ideascube/serveradmin/views.py:145
 #, python-brace-format
 msgid "Succesfully deleted backup {filename}"
-msgstr ""
+msgstr "فایل پشتیبان {filename}با موفقیت حذف شد"
 
 #: ideascube/serveradmin/views.py:150
 #, python-brace-format
 msgid "Succesfully restored backup {filename}"
-msgstr ""
+msgstr "فایل پشتیبان  {filename} با موفقیت بازگرداندە شد"
 
 #: ideascube/serveradmin/views.py:188
 #, python-brace-format
 msgid "Connected to {ssid}"
-msgstr ""
+msgstr "اتصال بە {ssid}"
 
 #: ideascube/serveradmin/views.py:192
 #, python-brace-format
 msgid "No such network: {ssid}"
-msgstr ""
+msgstr "چنین شبکەای پیدا نشد: {ssid}"
 
 #: ideascube/serveradmin/views.py:232
 msgid "Home cards updated successfully"
-msgstr ""
+msgstr "هوم کارت با موفقیت بەروز شد"
 
 #: ideascube/serveradmin/wifi.py:95
 msgid "A key is required to connect to this network"
-msgstr ""
+msgstr "برای اتصال بە این شبکە یک رمز لازم است"
 
 #: ideascube/serveradmin/wifi.py:114
 msgid "Invalid Wi-Fi key"
-msgstr ""
+msgstr "رمز وای-فای معتبر نسیت"
 
 #: ideascube/serveradmin/wifi.py:141
 #, python-format
 msgid "Failed to connect to %s"
-msgstr ""
+msgstr "عدم موفقیت در اتصال بە  %s"
 
 #: ideascube/serveradmin/wifi.py:221
 msgid "Wi-Fi hardware is disabled"
-msgstr ""
+msgstr "سخت‌افزار وای-فای ناکارا شدە است"
 
 #: ideascube/serveradmin/wifi.py:230
 msgid "Wi-Fi is disabled"
-msgstr ""
+msgstr "وای-فای ناکارا شدە است"
 
 #: ideascube/serveradmin/wifi.py:241
 msgid "No Wi-Fi device was found"
-msgstr ""
+msgstr "هیچ وسیلەی وای-فای پیدا نشد"
 
 #: ideascube/serveradmin/wifi.py:245
 msgid "Found more than one Wi-Fi device, this is not supported"
-msgstr ""
+msgstr "بیش از یک وسیلەی وای-فای پیدا شد، این امر پشتیبانی نشدە است"
 
 #: ideascube/templates/form-fullpage.html:26
 msgid "submit"
-msgstr ""
+msgstr "ثبت کردن"
 
 #: ideascube/templates/ideascube/by_tag.html:7
 #, python-format
 msgid "Browse topic \"%(topic)s\""
-msgstr ""
+msgstr "جستجوی موضوع \"%(topic)s\""
 
 #: ideascube/templates/ideascube/by_tag.html:9
 #, python-format
 msgid "Browse topics \"%(topics)s\""
-msgstr ""
+msgstr "جستجوی موضوعها \"%(topics)s\""
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:4
 #: ideascube/templates/ideascube/includes/cards/blog.html:4
 msgid "create"
-msgstr ""
+msgstr "ایجاد"
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:5
 msgid "App Inventor"
-msgstr ""
+msgstr "ایجادگر آپلیکیشن"
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:7
 msgid "Create your own apps for Android."
-msgstr ""
+msgstr "آپلیکیشن خود را برای آندروید ایجاد کنید"
 
 #: ideascube/templates/ideascube/includes/cards/blog.html:7
 msgid "Browse blog posts."
-msgstr ""
+msgstr "جستجوی بلاگ پست"
 
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:5
 msgid "BSF Campus"
-msgstr ""
+msgstr "کامپوس ب اس اف"
 
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:7
 msgid "Renforcer les capacités des bibliothèques."
-msgstr ""
+msgstr "تقویت گنجایش کتابخانەها"
 
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:5
 msgid "Khan Academy"
-msgstr ""
+msgstr "کان آکادمی"
 
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:7
 msgid "Learn with videos and exercises."
-msgstr ""
+msgstr "یادگرفتن از طریق ویدیو و تمرین"
 
 #: ideascube/templates/ideascube/includes/cards/koombookedu.html:5
 msgid "KoomBook EDU"
-msgstr ""
+msgstr "کوم بوک EDU"
 
 #: ideascube/templates/ideascube/includes/cards/koombookedu.html:7
 msgid ""
 "Plateforme d'e-learning ouverte aux <br /> étudiants et aux professeurs."
-msgstr ""
+msgstr "پلاتفورم آموزشی آزاد برای <br />  دانشجویان و اساتید."
 
 #: ideascube/templates/ideascube/includes/cards/library.html:7
 msgid "Browse books."
-msgstr ""
+msgstr "جستجوی کتاب"
 
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:5
 msgid "Medias center"
-msgstr ""
+msgstr "مرکز رسانەها"
 
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:7
 msgid "Browse videos, sounds, images, pdf…"
-msgstr ""
+msgstr "جستجوی ویدیو، صدا، تصویر، پی دی اف ..."
 
 #: ideascube/templates/ideascube/includes/footer.html:19
 msgid "Change"
-msgstr ""
+msgstr "تغییر"
 
 #: ideascube/templates/ideascube/includes/header.html:14
 #, python-format
 msgid "log out from %(user)s"
-msgstr ""
+msgstr "خارج شدن از %(user)s"
 
 #: ideascube/templates/ideascube/includes/header.html:16
 msgid "log in"
-msgstr ""
+msgstr "واردشدن"
 
 #: ideascube/templates/ideascube/pagination.html:5
 msgid "previous"
-msgstr ""
+msgstr "پیش نمایش"
 
 #: ideascube/templates/ideascube/pagination.html:8
 #, python-format
 msgid "Page %(current)s of %(total)s."
-msgstr ""
+msgstr "صفحەی %(current)s از %(total)s"
 
 #: ideascube/templates/ideascube/pagination.html:11
 msgid "next"
-msgstr ""
+msgstr "بعدی"
 
 #: ideascube/templates/ideascube/set_password.html:5
 #, python-format
 msgid "Set %(user)s password"
-msgstr ""
+msgstr "ایجاد رمز عبور  %(user)s"
 
 #: ideascube/templates/ideascube/user_confirm_delete.html:4
 #, python-format
 msgid "Are you sure you want to delete user \"%(user_obj)s\"?"
-msgstr ""
+msgstr "آیا مطمئن هستید کە می‌خواهید کاربر  \"%(user_obj)s\" را حذف کنید؟"
 
 #: ideascube/templates/ideascube/user_detail.html:5
 msgid "View all users"
-msgstr ""
+msgstr "نمایش تمام کاربران"
 
 #: ideascube/templates/ideascube/user_detail.html:16
 msgid "Set password"
-msgstr ""
+msgstr "ایجاد رمز عبور"
 
 #: ideascube/templates/ideascube/user_detail.html:17
 msgid "Remove staff status"
-msgstr ""
+msgstr "حذف موقعیت کارکنان"
 
 #: ideascube/templates/ideascube/user_detail.html:17
 msgid "Add staff status"
-msgstr ""
+msgstr "افزودن موقعیت کارکنان"
 
 #: ideascube/templates/ideascube/user_detail.html:18
 #: ideascube/templates/ideascube/user_list.html:27
 msgid "Add user"
-msgstr ""
+msgstr "افزودن کاربر"
 
 #: ideascube/templates/ideascube/user_form.html:7
 msgid "Edit user"
-msgstr ""
+msgstr "ویرایش کاربر"
 
 #: ideascube/templates/ideascube/user_form.html:9
 msgid "New User"
-msgstr ""
+msgstr "کاربر جدید"
 
 #: ideascube/templates/ideascube/user_import.html:6
 #: ideascube/templates/ideascube/user_list.html:29
 msgid "Import users"
-msgstr ""
+msgstr "واردکردن کاربر"
 
 #: ideascube/templates/ideascube/user_list.html:8
 msgid "Name"
-msgstr ""
+msgstr "نام"
 
 #: ideascube/templates/ideascube/user_list.html:28
 msgid "Export all users"
-msgstr ""
+msgstr "فرستادن تمام کاربران"
 
 #: ideascube/templates/ideascube/welcome_staff.html:5
 #, python-format
 msgid "Welcome to %(server_name)s"
-msgstr ""
+msgstr "خوش آمدید بە %(server_name)s"
 
 #: ideascube/templates/ideascube/welcome_staff.html:6
 msgid ""
 "To enjoy this digital library, you must first create a username and a "
 "password. These will allow you to administrate the server. Make sure to "
 "remember both the username AND password!"
-msgstr ""
+msgstr "برای بهرەگیری از این کتابخانەی دیجیتالی، باید ابتدا یک اسم کاربری و یک رمز عبور برای خودتان درست کنید. این بە شما امکان مدیریت سرور را خواهد داد. نام کاربری و رمز عبور را بە خاطر بسپارید."
 
 #: ideascube/templates/registration/login.html:14
 msgid "Log in"
-msgstr ""
+msgstr "وارد شدن"
 
 #: ideascube/views.py:98
 msgid "Welcome to {}, {}!"
-msgstr ""
+msgstr "خوش آمدید بە {}، {} !"
 
 #: ideascube/views.py:213
 #, python-brace-format
 msgid "Password has been set for {user}"
-msgstr ""
+msgstr "رمز عبور برای{user} ایجاد شدەاست"
 
 #: ideascube/views.py:258
 #, python-brace-format
 msgid "Successfully processed {count} users."
-msgstr ""
+msgstr "پردازش{count} کاربران موفقیت آمیز بود. "

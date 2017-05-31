@@ -4,6 +4,7 @@
 # 
 # Translators:
 # inaamcharaf@gmail.com <Inaamcharaf@gmail.com>, 2014
+# Matthieu Gautier <mgautier@kymeria.fr>, 2017
 # narjis naji areff ihloh <nano_naji@yahoo.com>, 2015-2017
 # Salah Saud <salahsaud@gmail.com>, 2015
 # yohanboniface <yohanboniface@free.fr>, 2016
@@ -13,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-18 15:42+0000\n"
-"PO-Revision-Date: 2017-05-19 09:22+0000\n"
+"PO-Revision-Date: 2017-05-30 14:28+0000\n"
 "Last-Translator: Matthieu Gautier <mgautier@kymeria.fr>\n"
 "Language-Team: Arabic (http://www.transifex.com/ideascube/ideascube/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -225,7 +226,7 @@ msgstr "تفعيل /الغاء تفعيل أضافه اللغة"
 
 #: ideascube/conf/base.py:354
 msgid "Python web server"
-msgstr "خادم الانترنت (بايثون)"
+msgstr "خادم الانترنت Python"
 
 #: ideascube/conf/base.py:355
 msgid "Global proxy"
@@ -907,7 +908,7 @@ msgid ""
 "\n"
 "                Download %(kind)s\n"
 "            "
-msgstr "\nDownload %(kind)s"
+msgstr "\nتنزيل %(kind)s"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:33
 #, python-format
@@ -916,7 +917,7 @@ msgid ""
 "                   Cannot edit or delete this document.\n"
 "                   It is installed by the \"%(package_id)s\" package.\n"
 "               "
-msgstr "\nلا يمكن حذف أو تعديل هذا الملف\n\nتم تحميله من خلال \"%(package_id)s\" "
+msgstr "\nلا يمكن حذف أو تعديل هذا الملف\n\nتم تحميله من خلال \"%(package_id)s\""
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:40
 #: ideascube/monitoring/templates/monitoring/inventory.html:54
