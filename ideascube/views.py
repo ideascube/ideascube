@@ -268,32 +268,3 @@ def validate_url(request):
     assert not ipaddress.startswith('127.')
     assert not ipaddress.startswith('192.168.')
     return url
-
-
-class AjaxProxy(View):
-
-    def get(self, *args, **kwargs):
-        # You should not use this in production (use Nginx or so)
-        try:
-            url = validate_url(self.request)
-        except AssertionError as e:
-            return HttpResponseBadRequest()
-        headers = {
-            'User-Agent': 'ideascube +http://ideas-box.org'
-        }
-        request = Request(url, headers=headers)
-        opener = build_opener()
-        try:
-            proxied_request = opener.open(request)
-        except HTTPError as e:
-            return HttpResponse(e.msg, status=e.code,
-                                content_type='text/plain')
-        else:
-            status_code = proxied_request.code
-            mimetype = proxied_request.headers.get('Content-Type') or mimetypes.guess_type(url)  # noqa
-            content = proxied_request.read()
-            # Quick hack to prevent Django from adding a Vary: Cookie header
-            self.request.session.accessed = False
-            return HttpResponse(content, status=status_code,
-                                content_type=mimetype)
-ajax_proxy = AjaxProxy.as_view()

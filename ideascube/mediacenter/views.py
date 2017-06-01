@@ -103,32 +103,3 @@ class DocumentDelete(DeleteView):
     model = Document
     success_url = reverse_lazy('mediacenter:index')
 document_delete = staff_member_required(DocumentDelete.as_view())
-
-
-class OEmbed(DetailView):
-    model = Document
-    template_name = 'mediacenter/oembed.html'
-
-    def get_object(self, queryset=None):
-        if not queryset:
-            queryset = self.get_queryset()
-        url = self.request.GET.get('url')
-        if not url:
-            raise Http404()
-        parsed = urlparse(url)
-        try:
-            match = resolve(parsed.path)
-        except Resolver404:
-            raise Http404()
-        if 'pk' not in match.kwargs:
-            raise Http404()
-        return queryset.get(pk=match.kwargs['pk'])
-
-    def render_to_response(self, context, **response_kwargs):
-        html = render_to_string(self.get_template_names(), context=context)
-        return JsonResponse({
-            "html": html,
-            "type": "rich"
-        })
-
-oembed = OEmbed.as_view()

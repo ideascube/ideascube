@@ -36,7 +36,6 @@ urlpatterns = i18n_patterns(
         views.user_delete, name='user_delete'),
     url(r'^user/(?P<pk>[\d]+)/toggle-staff/$',
         views.user_toggle_staff, name='user_toggle_staff'),
-    url(r'^ajax-proxy/$', cache_page(180)(views.ajax_proxy), name='ajax-proxy')
 )
 urlpatterns = urlpatterns + [
     url(r'^jsi18n/$', cache_control(max_age=31536000)(javascript_catalog),

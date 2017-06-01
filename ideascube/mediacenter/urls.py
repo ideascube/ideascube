@@ -12,5 +12,4 @@ urlpatterns = [
     url(r'^document/(?P<pk>[\d]+)/delete/$', views.document_delete,
         name='document_delete'),
     url(r'^document/new/$', views.document_create, name='document_create'),
-    url(r'^oembed/$', views.oembed, name='oembed'),
 ]
