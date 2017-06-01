@@ -574,7 +574,7 @@ class Catalog:
 
     def install_packages(self, ids):
         ids = self._get_package_ids(ids, self._available)
-        used_handlers = {}
+        used_handlers = set()
         downloaded = []
         installed_ids = []
 
@@ -601,19 +601,19 @@ class Catalog:
                 printerr("Failed installing {0.id}".format(pkg))
                 printerr(e)
                 continue
-            used_handlers[handler.__class__.__name__] = handler
+            used_handlers.add(handler)
             self._installed[pkg.id] = self._available[pkg.id].copy()
             installed_ids.append(pkg.id)
             self._persist_catalog()
 
         self._update_displayed_packages_on_home(to_add_ids=installed_ids)
 
-        for handler in used_handlers.values():
+        for handler in used_handlers:
             handler.commit()
 
     def remove_packages(self, ids, commit=True):
         ids = self._get_package_ids(ids, self._installed)
-        used_handlers = {}
+        used_handlers = set()
 
         for pkg_id in ids:
             pkg = self._get_package(pkg_id, self._installed)
@@ -625,7 +625,7 @@ class Catalog:
                 printerr("Failed removing {0.id}".format(pkg))
                 printerr(e)
                 continue
-            used_handlers[handler.__class__.__name__] = handler
+            used_handlers.add(handler)
             del(self._installed[pkg.id])
             self._persist_catalog()
 
@@ -634,7 +634,7 @@ class Catalog:
         if not commit:
             return
 
-        for handler in used_handlers.values():
+        for handler in used_handlers:
             handler.commit()
 
     def reinstall_packages(self, ids):
@@ -643,7 +643,7 @@ class Catalog:
 
     def upgrade_packages(self, ids):
         ids = self._get_package_ids(ids, self._available)
-        used_handlers = {}
+        used_handlers = set()
         downloaded = []
 
         for pkg_id in ids:
@@ -672,7 +672,7 @@ class Catalog:
                 printerr("Failed removing {0.id}".format(ipkg))
                 printerr(e)
                 continue
-            used_handlers[ihandler.__class__.__name__] = ihandler
+            used_handlers.add(ihandler)
 
             try:
                 uhandler.install(upkg, download_path)
@@ -680,12 +680,12 @@ class Catalog:
                 printerr("Failed installing {0.id}\n".format(upkg))
                 printerr(e)
                 continue
-            used_handlers[uhandler.__class__.__name__] = uhandler
+            used_handlers.add(uhandler)
 
             self._installed[ipkg.id] = self._available[upkg.id].copy()
             self._persist_catalog()
 
-        for handler in used_handlers.values():
+        for handler in used_handlers:
             handler.commit()
 
     # -- Manage local cache ---------------------------------------------------
