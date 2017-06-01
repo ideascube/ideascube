@@ -203,3 +203,26 @@ ID.initEditors = function () {
         tinymce.init(options);
    }
 };
+
+ID.tinymce_insert_document = function (document_info) {
+    var editor = top.tinymce.activeEditor;
+    var content = "";
+    if (document_info.kind == 'image') {
+        content = '<img src="' + document_info.original + '" />';
+    } else if (document_info.kind == 'video') {
+        content = '<video controls preload="none"> <source src="';
+        content += document_info.original + '">';
+        content += gettext("Your web browser doesn't support this media type.");
+        content += '</video>';
+    } else if (document_info.kind == 'audio') {
+        content = '<audio controls preload="none"> <source src="';
+        content += document_info.original + '">';
+        content += gettext("Your web browser doesn't support this media type.");
+        content += '</audio>';
+    } else {
+        content = '<a href="' + document_info.original + '">';
+        content += ' <img src="' + document_info.icon + '" /></a>';
+    }
+    editor.insertContent(content);
+    editor.windowManager.close();
+};

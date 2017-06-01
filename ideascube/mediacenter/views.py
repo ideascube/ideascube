@@ -74,6 +74,10 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
 
 index = Index.as_view()
 
+class DocumentSelect(Index):
+    template_name = 'mediacenter/document_select.html'
+document_select = DocumentSelect.as_view()
+
 
 class DocumentDetail(DetailView):
     model = Document
