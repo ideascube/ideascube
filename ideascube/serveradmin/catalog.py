@@ -591,6 +591,7 @@ class Catalog:
 
             except Exception as e:
                 printerr(e)
+                continue
 
         for pkg, download_path in downloaded:
             handler = pkg.handler
@@ -660,6 +661,7 @@ class Catalog:
 
             except Exception as e:
                 printerr(e)
+                continue
 
         for ipkg, upkg, download_path in downloaded:
             ihandler = ipkg.handler
