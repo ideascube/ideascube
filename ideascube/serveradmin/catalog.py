@@ -578,7 +578,7 @@ class Catalog:
         downloaded = []
         installed_ids = []
 
-        for pkg_id in ids:
+        for pkg_id in sorted(ids):
             if pkg_id in self._installed:
                 printerr('{pkg_id} is already installed'.format(pkg_id=pkg_id))
                 continue
@@ -615,7 +615,7 @@ class Catalog:
         ids = self._get_package_ids(ids, self._available)
         used_handlers = set()
 
-        for pkg_id in ids:
+        for pkg_id in sorted(ids):
             pkg = self._get_package(pkg_id, self._installed)
             handler = pkg.handler
             print('Removing {0.id}'.format(pkg))
@@ -646,7 +646,7 @@ class Catalog:
         used_handlers = set()
         downloaded = []
 
-        for pkg_id in ids:
+        for pkg_id in sorted(ids):
             ipkg = self._get_package(pkg_id, self._installed)
             upkg = self._get_package(ipkg.id, self._available)
 
