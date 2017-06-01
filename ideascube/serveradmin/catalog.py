@@ -586,11 +586,11 @@ class Catalog:
         installed_ids = []
 
         for pkg_id in ids:
-            pkg = self._get_package(pkg_id, self._available)
-
-            if pkg.id in self._installed:
-                printerr('{0.id} is already installed'.format(pkg))
+            if pkg_id in self._installed:
+                printerr('{pkg_id} is already installed'.format(pkg_id=pkg_id))
                 continue
+
+            pkg = self._get_package(pkg_id, self._available)
 
             try:
                 download_path = self._fetch_package(pkg)
