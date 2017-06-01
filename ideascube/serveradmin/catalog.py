@@ -211,6 +211,9 @@ class Package(metaclass=MetaRegistry):
         except KeyError:
             raise AttributeError(name)
 
+    def __str__(self):
+        return '{self.id}-{self.version}'.format(self=self)
+
     @property
     def version(self):
         # 0 has the advantage of always being "smaller" than any other version
