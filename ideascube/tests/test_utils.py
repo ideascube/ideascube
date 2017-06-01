@@ -2,7 +2,7 @@ from io import BytesIO
 
 import pytest
 
-from ideascube.utils import to_unicode, get_file_sha256, tag_splitter
+from ideascube.utils import to_unicode, get_file_sha256, tag_splitter, MetaRegistry
 from hashlib import sha256
 
 
@@ -79,3 +79,53 @@ def test_different_cases_make_same_tags():
     tags = tag_splitter("bar, Bar, BAR, baR")
     assert len(tags) == len(oracle)
     assert set(tags) == oracle
+
+
+def test_meta_registry_one_base():
+    # Ensure the base type itself is not added to the registry
+    class Base1(metaclass=MetaRegistry):
+        pass
+
+    assert Base1 not in Base1.registered_types.values()
+
+    # Register a new type, make sure it gets added to the registry
+    class Child1(Base1):
+        pass
+
+    assert Base1.registered_types['Child1'] == Child1
+
+    # Register a new type with a specific name,
+    # make sure it gets added to the registry
+    class Child2(Base1, typename='foo'):
+        pass
+
+    assert Base1.registered_types['foo'] == Child2
+    assert 'Child2' not in Base1.registered_types
+
+    # Define a new type discarding registration, make sure it
+    # does **not** get added to the registry
+    class NotRegistered(Base1, no_register=True):
+        pass
+
+    assert NotRegistered not in Base1.registered_types.values()
+
+
+def test_meta_registry_two_base():
+    # Ensure the base type itself is not added to the registry
+    class Base1(metaclass=MetaRegistry):
+        pass
+
+    class Base2(metaclass=MetaRegistry):
+        pass
+
+    assert Base1 not in Base1.registered_types.values()
+    assert Base2 not in Base1.registered_types.values()
+    assert Base1 not in Base2.registered_types.values()
+    assert Base2 not in Base2.registered_types.values()
+
+    # Register a new type, make sure it gets added to the registry
+    class Child1(Base1):
+        pass
+
+    assert Base1.registered_types['Child1'] == Child1
+    assert Child1 not in Base2.registered_types.values()

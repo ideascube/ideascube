@@ -228,26 +228,6 @@ def test_filesize_should_render_str_size_as_is():
     assert p.filesize == '1.7 GB'
 
 
-def test_package_registry():
-    from ideascube.serveradmin.catalog import Package
-
-    # Ensure the base type itself is not added to the registry
-    assert Package not in Package.registered_types.values()
-
-    # Register a new package type, make sure it gets added to the registry
-    class RegisteredPackage(Package):
-        typename = 'tests-only'
-
-    assert Package.registered_types['tests-only'] == RegisteredPackage
-
-    # Define a new package type without a typename attribute, make sure it
-    # does **not** get added to the registry
-    class NotRegisteredPackage(Package):
-        pass
-
-    assert NotRegisteredPackage not in Package.registered_types.values()
-
-
 def test_install_zippedzim(zippedzim_path, install_dir):
     from ideascube.serveradmin.catalog import ZippedZim
 
