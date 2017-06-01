@@ -849,6 +849,68 @@ def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir):
         'name': 'Videos from Foo'}}
 
 
+def test_catalog_clear_metadata_cache(tmpdir):
+    from ideascube.serveradmin.catalog import Catalog
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n  foovideos:\n    name: Videos from Foo')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    assert c._available == {}
+    assert c._installed == {}
+
+    c.update_cache()
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {}
+
+    # Pretend we installed a package
+    c._installed_value = {'foovideos': {}}
+    downloaded_path = os.path.join(c._local_package_cache, 'foovideos')
+
+    with open(downloaded_path, 'w') as f:
+        f.write('the downloaded content')
+
+    c.clear_metadata_cache()
+    assert c._available == {}
+    assert c._installed == {'foovideos': {}}
+    assert os.path.exists(downloaded_path)
+
+
+def test_catalog_clear_package_cache(tmpdir):
+    from ideascube.serveradmin.catalog import Catalog
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n  foovideos:\n    name: Videos from Foo')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    assert c._available == {}
+    assert c._installed == {}
+
+    c.update_cache()
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {}
+
+    # Pretend we installed a package
+    c._installed_value = {'foovideos': {}}
+    downloaded_path = os.path.join(c._local_package_cache, 'foovideos')
+
+    with open(downloaded_path, 'w') as f:
+        f.write('the downloaded content')
+
+    c.clear_package_cache()
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {'foovideos': {}}
+    assert not os.path.exists(downloaded_path)
+
+
 def test_catalog_clear_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -867,9 +929,17 @@ def test_catalog_clear_cache(tmpdir):
     assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
     assert c._installed == {}
 
+    # Pretend we installed a package
+    c._installed_value = {'foovideos': {}}
+    downloaded_path = os.path.join(c._local_package_cache, 'foovideos')
+
+    with open(downloaded_path, 'w') as f:
+        f.write('the downloaded content')
+
     c.clear_cache()
     assert c._available == {}
-    assert c._installed == {}
+    assert c._installed == {'foovideos': {}}
+    assert not os.path.exists(downloaded_path)
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
