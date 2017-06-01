@@ -97,13 +97,10 @@ class Remote:
 class Handler:
 
     def __init__(self):
-        default = os.path.join(settings.STORAGE_ROOT, self.name)
-        setting = 'CATALOG_{}_INSTALL_DIR'.format(self.name.upper())
+        name = self.__class__.__name__.lower()
+        default = os.path.join(settings.STORAGE_ROOT, name)
+        setting = 'CATALOG_{}_INSTALL_DIR'.format(name.upper())
         self._install_dir = getattr(settings, setting, default)
-
-    @property
-    def name(self):
-        return self.__class__.__name__.lower()
 
     def install(self, package, download_path):
         package.install(download_path, self._install_dir)
