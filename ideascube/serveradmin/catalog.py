@@ -871,11 +871,16 @@ class Catalog:
         self._persist_catalog()
 
     def clear_cache(self):
-        rm(self._local_package_cache)
-        os.mkdir(self._local_package_cache)
+        self.clear_package_cache()
+        self.clear_metadata_cache()
 
+    def clear_metadata_cache(self):
         self._available_value = {}
         self._persist_catalog()
+
+    def clear_package_cache(self):
+        rm(self._local_package_cache)
+        os.mkdir(self._local_package_cache)
 
     # -- Manage remote sources ------------------------------------------------
     @property
