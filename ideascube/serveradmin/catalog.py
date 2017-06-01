@@ -620,13 +620,16 @@ class Catalog:
 
         for pkg, download_path in downloaded:
             handler = pkg.handler
-            print('Installing {0.id}'.format(pkg))
+
             try:
+                print('Installing {pkg}'.format(pkg=pkg))
                 handler.install(pkg, download_path)
+                used_handlers.add(handler)
+
             except Exception as e:
                 printerr('Failed installing {pkg}: {e}'.format(pkg=pkg, e=e))
                 continue
-            used_handlers.add(handler)
+
             self._installed[pkg.id] = self._available[pkg.id].copy()
             installed_ids.append(pkg.id)
             self._persist_catalog()
@@ -643,13 +646,16 @@ class Catalog:
         for pkg_id in sorted(ids):
             pkg = self._get_package(pkg_id, self._installed)
             handler = pkg.handler
-            print('Removing {0.id}'.format(pkg))
+
             try:
+                print('Removing {pkg}'.format(pkg=pkg))
                 handler.remove(pkg)
+                used_handlers.add(handler)
+
             except Exception as e:
                 printerr('Failed removing {pkg}: {e}'.format(pkg=pkg, e=e))
                 continue
-            used_handlers.add(handler)
+
             del(self._installed[pkg.id])
             self._persist_catalog()
 
@@ -689,23 +695,26 @@ class Catalog:
         for ipkg, upkg, download_path in downloaded:
             ihandler = ipkg.handler
             uhandler = upkg.handler
-            print('Upgrading {0.id}'.format(ipkg))
 
             try:
+                print('Removing {ipkg}'.format(ipkg=ipkg))
                 ihandler.remove(ipkg)
+                used_handlers.add(ihandler)
+
             except Exception as e:
                 printerr(
                     'Failed removing {ipkg}: {e}'.format(ipkg=ipkg, e=e))
                 continue
-            used_handlers.add(ihandler)
 
             try:
+                print('Installing {upkg}'.format(upkg=upkg))
                 uhandler.install(upkg, download_path)
+                used_handlers.add(uhandler)
+
             except Exception as e:
                 printerr(
                     'Failed installing {upkg}: {e}'.format(upkg=upkg, e=e))
                 continue
-            used_handlers.add(uhandler)
 
             self._installed[ipkg.id] = self._available[upkg.id].copy()
             self._persist_catalog()
