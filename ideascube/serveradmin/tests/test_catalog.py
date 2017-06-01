@@ -1714,7 +1714,7 @@ def test_catalog_update_package_already_latest(
 
     out, err = capsys.readouterr()
     assert out.strip() == ''
-    assert err.strip() == 'wikipedia.tum has no update available'
+    assert err.strip() == 'wikipedia.tum-2015-08 has no update available'
 
 
 def test_catalog_list_available_packages(tmpdir, monkeypatch):

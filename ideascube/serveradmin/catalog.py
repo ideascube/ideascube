@@ -681,7 +681,7 @@ class Catalog:
             upkg = self._get_package(ipkg.id, self._available)
 
             if ipkg == upkg:
-                printerr('{0.id} has no update available'.format(ipkg))
+                printerr('{ipkg} has no update available'.format(ipkg=ipkg))
                 continue
 
             try:
