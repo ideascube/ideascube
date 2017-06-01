@@ -22,7 +22,7 @@ from ideascube.mediacenter.utils import guess_kind_from_filename
 from ideascube.models import User
 from ideascube.templatetags.ideascube_tags import smart_truncate
 from ideascube.utils import (
-    MetaRegistry, get_file_sha256, printerr, rm, urlretrieve,
+    MetaRegistry, classproperty, get_file_sha256, printerr, rm, urlretrieve,
 )
 
 from .systemd import Manager as SystemManager, NoSuchUnit
@@ -97,23 +97,29 @@ class Remote:
 
 
 class Handler:
-
-    def __init__(self):
-        name = self.__class__.__name__.lower()
+    @classproperty
+    @classmethod
+    def _install_dir(cls):
+        name = cls.__name__.lower()
         default = os.path.join(settings.STORAGE_ROOT, name)
         setting = 'CATALOG_{}_INSTALL_DIR'.format(name.upper())
-        self._install_dir = getattr(settings, setting, default)
 
-    def install(self, package, download_path):
-        package.install(download_path, self._install_dir)
+        return getattr(settings, setting, default)
 
-    def remove(self, package):
-        package.remove(self._install_dir)
+    @classmethod
+    def install(cls, package, download_path):
+        package.install(download_path, cls._install_dir)
 
-    def commit(self):
+    @classmethod
+    def remove(cls, package):
+        package.remove(cls._install_dir)
+
+    @classmethod
+    def commit(cls):
         pass
 
-    def restart_service(self, name):
+    @classmethod
+    def restart_service(cls, name):
         print('Restarting service', name)
         try:
             manager = SystemManager()
@@ -126,11 +132,11 @@ class Handler:
 
 
 class Kiwix(Handler):
-
-    def commit(self):
+    @classmethod
+    def commit(cls):
         print('Rebuilding the Kiwix library')
         library = etree.Element('library')
-        libdir = os.path.join(self._install_dir, 'data', 'library')
+        libdir = os.path.join(cls._install_dir, 'data', 'library')
         os.makedirs(libdir, exist_ok=True)
 
         for libpath in glob(os.path.join(libdir, '*.xml')):
@@ -147,22 +153,23 @@ class Kiwix(Handler):
                 book.set('path', 'data/content/%s' % zimname)
 
                 index_path = 'data/index/%s.idx' % zimname
-                if os.path.isdir(os.path.join(self._install_dir, index_path)):
+                if os.path.isdir(os.path.join(cls._install_dir, index_path)):
                     book.set('indexPath', index_path)
 
                 library.append(book)
 
-        with open(os.path.join(self._install_dir, 'library.xml'), 'wb') as f:
+        with open(os.path.join(cls._install_dir, 'library.xml'), 'wb') as f:
             f.write(etree.tostring(
                 library, xml_declaration=True, encoding='utf-8'))
 
-        self.restart_service('kiwix-server')
+        cls.restart_service('kiwix-server')
         super().commit()
 
 
 class Nginx(Handler):
-    def commit(self):
-        self.restart_service('nginx')
+    @classmethod
+    def commit(cls):
+        cls.restart_service('nginx')
         super().commit()
 
 
@@ -467,7 +474,7 @@ class Catalog:
                 yield id_pattern
 
     def _get_handler(self, package):
-        return package.handler()
+        return package.handler
 
     def _verify_sha256(self, path, sha256sum):
         sha = get_file_sha256(path)
