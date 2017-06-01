@@ -473,9 +473,6 @@ class Catalog:
             else:
                 yield id_pattern
 
-    def _get_handler(self, package):
-        return package.handler
-
     def _verify_sha256(self, path, sha256sum):
         sha = get_file_sha256(path)
         return sha == sha256sum
@@ -596,7 +593,7 @@ class Catalog:
                 printerr(e)
 
         for pkg, download_path in downloaded:
-            handler = self._get_handler(pkg)
+            handler = pkg.handler
             print('Installing {0.id}'.format(pkg))
             try:
                 handler.install(pkg, download_path)
@@ -620,7 +617,7 @@ class Catalog:
 
         for pkg_id in ids:
             pkg = self._get_package(pkg_id, self._installed)
-            handler = self._get_handler(pkg)
+            handler = pkg.handler
             print('Removing {0.id}'.format(pkg))
             try:
                 handler.remove(pkg)
@@ -665,8 +662,8 @@ class Catalog:
                 printerr(e)
 
         for ipkg, upkg, download_path in downloaded:
-            ihandler = self._get_handler(ipkg)
-            uhandler = self._get_handler(upkg)
+            ihandler = ipkg.handler
+            uhandler = upkg.handler
             print('Upgrading {0.id}'.format(ipkg))
 
             try:
