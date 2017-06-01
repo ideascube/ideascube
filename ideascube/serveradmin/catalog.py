@@ -588,6 +588,7 @@ class Catalog:
         downloaded = []
         installed_ids = []
 
+        # First get the list of installs and download them
         for pkg_id in sorted(ids):
             if pkg_id in self._installed:
                 printerr('{pkg_id} is already installed'.format(pkg_id=pkg_id))
@@ -603,6 +604,7 @@ class Catalog:
                 printerr(e)
                 continue
 
+        # Now actually install the packages
         for pkg, download_path in downloaded:
             handler = pkg.handler
 
@@ -661,6 +663,7 @@ class Catalog:
         used_handlers = set()
         downloaded = []
 
+        # First get the list of updates and download them
         for pkg_id in sorted(ids):
             ipkg = self._get_package(pkg_id, self._installed)
             upkg = self._get_package(ipkg.id, self._available)
@@ -677,6 +680,7 @@ class Catalog:
                 printerr(e)
                 continue
 
+        # Now actually update the packages
         for ipkg, upkg, download_path in downloaded:
             ihandler = ipkg.handler
             uhandler = upkg.handler
