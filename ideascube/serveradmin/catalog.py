@@ -600,7 +600,7 @@ class Catalog:
     def install_packages(self, ids):
         ids = self._get_package_ids(ids, self._available)
         used_handlers = set()
-        downloaded = []
+        installs = []
         installed_ids = []
 
         # First get the list of installs and download them
@@ -613,14 +613,17 @@ class Catalog:
 
             try:
                 download_path = self._fetch_package(pkg)
-                downloaded.append((pkg, download_path))
 
             except Exception as e:
                 printerr(e)
                 continue
 
+            installs.append({'new': pkg, 'download_path': download_path})
+
         # Now actually install the packages
-        for pkg, download_path in downloaded:
+        for install in installs:
+            pkg = install['new']
+            download_path = install['download_path']
             handler = pkg.handler
 
             try:
@@ -632,8 +635,8 @@ class Catalog:
                 printerr('Failed installing {pkg}: {e}'.format(pkg=pkg, e=e))
                 continue
 
-            self._installed[pkg.id] = self._available[pkg.id].copy()
             installed_ids.append(pkg.id)
+            self._installed[pkg.id] = self._available[pkg.id].copy()
             self._persist_catalog()
 
         self._update_displayed_packages_on_home(to_add_ids=installed_ids)
@@ -676,7 +679,8 @@ class Catalog:
     def upgrade_packages(self, ids):
         ids = self._get_package_ids(ids, self._available)
         used_handlers = set()
-        downloaded = []
+        updates = []
+        new_package_ids = []
 
         # First get the list of updates and download them
         for pkg_id in sorted(ids):
@@ -689,14 +693,20 @@ class Catalog:
 
             try:
                 download_path = self._fetch_package(upkg)
-                downloaded.append((ipkg, upkg, download_path))
 
             except Exception as e:
                 printerr(e)
                 continue
 
+            updates.append({
+                'old': ipkg, 'new': upkg, 'download_path': download_path,
+            })
+
         # Now actually update the packages
-        for ipkg, upkg, download_path in downloaded:
+        for update in updates:
+            ipkg = update['old']
+            upkg = update['new']
+            download_path = update['download_path']
             ihandler = ipkg.handler
             uhandler = upkg.handler
 
@@ -720,7 +730,7 @@ class Catalog:
                     'Failed installing {upkg}: {e}'.format(upkg=upkg, e=e))
                 continue
 
-            self._installed[ipkg.id] = self._available[upkg.id].copy()
+            self._installed[upkg.id] = self._available[upkg.id].copy()
             self._persist_catalog()
 
         for handler in used_handlers:
