@@ -1,0 +1,38 @@
+{% extends 'two-third-third.html' %}
+{% load i18n ideascube_tags mediacenter_tags static %}
+
+
+{% block header %}{% endblock header %}
+{% block footer %}{% endblock footer %}
+
+
+{% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{% static "mediacenter/mediacenter.css" %}">
+    <script src="{% static 'ideascube/js/ideascube.js' %}"></script>
+{% endblock %}
+
+{% block body_class %}mediacenter{% endblock %}
+
+{% block twothird %}
+    <div class="pure-g document-list card-container">
+        {% for document in document_list  %}
+            <div class="pure-u-1 pure-u-sm-1-2 pure-u-lg-1-3 pure-u-xl-1-4 pure-u">
+            {% include "mediacenter/document_card.html" with document_insert=document|to_json_dict url="#" %}
+            </div>
+        {% empty %}
+            <div class="pure-u-1">
+            {% trans "No documents yet." %}
+            </div>
+        {% endfor %}
+    </div>
+    {% include "ideascube/pagination.html" %}
+{% endblock twothird %}
+
+{% block third %}
+    {% include 'search/filter_cloud.html' %}
+    {% include 'search/box.html' with action=index %}
+    {% include 'search/order_by.html' %}
+    {% include 'search/filter_by_kind.html' %}
+    {% include 'search/filter_by_lang.html' %}
+    {% tag_cloud url='mediacenter:document_select' model=view.model limit=100 tags=available_tags %}
+{% endblock third %}
