@@ -666,7 +666,7 @@ class Catalog:
         # First get the list of updates and download them
         for pkg_id in sorted(ids):
             ipkg = self._get_package(pkg_id, self._installed)
-            upkg = self._get_package(ipkg.id, self._available)
+            upkg = self._get_package(pkg_id, self._available)
 
             if ipkg == upkg:
                 printerr('{ipkg} has no update available'.format(ipkg=ipkg))
