@@ -991,3 +991,39 @@ def test_upgrade_unavailable_package(tmpdir, settings, staticsite_path):
 
     assert 'No such package: the-site' in excinfo.exconly()
     assert install_dir.join('the-site').check(exists=False)
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_upgrade_not_installed_package(
+        tmpdir, capsys, settings, staticsite_path):
+    sha256sum = get_file_sha256(staticsite_path.strpath)
+
+    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
+    remote_catalog_file.write_text(
+        'all:\n'
+        '  the-site:\n'
+        '    name: A great web site\n'
+        '    version: 2017-06\n'
+        '    sha256sum: {sha256sum}\n'
+        '    size: 3027988\n'
+        '    url: file://{staticsite_path}\n'
+        '    type: static-site'.format(sha256sum=sha256sum, staticsite_path=staticsite_path),
+        'utf-8')
+
+    remote = {
+        'id': 'foo', 'name': 'Content from Foo',
+        'url': 'file://{}'.format(remote_catalog_file.strpath),
+        }
+    call_command(
+        'catalog', 'remotes', 'add', remote['id'], remote['name'],
+        remote['url'])
+
+    install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
+    assert install_dir.join('the-site').check(exists=False)
+
+    call_command('catalog', 'upgrade')
+    out, err = capsys.readouterr()
+    assert out.strip() == 'Installing the-site-2017-06'
+    assert err.strip() == ''
+    assert install_dir.join('the-site').join('index.html').read_binary() == (
+        b'<html></html>')
