@@ -102,8 +102,6 @@ class Handler:
         default = os.path.join(settings.STORAGE_ROOT, self.name)
         setting = 'CATALOG_{}_INSTALL_DIR'.format(self.name.upper())
         self._install_dir = getattr(settings, setting, default)
-        self._installed = []
-        self._removed = []
 
     @property
     def name(self):
@@ -111,15 +109,12 @@ class Handler:
 
     def install(self, package, download_path):
         package.install(download_path, self._install_dir)
-        self._installed.append(package)
 
     def remove(self, package):
         package.remove(self._install_dir)
-        self._removed.append(package)
 
     def commit(self):
-        self._installed = []
-        self._removed = []
+        pass
 
     def restart_service(self, name):
         print('Restarting service', name)
