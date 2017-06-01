@@ -28,10 +28,13 @@ class RichTextEntry(widgets.Widget):
         self.authorized_attributes = {
             'a': ['href', 'title'],
             'img': ['src', 'width', 'height', 'alt'],
-            'iframe': ['src', 'width', 'height', 'allowfullscreen']
+            'iframe': ['src', 'width', 'height', 'allowfullscreen'],
+            'video': ['controls', 'width', 'height', 'allowfullscreen'],
+            'audio': ['controls'],
+            'source': ['src']
         }
         if with_media:
-            self.authorized_tags += ['img', 'iframe']
+            self.authorized_tags += ['img', 'iframe', 'video', 'audio', 'source']
 
     def get_language(self):
         ideascube_language = get_language()
