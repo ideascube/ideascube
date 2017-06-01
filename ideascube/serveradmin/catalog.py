@@ -624,8 +624,7 @@ class Catalog:
             try:
                 handler.install(pkg, download_path)
             except Exception as e:
-                printerr("Failed installing {0.id}".format(pkg))
-                printerr(e)
+                printerr('Failed installing {pkg}: {e}'.format(pkg=pkg, e=e))
                 continue
             used_handlers.add(handler)
             self._installed[pkg.id] = self._available[pkg.id].copy()
@@ -648,8 +647,7 @@ class Catalog:
             try:
                 handler.remove(pkg)
             except Exception as e:
-                printerr("Failed removing {0.id}".format(pkg))
-                printerr(e)
+                printerr('Failed removing {pkg}: {e}'.format(pkg=pkg, e=e))
                 continue
             used_handlers.add(handler)
             del(self._installed[pkg.id])
@@ -696,16 +694,16 @@ class Catalog:
             try:
                 ihandler.remove(ipkg)
             except Exception as e:
-                printerr("Failed removing {0.id}".format(ipkg))
-                printerr(e)
+                printerr(
+                    'Failed removing {ipkg}: {e}'.format(ipkg=ipkg, e=e))
                 continue
             used_handlers.add(ihandler)
 
             try:
                 uhandler.install(upkg, download_path)
             except Exception as e:
-                printerr("Failed installing {0.id}\n".format(upkg))
-                printerr(e)
+                printerr(
+                    'Failed installing {upkg}: {e}'.format(upkg=upkg, e=e))
                 continue
             used_handlers.add(uhandler)
 
