@@ -1,8 +1,5 @@
-import mimetypes
 import socket
 from urllib.parse import urlparse
-from urllib.request import Request, build_opener
-from urllib.error import HTTPError
 
 from django.conf import settings
 from django.contrib import messages
@@ -11,8 +8,7 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.core.urlresolvers import reverse_lazy
 from django.core.validators import URLValidator, ValidationError
 from django.db import IntegrityError
-from django.http import (HttpResponse, HttpResponseBadRequest,
-                         HttpResponseRedirect)
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
@@ -268,32 +264,3 @@ def validate_url(request):
     assert not ipaddress.startswith('127.')
     assert not ipaddress.startswith('192.168.')
     return url
-
-
-class AjaxProxy(View):
-
-    def get(self, *args, **kwargs):
-        # You should not use this in production (use Nginx or so)
-        try:
-            url = validate_url(self.request)
-        except AssertionError as e:
-            return HttpResponseBadRequest()
-        headers = {
-            'User-Agent': 'ideascube +http://ideas-box.org'
-        }
-        request = Request(url, headers=headers)
-        opener = build_opener()
-        try:
-            proxied_request = opener.open(request)
-        except HTTPError as e:
-            return HttpResponse(e.msg, status=e.code,
-                                content_type='text/plain')
-        else:
-            status_code = proxied_request.code
-            mimetype = proxied_request.headers.get('Content-Type') or mimetypes.guess_type(url)  # noqa
-            content = proxied_request.read()
-            # Quick hack to prevent Django from adding a Vary: Cookie header
-            self.request.session.accessed = False
-            return HttpResponse(content, status=status_code,
-                                content_type=mimetype)
-ajax_proxy = AjaxProxy.as_view()

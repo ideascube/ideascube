@@ -2,85 +2,6 @@
 /* eslint new-cap:0, strict:0, quotes:[2, "single"] global-strict:0, no-underscore-dangle:0, curly:0, consistent-return:0, no-new:0, no-console:0, space-before-function-paren:[2, "always"] */
 'use strict';
 
-ID.http = {
-
-    _ajax: function (settings) {
-        var xhr = new window.XMLHttpRequest();
-        xhr.open(settings.verb, settings.uri, true);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                settings.callback.call(settings.context || xhr, xhr.status, xhr.responseText, xhr);
-            }
-        };
-        xhr.send(settings.data);
-        return xhr;
-    },
-
-    get: function (uri, options) {
-        options.verb = 'GET';
-        options.uri = uri;
-        return ID.http._ajax(options);
-    },
-
-    queryString: function (params) {
-        var queryString = [];
-        for (var key in params) {
-            queryString.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
-        }
-        return queryString.join('&');
-    }
-
-};
-
-ID.PROVIDERS = {
-    '^(http(s)?://)?(www\.)?(youtube\.com|youtu\.be)': 'http://www.youtube.com/oembed',
-    '^(http(s)?://)?(www\.)?dailymotion\.com': 'http://www.dailymotion.com/services/oembed',
-    '^(https?://)?vimeo.com/': 'http://vimeo.com/api/oembed.json',
-    '^(https?://)?(www\.)?flickr.com/': 'https://www.flickr.com/services/oembed/'
-};
-
-ID.matchProvider = function (value) {
-    ID.PROVIDERS['^(https?://)?((www\.)?' + ID.DOMAIN + '/|localhost)'] = window.location.origin + window.location.pathname.slice(0, 3) + '/mediacenter/oembed/';
-    for (var provider in ID.PROVIDERS) {
-        if (value.match(provider)) return ID.PROVIDERS[provider];
-    }
-};
-
-ID.image_url_resolver = function(data, resolve, reject) {
-    var callback = function (status, resp) {
-        if (status === 200) {
-            try {
-                resp = JSON.parse(resp);
-            } catch (e) {
-                reject({msg: ''});
-                return;
-            }
-            if (resp.type === 'photo') {
-                var img = document.createElement('IMG');
-                img.setAttribute('src', resp.url);
-                resolve({html: img.html});
-            } else if (resp.type === 'video' || resp.type === 'rich') {
-                resolve({html: resp.html});
-            } else {
-                reject({msg: 'Media type not supported'});
-            }
-        }
-    };
-    var providerUrl = ID.matchProvider(data.url);
-    if (providerUrl) {
-        var finalUrl = providerUrl + '?' + ID.http.queryString({url: data.url, format: 'json', maxwidth: '800'});
-        var proxyUrl = '/ajax-proxy/?' + ID.http.queryString({url: finalUrl});
-        ID.http.get(proxyUrl, {
-            callback: callback
-        });
-    }
-    else {
-        reject({msg: 'Media provider not supported'});
-    }
-};
-
-
 ID.initDatepicker = function (name) {
     new Pikaday({
         field: document.querySelector('[name="' + name + '"]'),
@@ -187,18 +108,15 @@ ID.initEditors = function () {
             selection_toolbar: "numlist bullist bold italic | quicklink h1 h2 h3 blockquote",
             language: editor.getAttribute('data-tinymce-language-code'),
             relative_urls : false,
-            media_url_resolver: ID.image_url_resolver,
-            media_alt_source: false,
-            media_poster: false,
             insert_toolbar: "numlist bullist bold italic | quicklink h1 h2 h3 blockquote",
             contextmenu: "link",
             plugins: "autolink textpattern contextmenu lists"
         };
         if ( use_media )
         {
-            options['insert_toolbar'] += " media";
-            options['contextmenu'] += " media";
-            options['plugins'] += " media";
+            options['insert_toolbar'] += " media_select";
+            options['contextmenu'] += " media_select";
+            options['plugins'] += " media mediacenter_select";
         }
         tinymce.init(options);
    }

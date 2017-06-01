@@ -459,21 +459,6 @@ def test_unkown_domain_raises():
         validate_url(build_request("http://xlkjdkjsdlkjfd.com"))
 
 
-def test_valid_proxy_request(app):
-    url = reverse('ajax-proxy')
-    params = {'url': 'http://example.org'}
-    headers = {
-        'X_REQUESTED_WITH': 'XMLHttpRequest',
-        'REFERER': 'http://testserver'
-    }
-    environ = {'SERVER_NAME': 'testserver'}
-    response = app.get(
-        url, params=params, headers=headers, extra_environ=environ)
-    assert response.status_code == 200
-    assert 'Example Domain' in response.text
-    assert "Vary" not in response.headers
-
-
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = ContentFactory(status=Content.PUBLISHED, tags=['plane'])
     boat = ContentFactory(status=Content.PUBLISHED, tags=['boat'])
