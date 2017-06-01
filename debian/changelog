@@ -1,3 +1,10 @@
+ideascube (0.28.1) unstable; urgency=low
+
+  * Fix the uWSGI configuration file, so it works better with the uWSGI
+    package in Debian;
+
+ -- Mathieu Bridon <bochecha@daitauha.fr>  Thu, 1 Jun 2017 14:23:00 +0200
+
 ideascube (0.28.0) unstable; urgency=low
 
   * Ideascube is now available in two more languages: Farsi and Kurdish; This
