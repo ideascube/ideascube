@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^select/$', views.document_select, name='document_select'),
     url(r'^document/(?P<pk>[\d]+)/$', views.document_detail,
         name='document_detail'),
     url(r'^document/(?P<pk>[\d]+)/edit/$', views.document_update,

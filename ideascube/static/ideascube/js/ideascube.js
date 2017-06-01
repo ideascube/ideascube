@@ -203,3 +203,32 @@ ID.initEditors = function () {
         tinymce.init(options);
    }
 };
+
+ID.tinymce_insert_document = function (document_info) {
+    var editor = top.tinymce.activeEditor;
+    if (document_info.kind == 'image') {
+        var element = document.createElement('img');
+        element.setAttribute('src', document_info.original);
+    } else if (document_info.kind == 'video' || document_info.kind == 'audio') {
+        var element = document.createElement(document_info.kind);
+        element.controls = true;
+        element.preload  = 'none';
+        element.innerHTML =
+            gettext("Your web browser doesn't support this media type.");
+        var source_element = document.createElement('source');
+        source_element.src = document_info.original;
+        element.appendChild(source_element);
+    } else {
+        var element = document.createElement('a');
+        element.href = document_info.original;
+        var img_element = document.createElement('img');
+        if (document.preview) {
+            img_element.src = document_info.preview;
+        } else {
+            img_element.src = document_info.icon;
+        }
+        element.appendChild(img_element);
+    }
+    editor.insertContent(element.outerHTML);
+    editor.windowManager.close();
+};

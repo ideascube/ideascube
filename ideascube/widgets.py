@@ -34,7 +34,8 @@ class RichTextEntry(widgets.Widget):
             'source': ['src']
         }
         if with_media:
-            self.authorized_tags += ['img', 'iframe', 'video', 'audio', 'source']
+            self.authorized_tags += [
+                'img', 'iframe', 'video', 'audio', 'source']
 
     def get_language(self):
         ideascube_language = get_language()
