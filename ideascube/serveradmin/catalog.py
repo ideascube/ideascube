@@ -17,16 +17,15 @@ from resumable import DownloadCheck, DownloadError, urlretrieve
 from requests import ConnectionError
 import yaml
 
-from ideascube.mediacenter.models import Document
-from ideascube.mediacenter.forms import PackagedDocumentForm
-from ideascube.mediacenter.utils import guess_kind_from_filename
-from ideascube.templatetags.ideascube_tags import smart_truncate
 from ideascube.configuration import get_config, set_config
+from ideascube.mediacenter.forms import PackagedDocumentForm
+from ideascube.mediacenter.models import Document
+from ideascube.mediacenter.utils import guess_kind_from_filename
 from ideascube.models import User
+from ideascube.templatetags.ideascube_tags import smart_truncate
+from ideascube.utils import get_file_sha256, printerr
 
 from .systemd import Manager as SystemManager, NoSuchUnit
-
-from ..utils import printerr, get_file_sha256
 
 
 def rm(path):
