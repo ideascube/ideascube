@@ -676,11 +676,18 @@ class Catalog:
         ids = self._expand_package_ids(ids, self._available)
         used_handlers = set()
         updates = []
+        new_package_ids = []
 
         # First get the list of updates and download them
         for pkg_id in sorted(ids):
-            ipkg = self._get_package(pkg_id, self._installed)
             upkg = self._get_package(pkg_id, self._available)
+
+            try:
+                ipkg = self._get_package(pkg_id, self._installed)
+
+            except NoSuchPackage:
+                # Not installed yet, we'll install the latest version
+                ipkg = None
 
             if ipkg == upkg:
                 printerr('{ipkg} has no update available'.format(ipkg=ipkg))
@@ -702,18 +709,20 @@ class Catalog:
             ipkg = update['old']
             upkg = update['new']
             download_path = update['download_path']
-            ihandler = ipkg.handler
             uhandler = upkg.handler
 
-            try:
-                print('Removing {ipkg}'.format(ipkg=ipkg))
-                ihandler.remove(ipkg)
-                used_handlers.add(ihandler)
+            if ipkg is not None:
+                ihandler = ipkg.handler
 
-            except Exception as e:
-                printerr(
-                    'Failed removing {ipkg}: {e}'.format(ipkg=ipkg, e=e))
-                continue
+                try:
+                    print('Removing {ipkg}'.format(ipkg=ipkg))
+                    ihandler.remove(ipkg)
+                    used_handlers.add(ihandler)
+
+                except Exception as e:
+                    printerr(
+                        'Failed removing {ipkg}: {e}'.format(ipkg=ipkg, e=e))
+                    continue
 
             try:
                 print('Installing {upkg}'.format(upkg=upkg))
@@ -725,8 +734,13 @@ class Catalog:
                     'Failed installing {upkg}: {e}'.format(upkg=upkg, e=e))
                 continue
 
+            if ipkg is None:
+                new_package_ids.append(upkg.id)
+
             self._installed[upkg.id] = self._available[upkg.id].copy()
             self._persist_catalog()
+
+        self._update_displayed_packages_on_home(to_add_ids=new_package_ids)
 
         for handler in used_handlers:
             handler.commit()
