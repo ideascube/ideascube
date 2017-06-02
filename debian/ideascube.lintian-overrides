@@ -7,3 +7,5 @@ ideascube: font-in-non-font-package opt/venvs/ideascube/lib/*
 ideascube: package-contains-empty-directory usr/share/ideascube/static/branding/
 ideascube: package-installs-python-pycache-dir opt/venvs/ideascube/*
 ideascube: wrong-path-for-interpreter opt/venvs/ideascube/bin/*
+
+ideascube source: source-is-missing ideascube/static/ideascube/vendor/*.min.js
