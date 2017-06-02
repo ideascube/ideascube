@@ -133,6 +133,9 @@ ID.tinymce_insert_document = function (document_info) {
         element.preload  = 'none';
         element.innerHTML =
             gettext("Your web browser doesn't support this media type.");
+        if (document_info.kind == 'video' && document_info.preview) {
+            element.poster = document_info.preview;
+        }
         var source_element = document.createElement('source');
         source_element.src = document_info.original;
         element.appendChild(source_element);

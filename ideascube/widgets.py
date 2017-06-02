@@ -30,7 +30,8 @@ class RichTextEntry(widgets.Widget):
             'img': ['src', 'width', 'height', 'alt'],
             'iframe': ['src', 'width', 'height', 'allowfullscreen'],
             'video': [
-                'controls', 'width', 'height', 'allowfullscreen', 'preload'],
+                'controls', 'width', 'height', 'allowfullscreen', 'preload',
+                'poster'],
             'audio': ['controls', 'preload'],
             'source': ['src']
         }
