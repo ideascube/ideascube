@@ -29,8 +29,9 @@ class RichTextEntry(widgets.Widget):
             'a': ['href', 'title'],
             'img': ['src', 'width', 'height', 'alt'],
             'iframe': ['src', 'width', 'height', 'allowfullscreen'],
-            'video': ['controls', 'width', 'height', 'allowfullscreen'],
-            'audio': ['controls'],
+            'video': [
+                'controls', 'width', 'height', 'allowfullscreen', 'preload'],
+            'audio': ['controls', 'preload'],
             'source': ['src']
         }
         if with_media:
