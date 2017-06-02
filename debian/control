@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Yohan Boniface <hi@yohanboniface.me>
 Build-Depends:
-  debhelper,
+  debhelper (>= 9),
   dh-virtualenv (>= 0.10),
   python3,
   python3-dev,
