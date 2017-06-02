@@ -12,9 +12,19 @@
     {% if document.kind == document.IMAGE %}
         <img src="{% media document 'original' %}" />
     {% elif document.kind == document.VIDEO %}
-        <video controls width="100%">
+        <video controls preload="none" width="100%"
+            {% if document.preview %}
+                poster="{% media document 'preview' %}"
+            {% endif %}
+        >
             <source src="{% media document 'original' %}">
+            {% trans "Your web browser doesn't support this media type." %}
         </video>
+    {% elif document.kind == document.AUDIO %}
+        <audio controls preload="none" width="100%">
+            <source src="{% media document 'original' %}">
+            {% trans "Your web browser doesn't support this media type." %}
+        </audio>
     {% elif document.preview %}
         <a href="{% media document 'original' %}"><img src="{% media document 'preview' %}" /></a>
     {% endif %}

@@ -1,6 +1,9 @@
 {% load ideascube_tags mediacenter_tags static %}
 
-<a class="card" href="{{ document.get_absolute_url }}">
+<a class="card"
+   href="{% if url %}{{ url }}{% else %}{{ document.get_absolute_url }}{% endif %}"
+   {% if document_insert %}onclick="ID.tinymce_insert_document({{ document_insert }})"{% endif %}
+>
   <h3><span class="theme discover">{{ document.slug }}</span> {{ document }}</h3>
   {% if document.preview %}
     <img src="{% media document 'preview' %}" title="{{ document.title }}" />

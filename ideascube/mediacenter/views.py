@@ -1,10 +1,6 @@
-from urllib.parse import urlparse
-
-from django.core.urlresolvers import reverse_lazy, resolve, Resolver404
+from django.core.urlresolvers import reverse_lazy
 from django.db.models import F
 from django.db.models.functions import Lower
-from django.http import Http404, JsonResponse
-from django.template.loader import render_to_string
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
@@ -74,6 +70,10 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
 
 index = Index.as_view()
 
+class DocumentSelect(Index):
+    template_name = 'mediacenter/document_select.html'
+document_select = DocumentSelect.as_view()
+
 
 class DocumentDetail(DetailView):
     model = Document
@@ -99,32 +99,3 @@ class DocumentDelete(DeleteView):
     model = Document
     success_url = reverse_lazy('mediacenter:index')
 document_delete = staff_member_required(DocumentDelete.as_view())
-
-
-class OEmbed(DetailView):
-    model = Document
-    template_name = 'mediacenter/oembed.html'
-
-    def get_object(self, queryset=None):
-        if not queryset:
-            queryset = self.get_queryset()
-        url = self.request.GET.get('url')
-        if not url:
-            raise Http404()
-        parsed = urlparse(url)
-        try:
-            match = resolve(parsed.path)
-        except Resolver404:
-            raise Http404()
-        if 'pk' not in match.kwargs:
-            raise Http404()
-        return queryset.get(pk=match.kwargs['pk'])
-
-    def render_to_response(self, context, **response_kwargs):
-        html = render_to_string(self.get_template_names(), context=context)
-        return JsonResponse({
-            "html": html,
-            "type": "rich"
-        })
-
-oembed = OEmbed.as_view()

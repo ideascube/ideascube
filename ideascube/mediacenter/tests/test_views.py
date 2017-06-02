@@ -502,38 +502,6 @@ def test_guess_kind_when_editing_without_changing_original(staffapp):
     assert Document.objects.first().kind == Document.AUDIO
 
 
-def test_oembed_should_return_video_oembed_extract(app, video):
-    url = '{base}?url=http://testserver{media}'.format(
-        base=reverse('mediacenter:oembed'),
-        media=reverse('mediacenter:document_detail', kwargs={'pk': video.pk})
-        )
-    resp = app.get(url, extra_environ={'SERVER_NAME': 'testserver'})
-    assert resp.content_type == 'application/json'
-    assert 'video' in resp.content.decode()
-    assert 'source' in resp.content.decode()
-    assert video.original.url in resp.content.decode()
-
-
-def test_oembed_should_return_image_oembed_extract(app, image):
-    url = '{base}?url=http://testserver{media}'.format(
-        base=reverse('mediacenter:oembed'),
-        media=reverse('mediacenter:document_detail', kwargs={'pk': image.pk})
-        )
-    resp = app.get(url, extra_environ={'SERVER_NAME': 'testserver'})
-    assert 'img' in resp.content.decode()
-    assert 'src' in resp.content.decode()
-    assert image.original.url in resp.content.decode()
-
-
-def test_oembed_should_return_pdf_oembed_extract(app, pdf):
-    url = '{base}?url=http://testserver{media}'.format(
-        base=reverse('mediacenter:oembed'),
-        media=reverse('mediacenter:document_detail', kwargs={'pk': pdf.pk})
-        )
-    resp = app.get(url, extra_environ={'SERVER_NAME': 'testserver'})
-    assert pdf.original.url in resp.content.decode()
-
-
 def test_by_tag_page_should_be_filtered_by_tag(app):
     plane = DocumentFactory(tags=['plane'])
     boat = DocumentFactory(tags=['boat'])

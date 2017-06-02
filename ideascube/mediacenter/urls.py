@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^select/$', views.document_select, name='document_select'),
     url(r'^document/(?P<pk>[\d]+)/$', views.document_detail,
         name='document_detail'),
     url(r'^document/(?P<pk>[\d]+)/edit/$', views.document_update,
@@ -11,5 +12,4 @@ urlpatterns = [
     url(r'^document/(?P<pk>[\d]+)/delete/$', views.document_delete,
         name='document_delete'),
     url(r'^document/new/$', views.document_create, name='document_create'),
-    url(r'^oembed/$', views.oembed, name='oembed'),
 ]
