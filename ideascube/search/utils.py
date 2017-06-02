@@ -11,15 +11,15 @@ def create_index_table(force=True):
     if not count or force:
         cursor_transient.execute("DROP TABLE IF EXISTS idx")
         cursor_transient.execute("CREATE VIRTUAL TABLE idx using "
-                                 "FTS4(id, model, model_id, public, text, "
+                                 "FTS4(id, model, object_id, public, text, "
                                  "lang, kind, tags, source)")
 
 
 def reindex_content(force=True):
-    from ideascube.search.models import SEARCHABLE
+    from ideascube.search.models import SearchMixin
     create_index_table(force=force)
     indexed = {}
-    for model in SEARCHABLE.values():
+    for model in SearchMixin.registered_types.values():
         count = 0
         for inst in model.objects.all():
             inst.index()

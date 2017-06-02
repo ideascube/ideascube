@@ -26,7 +26,7 @@ from ideascube.models import User
 
 from .systemd import Manager as SystemManager, NoSuchUnit
 
-from ..utils import printerr, get_file_sha256
+from ..utils import printerr, get_file_sha256, MetaRegistry
 
 
 def rm(path):
@@ -187,28 +187,7 @@ class MediaCenter(Handler):
     pass
 
 
-class MetaRegistry(type):
-    def __new__(mcs, name, bases, attrs, **kwargs):
-        cls = super().__new__(mcs, name, bases, attrs)
-
-        try:
-            baseclass = bases[0]
-            baseclass.registered_types[cls.typename] = cls
-
-        except IndexError:
-            # This is the base class, don't register it (bases was empty)
-            pass
-
-        except AttributeError:
-            # The class doesn't have a 'typename' attribute, don't register it
-            pass
-
-        return cls
-
-
 class Package(metaclass=MetaRegistry):
-    registered_types = {}
-
     def __init__(self, id, metadata):
         self.id = id
         self._metadata = metadata
@@ -247,8 +226,7 @@ class Package(metaclass=MetaRegistry):
             raise InvalidFile('{} is not a zip file'.format(path))
 
 
-class ZippedZim(Package):
-    typename = 'zipped-zim'
+class ZippedZim(Package, typename='zipped-zim'):
     handler = Kiwix
     template_id = "kiwix"
 
@@ -315,7 +293,7 @@ class ZippedZim(Package):
         return base_name
 
 
-class SimpleZipPackage(Package):
+class SimpleZipPackage(Package, no_register=True):
     def get_root_dir(self, install_dir):
         return os.path.join(install_dir, self.id)
 
@@ -332,8 +310,7 @@ class SimpleZipPackage(Package):
             printerr(e)
 
 
-class StaticSite(SimpleZipPackage):
-    typename = 'static-site'
+class StaticSite(SimpleZipPackage, typename='static-site'):
     template_id = 'static-site'
     handler = Nginx
 
@@ -356,8 +333,7 @@ class StaticSite(SimpleZipPackage):
         return base_name
 
 
-class ZippedMedias(SimpleZipPackage):
-    typename = 'zipped-medias'
+class ZippedMedias(SimpleZipPackage, typename='zipped-medias'):
     handler = MediaCenter
     template_id = "media-package"
 

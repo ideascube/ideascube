@@ -6,6 +6,31 @@ from django.conf import locale
 from hashlib import sha256
 
 
+class MetaRegistry(type):
+    def __new__(mcs, name, bases, attrs, **kwargs):
+        cls = super().__new__(mcs, name, bases, attrs)
+
+        try:
+            registered_types = cls.registered_types
+        except AttributeError:
+            # Impossible to find the registerd_types dict in the class or
+            # in the base classes => We are the top class and we need
+            # to create the registered_types dict.
+            cls.registered_types = {}
+            return cls
+
+        if kwargs.get('no_register', False):
+            return cls
+
+        typename = kwargs.get('typename', cls.__name__)
+        registered_types[typename] = cls
+
+        return cls
+
+    def __init__(cls, name, bases, attrs, **kwargs):
+        return super().__init__(name, bases, attrs)
+
+
 class classproperty(property):
     """
     Use it to decorate a classmethod to make it a "class property".

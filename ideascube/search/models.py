@@ -1,9 +1,11 @@
 from django.db import models
 from django.db.backends.signals import connection_created
-from django.db.models.signals import class_prepared, post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete
+from django.db.models.base import ModelBase
 from django.dispatch import receiver
 
 from .utils import rank
+from ..utils import MetaRegistry
 
 
 class Match(models.Lookup):
@@ -54,7 +56,7 @@ class Search(models.Model):
     """Model that handle the search."""
     rowid = models.IntegerField(primary_key=True)
     model = models.CharField(max_length=64)
-    model_id = models.IntegerField()
+    object_id = models.IntegerField()
     public = models.BooleanField(default=True)
     text = SearchField()
     lang = models.Field()
@@ -71,16 +73,19 @@ class Search(models.Model):
     @classmethod
     def ids(cls, **kwargs):
         qs = Search.objects.filter(**kwargs).order_by_relevancy()
-        return qs.values_list('model_id', flat=True)
+        return qs.values_list('object_id', flat=True)
 
     @classmethod
     def search(cls, **kwargs):
         qs = Search.objects.filter(**kwargs).order_by_relevancy()
-        for row in qs:
-            yield SEARCHABLE[row.model].objects.get(pk=row.model_id)
+        return (SearchMixin.registered_types[r.model].objects.get(pk=r.object_id) for r in qs)
 
 
-class SearchMixin(models.Model):
+class MetaSearchMixin(MetaRegistry, ModelBase):
+    pass
+
+
+class SearchMixin(models.Model, metaclass=MetaSearchMixin):
     """Inherit from this mixin to make your model searchable."""
 
     class Meta:
@@ -128,14 +133,14 @@ class SearchMixin(models.Model):
         }
         Search.objects.update_or_create(
             model=self.__class__.__name__,
-            model_id=self.pk,
+            object_id=self.pk,
             defaults=defaults
         )
 
     def deindex(self):
         Search.objects.filter(
             model=self.__class__.__name__,
-            model_id=self.pk).delete()
+            object_id=self.pk).delete()
 
 
 class SearchableQuerySet(object):
@@ -160,25 +165,16 @@ class SearchableQuerySet(object):
 
 @receiver(post_save)
 def index(sender, instance, **kwargs):
-    if SearchMixin in sender.__mro__:
+    if issubclass(sender, SearchMixin):
         instance.index()
 
 
 @receiver(pre_delete)
 def deindex(sender, instance, **kwargs):
-    if SearchMixin in sender.__mro__:
+    if issubclass(sender, SearchMixin):
         instance.deindex()
 
 
 @receiver(connection_created)
 def add_rank_function(sender, connection, **kwargs):
-    if connection.alias == 'burundi':
-        return
     connection.connection.create_function("rank", 1, rank)
-
-
-@receiver(class_prepared)
-def register_searchable_model(sender, **kwargs):
-    if issubclass(sender, SearchMixin):
-        SEARCHABLE[sender.__name__] = sender
-SEARCHABLE = {}
