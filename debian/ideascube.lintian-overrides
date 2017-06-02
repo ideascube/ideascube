@@ -1,3 +1,4 @@
+ideascube: binary-without-manpage usr/bin/ideascube
 ideascube: duplicate-font-file opt/venvs/ideascube/lib/*
 ideascube: embedded-javascript-library opt/venvs/ideascube/lib/*
 ideascube: extra-license-file opt/venvs/ideascube/lib/*
