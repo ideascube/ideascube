@@ -1,5 +1,5 @@
 ideascube: duplicate-font-file opt/venvs/ideascube/lib/*
-ideascube: font-in-non-font-package opt/venvs/ideascube/lib/*
 ideascube: embedded-javascript-library opt/venvs/ideascube/lib/*
 ideascube: extra-license-file opt/venvs/ideascube/lib/*
+ideascube: font-in-non-font-package opt/venvs/ideascube/lib/*
 ideascube: wrong-path-for-interpreter opt/venvs/ideascube/bin/*
