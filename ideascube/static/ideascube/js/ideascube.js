@@ -2,6 +2,8 @@
 /* eslint new-cap:0, strict:0, quotes:[2, "single"] global-strict:0, no-underscore-dangle:0, curly:0, consistent-return:0, no-new:0, no-console:0, space-before-function-paren:[2, "always"] */
 'use strict';
 
+var ID = {};
+
 ID.initDatepicker = function (name) {
     new Pikaday({
         field: document.querySelector('[name="' + name + '"]'),
