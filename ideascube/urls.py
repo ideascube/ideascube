@@ -4,7 +4,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.views.decorators.cache import cache_control
-from django.views.i18n import javascript_catalog
+from django.views.i18n import JavaScriptCatalog
 
 
 from . import views
@@ -38,7 +38,6 @@ urlpatterns = i18n_patterns(
         views.user_toggle_staff, name='user_toggle_staff'),
 )
 urlpatterns = urlpatterns + [
-    url(r'^jsi18n/$', cache_control(max_age=31536000)(javascript_catalog),
-        name='jsi18n'),
+    url(r'^jsi18n/$', cache_control(max_age=31536000)(JavaScriptCatalog.as_view(packages=['ideascube'])), name='jsi18n'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
