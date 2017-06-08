@@ -3,6 +3,8 @@ import os
 from .base import *  # pragma: no flakes
 
 
+DEBUG = True
+
 try:
     os.makedirs(os.path.join(STORAGE_ROOT, 'main'))  # pragma: no flakes
 except OSError:

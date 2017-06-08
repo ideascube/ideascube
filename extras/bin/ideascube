@@ -3,7 +3,6 @@ NAME=ideascube
 
 # Set defaults.
 DJANGO_SETTINGS_MODULE="$NAME.settings"
-DEBUG=
 IDEASCUBE_ID=${IDEASCUBE_ID:-""}
 STORAGE_ROOT=${STORAGE_ROOT:-"/var/$NAME"}
 
@@ -13,7 +12,6 @@ STORAGE_ROOT=${STORAGE_ROOT:-"/var/$NAME"}
 
 # Export them so django-admin can access them.
 export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
-export DEBUG=$DEBUG
 export STORAGE_ROOT=$STORAGE_ROOT
 export IDEASCUBE_ID=$IDEASCUBE_ID
 

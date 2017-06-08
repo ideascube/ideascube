@@ -23,8 +23,7 @@ PROJECT_DIR = os.path.join(BASE_DIR, 'ideascube')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '16exrv_@=2(za=oj$tj+l_^v#sbt83!=t#wz$s+1udfa04#vz!'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DEBUG', True))
+DEBUG = bool(os.environ.get('DEBUG', False))
 
 ALLOWED_HOSTS = ['.ideascube.lan', 'localhost']
 
