@@ -453,7 +453,6 @@ def test_kiwix_removes_zippedzim(settings, zippedzim_path):
     assert index.join('{}.zim.idx'.format(p.id)).check(exists=False)
 
 
-@pytest.mark.usefixtures('db', 'systemuser')
 def test_kiwix_commits_after_install(settings, zippedzim_path, mocker):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
 
@@ -480,7 +479,6 @@ def test_kiwix_commits_after_install(settings, zippedzim_path, mocker):
     manager().restart.call_count == 1
 
 
-@pytest.mark.usefixtures('db', 'systemuser')
 def test_kiwix_commits_after_remove(settings, zippedzim_path, mocker):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
     from ideascube.serveradmin.systemd import NoSuchUnit
@@ -543,8 +541,7 @@ def test_nginx_removes_staticsite(settings, staticsite_path):
     assert root.check(exists=False)
 
 
-@pytest.mark.usefixtures('db', 'systemuser')
-def test_nginx_commits_after_install(settings, staticsite_path, mocker):
+def test_nginx_commits_after_install(staticsite_path, mocker):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
 
     manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
@@ -558,8 +555,7 @@ def test_nginx_commits_after_install(settings, staticsite_path, mocker):
     manager().restart.call_count == 1
 
 
-@pytest.mark.usefixtures('db', 'systemuser')
-def test_nginx_commits_after_remove(settings, staticsite_path, mocker):
+def test_nginx_commits_after_remove(staticsite_path, mocker):
     from ideascube.serveradmin.catalog import Nginx, StaticSite
     from ideascube.serveradmin.systemd import NoSuchUnit
 
@@ -634,7 +630,7 @@ def test_mediacenter_installs_zippedmedia(settings, zippedmedia_path):
 
 
 @pytest.mark.usefixtures('db')
-def test_mediacenter_removes_zippedmedia(tmpdir, settings, zippedmedia_path):
+def test_mediacenter_removes_zippedmedia(settings, zippedmedia_path):
     from ideascube.serveradmin.catalog import MediaCenter, ZippedMedias
 
     p = ZippedMedias('test-media', {
@@ -742,7 +738,7 @@ def test_catalog_remove_remote(settings):
     assert params['id'] in exc.exconly()
 
 
-def test_catalog_update_cache(tmpdir, monkeypatch):
+def test_catalog_update_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
@@ -783,7 +779,7 @@ def test_catalog_update_cache_no_fail_if_remote_unavailable(mocker):
     assert c._installed == {}
 
 
-def test_catalog_update_cache_updates_installed_metadata(tmpdir, monkeypatch):
+def test_catalog_update_cache_updates_installed_metadata(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
@@ -836,7 +832,7 @@ def test_catalog_update_cache_updates_installed_metadata(tmpdir, monkeypatch):
         'name': 'Awesome videos from Foo'}}
 
 
-def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir, monkeypatch):
+def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
@@ -889,7 +885,7 @@ def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir, monkeyp
         'name': 'Videos from Foo'}}
 
 
-def test_catalog_clear_cache(tmpdir, monkeypatch):
+def test_catalog_clear_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
@@ -1030,8 +1026,7 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_install_does_not_stop_on_failure(tmpdir, settings,
-                                                  testdatadir, mocker):
+def test_catalog_install_does_not_stop_on_failure(tmpdir, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     sourcedir = tmpdir.mkdir('source')
@@ -1270,8 +1265,7 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
 
 
-def test_catalog_install_package_does_not_exist(
-        tmpdir, settings, testdatadir, mocker):
+def test_catalog_install_package_does_not_exist(tmpdir, testdatadir):
     from ideascube.serveradmin.catalog import Catalog, NoSuchPackage
 
     sourcedir = tmpdir.mkdir('source')
@@ -1292,8 +1286,6 @@ def test_catalog_install_package_does_not_exist(
             '212c29a30109c54\n')
         f.write('    type: zipped-zim\n')
 
-    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-
     c = Catalog()
     c.add_remote(
         'foo', 'Content from Foo',
@@ -1304,8 +1296,7 @@ def test_catalog_install_package_does_not_exist(
         c.install_packages(['nosuchpackage'])
 
 
-def test_catalog_install_package_with_missing_type(
-        tmpdir, settings, testdatadir, mocker):
+def test_catalog_install_package_with_missing_type(tmpdir, testdatadir):
     from ideascube.serveradmin.catalog import Catalog, InvalidPackageMetadata
 
     sourcedir = tmpdir.mkdir('source')
@@ -1335,8 +1326,7 @@ def test_catalog_install_package_with_missing_type(
         c.install_packages(['wikipedia.tum'])
 
 
-def test_catalog_install_package_with_unknown_type(
-        tmpdir, settings, testdatadir, mocker):
+def test_catalog_install_package_with_unknown_type(tmpdir, testdatadir):
     from ideascube.serveradmin.catalog import Catalog, InvalidPackageType
 
     sourcedir = tmpdir.mkdir('source')
@@ -1694,7 +1684,7 @@ def test_catalog_update_package_already_latest(
     assert err.strip() == 'wikipedia.tum-2015-08 has no update available'
 
 
-def test_catalog_list_available_packages(tmpdir, monkeypatch):
+def test_catalog_list_available_packages(tmpdir):
     from ideascube.serveradmin.catalog import Catalog, ZippedZim
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
@@ -1753,8 +1743,7 @@ def test_catalog_list_available_packages(tmpdir, monkeypatch):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_list_installed_packages(
-        tmpdir, settings, testdatadir, mocker):
+def test_catalog_list_installed_packages(tmpdir, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog, ZippedZim
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1819,8 +1808,7 @@ def test_catalog_list_installed_packages(
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_list_upgradable_packages(
-        tmpdir, settings, testdatadir, mocker):
+def test_catalog_list_upgradable_packages(tmpdir, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog, ZippedZim
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1903,8 +1891,7 @@ def test_catalog_list_upgradable_packages(
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_list_nothandled_packages(
-        tmpdir, settings, testdatadir, mocker):
+def test_catalog_list_nothandled_packages(tmpdir, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -1954,7 +1941,7 @@ def test_catalog_list_nothandled_packages(
     assert len(pkgs) == 1
 
 
-def test_catalog_doesn_t_try_to_read_file_at_instanciation(settings, mocker):
+def test_catalog_doesn_t_try_to_read_file_at_instanciation(mocker):
     from ideascube.serveradmin.catalog import Catalog
     from unittest.mock import mock_open
     m = mock_open()
