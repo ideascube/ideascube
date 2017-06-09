@@ -36,8 +36,8 @@ urlpatterns = i18n_patterns(
         views.user_delete, name='user_delete'),
     url(r'^user/(?P<pk>[\d]+)/toggle-staff/$',
         views.user_toggle_staff, name='user_toggle_staff'),
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(packages=['ideascube']), name='jsi18n'),
 )
 urlpatterns = urlpatterns + [
-    url(r'^jsi18n/$', cache_control(max_age=31536000)(JavaScriptCatalog.as_view(packages=['ideascube'])), name='jsi18n'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
