@@ -621,7 +621,8 @@ class Catalog:
             self._installed[pkg.id] = self._available[pkg.id].copy()
             self._persist_catalog()
 
-        self._update_displayed_packages_on_home(to_add_ids=installed_ids)
+        if installed_ids:
+            self._update_displayed_packages_on_home(to_add_ids=installed_ids)
 
         for handler in used_handlers:
             handler.commit()
