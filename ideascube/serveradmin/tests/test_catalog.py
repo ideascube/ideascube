@@ -541,42 +541,6 @@ def test_nginx_removes_staticsite(settings, staticsite_path):
     assert root.check(exists=False)
 
 
-def test_nginx_commits_after_install(staticsite_path, mocker):
-    from ideascube.serveradmin.catalog import Nginx, StaticSite
-
-    manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-
-    p = StaticSite('w2eu', {})
-    h = Nginx()
-    h.install(p, staticsite_path.strpath)
-    h.commit()
-
-    manager().get_service.assert_called_once_with('nginx')
-    manager().restart.call_count == 1
-
-
-def test_nginx_commits_after_remove(staticsite_path, mocker):
-    from ideascube.serveradmin.catalog import Nginx, StaticSite
-    from ideascube.serveradmin.systemd import NoSuchUnit
-
-    manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
-    manager().get_service.side_effect = NoSuchUnit
-
-    p = StaticSite('w2eu', {})
-    h = Nginx()
-    h.install(p, staticsite_path.strpath)
-    h.commit()
-
-    assert manager().get_service.call_count == 1
-    manager().restart.assert_not_called()
-
-    h.remove(p)
-    h.commit()
-
-    assert manager().get_service.call_count == 2
-    manager().restart.assert_not_called()
-
-
 @pytest.mark.usefixtures('db')
 def test_mediacenter_installs_zippedmedia(settings, zippedmedia_path):
     from ideascube.serveradmin.catalog import MediaCenter, ZippedMedias

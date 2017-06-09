@@ -167,10 +167,7 @@ class Kiwix(Handler):
 
 
 class Nginx(Handler):
-    @classmethod
-    def commit(cls):
-        cls.restart_service('nginx')
-        super().commit()
+    pass
 
 
 class MediaCenter(Handler):
