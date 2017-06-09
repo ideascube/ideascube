@@ -11,7 +11,8 @@ def migration_test(migrate_from, migrate_to):
                          )],
                          indirect=['migration'])
     def wrapper(function):
-        f = parametrize_migration(function)
+        f = pytest.mark.migration(function)
+        f = parametrize_migration(f)
         f = no_migration_skip(f)
         return f
     return wrapper
