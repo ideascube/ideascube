@@ -1,6 +1,7 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'ideascube/vendor/pikaday/pikaday.css' %}" />
+<script src="{% url 'jsi18n' %}?version={{ IDEASCUBE_VERSION }}"></script>
 <script src="{% static 'ideascube/vendor/moment/moment-with-locales.min.js' %}"></script>
 <script src="{% static 'ideascube/vendor/pikaday/pikaday.js' %}"></script>
 <script src="{% static 'ideascube/js/ideascube.js' %}"></script>
