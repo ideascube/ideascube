@@ -8,6 +8,7 @@
 
 {% block extra_head %}
     <link rel="stylesheet" type="text/css" href="{% static "mediacenter/mediacenter.css" %}">
+    <script src="{% url 'jsi18n' %}?version={{ IDEASCUBE_VERSION }}"></script>
     <script src="{% static 'ideascube/js/ideascube.js' %}"></script>
 {% endblock %}
 
