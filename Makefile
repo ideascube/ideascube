@@ -86,4 +86,4 @@ test-data-migration:
 	git checkout $$COMMIT; \
 	make sync-deps; \
 	make migrate
-	py.test --migrations
+	py.test --migrations -m migrations
