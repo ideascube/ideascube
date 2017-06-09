@@ -28,6 +28,12 @@ server {
         expires 1y;
     }
 
+    location ~ /.*/jsi18n/ {
+        uwsgi_pass ideascube;
+        include /var/ideascube/uwsgi_params;
+        expires 1y;
+    }
+
     # Finally, send all non-media requests to the Django server.
     location / {
         uwsgi_pass  ideascube;
