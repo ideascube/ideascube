@@ -1026,9 +1026,6 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
         'file://{}'.format(remote_catalog_file.strpath))
     c.update_cache()
     c.install_packages(['wikipedia.tum'])
-
-    # Once to download the remote catalog.yml, once to download the package
-
     c.install_packages(['wikipedia.tum'])
 
 
