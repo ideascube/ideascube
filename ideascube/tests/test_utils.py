@@ -129,3 +129,161 @@ def test_meta_registry_two_base():
 
     assert Base1.registered_types['Child1'] == Child1
     assert Child1 not in Base2.registered_types.values()
+
+
+def test_rm_file(tmpdir):
+    from ideascube.utils import rm
+
+    path = tmpdir.join('to-remove')
+    path.write_text('REMOVE ME!', 'utf-8')
+    assert path.check(file=True)
+
+    rm(path.strpath)
+    assert path.check(exists=False)
+
+
+def test_rm_tree(tmpdir):
+    from ideascube.utils import rm
+
+    dirpath = tmpdir.mkdir('to-remove')
+    subdirpath = dirpath.mkdir('subdir')
+    subfilepath = subdirpath.join('file')
+    subfilepath.write_text('REMOVE ME!', 'utf-8')
+    assert subfilepath.check(file=True)
+
+    rm(dirpath.strpath)
+    assert dirpath.check(exists=False)
+
+
+def test_rm_inexistent_file(tmpdir):
+    from ideascube.utils import rm
+
+    path = tmpdir.join('does-not-exist')
+    assert path.check(exists=False)
+
+    rm(path.strpath)
+    assert path.check(exists=False)
+
+
+def test_urlretrieve_file(tmpdir):
+    from ideascube.utils import urlretrieve
+
+    src_path = tmpdir.join('source')
+    src_path.write('DOWNLOAD ME!')
+    src_sha256 = sha256(src_path.read_binary()).hexdigest()
+    src_url = 'file://{src_path}'.format(src_path=src_path)
+
+    dest_path = tmpdir.join('destination')
+    assert dest_path.check(exists=False)
+
+    urlretrieve(src_url, dest_path.strpath, sha256sum=src_sha256)
+    assert dest_path.check(file=True)
+    assert dest_path.read_binary() == src_path.read_binary()
+
+
+def test_urlretrieve_file_checksum_mismatch(tmpdir):
+    from ideascube.utils import URLRetrieveError, urlretrieve
+
+    src_path = tmpdir.join('source')
+    src_path.write('DOWNLOAD ME!')
+    src_url = 'file://{src_path}'.format(src_path=src_path)
+
+    dest_path = tmpdir.join('destination')
+    assert dest_path.check(exists=False)
+
+    with pytest.raises(URLRetrieveError) as excinfo:
+        urlretrieve(src_url, dest_path.strpath, sha256sum='wrong hash')
+
+    excinfo.match('Invalid checksum')
+    assert dest_path.check(exists=False)
+
+
+def test_urlretrieve_http(tmpdir, mocker):
+    from ideascube.utils import urlretrieve
+
+    def fake_resumable_urlretrieve(url, dest, sha256sum=None, reporthook=None):
+        # Since we already test ideascube.utils.urlretrieve with a file:// URL
+        # explicitly, and since it offers the same API as the one we use from
+        # resumable.urlretrieve, then we can use our version with a file:// URL
+        # as a decent mocking of the latter with http://
+        url = url.replace('http://', 'file://')
+
+        return urlretrieve(
+            url, dest, sha256sum=sha256sum, reporthook=reporthook)
+
+    src_path = tmpdir.join('source')
+    src_path.write('DOWNLOAD ME!')
+    src_sha256 = sha256(src_path.read_binary()).hexdigest()
+    src_url = 'http://{src_path}'.format(src_path=src_path)
+
+    dest_path = tmpdir.join('destination')
+    assert dest_path.check(exists=False)
+
+    mocked_resumable_urlretrieve = mocker.patch(
+        'ideascube.utils.resumable_urlretrieve',
+        side_effect=fake_resumable_urlretrieve)
+
+    urlretrieve(src_url, dest_path.strpath, sha256sum=src_sha256)
+    assert dest_path.check(file=True)
+    assert dest_path.read_binary() == src_path.read_binary()
+    mocked_resumable_urlretrieve.assert_called_once_with(
+        src_url, dest_path.strpath, reporthook=None, sha256sum=src_sha256)
+
+
+def test_urlretrieve_http_checksum_mismatch(tmpdir, mocker):
+    from ideascube.utils import URLRetrieveError, urlretrieve
+
+    def fake_resumable_urlretrieve(url, dest, sha256sum=None, reporthook=None):
+        from resumable import DownloadCheck, DownloadError
+        raise DownloadError(DownloadCheck.checksum_mismatch)
+
+    src_path = tmpdir.join('source')
+    src_path.write('DOWNLOAD ME!')
+    src_url = 'http://{src_path}'.format(src_path=src_path)
+
+    dest_path = tmpdir.join('destination')
+    assert dest_path.check(exists=False)
+
+    mocker.patch(
+        'ideascube.utils.resumable_urlretrieve',
+        side_effect=fake_resumable_urlretrieve)
+
+    with pytest.raises(URLRetrieveError) as excinfo:
+        urlretrieve(src_url, dest_path.strpath, sha256sum='whatever')
+
+    excinfo.match('Invalid checksum')
+    assert dest_path.check(exists=False)
+
+
+def test_urlretrieve_http_error(tmpdir, mocker):
+    from ideascube.utils import URLRetrieveError, urlretrieve
+
+    def fake_resumable_urlretrieve(url, dest, sha256sum=None, reporthook=None):
+        from resumable import DownloadCheck, DownloadError
+        raise DownloadError(DownloadCheck.size_mismatch)
+
+    src_path = tmpdir.join('source')
+    src_path.write('DOWNLOAD ME!')
+    src_url = 'http://{src_path}'.format(src_path=src_path)
+
+    dest_path = tmpdir.join('destination')
+    assert dest_path.check(exists=False)
+
+    mocker.patch(
+        'ideascube.utils.resumable_urlretrieve',
+        side_effect=fake_resumable_urlretrieve)
+
+    with pytest.raises(URLRetrieveError) as excinfo:
+        urlretrieve(src_url, dest_path.strpath, sha256sum='whatever')
+
+    excinfo.match('Download error')
+    assert dest_path.check(exists=False)
+
+
+def test_urlretrieve_unknown_scheme():
+    from ideascube.utils import urlretrieve
+
+    with pytest.raises(ValueError) as excinfo:
+        urlretrieve('ftp://nope', 'whatever')
+
+    excinfo.match('Unsupported URL scheme')

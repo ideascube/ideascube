@@ -7,34 +7,25 @@ from pathlib import Path
 import shutil
 import tempfile
 import zipfile
-from urllib.parse import urlparse
 
 from django.conf import settings
 from django.template.defaultfilters import filesizeformat
 from lxml import etree
 from progressist import ProgressBar
-from resumable import DownloadCheck, DownloadError, urlretrieve
 from requests import ConnectionError
 import yaml
 
-from ideascube.mediacenter.models import Document
-from ideascube.mediacenter.forms import PackagedDocumentForm
-from ideascube.mediacenter.utils import guess_kind_from_filename
-from ideascube.templatetags.ideascube_tags import smart_truncate
 from ideascube.configuration import get_config, set_config
+from ideascube.mediacenter.forms import PackagedDocumentForm
+from ideascube.mediacenter.models import Document
+from ideascube.mediacenter.utils import guess_kind_from_filename
 from ideascube.models import User
+from ideascube.templatetags.ideascube_tags import smart_truncate
+from ideascube.utils import (
+    MetaRegistry, classproperty, get_file_sha256, printerr, rm, urlretrieve,
+)
 
 from .systemd import Manager as SystemManager, NoSuchUnit
-
-from ..utils import printerr, get_file_sha256, MetaRegistry
-
-
-def rm(path):
-    try:
-        os.unlink(path)
-
-    except IsADirectoryError:
-        shutil.rmtree(path)
 
 
 def load_from_file(path):
@@ -106,31 +97,29 @@ class Remote:
 
 
 class Handler:
+    @classproperty
+    @classmethod
+    def _install_dir(cls):
+        name = cls.__name__.lower()
+        default = os.path.join(settings.STORAGE_ROOT, name)
+        setting = 'CATALOG_{}_INSTALL_DIR'.format(name.upper())
 
-    def __init__(self):
-        default = os.path.join(settings.STORAGE_ROOT, self.name)
-        setting = 'CATALOG_{}_INSTALL_DIR'.format(self.name.upper())
-        self._install_dir = getattr(settings, setting, default)
-        self._installed = []
-        self._removed = []
+        return getattr(settings, setting, default)
 
-    @property
-    def name(self):
-        return self.__class__.__name__.lower()
+    @classmethod
+    def install(cls, package, download_path):
+        package.install(download_path, cls._install_dir)
 
-    def install(self, package, download_path):
-        package.install(download_path, self._install_dir)
-        self._installed.append(package)
+    @classmethod
+    def remove(cls, package):
+        package.remove(cls._install_dir)
 
-    def remove(self, package):
-        package.remove(self._install_dir)
-        self._removed.append(package)
+    @classmethod
+    def commit(cls):
+        pass
 
-    def commit(self):
-        self._installed = []
-        self._removed = []
-
-    def restart_service(self, name):
+    @classmethod
+    def restart_service(cls, name):
         print('Restarting service', name)
         try:
             manager = SystemManager()
@@ -143,11 +132,11 @@ class Handler:
 
 
 class Kiwix(Handler):
-
-    def commit(self):
+    @classmethod
+    def commit(cls):
         print('Rebuilding the Kiwix library')
         library = etree.Element('library')
-        libdir = os.path.join(self._install_dir, 'data', 'library')
+        libdir = os.path.join(cls._install_dir, 'data', 'library')
         os.makedirs(libdir, exist_ok=True)
 
         for libpath in glob(os.path.join(libdir, '*.xml')):
@@ -164,22 +153,23 @@ class Kiwix(Handler):
                 book.set('path', 'data/content/%s' % zimname)
 
                 index_path = 'data/index/%s.idx' % zimname
-                if os.path.isdir(os.path.join(self._install_dir, index_path)):
+                if os.path.isdir(os.path.join(cls._install_dir, index_path)):
                     book.set('indexPath', index_path)
 
                 library.append(book)
 
-        with open(os.path.join(self._install_dir, 'library.xml'), 'wb') as f:
+        with open(os.path.join(cls._install_dir, 'library.xml'), 'wb') as f:
             f.write(etree.tostring(
                 library, xml_declaration=True, encoding='utf-8'))
 
-        self.restart_service('kiwix-server')
+        cls.restart_service('kiwix-server')
         super().commit()
 
 
 class Nginx(Handler):
-    def commit(self):
-        self.restart_service('nginx')
+    @classmethod
+    def commit(cls):
+        cls.restart_service('nginx')
         super().commit()
 
 
@@ -202,6 +192,9 @@ class Package(metaclass=MetaRegistry):
         except KeyError:
             raise AttributeError(name)
 
+    def __str__(self):
+        return '{self.id}-{self.version}'.format(self=self)
+
     @property
     def version(self):
         # 0 has the advantage of always being "smaller" than any other version
@@ -222,7 +215,7 @@ class Package(metaclass=MetaRegistry):
 
     def assert_is_zipfile(self, path):
         if not zipfile.is_zipfile(path):
-            os.unlink(path)
+            rm(path)
             raise InvalidFile('{} is not a zip file'.format(path))
 
 
@@ -473,40 +466,22 @@ class Catalog:
         except KeyError:
             raise InvalidPackageType(type)
 
-    def _get_packages(
-        self, id_patterns, source,
-        fail_if_no_match=True, fail_if_invalid=True):
-
-        pkgs = []
-
+    def _expand_package_ids(self, id_patterns, source):
         for id_pattern in id_patterns:
             if '*' in id_pattern:
-                for id in source:
-                    if fnmatch(id, id_pattern):
-                        try:
-                            pkgs.append(self._get_package(id, source))
-                        except InvalidPackageType as e:
-                            if fail_if_invalid:
-                                raise e
+                pkg_ids = [
+                    pkg_id for pkg_id in source if fnmatch(pkg_id, id_pattern)
+                ]
+
+                if pkg_ids:
+                    yield from pkg_ids
+
+                else:
+                    # The pattern could not be expanded, yield it back
+                    yield id_pattern
 
             else:
-                try:
-                    try:
-                        pkgs.append(self._get_package(id_pattern, source))
-                    except InvalidPackageType as e:
-                        if fail_if_invalid:
-                            raise e
-                        print("Package {} is present but not handled"
-                              .format(id_pattern))
-
-                except NoSuchPackage as e:
-                    if fail_if_no_match:
-                        raise e
-
-        return pkgs
-
-    def _get_handler(self, package):
-        return package.handler()
+                yield id_pattern
 
     def _verify_sha256(self, path, sha256sum):
         sha = get_file_sha256(path)
@@ -517,7 +492,6 @@ class Catalog:
             self._progress(' {}'.format(package.id), *args)
 
         filename = '{0.id}-{0.version}'.format(package)
-        urlparsed = urlparse(package.url)
 
         for cache in self._package_caches:
             path = os.path.join(cache, filename)
@@ -525,67 +499,60 @@ class Catalog:
             if os.path.isfile(path):
                 if self._verify_sha256(path, package.sha256sum):
                     return path
-                if urlparsed.scheme in ['file', '']:
-                    try:
-                        shutil.copyfile(urlparsed.path, path)
-                    except Exception as error:
-                        print("Warning: Impossible to fetch the package file"
-                              " {package.title}({package.url}).\n{error}\n"
-                              "Ignoring this package."
-                              .format(package=package, error=error))
-                        os.unlink(path)
-                else:
-                    try:
-                        # This might be an incomplete download, try finishing it
-                        urlretrieve(
-                            package.url, path, sha256sum=package.sha256sum,
-                            reporthook=_progress)
-                        return path
 
-                    except DownloadError as e:
-                        # File was too busted, could not finish the download
-                        if e.args[0] is DownloadCheck.checksum_mismatch:
-                            msg = 'Downloaded file has invalid checksum'
+                # This might be an incomplete download, try finishing it
+                try:
+                    urlretrieve(
+                        package.url, path, sha256sum=package.sha256sum,
+                        reporthook=_progress)
 
-                        else:
-                            msg = 'Error downloading the file: {}'.format(e)
-
-                        printerr(msg)
-                        os.unlink(path)
+                except Exception as e:
+                    printerr(e)
 
         path = os.path.join(self._local_package_cache, filename)
-        if urlparsed.scheme in ['file', '']:
-            try:
-                shutil.copyfile(urlparsed.path, path)
-            except Exception as error:
-                print("Warning: Impossible to fetch the package file"
-                      " {package.title}({package.url}).\n{error}\n"
-                      "Ignoring this package."
-                      .format(package=package, error=error))
-        else:
-            urlretrieve(
-                package.url, path, sha256sum=package.sha256sum,
-                reporthook=_progress)
+        urlretrieve(
+            package.url, path, sha256sum=package.sha256sum,
+            reporthook=_progress)
+
         return path
 
     def list_installed(self, ids):
-        pkgs = self._get_packages(
-            ids, self._installed,
-            fail_if_no_match=False, fail_if_invalid=False)
+        ids = self._expand_package_ids(ids, self._installed)
+        pkgs = []
+
+        for pkg_id in ids:
+            try:
+                pkgs.append(self._get_package(pkg_id, self._installed))
+
+            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+                continue
+
         return sorted(pkgs, key=attrgetter('id'))
 
     def list_available(self, ids):
-        pkgs = self._get_packages(
-            ids, self._available,
-            fail_if_no_match=False, fail_if_invalid=False)
+        ids = self._expand_package_ids(ids, self._available)
+        pkgs = []
+
+        for pkg_id in ids:
+            try:
+                pkgs.append(self._get_package(pkg_id, self._available))
+
+            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+                continue
+
         return sorted(pkgs, key=attrgetter('id'))
 
     def list_upgradable(self, ids):
+        ids = self._expand_package_ids(ids, self._installed)
         pkgs = []
 
-        for ipkg in self._get_packages(
-                ids, self._installed,
-                fail_if_no_match=False, fail_if_invalid=False):
+        for pkg_id in ids:
+            try:
+                ipkg = self._get_package(pkg_id, self._installed)
+
+            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+                continue
+
             upkg = self._get_package(ipkg.id, self._available)
 
             if ipkg != upkg:
@@ -616,55 +583,69 @@ class Catalog:
                    displayed_packages, User.objects.get_system_user())
 
     def install_packages(self, ids):
-        used_handlers = {}
-        downloaded = []
+        ids = self._expand_package_ids(ids, self._available)
+        used_handlers = set()
+        installs = []
         installed_ids = []
 
-        for pkg in self._get_packages(ids, self._available):
-            if pkg.id in self._installed:
-                printerr('{0.id} is already installed'.format(pkg))
+        # First get the list of installs and download them
+        for pkg_id in sorted(ids):
+            if pkg_id in self._installed:
+                printerr('{pkg_id} is already installed'.format(pkg_id=pkg_id))
                 continue
+
+            pkg = self._get_package(pkg_id, self._available)
 
             try:
                 download_path = self._fetch_package(pkg)
-            except DownloadError as e:
-                printerr("Failed downloading {0.id}".format(pkg))
-                printerr(e)
-            else:
-                downloaded.append((pkg, download_path))
 
-        for pkg, download_path in downloaded:
-            handler = self._get_handler(pkg)
-            print('Installing {0.id}'.format(pkg))
-            try:
-                handler.install(pkg, download_path)
             except Exception as e:
-                printerr("Failed installing {0.id}".format(pkg))
                 printerr(e)
                 continue
-            used_handlers[handler.__class__.__name__] = handler
-            self._installed[pkg.id] = self._available[pkg.id].copy()
+
+            installs.append({'new': pkg, 'download_path': download_path})
+
+        # Now actually install the packages
+        for install in installs:
+            pkg = install['new']
+            download_path = install['download_path']
+            handler = pkg.handler
+
+            try:
+                print('Installing {pkg}'.format(pkg=pkg))
+                handler.install(pkg, download_path)
+                used_handlers.add(handler)
+
+            except Exception as e:
+                printerr('Failed installing {pkg}: {e}'.format(pkg=pkg, e=e))
+                continue
+
             installed_ids.append(pkg.id)
+            self._installed[pkg.id] = self._available[pkg.id].copy()
             self._persist_catalog()
 
         self._update_displayed_packages_on_home(to_add_ids=installed_ids)
 
-        for handler in used_handlers.values():
+        for handler in used_handlers:
             handler.commit()
 
     def remove_packages(self, ids, commit=True):
-        used_handlers = {}
+        ids = self._expand_package_ids(ids, self._installed)
+        used_handlers = set()
 
-        for pkg in self._get_packages(ids, self._installed):
-            handler = self._get_handler(pkg)
-            print('Removing {0.id}'.format(pkg))
+        for pkg_id in sorted(ids):
+            pkg = self._get_package(pkg_id, self._installed)
+            handler = pkg.handler
+
             try:
+                print('Removing {pkg}'.format(pkg=pkg))
                 handler.remove(pkg)
+                used_handlers.add(handler)
+
             except Exception as e:
-                printerr("Failed removing {0.id}".format(pkg))
-                printerr(e)
+                printerr('Failed removing {pkg}: {e}'.format(pkg=pkg, e=e))
                 continue
-            used_handlers[handler.__class__.__name__] = handler
+
             del(self._installed[pkg.id])
             self._persist_catalog()
 
@@ -673,7 +654,7 @@ class Catalog:
         if not commit:
             return
 
-        for handler in used_handlers.values():
+        for handler in used_handlers:
             handler.commit()
 
     def reinstall_packages(self, ids):
@@ -681,49 +662,62 @@ class Catalog:
         self.install_packages(ids)
 
     def upgrade_packages(self, ids):
-        used_handlers = {}
-        downloaded = []
+        ids = self._expand_package_ids(ids, self._available)
+        used_handlers = set()
+        updates = []
 
-        for ipkg in self._get_packages(ids, self._installed):
-            upkg = self._get_package(ipkg.id, self._available)
+        # First get the list of updates and download them
+        for pkg_id in sorted(ids):
+            ipkg = self._get_package(pkg_id, self._installed)
+            upkg = self._get_package(pkg_id, self._available)
 
             if ipkg == upkg:
-                printerr('{0.id} has no update available'.format(ipkg))
+                printerr('{ipkg} has no update available'.format(ipkg=ipkg))
                 continue
 
             try:
                 download_path = self._fetch_package(upkg)
-            except DownloadError as e:
-                printerr("Failed downloading {0.id}".format(upkg))
-                printerr(e)
-            else:
-                downloaded.append((ipkg, upkg, download_path))
 
-        for ipkg, upkg, download_path in downloaded:
-            ihandler = self._get_handler(ipkg)
-            uhandler = self._get_handler(upkg)
-            print('Upgrading {0.id}'.format(ipkg))
+            except Exception as e:
+                printerr(e)
+                continue
+
+            updates.append({
+                'old': ipkg, 'new': upkg, 'download_path': download_path,
+            })
+
+        # Now actually update the packages
+        for update in updates:
+            ipkg = update['old']
+            upkg = update['new']
+            download_path = update['download_path']
+            ihandler = ipkg.handler
+            uhandler = upkg.handler
 
             try:
+                print('Removing {ipkg}'.format(ipkg=ipkg))
                 ihandler.remove(ipkg)
+                used_handlers.add(ihandler)
+
             except Exception as e:
-                printerr("Failed removing {0.id}".format(ipkg))
-                printerr(e)
+                printerr(
+                    'Failed removing {ipkg}: {e}'.format(ipkg=ipkg, e=e))
                 continue
-            used_handlers[ihandler.__class__.__name__] = ihandler
 
             try:
+                print('Installing {upkg}'.format(upkg=upkg))
                 uhandler.install(upkg, download_path)
-            except Exception as e:
-                printerr("Failed installing {0.id}\n".format(upkg))
-                printerr(e)
-                continue
-            used_handlers[uhandler.__class__.__name__] = uhandler
+                used_handlers.add(uhandler)
 
-            self._installed[ipkg.id] = self._available[upkg.id].copy()
+            except Exception as e:
+                printerr(
+                    'Failed installing {upkg}: {e}'.format(upkg=upkg, e=e))
+                continue
+
+            self._installed[upkg.id] = self._available[upkg.id].copy()
             self._persist_catalog()
 
-        for handler in used_handlers.values():
+        for handler in used_handlers:
             handler.commit()
 
     # -- Manage local cache ---------------------------------------------------
@@ -833,25 +827,14 @@ class Catalog:
                     self._progress(' {}'.format(remote.name), *args)
 
                 # TODO: Verify the download with sha256sum? Crypto signature?
-                urlparsed = urlparse(remote.url)
-                if urlparsed.scheme in ['file', '']:
-                    try:
-                        shutil.copyfile(urlparsed.path, tmppath)
-                    except Exception as error:
-                        print("Warning: Impossible to fetch the catalog file"
-                              " {remote.name}({remote.url}).\n{error}\n"
-                              "Continue anyway without this remote."
-                              .format(remote=remote, error=error))
-                        continue
-                else:
-                    try:
-                        urlretrieve(remote.url, tmppath, reporthook=_progress)
-                    except ConnectionError:
-                        print("Warning: Impossible to connect to the remote"
-                              " {remote.name}({remote.url}).\n"
-                              "Continue anyway without this remote."
-                              .format(remote=remote))
-                        continue
+                try:
+                    urlretrieve(remote.url, tmppath, reporthook=_progress)
+
+                except ConnectionError:
+                    print("Warning: Impossible to connect to the remote "
+                          "{remote.name}({remote.url}).\n"
+                          "Continuing without it.".format(remote=remote))
+                    continue
 
                 catalog = load_from_file(tmppath)
 
@@ -862,7 +845,7 @@ class Catalog:
         self._persist_catalog()
 
     def clear_cache(self):
-        shutil.rmtree(self._local_package_cache)
+        rm(self._local_package_cache)
         os.mkdir(self._local_package_cache)
 
         self._available_value = {}
@@ -894,7 +877,7 @@ class Catalog:
 
         if self._remotes_value:
             # So we did have old remotes after all...
-            shutil.rmtree(old_remote_cache)
+            rm(old_remote_cache)
 
     def list_remotes(self):
         return sorted(self._remotes.values(), key=attrgetter('id'))
@@ -914,4 +897,4 @@ class Catalog:
             raise ValueError('There is no "{}" remote'.format(id))
 
         del(self._remotes[id])
-        os.unlink(os.path.join(self._remote_storage, '{}.yml'.format(id)))
+        rm(os.path.join(self._remote_storage, '{}.yml'.format(id)))
