@@ -129,10 +129,10 @@ LANG_INFO.update({
         'code': 'ckb',
         'name_local': 'سۆرانی',
     },
-    'fa_IR': {
+    'fa-ir': {
         'bidi': True,
         'name': 'Persian',
-        'code': 'fa_IR',
+        'code': 'fa-ir',
         'name_local': 'فارسی',
     },
     'ku': {
@@ -186,7 +186,7 @@ _AVAILABLE_LANGUAGES = (
     'bm',
     'en',
     'es',
-    'fa_IR',
+    'fa-ir',
     'fr',
     'ku',
     'so',
