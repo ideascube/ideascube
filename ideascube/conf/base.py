@@ -129,10 +129,10 @@ LANG_INFO.update({
         'code': 'ckb',
         'name_local': 'سۆرانی',
     },
-    'fa_IR': {
+    'fa-ir': {
         'bidi': True,
         'name': 'Persian',
-        'code': 'fa_IR',
+        'code': 'fa-ir',
         'name_local': 'فارسی',
     },
     'ku': {
@@ -186,7 +186,7 @@ _AVAILABLE_LANGUAGES = (
     'bm',
     'en',
     'es',
-    'fa_IR',
+    'fa-ir',
     'fr',
     'ku',
     'so',
@@ -197,6 +197,9 @@ for code, lang_data in sorted(LANG_INFO.items()):
     if code in _AVAILABLE_LANGUAGES:
         LANGUAGES.append((code, lang_data['name_local'].capitalize()))
 
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'ideascube', 'locale'),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
