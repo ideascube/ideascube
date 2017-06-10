@@ -45,7 +45,7 @@ class ContentDetail(DetailView):
     model = Content
 
     def get_queryset(self):
-        if self.request.user.is_authenticated() and self.request.user.is_staff:
+        if self.request.user.is_authenticated and self.request.user.is_staff:
             return Content.objects.all()
         else:
             return Content.objects.published()

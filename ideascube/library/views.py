@@ -56,7 +56,7 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         user = self.request.user
-        if not (user.is_authenticated() and user.is_staff):
+        if not (user.is_authenticated and user.is_staff):
             qs = qs.filter(specimens__isnull=False).distinct()
         return qs
 
