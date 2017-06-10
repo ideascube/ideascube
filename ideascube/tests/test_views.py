@@ -86,7 +86,7 @@ def test_login_page_should_log_in_user_if_POST_data_is_correct(client, user):
     }, follow=True)
     assert response.status_code == 200
     assert len(response.redirect_chain) == 1
-    assert response.context['user'].is_authenticated()
+    assert response.context['user'].is_authenticated
 
 
 def test_logged_users_are_logged_out_after_a_given_time(client, user):
@@ -108,7 +108,7 @@ def test_login_page_should_not_log_in_user_with_incorrect_POST(client, user):
     }, follow=True)
     assert response.status_code == 200
     assert len(response.redirect_chain) == 0
-    assert not response.context['user'].is_authenticated()
+    assert not response.context['user'].is_authenticated
 
 
 def test_system_user_cannot_log_in(client, systemuser):
@@ -118,7 +118,7 @@ def test_system_user_cannot_log_in(client, systemuser):
     }, follow=True)
     assert response.status_code == 200
     assert len(response.redirect_chain) == 0
-    assert not response.context['user'].is_authenticated()
+    assert not response.context['user'].is_authenticated
 
 
 @pytest.mark.usefixtures('staffuser')
