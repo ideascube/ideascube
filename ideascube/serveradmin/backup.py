@@ -90,7 +90,7 @@ class Backup(object):
             archive.add(settings.BACKUPED_ROOT,
                         arcname='./',
                         recursive=True,
-                        exclude=os.path.islink)
+                        filter=lambda ti: ti if not ti.issym() else None)
         except:
             raise
         finally:
