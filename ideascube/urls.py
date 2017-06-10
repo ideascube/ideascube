@@ -9,17 +9,15 @@ from django.views.i18n import JavaScriptCatalog
 from . import views
 
 urlpatterns = i18n_patterns(
-    url(r'^blog/', include('ideascube.blog.urls', namespace="blog")),
-    url(r'^library/', include('ideascube.library.urls', namespace="library")),
-    url(r'^search/', include('ideascube.search.urls', namespace="search")),
-    url(r'^mediacenter/', include('ideascube.mediacenter.urls',
-                                  namespace="mediacenter")),
-    url(r'^monitoring/', include('ideascube.monitoring.urls',
-                                 namespace="monitoring")),
+    url(r'^blog/', include('ideascube.blog.urls')),
+    url(r'^library/', include('ideascube.library.urls')),
+    url(r'^search/', include('ideascube.search.urls')),
+    url(r'^mediacenter/', include('ideascube.mediacenter.urls')),
+    url(r'^monitoring/', include('ideascube.monitoring.urls')),
     url(r'^$', views.index, name='index'),
     url(r'^welcome_staff/$', views.welcome_staff, name='welcome_staff'),
     url(r'^tag/$', views.by_tag, name='by_tag'),
-    url(r'^server/', include('ideascube.serveradmin.urls', namespace="server")),
+    url(r'^server/', include('ideascube.serveradmin.urls')),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, kwargs={"next_page": "/"},
         name='logout'),
