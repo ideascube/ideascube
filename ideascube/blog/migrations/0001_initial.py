@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('published_at', models.DateTimeField(verbose_name='publication date')),
                 ('status', models.PositiveSmallIntegerField(default=1, verbose_name='Status', choices=[(1, 'draft'), (2, 'published'), (3, 'deleted')])),
                 ('lang', models.CharField(default=b'en', max_length=10, verbose_name='Language', choices=[(b'en', b'English'), (b'fr', 'Fran\xe7ais'), (b'ar', '\u0627\u0644\u0639\u0631\u0628\u064a\u0629')])),
-                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
                 ('tags', taggit.managers.TaggableManager(to='taggit.Tag', through='taggit.TaggedItem', blank=True, help_text='A comma-separated list of tags.', verbose_name='Tags')),
             ],
             options={
