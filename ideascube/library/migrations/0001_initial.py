@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
                 ('location', models.CharField(max_length=300, verbose_name='location', blank=True)),
                 ('remarks', models.TextField(verbose_name='remarks', blank=True)),
                 ('file', models.FileField(upload_to=b'library/digital', verbose_name='digital file', blank=True)),
-                ('book', models.ForeignKey(related_name='specimens', to='library.Book')),
+                ('book', models.ForeignKey(related_name='specimens', to='library.Book', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['-modified_at'],

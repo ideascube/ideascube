@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('module', models.CharField(max_length=20, choices=[(b'cinema', 'Cinema'), (b'library', 'Library'), (b'digital', 'Multimedia')])),
                 ('activity', models.CharField(max_length=200, blank=True)),
                 ('partner', models.CharField(max_length=200, blank=True)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('-created_at',),
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('count', models.IntegerField(default=1)),
-                ('inventory', models.ForeignKey(to='monitoring.Inventory')),
+                ('inventory', models.ForeignKey(to='monitoring.Inventory', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
                 ('due_date', models.DateField(default=datetime.date.today, verbose_name='Due date')),
                 ('returned_at', models.DateTimeField(default=None, null=True, verbose_name='Return time', blank=True)),
                 ('comments', models.CharField(max_length=500, verbose_name='Comments', blank=True)),
-                ('by', models.ForeignKey(related_name='loans_made', to=settings.AUTH_USER_MODEL)),
+                ('by', models.ForeignKey(related_name='loans_made', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('due_date', 'created_at'),
@@ -92,22 +92,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='specimen',
             name='item',
-            field=models.ForeignKey(related_name='specimens', to='monitoring.StockItem'),
+            field=models.ForeignKey(related_name='specimens', to='monitoring.StockItem', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='loan',
             name='specimen',
-            field=models.ForeignKey(to='monitoring.Specimen'),
+            field=models.ForeignKey(to='monitoring.Specimen', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='loan',
             name='user',
-            field=models.ForeignKey(related_name='loans', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(related_name='loans', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='inventoryspecimen',
             name='specimen',
-            field=models.ForeignKey(to='monitoring.Specimen'),
+            field=models.ForeignKey(to='monitoring.Specimen', on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='inventoryspecimen',
