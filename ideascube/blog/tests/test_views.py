@@ -58,12 +58,15 @@ def test_index_page_is_paginated(app, monkeypatch):
 
 
 def test_content_are_ordered_by_last_published_by_default(app):
-    content3 = ContentFactory(status=Content.PUBLISHED,
-                              published_at=datetime(2016, 6, 26, 16, 15))
-    content1 = ContentFactory(status=Content.PUBLISHED,
-                              published_at=datetime(2016, 6, 26, 16, 17))
-    content2 = ContentFactory(status=Content.PUBLISHED,
-                              published_at=datetime(2016, 6, 26, 16, 16))
+    content3 = ContentFactory(
+        status=Content.PUBLISHED,
+        published_at=datetime(2016, 6, 26, 16, 15, tzinfo=timezone.utc))
+    content1 = ContentFactory(
+        status=Content.PUBLISHED,
+        published_at=datetime(2016, 6, 26, 16, 17, tzinfo=timezone.utc))
+    content2 = ContentFactory(
+        status=Content.PUBLISHED,
+        published_at=datetime(2016, 6, 26, 16, 16, tzinfo=timezone.utc))
     response = app.get(reverse('blog:index'))
     titles = response.pyquery.find('.card.blog h3')
     assert titles[0].text == content1.title
@@ -72,12 +75,15 @@ def test_content_are_ordered_by_last_published_by_default(app):
 
 
 def test_should_take_sort_parameter_into_account(app):
-    content3 = ContentFactory(status=Content.PUBLISHED,
-                              published_at=datetime(2016, 6, 26, 16, 15))
-    content1 = ContentFactory(status=Content.PUBLISHED,
-                              published_at=datetime(2016, 6, 26, 16, 17))
-    content2 = ContentFactory(status=Content.PUBLISHED,
-                              published_at=datetime(2016, 6, 26, 16, 16))
+    content3 = ContentFactory(
+        status=Content.PUBLISHED,
+        published_at=datetime(2016, 6, 26, 16, 15, tzinfo=timezone.utc))
+    content1 = ContentFactory(
+        status=Content.PUBLISHED,
+        published_at=datetime(2016, 6, 26, 16, 17, tzinfo=timezone.utc))
+    content2 = ContentFactory(
+        status=Content.PUBLISHED,
+        published_at=datetime(2016, 6, 26, 16, 16, tzinfo=timezone.utc))
     response = app.get(reverse('blog:index'), params={'sort': 'asc'})
     titles = response.pyquery.find('.card.blog h3')
     assert titles[0].text == content3.title
@@ -201,7 +207,7 @@ def test_staff_can_edit_deleted_content(staffapp, deleted):
 
 def test_published_at_is_YMD_formatted_even_in_other_locale(staffapp,
                                                             published):
-    published.published_at = date(2015, 1, 7)
+    published.published_at = datetime(2015, 1, 7, tzinfo=timezone.utc)
     published.save()
     translation.activate('fr')
     url = reverse('blog:content_update', kwargs={'pk': published.pk})
