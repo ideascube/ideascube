@@ -1,5 +1,5 @@
 import zipfile
-from datetime import datetime
+from datetime import datetime, timezone
 
 import pytest
 from django.core.files.base import ContentFile
@@ -53,12 +53,12 @@ def test_books_are_ordered_by_created_at_by_default(app):
     BookSpecimenFactory(item=book2)
     BookSpecimenFactory(item=book3)
     # Update without calling save (which would not honour created_at).
-    Book.objects.filter(pk=book1.pk).update(created_at=datetime(2016, 6,
-                                            26, 16, 17))
-    Book.objects.filter(pk=book2.pk).update(created_at=datetime(2016, 6,
-                                            26, 16, 16))
-    Book.objects.filter(pk=book3.pk).update(created_at=datetime(2016, 6,
-                                            26, 16, 15))
+    Book.objects.filter(pk=book1.pk).update(
+        created_at=datetime(2016, 6, 26, 16, 17, tzinfo=timezone.utc))
+    Book.objects.filter(pk=book2.pk).update(
+        created_at=datetime(2016, 6, 26, 16, 16, tzinfo=timezone.utc))
+    Book.objects.filter(pk=book3.pk).update(
+        created_at=datetime(2016, 6, 26, 16, 15, tzinfo=timezone.utc))
     response = app.get(reverse('library:index'))
     titles = response.pyquery.find('.book-list h3')
     assert book1.name in titles[0].text_content()
@@ -74,12 +74,12 @@ def test_should_take_sort_parameter_into_account(app):
     BookSpecimenFactory(item=book2)
     BookSpecimenFactory(item=book3)
     # Update without calling save (which would not honour created_at).
-    Book.objects.filter(pk=book1.pk).update(created_at=datetime(2016, 6,
-                                            26, 16, 17))
-    Book.objects.filter(pk=book2.pk).update(created_at=datetime(2016, 6,
-                                            26, 16, 16))
-    Book.objects.filter(pk=book3.pk).update(created_at=datetime(2016, 6,
-                                            26, 16, 15))
+    Book.objects.filter(pk=book1.pk).update(
+        created_at=datetime(2016, 6, 26, 16, 17, tzinfo=timezone.utc))
+    Book.objects.filter(pk=book2.pk).update(
+        created_at=datetime(2016, 6, 26, 16, 16, tzinfo=timezone.utc))
+    Book.objects.filter(pk=book3.pk).update(
+        created_at=datetime(2016, 6, 26, 16, 15, tzinfo=timezone.utc))
     response = app.get(reverse('library:index'), params={'sort': 'asc'})
     titles = response.pyquery.find('.book-list h3')
     assert book3.name in titles[0].text_content()
