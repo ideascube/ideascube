@@ -60,7 +60,7 @@ test:
 	py.test
 
 test-coverage:
-	py.test --cov=ideascube/ --cov-report=term-missing --cov-fail-under=93
+	py.test --cov=ideascube
 
 quality-check:
 	py.test --flakes -m flakes
