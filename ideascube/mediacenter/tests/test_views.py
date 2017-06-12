@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 import pytest
 
@@ -62,12 +62,12 @@ def test_documents_are_ordered_by_modified_at_by_default(app):
     doc1 = DocumentFactory()
     doc2 = DocumentFactory()
     # Update without calling save (which would override modified_at).
-    Document.objects.filter(pk=doc1.pk).update(modified_at=datetime(2016, 6,
-                                               26, 16, 17))
-    Document.objects.filter(pk=doc2.pk).update(modified_at=datetime(2016, 6,
-                                               26, 16, 16))
-    Document.objects.filter(pk=doc3.pk).update(modified_at=datetime(2016, 6,
-                                               26, 16, 15))
+    Document.objects.filter(pk=doc1.pk).update(
+        modified_at=datetime(2016, 6, 26, 16, 17, tzinfo=timezone.utc))
+    Document.objects.filter(pk=doc2.pk).update(
+        modified_at=datetime(2016, 6, 26, 16, 16, tzinfo=timezone.utc))
+    Document.objects.filter(pk=doc3.pk).update(
+        modified_at=datetime(2016, 6, 26, 16, 15, tzinfo=timezone.utc))
     response = app.get(reverse('mediacenter:index'))
     titles = response.pyquery.find('.document-list h3')
     assert doc1.title in titles[0].text_content()
@@ -80,12 +80,12 @@ def test_should_take_sort_parameter_into_account(app):
     doc1 = DocumentFactory()
     doc2 = DocumentFactory()
     # Update without calling save (which would override modified_at).
-    Document.objects.filter(pk=doc1.pk).update(modified_at=datetime(2016, 6,
-                                               26, 16, 17))
-    Document.objects.filter(pk=doc2.pk).update(modified_at=datetime(2016, 6,
-                                               26, 16, 16))
-    Document.objects.filter(pk=doc3.pk).update(modified_at=datetime(2016, 6,
-                                               26, 16, 15))
+    Document.objects.filter(pk=doc1.pk).update(
+        modified_at=datetime(2016, 6, 26, 16, 17, tzinfo=timezone.utc))
+    Document.objects.filter(pk=doc2.pk).update(
+        modified_at=datetime(2016, 6, 26, 16, 16, tzinfo=timezone.utc))
+    Document.objects.filter(pk=doc3.pk).update(
+        modified_at=datetime(2016, 6, 26, 16, 15, tzinfo=timezone.utc))
     response = app.get(reverse('mediacenter:index'), params={'sort': 'asc'})
     titles = response.pyquery.find('.document-list h3')
     assert doc3.title in titles[0].text_content()

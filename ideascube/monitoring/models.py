@@ -1,8 +1,9 @@
-from datetime import date, datetime
+from datetime import date
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from ideascube.models import TimeStampedModel
@@ -190,7 +191,7 @@ class Loan(TimeStampedModel):
         return self.returned_at is None
 
     def mark_returned(self):
-        self.returned_at = datetime.now()
+        self.returned_at = timezone.now()
         self.save()
 
     class Meta:
