@@ -10,4 +10,6 @@ omit =
     ideascube/settings.py
 
 [report]
+fail_under = 94
 precision = 2
+show_missing = true
