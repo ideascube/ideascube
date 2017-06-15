@@ -149,6 +149,18 @@ def test_add_qs_to_existing():
     assert dict(params) == {'foo': ['val1', 'val2']}
 
 
+def test_add_qs_bool_to_empty():
+    params = _add_qs(QueryDict(mutable=True), 'foo')
+    assert dict(params) == {'foo': ['true']}
+
+
+def test_add_qs_bool_to_existing():
+    orig = QueryDict(mutable=True)
+    orig.update({'foo': 'val1'})
+    params = _add_qs(orig, 'foo')
+    assert dict(params) == {'foo': ['val1']}
+
+
 def test_replace_qs_to_empty():
     params = _replace_qs(QueryDict(mutable=True), foo='bar')
     assert dict(params) == {'foo': ['bar']}
