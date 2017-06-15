@@ -141,12 +141,16 @@ def paginate(request, **kwargs):
 
 
 @register.assignment_tag(takes_context=True)
-def is_in_qs(context, key, value):
+def is_in_qs(context, key, value=None):
     req = template.Variable('request').resolve(context)
     return _is_in_qs(req.GET.copy(), key, value)
 
 def _is_in_qs(params, key, value):
-    return key in params and value in params.getlist(key)
+    if key not in params:
+        return False
+    if value is not None:
+        return value in params.getlist(key)
+    return True
 
 @register.simple_tag(takes_context=True)
 def add_qs(context, *args, **kwargs):
