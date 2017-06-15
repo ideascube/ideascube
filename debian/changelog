@@ -1,3 +1,22 @@
+ideascube (0.29.0) unstable; urgency=low
+
+  * Search index is spread in different tables depending of the indexed
+    content;
+  * Add a special view to select media from mediacenter for a blog;
+  * Add a audio player to audio media;
+  * Use the preview image for the poster (preview for video);
+  * Do not try to collect translatble strings in the storage directory;
+  * Do not load jsi18n where js is not used (performance);
+  * Cache jsi18n translation (performance);
+  * Huge simplification of catalog code;
+  * Do not restart nginx when installing static-site as it is not necessary;
+  * Do not fail when trying to upgrade unvailable packages;
+  * Do not fail when trying to uninstall/reinstall not installed packages;
+  * Allow clearing only a part of the cache (package, metadata or all);
+  * Update translations.
+
+ -- Matthieu Gautier <mgautier@kymeria.fr>  Thu, 15 Jun 2017 15:30:00 +0200
+
 ideascube (0.28.1) unstable; urgency=low
 
   * Fix the uWSGI configuration file, so it works better with the uWSGI
