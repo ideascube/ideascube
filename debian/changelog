@@ -1,7 +1,5 @@
 ideascube (0.29.0) unstable; urgency=low
 
-  * Search index is spread in different tables depending of the indexed
-    content;
   * Add a special view to select media from mediacenter for a blog;
   * Add a audio player to audio media;
   * Use the preview image for the poster (preview for video);
