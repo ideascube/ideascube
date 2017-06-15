@@ -4,6 +4,7 @@ from django.db.models.functions import Lower
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
+from django.core.exceptions import PermissionDenied
 
 from ideascube.decorators import staff_member_required
 from ideascube.mixins import FilterableViewMixin, OrderableViewMixin
@@ -21,7 +22,14 @@ from .models import Document
 from .forms import DocumentForm
 
 
-class Index(FilterableViewMixin, OrderableViewMixin, ListView):
+class NoHiddenDocumentMixin:
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(hidden=False)
+        return qs
+
+
+class Index(NoHiddenDocumentMixin, FilterableViewMixin, OrderableViewMixin, ListView):
 
     ORDERS = [
         {
@@ -67,7 +75,6 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
 
             context['source_name'] = package.name
         return context
-
 index = Index.as_view()
 
 class DocumentSelect(Index):
@@ -75,12 +82,12 @@ class DocumentSelect(Index):
 document_select = DocumentSelect.as_view()
 
 
-class DocumentDetail(DetailView):
+class DocumentDetail(NoHiddenDocumentMixin, DetailView):
     model = Document
 document_detail = DocumentDetail.as_view()
 
 
-class DocumentUpdate(UpdateView):
+class DocumentUpdate(NoHiddenDocumentMixin, UpdateView):
     model = Document
     form_class = DocumentForm
     def get_object(self, *args, **kwargs):
@@ -100,7 +107,7 @@ class DocumentCreate(CreateView):
 document_create = staff_member_required(DocumentCreate.as_view())
 
 
-class DocumentDelete(DeleteView):
+class DocumentDelete(NoHiddenDocumentMixin, DeleteView):
     model = Document
     success_url = reverse_lazy('mediacenter:index')
     def get_object(self, *args, **kwargs):
