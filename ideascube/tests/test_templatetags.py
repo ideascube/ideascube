@@ -195,5 +195,16 @@ def test_remove_qs_to_several():
     orig.update({'foo':'val1'})
     orig.update({'foo':'val2'})
     assert dict(orig) == {'foo':['val1', 'val2']}
+
     params = _remove_qs(orig, foo='val2')
     assert dict(params) == {'foo':['val1']}
+
+
+def test_remove_qs_key_to_several():
+    orig = QueryDict(mutable=True)
+    orig.update({'foo':'val1', 'bar':'val2'})
+    orig.update({'foo':'val2'})
+    assert dict(orig) == {'foo':['val1', 'val2'], 'bar':['val2']}
+
+    params = _remove_qs(orig, 'foo')
+    assert dict(params) == {'bar': ['val2']}
