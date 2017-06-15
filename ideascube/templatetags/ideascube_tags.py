@@ -176,14 +176,16 @@ def _replace_qs(params, **kwargs):
 
 
 @register.simple_tag(takes_context=True)
-def remove_qs(context, **kwargs):
+def remove_qs(context, *args, **kwargs):
     req = template.Variable('request').resolve(context)
-    params = _remove_qs(req.GET.copy(), **kwargs)
+    params = _remove_qs(req.GET.copy(), *args, **kwargs)
     return '?%s' % params.urlencode()
 
 
-def _remove_qs(params, **kwargs):
+def _remove_qs(params, *args, **kwargs):
     existing = dict(params)
+    for key in args:
+        del existing[key]
     for key, value in kwargs.items():
         try:
             existing[key].remove(value)
