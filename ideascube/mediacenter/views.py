@@ -4,6 +4,7 @@ from django.db.models.functions import Lower
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
+from django.core.exceptions import PermissionDenied
 
 from ideascube.decorators import staff_member_required
 from ideascube.mixins import FilterableViewMixin, OrderableViewMixin
@@ -68,6 +69,11 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
             context['source_name'] = package.name
         return context
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(hidden=False)
+        return qs
+
 index = Index.as_view()
 
 class DocumentSelect(Index):
@@ -77,6 +83,11 @@ document_select = DocumentSelect.as_view()
 
 class DocumentDetail(DetailView):
     model = Document
+    def get_object(self, *args, **kwargs):
+        object = super().get_object(*args, **kwargs)
+        if object.hidden:
+            raise PermissionDenied
+        return object
 document_detail = DocumentDetail.as_view()
 
 
