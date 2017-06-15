@@ -149,12 +149,15 @@ def _is_in_qs(params, key, value):
     return key in params and value in params.getlist(key)
 
 @register.simple_tag(takes_context=True)
-def add_qs(context, **kwargs):
+def add_qs(context, *args, **kwargs):
     req = template.Variable('request').resolve(context)
-    params = _add_qs(req.GET.copy(), **kwargs)
+    params = _add_qs(req.GET.copy(), *args, **kwargs)
     return '?%s' % params.urlencode()
 
-def _add_qs(params, **kwargs):
+def _add_qs(params, *args, **kwargs):
+    for key in args:
+        if not params.getlist(key):
+            params[key] = 'true'
     for key, value in kwargs.items():
         if value not in params.getlist(key):
             params.appendlist(key, value)
