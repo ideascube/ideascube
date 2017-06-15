@@ -167,10 +167,7 @@ class Kiwix(Handler):
 
 
 class Nginx(Handler):
-    @classmethod
-    def commit(cls):
-        cls.restart_service('nginx')
-        super().commit()
+    pass
 
 
 class MediaCenter(Handler):
@@ -624,7 +621,8 @@ class Catalog:
             self._installed[pkg.id] = self._available[pkg.id].copy()
             self._persist_catalog()
 
-        self._update_displayed_packages_on_home(to_add_ids=installed_ids)
+        if installed_ids:
+            self._update_displayed_packages_on_home(to_add_ids=installed_ids)
 
         for handler in used_handlers:
             handler.commit()
@@ -632,6 +630,7 @@ class Catalog:
     def remove_packages(self, ids, commit=True):
         ids = self._expand_package_ids(ids, self._installed)
         used_handlers = set()
+        removed_ids = []
 
         for pkg_id in sorted(ids):
             pkg = self._get_package(pkg_id, self._installed)
@@ -646,10 +645,12 @@ class Catalog:
                 printerr('Failed removing {pkg}: {e}'.format(pkg=pkg, e=e))
                 continue
 
+            removed_ids.append(pkg.id)
             del(self._installed[pkg.id])
             self._persist_catalog()
 
-        self._update_displayed_packages_on_home(to_remove_ids=ids)
+        if removed_ids:
+            self._update_displayed_packages_on_home(to_remove_ids=removed_ids)
 
         if not commit:
             return

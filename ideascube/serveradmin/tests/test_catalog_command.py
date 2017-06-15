@@ -8,7 +8,7 @@ import pytest
 import yaml
 
 
-def test_add_remote(tmpdir, settings, capsys, monkeypatch):
+def test_add_remote(tmpdir, settings, capsys):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -49,7 +49,7 @@ def test_add_remote(tmpdir, settings, capsys, monkeypatch):
     assert err.strip() == ''
 
 
-def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch, capsys):
+def test_cannot_add_duplicate_remote(tmpdir, settings, capsys):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -89,7 +89,7 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, monkeypatch, capsys):
     assert remotes_dir.join('foo.yml').mtime() == old_mtime
 
 
-def test_remove_remote(tmpdir, settings, capsys, monkeypatch):
+def test_remove_remote(tmpdir, settings, capsys):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -137,7 +137,7 @@ def test_list_no_remotes(capsys):
     assert err.strip() == ''
 
 
-def test_add_then_list_multiple_remotes(tmpdir, capsys, monkeypatch):
+def test_add_then_list_multiple_remotes(tmpdir, capsys):
     remote_catalog_file1 = tmpdir.mkdir('source1').join('catalog.yml')
     remote_catalog_file1.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -171,7 +171,7 @@ def test_add_then_list_multiple_remotes(tmpdir, capsys, monkeypatch):
     assert err.strip() == ''
 
 
-def test_add_then_remove_then_list_remote(tmpdir, capsys, monkeypatch):
+def test_add_then_remove_then_list_remote(tmpdir, capsys):
     remote_catalog_file = tmpdir.mkdir('source1').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -192,7 +192,7 @@ def test_add_then_remove_then_list_remote(tmpdir, capsys, monkeypatch):
     assert err.strip() == ''
 
 
-def test_update_cache_without_remote(tmpdir, settings, capsys):
+def test_update_cache_without_remote(settings, capsys):
     expected = {}
 
     call_command('catalog', 'cache', 'update')
@@ -208,7 +208,7 @@ def test_update_cache_without_remote(tmpdir, settings, capsys):
     assert err.strip() == ''
 
 
-def test_update_cache_with_remote(tmpdir, settings, capsys, monkeypatch):
+def test_update_cache_with_remote(tmpdir, settings, capsys):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -242,7 +242,7 @@ def test_update_cache_with_remote(tmpdir, settings, capsys, monkeypatch):
     assert err.strip() == ''
 
 
-def test_clear_cache(tmpdir, settings, capsys, monkeypatch):
+def test_clear_cache(tmpdir, settings, capsys):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -271,7 +271,7 @@ def test_clear_cache(tmpdir, settings, capsys, monkeypatch):
     assert err.strip() == ''
 
 
-def test_split_cache(tmpdir, settings, monkeypatch):
+def test_split_cache(tmpdir, settings):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -307,7 +307,7 @@ def test_split_cache(tmpdir, settings, monkeypatch):
         catalog_storage_dir.join('installed.yml').read()) == {}
 
 
-def test_move_remotes(tmpdir, settings, monkeypatch):
+def test_move_remotes(tmpdir, settings):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
@@ -335,9 +335,7 @@ def test_move_remotes(tmpdir, settings, monkeypatch):
     assert catalog_storage_dir.join('remotes', 'foo.yml').check(file=True)
 
 
-def test_list_with_unknown_package_must_no_fail(
-    tmpdir, settings, capsys, monkeypatch):
-
+def test_list_with_unknown_package_must_no_fail(tmpdir, capsys):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write('''all:
   foovideos:
