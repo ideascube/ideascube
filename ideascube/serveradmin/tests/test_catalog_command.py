@@ -13,16 +13,14 @@ def test_add_remote(tmpdir, settings, capsys):
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
 
-    remote = {
+    expected = {
         'id': 'foo', 'name': 'Content from Foo',
         'url': 'file://{}'.format(remote_catalog_file.strpath),
         }
-    expected = {
-        'id': remote['id'], 'name': remote['name'], 'url': remote['url']}
 
     call_command(
-        'catalog', 'remotes', 'add', remote['id'], remote['name'],
-        remote['url'])
+        'catalog', 'remotes', 'add', expected['id'], expected['name'],
+        expected['url'])
 
     # Ensure the remote has been added
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
@@ -213,14 +211,9 @@ def test_update_cache_with_remote(tmpdir, settings, capsys):
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
 
-    remote = {
-        'id': 'foo', 'name': 'Content from Foo',
-        'url': 'file://{}'.format(remote_catalog_file.strpath),
-        }
-
     call_command(
-        'catalog', 'remotes', 'add', remote['id'], remote['name'],
-        remote['url'])
+        'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
 
     # Now let's say the remote published an update to their catalog
     remote_catalog_file = tmpdir.join('source', 'catalog.yml')
@@ -247,24 +240,22 @@ def test_clear_cache(tmpdir, settings, capsys):
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
 
-    remote = {
-        'id': 'foo', 'name': 'Content from Foo',
-        'url': 'file://{}'.format(remote_catalog_file.strpath),
-        }
-    expected = {}
-
     call_command(
-        'catalog', 'remotes', 'add', remote['id'], remote['name'],
-        remote['url'])
+        'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
     call_command('catalog', 'cache', 'update')
+
+    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
+    catalog_cache_path = catalog_cache_dir.join('catalog.yml')
+    downloaded_path = catalog_cache_dir.join('packages').join('foovideos')
+    downloaded_path.write_binary(b'content')
+    assert yaml.safe_load(catalog_cache_path.read_text('utf-8')) != {}
 
     call_command('catalog', 'cache', 'clear')
 
-    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     assert catalog_cache_dir.join('catalog.yml').check(file=True)
-
-    with catalog_cache_dir.join('catalog.yml').open('r') as f:
-        assert yaml.safe_load(f.read()) == expected
+    assert yaml.safe_load(catalog_cache_path.read_text('utf-8')) == {}
+    assert downloaded_path.check(exists=False)
 
     out, err = capsys.readouterr()
     assert out.strip() == ''
@@ -275,14 +266,10 @@ def test_split_cache(tmpdir, settings):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
-    remote = {
-        'id': 'foo', 'name': 'Content from Foo',
-        'url': 'file://{}'.format(remote_catalog_file.strpath),
-        }
 
     call_command(
-        'catalog', 'remotes', 'add', remote['id'], remote['name'],
-        remote['url'])
+        'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
     call_command('catalog', 'cache', 'update')
 
     # Now write the catalog cache in the old format
@@ -311,14 +298,10 @@ def test_move_remotes(tmpdir, settings):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write(
         'all:\n  foovideos:\n    name: Videos from Foo')
-    remote = {
-        'id': 'foo', 'name': 'Content from Foo',
-        'url': 'file://{}'.format(remote_catalog_file.strpath),
-        }
 
     call_command(
-        'catalog', 'remotes', 'add', remote['id'], remote['name'],
-        remote['url'])
+        'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
 
     # Now move the remotes to the old location
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
@@ -344,13 +327,9 @@ def test_list_with_unknown_package_must_no_fail(tmpdir, capsys):
     version: 0
     filesize: 0kb''')
 
-    remote = {
-        'id': 'foo', 'name': 'Content from Foo',
-        'url': 'file://{}'.format(remote_catalog_file.strpath),
-        }
-
-    call_command('catalog', 'remotes', 'add', remote['id'], remote['name'],
-                 remote['url'])
+    call_command(
+        'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
 
     call_command('catalog', 'list')
     out, err = capsys.readouterr()
