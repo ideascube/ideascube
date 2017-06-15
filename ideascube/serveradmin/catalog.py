@@ -95,6 +95,10 @@ class Remote:
         d = {'id': self.id, 'name': self.name, 'url': self.url}
         persist_to_file(path, d)
 
+    def __str__(self):
+        left = '[{self.id}] {self.name}'.format(self=self)
+        return '{left:>35} : {self.url}'.format(left=left, self=self)
+
 
 class Handler:
     @classproperty
