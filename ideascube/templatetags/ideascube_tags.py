@@ -143,39 +143,51 @@ def paginate(request, **kwargs):
 @register.simple_tag(takes_context=True)
 def is_in_qs(context, key, value):
     req = template.Variable('request').resolve(context)
-    params = req.GET.copy()
-    return key in params and value in params.getlist(key)
+    return _is_in_qs(req.GET.copy(), key, value)
 
+def _is_in_qs(params, key, value):
+    return key in params and value in params.getlist(key)
 
 @register.simple_tag(takes_context=True)
 def add_qs(context, **kwargs):
     req = template.Variable('request').resolve(context)
-    params = req.GET.copy()
+    params = _add_qs(req.GET.copy(), **kwargs)
+    return '?%s' % params.urlencode()
+
+def _add_qs(params, **kwargs):
     for key, value in kwargs.items():
         if value not in params.getlist(key):
             params.appendlist(key, value)
     params.pop('page', None)  # Changing search context, reset page.
-    return '?%s' % params.urlencode()
-
+    return params
 
 @register.simple_tag(takes_context=True)
 def replace_qs(context, **kwargs):
     req = template.Variable('request').resolve(context)
-    params = req.GET.copy()
+    params = _replace_qs(req.GET.copy(), **kwargs)
+    return '?%s' % params.urlencode()
+
+
+def _replace_qs(params, **kwargs):
     for key, value in kwargs.items():
         params[key] = value
     params.pop('page', None)  # Changing search context, reset page.
-    return '?%s' % params.urlencode()
+    return params
 
 
 @register.simple_tag(takes_context=True)
 def remove_qs(context, **kwargs):
     req = template.Variable('request').resolve(context)
-    existing = dict(req.GET.copy())
+    params = _remove_qs(req.GET.copy(), **kwargs)
+    return '?%s' % params.urlencode()
+
+
+def _remove_qs(params, **kwargs):
+    existing = dict(params)
     for key, value in kwargs.items():
         try:
             existing[key].remove(value)
-        except KeyError:
+        except (KeyError, ValueError):
             pass
         else:
             if not existing[key]:
@@ -183,7 +195,7 @@ def remove_qs(context, **kwargs):
     params = QueryDict(mutable=True)
     params.update(MultiValueDict(existing))
     params.pop('page', None)  # Changing search context, reset page.
-    return '?%s' % params.urlencode()
+    return params
 
 
 @register.simple_tag
