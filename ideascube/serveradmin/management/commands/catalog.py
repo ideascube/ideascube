@@ -219,8 +219,7 @@ class Command(BaseCommandWithSubcommands):
     # -- Manage remote sources ------------------------------------------------
     def list_remotes(self, options):
         for remote in self.catalog.list_remotes():
-            left = '[{0.id}] {0.name}'.format(remote)
-            print('{0:>35} : {1.url}'.format(left, remote))
+            print(remote)
 
     def add_remote(self, options):
         try:
