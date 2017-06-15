@@ -550,7 +550,11 @@ class Catalog:
             except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
                 continue
 
-            upkg = self._get_package(ipkg.id, self._available)
+            try:
+                upkg = self._get_package(ipkg.id, self._available)
+
+            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+                continue
 
             if ipkg != upkg:
                 pkgs.append(upkg)
@@ -633,7 +637,14 @@ class Catalog:
         removed_ids = []
 
         for pkg_id in sorted(ids):
-            pkg = self._get_package(pkg_id, self._installed)
+            try:
+                pkg = self._get_package(pkg_id, self._installed)
+
+            except NoSuchPackage:
+                # The package is not installed, that's fine
+                printerr('{pkg_id} is not installed'.format(pkg_id=pkg_id))
+                continue
+
             handler = pkg.handler
 
             try:
@@ -666,13 +677,20 @@ class Catalog:
         ids = self._expand_package_ids(ids, self._available)
         used_handlers = set()
         updates = []
+        new_package_ids = []
 
         # First get the list of updates and download them
         for pkg_id in sorted(ids):
-            ipkg = self._get_package(pkg_id, self._installed)
             upkg = self._get_package(pkg_id, self._available)
 
-            if ipkg == upkg:
+            try:
+                ipkg = self._get_package(pkg_id, self._installed)
+
+            except NoSuchPackage:
+                # Not installed yet, we'll install the latest version
+                ipkg = None
+
+            if ipkg is not None and ipkg == upkg:
                 printerr('{ipkg} has no update available'.format(ipkg=ipkg))
                 continue
 
@@ -692,18 +710,20 @@ class Catalog:
             ipkg = update['old']
             upkg = update['new']
             download_path = update['download_path']
-            ihandler = ipkg.handler
             uhandler = upkg.handler
 
-            try:
-                print('Removing {ipkg}'.format(ipkg=ipkg))
-                ihandler.remove(ipkg)
-                used_handlers.add(ihandler)
+            if ipkg is not None:
+                ihandler = ipkg.handler
 
-            except Exception as e:
-                printerr(
-                    'Failed removing {ipkg}: {e}'.format(ipkg=ipkg, e=e))
-                continue
+                try:
+                    print('Removing {ipkg}'.format(ipkg=ipkg))
+                    ihandler.remove(ipkg)
+                    used_handlers.add(ihandler)
+
+                except Exception as e:
+                    printerr(
+                        'Failed removing {ipkg}: {e}'.format(ipkg=ipkg, e=e))
+                    continue
 
             try:
                 print('Installing {upkg}'.format(upkg=upkg))
@@ -715,8 +735,13 @@ class Catalog:
                     'Failed installing {upkg}: {e}'.format(upkg=upkg, e=e))
                 continue
 
+            if ipkg is None:
+                new_package_ids.append(upkg.id)
+
             self._installed[upkg.id] = self._available[upkg.id].copy()
             self._persist_catalog()
+
+        self._update_displayed_packages_on_home(to_add_ids=new_package_ids)
 
         for handler in used_handlers:
             handler.commit()
@@ -846,11 +871,16 @@ class Catalog:
         self._persist_catalog()
 
     def clear_cache(self):
-        rm(self._local_package_cache)
-        os.mkdir(self._local_package_cache)
+        self.clear_package_cache()
+        self.clear_metadata_cache()
 
+    def clear_metadata_cache(self):
         self._available_value = {}
         self._persist_catalog()
+
+    def clear_package_cache(self):
+        rm(self._local_package_cache)
+        os.mkdir(self._local_package_cache)
 
     # -- Manage remote sources ------------------------------------------------
     @property

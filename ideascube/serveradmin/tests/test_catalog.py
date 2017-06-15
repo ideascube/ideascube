@@ -849,6 +849,68 @@ def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir):
         'name': 'Videos from Foo'}}
 
 
+def test_catalog_clear_metadata_cache(tmpdir):
+    from ideascube.serveradmin.catalog import Catalog
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n  foovideos:\n    name: Videos from Foo')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    assert c._available == {}
+    assert c._installed == {}
+
+    c.update_cache()
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {}
+
+    # Pretend we installed a package
+    c._installed_value = {'foovideos': {}}
+    downloaded_path = os.path.join(c._local_package_cache, 'foovideos')
+
+    with open(downloaded_path, 'w') as f:
+        f.write('the downloaded content')
+
+    c.clear_metadata_cache()
+    assert c._available == {}
+    assert c._installed == {'foovideos': {}}
+    assert os.path.exists(downloaded_path)
+
+
+def test_catalog_clear_package_cache(tmpdir):
+    from ideascube.serveradmin.catalog import Catalog
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    remote_catalog_file.write(
+        'all:\n  foovideos:\n    name: Videos from Foo')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    assert c._available == {}
+    assert c._installed == {}
+
+    c.update_cache()
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {}
+
+    # Pretend we installed a package
+    c._installed_value = {'foovideos': {}}
+    downloaded_path = os.path.join(c._local_package_cache, 'foovideos')
+
+    with open(downloaded_path, 'w') as f:
+        f.write('the downloaded content')
+
+    c.clear_package_cache()
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {'foovideos': {}}
+    assert not os.path.exists(downloaded_path)
+
+
 def test_catalog_clear_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -867,9 +929,17 @@ def test_catalog_clear_cache(tmpdir):
     assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
     assert c._installed == {}
 
+    # Pretend we installed a package
+    c._installed_value = {'foovideos': {}}
+    downloaded_path = os.path.join(c._local_package_cache, 'foovideos')
+
+    with open(downloaded_path, 'w') as f:
+        f.write('the downloaded content')
+
     c.clear_cache()
     assert c._available == {}
-    assert c._installed == {}
+    assert c._installed == {'foovideos': {}}
+    assert not os.path.exists(downloaded_path)
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1454,6 +1524,20 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
         "<?xml version='1.0' encoding='utf-8'?>\n<library/>")
 
 
+def test_catalog_remove_uninstalled_package(capsys):
+    from ideascube.serveradmin.catalog import Catalog
+
+    c = Catalog()
+    c.update_cache()
+    assert len(c.list_installed(['*'])) == 0
+
+    c.remove_packages(['foobar'])
+
+    out, err = capsys.readouterr()
+    assert out.strip() == ''
+    assert err.strip() == 'foobar is not installed'
+
+
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
@@ -1524,6 +1608,50 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
         assert 'date="2015-09-10"' in libdata
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_catalog_update_uninstalled_package(
+        tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    c.upgrade_packages(['wikipedia.tum'])
+
+    library = installdir.join('library.xml')
+    assert library.check(exists=True)
+
+    with library.open(mode='r') as f:
+        libdata = f.read()
+
+        assert 'path="data/content/wikipedia.tum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1852,6 +1980,43 @@ def test_catalog_list_upgradable_packages(tmpdir, testdatadir, mocker):
     assert pkg.version == '2015-09'
     assert pkg.size == '200KB'
     assert isinstance(pkg, ZippedZim)
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_catalog_list_upgradable_with_bad_packages(tmpdir, testdatadir):
+    from ideascube.serveradmin.catalog import Catalog
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  missing-metadata:\n')
+        f.write('    size: 200KB\n')
+        f.write('  invalid-type:\n')
+        f.write('    type: unknown-type\n')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    # Pretend we've installed some packages previously, but at some point the
+    # remote was updated and...
+    c._installed_value = {
+        'missing-metadata': {  # ... this now misses metadata in the remote
+            'type': 'static-site',
+        },
+        'invalid-type': {  # ... this now has an invalid type in the remote
+            'type': 'zipped-medias',
+        },
+        'unavailable': {  # ... this got removed from the remote
+            'type': 'zipped-zim',
+        },
+    }
+    assert len(c.list_installed(['*'])) == 3
+
+    # Ensure invalid packages are not reported as upgradable
+    assert len(c.list_upgradable(['*'])) == 0
 
 
 @pytest.mark.usefixtures('db', 'systemuser')

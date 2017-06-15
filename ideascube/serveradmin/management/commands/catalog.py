@@ -83,7 +83,17 @@ class Command(BaseCommandWithSubcommands):
         update.set_defaults(func=self.update_cache)
 
         clear = cachesubs.add_parser('clear', help='Clear the local cache')
-        clear.set_defaults(func=self.clear_cache)
+        group = clear.add_mutually_exclusive_group()
+        group.add_argument(
+            '--metadata', action='store_const', dest='filter',
+            const='metadata', help='Clear the cache of package metadata')
+        group.add_argument(
+            '--packages', action='store_const', dest='filter',
+            const='packages', help='Clear the cache of downloaded packages')
+        group.add_argument(
+            '--all', action='store_const', dest='filter', const='all',
+            help='Clear the whole cache (default)')
+        clear.set_defaults(filter='all', func=self.clear_cache)
 
         # -- Manage remote sources --------------------------------------------
         remote = self.subs.add_parser('remotes', help='Manage remote sources')
@@ -172,11 +182,7 @@ class Command(BaseCommandWithSubcommands):
             raise CommandError('No such package: {}'.format(e))
 
     def remove_packages(self, options):
-        try:
-            self.catalog.remove_packages(options['ids'])
-
-        except NoSuchPackage as e:
-            raise CommandError('No such package: {}'.format(e))
+        self.catalog.remove_packages(options['ids'])
 
     def reinstall_packages(self, options):
         try:
@@ -201,7 +207,14 @@ class Command(BaseCommandWithSubcommands):
         self.catalog.update_cache()
 
     def clear_cache(self, options):
-        self.catalog.clear_cache()
+        if options['filter'] == 'metadata':
+            self.catalog.clear_metadata_cache()
+
+        elif options['filter'] == 'packages':
+            self.catalog.clear_package_cache()
+
+        else:
+            self.catalog.clear_cache()
 
     # -- Manage remote sources ------------------------------------------------
     def list_remotes(self, options):
