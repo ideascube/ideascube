@@ -1,3 +1,10 @@
+ideascube (0.29.1) unstable; urgency=low
+
+  * Fixed the uWSGI configuration file, so that operations requiring PolicyKit
+    permissions succeed;
+
+ -- Mathieu Bridon <bochecha@daitauha.fr>  Fri, 16 Jun 2017 12:20:00 +0200
+
 ideascube (0.29.0) unstable; urgency=low
 
   * Add a special view to select media from mediacenter for a blog;
