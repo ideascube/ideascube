@@ -45,7 +45,6 @@ html[dir='rtl'] .card {
 }
 .card.cest-pas-sorcier {
     background-image: url('./img/cards/cest-pas-sorcier.png');
-    background-position: top 10px right 5px;
 }
 .card.gutenberg {
     background-image: url('./img/cards/gutenberg.jpeg');
@@ -82,7 +81,6 @@ html[dir='rtl'] .card {
 }
 .card.ted {
     background-image: url('./img/cards/ted.png');
-    background-position: top 24px right 5px;
 }
 .card.ubuntudoc {
     background-image: url('./img/cards/ubuntudoc.jpeg');
