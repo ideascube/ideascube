@@ -277,13 +277,6 @@ class ZippedZim(Package, typename='zipped-zim'):
             return _("read")
         return _("learn")
 
-    @property
-    def css_class(self):
-        base_name, _ = self.id.rsplit('.', 1)
-        if base_name.startswith('ted'):
-            return 'ted'
-        return base_name
-
 
 class SimpleZipPackage(Package, no_register=True):
     def get_root_dir(self, install_dir):
@@ -317,18 +310,10 @@ class StaticSite(SimpleZipPackage, typename='static-site'):
             return _('discover')
         return _('info')
 
-    @property
-    def css_class(self):
-        if '.map' in self.id:
-            return 'maps'
-        base_name, *_ = self.id.split('.')
-        return base_name
-
 
 class ZippedMedias(SimpleZipPackage, typename='zipped-medias'):
     handler = MediaCenter
     template_id = "media-package"
-    css_class = "mediacenter"
     theme = "discover"
 
     def remove(self, install_dir):

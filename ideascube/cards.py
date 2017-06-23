@@ -41,7 +41,6 @@ def build_package_card_info():
             'package_id': package.id,
             'is_staff': getattr(package, 'staff_only', False),
             'theme': getattr(package, 'theme', None),
-            'css_class': getattr(package, 'css_class', None),
             'icon_document': icon_document,
         }
         package_card_info.append(card_info)
