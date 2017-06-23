@@ -1,3 +1,4 @@
+import base64
 from datetime import timedelta
 from fnmatch import fnmatch
 from glob import glob
@@ -10,6 +11,7 @@ import zipfile
 
 from django.conf import settings
 from django.template.defaultfilters import filesizeformat
+from django.core.files.base import ContentFile
 from lxml import etree
 from progressist import ProgressBar
 from requests import ConnectionError
@@ -331,6 +333,9 @@ class ZippedMedias(SimpleZipPackage, typename='zipped-medias'):
 
     def remove(self, install_dir):
         # Easy part here. Just delete documents from the package.
+        # This will also delete the thumbnail document for this package,
+        # but this is not a problem as we will delete this thumbnail later
+        # anyway.
         Document.objects.filter(package_id=self.id).delete()
         super().remove(install_dir)
 
@@ -585,6 +590,34 @@ class Catalog:
         set_config('home-page', 'displayed-package-ids',
                    displayed_packages, User.objects.get_system_user())
 
+    def _update_package_thumbnails(self, *, to_remove_ids=None, to_add_ids=None):
+        if to_remove_ids:
+            Document.objects.filter(package_id__in=to_remove_ids).delete()
+
+        if to_add_ids is None: to_add_ids = []
+        for ipkg in to_add_ids:
+            try:
+                icon_data = (self._installed[ipkg]
+                                 .get('thumbnail', {})
+                                 .get('data', None))
+            except:
+                icon_data = None
+
+            if icon_data:
+                data = ContentFile(
+                    base64.b64decode(icon_data),
+                    name='__thumbnail_{}__'.format(ipkg))
+                Document.objects.update_or_create(
+                    defaults = {'original': data},
+                    title='__package_{}_thumbnail__'.format(ipkg),
+                    kind = Document.IMAGE,
+                    hidden = True,
+                    package_id = ipkg)
+            else:
+                Document.objects.filter(
+                    title='__package_{}_thumbnail__'.format(ipkg)).delete()
+
+
     def install_packages(self, ids):
         ids = self._expand_package_ids(ids, self._available)
         used_handlers = set()
@@ -629,6 +662,7 @@ class Catalog:
 
         if installed_ids:
             self._update_displayed_packages_on_home(to_add_ids=installed_ids)
+            self._update_package_thumbnails(to_add_ids=installed_ids)
 
         for handler in used_handlers:
             handler.commit()
@@ -664,6 +698,7 @@ class Catalog:
 
         if removed_ids:
             self._update_displayed_packages_on_home(to_remove_ids=removed_ids)
+            self._update_package_thumbnails(to_remove_ids=removed_ids)
 
         if not commit:
             return
@@ -744,6 +779,8 @@ class Catalog:
             self._persist_catalog()
 
         self._update_displayed_packages_on_home(to_add_ids=new_package_ids)
+        updated_package_ids = (u['new'].id for u in updates)
+        self._update_package_thumbnails(to_add_ids=updated_package_ids)
 
         for handler in used_handlers:
             handler.commit()
@@ -821,6 +858,7 @@ class Catalog:
             'version',
         )
 
+        thumbnail_change_package_ids = []
         for pkgid in self._installed:
             installed = self._installed[pkgid]
             available = self._available.get(pkgid)
@@ -834,11 +872,16 @@ class Catalog:
                 # installed metadata here
                 continue
 
+            if installed.get('thumbnail') != available.get('thumbnail'):
+                thumbnail_change_package_ids.append(pkgid)
+
             # The remote catalog metadata for this package changed, but the
             # values associated to blacklisted keys didn't. It is thus the
             # exact same package, just with updated (and let's hope improved)
             # name, description, ...
             self._installed[pkgid] = available.copy()
+
+        self._update_package_thumbnails(to_add_ids=thumbnail_change_package_ids)
 
     def add_package_cache(self, path):
         self._package_caches.append(os.path.abspath(path))
