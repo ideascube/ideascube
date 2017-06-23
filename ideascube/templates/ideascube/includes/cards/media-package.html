@@ -1,7 +1,7 @@
 {% load i18n %}
-<a href="{% url 'mediacenter:index' %}?source={{ card.package_id }}" class="card tinted mediacenter">
+<a href="{% url 'mediacenter:index' %}?source={{ card.package_id }}" class="card tinted {{ card.css_class}} ">
   <h4>
-    <span class="theme discover">{% trans "discover" %}</span>
+    <span class="theme {{ card.theme }}">{% trans card.theme %}</span>
     <span>{{ card.name }}</span>
   </h4>
   <p>{{ card.description }}</p>

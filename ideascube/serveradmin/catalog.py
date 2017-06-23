@@ -326,6 +326,8 @@ class StaticSite(SimpleZipPackage, typename='static-site'):
 class ZippedMedias(SimpleZipPackage, typename='zipped-medias'):
     handler = MediaCenter
     template_id = "media-package"
+    css_class = "mediacenter"
+    theme = "discover"
 
     def remove(self, install_dir):
         # Easy part here. Just delete documents from the package.
