@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from ideascube.configuration import get_config
+from ideascube.mediacenter.models import Document
 
 # For unittesting purpose, we need to mock the Catalog class.
 # However, the mock is made in a fixture and at this moment, we don't
@@ -10,7 +11,6 @@ from ideascube.configuration import get_config
 # Catalog class directly but reference it from ideascube.serveradmin.catalog
 # module.
 from ideascube.serveradmin import catalog as catalog_mod
-
 
 def build_builtin_card_info():
     card_ids = settings.BUILTIN_APP_CARDS
@@ -28,6 +28,11 @@ def build_package_card_info():
     packages_to_display = catalog.list_installed(get_config('home-page', 'displayed-package-ids'))
 
     for package in packages_to_display:
+        try:
+            icon_document = Document.objects.get(title='__package_{}_thumbnail__'.format(package.id))
+        except Document.DoesNotExist:
+            icon_document = None
+
         card_info = {
             'id': package.template_id,
             'name': package.name,
@@ -36,7 +41,9 @@ def build_package_card_info():
             'package_id': package.id,
             'is_staff': getattr(package, 'staff_only', False),
             'theme': getattr(package, 'theme', None),
-            'css_class': getattr(package, 'css_class', None)
+            'css_class': getattr(package, 'css_class', None),
+            'icon_document': icon_document,
         }
         package_card_info.append(card_info)
+
     return package_card_info
