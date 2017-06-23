@@ -796,6 +796,112 @@ def test_catalog_update_cache_updates_installed_metadata(tmpdir):
         'name': 'Awesome videos from Foo'}}
 
 
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_catalog_update_cache_updates_installed_metadata_thumbnails(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    remote_catalog_file.write((
+        'all:\n'
+        '  new_thumbnail:\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+        '    size: 200KB\n'
+        '    url: file://{0}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+        '  thumbnail_updated:\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+        '    size: 200KB\n'
+        '    url: file://{0}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+        '    thumbnail:\n'
+        '      data: AAAA\n'
+        '  thumbnail_deleted:\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+        '    size: 200KB\n'
+        '    url: file://{0}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+        '    thumbnail:\n'
+        '      data: AAAA\n'
+    ).format(path))
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    assert Document.objects.count() == 0
+    c.install_packages(['new_thumbnail', 'thumbnail_updated', 'thumbnail_deleted'])
+
+    assert Document.objects.count() == 2
+
+    # And now let's say that someone modified the remote metadata, for example
+    # to fix an undescriptive name
+    remote_catalog_file.write(
+        'all:\n'
+        '  new_thumbnail:\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+        '    size: 200KB\n'
+        '    url: file://{0}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+        '    thumbnail:\n'
+        '      data: ////\n'
+        '  thumbnail_updated:\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+        '    size: 200KB\n'
+        '    url: file://{0}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+        '    thumbnail:\n'
+        '      data: ////\n'
+        '  thumbnail_deleted:\n'
+        '    sha256sum: abcdef\n'
+        '    type: zipped-zim\n'
+        '    version: 1.0.0\n'
+        '    size: 200KB\n'
+        '    url: file://{0}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+    )
+
+    c.update_cache()
+
+    thumbnail = Document.objects.get(title="__package_new_thumbnail_thumbnail__")
+    with open(thumbnail.original.path, 'rb') as f:
+        thumbnail_data = f.read()
+    assert thumbnail_data == bytes([255, 255, 255])
+
+    thumbnail = Document.objects.get(title="__package_thumbnail_updated_thumbnail__")
+    with open(thumbnail.original.path, 'rb') as f:
+        thumbnail_data = f.read()
+    assert thumbnail_data == bytes([255, 255, 255])
+
+    assert not Document.objects.filter(title="__package_thumbnail_deleted_thumbnail__")
+
+
 def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -982,6 +1088,50 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_catalog_install_package_thumbnail(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    remote_catalog_file.write((
+        'all:\n'
+        '  wikipedia.tum:\n'
+        '    version: 2015-08\n'
+        '    size: 200KB\n'
+        '    url: file://{}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+        '    type: zipped-zim\n'
+        '    thumbnail:\n'
+        '      data: AAAA\n'
+    ).format(path))
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    assert Document.objects.count() == 0
+    c.install_packages(['wikipedia.tum'])
+
+    assert Document.objects.count() == 1
+    thumbnail = Document.objects.get(title="__package_wikipedia.tum_thumbnail__")
+    with open(thumbnail.original.path, 'rb') as f:
+        thumbnail_data = f.read()
+    assert thumbnail_data == bytes([0, 0, 0])
+
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1486,6 +1636,45 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
+def test_catalog_remove_package_thumbnail(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    remote_catalog_file.write((
+        'all:\n'
+        '  wikipedia.tum:\n'
+        '    version: 2015-08\n'
+        '    size: 200KB\n'
+        '    url: file://{}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+        '    type: zipped-zim\n'
+        '    thumbnail:\n'
+        '      data: AAAA\n'
+    ).format(path))
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    assert Document.objects.count() == 0
+    c.install_packages(['wikipedia.tum'])
+    assert Document.objects.count() == 1
+    c.remove_packages(['wikipedia.tum'])
+    assert Document.objects.count() == 0
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -1609,6 +1798,184 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
         assert 'date="2015-09-10"' in libdata
 
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_catalog_update_package_thumbnail(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    remote_catalog_file.write((
+        'all:\n'
+        '  wikipedia.tum:\n'
+        '    version: 2015-08\n'
+        '    size: 200KB\n'
+        '    url: file://{}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+        '    type: zipped-zim\n'
+        '    thumbnail:\n'
+        '      data: AAAA\n'
+    ).format(path))
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    remote_catalog_file.write((
+        'all:\n'
+        '  wikipedia.tum:\n'
+        '    version: 2015-09\n'
+        '    size: 200KB\n'
+        '    url: file://{}\n'
+        '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+        'd78fd4c9cf2c3dd\n'
+        '    type: zipped-zim\n'
+        '    thumbnail:\n'
+        '      data: "////"\n'
+    ).format(path))
+
+    c.update_cache()
+
+    thumbnail = Document.objects.get(title="__package_wikipedia.tum_thumbnail__")
+    with open(thumbnail.original.path, 'rb') as f:
+        thumbnail_data = f.read()
+    assert thumbnail_data == bytes([0, 0, 0])
+
+    c.upgrade_packages(['wikipedia.tum'])
+
+    assert Document.objects.count() == 1
+    thumbnail = Document.objects.get(title="__package_wikipedia.tum_thumbnail__")
+    with open(thumbnail.original.path, 'rb') as f:
+        thumbnail_data = f.read()
+    assert thumbnail_data == bytes([255, 255, 255])
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_catalog_update_package_delete_thumbnail(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    remote_catalog_file.write((
+        'all:\n'
+        '  wikipedia.tum:\n'
+        '    version: 2015-08\n'
+        '    size: 200KB\n'
+        '    url: file://{}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+        '    type: zipped-zim\n'
+        '    thumbnail:\n'
+        '      data: AAAA\n'
+    ).format(path))
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    remote_catalog_file.write((
+        'all:\n'
+        '  wikipedia.tum:\n'
+        '    version: 2015-09\n'
+        '    size: 200KB\n'
+        '    url: file://{}\n'
+        '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+        'd78fd4c9cf2c3dd\n'
+        '    type: zipped-zim\n'
+    ).format(path))
+
+    c.update_cache()
+    assert Document.objects.count() == 1
+    c.upgrade_packages(['wikipedia.tum'])
+    assert Document.objects.count() == 0
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_catalog_update_package_new_thumbnail(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    remote_catalog_file.write((
+        'all:\n'
+        '  wikipedia.tum:\n'
+        '    version: 2015-08\n'
+        '    size: 200KB\n'
+        '    url: file://{}\n'
+        '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+        '212c29a30109c54\n'
+        '    type: zipped-zim\n'
+    ).format(path))
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    remote_catalog_file.write((
+        'all:\n'
+        '  wikipedia.tum:\n'
+        '    version: 2015-09\n'
+        '    size: 200KB\n'
+        '    url: file://{}\n'
+        '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+        'd78fd4c9cf2c3dd\n'
+        '    type: zipped-zim\n'
+        '    thumbnail:\n'
+        '      data: AAAA\n'
+    ).format(path))
+
+    c.update_cache()
+    assert Document.objects.count() == 0
+    c.upgrade_packages(['wikipedia.tum'])
+    assert Document.objects.count() == 1
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_uninstalled_package(

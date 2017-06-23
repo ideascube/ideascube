@@ -1,3 +1,6 @@
+import pytest
+from ideascube.mediacenter.tests.factories import DocumentFactory
+
 def test_build_builtin_card_info(settings):
     from ideascube.cards import build_builtin_card_info
 
@@ -38,6 +41,7 @@ def test_build_package_card_info(systemuser, catalog):
         'language':'fr',
         'staff_only':False}))
     set_config('home-page', 'displayed-package-ids', ['test.package1.fr', 'test.package2.fr'], systemuser)
+    thumbnail = DocumentFactory(title='__package_test.package2.fr_thumbnail__')
 
     assert build_package_card_info() == [{
         'package_id' : 'test.package1.fr',
@@ -47,7 +51,8 @@ def test_build_package_card_info(systemuser, catalog):
         'is_staff'   : False,
         'id'         : 'kiwix',
         'css_class'  : 'test.package1',
-        'theme'      : 'learn'
+        'theme'      : 'learn',
+        'icon_document': None,
     },
     {
         'package_id' : 'test.package2.fr',
@@ -58,4 +63,5 @@ def test_build_package_card_info(systemuser, catalog):
         'id'         : 'media-package',
         'css_class'  : 'mediacenter',
         'theme'      : 'discover',
+        'icon_document'  : thumbnail,
     }]
