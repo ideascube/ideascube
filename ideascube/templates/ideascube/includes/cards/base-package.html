@@ -1,5 +1,12 @@
-{% load i18n %}
-<a href="{{ dest_url }}" class="card tinted {{ card.css_class}} ">
+{% load i18n ideascube_tags %}
+<a href="{{ dest_url }}"
+  {% if card.icon_document %}
+    class="card tinted"
+    style="background-image: url('{% media card.icon_document 'original' %}');"
+  {% else %}
+    class="card tinted {{ card.css_class}}"
+  {% endif %}
+>
   <h4>
     <span class="theme {{ card.theme }}">{% trans card.theme %}</span>
     <span>{{ card.name }}</span>
