@@ -56,6 +56,6 @@ def test_build_package_card_info(systemuser, catalog):
         'lang'       : 'fr',
         'is_staff'   : False,
         'id'         : 'media-package',
-        'css_class'  : None,
-        'theme'      : None
+        'css_class'  : 'mediacenter',
+        'theme'      : 'discover',
     }]
