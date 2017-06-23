@@ -216,7 +216,7 @@ class Package(metaclass=MetaRegistry):
             raise InvalidFile('{} is not a zip file'.format(path))
 
 
-class ZippedZim(Package, typename='zipped-zim'):
+class Zim(Package, typename='zim'):
     handler = Kiwix
     template_id = "kiwix"
 
@@ -244,6 +244,15 @@ class ZippedZim(Package, typename='zipped-zim'):
             return 'ted'
         return base_name
 
+    def install(self, download_path, install_dir):
+        dest_name = os.path.join(install_dir, '{0.id}.zim'.format(self))
+        shutil.copyfile(download_path, dest_name)
+
+    def remove(self, install_dir):
+        rm(os.path.join(install_dir, '{0.id}.zim'.format(self)))
+
+
+class ZippedZim(Zim, typename='zipped-zim'):
     def install(self, download_path, install_dir):
         self.assert_is_zipfile(download_path)
 
