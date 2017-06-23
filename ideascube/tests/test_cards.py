@@ -49,7 +49,6 @@ def test_build_package_card_info(systemuser, catalog):
         'lang'       : 'fr',
         'is_staff'   : False,
         'id'         : 'kiwix',
-        'css_class'  : 'test.package1',
         'theme'      : 'learn',
         'icon_document': None,
     },
@@ -60,7 +59,6 @@ def test_build_package_card_info(systemuser, catalog):
         'lang'       : 'fr',
         'is_staff'   : False,
         'id'         : 'media-package',
-        'css_class'  : 'mediacenter',
         'theme'      : 'discover',
         'icon_document'  : thumbnail,
     }]
