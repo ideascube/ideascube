@@ -18,9 +18,6 @@ case "$1" in
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE/main
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/cache/$DPKG_MAINTSCRIPT_PACKAGE
-
-        ln -fs /etc/nginx/sites-available/$DPKG_MAINTSCRIPT_PACKAGE /etc/nginx/sites-enabled/$DPKG_MAINTSCRIPT_PACKAGE
-        ln -fs /etc/uwsgi/apps-available/$DPKG_MAINTSCRIPT_PACKAGE.ini /etc/uwsgi/apps-enabled/$DPKG_MAINTSCRIPT_PACKAGE.ini
         ;;
 esac
 
