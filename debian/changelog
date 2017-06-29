@@ -86,7 +86,7 @@ ideascube (0.26.0) unstable; urgency=low
   * Reworked the home cards configurations;
   * Upgraded our dependencies, including Django 1.11;
 
- -- Mathieu bridon <bochecha@daitauha.fr>  Thu, 4 May 2017 15:17:00 +0200
+ -- Mathieu Bridon <bochecha@daitauha.fr>  Thu, 4 May 2017 15:17:00 +0200
 
 ideascube (0.25.0) unstable; urgency=low
 

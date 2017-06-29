@@ -13,6 +13,10 @@ export DH_PIP_EXTRA_ARGS=--no-binary=:all:
 %:
 	dh $@ --with python3 --buildsystem dh_virtualenv
 
+override_dh_auto_install:
+	dh_auto_install
+	find $(CURDIR)/debian/ideascube -name '*.la' -exec rm -f '{}' \;
+
 # https://github.com/spotify/dh-virtualenv/issues/209
 override_dh_auto_test:
 	:
