@@ -29,37 +29,36 @@ except ImportError:
     # No specific config for this box
     from .conf import base as sub
 
-finally:
-    # Make it available as a settings, to be able to display it in the admin.
-    SETTINGS_MODULE = sub.__name__
-    log('Importing settings from %s\n' % SETTINGS_MODULE)
-    ldict = locals()
-    for k in sub.__dict__:
-        if k.isupper() and not k.startswith('__') or not k.endswith('__'):
-            ldict[k] = sub.__dict__[k]
-    USER_DATA_FIELDS = []
-    for section, fields in USER_FORM_FIELDS:  # pragma: no flakes
-        USER_DATA_FIELDS.extend(fields)
+# Make it available as a settings, to be able to display it in the admin.
+SETTINGS_MODULE = sub.__name__
+log('Importing settings from %s\n' % SETTINGS_MODULE)
+ldict = locals()
+for k in sub.__dict__:
+    if k.isupper() and not k.startswith('__') or not k.endswith('__'):
+        ldict[k] = sub.__dict__[k]
+USER_DATA_FIELDS = []
+for section, fields in USER_FORM_FIELDS:  # pragma: no flakes
+    USER_DATA_FIELDS.extend(fields)
 
-    # Allow server settings to only define STORAGE_ROOT without needing to
-    # redefine all ROOTS like settings.
-    BACKUPED_ROOT = ldict.get('BACKUPED_ROOT') or os.path.join(STORAGE_ROOT, 'main')  # pragma: no flakes
-    MEDIA_ROOT = ldict.get('MEDIA_ROOT') or os.path.join(BACKUPED_ROOT, 'media')  # noqa
-    STATIC_ROOT = ldict.get('STATIC_ROOT') or os.path.join(STORAGE_ROOT, 'static')  # pragma: no flakes
-    CATALOG_CACHE_ROOT = (
-        ldict.get('CATALOG_CACHE_ROOT') or '/var/cache/ideascube/catalog')
-    CATALOG_STORAGE_ROOT = (
-        ldict.get('CATALOG_STORAGE_ROOT')
-        or os.path.join(BACKUPED_ROOT, 'catalog'))
+# Allow server settings to only define STORAGE_ROOT without needing to
+# redefine all ROOTS like settings.
+BACKUPED_ROOT = ldict.get('BACKUPED_ROOT') or os.path.join(STORAGE_ROOT, 'main')  # pragma: no flakes
+MEDIA_ROOT = ldict.get('MEDIA_ROOT') or os.path.join(BACKUPED_ROOT, 'media')  # noqa
+STATIC_ROOT = ldict.get('STATIC_ROOT') or os.path.join(STORAGE_ROOT, 'static')  # pragma: no flakes
+CATALOG_CACHE_ROOT = (
+    ldict.get('CATALOG_CACHE_ROOT') or '/var/cache/ideascube/catalog')
+CATALOG_STORAGE_ROOT = (
+    ldict.get('CATALOG_STORAGE_ROOT')
+    or os.path.join(BACKUPED_ROOT, 'catalog'))
 
-    if not getattr(ldict, 'DATABASES', None):
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': os.path.join(BACKUPED_ROOT, 'default.sqlite'),
-            },
-            'transient': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': os.path.join(STORAGE_ROOT, 'transient.sqlite'),  # pragma: no flakes
-            }
+if not getattr(ldict, 'DATABASES', None):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BACKUPED_ROOT, 'default.sqlite'),
+        },
+        'transient': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(STORAGE_ROOT, 'transient.sqlite'),  # pragma: no flakes
         }
+    }
