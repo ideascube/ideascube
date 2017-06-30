@@ -1,3 +1,13 @@
+ideascube (0.29.2) unstable; urgency=low
+
+  * Add new configuration files.
+  * Stop enabling thu uWSGI/Nginx ideascube app. (Fix a race condition at
+    installation/update)
+  * Clean debian packaging (Fix deb-lintian warning)
+  * Specify the mode of uploaded files (Fix upload of file > 5Mo)
+
+ -- Matthieu Gautier <mgautier@kymeria.fr>  Fri, 30 Jun 2017 14:26:00 +0200
+
 ideascube (0.29.1) unstable; urgency=low
 
   * Fixed the uWSGI configuration file, so that operations requiring PolicyKit
