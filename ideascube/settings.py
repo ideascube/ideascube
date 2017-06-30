@@ -62,3 +62,5 @@ if not getattr(ldict, 'DATABASES', None):
             'NAME': os.path.join(STORAGE_ROOT, 'transient.sqlite'),  # pragma: no flakes
         }
     }
+
+FILE_UPLOAD_PERMISSIONS = 0o644
