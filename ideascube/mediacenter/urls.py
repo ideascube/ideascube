@@ -2,6 +2,8 @@ from django.conf.urls import url
 
 from . import views
 
+
+app_name = 'mediacenter'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^select/$', views.document_select, name='document_select'),

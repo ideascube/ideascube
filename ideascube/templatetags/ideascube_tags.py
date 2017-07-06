@@ -140,7 +140,7 @@ def paginate(request, **kwargs):
     return '?{}'.format(get.urlencode())
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def is_in_qs(context, key, value):
     req = template.Variable('request').resolve(context)
     params = req.GET.copy()
