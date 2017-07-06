@@ -83,6 +83,11 @@ document_detail = DocumentDetail.as_view()
 class DocumentUpdate(UpdateView):
     model = Document
     form_class = DocumentForm
+    def get_object(self, *args, **kwargs):
+        object = super().get_object(*args, **kwargs)
+        if object.package_id:
+            raise PermissionDenied
+        return object
 document_update = staff_member_required(DocumentUpdate.as_view())
 
 
@@ -98,4 +103,9 @@ document_create = staff_member_required(DocumentCreate.as_view())
 class DocumentDelete(DeleteView):
     model = Document
     success_url = reverse_lazy('mediacenter:index')
+    def get_object(self, *args, **kwargs):
+        object = super().get_object(*args, **kwargs)
+        if object.package_id:
+            raise PermissionDenied
+        return object
 document_delete = staff_member_required(DocumentDelete.as_view())
