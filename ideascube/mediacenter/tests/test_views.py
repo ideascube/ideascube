@@ -359,14 +359,33 @@ def test_everyone_should_access_other_detail_page(app, other):
                            kwargs={'pk': other.pk}), status=200)
 
 
+def test_anonymous_should_not_access_delete_page(app, video):
+    delete_url = reverse('mediacenter:document_delete', kwargs={'pk': video.pk})
+    redirect_url = app.get(delete_url, status=302).location
+    assert redirect_url == '{}?next={}'.format(reverse('login'), delete_url)
+
+
+def test_non_staff_should_not_access_delete_page(loggedapp, video):
+    delete_url = reverse('mediacenter:document_delete', kwargs={'pk': video.pk})
+    redirect_url = loggedapp.get(delete_url, status=302).location
+    assert redirect_url == '{}?next={}'.format(reverse('login'), delete_url)
+
+
+def test_staff_should_access_delete_page(staffapp, video):
+    assert staffapp.get(reverse('mediacenter:document_delete',
+                                kwargs={'pk': video.pk}), status=200)
+
+
 def test_anonymous_should_not_access_edit_page(app, video):
-    assert app.get(reverse('mediacenter:document_update',
-                           kwargs={'pk': video.pk}), status=302)
+    update_url = reverse('mediacenter:document_update', kwargs={'pk': video.pk})
+    redirect_url = app.get(update_url, status=302).location
+    assert redirect_url == '{}?next={}'.format(reverse('login'), update_url)
 
 
 def test_non_staff_should_not_access_edit_page(loggedapp, video):
-    assert loggedapp.get(reverse('mediacenter:document_update',
-                                 kwargs={'pk': video.pk}), status=302)
+    update_url = reverse('mediacenter:document_update', kwargs={'pk': video.pk})
+    redirect_url = loggedapp.get(update_url, status=302).location
+    assert redirect_url == '{}?next={}'.format(reverse('login'), update_url)
 
 
 def test_staff_should_access_edit_page(staffapp, video):
