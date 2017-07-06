@@ -1112,6 +1112,54 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, testdatadir, mocker):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
+def test_install_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('  wikipedia.fr:\n')
+        f.write('    version: 2015-09\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    c.install_packages(['wikipedia.tum'])
+    assert 'wikipedia.tum' in c._installed
+    assert not (package_cache / 'wikipedia.tum-2015-08').exists()
+
+    c.install_packages(['wikipedia.fr'], keep_downloads=True)
+    assert 'wikipedia.fr' in c._installed
+    assert (package_cache / 'wikipedia.fr-2015-09').exists()
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_already_downloaded(
         tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
@@ -1447,6 +1495,46 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
+def test_reinstall_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    c.install_packages(['wikipedia.tum'])
+    assert 'wikipedia.tum' in c._installed
+    assert not (package_cache / 'wikipedia.tum-2015-08').exists()
+
+    c.reinstall_packages(['wikipedia.tum'], keep_downloads=True)
+    assert 'wikipedia.tum' in c._installed
+    assert (package_cache / 'wikipedia.tum-2015-08').exists()
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
@@ -1774,6 +1862,61 @@ def test_catalog_update_package_already_latest(
     out, err = capsys.readouterr()
     assert out.strip() == ''
     assert err.strip() == 'wikipedia.tum-2015-08 has no update available'
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_update_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    c.install_packages(['wikipedia.tum'])
+    assert not (package_cache / 'wikipedia.tum-2015-08').exists()
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-09\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+            'd78fd4c9cf2c3dd\n')
+        f.write('    type: zipped-zim\n')
+
+    c.update_cache()
+    c.upgrade_packages(['wikipedia.tum'], keep_downloads=True)
+    assert (package_cache / 'wikipedia.tum-2015-09').exists()
 
 
 def test_catalog_list_available_packages(tmpdir):
