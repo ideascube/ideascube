@@ -71,7 +71,12 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(hidden=False)
+        if not self.request.user.is_staff:
+            qs = qs.filter(hidden=False)
+        else:
+            show_hidden = 'hidden' in self.request.GET
+            if not show_hidden:
+                qs = qs.filter(hidden=False)
         return qs
 
 index = Index.as_view()
