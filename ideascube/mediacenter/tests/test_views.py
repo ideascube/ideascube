@@ -359,19 +359,50 @@ def test_everyone_should_access_other_detail_page(app, other):
                            kwargs={'pk': other.pk}), status=200)
 
 
+def test_anonymous_should_not_access_delete_page(app, video):
+    delete_url = reverse('mediacenter:document_delete', kwargs={'pk': video.pk})
+    redirect_url = app.get(delete_url, status=302).location
+    assert redirect_url == '{}?next={}'.format(reverse('login'), delete_url)
+
+
+def test_non_staff_should_not_access_delete_page(loggedapp, video):
+    delete_url = reverse('mediacenter:document_delete', kwargs={'pk': video.pk})
+    redirect_url = loggedapp.get(delete_url, status=302).location
+    assert redirect_url == '{}?next={}'.format(reverse('login'), delete_url)
+
+
+def test_staff_should_access_delete_page(staffapp, video):
+    assert staffapp.get(reverse('mediacenter:document_delete',
+                                kwargs={'pk': video.pk}), status=200)
+
+
+def test_staff_cannot_delete_document_from_package(staffapp):
+    document = DocumentFactory(package_id="foo")
+    staffapp.get(reverse('mediacenter:document_delete',
+                         kwargs={'pk': document.pk}), status=403)
+
+
 def test_anonymous_should_not_access_edit_page(app, video):
-    assert app.get(reverse('mediacenter:document_update',
-                           kwargs={'pk': video.pk}), status=302)
+    update_url = reverse('mediacenter:document_update', kwargs={'pk': video.pk})
+    redirect_url = app.get(update_url, status=302).location
+    assert redirect_url == '{}?next={}'.format(reverse('login'), update_url)
 
 
 def test_non_staff_should_not_access_edit_page(loggedapp, video):
-    assert loggedapp.get(reverse('mediacenter:document_update',
-                                 kwargs={'pk': video.pk}), status=302)
+    update_url = reverse('mediacenter:document_update', kwargs={'pk': video.pk})
+    redirect_url = loggedapp.get(update_url, status=302).location
+    assert redirect_url == '{}?next={}'.format(reverse('login'), update_url)
 
 
 def test_staff_should_access_edit_page(staffapp, video):
     assert staffapp.get(reverse('mediacenter:document_update',
                                 kwargs={'pk': video.pk}), status=200)
+
+
+def test_staff_cannot_edit_document_from_package(staffapp):
+    document = DocumentFactory(package_id="foo")
+    staffapp.get(reverse('mediacenter:document_update',
+                         kwargs={'pk': document.pk}), status=403)
 
 
 def test_staff_can_edit_document(staffapp, video):
@@ -611,3 +642,31 @@ def test_content_summary_is_cleaned_from_unwanted_html_tags(staffapp):
     form.submit().follow()
     document = Document.objects.first()
     assert document.summary == ('my content summary &lt;img src="foo"&gt;')
+
+
+def test_index_should_not_show_hidden_content_to_user(app):
+    shown = DocumentFactory()
+    hidden = DocumentFactory(hidden=True)
+
+    response = app.get(reverse('mediacenter:index'))
+
+    assert shown.title in response.text
+    assert hidden.title not in response.text
+
+    response = app.get(reverse('mediacenter:index'),
+        params={'hidden':''})
+
+    assert shown.title in response.text
+    assert hidden.title not in response.text
+
+
+def test_user_cannot_access_detail_page_of_hidden_content(app):
+    document = DocumentFactory(hidden=True)
+    app.get(reverse('mediacenter:document_detail',
+                    kwargs={'pk': document.pk}), status=404)
+
+
+def test_staff_cannot_access_detail_page_of_hidden_content(staffapp):
+    document = DocumentFactory(hidden=True)
+    staffapp.get(reverse('mediacenter:document_detail',
+                    kwargs={'pk': document.pk}), status=404)

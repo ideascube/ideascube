@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
+from django.http import QueryDict
+
 from ideascube.blog.models import Content
 from ideascube.blog.tests.factories import ContentFactory
 from ideascube.library.models import Book
@@ -8,9 +10,10 @@ from ideascube.library.tests.factories import BookFactory
 from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.tests.factories import DocumentFactory
 
-from ..templatetags.ideascube_tags import (do_min, fa, remove_i18n,
-                                           smart_truncate, tag_cloud,
-                                           theme_slug)
+from ..templatetags.ideascube_tags import (do_min, fa, remove_i18n, tag_cloud,
+                                           smart_truncate, theme_slug,
+                                           _is_in_qs,  _add_qs, _replace_qs,
+                                           _remove_qs)
 
 pytestmark = pytest.mark.django_db
 
@@ -103,3 +106,99 @@ def test_smart_struncate(given, expected, length, suffix):
     if suffix is not None:
         kwargs['suffix'] = suffix
     assert smart_truncate(given, **kwargs) == expected
+
+
+def test_is_in_qs_empty():
+    assert _is_in_qs(QueryDict(), 'foo', 'bar') == False
+
+
+def test_is_in_qs_is_in():
+    query = QueryDict(mutable=True)
+    query.update({'foo': 'bar'})
+    assert _is_in_qs(query, 'foo', 'bar') == True
+
+
+def test_is_in_qs_wrong_value():
+    query = QueryDict(mutable=True)
+    query.update({'foo': 'bar'})
+    assert _is_in_qs(query, 'foo', 'baz') == False
+
+
+def test_is_in_qs_wrong_key():
+    query = QueryDict(mutable=True)
+    query.update({'foo': 'bar'})
+    assert _is_in_qs(query, 'key', 'bar') == False
+
+
+def test_add_qs_to_empty():
+    params = _add_qs(QueryDict(mutable=True), foo='bar', bar='foo')
+    assert dict(params) == {'bar': ['foo'], 'foo': ['bar']}
+
+
+def test_add_qs_to_identical():
+    orig = QueryDict(mutable=True)
+    orig.update({'bar': 'foo', 'foo': 'bar'})
+    params = _add_qs(orig, foo='bar', bar='foo')
+    assert dict(params) == {'bar': ['foo'], 'foo': ['bar']}
+
+
+def test_add_qs_to_existing():
+    orig = QueryDict(mutable=True)
+    orig.update({'foo': 'val1'})
+    params = _add_qs(orig, foo='val2')
+    assert dict(params) == {'foo': ['val1', 'val2']}
+
+
+def test_replace_qs_to_empty():
+    params = _replace_qs(QueryDict(mutable=True), foo='bar')
+    assert dict(params) == {'foo': ['bar']}
+
+
+def test_replace_qs_to_identical():
+    orig = QueryDict(mutable=True)
+    orig.update({'foo': 'bar'})
+    params = _replace_qs(orig, foo='bar')
+    assert dict(params) == {'foo': ['bar']}
+
+
+def test_replace_qs_to_existing():
+    orig = QueryDict(mutable=True)
+    orig.update({'foo': 'val1'})
+    params = _replace_qs(orig, foo='val2')
+    assert dict(params) == {'foo': ['val2']}
+
+
+def test_remove_qs_to_empty():
+    params = _remove_qs(QueryDict(mutable=True), foo='bar')
+    assert dict(params) == {}
+
+
+def test_remove_qs_to_not_existing():
+    orig = QueryDict(mutable=True)
+    orig.update({'bar': 'foo'})
+    params = _remove_qs(orig, foo='bar')
+    assert dict(params) == {'bar': ['foo']}
+
+
+def test_remove_qs_to_value_not_existing():
+    orig = QueryDict(mutable=True)
+    orig.update({'bar': 'foo'})
+    params = _remove_qs(orig, bar='bar')
+    assert dict(params) == {'bar': ['foo']}
+
+
+def test_remove_qs_to_one():
+    orig = QueryDict(mutable=True)
+    orig.update({'foo': 'val1'})
+
+    params = _remove_qs(orig, foo='val1')
+    assert dict(params) == {}
+
+
+def test_remove_qs_to_several():
+    orig = QueryDict(mutable=True)
+    orig.update({'foo': 'val1'})
+    orig.update({'foo': 'val2'})
+    assert dict(orig) == {'foo': ['val1', 'val2']}
+    params = _remove_qs(orig, foo='val2')
+    assert dict(params) == {'foo': ['val1']}

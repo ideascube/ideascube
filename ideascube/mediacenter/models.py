@@ -76,6 +76,7 @@ class Document(SearchMixin, TimeStampedModel):
 
     package_id = models.CharField(verbose_name=_('package'), max_length=100,
                                   blank=True)
+    hidden = models.BooleanField(verbose_name=_('hidden'), default=False)
 
     class Meta:
         ordering = ["-modified_at", ]
