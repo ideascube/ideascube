@@ -236,12 +236,8 @@ class Command(BaseCommandWithSubcommands):
         except ExistingRemoteError as e:
             raise CommandError(e)
 
-        else:
-            self.catalog.update_cache()
-
     def remove_remote(self, options):
         try:
             self.catalog.remove_remote(options['id'])
         except ValueError as e:
             raise CommandError(e)
-        self.catalog.update_cache()
