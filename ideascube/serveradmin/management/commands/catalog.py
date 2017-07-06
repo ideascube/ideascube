@@ -30,6 +30,10 @@ class Command(BaseCommandWithSubcommands):
             '--package-cache', action='append', metavar='PATH', default=[],
             help='The path to an existing directory where downloaded packages'
                  ' can be found, in addition to the default package cache')
+        package_cache.add_argument(
+            '--keep-downloads', action='store_true',
+            help='Keep the downloaded packages in the local cache after the '
+                 'operation (the default is to discard them)')
 
         # -- Manage content ---------------------------------------------------
         list = self.subs.add_parser(
@@ -176,7 +180,8 @@ class Command(BaseCommandWithSubcommands):
                 self.catalog.add_package_cache(path)
 
         try:
-            self.catalog.install_packages(options['ids'])
+            self.catalog.install_packages(
+                options['ids'], keep_downloads=options['keep_downloads'])
 
         except NoSuchPackage as e:
             raise CommandError('No such package: {}'.format(e))
@@ -186,7 +191,8 @@ class Command(BaseCommandWithSubcommands):
 
     def reinstall_packages(self, options):
         try:
-            self.catalog.reinstall_packages(options['ids'])
+            self.catalog.reinstall_packages(
+                options['ids'], keep_downloads=options['keep_downloads'])
 
         except NoSuchPackage as e:
             raise CommandError('No such package: {}'.format(e))
@@ -197,7 +203,8 @@ class Command(BaseCommandWithSubcommands):
                 self.catalog.add_package_cache(path)
 
         try:
-            self.catalog.upgrade_packages(options['ids'])
+            self.catalog.upgrade_packages(
+                options['ids'], keep_downloads=options['keep_downloads'])
 
         except NoSuchPackage as e:
             raise CommandError('No such package: {}'.format(e))
