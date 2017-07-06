@@ -583,7 +583,7 @@ class Catalog:
         set_config('home-page', 'displayed-package-ids',
                    displayed_packages, User.objects.get_system_user())
 
-    def install_packages(self, ids):
+    def install_packages(self, ids, keep_downloads=False):
         ids = self._expand_package_ids(ids, self._available)
         used_handlers = set()
         installs = []
@@ -624,6 +624,9 @@ class Catalog:
             installed_ids.append(pkg.id)
             self._installed[pkg.id] = self._available[pkg.id].copy()
             self._persist_catalog()
+
+            if not keep_downloads:
+                rm(download_path)
 
         if installed_ids:
             self._update_displayed_packages_on_home(to_add_ids=installed_ids)
@@ -669,11 +672,11 @@ class Catalog:
         for handler in used_handlers:
             handler.commit()
 
-    def reinstall_packages(self, ids):
+    def reinstall_packages(self, ids, keep_downloads=False):
         self.remove_packages(ids, commit=False)
-        self.install_packages(ids)
+        self.install_packages(ids, keep_downloads=keep_downloads)
 
-    def upgrade_packages(self, ids):
+    def upgrade_packages(self, ids, keep_downloads=False):
         ids = self._expand_package_ids(ids, self._available)
         used_handlers = set()
         updates = []
@@ -740,6 +743,9 @@ class Catalog:
 
             self._installed[upkg.id] = self._available[upkg.id].copy()
             self._persist_catalog()
+
+            if not keep_downloads:
+                rm(download_path)
 
         self._update_displayed_packages_on_home(to_add_ids=new_package_ids)
 
