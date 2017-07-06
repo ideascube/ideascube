@@ -71,7 +71,12 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(hidden=False)
+        if not self.request.user.is_staff:
+            qs = qs.filter(hidden=False)
+        else:
+            show_hidden = 'hidden' in self.request.GET
+            if not show_hidden:
+                qs = qs.filter(hidden=False)
         return qs
 
 index = Index.as_view()
@@ -85,7 +90,7 @@ class DocumentDetail(DetailView):
     model = Document
     def get_object(self, *args, **kwargs):
         object = super().get_object(*args, **kwargs)
-        if object.hidden:
+        if object.hidden and not self.request.user.is_staff:
             raise PermissionDenied
         return object
 document_detail = DocumentDetail.as_view()

@@ -26,6 +26,18 @@
     {% if user.is_staff %}
         <div class="card tinted admin">
             {% fa 'plus' 'fa-fw' %} <a href="{% url 'mediacenter:document_create' %}">{% trans "Add a document" %}</a>
+            <br />
+            {% fa 'eye-slash' 'fa-fw' %}
+            {% is_in_qs 'hidden' as in_qs %}
+            {% if in_qs %}
+                <a href="{% remove_qs 'hidden' %}" class="flatlist">
+                    {% trans 'Hide hidden media' %}
+                </a>
+            {% else %}
+                <a href="{% add_qs 'hidden' %}" class="flatlist">
+                    {% trans 'Show hidden media' %}
+                </a>
+            {% endif %}
         </div>
     {% endif %}
     {% url 'mediacenter:index' as index %}

@@ -629,13 +629,29 @@ def test_index_should_not_show_hidden_content_to_user(app):
     assert hidden.title not in response.text
 
 
+def test_index_can_show_hidden_content_to_staff(staffapp):
+    shown = DocumentFactory()
+    hidden = DocumentFactory(hidden=True)
+
+    response = staffapp.get(reverse('mediacenter:index'))
+
+    assert shown.title in response.text
+    assert hidden.title not in response.text
+
+    response = staffapp.get(reverse('mediacenter:index'),
+        params={'hidden':''})
+
+    assert shown.title in response.text
+    assert hidden.title in response.text
+
+
 def test_user_cannot_access_detail_page_of_hidden_content(app):
     document = DocumentFactory(hidden=True)
     app.get(reverse('mediacenter:document_detail',
                     kwargs={'pk': document.pk}), status=403)
 
 
-def test_staff_cannot_access_detail_page_of_hidden_content(staffapp):
+def test_staff_can_access_detail_page_of_hidden_content(staffapp):
     document = DocumentFactory(hidden=True)
     staffapp.get(reverse('mediacenter:document_detail',
-                    kwargs={'pk': document.pk}), status=403)
+                    kwargs={'pk': document.pk}), status=200)
