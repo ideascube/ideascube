@@ -583,6 +583,7 @@ def test_install_package(tmpdir, capsys, settings, staticsite_path):
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
 
+    package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
 
@@ -592,6 +593,41 @@ def test_install_package(tmpdir, capsys, settings, staticsite_path):
     assert err.strip() == ''
     assert install_dir.join('the-site').join('index.html').read_binary() == (
         b'<html></html>')
+    assert not (package_cache / 'the-site-2017-06').exists()
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_install_package_and_keep_download(
+        tmpdir, capsys, settings, staticsite_path):
+    sha256sum = get_file_sha256(staticsite_path.strpath)
+
+    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
+    remote_catalog_file.write_text(
+        'all:\n'
+        '  the-site:\n'
+        '    name: A great web site\n'
+        '    version: 2017-06\n'
+        '    sha256sum: {sha256sum}\n'
+        '    size: 3027988\n'
+        '    url: file://{staticsite_path}\n'
+        '    type: static-site'.format(sha256sum=sha256sum, staticsite_path=staticsite_path),
+        'utf-8')
+
+    call_command(
+        'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+
+    package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
+    install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
+    assert install_dir.join('the-site').check(exists=False)
+
+    call_command('catalog', 'install', '--keep-downloads', 'the-site')
+    out, err = capsys.readouterr()
+    assert out.strip() == 'Installing the-site-2017-06'
+    assert err.strip() == ''
+    assert install_dir.join('the-site').join('index.html').read_binary() == (
+        b'<html></html>')
+    assert (package_cache / 'the-site-2017-06').exists()
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -762,6 +798,54 @@ def test_reinstall_package(tmpdir, capsys, settings, staticsite_path):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
+def test_reinstall_package_and_keep_downloads(
+        tmpdir, capsys, settings, staticsite_path):
+    sha256sum = get_file_sha256(staticsite_path.strpath)
+
+    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
+    remote_catalog_file.write_text(
+        'all:\n'
+        '  the-site:\n'
+        '    name: A great web site\n'
+        '    version: 2017-06\n'
+        '    sha256sum: {sha256sum}\n'
+        '    size: 3027988\n'
+        '    url: file://{staticsite_path}\n'
+        '    type: static-site'.format(sha256sum=sha256sum, staticsite_path=staticsite_path),
+        'utf-8')
+
+    call_command(
+        'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+
+    package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
+    install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
+    assert install_dir.join('the-site').check(exists=False)
+
+    call_command('catalog', 'install', 'the-site')
+    assert not (package_cache / 'the-site-2017-06').exists()
+
+    # Reset the output
+    out, err = capsys.readouterr()
+
+    call_command('catalog', 'reinstall', 'the-site')
+    out, err = capsys.readouterr()
+    assert out.strip() == (
+        'Removing the-site-2017-06\n'
+        'Installing the-site-2017-06')
+    assert err.strip() == ''
+    assert not (package_cache / 'the-site-2017-06').exists()
+
+    call_command('catalog', 'reinstall', '--keep-downloads', 'the-site')
+    out, err = capsys.readouterr()
+    assert out.strip() == (
+        'Removing the-site-2017-06\n'
+        'Installing the-site-2017-06')
+    assert err.strip() == ''
+    assert (package_cache / 'the-site-2017-06').exists()
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_reinstall_unavailable_package(tmpdir, capsys, settings, staticsite_path):
     sha256sum = get_file_sha256(staticsite_path.strpath)
 
@@ -879,6 +963,84 @@ def test_upgrade_package(tmpdir, capsys, settings, staticsite_path):
     assert err.strip() == ''
     assert install_dir.join('the-site').join('index.html').read_binary() == (
         b'<html></html>')
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_upgrade_package_and_keep_downloads(
+        tmpdir, capsys, settings, staticsite_path):
+    sha256sum = get_file_sha256(staticsite_path.strpath)
+
+    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
+    remote_catalog_file.write_text(
+        'all:\n'
+        '  the-site:\n'
+        '    name: A great web site\n'
+        '    version: 2017-06\n'
+        '    sha256sum: {sha256sum}\n'
+        '    size: 3027988\n'
+        '    url: file://{staticsite_path}\n'
+        '    type: static-site'.format(sha256sum=sha256sum, staticsite_path=staticsite_path),
+        'utf-8')
+
+    call_command(
+        'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+
+    package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
+    install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
+    assert install_dir.join('the-site').check(exists=False)
+
+    call_command('catalog', 'install', 'the-site')
+    assert not (package_cache / 'the-site-2017-06').exists()
+
+    # The package was updated on the remote
+    remote_catalog_file.write_text(
+        'all:\n'
+        '  the-site:\n'
+        '    name: A great web site\n'
+        '    version: 2017-07\n'
+        '    sha256sum: {sha256sum}\n'
+        '    size: 3027988\n'
+        '    url: file://{staticsite_path}\n'
+        '    type: static-site'.format(sha256sum=sha256sum, staticsite_path=staticsite_path),
+        'utf-8')
+    call_command('catalog', 'cache', 'update')
+
+    # Reset the output
+    out, err = capsys.readouterr()
+
+    call_command('catalog', 'upgrade')
+    out, err = capsys.readouterr()
+    assert out.strip() == (
+        'Removing the-site-2017-06\n'
+        'Installing the-site-2017-07')
+    assert err.strip() == ''
+    assert install_dir.join('the-site').join('index.html').read_binary() == (
+        b'<html></html>')
+    assert not (package_cache / 'the-site-2017-07').exists()
+
+    # The package was again updated on the remote
+    remote_catalog_file.write_text(
+        'all:\n'
+        '  the-site:\n'
+        '    name: A great web site\n'
+        '    version: 2017-08\n'
+        '    sha256sum: {sha256sum}\n'
+        '    size: 3027988\n'
+        '    url: file://{staticsite_path}\n'
+        '    type: static-site'.format(sha256sum=sha256sum, staticsite_path=staticsite_path),
+        'utf-8')
+    call_command('catalog', 'cache', 'update')
+
+    call_command('catalog', 'upgrade', '--keep-downloads')
+    out, err = capsys.readouterr()
+    assert out.strip() == (
+        'Removing the-site-2017-07\n'
+        'Installing the-site-2017-08')
+    assert err.strip() == ''
+    assert install_dir.join('the-site').join('index.html').read_binary() == (
+        b'<html></html>')
+    assert (package_cache / 'the-site-2017-08').exists()
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
