@@ -293,6 +293,7 @@ EXTRA_APP_CARDS = [
     # 'appinventor',
     # 'bsfcampus',
     # 'khanacademy',
+    # 'kolibri',
     # 'koombookedu',
 ]
 CUSTOM_CARDS = [
