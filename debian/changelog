@@ -1,3 +1,22 @@
+ideascube (0.30.0) unstable; urgency=low
+
+  * Mediacenter content can now be completely hidden; this is intended as a
+    purely internal feature, so we can store things that users don't need to
+    see;
+  * Added the Kolibri card;
+  * Stopped keeping the downloaded packages by default when installing or
+    upgrading them; a new --keep-downloads option was added;
+  * Fixed the deprecation warnings, so we can eventually move to Django 2
+    easily; deprecation warnings will now fail the tests, so we're forced to
+    fix them;
+  * Upgraded our dependencies to the latest and greatest;
+  * This release is dedicated to Grégoire, who for all these years has been
+    an amazing tech lead at BSF, the main sponsor of the Ideascube project; we
+    wish him the best in his new venture, and hope he will remain as a friend
+    in the Ideascube community;
+
+ -- Mathieu Bridon <bochecha@daitauha.fr>  Thu, 13 Jul 2017 17:15:00 +0200
+
 ideascube (0.29.2) unstable; urgency=low
 
   * Add new configuration files.
