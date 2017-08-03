@@ -226,19 +226,16 @@ class Command(BaseCommandWithSubcommands):
     # -- Manage remote sources ------------------------------------------------
     def list_remotes(self, options):
         for remote in self.catalog.list_remotes():
-            left = '[{0.id}] {0.name}'.format(remote)
-            print('{0:>35} : {1.url}'.format(left, remote))
+            print(remote)
 
     def add_remote(self, options):
         try:
             self.catalog.add_remote(options['id'], options['name'],
                                     options['url'])
+
         except ExistingRemoteError as e:
-            if e.remote.url != options['url']:
-                raise CommandError(
-                    ('There already is a "{0.id}" remote and urls differ '
-                     '({0.url} and {1})').format(e.remote, options['url']))
-            print('Not adding already existing remote: "{}"'.format(options['id']))
+            raise CommandError(e)
+
         else:
             self.catalog.update_cache()
 
