@@ -7,6 +7,7 @@ from django.core.management.base import CommandError
 from py.path import local as Path
 import pytest
 import yaml
+import json
 
 from ideascube.utils import URLRetrieveError, get_file_sha256
 
@@ -39,10 +40,10 @@ def test_add_remote(tmpdir, settings, capsys):
     remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).join('remotes')
 
     assert remotes_dir.check(dir=True)
-    assert remotes_dir.join('foo.yml').check(file=True)
+    assert remotes_dir.join('foo.json').check(file=True)
 
-    with remotes_dir.join('foo.yml').open('r') as f:
-        assert yaml.safe_load(f.read()) == expected
+    with remotes_dir.join('foo.json').open('r') as f:
+        assert json.load(f) == expected
 
 
 def test_cannot_add_duplicate_remote(tmpdir, settings, capsys):
@@ -62,9 +63,9 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, capsys):
     remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).join('remotes')
 
     assert remotes_dir.check(dir=True)
-    assert remotes_dir.join('foo.yml').check(file=True)
+    assert remotes_dir.join('foo.json').check(file=True)
 
-    old_mtime = remotes_dir.join('foo.yml').mtime()
+    old_mtime = remotes_dir.join('foo.json').mtime()
 
     capsys.readouterr()
 
@@ -84,7 +85,7 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, capsys):
             remote['url'])
 
     excinfo.match('A remote with this url already exists')
-    assert remotes_dir.join('foo2.yml').check(exists=False)
+    assert remotes_dir.join('foo2.json').check(exists=False)
 
     # Adding a remote with the same id but a different url should fail
     with pytest.raises(CommandError) as excinfo:
@@ -93,7 +94,7 @@ def test_cannot_add_duplicate_remote(tmpdir, settings, capsys):
             remote['url'] + "bad")
 
     excinfo.match('A remote with this id already exists')
-    assert remotes_dir.join('foo.yml').mtime() == old_mtime
+    assert remotes_dir.join('foo.json').mtime() == old_mtime
 
 
 def test_remove_remote(tmpdir, settings, capsys):
@@ -192,9 +193,9 @@ def test_update_cache_without_remote(settings, capsys):
     call_command('catalog', 'cache', 'update')
 
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
-    assert catalog_cache_dir.join('catalog.yml').check(file=True)
+    assert catalog_cache_dir.join('catalog.json').check(file=True)
 
-    with catalog_cache_dir.join('catalog.yml').open('r') as f:
+    with catalog_cache_dir.join('catalog.json').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
 
     out, err = capsys.readouterr()
@@ -219,11 +220,11 @@ def test_update_cache_with_remote(tmpdir, settings, capsys):
     call_command('catalog', 'cache', 'update')
 
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
-    assert catalog_cache_dir.join('catalog.yml').check(file=True)
+    assert catalog_cache_dir.join('catalog.json').check(file=True)
 
     expected = {'foovideos': {'name': 'Great videos from Foo'}}
 
-    with catalog_cache_dir.join('catalog.yml').open('r') as f:
+    with catalog_cache_dir.join('catalog.json').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
 
     out, err = capsys.readouterr()
@@ -242,14 +243,14 @@ def test_clear_metadata_cache(tmpdir, settings, capsys):
     call_command('catalog', 'cache', 'update')
 
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
-    catalog_cache_path = catalog_cache_dir.join('catalog.yml')
+    catalog_cache_path = catalog_cache_dir.join('catalog.json')
     downloaded_path = catalog_cache_dir.join('packages').join('foovideos')
     downloaded_path.write_binary(b'content')
     assert yaml.safe_load(catalog_cache_path.read_text('utf-8')) != {}
 
     call_command('catalog', 'cache', 'clear', '--metadata')
 
-    assert catalog_cache_dir.join('catalog.yml').check(file=True)
+    assert catalog_cache_dir.join('catalog.json').check(file=True)
     assert yaml.safe_load(catalog_cache_path.read_text('utf-8')) == {}
     assert downloaded_path.read_binary() == b'content'
 
@@ -269,14 +270,14 @@ def test_clear_package_cache(tmpdir, settings, capsys):
     call_command('catalog', 'cache', 'update')
 
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
-    catalog_cache_path = catalog_cache_dir.join('catalog.yml')
+    catalog_cache_path = catalog_cache_dir.join('catalog.json')
     downloaded_path = catalog_cache_dir.join('packages').join('foovideos')
     downloaded_path.write_binary(b'content')
     assert yaml.safe_load(catalog_cache_path.read_text('utf-8')) != {}
 
     call_command('catalog', 'cache', 'clear', '--packages')
 
-    assert catalog_cache_dir.join('catalog.yml').check(file=True)
+    assert catalog_cache_dir.join('catalog.json').check(file=True)
     assert yaml.safe_load(catalog_cache_path.read_text('utf-8')) != {}
     assert downloaded_path.check(exists=False)
 
@@ -296,14 +297,14 @@ def test_clear_cache(tmpdir, settings, capsys):
     call_command('catalog', 'cache', 'update')
 
     catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
-    catalog_cache_path = catalog_cache_dir.join('catalog.yml')
+    catalog_cache_path = catalog_cache_dir.join('catalog.json')
     downloaded_path = catalog_cache_dir.join('packages').join('foovideos')
     downloaded_path.write_binary(b'content')
     assert yaml.safe_load(catalog_cache_path.read_text('utf-8')) != {}
 
     call_command('catalog', 'cache', 'clear')
 
-    assert catalog_cache_dir.join('catalog.yml').check(file=True)
+    assert catalog_cache_dir.join('catalog.json').check(file=True)
     assert yaml.safe_load(catalog_cache_path.read_text('utf-8')) == {}
     assert downloaded_path.check(exists=False)
 
@@ -330,7 +331,7 @@ def test_split_cache(tmpdir, settings):
     catalog_storage_dir = Path(settings.CATALOG_STORAGE_ROOT)
 
     catalog_cache_dir.join('catalog.yml').write(old_cache)
-    catalog_storage_dir.join('installed.yml').remove()
+    catalog_storage_dir.join('installed.json').remove()
 
     # And check that it migrates properly
     call_command('catalog', 'cache', 'update')
@@ -339,9 +340,9 @@ def test_split_cache(tmpdir, settings):
         'foovideos': {'name': 'Videos from Foo'},
         }
     assert yaml.safe_load(
-        catalog_cache_dir.join('catalog.yml').read()) == expected
+        catalog_cache_dir.join('catalog.json').read()) == expected
     assert yaml.safe_load(
-        catalog_storage_dir.join('installed.yml').read()) == {}
+        catalog_storage_dir.join('installed.json').read()) == {}
 
 
 def test_move_remotes(tmpdir, settings):
@@ -358,6 +359,9 @@ def test_move_remotes(tmpdir, settings):
     catalog_storage_dir = Path(settings.CATALOG_STORAGE_ROOT)
 
     catalog_storage_dir.join('remotes').move(catalog_cache_dir.join('remotes'))
+    content = json.loads(catalog_cache_dir.join('remotes', 'foo.json').read())
+    catalog_cache_dir.join('remotes', 'foo.yml').write(yaml.safe_dump(content))
+    catalog_cache_dir.join('remotes', 'foo.json').remove()
     assert catalog_cache_dir.join('remotes', 'foo.yml').check(file=True)
     assert catalog_storage_dir.join('remotes').check(exists=False)
 
@@ -365,7 +369,7 @@ def test_move_remotes(tmpdir, settings):
     call_command('catalog', 'cache', 'update')
 
     assert catalog_cache_dir.join('remotes').check(exists=False)
-    assert catalog_storage_dir.join('remotes', 'foo.yml').check(file=True)
+    assert catalog_storage_dir.join('remotes', 'foo.json').check(file=True)
 
 
 def test_list_packages_without_remotes(capsys):
@@ -423,12 +427,15 @@ def test_list_installed_packages(tmpdir, capsys, settings):
     call_command('catalog', 'cache', 'update')
 
     # Pretend we installed something
-    Path(settings.CATALOG_STORAGE_ROOT).join('installed.yml').write_text(
-        'foovideos:\n'
-        '  name: Videos from Foo\n'
-        '  version: 2017-06\n'
-        '  size: 3027988\n'
-        '  type: zipped-medias',
+    Path(settings.CATALOG_STORAGE_ROOT).join('installed.json').write_text(
+        '{\n'
+        '  "foovideos": {\n'
+        '    "name": "Videos from Foo",\n'
+        '    "version": "2017-06",\n'
+        '    "size": 3027988,\n'
+        '    "type": "zipped-medias"\n'
+        '  }\n'
+        '}\n',
         'utf-8')
 
     call_command('catalog', 'list', '--installed')
@@ -458,12 +465,15 @@ def test_list_upgradable_packages(tmpdir, capsys, settings):
     call_command('catalog', 'cache', 'update')
 
     # Pretend we installed something which has since been updated in the remote
-    Path(settings.CATALOG_STORAGE_ROOT).join('installed.yml').write_text(
-        'foovideos:\n'
-        '  name: Videos from Foo\n'
-        '  version: 2017-05\n'
-        '  size: 3027988\n'
-        '  type: zipped-medias',
+    Path(settings.CATALOG_STORAGE_ROOT).join('installed.json').write_text(
+        '{\n'
+        '  "foovideos":{\n'
+        '    "name": "Videos from Foo",\n'
+        '    "version": "2017-05",\n'
+        '    "size": 3027988,\n'
+        '    "type": "zipped-medias"\n'
+        '  }\n'
+        '}\n',
         'utf-8')
 
     call_command('catalog', 'list', '--upgradable')
