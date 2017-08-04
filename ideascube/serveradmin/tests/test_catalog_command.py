@@ -36,7 +36,6 @@ def test_add_remote(tmpdir, settings, capsys):
         expected['url'])
 
     # Ensure the remote has been added
-    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).join('remotes')
 
     assert remotes_dir.check(dir=True)
@@ -44,20 +43,6 @@ def test_add_remote(tmpdir, settings, capsys):
 
     with remotes_dir.join('foo.yml').open('r') as f:
         assert yaml.safe_load(f.read()) == expected
-
-    # Ensure the cache has been updated
-    assert catalog_cache_dir.join('catalog.yml').check(file=True)
-
-    expected = {
-        'foovideos': {'name': 'Videos from Foo'},
-        }
-
-    with catalog_cache_dir.join('catalog.yml').open('r') as f:
-        assert yaml.safe_load(f.read()) == expected
-
-    out, err = capsys.readouterr()
-    assert out.strip() == ''
-    assert err.strip() == ''
 
 
 def test_cannot_add_duplicate_remote(tmpdir, settings, capsys):
@@ -127,23 +112,10 @@ def test_remove_remote(tmpdir, settings, capsys):
     call_command('catalog', 'remotes', 'remove', remote['id'])
 
     # Ensure the remote has been removed
-    catalog_cache_dir = Path(settings.CATALOG_CACHE_ROOT)
     remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).join('remotes')
 
     assert remotes_dir.check(dir=True)
     assert remotes_dir.listdir() == []
-
-    # Ensure the cache has been updated
-    assert catalog_cache_dir.join('catalog.yml').check(file=True)
-
-    expected = {}
-
-    with catalog_cache_dir.join('catalog.yml').open('r') as f:
-        assert yaml.safe_load(f.read()) == expected
-
-    out, err = capsys.readouterr()
-    assert out.strip() == ''
-    assert err.strip() == ''
 
 
 def test_cannot_remove_unexisting_remote():
@@ -422,6 +394,7 @@ def test_list_available_packages(tmpdir, capsys):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     call_command('catalog', 'list', '--available')
 
@@ -447,6 +420,7 @@ def test_list_installed_packages(tmpdir, capsys, settings):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     # Pretend we installed something
     Path(settings.CATALOG_STORAGE_ROOT).join('installed.yml').write_text(
@@ -481,6 +455,7 @@ def test_list_upgradable_packages(tmpdir, capsys, settings):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     # Pretend we installed something which has since been updated in the remote
     Path(settings.CATALOG_STORAGE_ROOT).join('installed.yml').write_text(
@@ -515,6 +490,7 @@ def test_list_no_upgradable_packages(tmpdir, capsys, settings):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     call_command('catalog', 'list', '--upgradable')
 
@@ -530,6 +506,7 @@ def test_list_upgradable_removed_from_remote(tmpdir, capsys, settings):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     # Pretend we installed something which has since disapeared from the remote
     Path(settings.CATALOG_STORAGE_ROOT).join('installed.yml').write_text(
@@ -559,6 +536,7 @@ def test_list_with_unknown_package_must_no_fail(tmpdir, capsys):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     call_command('catalog', 'list')
     out, err = capsys.readouterr()
@@ -593,6 +571,7 @@ def test_install_package(tmpdir, capsys, settings, staticsite_path):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
@@ -627,6 +606,7 @@ def test_install_package_and_keep_download(
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
@@ -661,6 +641,7 @@ def test_install_package_already_in_extra_cache(
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
@@ -695,6 +676,7 @@ def test_install_unavailable_package(tmpdir, settings, staticsite_path):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
@@ -725,6 +707,7 @@ def test_remove_package(tmpdir, capsys, settings, staticsite_path):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
@@ -761,6 +744,7 @@ def test_remove_uninstalled_package(tmpdir, capsys, settings, staticsite_path):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
@@ -791,6 +775,7 @@ def test_reinstall_package(tmpdir, capsys, settings, staticsite_path):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
@@ -828,6 +813,7 @@ def test_reinstall_package_and_keep_downloads(
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
@@ -875,6 +861,7 @@ def test_reinstall_unavailable_package(tmpdir, capsys, settings, staticsite_path
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
@@ -913,6 +900,7 @@ def test_reinstall_not_installed_package(tmpdir, capsys, settings, staticsite_pa
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
@@ -944,6 +932,7 @@ def test_upgrade_package(tmpdir, capsys, settings, staticsite_path):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
@@ -996,6 +985,7 @@ def test_upgrade_package_and_keep_downloads(
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
@@ -1074,6 +1064,7 @@ def test_upgrade_package_already_in_extra_cache(
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
@@ -1126,6 +1117,7 @@ def test_upgrade_unavailable_package(tmpdir, settings, staticsite_path):
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
@@ -1157,6 +1149,7 @@ def test_upgrade_not_installed_package(
     call_command(
         'catalog', 'remotes', 'add', 'foo', 'Content from Foo',
         'file://{}'.format(remote_catalog_file.strpath))
+    call_command('catalog', 'cache', 'update')
 
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
