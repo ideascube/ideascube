@@ -712,6 +712,27 @@ def test_catalog_remove_remote(settings):
     assert params['id'] in exc.exconly()
 
 
+def test_catalog_add_package_cache(tmpdir, settings):
+    from ideascube.serveradmin.catalog import Catalog
+
+    default_cache = os.path.join(settings.CATALOG_CACHE_ROOT, 'packages')
+
+    c = Catalog()
+    assert c._package_caches == [default_cache]
+
+    extra1 = tmpdir.mkdir('extra1').strpath
+    c.add_package_cache(extra1)
+    assert c._package_caches == [extra1, default_cache]
+
+    extra2 = tmpdir.mkdir('extra2').strpath
+    c.add_package_cache(extra2)
+    assert c._package_caches == [extra1, extra2, default_cache]
+
+    extra3 = tmpdir.mkdir('extra3').strpath
+    c.add_package_cache(extra3)
+    assert c._package_caches == [extra1, extra2, extra3, default_cache]
+
+
 def test_catalog_update_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
