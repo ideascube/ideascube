@@ -853,7 +853,7 @@ class Catalog:
             self._installed[pkgid] = available.copy()
 
     def add_package_cache(self, path):
-        self._package_caches.append(os.path.abspath(path))
+        self._package_caches.insert(-1, os.path.abspath(path))
 
     def update_cache(self):
         self._available_value = {}
