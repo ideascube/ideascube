@@ -1,3 +1,14 @@
+ideascube (0.31.0) unstable; urgency=low
+
+  * Changed the catalog command so it doesn't automatically update the cache
+    when adding or removing remotes;
+  * Made the catalog try the extra package caches before the primary one;
+  * Improved handling of duplicate remotes in the catalog;
+  * Made catalog handlers create their installation directory;
+  * Added a configuration for the drcamman box in Jordan;
+
+ -- Mathieu Bridon <bochecha@daitauha.fr>  Thu, 10 Aug 2017 11:52:00 +0200
+
 ideascube (0.30.0) unstable; urgency=low
 
   * Mediacenter content can now be completely hidden; this is intended as a
