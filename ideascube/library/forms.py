@@ -17,19 +17,6 @@ from .utils import (fetch_from_openlibrary, load_from_ideascube,
 
 class BookSpecimenForm(forms.ModelForm):
 
-    def clean_barcode(self):
-        barcode = self.cleaned_data['barcode']
-
-        if barcode is None:
-            return None
-
-        # Keep only letters
-        barcode = re.sub(r'\s', '', barcode)
-
-        # Make sure empty values are mapped to None, not empty strings (we need
-        # NULL values in db, not empty strings, for uniqueness constraints).
-        return barcode or None
-
     def clean_file(self):
         # Ensure specimenfile and barcode are not both filled or both set to
         # None.

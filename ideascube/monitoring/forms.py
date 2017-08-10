@@ -1,5 +1,4 @@
 import csv
-import re
 from datetime import date
 
 from django import forms
@@ -13,18 +12,6 @@ from ideascube.utils import TextIOWrapper
 from .models import Entry, InventorySpecimen, Loan, Specimen, StockItem
 
 user_model = get_user_model()
-
-
-def clean_barcode(barcode):
-    if barcode is None:
-        return None
-
-    # Keep only integers
-    barcode = re.sub(r'\W', '', barcode)
-
-    # Make sure empty values are mapped to None, not empty strings (we need
-    # NULL values in db, not empty strings, for uniqueness constraints).
-    return barcode or None
 
 
 class EntryForm(forms.Form):
@@ -72,9 +59,6 @@ class ExportLoanForm(SinceForm):
 
 class SpecimenForm(forms.ModelForm):
 
-    def clean_barcode(self):
-        return clean_barcode(self.cleaned_data['barcode'])
-
     class Meta:
         model = Specimen
         widgets = {'item': forms.HiddenInput}
@@ -88,7 +72,7 @@ class InventorySpecimenForm(forms.ModelForm):
                                    'placeholder': _('Enter a barcode')}))
 
     def clean_specimen(self):
-        barcode = clean_barcode(self.cleaned_data['specimen'])
+        barcode = self.cleaned_data['specimen']
         specimen_query = Q(barcode=barcode)|Q(serial=barcode)
         try:
             specimen = Specimen.objects.get(specimen_query)
