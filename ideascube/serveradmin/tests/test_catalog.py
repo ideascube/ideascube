@@ -1868,6 +1868,28 @@ def test_catalog_update_uninstalled_package(
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
+def test_update_uninstalled_and_unavailable_package(tmpdir):
+    from ideascube.serveradmin.catalog import Catalog, NoSuchPackage
+
+    sourcedir = tmpdir.mkdir('source')
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all: {}')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+
+    with pytest.raises(NoSuchPackage) as excinfo:
+        c.upgrade_packages(['wikipedia.tum'])
+
+    excinfo.match('wikipedia.tum')
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
