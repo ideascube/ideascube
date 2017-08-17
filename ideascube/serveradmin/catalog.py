@@ -693,14 +693,26 @@ class Catalog:
 
         # First get the list of updates and download them
         for pkg_id in sorted(ids):
-            upkg = self._get_package(pkg_id, self._available)
-
             try:
                 ipkg = self._get_package(pkg_id, self._installed)
 
             except NoSuchPackage:
                 # Not installed yet, we'll install the latest version
                 ipkg = None
+
+            try:
+                upkg = self._get_package(pkg_id, self._available)
+
+            except NoSuchPackage:
+                if ipkg is not None:
+                    printerr(
+                        'Ignoring package: {pkg_id} is installed but now can '
+                        'not be found in any remote'.format(pkg_id=pkg_id))
+                    continue
+
+                else:
+                    # Not installed and not available? This is clearly an error
+                    raise
 
             if ipkg is not None and ipkg == upkg:
                 printerr('{ipkg} has no update available'.format(ipkg=ipkg))
