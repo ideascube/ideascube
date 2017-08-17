@@ -419,7 +419,7 @@ class ZippedMedias(SimpleZipPackage, typename='zipped-medias'):
 
 
 class Bar(ProgressBar):
-    template = ('Download: {percent} |{animation}| {done:B}/{total:B} '
+    template = ('Downloading {item}: {percent} |{animation}| {done:B}/{total:B} '
                 '({speed:B}/s) | ETA: {eta}')
     throttle = timedelta(seconds=1)
 
@@ -448,8 +448,9 @@ class Catalog:
 
         self._bar = Bar()
 
-    def _progress(self, msg, i, chunk_size, remote_size):
-        self._bar.update(done=(i + 1) * chunk_size, total=remote_size)
+    def _progress(self, item, i, chunk_size, remote_size):
+        self._bar.update(
+            item=item, done=(i + 1) * chunk_size, total=remote_size)
 
     # -- Manage packages ------------------------------------------------------
     def _get_package(self, id, source):
@@ -494,7 +495,7 @@ class Catalog:
 
     def _fetch_package(self, package):
         def _progress(*args):
-            self._progress(' {}'.format(package.id), *args)
+            self._progress(package.id, *args)
 
         filename = '{0.id}-{0.version}'.format(package)
 
@@ -864,7 +865,7 @@ class Catalog:
                 tmppath = fd.name
 
                 def _progress(*args):
-                    self._progress(' {}'.format(remote.name), *args)
+                    self._progress(remote.name, *args)
 
                 # TODO: Verify the download with sha256sum? Crypto signature?
                 try:
