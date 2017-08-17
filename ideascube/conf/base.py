@@ -205,7 +205,7 @@ LOCALE_PATHS = (
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'ideascube.storage.VersionedStaticFilesStorage'
 STATICFILES_DIRS = []
 if os.path.exists('/usr/share/ideascube/static'):
     STATICFILES_DIRS.append('/usr/share/ideascube/static')
