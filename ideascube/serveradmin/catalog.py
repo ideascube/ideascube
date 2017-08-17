@@ -686,7 +686,7 @@ class Catalog:
         self.install_packages(ids, keep_downloads=keep_downloads)
 
     def upgrade_packages(self, ids, keep_downloads=False):
-        ids = self._expand_package_ids(ids, self._available)
+        ids = self._expand_package_ids(ids, self._installed)
         used_handlers = set()
         updates = []
         new_package_ids = []
