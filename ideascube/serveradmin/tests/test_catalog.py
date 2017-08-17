@@ -1890,6 +1890,170 @@ def test_update_uninstalled_and_unavailable_package(tmpdir):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
+def test_catalog_update_installed_but_unavailable_package(
+        tmpdir, capsys, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum'])
+
+    library = installdir.join('library.xml')
+    assert library.check(exists=True)
+
+    with library.open(mode='r') as f:
+        libdata = f.read()
+
+        assert 'path="data/content/wikipedia.tum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        assert 'date="2015-08-10"' in libdata
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all: {}')
+
+    c.update_cache()
+    c.upgrade_packages(['wikipedia.tum'])
+
+    library = installdir.join('library.xml')
+    assert library.check(exists=True)
+
+    with library.open(mode='r') as f:
+        libdata = f.read()
+
+        assert 'path="data/content/wikipedia.tum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        assert 'date="2015-08-10"' in libdata
+
+    _, err = capsys.readouterr()
+    assert (
+        'Ignoring package: wikipedia.tum is installed but now can not be found'
+        ' in any remote') in err
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
+def test_update_all_with_unavailable_package(
+        tmpdir, capsys, settings, testdatadir, mocker):
+    from ideascube.serveradmin.catalog import Catalog
+
+    installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+    sourcedir = tmpdir.mkdir('source')
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+        f.write('  wikipedia.tumtudum:\n')
+        f.write('    version: 2015-08\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
+            '212c29a30109c54\n')
+        f.write('    type: zipped-zim\n')
+
+    mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    c = Catalog()
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    c.install_packages(['wikipedia.tum', 'wikipedia.tumtudum'])
+
+    library = installdir.join('library.xml')
+    assert library.check(exists=True)
+
+    with library.open(mode='r') as f:
+        libdata = f.read()
+
+        assert 'path="data/content/wikipedia.tum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        assert 'date="2015-08-10"' in libdata
+
+        assert 'path="data/content/wikipedia.tumtudum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' in libdata
+        assert 'date="2015-08-10"' in libdata
+
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim.copy(path)
+
+    remote_catalog_file = sourcedir.join('catalog.yml')
+    with remote_catalog_file.open(mode='w') as f:
+        f.write('all:\n')
+        f.write('  wikipedia.tum:\n')
+        f.write('    version: 2015-09\n')
+        f.write('    size: 200KB\n')
+        f.write('    url: file://{}\n'.format(path))
+        f.write(
+            '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+            'd78fd4c9cf2c3dd\n')
+        f.write('    type: zipped-zim\n')
+
+    c.update_cache()
+    c.upgrade_packages(['*'])
+
+    library = installdir.join('library.xml')
+    assert library.check(exists=True)
+
+    with library.open(mode='r') as f:
+        libdata = f.read()
+
+        assert 'path="data/content/wikipedia.tum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        assert 'date="2015-09-10"' in libdata
+
+        assert 'path="data/content/wikipedia.tumtudum.zim"' in libdata
+        assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' in libdata
+        assert 'date="2015-08-10"' in libdata
+
+    _, err = capsys.readouterr()
+    assert (
+        'Ignoring package: wikipedia.tumtudum is installed but now can not be '
+        'found in any remote') in err
+
+
+@pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
