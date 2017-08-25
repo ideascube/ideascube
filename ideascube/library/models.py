@@ -90,12 +90,13 @@ class Book(StockItem, SearchMixin, TimeStampedModel):
     def index_kind(self):
         return self.section
 
-    @property
-    def physical(self):
-        return any(s.instance.physical for s in self.specimens.all())
-
     def save(self, *args, **kwargs):
         self.module = self.LIBRARY
+
+        if self.id is None:
+            # Books start digital, until one of their BookSpecimen is physical
+            self.physical = False
+
         return super().save(*args, **kwargs)
 
 
@@ -126,3 +127,11 @@ class BookSpecimen(Specimen, TimeStampedModel):
             return ''
         name, extension = os.path.splitext(self.file.name)
         return extension[1:]
+
+    def save(self, *args, **kwargs):
+        if self.physical:
+            # This is a physical BookSpecimen, make the Book physical
+            self.item.physical = True
+            self.item.save()
+
+        return super().save(*args, **kwargs)
