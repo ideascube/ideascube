@@ -55,13 +55,7 @@ class Inventory(TimeStampedModel):
         return self.inventoryspecimen_set.filter(specimen=specimen).exists()
 
 
-class StockItemQuerySet(models.QuerySet):
-    def physical(self):
-        return [item for item in self if item.instance.physical]
-
-
 class StockItem(models.Model):
-    physical = True
     CINEMA = 'cinema'
     LIBRARY = 'library'
     DIGITAL = 'digital'
@@ -78,8 +72,7 @@ class StockItem(models.Model):
                               choices=MODULES)
     name = models.CharField(verbose_name=_('name'), max_length=300)
     description = models.TextField(verbose_name=_('description'), blank=True)
-
-    objects = StockItemQuerySet.as_manager()
+    physical = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
