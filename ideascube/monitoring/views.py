@@ -108,7 +108,7 @@ class StockListMixin(object):
             stock.append({
                 'key': key,
                 'name': name,
-                'objects': StockItem.objects.filter(module=key).physical()
+                'objects': StockItem.objects.filter(module=key, physical=True)
             })
         return stock
 
