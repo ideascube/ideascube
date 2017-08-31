@@ -314,10 +314,6 @@ CUSTOM_CARDS = [
 SERVICES = [
     {'name': 'uwsgi', 'description': _('Python web server')},
     {'name': 'nginx', 'description': _('Global proxy')},
-    {
-        'name': 'kalite',
-        'description': _('Daemon which provides KhanAcademy on lan'),
-    },
 ]
 
 
