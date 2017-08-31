@@ -1,4 +1,3 @@
-from io import BytesIO
 import os
 import shutil
 import tarfile
@@ -12,9 +11,7 @@ from django.core.files.base import ContentFile
 from ..backup import Backup
 from ideascube.configuration import get_config, set_config
 from .test_backup import BACKUPS_ROOT, DATA_ROOT
-from . import (
-    FakeBus, FakePopen, FailingPopen, NMActiveConnection, NMConnection,
-    NMDevice)
+from . import FakePopen, NMActiveConnection, NMConnection, NMDevice
 
 pytestmark = pytest.mark.django_db
 
@@ -22,7 +19,6 @@ pytestmark = pytest.mark.django_db
 @pytest.mark.parametrize("page", [
     ("settings"),
     ("languages"),
-    ("services"),
     ("power"),
     ("backup"),
     ("battery"),
@@ -37,7 +33,6 @@ def test_anonymous_user_should_not_access_server(app, page):
 @pytest.mark.parametrize("page", [
     ("settings"),
     ("languages"),
-    ("services"),
     ("power"),
     ("backup"),
     ("battery"),
@@ -76,181 +71,6 @@ def test_staff_is_presented_with_default_server_name(staffapp, settings):
     res = staffapp.get(reverse('server:settings'), status=200)
     form = res.forms['server_name']
     assert form['server_name'].value == 'Ideas Cube'
-
-
-def test_staff_lists_services(mocker, staffapp, settings):
-    mocker.patch(
-        'ideascube.serveradmin.systemd.dbus.SystemBus', side_effect=FakeBus)
-    settings.SERVICES = [
-        {'name': 'foobar'}, {'name': 'nginx'},
-        {'name': 'NetworkManager.service'}]
-
-    res = staffapp.get(reverse("server:services"), status=200)
-    body = res.unicode_body
-
-    assert body.count('<li class="service">') == 3
-
-
-def test_staff_lists_uninstalled_service(mocker, staffapp, settings):
-    mocker.patch(
-        'ideascube.serveradmin.systemd.dbus.SystemBus', side_effect=FakeBus)
-    settings.SERVICES = [{'name': 'foobar'}]
-
-    res = staffapp.get(reverse("server:services"), status=200)
-    body = res.unicode_body
-
-    assert body.count('<li class="service">') == 1
-    assert '<h3>foobar <span>not running</span></h3>' in body
-    assert '<div class="error">Not installed</div>' in body
-    assert '<input type="submit" name="start" value="Start">' not in body
-    assert '<input type="submit" name="restart" value="Restart">' not in body
-    assert '<input type="submit" name="stop" value="Stop">' not in body
-
-
-def test_staff_lists_inactive_service(mocker, staffapp, settings):
-    mocker.patch(
-        'ideascube.serveradmin.systemd.dbus.SystemBus', side_effect=FakeBus)
-    settings.SERVICES = [{'name': 'nginx'}]
-
-    res = staffapp.get(reverse("server:services"), status=200)
-    body = res.unicode_body
-
-    assert body.count('<li class="service">') == 1
-    assert '<h3>nginx <span>not running</span></h3>' in body
-    assert '<div class="error">Not installed</div>' not in body
-    assert '<input type="submit" name="start" value="Start">' in body
-    assert '<input type="submit" name="restart" value="Restart">' not in body
-    assert '<input type="submit" name="stop" value="Stop">' not in body
-
-
-def test_staff_lists_active_service(mocker, staffapp, settings):
-    mocker.patch(
-        'ideascube.serveradmin.systemd.dbus.SystemBus', side_effect=FakeBus)
-    settings.SERVICES = [{'name': 'NetworkManager'}]
-
-    res = staffapp.get(reverse("server:services"), status=200)
-    body = res.unicode_body
-
-    assert body.count('<li class="service">') == 1
-    assert '<h3>NetworkManager <span>running</span></h3>' in body
-    assert '<div class="error">Not installed</div>' not in body
-    assert '<input type="submit" name="start" value="Start">' not in body
-    assert '<input type="submit" name="restart" value="Restart">' in body
-    assert '<input type="submit" name="stop" value="Stop">' in body
-
-
-def test_staff_activates_service(mocker, staffapp, settings):
-    mocker.patch(
-        'ideascube.serveradmin.systemd.dbus.SystemBus', side_effect=FakeBus)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.Popen',
-        side_effect=FakePopen)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
-
-    settings.SERVICES = [{'name': 'nginx'}]
-
-    res = staffapp.get(reverse("server:services"), status=200)
-    form = res.forms['service-nginx']
-    res = form.submit('start')
-    assert (
-        '<ul class="messages"><li class="error">Could not enable '
-        'nginx.service: Oh Noes!</li></ul>') not in res.unicode_body
-
-
-def test_staff_fails_to_activate_service(mocker, staffapp, settings):
-    mocker.patch(
-        'ideascube.serveradmin.systemd.dbus.SystemBus', side_effect=FakeBus)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.Popen',
-        side_effect=FailingPopen)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
-
-    settings.SERVICES = [{'name': 'nginx'}]
-
-    res = staffapp.get(reverse("server:services"), status=200)
-    form = res.forms['service-nginx']
-    res = form.submit('start')
-    assert (
-        '<ul class="messages"><li class="error">Could not enable '
-        'nginx.service: Oh Noes!</li></ul>') in res.unicode_body
-
-
-def test_staff_deactivates_service(mocker, staffapp, settings):
-    mocker.patch(
-        'ideascube.serveradmin.systemd.dbus.SystemBus', side_effect=FakeBus)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.Popen',
-        side_effect=FakePopen)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
-
-    settings.SERVICES = [{'name': 'NetworkManager'}]
-
-    res = staffapp.get(reverse("server:services"), status=200)
-    form = res.forms['service-NetworkManager']
-    res = form.submit('stop')
-    assert (
-        '<ul class="messages"><li class="error">Could not disable '
-        'NetworkManager.service: Oh Noes!</li></ul>') not in res.unicode_body
-
-
-def test_staff_fails_to_deactivate_service(mocker, staffapp, settings):
-    mocker.patch(
-        'ideascube.serveradmin.systemd.dbus.SystemBus', side_effect=FakeBus)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.Popen',
-        side_effect=FailingPopen)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
-
-    settings.SERVICES = [{'name': 'NetworkManager'}]
-
-    res = staffapp.get(reverse("server:services"), status=200)
-    form = res.forms['service-NetworkManager']
-    res = form.submit('stop')
-    assert (
-        '<ul class="messages"><li class="error">Could not disable '
-        'NetworkManager.service: Oh Noes!</li></ul>') in res.unicode_body
-
-
-def test_staff_restarts_service(mocker, staffapp, settings):
-    mocker.patch(
-        'ideascube.serveradmin.systemd.dbus.SystemBus', side_effect=FakeBus)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.Popen',
-        side_effect=FakePopen)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
-
-    settings.SERVICES = [{'name': 'NetworkManager'}]
-
-    res = staffapp.get(reverse("server:services"), status=200)
-    form = res.forms['service-NetworkManager']
-    res = form.submit('restart')
-    assert (
-        '<ul class="messages"><li class="error">Could not restart '
-        'NetworkManager.service: Oh Noes!</li></ul>') not in res.unicode_body
-
-
-def test_staff_fails_to_restart_service(mocker, staffapp, settings):
-    mocker.patch(
-        'ideascube.serveradmin.systemd.dbus.SystemBus', side_effect=FakeBus)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.Popen',
-        side_effect=FailingPopen)
-    mocker.patch(
-        'ideascube.serveradmin.systemd.subprocess.PIPE', side_effect=BytesIO)
-
-    settings.SERVICES = [{'name': 'NetworkManager'}]
-
-    res = staffapp.get(reverse("server:services"), status=200)
-    form = res.forms['service-NetworkManager']
-    res = form.submit('restart')
-    assert (
-        '<ul class="messages"><li class="error">Could not restart '
-        'NetworkManager.service: Oh Noes!</li></ul>') in res.unicode_body
 
 
 def test_staff_user_should_access_power_admin(staffapp):

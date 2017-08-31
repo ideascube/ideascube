@@ -22,14 +22,6 @@ class Manager(object):
 
         return self._get_unit(service_id)
 
-    def activate(self, unit_id):
-        systemctl('enable', unit_id)
-        systemctl('start', unit_id)
-
-    def deactivate(self, unit_id):
-        systemctl('disable', unit_id)
-        systemctl('stop', unit_id)
-
     def restart(self, unit_id):
         systemctl('restart', unit_id)
 

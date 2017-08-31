@@ -1,29 +1,6 @@
 /* ************************************************* */
 /* **************** SERVER ADMIN ******************* */
 /* ************************************************* */
-.services .service {
-    padding-bottom: 20px;
-}
-.services .service h3 {
-    text-transform: uppercase;
-}
-.services .service + .service {
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-}
-.services .status-error h3 span,
-.services .status-off h3 span,
-.services .status-on h3 span {
-    font-family: 'fira_sansbook';
-}
-.services .status-on h3 span {
-    color: #26A65B;
-}
-.services .status-error h3 span,
-.services .status-off h3 span {
-    color: #C0392B;
-}
-
 .list-box {
     border: 1px solid #ddd;
     padding: 0;
