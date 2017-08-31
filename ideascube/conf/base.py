@@ -318,8 +318,6 @@ SERVICES = [
         'name': 'kalite',
         'description': _('Daemon which provides KhanAcademy on lan'),
     },
-    {'name': 'ssh',
-        'description': _('Daemon used for distant connexion to server')},
 ]
 
 
