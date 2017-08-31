@@ -319,19 +319,6 @@ def test_staff_can_create_inventoryspecimen_by_barcode(staffapp):
                                             specimen=specimen).count() == 1
 
 
-def test_inventoryspecimen_by_barcode_should_clean_barcode_input(staffapp):
-    inventory = InventoryFactory()
-    specimen = SpecimenFactory(barcode='1987654')
-    assert not InventorySpecimen.objects.filter(inventory=inventory,
-                                                specimen=specimen).exists()
-    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
-    form = staffapp.get(url).forms['by_barcode']
-    form['specimen'] = '19.87654'
-    form.submit().follow()
-    assert InventorySpecimen.objects.filter(inventory=inventory,
-                                            specimen=specimen).count() == 1
-
-
 def test_cant_create_inventoryspecimen_by_barcode_twice(staffapp):
     inventory = InventoryFactory()
     specimen = SpecimenFactory()
@@ -354,19 +341,6 @@ def test_staff_can_create_inventoryspecimen_by_serial(staffapp):
     url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
     form = staffapp.get(url).forms['by_barcode']
     form['specimen'] = specimen.serial
-    form.submit().follow()
-    assert InventorySpecimen.objects.filter(inventory=inventory,
-                                            specimen=specimen).count() == 1
-
-
-def test_inventoryspecimen_by_serial_should_clean_barcode_input(staffapp):
-    inventory = InventoryFactory()
-    specimen = SpecimenFactory(serial='1987654')
-    assert not InventorySpecimen.objects.filter(inventory=inventory,
-                                                specimen=specimen).exists()
-    url = reverse('monitoring:inventory', kwargs={'pk': inventory.pk})
-    form = staffapp.get(url).forms['by_barcode']
-    form['specimen'] = '19.87654'
     form.submit().follow()
     assert InventorySpecimen.objects.filter(inventory=inventory,
                                             specimen=specimen).count() == 1
