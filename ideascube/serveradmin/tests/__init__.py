@@ -114,10 +114,6 @@ class FakePopen(object):
         return self.stdout.getvalue(), self.stderr.getvalue()
 
 
-class FailingPopen(FakePopen):
-    returncode = 1
-
-
 class NMAccessPoint(object):
     def __init__(self, ssid, strength, wpa_flags):
         self.Ssid = ssid

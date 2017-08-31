@@ -310,13 +310,6 @@ CUSTOM_CARDS = [
     # },
 ]
 
-
-SERVICES = [
-    {'name': 'uwsgi', 'description': _('Python web server')},
-    {'name': 'nginx', 'description': _('Global proxy')},
-]
-
-
 SESSION_COOKIE_AGE = 60 * 60  # Members must be logged out after one hour
 SESSION_SAVE_EVERY_REQUEST = True
 BACKUP_FORMAT = 'gztar'  # One of 'tar', 'bztar', 'gztar'
