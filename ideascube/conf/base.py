@@ -310,8 +310,6 @@ CUSTOM_CARDS = [
     # },
 ]
 
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 SERVICES = [
     {'name': 'uwsgi', 'description': _('Python web server')},
