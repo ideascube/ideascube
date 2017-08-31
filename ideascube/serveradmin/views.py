@@ -1,6 +1,5 @@
 from subprocess import call
 
-from django.conf import settings
 from django.contrib import messages
 from django.http import StreamingHttpResponse
 from django.shortcuts import render
@@ -12,7 +11,6 @@ from ideascube.utils import get_all_languages
 
 from .backup import Backup
 from .battery import get_batteries
-from .systemd import Manager, NoSuchUnit, UnitManagementError
 from .wifi import (
     AvailableWifiNetwork, KnownWifiConnection, enable_wifi, WifiError)
 
@@ -46,44 +44,6 @@ def languages(request):
         request, 'serveradmin/languages.html', {
             'languages': languages, 'selected': local_languages,
         })
-
-
-@staff_member_required
-def services(request):
-    services = settings.SERVICES
-    manager = Manager()
-    to_manage = request.POST.get('name')
-
-    for service in services:
-        # Reset these, otherwise the values are cached from a previous run.
-        service['status'] = False
-        service['error'] = None
-
-        name = service['name']
-
-        try:
-            service_unit = manager.get_service(service['name'])
-
-            if name == to_manage:
-                if 'start' in request.POST:
-                    manager.activate(service_unit.Id)
-
-                elif 'stop' in request.POST:
-                    manager.deactivate(service_unit.Id)
-
-                elif 'restart' in request.POST:
-                    manager.restart(service_unit.Id)
-
-            service['status'] = service_unit.active
-
-        except NoSuchUnit:
-            service['error'] = 'Not installed'
-
-        except UnitManagementError as e:
-            messages.error(request, e)
-
-    return render(
-        request, 'serveradmin/services.html', {'services': services})
 
 
 @staff_member_required

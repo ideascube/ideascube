@@ -7,7 +7,6 @@ app_name = 'server'
 urlpatterns = [
     url(r'^settings/$', views.server_info, name='settings'),
     url(r'^power/$', views.power, name='power'),
-    url(r'^services/$', views.services, name='services'),
     url(r'^backup/$', views.backup, name='backup'),
     url(r'^battery/$', views.battery, name='battery'),
     url(r'^wifi/(?P<ssid>.+)?$', views.wifi, name='wifi'),
