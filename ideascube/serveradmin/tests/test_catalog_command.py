@@ -1154,7 +1154,7 @@ def test_upgrade_not_installed_package(
     install_dir = Path(settings.CATALOG_NGINX_INSTALL_DIR)
     assert install_dir.join('the-site').check(exists=False)
 
-    call_command('catalog', 'upgrade')
+    call_command('catalog', 'upgrade', 'the-site')
     out, err = capsys.readouterr()
     assert out.strip() == 'Installing the-site-2017-06'
     assert err.strip() == ''

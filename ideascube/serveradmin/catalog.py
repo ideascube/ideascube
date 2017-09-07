@@ -419,7 +419,7 @@ class ZippedMedias(SimpleZipPackage, typename='zipped-medias'):
 
 
 class Bar(ProgressBar):
-    template = ('Download: {percent} |{animation}| {done:B}/{total:B} '
+    template = ('Downloading {item}: {percent} |{animation}| {done:B}/{total:B} '
                 '({speed:B}/s) | ETA: {eta}')
     throttle = timedelta(seconds=1)
 
@@ -448,8 +448,9 @@ class Catalog:
 
         self._bar = Bar()
 
-    def _progress(self, msg, i, chunk_size, remote_size):
-        self._bar.update(done=(i + 1) * chunk_size, total=remote_size)
+    def _progress(self, item, i, chunk_size, remote_size):
+        self._bar.update(
+            item=item, done=(i + 1) * chunk_size, total=remote_size)
 
     # -- Manage packages ------------------------------------------------------
     def _get_package(self, id, source):
@@ -494,7 +495,7 @@ class Catalog:
 
     def _fetch_package(self, package):
         def _progress(*args):
-            self._progress(' {}'.format(package.id), *args)
+            self._progress(package.id, *args)
 
         filename = '{0.id}-{0.version}'.format(package)
 
@@ -685,21 +686,33 @@ class Catalog:
         self.install_packages(ids, keep_downloads=keep_downloads)
 
     def upgrade_packages(self, ids, keep_downloads=False):
-        ids = self._expand_package_ids(ids, self._available)
+        ids = self._expand_package_ids(ids, self._installed)
         used_handlers = set()
         updates = []
         new_package_ids = []
 
         # First get the list of updates and download them
         for pkg_id in sorted(ids):
-            upkg = self._get_package(pkg_id, self._available)
-
             try:
                 ipkg = self._get_package(pkg_id, self._installed)
 
             except NoSuchPackage:
                 # Not installed yet, we'll install the latest version
                 ipkg = None
+
+            try:
+                upkg = self._get_package(pkg_id, self._available)
+
+            except NoSuchPackage:
+                if ipkg is not None:
+                    printerr(
+                        'Ignoring package: {pkg_id} is installed but now can '
+                        'not be found in any remote'.format(pkg_id=pkg_id))
+                    continue
+
+                else:
+                    # Not installed and not available? This is clearly an error
+                    raise
 
             if ipkg is not None and ipkg == upkg:
                 printerr('{ipkg} has no update available'.format(ipkg=ipkg))
@@ -864,7 +877,7 @@ class Catalog:
                 tmppath = fd.name
 
                 def _progress(*args):
-                    self._progress(' {}'.format(remote.name), *args)
+                    self._progress(remote.name, *args)
 
                 # TODO: Verify the download with sha256sum? Crypto signature?
                 try:
