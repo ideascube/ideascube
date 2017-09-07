@@ -93,31 +93,31 @@ def install_dir(tmpdir):
 def test_remote_from_file(input_file):
     from ideascube.serveradmin.catalog import InvalidFile, Remote
 
-    path = input_file['path']
+    basepath = os.path.splitext(input_file['path'])[0]
     expected_id = input_file['input'].get('id')
     expected_name = input_file['input'].get('name')
     expected_url = input_file['input'].get('url')
 
     if expected_id is None:
         with pytest.raises(InvalidFile) as exc:
-            Remote.from_yml_file(path)
+            Remote.from_basepath(basepath)
 
         assert 'id' in exc.exconly()
 
     elif expected_name is None:
         with pytest.raises(InvalidFile) as exc:
-            Remote.from_yml_file(path)
+            Remote.from_basepath(basepath)
 
         assert 'name' in exc.exconly()
 
     elif expected_url is None:
         with pytest.raises(InvalidFile) as exc:
-            Remote.from_yml_file(path)
+            Remote.from_basepath(basepath)
 
         assert 'url' in exc.exconly()
 
     else:
-        remote = Remote.from_yml_file(path)
+        remote = Remote.from_basepath(basepath)
         assert remote.id == expected_id
         assert remote.name == expected_name
         assert remote.url == expected_url
@@ -127,10 +127,11 @@ def test_remote_to_file(tmpdir):
     from ideascube.serveradmin.catalog import Remote
 
     path = tmpdir.join('foo.yml')
+    basepath = os.path.splitext(path.strpath)[0]
 
     remote = Remote(
         'foo', 'Content provided by Foo', 'http://foo.fr/catalog.yml')
-    remote.to_file(path.strpath)
+    remote.to_file(basepath)
 
     lines = path.readlines(cr=False)
     lines = filter(lambda x: len(x), lines)
@@ -145,11 +146,12 @@ def test_remote_to_file_utf8(tmpdir):
     from ideascube.serveradmin.catalog import Remote
 
     path = tmpdir.join('foo.yml')
+    basepath = os.path.splitext(path.strpath)[0]
 
     remote = Remote(
         'bibliothèque', 'Le contenu de la bibliothèque',
         'http://foo.fr/catalog.yml')
-    remote.to_file(path.strpath)
+    remote.to_file(basepath)
 
     lines = path.read_text('utf-8').split('\n')
     lines = filter(lambda x: len(x), lines)
@@ -160,7 +162,7 @@ def test_remote_to_file_utf8(tmpdir):
         'url: http://foo.fr/catalog.yml']
 
     # Try loading it back
-    remote = Remote.from_yml_file(path.strpath)
+    remote = Remote.from_basepath(basepath)
     assert remote.id == 'bibliothèque'
     assert remote.name == 'Le contenu de la bibliothèque'
 
