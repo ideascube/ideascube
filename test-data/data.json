@@ -8455,7 +8455,8 @@
     "fields": {
         "module": "library",
         "name": "\u00e0\u68eerk\u00eah\u00eenbz",
-        "description": "mhb\u68eeizyuzr uxw\u00f4d\u00e9skcn \u6797l\u00fbd\u00e0\u68eenj\u00e2\u68ee \u00ea\u68eea.ah\u6797hny yvnvy\u00e0jyih pzx\u00e9z\u68eewxei mogz\u68eeyq\u00e8n\u68ee n\u00eatkmv\u00fbn\u00e2\u00e0 cmb\u00f4v\u6728\u00e0\u00e8ba m\u00e9\u00ee\u00e2\u00fbhkkfp me\u6797\u6728bgz\u6728f\u6728 b\u00e0k\u00f4x\u00e0\u00ee\u00e9\u00e9v welxs\u68eeyn\u00eee"
+        "description": "mhb\u68eeizyuzr uxw\u00f4d\u00e9skcn \u6797l\u00fbd\u00e0\u68eenj\u00e2\u68ee \u00ea\u68eea.ah\u6797hny yvnvy\u00e0jyih pzx\u00e9z\u68eewxei mogz\u68eeyq\u00e8n\u68ee n\u00eatkmv\u00fbn\u00e2\u00e0 cmb\u00f4v\u6728\u00e0\u00e8ba m\u00e9\u00ee\u00e2\u00fbhkkfp me\u6797\u6728bgz\u6728f\u6728 b\u00e0k\u00f4x\u00e0\u00ee\u00e9\u00e9v welxs\u68eeyn\u00eee",
+        "physical": true
     }
 },
 {
@@ -8464,7 +8465,8 @@
     "fields": {
         "module": "library",
         "name": "\u00e8euhp\u00f4\u00e0ozh",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8473,7 +8475,8 @@
     "fields": {
         "module": "library",
         "name": "rvzqnzu\u00e9en",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8482,7 +8485,8 @@
     "fields": {
         "module": "library",
         "name": "cjsx\u6797\u00e2ed\u00e2\u00ee",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8491,7 +8495,8 @@
     "fields": {
         "module": "library",
         "name": "r\u00eacxvkj\u00ea\u68ee\u00e8",
-        "description": "m\u00e8b\u00e9s\u00eats\u6797\u00ea nvsprxc\u00fb\u00e9l h\u00e8muk\u00fb.wmf wnouc\u6797h\u00fbo\u00fb \u00e0ferma\u00eebjd qx.\u68eepsjmyj \u00e0f\u00eewjaiqx\u00ea spz\u68ees\u00e2\u00e9uq\u6797 .\u00eenvhkank\u6728"
+        "description": "m\u00e8b\u00e9s\u00eats\u6797\u00ea nvsprxc\u00fb\u00e9l h\u00e8muk\u00fb.wmf wnouc\u6797h\u00fbo\u00fb \u00e0ferma\u00eebjd qx.\u68eepsjmyj \u00e0f\u00eewjaiqx\u00ea spz\u68ees\u00e2\u00e9uq\u6797 .\u00eenvhkank\u6728",
+        "physical": true
     }
 },
 {
@@ -8500,7 +8505,8 @@
     "fields": {
         "module": "library",
         "name": "\u00f4nbgo\u00e2lbx\u6797",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -8509,7 +8515,8 @@
     "fields": {
         "module": "library",
         "name": "\u00e2eotxja\u68ee\u68eef",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -8518,7 +8525,8 @@
     "fields": {
         "module": "library",
         "name": "vuz\u00fbjbyw\u68ees",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8527,7 +8535,8 @@
     "fields": {
         "module": "library",
         "name": "qga.srw.\u68eer",
-        "description": ".\u00f4gcy\u00fbf\u00e2m\u00ea tzkxco\u00e9q\u00f4x \u00e9u\u00e2rsnddt\u6797 ulbc\u6797ftmwo jmnds\u00eexncm cxe\u00eep\u00e0h.\u6728x \u00eeejkjkuzku \u00fbv.\u6797row\u00e8c. b\u6797y\u00eadq\u00e8pwd"
+        "description": ".\u00f4gcy\u00fbf\u00e2m\u00ea tzkxco\u00e9q\u00f4x \u00e9u\u00e2rsnddt\u6797 ulbc\u6797ftmwo jmnds\u00eexncm cxe\u00eep\u00e0h.\u6728x \u00eeejkjkuzku \u00fbv.\u6797row\u00e8c. b\u6797y\u00eadq\u00e8pwd",
+        "physical": false
     }
 },
 {
@@ -8536,7 +8545,8 @@
     "fields": {
         "module": "library",
         "name": "\u00e0nsfljlf\u00e2u",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8545,7 +8555,8 @@
     "fields": {
         "module": "library",
         "name": "zneyl\u00e9k\u6797gh",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8554,7 +8565,8 @@
     "fields": {
         "module": "library",
         "name": "\u00eaz\u6797mt\u00eeulmr",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8563,7 +8575,8 @@
     "fields": {
         "module": "library",
         "name": "d\u00e9coo\u00ea\u68ee\u6728mg",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8572,7 +8585,8 @@
     "fields": {
         "module": "library",
         "name": "u\u6797beeobqhh",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -8581,7 +8595,8 @@
     "fields": {
         "module": "library",
         "name": "\u00eeutowkxd\u00fbt",
-        "description": "\u00eeywvkgoak\u00ee \u00e9lz\u6728p\u00eer\u00ea\u00e8\u68ee"
+        "description": "\u00eeywvkgoak\u00ee \u00e9lz\u6728p\u00eer\u00ea\u00e8\u68ee",
+        "physical": true
     }
 },
 {
@@ -8590,7 +8605,8 @@
     "fields": {
         "module": "library",
         "name": "b.i.\u00eahtu\u00ee\u00ee",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8599,7 +8615,8 @@
     "fields": {
         "module": "library",
         "name": "sigejsxcwp",
-        "description": "vm\u00ea.u\u00ee\u00f4s\u00e0d \u00e0r\u00e2u..dyx\u00e0 ml\u68eein\u00e2leln \u6728pli.hdf\u00ea\u00e2 z\u00ee\u00e9\u6797\u00f4mghz."
+        "description": "vm\u00ea.u\u00ee\u00f4s\u00e0d \u00e0r\u00e2u..dyx\u00e0 ml\u68eein\u00e2leln \u6728pli.hdf\u00ea\u00e2 z\u00ee\u00e9\u6797\u00f4mghz.",
+        "physical": true
     }
 },
 {
@@ -8608,7 +8625,8 @@
     "fields": {
         "module": "library",
         "name": "it\u00e0f\u68eer.\u6797\u68een",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8617,7 +8635,8 @@
     "fields": {
         "module": "library",
         "name": "hzvzf\u68eef\u00e0zj",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8626,7 +8645,8 @@
     "fields": {
         "module": "library",
         "name": "rinn\u00e8\u00e9g\u00eefg",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8635,7 +8655,8 @@
     "fields": {
         "module": "library",
         "name": "u\u6797\u6797pg\u68eea.\u68ee\u68ee",
-        "description": "cgpzqvx\u00e9g\u00ea j\u00e2l..pgt\u00fbq h\u00e9pawqfxmc yso\u6797dtcdcd qrf\u00f4\u00e0sdqjv j\u00fb\u00ea\u6728u\u00f4\u00e0y\u00eex zp\u00eatvy\u00fb\u00eez\u00e0 h\u00f4\u00e9g\u00e2yrp\u6797t qr\u00e2\u6728.k.qr\u68ee \u00fbe\u6797v\u00e2\u00f4po\u00eay m\u00e8uagcify\u00e0 so\u00e2\u6728\u6728g\u00e9qs\u6728 p\u00e8z\u00e0t\u00e9csr\u00e2"
+        "description": "cgpzqvx\u00e9g\u00ea j\u00e2l..pgt\u00fbq h\u00e9pawqfxmc yso\u6797dtcdcd qrf\u00f4\u00e0sdqjv j\u00fb\u00ea\u6728u\u00f4\u00e0y\u00eex zp\u00eatvy\u00fb\u00eez\u00e0 h\u00f4\u00e9g\u00e2yrp\u6797t qr\u00e2\u6728.k.qr\u68ee \u00fbe\u6797v\u00e2\u00f4po\u00eay m\u00e8uagcify\u00e0 so\u00e2\u6728\u6728g\u00e9qs\u6728 p\u00e8z\u00e0t\u00e9csr\u00e2",
+        "physical": true
     }
 },
 {
@@ -8644,7 +8665,8 @@
     "fields": {
         "module": "library",
         "name": "\u68eeqjwx\u68eewqkz",
-        "description": "o\u00e9rdq.g\u00fb.v h\u00e9rnoanfh\u6797 y\u00e2kogh\u00fbv\u6797e osnva\u00fblh\u6797x vu\u00e2rlr\u00e8fnd c\u00e9f\u68eeqmlxg\u00e0 h.\u00fbscutl\u00e2s \u00eet\u00fb\u00ee\u6797mjsvc aeb\u00e0\u00e2\u00f4ch\u6728x sx\u00ea\u00e8ed\u6728\u00e9\u00e8d b\u00e9zn\u00e9erudy \u00ean\u68eeb\u00e9\u00e9\u00e2pei bxlv\u68eeq\u68ee\u6797\u00e0n alqc\u00fb\u00fb\u00e9uih brp\u00e8ajxa\u68eep q\u00e8\u00e2pwvzfi\u00e0 \u68eek\u6728\u00e2x\u68ee\u6728mxr \u00eac\u6797mgns\u00ee\u00e0z \u6728\u00eed\u00eaovmkqd"
+        "description": "o\u00e9rdq.g\u00fb.v h\u00e9rnoanfh\u6797 y\u00e2kogh\u00fbv\u6797e osnva\u00fblh\u6797x vu\u00e2rlr\u00e8fnd c\u00e9f\u68eeqmlxg\u00e0 h.\u00fbscutl\u00e2s \u00eet\u00fb\u00ee\u6797mjsvc aeb\u00e0\u00e2\u00f4ch\u6728x sx\u00ea\u00e8ed\u6728\u00e9\u00e8d b\u00e9zn\u00e9erudy \u00ean\u68eeb\u00e9\u00e9\u00e2pei bxlv\u68eeq\u68ee\u6797\u00e0n alqc\u00fb\u00fb\u00e9uih brp\u00e8ajxa\u68eep q\u00e8\u00e2pwvzfi\u00e0 \u68eek\u6728\u00e2x\u68ee\u6728mxr \u00eac\u6797mgns\u00ee\u00e0z \u6728\u00eed\u00eaovmkqd",
+        "physical": false
     }
 },
 {
@@ -8653,7 +8675,8 @@
     "fields": {
         "module": "library",
         "name": "nsdnd\u00e2o.\u00f4\u00e0",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8662,7 +8685,8 @@
     "fields": {
         "module": "library",
         "name": "l\u00e2krk\u68eejjje",
-        "description": "\u00eez\u00ee\u00e2\u00fbz\u6797s\u00e9k uq.dpaqz\u00e2l \u00e0me\u00e9\u6797lh\u6797\u00f4e ik\u00e2rzianx\u00ea lcwazb\u68eerkg ba\u6797s\u00e2hb\u00f4bh bwg\u00e2u\u00e2n\u6728w\u00fb"
+        "description": "\u00eez\u00ee\u00e2\u00fbz\u6797s\u00e9k uq.dpaqz\u00e2l \u00e0me\u00e9\u6797lh\u6797\u00f4e ik\u00e2rzianx\u00ea lcwazb\u68eerkg ba\u6797s\u00e2hb\u00f4bh bwg\u00e2u\u00e2n\u6728w\u00fb",
+        "physical": true
     }
 },
 {
@@ -8671,7 +8695,8 @@
     "fields": {
         "module": "library",
         "name": "auid\u00e2xga\u00e8k",
-        "description": "\u00e9\u68eexfdz.ajt pgzibc..mm lvjogce\u00f4\u00e2\u00e0 jrmyiow\u68eehq fini\u00e9snn\u00eea pw\u00e8gillbr\u00e8 \u00e8f\u00e9rsdacaf pkz\u00e9pp\u00e8cpl \u00e0xlokcbh.. c\u00eewh\u00fbulbvb sl\u00fb\u00fbogio\u00ea\u00e2 \u00eab\u00e0h\u00e8nqs\u00e9p grgtltk\u00eeso xfxqty\u6728\u00eey\u00e2 w\u6797hyddsib\u00f4 eujdfpdmx\u00ea"
+        "description": "\u00e9\u68eexfdz.ajt pgzibc..mm lvjogce\u00f4\u00e2\u00e0 jrmyiow\u68eehq fini\u00e9snn\u00eea pw\u00e8gillbr\u00e8 \u00e8f\u00e9rsdacaf pkz\u00e9pp\u00e8cpl \u00e0xlokcbh.. c\u00eewh\u00fbulbvb sl\u00fb\u00fbogio\u00ea\u00e2 \u00eab\u00e0h\u00e8nqs\u00e9p grgtltk\u00eeso xfxqty\u6728\u00eey\u00e2 w\u6797hyddsib\u00f4 eujdfpdmx\u00ea",
+        "physical": false
     }
 },
 {
@@ -8680,7 +8705,8 @@
     "fields": {
         "module": "library",
         "name": "nynxd\u00e9eoul",
-        "description": "kmb\u68eeukl.\u68ee\u00fb \u00e8eacnp\u00fbxat xkha\u00e0\u6728tgeh \u00e2z\u00e8y.jp\u00ea\u00e9t"
+        "description": "kmb\u68eeukl.\u68ee\u00fb \u00e8eacnp\u00fbxat xkha\u00e0\u6728tgeh \u00e2z\u00e8y.jp\u00ea\u00e9t",
+        "physical": true
     }
 },
 {
@@ -8689,7 +8715,8 @@
     "fields": {
         "module": "library",
         "name": "\u00f4p\u6728\u00e9hvcn\u00f4q",
-        "description": "vbt\u6728inh\u68eez\u00fb q\u6797f\u00e8cb\u6728mx\u6728 g\u68ee\u00e2paufob\u00e0"
+        "description": "vbt\u6728inh\u68eez\u00fb q\u6797f\u00e8cb\u6728mx\u6728 g\u68ee\u00e2paufob\u00e0",
+        "physical": false
     }
 },
 {
@@ -8698,7 +8725,8 @@
     "fields": {
         "module": "library",
         "name": "nyv\u00e9z\u00ealx\u6797\u6728",
-        "description": "\u00e8\u00e9s\u00eee\u00e8icyf azh\u68eesgds\u00eat p\u6797\u6728pabvosv lm\u00e8ql\u00e2\u6797\u00f4tc"
+        "description": "\u00e8\u00e9s\u00eee\u00e8icyf azh\u68eesgds\u00eat p\u6797\u6728pabvosv lm\u00e8ql\u00e2\u6797\u00f4tc",
+        "physical": true
     }
 },
 {
@@ -8707,7 +8735,8 @@
     "fields": {
         "module": "library",
         "name": "\u00e9gj\u00e9\u00eaid\u00e8k\u00ea",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8716,7 +8745,8 @@
     "fields": {
         "module": "library",
         "name": "\u00e9js\u00fblb\u00e9ruy",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8725,7 +8755,8 @@
     "fields": {
         "module": "library",
         "name": "\u00f4jp\u00e8\u00e2eo\u00e2\u00e9b",
-        "description": "qlus\u00e0mb\u00e2al qyr.mfchsz vwf\u00ea\u00f4v\u00e9e\u6797v \u00ea\u00eafwz\u68eex\u00ea\u00ean \u00e9\u00e8bbqyms.m"
+        "description": "qlus\u00e0mb\u00e2al qyr.mfchsz vwf\u00ea\u00f4v\u00e9e\u6797v \u00ea\u00eafwz\u68eex\u00ea\u00ean \u00e9\u00e8bbqyms.m",
+        "physical": true
     }
 },
 {
@@ -8734,7 +8765,8 @@
     "fields": {
         "module": "library",
         "name": "soynufk\u6797v\u6728",
-        "description": "a..p\u00ee\u00e0dhqa p\u00e8chnlc\u00e2.r \u00eezw\u00e8edd\u00e0x\u00f4 gxigm\u6728o\u00e2\u00f4h s\u68ee.ot\u6728c\u6728\u00ee. g\u00ee\u00eefkolzvc a\u00e0oz\u00f4o\u68eeeo. hsaf\u6797\u00ee\u00e9yr. jev\u00e2eoyj\u00e0f \u00ea\u00e2\u00e2\u00e8e\u00e8\u6797xhi \u68eefcmfqn\u00fb\u6728b fl\u00e9a\u00f4zzxn\u68ee d\u00fbe\u68eex\u00eeg\u00e2dl \u6728gag\u00e2dmf\u00e8v w\u68eesvp\u68eelwof hv\u6728ty.ix\u00e0n d\u68eejldzdcz\u00ea"
+        "description": "a..p\u00ee\u00e0dhqa p\u00e8chnlc\u00e2.r \u00eezw\u00e8edd\u00e0x\u00f4 gxigm\u6728o\u00e2\u00f4h s\u68ee.ot\u6728c\u6728\u00ee. g\u00ee\u00eefkolzvc a\u00e0oz\u00f4o\u68eeeo. hsaf\u6797\u00ee\u00e9yr. jev\u00e2eoyj\u00e0f \u00ea\u00e2\u00e2\u00e8e\u00e8\u6797xhi \u68eefcmfqn\u00fb\u6728b fl\u00e9a\u00f4zzxn\u68ee d\u00fbe\u68eex\u00eeg\u00e2dl \u6728gag\u00e2dmf\u00e8v w\u68eesvp\u68eelwof hv\u6728ty.ix\u00e0n d\u68eejldzdcz\u00ea",
+        "physical": true
     }
 },
 {
@@ -8743,7 +8775,8 @@
     "fields": {
         "module": "library",
         "name": "cue\u00e9bw\u00e9\u00fb\u00e8f",
-        "description": "\u6728yqepa\u6797dyc mk\u00e2jdv\u00easm\u00e8 \u00f4thn\u00fb\u00f4.zb\u00e9 shco\u00e2axet\u00ee \u6797\u6728ihh\u00e9k\u00eajr eh\u00e8gycb\u00e0k\u00e8 \u00e0d\u00ea\u00e2\u6797\u00e0.vnw j\u00e8fhhr\u00eadjh tlyvjhcw\u00eaz u\u00eerl\u00fbftluv f\u00e2\u00f4l\u00ea.ycqu \u6797\u00eai\u00fb\u00e8\u00fbxtkz bwquyf\u68eenya \u00ee\u00e8\u00e9f\u00f4\u00e8\u6728\u00e8lk knhik\u00e8\u00e9\u00e2\u00een o.tbyldo.r a\u6728y\u00e8tzevnf"
+        "description": "\u6728yqepa\u6797dyc mk\u00e2jdv\u00easm\u00e8 \u00f4thn\u00fb\u00f4.zb\u00e9 shco\u00e2axet\u00ee \u6797\u6728ihh\u00e9k\u00eajr eh\u00e8gycb\u00e0k\u00e8 \u00e0d\u00ea\u00e2\u6797\u00e0.vnw j\u00e8fhhr\u00eadjh tlyvjhcw\u00eaz u\u00eerl\u00fbftluv f\u00e2\u00f4l\u00ea.ycqu \u6797\u00eai\u00fb\u00e8\u00fbxtkz bwquyf\u68eenya \u00ee\u00e8\u00e9f\u00f4\u00e8\u6728\u00e8lk knhik\u00e8\u00e9\u00e2\u00een o.tbyldo.r a\u6728y\u00e8tzevnf",
+        "physical": true
     }
 },
 {
@@ -8752,7 +8785,8 @@
     "fields": {
         "module": "library",
         "name": "z\u6797\u00e0\u00fb\u68eevuntr",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8761,7 +8795,8 @@
     "fields": {
         "module": "library",
         "name": "\u00e2\u00e2wg\u00e9lqiew",
-        "description": "lmehveya\u6728\u00e8 \u00e2oezaa\u00e0a\u68eer"
+        "description": "lmehveya\u6728\u00e8 \u00e2oezaa\u00e0a\u68eer",
+        "physical": true
     }
 },
 {
@@ -8770,7 +8805,8 @@
     "fields": {
         "module": "library",
         "name": "nwvmb\u00e8\u00e2\u6797if",
-        "description": "s\u68ee\u6728\u6797s.ox\u00e2\u00ea \u00eaelpr\u00e2tt\u00e9. aowh\u00eepz\u6728xg s\u00e2\u00fb\u00e2laiyfr yjoutytw\u6728u ye\u68ee\u68ee\u00e2\u68eec\u6797mk thns.k.r\u6728e u\u68eesxubkwde \u00e2z\u6797nlm\u00e9da\u00ee glg\u6797\u00e9zscce \u00e9m\u00e0\u68eetkt\u00e0gm \u00e0dt\u00eavpmisl .\u00eapm\u68eeja\u00eewy fzoku.\u00eeurf kzf\u6797lour\u6797\u00e8 jscp\u68eevba\u00e0\u00ee gfkqytyxuc d\u00fbcvc\u00ee.zqu"
+        "description": "s\u68ee\u6728\u6797s.ox\u00e2\u00ea \u00eaelpr\u00e2tt\u00e9. aowh\u00eepz\u6728xg s\u00e2\u00fb\u00e2laiyfr yjoutytw\u6728u ye\u68ee\u68ee\u00e2\u68eec\u6797mk thns.k.r\u6728e u\u68eesxubkwde \u00e2z\u6797nlm\u00e9da\u00ee glg\u6797\u00e9zscce \u00e9m\u00e0\u68eetkt\u00e0gm \u00e0dt\u00eavpmisl .\u00eapm\u68eeja\u00eewy fzoku.\u00eeurf kzf\u6797lour\u6797\u00e8 jscp\u68eevba\u00e0\u00ee gfkqytyxuc d\u00fbcvc\u00ee.zqu",
+        "physical": true
     }
 },
 {
@@ -8779,7 +8815,8 @@
     "fields": {
         "module": "library",
         "name": "mus\u6728mm\u00eez\u6797d",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8788,7 +8825,8 @@
     "fields": {
         "module": "library",
         "name": "cwqgzlm\u00ea\u00e2t",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8797,7 +8835,8 @@
     "fields": {
         "module": "library",
         "name": "\u6797akcsjoyi\u00ea",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8806,7 +8845,8 @@
     "fields": {
         "module": "library",
         "name": "\u6797ri\u00fbe\u6797dy\u00ear",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8815,7 +8855,8 @@
     "fields": {
         "module": "library",
         "name": "\u6728.v\u00ea\u00e8cxqk.",
-        "description": "i\u00e2.acpf\u00e2\u00eey p\u6728emoqsh\u68eeq n\u6728\u68ee\u00eef\u00fbhzpl f\u00eabebjwqd\u6797 \u00eaueus\u00e0.x\u00f4o nt\u00fb.vfepkk sw\u00e8dtfwesh \u00eazytsyarjz lpjmpl\u00e9\u6797qv q\u00e8\u00eamfcrhos n\u00fbtjku\u6728\u00f4dw nnctqrr\u00e2\u00fbb \u00e0npkjtz\u68eem\u6797 kbqiqetray l\u00e2\u00eeb\u00e9k.u\u6728q time\u00f4o\u00eek\u00e9r uxho\u68eepo\u00e2lg \u00ea\u00e2\u00eerrx\u00e0l\u00fbu ro\u00e0logdrrb cas\u00e8\u00fbgrgki"
+        "description": "i\u00e2.acpf\u00e2\u00eey p\u6728emoqsh\u68eeq n\u6728\u68ee\u00eef\u00fbhzpl f\u00eabebjwqd\u6797 \u00eaueus\u00e0.x\u00f4o nt\u00fb.vfepkk sw\u00e8dtfwesh \u00eazytsyarjz lpjmpl\u00e9\u6797qv q\u00e8\u00eamfcrhos n\u00fbtjku\u6728\u00f4dw nnctqrr\u00e2\u00fbb \u00e0npkjtz\u68eem\u6797 kbqiqetray l\u00e2\u00eeb\u00e9k.u\u6728q time\u00f4o\u00eek\u00e9r uxho\u68eepo\u00e2lg \u00ea\u00e2\u00eerrx\u00e0l\u00fbu ro\u00e0logdrrb cas\u00e8\u00fbgrgki",
+        "physical": true
     }
 },
 {
@@ -8824,7 +8865,8 @@
     "fields": {
         "module": "library",
         "name": "\u00e0\u00e2rspu\u00f4oix",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8833,7 +8875,8 @@
     "fields": {
         "module": "library",
         "name": "\u6728riwz\u00e2ke\u00eee",
-        "description": "l\u00e9.e\u00ea\u00f4grid \u00f4gacbdokyy \u00ea\u00ee.wspc.\u00eai \u00e8evhzbw\u00f4lu \u00fb.\u68eerc\u00eebheo tuky.l\u6797s.g jb.j\u6728\u00e2lgod z\u00fbfayxe\u00e8h\u00fb g.ttvv\u00eehrr q.ygxv\u00e9m\u00fbx qhxhieo\u68eed\u6797 dhidmqn\u00e2id \u6797iu\u6797o\u00fbebk\u00ea \u00eabe\u00e8fsq.mx jkbemf\u6797\u00e0aa \u00e9ad\u00e9y.hxxx"
+        "description": "l\u00e9.e\u00ea\u00f4grid \u00f4gacbdokyy \u00ea\u00ee.wspc.\u00eai \u00e8evhzbw\u00f4lu \u00fb.\u68eerc\u00eebheo tuky.l\u6797s.g jb.j\u6728\u00e2lgod z\u00fbfayxe\u00e8h\u00fb g.ttvv\u00eehrr q.ygxv\u00e9m\u00fbx qhxhieo\u68eed\u6797 dhidmqn\u00e2id \u6797iu\u6797o\u00fbebk\u00ea \u00eabe\u00e8fsq.mx jkbemf\u6797\u00e0aa \u00e9ad\u00e9y.hxxx",
+        "physical": false
     }
 },
 {
@@ -8842,7 +8885,8 @@
     "fields": {
         "module": "library",
         "name": "u\u00f4\u00e8vdkz\u00eauk",
-        "description": "tya\u6728p\u00eer\u00fbkw \u00fbuva\u00e0a\u00eaiyr \u00e0sksov\u00f4\u00eeds \u00eafwe\u00fb\u00fb\u6797dcg \u00f4\u00eewd\u00f4nzeg\u6797 \u00e9k\u00e0iexwejl bvp\u00e9\u00e0ts\u6728d\u6797 \u00e9\u6797syiduhnd kezq\u00eap\u6728f\u00e0\u6728 \u6728ogla\u00e2\u6797k\u6728e b\u6797\u6797epaxu\u6728c \u00eeei\u00eewy\u00e9x\u6728f c\u00eaidtrioq\u00e9 \u00eey\u00eegnd\u00e2\u6728ez hqpk\u68eeev\u00eehm"
+        "description": "tya\u6728p\u00eer\u00fbkw \u00fbuva\u00e0a\u00eaiyr \u00e0sksov\u00f4\u00eeds \u00eafwe\u00fb\u00fb\u6797dcg \u00f4\u00eewd\u00f4nzeg\u6797 \u00e9k\u00e0iexwejl bvp\u00e9\u00e0ts\u6728d\u6797 \u00e9\u6797syiduhnd kezq\u00eap\u6728f\u00e0\u6728 \u6728ogla\u00e2\u6797k\u6728e b\u6797\u6797epaxu\u6728c \u00eeei\u00eewy\u00e9x\u6728f c\u00eaidtrioq\u00e9 \u00eey\u00eegnd\u00e2\u6728ez hqpk\u68eeev\u00eehm",
+        "physical": true
     }
 },
 {
@@ -8851,7 +8895,8 @@
     "fields": {
         "module": "library",
         "name": "\u00eaxtkm\u00e9rmbh",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -8860,7 +8905,8 @@
     "fields": {
         "module": "library",
         "name": "fauyhgi\u00easn",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8869,7 +8915,8 @@
     "fields": {
         "module": "library",
         "name": "ladpc\u00e8\u00e2nza",
-        "description": "eqypod\u6728m\u00e9x \u00ee\u6728og\u00eai.fjr \u00ee\u00e0acc\u6728qkf\u00fb uwp\u00e8\u68eerks\u00eax f\u00e0xf\u68ee\u00e2gqm\u00ea kj.uy\u00e0syyq h\u6797z\u6728jv\u00e0oxh \u00e2zoy\u00f4\u6728pysi k\u6797\u00f4jzyf\u00e8sj ujx\u6728alxboa \u00e2\u68eeqtctgcqp da\u6797dbsawz\u6797 lp\u6728\u00e0\u00eej\u00ee\u68eejy"
+        "description": "eqypod\u6728m\u00e9x \u00ee\u6728og\u00eai.fjr \u00ee\u00e0acc\u6728qkf\u00fb uwp\u00e8\u68eerks\u00eax f\u00e0xf\u68ee\u00e2gqm\u00ea kj.uy\u00e0syyq h\u6797z\u6728jv\u00e0oxh \u00e2zoy\u00f4\u6728pysi k\u6797\u00f4jzyf\u00e8sj ujx\u6728alxboa \u00e2\u68eeqtctgcqp da\u6797dbsawz\u6797 lp\u6728\u00e0\u00eej\u00ee\u68eejy",
+        "physical": true
     }
 },
 {
@@ -8878,7 +8925,8 @@
     "fields": {
         "module": "library",
         "name": "c\u00f4qjsppja\u00e8",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8887,7 +8935,8 @@
     "fields": {
         "module": "library",
         "name": "xte\u00eegjvzvs",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8896,7 +8945,8 @@
     "fields": {
         "module": "library",
         "name": "khrkh\u00e0phtg",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8905,7 +8955,8 @@
     "fields": {
         "module": "admin",
         "name": "vfs\u00eamvwyzi",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -8914,7 +8965,8 @@
     "fields": {
         "module": "",
         "name": "zphl\u00e2\u00ea\u00ee\u6797vt",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8923,7 +8975,8 @@
     "fields": {
         "module": "cinema",
         "name": "gfh\u00e0as\u00f4\u00fbar",
-        "description": "g\u00f4iznn\u00eaib\u6728 o\u00e2rs\u00e9\u00e8bpwu \u6797ybehhn\u6728ze asd\u00f4la\u00e8\u00eaez ss\u68eeqk\u00eep\u00e8bm \u00e9\u00f4\u00e2\u00e8paukhk \u00e8y\u00e0mfisqlf omudrb\u00eaq\u6797f \u00fbrbvh\u00e8eqym h\u6728t.j.xozz \u00e8mbqsnc\u00fbya ye\u00e8dafklkd \u00e0v\u00fb\u00e2\u00ee\u00eedpfl dibs\u68eeytbzs \u00f4r\u00eecubm\u00fbxt yy\u00e8qdsm.\u00eed \u00e0\u00e9smmkuv\u00f4\u00e9 k\u00e8\u00eewvpio\u00eal"
+        "description": "g\u00f4iznn\u00eaib\u6728 o\u00e2rs\u00e9\u00e8bpwu \u6797ybehhn\u6728ze asd\u00f4la\u00e8\u00eaez ss\u68eeqk\u00eep\u00e8bm \u00e9\u00f4\u00e2\u00e8paukhk \u00e8y\u00e0mfisqlf omudrb\u00eaq\u6797f \u00fbrbvh\u00e8eqym h\u6728t.j.xozz \u00e8mbqsnc\u00fbya ye\u00e8dafklkd \u00e0v\u00fb\u00e2\u00ee\u00eedpfl dibs\u68eeytbzs \u00f4r\u00eecubm\u00fbxt yy\u00e8qdsm.\u00eed \u00e0\u00e9smmkuv\u00f4\u00e9 k\u00e8\u00eewvpio\u00eal",
+        "physical": true
     }
 },
 {
@@ -8932,7 +8985,8 @@
     "fields": {
         "module": "other",
         "name": "b\u00eenwnk\u00e2.v\u00f4",
-        "description": "c.\u00eauckuw\u00f4\u6728 a\u00e9ljfhfr\u00fb\u00e9 akesmq\u6728\u00e2\u00f4\u6728 yp\u00e8\u00f4otxlow ektaiafdhk k\u00f4xu\u68eedhxf. \u00e2g\u00e8glcxbeu y\u00e2fapfpp\u00eeq f\u68eesb\u00e9t\u6728\u00e0j\u00ee"
+        "description": "c.\u00eauckuw\u00f4\u6728 a\u00e9ljfhfr\u00fb\u00e9 akesmq\u6728\u00e2\u00f4\u6728 yp\u00e8\u00f4otxlow ektaiafdhk k\u00f4xu\u68eedhxf. \u00e2g\u00e8glcxbeu y\u00e2fapfpp\u00eeq f\u68eesb\u00e9t\u6728\u00e0j\u00ee",
+        "physical": false
     }
 },
 {
@@ -8941,7 +8995,8 @@
     "fields": {
         "module": "library",
         "name": "poc\u68eeu\u68eeh\u00e0.\u00e8",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8950,7 +9005,8 @@
     "fields": {
         "module": "digital",
         "name": "zovty\u00e8iyto",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8959,7 +9015,8 @@
     "fields": {
         "module": "library",
         "name": "tg\u00ee\u00e0och\u68eej.",
-        "description": "fzry\u6797\u6728\u00f4f\u00ea\u00f4 dy\u00eav\u6728\u6797aw\u00e8c \u6797zsl\u00e0wbr\u00e9e rcay\u00e0\u6797\u00eev\u00e0\u00e0 db\u00e8\u00ea.\u00e8l\u00e9g\u6797 gb\u00e0\u00eacaqd\u00e2k \u00eex\u00ee\u00e0a\u00ea\u00e0hg\u6728 fcjj\u68eewsvq\u00e0 wq\u68ee\u00e8q\u68eelsjb"
+        "description": "fzry\u6797\u6728\u00f4f\u00ea\u00f4 dy\u00eav\u6728\u6797aw\u00e8c \u6797zsl\u00e0wbr\u00e9e rcay\u00e0\u6797\u00eev\u00e0\u00e0 db\u00e8\u00ea.\u00e8l\u00e9g\u6797 gb\u00e0\u00eacaqd\u00e2k \u00eex\u00ee\u00e0a\u00ea\u00e0hg\u6728 fcjj\u68eewsvq\u00e0 wq\u68ee\u00e8q\u68eelsjb",
+        "physical": true
     }
 },
 {
@@ -8968,7 +9025,8 @@
     "fields": {
         "module": "",
         "name": "viwriecooh",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -8977,7 +9035,8 @@
     "fields": {
         "module": "",
         "name": "z\u00e0\u00eeovqs\u6728te",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8986,7 +9045,8 @@
     "fields": {
         "module": "",
         "name": "\u6728\u6728.widnf\u00e2u",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -8995,7 +9055,8 @@
     "fields": {
         "module": "other",
         "name": "\u6728qt\u00eeluz\u68eefl",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9004,7 +9065,8 @@
     "fields": {
         "module": "other",
         "name": "\u00e2nv\u00e8pkt\u00f4\u00ead",
-        "description": "\u6797\u6797ymw.\u00fbedp z\u6797vop\u6797x\u00e2b\u00e8 \u68eeug\u00e0odpzfw \u6797au.lf\u6797ykj \u6797yz\u00e2c\u00e2m\u00e8wj \u00f4\u00e9\u00fbvntq\u00fb\u00e9h \u6728cavxirj\u00e2a mv\u00fbcxbw\u6728wo ylgl\u6797g\u00e0qxq c\u00f4\u00e8\u00eaj\u00f4.zt\u00f4 m\u00fbj\u6728fdn\u00eeio"
+        "description": "\u6797\u6797ymw.\u00fbedp z\u6797vop\u6797x\u00e2b\u00e8 \u68eeug\u00e0odpzfw \u6797au.lf\u6797ykj \u6797yz\u00e2c\u00e2m\u00e8wj \u00f4\u00e9\u00fbvntq\u00fb\u00e9h \u6728cavxirj\u00e2a mv\u00fbcxbw\u6728wo ylgl\u6797g\u00e0qxq c\u00f4\u00e8\u00eaj\u00f4.zt\u00f4 m\u00fbj\u6728fdn\u00eeio",
+        "physical": false
     }
 },
 {
@@ -9013,7 +9075,8 @@
     "fields": {
         "module": "library",
         "name": "\u68eep\u68eegj\u6797.z\u00fbx",
-        "description": "o\u00ea.\u68eeu\u00ea\u00e0bku \u00eascrxyqb\u68eet pbabay\u00e0dbf \u00eehkr\u00eekgx.\u00e9"
+        "description": "o\u00ea.\u68eeu\u00ea\u00e0bku \u00eascrxyqb\u68eet pbabay\u00e0dbf \u00eehkr\u00eekgx.\u00e9",
+        "physical": false
     }
 },
 {
@@ -9022,7 +9085,8 @@
     "fields": {
         "module": "cinema",
         "name": "gc\u00e0gq\u00e2i\u00e8lf",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9031,7 +9095,8 @@
     "fields": {
         "module": "digital",
         "name": "ma\u00e8t\u68ee\u00ee.udr",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -9040,7 +9105,8 @@
     "fields": {
         "module": "library",
         "name": "o\u00eequr\u00ea\u00ee\u6797un",
-        "description": ".bqlofgrni bsm\u00f4c.\u00e8e\u00eei .lcpflm\u00f4eh \u00eac\u00eac\u00e9\u00ee\u68eefc\u00ee cp\u6797.s\u6728l\u00ee\u6797\u00e8 qy\u00ea.k\u00e0c\u00e0\u00e9q j\u00eeikjnkl\u6797\u6797 mesevhku\u6797e kpb\u6797i\u6797no\u6728f bx\u00e8sradehs hvkhgg\u00e9\u00ealo \u00fbjrb\u68eehev\u00e0c \u00e0\u68eep\u00f4lw\u00eeefc osl\u00fbebzvom k\u00e0\u6728\u00f4yxz\u6797\u00e8n \u00e8jt\u00f4\u00e9\u6728b.ew \u68eepb.\u00e8f\u00fby\u00e0l"
+        "description": ".bqlofgrni bsm\u00f4c.\u00e8e\u00eei .lcpflm\u00f4eh \u00eac\u00eac\u00e9\u00ee\u68eefc\u00ee cp\u6797.s\u6728l\u00ee\u6797\u00e8 qy\u00ea.k\u00e0c\u00e0\u00e9q j\u00eeikjnkl\u6797\u6797 mesevhku\u6797e kpb\u6797i\u6797no\u6728f bx\u00e8sradehs hvkhgg\u00e9\u00ealo \u00fbjrb\u68eehev\u00e0c \u00e0\u68eep\u00f4lw\u00eeefc osl\u00fbebzvom k\u00e0\u6728\u00f4yxz\u6797\u00e8n \u00e8jt\u00f4\u00e9\u6728b.ew \u68eepb.\u00e8f\u00fby\u00e0l",
+        "physical": true
     }
 },
 {
@@ -9049,7 +9115,8 @@
     "fields": {
         "module": "cinema",
         "name": "\u00eeov\u00e2\u00ee\u68eemxrl",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -9058,7 +9125,8 @@
     "fields": {
         "module": "library",
         "name": "ex.\u00ea\u6728.exvk",
-        "description": "ke\u00e8b\u00e8eteqv tsc\u00f4oncv\u68eeg go\u00e8\u00eekn.gu\u00f4 e\u00f4fqp\u00ee\u00fboaf njyn\u00e9.lb\u00e2r \u00e8.fqjo\u00e0\u6797vb e\u00e9vsimxhcv \u00e9h\u00ee\u00e8\u00e0dxj\u00e9j l\u00ea\u00e9k\u68ee\u00e9sy\u00fbt"
+        "description": "ke\u00e8b\u00e8eteqv tsc\u00f4oncv\u68eeg go\u00e8\u00eekn.gu\u00f4 e\u00f4fqp\u00ee\u00fboaf njyn\u00e9.lb\u00e2r \u00e8.fqjo\u00e0\u6797vb e\u00e9vsimxhcv \u00e9h\u00ee\u00e8\u00e0dxj\u00e9j l\u00ea\u00e9k\u68ee\u00e9sy\u00fbt",
+        "physical": false
     }
 },
 {
@@ -9067,7 +9135,8 @@
     "fields": {
         "module": "",
         "name": "\u00e2draamk.qi",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -9076,7 +9145,8 @@
     "fields": {
         "module": "admin",
         "name": "\u6797uxjm\u6728mtkb",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9085,7 +9155,8 @@
     "fields": {
         "module": "other",
         "name": "vx\u6728rth\u6797w\u6797\u68ee",
-        "description": "mp\u00eeb\u00e0j.vrr jk\u00fb\u00f4i\u00e2v\u00f4nq"
+        "description": "mp\u00eeb\u00e0j.vrr jk\u00fb\u00f4i\u00e2v\u00f4nq",
+        "physical": true
     }
 },
 {
@@ -9094,7 +9165,8 @@
     "fields": {
         "module": "digital",
         "name": "f.m\u00e2yy\u00e0\u00e2hu",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9103,7 +9175,8 @@
     "fields": {
         "module": "admin",
         "name": "lmlrvwudjc",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9112,7 +9185,8 @@
     "fields": {
         "module": "digital",
         "name": "\u00e8idloqt\u00east",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9121,7 +9195,8 @@
     "fields": {
         "module": "digital",
         "name": "\u00e9y\u00e2sm\u00e2lhvu",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -9130,7 +9205,8 @@
     "fields": {
         "module": "other",
         "name": "ga\u00e2\u6728\u00eesui\u00e2y",
-        "description": "s\u00e0\u00fbkxr\u6728\u00f4hg kip\u68ee\u00ee\u6797kdjv h\u68ee\u00e9f\u00e9mouoh .\u00e0q\u00e9c\u00e2fnln nsq\u68ee\u00e8imqz\u6797 rxh\u68eeveim\u00eaz \u00e8\u6728\u00e8c\u00e0bpb\u00e2t gbbwumwqlq kq\u00e9\u00fbn\u00f4\u00eesev wfra.y\u00eeyvh \u6728\u00ea\u00e8\u6797\u00f4d\u00eaz\u68ee\u6797"
+        "description": "s\u00e0\u00fbkxr\u6728\u00f4hg kip\u68ee\u00ee\u6797kdjv h\u68ee\u00e9f\u00e9mouoh .\u00e0q\u00e9c\u00e2fnln nsq\u68ee\u00e8imqz\u6797 rxh\u68eeveim\u00eaz \u00e8\u6728\u00e8c\u00e0bpb\u00e2t gbbwumwqlq kq\u00e9\u00fbn\u00f4\u00eesev wfra.y\u00eeyvh \u6728\u00ea\u00e8\u6797\u00f4d\u00eaz\u68ee\u6797",
+        "physical": true
     }
 },
 {
@@ -9139,7 +9215,8 @@
     "fields": {
         "module": "digital",
         "name": "lnih\u6797v\u00f4oyu",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9148,7 +9225,8 @@
     "fields": {
         "module": "other",
         "name": "okh\u00e0thsx\u00fbm",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9157,7 +9235,8 @@
     "fields": {
         "module": "library",
         "name": "\u00eec\u00e0kno\u00e0tkw",
-        "description": "\u00e2sxp\u00e0r\u00f4isw f\u00eeiiw\u00f4\u00e2l\u00e9y r\u00e2l\u6797dxd\u00f4w\u6797 .\u00e2vutxjkvm ..le\u6797\u6797\u6728lxa mw\u00e8ec\u68ees\u00e2zq fa\u00e2e\u00e9ec.vk .g\u00ear\u00e0mg\u00e8cq xi\u00e9dapkxy\u00e0 jjftt\u00e9d\u68ee\u00e9g a\u00e8cdkazdnh \u6728ujvqnfs\u00eay \u00eabeil\u00f4ml.p \u6728\u00e8hhxjurk\u68ee kn\u00eaqnwsv\u68eei \u6797ybz\u00f4ynbvy"
+        "description": "\u00e2sxp\u00e0r\u00f4isw f\u00eeiiw\u00f4\u00e2l\u00e9y r\u00e2l\u6797dxd\u00f4w\u6797 .\u00e2vutxjkvm ..le\u6797\u6797\u6728lxa mw\u00e8ec\u68ees\u00e2zq fa\u00e2e\u00e9ec.vk .g\u00ear\u00e0mg\u00e8cq xi\u00e9dapkxy\u00e0 jjftt\u00e9d\u68ee\u00e9g a\u00e8cdkazdnh \u6728ujvqnfs\u00eay \u00eabeil\u00f4ml.p \u6728\u00e8hhxjurk\u68ee kn\u00eaqnwsv\u68eei \u6797ybz\u00f4ynbvy",
+        "physical": true
     }
 },
 {
@@ -9166,7 +9245,8 @@
     "fields": {
         "module": "library",
         "name": "gm\u00e2.\u00e2m\u00fbo\u00f4a",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9175,7 +9255,8 @@
     "fields": {
         "module": "admin",
         "name": "b.vgtnf\u00ea\u00fby",
-        "description": "\u68ee.juqqx\u00f4q. xdd\u00fbqzj\u00e2\u00e0\u68ee sao.zli\u00e0lf g\u00e2ofpj\u00e9arp \u00e2pxgrgv\u00eeqp t\u6728hw.\u00e0\u00e9\u00fb\u00e0e \u6797\u00fbkrccywyl \u68ee\u00e0qw\u00e2dzl\u00e9w ul\u00f4inu\u6797evh"
+        "description": "\u68ee.juqqx\u00f4q. xdd\u00fbqzj\u00e2\u00e0\u68ee sao.zli\u00e0lf g\u00e2ofpj\u00e9arp \u00e2pxgrgv\u00eeqp t\u6728hw.\u00e0\u00e9\u00fb\u00e0e \u6797\u00fbkrccywyl \u68ee\u00e0qw\u00e2dzl\u00e9w ul\u00f4inu\u6797evh",
+        "physical": true
     }
 },
 {
@@ -9184,7 +9265,8 @@
     "fields": {
         "module": "admin",
         "name": "pl\u00eemrq\u00e8\u00f4\u00e9s",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9193,7 +9275,8 @@
     "fields": {
         "module": "cinema",
         "name": "h.minbq\u00e8\u00fb\u00e2",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9202,7 +9285,8 @@
     "fields": {
         "module": "admin",
         "name": "fudu\u68eetc\u00e2m\u00e9",
-        "description": "d\u6728uuipz\u00ee\u00f4g c\u00e2beaayuew c\u00e9at\u00e2z\u00fbf.z .hen\u6728t\u00ee\u00ean\u00e0 ayutwb\u00e8h\u00e8j r\u00eapt\u00eaz\u00e8fz\u6797 c\u68eepb\u6728\u00ee\u6797npz rs\u00e0obthe.e \u6728e\u00e0nm\u00e0lnwa f\u00e0\u00eaczo\u6728c\u00e0\u00ea d\u00e2\u00ee\u00e0dsfe\u00eet l\u00f4y\u00eeb\u00e2vs\u00e2i l\u00e0qdiasa.p \u00e8og\u00eenff\u6728yw zekzqawcwg"
+        "description": "d\u6728uuipz\u00ee\u00f4g c\u00e2beaayuew c\u00e9at\u00e2z\u00fbf.z .hen\u6728t\u00ee\u00ean\u00e0 ayutwb\u00e8h\u00e8j r\u00eapt\u00eaz\u00e8fz\u6797 c\u68eepb\u6728\u00ee\u6797npz rs\u00e0obthe.e \u6728e\u00e0nm\u00e0lnwa f\u00e0\u00eaczo\u6728c\u00e0\u00ea d\u00e2\u00ee\u00e0dsfe\u00eet l\u00f4y\u00eeb\u00e2vs\u00e2i l\u00e0qdiasa.p \u00e8og\u00eenff\u6728yw zekzqawcwg",
+        "physical": true
     }
 },
 {
@@ -9211,7 +9295,8 @@
     "fields": {
         "module": "digital",
         "name": "s.\u6728\u00eattvxmv",
-        "description": ""
+        "description": "",
+        "physical": false
     }
 },
 {
@@ -9220,7 +9305,8 @@
     "fields": {
         "module": "",
         "name": "w\u00e9v\u00e9\u00e2kxwpa",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9229,7 +9315,8 @@
     "fields": {
         "module": "other",
         "name": "e\u00e2v\u00ee\u00f4a\u6728\u00e0\u00eav",
-        "description": "jjfpzn\u68eexln p\u6797o\u00e8\u00e0ceklg ygsomdrx\u00e0f vlbk\u00e9byc\u68ee\u00e2 xlfoz\u00eaozpj lzgudh\u00f4ut\u00e0 oho\u00f4n\u00fbe\u00e8\u00e0s \u00e0ds\u6728od\u00ea\u00eant m\u00e2pjsco\u00f4\u00fby"
+        "description": "jjfpzn\u68eexln p\u6797o\u00e8\u00e0ceklg ygsomdrx\u00e0f vlbk\u00e9byc\u68ee\u00e2 xlfoz\u00eaozpj lzgudh\u00f4ut\u00e0 oho\u00f4n\u00fbe\u00e8\u00e0s \u00e0ds\u6728od\u00ea\u00eant m\u00e2pjsco\u00f4\u00fby",
+        "physical": true
     }
 },
 {
@@ -9238,7 +9325,8 @@
     "fields": {
         "module": "other",
         "name": "kiz\u00e2p\u00ee\u00eanq\u00e8",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9247,7 +9335,8 @@
     "fields": {
         "module": "cinema",
         "name": "j\u00e2pz.um\u00ee\u6797x",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9256,7 +9345,8 @@
     "fields": {
         "module": "cinema",
         "name": "\u00fb\u68eephuim\u00e0\u6797m",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9265,7 +9355,8 @@
     "fields": {
         "module": "library",
         "name": "z\u6728\u00e0k\u00ea\u00ea\u6797k\u68eeg",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9274,7 +9365,8 @@
     "fields": {
         "module": "other",
         "name": "xs\u00e8ni\u00e0sfol",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9283,7 +9375,8 @@
     "fields": {
         "module": "admin",
         "name": "qmvikh\u00e2c\u00eal",
-        "description": "s\u00fb\u68eebapcfno q\u00e0\u68eeae\u00eedekg \u6797pohpxb\u00e2\u00f4u \u00e9\u00e8td.\u6797\u00eei\u00ea\u00ea ginyyaae\u00e2d iikx\u00e0ib\u00eeuc \u00e2j\u00e9fo\u00e8\u00e2mwg oetidf\u00e0y.\u00f4 t\u00e0jc\u00e2t\u00e2quz ae\u00e8h\u00f4\u00f4\u00e9\u68ee\u00e9d wxlkcm\u00e0ly. lnx\u00e9hxq.qq gno\u00f4v\u00f4\u00fbp\u00eex uipso\u00f4cmiy"
+        "description": "s\u00fb\u68eebapcfno q\u00e0\u68eeae\u00eedekg \u6797pohpxb\u00e2\u00f4u \u00e9\u00e8td.\u6797\u00eei\u00ea\u00ea ginyyaae\u00e2d iikx\u00e0ib\u00eeuc \u00e2j\u00e9fo\u00e8\u00e2mwg oetidf\u00e0y.\u00f4 t\u00e0jc\u00e2t\u00e2quz ae\u00e8h\u00f4\u00f4\u00e9\u68ee\u00e9d wxlkcm\u00e0ly. lnx\u00e9hxq.qq gno\u00f4v\u00f4\u00fbp\u00eex uipso\u00f4cmiy",
+        "physical": false
     }
 },
 {
@@ -9292,7 +9385,8 @@
     "fields": {
         "module": "",
         "name": "\u00e2\u6797kdex\u00fbd\u00e2u",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9301,7 +9395,8 @@
     "fields": {
         "module": "cinema",
         "name": "\u00f4gx\u00earzkgpu",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9310,7 +9405,8 @@
     "fields": {
         "module": "cinema",
         "name": "iyz\u00ee\u00e0\u6728b\u00earx",
-        "description": "ng\u00f4\u00ee\u00e2\u00e9a\u00e8fy d\u00e0m\u00f4c\u00fb\u00f4zad \u00eaj\u00e2b\u00e9\u00ee\u00e9inb wrsq.kd\u00ea\u00eao \u00e9\u00e9giofyzww zw\u00e0.o.\u00e0b\u6728b \u00f4k\u00fbx\u00e2\u00e2.n\u00e9v mpu\u6728v\u6797qvxe u\u00ee\u00f4\u6728hfxyy\u00ea"
+        "description": "ng\u00f4\u00ee\u00e2\u00e9a\u00e8fy d\u00e0m\u00f4c\u00fb\u00f4zad \u00eaj\u00e2b\u00e9\u00ee\u00e9inb wrsq.kd\u00ea\u00eao \u00e9\u00e9giofyzww zw\u00e0.o.\u00e0b\u6728b \u00f4k\u00fbx\u00e2\u00e2.n\u00e9v mpu\u6728v\u6797qvxe u\u00ee\u00f4\u6728hfxyy\u00ea",
+        "physical": true
     }
 },
 {
@@ -9319,7 +9415,8 @@
     "fields": {
         "module": "admin",
         "name": "j\u00eap\u00fbx\u6797qclb",
-        "description": "q\u00e2\u00e2ogc\u00f4kc\u6728 dfdql\u68ee\u00fb\u6797ul \u00e0\u00e9ouxj\u00eal\u6728l \u6797.\u00eety\u6797yevr imy\u00eav.wmyh f\u6728y\u00f4xxl\u00e2b. \u00e9h\u00e9\u00f4i\u00eeq\u00een\u00e9 p\u00e2\u68eecgz\u00e9g\u00e8\u00ee ivxjlnbcii h\u00ea\u00e9ctwv\u00e8\u00eaf \u00e2yj\u00e8phkm\u6797\u00fb"
+        "description": "q\u00e2\u00e2ogc\u00f4kc\u6728 dfdql\u68ee\u00fb\u6797ul \u00e0\u00e9ouxj\u00eal\u6728l \u6797.\u00eety\u6797yevr imy\u00eav.wmyh f\u6728y\u00f4xxl\u00e2b. \u00e9h\u00e9\u00f4i\u00eeq\u00een\u00e9 p\u00e2\u68eecgz\u00e9g\u00e8\u00ee ivxjlnbcii h\u00ea\u00e9ctwv\u00e8\u00eaf \u00e2yj\u00e8phkm\u6797\u00fb",
+        "physical": true
     }
 },
 {
@@ -9328,7 +9425,8 @@
     "fields": {
         "module": "other",
         "name": "rvx\u00e8ghod..",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
@@ -9337,7 +9435,8 @@
     "fields": {
         "module": "",
         "name": "aoi\u68eejpnx.x",
-        "description": "urp\u00eeq\u00e8m\u6797jt qtm\u68eem\u00e9jmq\u00e2 \u00ea\u68eek\u00fbx\u6728suvw xw\u00fbhz\u00fb\u00e0fyi e\u00e9bvhw.bol \u00e9a\u6728cbbp\u00eabq \u00e0gsd.i\u68eefkc oguzazxehq d\u00e2txphf\u00e9ur"
+        "description": "urp\u00eeq\u00e8m\u6797jt qtm\u68eem\u00e9jmq\u00e2 \u00ea\u68eek\u00fbx\u6728suvw xw\u00fbhz\u00fb\u00e0fyi e\u00e9bvhw.bol \u00e9a\u6728cbbp\u00eabq \u00e0gsd.i\u68eefkc oguzazxehq d\u00e2txphf\u00e9ur",
+        "physical": false
     }
 },
 {
@@ -9346,7 +9445,8 @@
     "fields": {
         "module": "admin",
         "name": "awbgbu\u00f4\u00e8\u00e9i",
-        "description": ""
+        "description": "",
+        "physical": true
     }
 },
 {
