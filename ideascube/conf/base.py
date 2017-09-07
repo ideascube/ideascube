@@ -310,25 +310,6 @@ CUSTOM_CARDS = [
     # },
 ]
 
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
-SERVICES = [
-    {'name': 'uwsgi', 'description': _('Python web server')},
-    {'name': 'nginx', 'description': _('Global proxy')},
-    {
-        'name': 'kalite',
-        'description': _('Daemon which provides KhanAcademy on lan'),
-    },
-    {'name': 'wikipedia',
-        'description': _('Daemon which provides Wikipedia on lan')},
-    {'name': 'gutenberg',
-        'description': _('Daemon which provides Gutenberg on lan')},
-    {'name': 'ssh',
-        'description': _('Daemon used for distant connexion to server')},
-]
-
-
 SESSION_COOKIE_AGE = 60 * 60  # Members must be logged out after one hour
 SESSION_SAVE_EVERY_REQUEST = True
 BACKUP_FORMAT = 'gztar'  # One of 'tar', 'bztar', 'gztar'
