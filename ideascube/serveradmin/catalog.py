@@ -28,6 +28,20 @@ from ideascube.utils import (
 from .systemd import Manager as SystemManager, NoSuchUnit
 
 
+def get_data_paths(directory):
+    paths = glob(os.path.join(directory, '*.yml'))
+    basepaths = {os.path.splitext(path)[0] for path in paths}
+    return basepaths
+
+
+def load_from_basepath(basepath):
+    yml_path = basepath + '.yml'
+    try:
+        return load_from_yml_file(yml_path)
+    except FileNotFoundError:
+        raise
+
+
 def load_from_yml_file(path):
     with open(path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f.read())
@@ -38,7 +52,8 @@ def persist_to_file(path, data):
 
     Note: The function assumes that the data is serializable.
     """
-    with open(path, 'w', encoding='utf-8') as f:
+    yml_path = path + '.yml'
+    with open(yml_path, 'w', encoding='utf-8') as f:
         f.write(yaml.safe_dump(data, default_flow_style=False))
 
 
@@ -82,6 +97,17 @@ class Remote:
         self.id = id
         self.name = name
         self.url = url
+
+    @classmethod
+    def from_basepath(cls, path):
+        d = load_from_basepath(path)
+
+        try:
+            return cls(d['id'], d['name'], d['url'])
+
+        except KeyError as e:
+            raise InvalidFile(
+                'Remote file is missing a {} key: {}'.format(e, path))
 
     @classmethod
     def from_yml_file(cls, path):
@@ -430,15 +456,15 @@ class Catalog:
         self._cache_root = settings.CATALOG_CACHE_ROOT
         os.makedirs(self._cache_root, exist_ok=True)
 
-        self._catalog_cache = os.path.join(self._cache_root, 'catalog.yml')
+        self._catalog_cache_basepath = os.path.join(self._cache_root, 'catalog')
         self._local_package_cache = os.path.join(self._cache_root, 'packages')
         os.makedirs(self._local_package_cache, exist_ok=True)
 
         self._storage_root = settings.CATALOG_STORAGE_ROOT
         os.makedirs(self._storage_root, exist_ok=True)
 
-        self._installed_storage = os.path.join(
-            self._storage_root, 'installed.yml')
+        self._installed_storage_basepath = os.path.join(
+            self._storage_root, 'installed')
         self._remote_storage = os.path.join(self._storage_root, 'remotes')
         os.makedirs(self._remote_storage, exist_ok=True)
 
@@ -780,14 +806,14 @@ class Catalog:
         if self._available_value is None:
             self._available_value = {}
             try:
-                catalog = load_from_yml_file(self._catalog_cache)
+                catalog = load_from_basepath(self._catalog_cache_basepath)
 
             except FileNotFoundError:
                 # That's ok.
                 pass
 
             else:
-                # load_from_yml_file returns None for empty files
+                # load_from_basepath returns None for empty files
                 if catalog is not None:
                     if 'available' in catalog and 'installed' in catalog:
                         # The cache on file is in the old format
@@ -805,18 +831,18 @@ class Catalog:
             self._installed_value = {}
 
             try:
-                installed = load_from_yml_file(self._installed_storage)
+                installed = load_from_basepath(self._installed_storage_basepath)
 
             except FileNotFoundError:
                 # Try compatible old format
                 try:
-                    catalog = load_from_yml_file(self._catalog_cache)
+                    catalog = load_from_basepath(self._catalog_cache_basepath)
                 except FileNotFoundError:
                     # That's ok
                     pass
 
                 else:
-                    # load_from_yml_file returns None for empty files
+                    # load_from_basepath returns None for empty files
                     if catalog is not None:
                         if 'available' in catalog and 'installed' in catalog:
                             # The cache on file is in the old format
@@ -828,15 +854,15 @@ class Catalog:
                             self._available_value = catalog
 
             else:
-                # load_from_yml_file returns None for empty files
+                # load_from_basepath returns None for empty files
                 if installed is not None:
                     self._installed_value = installed
 
         return self._installed_value
 
     def _persist_catalog(self):
-        persist_to_file(self._catalog_cache, self._available)
-        persist_to_file(self._installed_storage, self._installed)
+        persist_to_file(self._catalog_cache_basepath, self._available)
+        persist_to_file(self._installed_storage_basepath, self._installed)
 
     def _update_installed_metadata(self):
         # These are the keys we must only ever update with an actual package
@@ -920,8 +946,9 @@ class Catalog:
     def _load_remotes(self):
         self._remotes_value = {}
 
-        for path in glob(os.path.join(self._remote_storage, '*.yml')):
-            r = Remote.from_yml_file(path)
+        paths = get_data_paths(self._remote_storage)
+        for path in paths:
+            r = Remote.from_basepath(path)
             self._remotes_value[r.id] = r
 
         if self._remotes_value:
@@ -954,8 +981,7 @@ class Catalog:
                 raise ExistingRemoteError(remote, 'url')
 
         remote = Remote(id, name, url)
-        remote.to_file(os.path.join(self._remote_storage,
-                       '{}.yml'.format(id)))
+        remote.to_file(os.path.join(self._remote_storage, id))
         self._remotes[id] = remote
 
     def remove_remote(self, id):

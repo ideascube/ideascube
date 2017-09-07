@@ -126,10 +126,11 @@ def test_remote_to_file(tmpdir):
     from ideascube.serveradmin.catalog import Remote
 
     path = tmpdir.join('foo.yml')
+    basepath = os.path.splitext(path.strpath)[0]
 
     remote = Remote(
         'foo', 'Content provided by Foo', 'http://foo.fr/catalog.yml')
-    remote.to_file(path.strpath)
+    remote.to_file(basepath)
 
     lines = path.readlines(cr=False)
     lines = filter(lambda x: len(x), lines)
@@ -144,11 +145,12 @@ def test_remote_to_file_utf8(tmpdir):
     from ideascube.serveradmin.catalog import Remote
 
     path = tmpdir.join('foo.yml')
+    basepath = os.path.splitext(path.strpath)[0]
 
     remote = Remote(
         'bibliothèque', 'Le contenu de la bibliothèque',
         'http://foo.fr/catalog.yml')
-    remote.to_file(path.strpath)
+    remote.to_file(basepath)
 
     lines = path.read_text('utf-8').split('\n')
     lines = filter(lambda x: len(x), lines)
