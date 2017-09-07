@@ -5,8 +5,13 @@ import zipfile
 from py.path import local as Path
 import pytest
 import yaml
+import json
 
 from ideascube.mediacenter.models import Document
+
+@pytest.fixture(params=['yml', 'json'])
+def input_type(request):
+    return request.param
 
 
 @pytest.fixture(
@@ -41,23 +46,22 @@ from ideascube.mediacenter.models import Document
         'missing-name',
         'missing-url',
     ])
-def input_file(tmpdir, request):
-    path = tmpdir.join('foo.yml')
+def input_content(request):
+    return request.param
 
-    lines = []
 
-    if 'id' in request.param:
-        lines.append('id: {id}'.format(**request.param))
+@pytest.fixture
+def input_file(tmpdir, input_type, input_content):
+    path = tmpdir.join('foo.{}'.format(input_type))
 
-    if 'name' in request.param:
-        lines.append('name: {name}'.format(**request.param))
+    if input_type == 'yml':
+       content = yaml.safe_dump(input_content)
+    else:
+       content = json.dumps(input_content)
 
-    if 'url' in request.param:
-        lines.append('url: "{url}"'.format(**request.param))
+    path.write_text(content, encoding='utf-8')
 
-    path.write_text('\n'.join(lines), encoding='utf-8')
-
-    return {'path': path.strpath, 'input': request.param}
+    return {'path': path.strpath, 'input': input_content}
 
 
 @pytest.fixture
@@ -126,7 +130,7 @@ def test_remote_from_file(input_file):
 def test_remote_to_file(tmpdir):
     from ideascube.serveradmin.catalog import Remote
 
-    path = tmpdir.join('foo.yml')
+    path = tmpdir.join('foo.json')
     basepath = os.path.splitext(path.strpath)[0]
 
     remote = Remote(
@@ -134,18 +138,21 @@ def test_remote_to_file(tmpdir):
     remote.to_file(basepath)
 
     lines = path.readlines(cr=False)
+    lines = lines[1:-1]
+    lines = (l[:-1] if l.endswith(',') else l for l in lines)
     lines = filter(lambda x: len(x), lines)
     lines = sorted(lines)
 
     assert lines == [
-        'id: foo', 'name: Content provided by Foo',
-        'url: http://foo.fr/catalog.yml']
+        '  "id": "foo"',
+        '  "name": "Content provided by Foo"',
+        '  "url": "http://foo.fr/catalog.yml"']
 
 
 def test_remote_to_file_utf8(tmpdir):
     from ideascube.serveradmin.catalog import Remote
 
-    path = tmpdir.join('foo.yml')
+    path = tmpdir.join('foo.json')
     basepath = os.path.splitext(path.strpath)[0]
 
     remote = Remote(
@@ -154,12 +161,15 @@ def test_remote_to_file_utf8(tmpdir):
     remote.to_file(basepath)
 
     lines = path.read_text('utf-8').split('\n')
+    lines = lines[1:-1]
+    lines = (l[:-1] if l.endswith(',') else l for l in lines)
     lines = filter(lambda x: len(x), lines)
     lines = sorted(lines)
 
     assert lines == [
-        'id: "biblioth\\xE8que"', 'name: "Le contenu de la biblioth\\xE8que"',
-        'url: http://foo.fr/catalog.yml']
+        '  "id": "biblioth\\u00e8que"',
+        '  "name": "Le contenu de la biblioth\\u00e8que"',
+        '  "url": "http://foo.fr/catalog.yml"']
 
     # Try loading it back
     remote = Remote.from_basepath(basepath)
