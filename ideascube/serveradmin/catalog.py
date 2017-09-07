@@ -14,6 +14,7 @@ from lxml import etree
 from progressist import ProgressBar
 from requests import ConnectionError
 import yaml
+import json
 
 from ideascube.configuration import get_config, set_config
 from ideascube.mediacenter.forms import PackagedDocumentForm
@@ -29,17 +30,32 @@ from .systemd import Manager as SystemManager, NoSuchUnit
 
 
 def get_data_paths(directory):
-    paths = glob(os.path.join(directory, '*.yml'))
+    paths = glob(os.path.join(directory, '*.json'))
+    paths += glob(os.path.join(directory, '*.yml'))
     basepaths = {os.path.splitext(path)[0] for path in paths}
     return basepaths
 
 
 def load_from_basepath(basepath):
+    json_path = basepath + '.json'
+    try:
+        return load_from_json_file(json_path)
+    except FileNotFoundError:
+        # Json file doesn't exists, let's try with the yml file.
+        pass
+
     yml_path = basepath + '.yml'
     try:
         return load_from_yml_file(yml_path)
     except FileNotFoundError:
         raise
+
+def load_from_json_file(path):
+    with open(path, 'r', encoding='utf-8') as f:
+        content = f.read()
+        if not content:
+            return None
+        return json.loads(content)
 
 
 def load_from_yml_file(path):
@@ -52,9 +68,9 @@ def persist_to_file(path, data):
 
     Note: The function assumes that the data is serializable.
     """
-    yml_path = path + '.yml'
-    with open(yml_path, 'w', encoding='utf-8') as f:
-        f.write(yaml.safe_dump(data, default_flow_style=False))
+    json_path = path + '.json'
+    with open(json_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2)
 
 
 class InvalidFile(Exception):
@@ -990,3 +1006,4 @@ class Catalog:
 
         del(self._remotes[id])
         rm(os.path.join(self._remote_storage, '{}.yml'.format(id)))
+        rm(os.path.join(self._remote_storage, '{}.json'.format(id)))
