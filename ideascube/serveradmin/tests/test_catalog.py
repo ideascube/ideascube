@@ -99,24 +99,24 @@ def test_remote_from_file(input_file):
 
     if expected_id is None:
         with pytest.raises(InvalidFile) as exc:
-            Remote.from_file(path)
+            Remote.from_yml_file(path)
 
         assert 'id' in exc.exconly()
 
     elif expected_name is None:
         with pytest.raises(InvalidFile) as exc:
-            Remote.from_file(path)
+            Remote.from_yml_file(path)
 
         assert 'name' in exc.exconly()
 
     elif expected_url is None:
         with pytest.raises(InvalidFile) as exc:
-            Remote.from_file(path)
+            Remote.from_yml_file(path)
 
         assert 'url' in exc.exconly()
 
     else:
-        remote = Remote.from_file(path)
+        remote = Remote.from_yml_file(path)
         assert remote.id == expected_id
         assert remote.name == expected_name
         assert remote.url == expected_url
@@ -159,7 +159,7 @@ def test_remote_to_file_utf8(tmpdir):
         'url: http://foo.fr/catalog.yml']
 
     # Try loading it back
-    remote = Remote.from_file(path.strpath)
+    remote = Remote.from_yml_file(path.strpath)
     assert remote.id == 'bibliothèque'
     assert remote.name == 'Le contenu de la bibliothèque'
 

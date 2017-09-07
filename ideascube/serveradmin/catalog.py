@@ -28,7 +28,7 @@ from ideascube.utils import (
 from .systemd import Manager as SystemManager, NoSuchUnit
 
 
-def load_from_file(path):
+def load_from_yml_file(path):
     with open(path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f.read())
 
@@ -84,8 +84,8 @@ class Remote:
         self.url = url
 
     @classmethod
-    def from_file(cls, path):
-        d = load_from_file(path)
+    def from_yml_file(cls, path):
+        d = load_from_yml_file(path)
 
         try:
             return cls(d['id'], d['name'], d['url'])
@@ -93,6 +93,7 @@ class Remote:
         except KeyError as e:
             raise InvalidFile(
                 'Remote file is missing a {} key: {}'.format(e, path))
+
 
     def to_file(self, path):
         d = {'id': self.id, 'name': self.name, 'url': self.url}
@@ -779,14 +780,14 @@ class Catalog:
         if self._available_value is None:
             self._available_value = {}
             try:
-                catalog = load_from_file(self._catalog_cache)
+                catalog = load_from_yml_file(self._catalog_cache)
 
             except FileNotFoundError:
                 # That's ok.
                 pass
 
             else:
-                # load_from_file returns None for empty files
+                # load_from_yml_file returns None for empty files
                 if catalog is not None:
                     if 'available' in catalog and 'installed' in catalog:
                         # The cache on file is in the old format
@@ -804,18 +805,18 @@ class Catalog:
             self._installed_value = {}
 
             try:
-                installed = load_from_file(self._installed_storage)
+                installed = load_from_yml_file(self._installed_storage)
 
             except FileNotFoundError:
                 # Try compatible old format
                 try:
-                    catalog = load_from_file(self._catalog_cache)
+                    catalog = load_from_yml_file(self._catalog_cache)
                 except FileNotFoundError:
                     # That's ok
                     pass
 
                 else:
-                    # load_from_file returns None for empty files
+                    # load_from_yml_file returns None for empty files
                     if catalog is not None:
                         if 'available' in catalog and 'installed' in catalog:
                             # The cache on file is in the old format
@@ -827,7 +828,7 @@ class Catalog:
                             self._available_value = catalog
 
             else:
-                # load_from_file returns None for empty files
+                # load_from_yml_file returns None for empty files
                 if installed is not None:
                     self._installed_value = installed
 
@@ -889,7 +890,7 @@ class Catalog:
                           "Continuing without it.".format(remote=remote))
                     continue
 
-                catalog = load_from_file(tmppath)
+                catalog = load_from_yml_file(tmppath)
 
                 # TODO: Handle content which was removed from the remote source
                 self._available.update(catalog['all'])
@@ -920,7 +921,7 @@ class Catalog:
         self._remotes_value = {}
 
         for path in glob(os.path.join(self._remote_storage, '*.yml')):
-            r = Remote.from_file(path)
+            r = Remote.from_yml_file(path)
             self._remotes_value[r.id] = r
 
         if self._remotes_value:
@@ -930,7 +931,7 @@ class Catalog:
         old_remote_cache = os.path.join(self._cache_root, 'remotes')
 
         for path in glob(os.path.join(old_remote_cache, '*.yml')):
-            r = Remote.from_file(path)
+            r = Remote.from_yml_file(path)
             self.add_remote(r.id, r.name, r.url)
 
         if self._remotes_value:
