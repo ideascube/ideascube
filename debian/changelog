@@ -1,3 +1,22 @@
+ideascube (0.32.0) unstable; urgency=low
+
+  * Made the StockItem.physical property a model field stored in the database;
+    this should greatly improve the performance of the stock list and
+    inventory pages;
+  * We now accept barcodes the way they are entered by the staff, without
+    trying to modify them (e.g removing special characters), as this works
+    better with barcode scanners;
+  * Removed the service management page, as this was confusing users and
+    overall just gave them opportunities to shoot themselves in the foot;
+  * Fixed the `catalog upgrade` command which was upgrading all available
+    packages, even the ones which weren't yet installed;
+  * Made the catalog upgrades more tolerant of failures, so that they now try
+    to upgrade as much as possible instead of failing at the first problem;
+  * Improved the catalog download progress indicator;
+  * Added the package descriptions to the home page management view;
+
+ -- Mathieu Bridon <bochecha@daitauha.fr>  Thu, 7 Sep 2017 12:35:00 +0200
+
 ideascube (0.31.0) unstable; urgency=low
 
   * Changed the catalog command so it doesn't automatically update the cache
