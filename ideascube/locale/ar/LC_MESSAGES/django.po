@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-09 12:41+0000\n"
-"PO-Revision-Date: 2017-06-09 12:43+0000\n"
+"POT-Creation-Date: 2017-09-07 10:22+0000\n"
+"PO-Revision-Date: 2017-09-07 10:24+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
 "Language-Team: Arabic (http://www.transifex.com/ideascube/ideascube/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr "نشر"
 msgid "deleted"
 msgstr "تم الحذف"
 
-#: ideascube/blog/models.py:50 ideascube/library/forms.py:162
+#: ideascube/blog/models.py:50 ideascube/library/forms.py:149
 #: ideascube/mediacenter/models.py:55
 msgid "title"
 msgstr "العنوان"
@@ -166,30 +166,6 @@ msgstr ""
 #: ideascube/conf/base.py:285
 msgid "Configure the server"
 msgstr ""
-
-#: ideascube/conf/base.py:316
-msgid "Python web server"
-msgstr "خادم الانترنت Python"
-
-#: ideascube/conf/base.py:317
-msgid "Global proxy"
-msgstr "وكيل العالمي"
-
-#: ideascube/conf/base.py:320
-msgid "Daemon which provides KhanAcademy on lan"
-msgstr "البرنامج الذي يزود KhanAcademy على الشبكة المحلية"
-
-#: ideascube/conf/base.py:323
-msgid "Daemon which provides Wikipedia on lan"
-msgstr "البرنامج الذي يزود Wikipedia على الشبكة المحلية"
-
-#: ideascube/conf/base.py:325
-msgid "Daemon which provides Gutenberg on lan"
-msgstr "برنامج Daemon المخصص لربط غيتنبيرغ على شبكه الأنترنت"
-
-#: ideascube/conf/base.py:327
-msgid "Daemon used for distant connexion to server"
-msgstr "برنامج Daemon المستخدمة للاتصال بالمخدم عن بعد"
 
 #: ideascube/conf/idb_aus_queensland.py:6 ideascube/conf/idb_aus_slwa.py:5
 msgid "the community"
@@ -396,59 +372,59 @@ msgstr ""
 msgid "Invalid row at line {id}: {reason}"
 msgstr "سطر غير معرف {id}: {reason}"
 
-#: ideascube/library/forms.py:37
+#: ideascube/library/forms.py:24
 msgid "You can't have both a file and a barcode"
 msgstr "لا يمكنك الحصول على ملف و باركود معا "
 
-#: ideascube/library/forms.py:39
+#: ideascube/library/forms.py:26
 msgid "You must add a file or a barcode"
 msgstr "يجب عليك اضافة إما باركود أو ملف"
 
-#: ideascube/library/forms.py:49 ideascube/monitoring/forms.py:190
+#: ideascube/library/forms.py:36 ideascube/monitoring/forms.py:174
 msgid "CSV File"
 msgstr "ملف CSV"
 
-#: ideascube/library/forms.py:53
+#: ideascube/library/forms.py:40
 msgid "Uploaded file is not a Zip archive"
 msgstr " الملف المحمل ليس مضغوط بخاصيه zip"
 
-#: ideascube/library/forms.py:62
+#: ideascube/library/forms.py:49
 msgid "Archive does not contain a CSV"
 msgstr "الارشيف لا يحتوي على CSV"
 
-#: ideascube/library/forms.py:90 ideascube/monitoring/forms.py:205
+#: ideascube/library/forms.py:77 ideascube/monitoring/forms.py:189
 msgid "Missing column \"{}\" on line {}"
 msgstr "عامود مفقود \"{}\" on line {}"
 
-#: ideascube/library/forms.py:104
+#: ideascube/library/forms.py:91
 msgid "Could not import line {}: no book with ISBN \"{}\""
 msgstr "لا يمكن استيراد السطر {}: لا يوجد كتاب برقم ISBN \"{}\""
 
-#: ideascube/library/forms.py:114
+#: ideascube/library/forms.py:101
 msgid "Could not import line {}: no \"{}\" book"
 msgstr "لا يمكن استيراد السطر {}: الكتاب {} غير موجود"
 
-#: ideascube/library/forms.py:120
+#: ideascube/library/forms.py:107
 msgid "Could not import line {}: found multiple \"{}\" books"
 msgstr "لا يمكن استيراد السطر {}: يوجد عدد \"{}\" كتب"
 
-#: ideascube/library/forms.py:135
+#: ideascube/library/forms.py:122
 msgid "Could not import line {}: file {} is missing from the archive"
 msgstr "لا يمكن استيراد السطر {}: الملف {} مفقود من الأرشيف"
 
-#: ideascube/library/forms.py:150 ideascube/monitoring/forms.py:219
+#: ideascube/library/forms.py:137 ideascube/monitoring/forms.py:203
 msgid "Could not import line {}: {}"
 msgstr "لا يمكن استيراد السطر {}: {}"
 
-#: ideascube/library/forms.py:193
+#: ideascube/library/forms.py:180
 msgid "CSV from \"MoCCam-en-ligne\""
 msgstr "ال CSV من \"MoCCam-eng-ligne\""
 
-#: ideascube/library/forms.py:195
+#: ideascube/library/forms.py:182
 msgid "Ideascube ZIP"
 msgstr "Ideascube ZIP"
 
-#: ideascube/library/forms.py:213
+#: ideascube/library/forms.py:200
 msgid "Unknown file format"
 msgstr "صيغه ملف غير معروفة"
 
@@ -552,11 +528,11 @@ msgstr "قسم / فرع"
 msgid "cover"
 msgstr "الغلاف"
 
-#: ideascube/library/models.py:104
+#: ideascube/library/models.py:106
 msgid "location"
 msgstr "موقع"
 
-#: ideascube/library/models.py:106
+#: ideascube/library/models.py:108
 msgid "digital file"
 msgstr "ملف رقمي"
 
@@ -574,7 +550,7 @@ msgstr "عرض جميع الكتب"
 
 #: ideascube/library/templates/library/book_detail.html:15
 #: ideascube/library/templates/library/index.html:9
-#: ideascube/serveradmin/catalog.py:285
+#: ideascube/serveradmin/catalog.py:283
 #: ideascube/templates/ideascube/includes/cards/library.html:4
 msgid "read"
 msgstr "اقرأ"
@@ -670,7 +646,7 @@ msgid "Load notices from ISBN"
 msgstr "تحميل الخصائص من ISBN"
 
 #: ideascube/library/templates/library/index.html:9
-#: ideascube/monitoring/models.py:17 ideascube/monitoring/models.py:71
+#: ideascube/monitoring/models.py:18 ideascube/monitoring/models.py:66
 #: ideascube/templates/ideascube/includes/cards/library.html:5
 msgid "Library"
 msgstr "مكتبة"
@@ -763,7 +739,7 @@ msgstr "ملف ال (CVS) مفقود"
 msgid "Last added"
 msgstr "المضافه أخيرا"
 
-#: ideascube/library/views.py:34 ideascube/mediacenter/views.py:35
+#: ideascube/library/views.py:34 ideascube/mediacenter/views.py:43
 msgid "Title"
 msgstr "العنوان"
 
@@ -840,6 +816,10 @@ msgstr "النوع"
 msgid "package"
 msgstr "حزمة"
 
+#: ideascube/mediacenter/models.py:79
+msgid "hidden"
+msgstr ""
+
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5
 #, python-format
 msgid "Are you sure you want to delete document \"%(document)s\"?"
@@ -902,7 +882,7 @@ msgid "No documents yet."
 msgstr "لا يوجد مجلدات"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
-#: ideascube/serveradmin/catalog.py:283 ideascube/serveradmin/catalog.py:325
+#: ideascube/serveradmin/catalog.py:281 ideascube/serveradmin/catalog.py:323
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "discover"
@@ -916,7 +896,7 @@ msgstr "مركز الوسائط"
 msgid "Add a document"
 msgstr "اضافة مجلد"
 
-#: ideascube/mediacenter/views.py:29
+#: ideascube/mediacenter/views.py:37
 msgid "Last modification"
 msgstr "تنزيل المستند"
 
@@ -997,7 +977,7 @@ msgid "Retired"
 msgstr "متقاعد"
 
 #: ideascube/models.py:187 ideascube/models.py:219
-#: ideascube/monitoring/models.py:74
+#: ideascube/monitoring/models.py:69
 msgid "Other"
 msgstr "الآخر"
 
@@ -1260,156 +1240,156 @@ msgstr "المعرفة الكردية"
 msgid "Shabak knowledge"
 msgstr "المعرفه بلغه الشبك"
 
-#: ideascube/monitoring/forms.py:33
+#: ideascube/monitoring/forms.py:20
 msgid "Enter user identifiers"
 msgstr "أدخل معرف المستخدم"
 
-#: ideascube/monitoring/forms.py:38
+#: ideascube/monitoring/forms.py:25
 msgid "Custom activity name"
 msgstr "أسم النشاط "
 
-#: ideascube/monitoring/forms.py:40
+#: ideascube/monitoring/forms.py:27
 msgid "Partner involved in activity"
 msgstr "أشتراك الأهل بالنشاط"
 
-#: ideascube/monitoring/forms.py:51
+#: ideascube/monitoring/forms.py:38
 msgid "Missing module name"
 msgstr "اسم الصندوق مفقود"
 
-#: ideascube/monitoring/forms.py:60
+#: ideascube/monitoring/forms.py:47
 msgid "since"
 msgstr "منذ"
 
-#: ideascube/monitoring/forms.py:86 ideascube/monitoring/forms.py:115
-#: ideascube/monitoring/forms.py:165 ideascube/monitoring/models.py:172
+#: ideascube/monitoring/forms.py:70 ideascube/monitoring/forms.py:99
+#: ideascube/monitoring/forms.py:149 ideascube/monitoring/models.py:166
 msgid "specimen"
 msgstr "عينة"
 
-#: ideascube/monitoring/forms.py:88
+#: ideascube/monitoring/forms.py:72
 msgid "Enter a barcode"
 msgstr "أدخل الباركود"
 
-#: ideascube/monitoring/forms.py:104
+#: ideascube/monitoring/forms.py:88
 #, python-brace-format
 msgid "Barcode {barcode} not found."
 msgstr ""
 
-#: ideascube/monitoring/forms.py:117 ideascube/monitoring/forms.py:167
+#: ideascube/monitoring/forms.py:101 ideascube/monitoring/forms.py:151
 msgid "Enter an item barcode"
 msgstr "أدخل الباركود للقطعه"
 
-#: ideascube/monitoring/forms.py:118 ideascube/monitoring/models.py:27
-#: ideascube/monitoring/models.py:175
+#: ideascube/monitoring/forms.py:102 ideascube/monitoring/models.py:28
+#: ideascube/monitoring/models.py:169
 msgid "user"
 msgstr "المستخدم"
 
-#: ideascube/monitoring/forms.py:120
+#: ideascube/monitoring/forms.py:104
 msgid "Enter a user identifier"
 msgstr "أدخل المعرف المستخدم"
 
-#: ideascube/monitoring/forms.py:121
+#: ideascube/monitoring/forms.py:105
 msgid "due date"
 msgstr "خلال التاريخ"
 
-#: ideascube/monitoring/forms.py:130
+#: ideascube/monitoring/forms.py:114
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
 msgstr "القطعه التي تحمل الباركود رقم {barcode} تم إستعارتها"
 
-#: ideascube/monitoring/forms.py:145
+#: ideascube/monitoring/forms.py:129
 #, python-brace-format
 msgid "Barcode {barcode} not found"
 msgstr "الباركود {barcode} غير موجود"
 
-#: ideascube/monitoring/forms.py:155
+#: ideascube/monitoring/forms.py:139
 #, python-brace-format
 msgid "Identifier {serial} not found"
 msgstr "المعرف {serial} غير موجود"
 
-#: ideascube/monitoring/forms.py:175
+#: ideascube/monitoring/forms.py:159
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
 msgstr "القطعه التي تحمل الباركود رقم {barcode} لم يتم إستعارتها"
 
-#: ideascube/monitoring/models.py:16 ideascube/monitoring/models.py:70
+#: ideascube/monitoring/models.py:17 ideascube/monitoring/models.py:65
 msgid "Cinema"
 msgstr "سينما"
 
-#: ideascube/monitoring/models.py:18 ideascube/monitoring/models.py:72
+#: ideascube/monitoring/models.py:19 ideascube/monitoring/models.py:67
 msgid "Multimedia"
 msgstr "الوسائط المتعددة"
 
-#: ideascube/monitoring/models.py:20 ideascube/monitoring/models.py:76
+#: ideascube/monitoring/models.py:21 ideascube/monitoring/models.py:71
 msgid "module"
 msgstr "الموديل"
 
-#: ideascube/monitoring/models.py:22
+#: ideascube/monitoring/models.py:23
 msgid "activity"
 msgstr "نشاط"
 
-#: ideascube/monitoring/models.py:24
+#: ideascube/monitoring/models.py:25
 msgid "partner"
 msgstr "شريك"
 
-#: ideascube/monitoring/models.py:30
+#: ideascube/monitoring/models.py:31
 msgid "entry"
 msgstr "ادخال"
 
-#: ideascube/monitoring/models.py:31
+#: ideascube/monitoring/models.py:32
 msgid "entries"
 msgstr "المدخلات"
 
-#: ideascube/monitoring/models.py:43
+#: ideascube/monitoring/models.py:44
 msgid "date"
 msgstr "التاريخ"
 
-#: ideascube/monitoring/models.py:44 ideascube/monitoring/models.py:126
+#: ideascube/monitoring/models.py:45 ideascube/monitoring/models.py:120
 msgid "comments"
 msgstr "تعليق"
 
-#: ideascube/monitoring/models.py:73
+#: ideascube/monitoring/models.py:68
 msgid "Administration"
 msgstr "الادارة"
 
-#: ideascube/monitoring/models.py:78
+#: ideascube/monitoring/models.py:73
 msgid "name"
 msgstr "الاسم"
 
-#: ideascube/monitoring/models.py:79
+#: ideascube/monitoring/models.py:74
 msgid "description"
 msgstr "الوصف"
 
-#: ideascube/monitoring/models.py:117
+#: ideascube/monitoring/models.py:111
 msgid "ideascube bar code"
 msgstr "رقم الباركود المخصص لمكعب الافكار"
 
-#: ideascube/monitoring/models.py:121
+#: ideascube/monitoring/models.py:115
 #: ideascube/monitoring/templates/monitoring/loan.html:25
 msgid "Serial number"
 msgstr "الرقم المتسلسل"
 
-#: ideascube/monitoring/models.py:124
+#: ideascube/monitoring/models.py:118
 msgid "item"
 msgstr "المادة"
 
-#: ideascube/monitoring/models.py:125
+#: ideascube/monitoring/models.py:119
 msgid "quantity"
 msgstr "الكمية"
 
-#: ideascube/monitoring/models.py:178
+#: ideascube/monitoring/models.py:172
 msgid "by"
 msgstr "من خلال"
 
-#: ideascube/monitoring/models.py:179
+#: ideascube/monitoring/models.py:173
 #: ideascube/monitoring/templates/monitoring/loan.html:27
 msgid "Due date"
 msgstr "خلال تاريخ"
 
-#: ideascube/monitoring/models.py:180
+#: ideascube/monitoring/models.py:174
 msgid "Return time"
 msgstr "وقت الاسترجاع"
 
-#: ideascube/monitoring/models.py:183
+#: ideascube/monitoring/models.py:177
 #: ideascube/monitoring/templates/monitoring/loan.html:28
 msgid "Comments"
 msgstr "تعليقات"
@@ -1726,14 +1706,15 @@ msgstr "صيغة الملف {} غير مدعومه خلال الأنشاء"
 msgid "Not a {} file"
 msgstr "ليس  {} ملف"
 
-#: ideascube/serveradmin/catalog.py:286
+#: ideascube/serveradmin/catalog.py:284
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:4
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:4
+#: ideascube/templates/ideascube/includes/cards/kolibri.html:4
 #: ideascube/templates/ideascube/includes/cards/koombookedu.html:4
 msgid "learn"
 msgstr "تعلم"
 
-#: ideascube/serveradmin/catalog.py:326
+#: ideascube/serveradmin/catalog.py:324
 msgid "info"
 msgstr "المعلومات"
 
@@ -1809,7 +1790,7 @@ msgid "Capacity"
 msgstr "قابلية"
 
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:5
-#: ideascube/serveradmin/templates/serveradmin/index.html:19
+#: ideascube/serveradmin/templates/serveradmin/index.html:18
 msgid "Manage home page"
 msgstr "إداره الصفحة الرئيسية"
 
@@ -1830,19 +1811,14 @@ msgid "Languages"
 msgstr "اللغات"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:15
-#: ideascube/serveradmin/templates/serveradmin/services.html:6
-msgid "Manage services"
-msgstr "إدارة الخدمات"
-
-#: ideascube/serveradmin/templates/serveradmin/index.html:16
 msgid "Restart server"
 msgstr "إعادة تشغيل الخادم "
 
-#: ideascube/serveradmin/templates/serveradmin/index.html:17
+#: ideascube/serveradmin/templates/serveradmin/index.html:16
 msgid "Monitor battery"
 msgstr "مراقبه البطاريه"
 
-#: ideascube/serveradmin/templates/serveradmin/index.html:18
+#: ideascube/serveradmin/templates/serveradmin/index.html:17
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:5
 msgid "Manage Wi-Fi"
 msgstr "أداره شبكة الأنترنت"
@@ -1937,57 +1913,57 @@ msgstr "الغاء المختاره"
 msgid "No known Wi-Fi networks"
 msgstr "لا يوجد شبكه انترنت معروفه"
 
-#: ideascube/serveradmin/views.py:41
+#: ideascube/serveradmin/views.py:39
 msgid "Please select at least one language"
 msgstr "الرجاء الأختيار على الأقل لغة واحده"
 
-#: ideascube/serveradmin/views.py:105
+#: ideascube/serveradmin/views.py:65
 #, python-brace-format
 msgid "Succesfully created backup {filename}"
 msgstr "تم إنشاء النسخ الأحتياطي بنجاح {filename}"
 
-#: ideascube/serveradmin/views.py:115
+#: ideascube/serveradmin/views.py:75
 msgid "Unable to load file:"
 msgstr "غير قادر على تحميل الملف:"
 
-#: ideascube/serveradmin/views.py:119
+#: ideascube/serveradmin/views.py:79
 #, python-brace-format
 msgid "File {name} has been loaded."
 msgstr "الملف {name} تم تحميله بنجاح."
 
-#: ideascube/serveradmin/views.py:124
+#: ideascube/serveradmin/views.py:84
 msgid "No file found to upload."
 msgstr "لا يوجد ملفات ليتم تحميلها ."
 
-#: ideascube/serveradmin/views.py:130
+#: ideascube/serveradmin/views.py:90
 #, python-brace-format
 msgid "Succesfully deleted backup {filename}"
 msgstr "تم حذف ملفات النسخ الاحتياطي بنجاح {filename} "
 
-#: ideascube/serveradmin/views.py:135
+#: ideascube/serveradmin/views.py:95
 #, python-brace-format
 msgid "Succesfully restored backup {filename}"
 msgstr "تم أستعاده ملفات النسخ الأحتياطي بنجاح {filename}"
 
-#: ideascube/serveradmin/views.py:173
+#: ideascube/serveradmin/views.py:133
 #, python-brace-format
 msgid "Connected to {ssid}"
 msgstr "ربط الأتصال ب{ssid}"
 
-#: ideascube/serveradmin/views.py:177
+#: ideascube/serveradmin/views.py:137
 #, python-brace-format
 msgid "No such network: {ssid}"
 msgstr "لا يوجد شبكه :{ssid}"
 
-#: ideascube/serveradmin/views.py:217
+#: ideascube/serveradmin/views.py:177
 msgid "Home cards updated successfully"
 msgstr "تم أختيار مواضيع الصفحة الرئيسية بنجاح"
 
-#: ideascube/serveradmin/views.py:235
+#: ideascube/serveradmin/views.py:195
 msgid "Server name changed successfully"
 msgstr "أسم الخادم تم تغييره بنجاح"
 
-#: ideascube/serveradmin/views.py:238
+#: ideascube/serveradmin/views.py:198
 msgid "Server name cannot be empty"
 msgstr "أسم الخادم لايمكن أن يكون فارغ"
 
@@ -2057,6 +2033,7 @@ msgid "Browse blog posts."
 msgstr "تصفح منشورات الموقع"
 
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:7
+#: ideascube/templates/ideascube/includes/cards/kolibri.html:7
 msgid "Learn with videos and exercises."
 msgstr "التعلم بأستخدام الفيديو و التمرينات"
 
