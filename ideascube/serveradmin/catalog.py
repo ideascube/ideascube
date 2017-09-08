@@ -36,7 +36,7 @@ def get_data_paths(directory):
     return basepaths
 
 
-def load_from_basepath(basepath):
+def load_from_basepath(basepath, persist_to_json=True):
     json_path = basepath + '.json'
     try:
         return load_from_json_file(json_path)
@@ -46,9 +46,16 @@ def load_from_basepath(basepath):
 
     yml_path = basepath + '.yml'
     try:
-        return load_from_yml_file(yml_path)
+        data = load_from_yml_file(yml_path)
     except FileNotFoundError:
         raise
+
+    if persist_to_json:
+        persist_to_file(basepath, data)
+        os.remove(yml_path)
+
+    return data
+
 
 def load_from_json_file(path):
     with open(path, 'r', encoding='utf-8') as f:
@@ -115,8 +122,8 @@ class Remote:
         self.url = url
 
     @classmethod
-    def from_basepath(cls, path):
-        d = load_from_basepath(path)
+    def from_basepath(cls, path, persist_to_json=True):
+        d = load_from_basepath(path, persist_to_json)
 
         try:
             return cls(d['id'], d['name'], d['url'])
@@ -852,7 +859,8 @@ class Catalog:
             except FileNotFoundError:
                 # Try compatible old format
                 try:
-                    catalog = load_from_basepath(self._catalog_cache_basepath)
+                    # Don't try to save a old format to json. This is useless.
+                    catalog = load_from_basepath(self._catalog_cache_basepath, persist_to_json=False)
                 except FileNotFoundError:
                     # That's ok
                     pass
