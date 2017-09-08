@@ -39,9 +39,15 @@ def load_from_basepath(basepath):
 
     yml_path = basepath + '.yml'
     try:
-        return load_from_yml_file(yml_path)
+        data = load_from_yml_file(yml_path)
     except FileNotFoundError:
         raise
+
+    persist_to_file(basepath, data)
+    os.remove(yml_path)
+
+    return data
+
 
 def load_from_json_file(path):
     with open(path, 'r', encoding='utf-8') as f:
