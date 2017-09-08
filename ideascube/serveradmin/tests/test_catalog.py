@@ -4,6 +4,7 @@ import zipfile
 
 from py.path import local as Path
 import pytest
+import yaml
 
 from ideascube.mediacenter.models import Document
 
@@ -634,8 +635,7 @@ def test_catalog_existing_remote(settings):
         'url': 'http://foo.fr/catalog.yml'}
 
     remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).mkdir('remotes')
-    remotes_dir.join('foo.yml').write(
-        'id: {id}\nname: {name}\nurl: {url}'.format(**params))
+    remotes_dir.join('foo.yml').write(yaml.safe_dump(params))
 
     c = Catalog()
     remotes = c.list_remotes()
@@ -698,8 +698,7 @@ def test_catalog_remove_remote(settings):
         'url': 'http://foo.fr/catalog.yml'}
 
     remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).mkdir('remotes')
-    remotes_dir.join('foo.yml').write(
-        'id: {id}\nname: {name}\nurl: {url}'.format(**params))
+    remotes_dir.join('foo.yml').write(yaml.safe_dump(params))
 
     c = Catalog()
     c.remove_remote(params['id'])
@@ -737,8 +736,8 @@ def test_catalog_update_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(
-        'all:\n  foovideos:\n    name: Videos from Foo')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {'foovideos': {'name': 'Videos from Foo'}}}))
 
     c = Catalog()
     assert c._available == {}
@@ -778,14 +777,16 @@ def test_catalog_update_cache_updates_installed_metadata(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(
-        'all:\n'
-        '  foovideos:\n'
-        '    name: Videos from Foo\n'
-        '    sha256sum: abcdef\n'
-        '    type: zipped-zim\n'
-        '    version: 1.0.0\n'
-    )
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+           'foovideos': {
+               'name': "Videos from Foo",
+               'sha256sum': "abcdef",
+               'type': "zipped-zim",
+               'version': "1.0.0"
+           }
+        }
+    }))
 
     c = Catalog()
     c.add_remote(
@@ -809,14 +810,16 @@ def test_catalog_update_cache_updates_installed_metadata(tmpdir):
 
     # And now let's say that someone modified the remote metadata, for example
     # to fix an undescriptive name
-    remote_catalog_file.write(
-        'all:\n'
-        '  foovideos:\n'
-        '    name: Awesome videos from Foo\n'
-        '    sha256sum: abcdef\n'
-        '    type: zipped-zim\n'
-        '    version: 1.0.0\n'
-    )
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+          'foovideos': {
+            'name': "Awesome videos from Foo",
+            'sha256sum': "abcdef",
+            'type': "zipped-zim",
+            'version': "1.0.0"
+          }
+        }
+    }))
 
     c.update_cache()
     assert c._available == {'foovideos': {
@@ -831,14 +834,16 @@ def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(
-        'all:\n'
-        '  foovideos:\n'
-        '    name: Videos from Foo\n'
-        '    sha256sum: abcdef\n'
-        '    type: zipped-zim\n'
-        '    version: 1.0.0\n'
-    )
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+          'foovideos': {
+            'name': "Videos from Foo",
+            'sha256sum': "abcdef",
+            'type': "zipped-zim",
+            'version': "1.0.0"
+          }
+        }
+    }))
 
     c = Catalog()
     c.add_remote(
@@ -862,14 +867,16 @@ def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir):
 
     # And now let's say that someone modified the remote metadata, for example
     # to fix an undescriptive name... while also publishing an update
-    remote_catalog_file.write(
-        'all:\n'
-        '  foovideos:\n'
-        '    name: Awesome videos from Foo\n'
-        '    sha256sum: abcdef\n'
-        '    type: zipped-zim\n'
-        '    version: 2.0.0\n'
-    )
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+          'foovideos': {
+            'name': "Awesome videos from Foo",
+            'sha256sum': "abcdef",
+            'type': "zipped-zim",
+            'version': "2.0.0"
+          }
+        }
+    }))
 
     c.update_cache()
     assert c._available == {'foovideos': {
@@ -884,8 +891,8 @@ def test_catalog_clear_metadata_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(
-        'all:\n  foovideos:\n    name: Videos from Foo')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all':{'foovideos':{'name': "Videos from Foo"}}}))
 
     c = Catalog()
     c.add_remote(
@@ -915,8 +922,8 @@ def test_catalog_clear_package_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(
-        'all:\n  foovideos:\n    name: Videos from Foo')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all':{'foovideos':{'name': "Videos from Foo"}}}))
 
     c = Catalog()
     c.add_remote(
@@ -946,8 +953,8 @@ def test_catalog_clear_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(
-        'all:\n  foovideos:\n    name: Videos from Foo')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all':{'foovideos':{'name': 'Videos from Foo'}}}))
 
     c = Catalog()
     c.add_remote(
@@ -985,16 +992,18 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all':{
+            'wikipedia.tum':{
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1027,16 +1036,18 @@ def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1068,16 +1079,18 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1101,24 +1114,26 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
-        f.write('  wikipedia.fr:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            },
+            'wikipedia.fr': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1154,24 +1169,26 @@ def test_install_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
-        f.write('  wikipedia.fr:\n')
-        f.write('    version: 2015-09\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim',
+            },
+            'wikipedia.fr': {
+                'version': '2015-09',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1205,16 +1222,18 @@ def test_catalog_install_package_already_downloaded(
     zippedzim.copy(packagesdir.join('wikipedia.tum-2015-08'))
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+         }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1249,16 +1268,18 @@ def test_catalog_install_package_already_in_additional_cache(
     zippedzim.copy(additionaldir.join('wikipedia.tum-2015-08'))
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1299,16 +1320,18 @@ def test_catalog_install_package_partially_downloaded(
         zippedzim.read_binary()[:100])
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                            '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1348,16 +1371,18 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
         b'corrupt download')
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1388,16 +1413,18 @@ def test_catalog_install_package_does_not_exist(tmpdir, testdatadir):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     c = Catalog()
     c.add_remote(
@@ -1419,15 +1446,17 @@ def test_catalog_install_package_with_missing_type(tmpdir, testdatadir):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54'
+            }
+        }
+    }))
 
     c = Catalog()
     c.add_remote(
@@ -1449,16 +1478,18 @@ def test_catalog_install_package_with_unknown_type(tmpdir, testdatadir):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: something-not-supported\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'something-not-supported'
+            }
+        }
+    }))
 
     c = Catalog()
     c.add_remote(
@@ -1482,16 +1513,18 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1537,16 +1570,18 @@ def test_reinstall_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1580,16 +1615,18 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1619,16 +1656,18 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1672,16 +1711,18 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1707,16 +1748,18 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-09\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
-            'd78fd4c9cf2c3dd\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-09',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': 'f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+                             'd78fd4c9cf2c3dd',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     c.update_cache()
     c.upgrade_packages(['wikipedia.tum'])
@@ -1744,24 +1787,26 @@ def test_update_all_installed_packages(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
-        f.write('  wikipedia.tumtudum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            },
+            'wikipedia.tumtudum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1787,24 +1832,26 @@ def test_update_all_installed_packages(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-09\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
-            'd78fd4c9cf2c3dd\n')
-        f.write('    type: zipped-zim\n')
-        f.write('  wikipedia.tumtudum:\n')
-        f.write('    version: 2015-09\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
-            'd78fd4c9cf2c3dd\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-09',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': 'f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+                             'd78fd4c9cf2c3dd',
+                'type': 'zipped-zim'
+            },
+            'wikipedia.tumtudum': {
+                'version': '2015-09',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': 'f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+                             'd78fd4c9cf2c3dd',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     c.update_cache()
     c.upgrade_packages(['*'])
@@ -1836,16 +1883,18 @@ def test_catalog_update_uninstalled_package(
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1874,8 +1923,9 @@ def test_update_uninstalled_and_unavailable_package(tmpdir):
     sourcedir = tmpdir.mkdir('source')
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all: {}')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {}
+    }))
 
     c = Catalog()
     c.add_remote(
@@ -1902,16 +1952,18 @@ def test_catalog_update_installed_but_unavailable_package(
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -1937,8 +1989,9 @@ def test_catalog_update_installed_but_unavailable_package(
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all: {}')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {}
+    }))
 
     c.update_cache()
     c.upgrade_packages(['wikipedia.tum'])
@@ -1972,24 +2025,26 @@ def test_update_all_with_unavailable_package(
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
-        f.write('  wikipedia.tumtudum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            },
+            'wikipedia.tumtudum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -2019,16 +2074,18 @@ def test_update_all_with_unavailable_package(
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-09\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
-            'd78fd4c9cf2c3dd\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-09',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': 'f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+                             'd78fd4c9cf2c3dd',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     c.update_cache()
     c.upgrade_packages(['*'])
@@ -2065,16 +2122,18 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -2100,16 +2159,18 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-09\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
-            'd78fd4c9cf2c3dd\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-09',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': 'f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+                             'd78fd4c9cf2c3dd',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     c.update_cache()
     c.upgrade_packages(['wikipedia.*'])
@@ -2138,16 +2199,18 @@ def test_catalog_update_package_already_latest(
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -2187,16 +2250,18 @@ def test_update_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -2214,16 +2279,18 @@ def test_update_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-09\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
-            'd78fd4c9cf2c3dd\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-09',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': 'f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+                             'd78fd4c9cf2c3dd',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     c.update_cache()
     c.upgrade_packages(['wikipedia.tum'])
@@ -2233,16 +2300,18 @@ def test_update_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-10\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
-            'd78fd4c9cf2c3dd\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-10',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': 'f8794e3c8676258b0b594ad6e464177dda8d66dbcbb04b301'
+                             'd78fd4c9cf2c3dd',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     c.update_cache()
     c.upgrade_packages(['wikipedia.tum'], keep_downloads=True)
@@ -2253,13 +2322,16 @@ def test_catalog_list_available_packages(tmpdir):
     from ideascube.serveradmin.catalog import Catalog, ZippedZim
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  foovideos:\n')
-        f.write('    name: Videos from Foo\n')
-        f.write('    type: zipped-zim\n')
-        f.write('    version: 1.0.0\n')
-        f.write('    size: 1GB\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'foovideos': {
+                'name': 'Videos from Foo',
+                'type': 'zipped-zim',
+                'version': '1.0.0',
+                'size': '1GB'
+            }
+        }
+    }))
 
     c = Catalog()
     c.add_remote(
@@ -2316,16 +2388,18 @@ def test_catalog_list_installed_packages(tmpdir, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = tmpdir.join('source').join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -2381,16 +2455,18 @@ def test_catalog_list_upgradable_packages(tmpdir, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = tmpdir.join('source').join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
@@ -2407,16 +2483,18 @@ def test_catalog_list_upgradable_packages(tmpdir, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = tmpdir.join('source').join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-09\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-09',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            }
+        }
+    }))
 
     c.update_cache()
     pkgs = c.list_upgradable(['nosuchpackage'])
@@ -2460,12 +2538,16 @@ def test_catalog_list_upgradable_with_bad_packages(tmpdir, testdatadir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  missing-metadata:\n')
-        f.write('    size: 200KB\n')
-        f.write('  invalid-type:\n')
-        f.write('    type: unknown-type\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'missing-metadata': {
+                'size': '200KB'
+            },
+            'invalid-type' : {
+                'type': 'unknown-type'
+            }
+        }
+    }))
 
     c = Catalog()
     c.add_remote(
@@ -2501,22 +2583,25 @@ def test_catalog_list_nothandled_packages(tmpdir, testdatadir, mocker):
     zippedzim.copy(path)
 
     remote_catalog_file = tmpdir.join('source').join('catalog.yml')
-    with remote_catalog_file.open(mode='w') as f:
-        f.write('all:\n')
-        f.write('  wikipedia.tum:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 200KB\n')
-        f.write('    url: file://{}\n'.format(path))
-        f.write(
-            '    sha256sum: 335d00b53350c63df45486c5433205f068ad90e33c208064b'
-            '212c29a30109c54\n')
-        f.write('    type: zipped-zim\n')
-        f.write('  nothandled:\n')
-        f.write('    version: 2015-08\n')
-        f.write('    size: 0KB\n')
-        f.write('    url: file://fackurl\n')
-        f.write('    sha256sum: 0\n')
-        f.write('    type: NOTHANDLED\n')
+    remote_catalog_file.write(yaml.safe_dump({
+        'all': {
+            'wikipedia.tum': {
+                'version': '2015-08',
+                'size': '200KB',
+                'url': 'file://{}'.format(path),
+                'sha256sum': '335d00b53350c63df45486c5433205f068ad90e33c208064b'
+                             '212c29a30109c54',
+                'type': 'zipped-zim'
+            },
+            'nothandled': {
+                'version': '2015-08',
+                'size': '0KB',
+                'url': 'file://fackurl',
+                'sha256sum': '0',
+                'type': 'NOTHANDLED'
+            }
+        }
+    }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
