@@ -193,24 +193,16 @@ class Kiwix(Handler):
         libdir = os.path.join(cls._install_dir, 'data', 'library')
         os.makedirs(libdir, exist_ok=True)
 
-        for libpath in glob(os.path.join(libdir, '*.xml')):
-            zimname = os.path.basename(libpath)[:-4]
+        for zim_info_path in glob(os.path.join(cls._install_dir, '*.zim.json')):
+            zim_info = load_from_json_file(zim_info_path)
 
-            with open(libpath, 'r') as f:
-                et = etree.parse(f)
-                books = et.findall('book')
+            book = etree.Element('book')
+            book.set('id', zim_info['id'])
+            book.set('path', zim_info['path'])
+            if 'indexPath' in zim_info:
+                book.set('indexPath', zim_info['indexPath'])
 
-                # We only want to handle a single zim per zip
-                assert len(books) == 1
-
-                book = books[0]
-                book.set('path', 'data/content/%s' % zimname)
-
-                index_path = 'data/index/%s.idx' % zimname
-                if os.path.isdir(os.path.join(cls._install_dir, index_path)):
-                    book.set('indexPath', index_path)
-
-                library.append(book)
+            library.append(book)
 
         with open(os.path.join(cls._install_dir, 'library.xml'), 'wb') as f:
             f.write(etree.tostring(
@@ -306,35 +298,51 @@ class ZippedZim(Package, typename='zipped-zim'):
             names = filter(lambda n: n.startswith('data/'), names)
             # Make it a list so we can reuse it later
             names = list(names)
-            z.extractall(install_dir, members=names)
+            zim_names = [name for name in names if name.startswith('data/content/') and '.zim' in name]
+            idx_names = [name for name in names if name.startswith('data/index/') and '.zim.idx/' in name]
+            z.extractall(install_dir, members=zim_names+idx_names)
 
-        datadir = os.path.join(install_dir, 'data')
-
-        for path in glob(os.path.join(datadir, '*', '*.zim*')):
-            relpath = os.path.relpath(path, install_dir)
-
-            if os.path.isdir(path):
-                # Dirs end with a / in the zip file list
-                relpath += '/'
-
-            if relpath not in names:
-                # Ignore zim files installed by other packages
-                continue
-
-            zimname = os.path.basename(path).split('.zim')[0] + '.zim'
-            new = path.replace(zimname, '{0.id}.zim'.format(self))
+        for relpath in zim_names:
+            path = os.path.join(install_dir, relpath)
+            _, ext = os.path.splitext(relpath)
+            new = os.path.join(install_dir, '{self.id}{ext}'.format(self=self, ext=ext))
             try:
                 os.rename(path, new)
             except OSError:
                 rm(new)
                 os.rename(path, new)
 
+        zim_name = '{self.id}.zim'.format(self=self)
+        info = {
+            'id': self.id,
+            'path': zim_name,
+        }
+
+        if idx_names:
+           relpath = idx_names[0]
+           path = os.path.join(install_dir, relpath)
+           new = os.path.join(install_dir, '{self.id}.zim.idx'.format(self=self))
+           try:
+               os.rename(path, new)
+           except OSError:
+               rm(new)
+               os.rename(path, new)
+           info['indexPath'] = '{self.id}.zim.idx'.format(self=self)
+
+        persist_to_file(os.path.join(install_dir, zim_name), info)
+
+
     def remove(self, install_dir):
         zimname = '{0.id}.zim*'.format(self)
+        for path in glob(os.path.join(install_dir, zimname)):
+            rm(path)
+        
+        # Keep removing old data installed using old way of doing
         datadir = os.path.join(install_dir, 'data')
-
         for path in glob(os.path.join(datadir, '*', zimname)):
             rm(path)
+
+
 
 
 class SimpleZipPackage(Package, no_register=True):
