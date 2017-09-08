@@ -639,7 +639,7 @@ def test_catalog_no_remote(settings):
     assert remotes_dir.listdir() == []
 
 
-def test_catalog_existing_remote(settings):
+def test_catalog_existing_remote_json(settings):
     from ideascube.serveradmin.catalog import Catalog
 
     params = {
@@ -647,7 +647,7 @@ def test_catalog_existing_remote(settings):
         'url': 'http://foo.fr/catalog.yml'}
 
     remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).mkdir('remotes')
-    remotes_dir.join('foo.yml').write(yaml.safe_dump(params))
+    remotes_dir.join('foo.json').write(json.dumps(params))
 
     c = Catalog()
     remotes = c.list_remotes()
@@ -657,6 +657,31 @@ def test_catalog_existing_remote(settings):
     assert remote.id == params['id']
     assert remote.name == params['name']
     assert remote.url == params['url']
+
+
+def test_catalog_existing_remote_yml(settings):
+    from ideascube.serveradmin.catalog import Catalog
+
+    params = {
+        'id': 'foo', 'name': 'Content provided by Foo',
+        'url': 'http://foo.fr/catalog.yml'}
+
+    remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).mkdir('remotes')
+    yml_file = remotes_dir.join('foo.yml')
+    yml_file.write(yaml.safe_dump(params))
+
+    c = Catalog()
+    remotes = c.list_remotes()
+    assert len(remotes) == 1
+
+    remote = remotes[0]
+    assert remote.id == params['id']
+    assert remote.name == params['name']
+    assert remote.url == params['url']
+
+    assert yml_file.check(exists=False)
+    json_data = json.loads(remotes_dir.join('foo.json').read())
+    assert json_data == params
 
 
 def test_catalog_add_remotes():
@@ -702,7 +727,7 @@ def test_catalog_add_remotes():
     excinfo.match('A remote with this url already exists')
 
 
-def test_catalog_remove_remote(settings):
+def test_catalog_remove_remote_json(settings):
     from ideascube.serveradmin.catalog import Catalog
 
     params = {
@@ -710,12 +735,38 @@ def test_catalog_remove_remote(settings):
         'url': 'http://foo.fr/catalog.yml'}
 
     remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).mkdir('remotes')
-    remotes_dir.join('foo.yml').write(yaml.safe_dump(params))
+    json_file = remotes_dir.join('foo.json')
+    json_file.write(json.dumps(params))
 
     c = Catalog()
     c.remove_remote(params['id'])
     remotes = c.list_remotes()
     assert len(remotes) == 0
+    assert json_file.check(exists=False)
+
+    with pytest.raises(ValueError) as exc:
+        c.remove_remote(params['id'])
+
+    assert params['id'] in exc.exconly()
+
+
+def test_catalog_remove_remote_yml(settings):
+    from ideascube.serveradmin.catalog import Catalog
+
+    params = {
+        'id': 'foo', 'name': 'Content provided by Foo',
+        'url': 'http://foo.fr/catalog.yml'}
+
+    remotes_dir = Path(settings.CATALOG_STORAGE_ROOT).mkdir('remotes')
+    yml_file = remotes_dir.join('foo.yml')
+    yml_file.write(yaml.safe_dump(params))
+
+    c = Catalog()
+    c.remove_remote(params['id'])
+    remotes = c.list_remotes()
+    assert len(remotes) == 0
+    assert yml_file.check(exists=False)
+    assert remotes_dir.join('foo.json').check(exists=False)
 
     with pytest.raises(ValueError) as exc:
         c.remove_remote(params['id'])
@@ -744,7 +795,30 @@ def test_catalog_add_package_cache(tmpdir, settings):
     assert c._package_caches == [extra1, extra2, extra3, default_cache]
 
 
-def test_catalog_update_cache(tmpdir):
+def test_catalog_update_cache_json(tmpdir):
+    from ideascube.serveradmin.catalog import Catalog
+
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
+        'all': {'foovideos': {'name': "Videos from Foo"}}}))
+
+    c = Catalog()
+    assert c._available == {}
+    assert c._installed == {}
+
+    c.add_remote(
+        'foo', 'Content from Foo',
+        'file://{}'.format(remote_catalog_file.strpath))
+    c.update_cache()
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {}
+
+    c = Catalog()
+    assert c._available == {'foovideos': {'name': 'Videos from Foo'}}
+    assert c._installed == {}
+
+
+def test_catalog_update_cache_yml(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
@@ -788,8 +862,8 @@ def test_catalog_update_cache_no_fail_if_remote_unavailable(mocker):
 def test_catalog_update_cache_updates_installed_metadata(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
-    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
            'foovideos': {
                'name': "Videos from Foo",
@@ -822,7 +896,7 @@ def test_catalog_update_cache_updates_installed_metadata(tmpdir):
 
     # And now let's say that someone modified the remote metadata, for example
     # to fix an undescriptive name
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file.write(json.dumps({
         'all': {
           'foovideos': {
             'name': "Awesome videos from Foo",
@@ -845,8 +919,8 @@ def test_catalog_update_cache_updates_installed_metadata(tmpdir):
 def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
-    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
           'foovideos': {
             'name': "Videos from Foo",
@@ -879,7 +953,7 @@ def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir):
 
     # And now let's say that someone modified the remote metadata, for example
     # to fix an undescriptive name... while also publishing an update
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file.write(json.dumps({
         'all': {
           'foovideos': {
             'name': "Awesome videos from Foo",
@@ -902,8 +976,8 @@ def test_catalog_update_cache_does_not_update_installed_metadata(tmpdir):
 def test_catalog_clear_metadata_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
-    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all':{'foovideos':{'name': "Videos from Foo"}}}))
 
     c = Catalog()
@@ -933,8 +1007,8 @@ def test_catalog_clear_metadata_cache(tmpdir):
 def test_catalog_clear_package_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
-    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all':{'foovideos':{'name': "Videos from Foo"}}}))
 
     c = Catalog()
@@ -964,8 +1038,8 @@ def test_catalog_clear_package_cache(tmpdir):
 def test_catalog_clear_cache(tmpdir):
     from ideascube.serveradmin.catalog import Catalog
 
-    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all':{'foovideos':{'name': 'Videos from Foo'}}}))
 
     c = Catalog()
@@ -1003,8 +1077,8 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all':{
             'wikipedia.tum':{
                 'version': '2015-08',
@@ -1047,8 +1121,8 @@ def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1090,8 +1164,8 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1125,8 +1199,8 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1180,8 +1254,8 @@ def test_install_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1233,8 +1307,8 @@ def test_catalog_install_package_already_downloaded(
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(packagesdir.join('wikipedia.tum-2015-08'))
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1279,8 +1353,8 @@ def test_catalog_install_package_already_in_additional_cache(
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(additionaldir.join('wikipedia.tum-2015-08'))
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1331,8 +1405,8 @@ def test_catalog_install_package_partially_downloaded(
     packagesdir.join('wikipedia.tum-2015-08').write_binary(
         zippedzim.read_binary()[:100])
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1382,8 +1456,8 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
     packagesdir.join('wikipedia.tum-2015-08').write_binary(
         b'corrupt download')
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1424,8 +1498,8 @@ def test_catalog_install_package_does_not_exist(tmpdir, testdatadir):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1457,8 +1531,8 @@ def test_catalog_install_package_with_missing_type(tmpdir, testdatadir):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1489,8 +1563,8 @@ def test_catalog_install_package_with_unknown_type(tmpdir, testdatadir):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1524,8 +1598,8 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1581,8 +1655,8 @@ def test_reinstall_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1626,8 +1700,8 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1667,8 +1741,8 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1722,8 +1796,8 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1759,8 +1833,8 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-09',
@@ -1798,8 +1872,8 @@ def test_update_all_installed_packages(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1843,8 +1917,8 @@ def test_update_all_installed_packages(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-09',
@@ -1894,8 +1968,8 @@ def test_catalog_update_uninstalled_package(
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1934,8 +2008,8 @@ def test_update_uninstalled_and_unavailable_package(tmpdir):
 
     sourcedir = tmpdir.mkdir('source')
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({'all': {}}))
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({'all': {}}))
 
     c = Catalog()
     c.add_remote(
@@ -1961,8 +2035,8 @@ def test_catalog_update_installed_but_unavailable_package(
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -1998,8 +2072,8 @@ def test_catalog_update_installed_but_unavailable_package(
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({'all': {}}))
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({'all': {}}))
 
     c.update_cache()
     c.upgrade_packages(['wikipedia.tum'])
@@ -2032,8 +2106,8 @@ def test_update_all_with_unavailable_package(
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -2081,8 +2155,8 @@ def test_update_all_with_unavailable_package(
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-09',
@@ -2129,8 +2203,8 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -2166,8 +2240,8 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-09',
@@ -2206,8 +2280,8 @@ def test_catalog_update_package_already_latest(
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -2257,8 +2331,8 @@ def test_update_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -2286,8 +2360,8 @@ def test_update_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-09',
@@ -2307,8 +2381,8 @@ def test_update_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-10.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = sourcedir.join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = sourcedir.join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-10',
@@ -2329,8 +2403,8 @@ def test_update_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
 def test_catalog_list_available_packages(tmpdir):
     from ideascube.serveradmin.catalog import Catalog, ZippedZim
 
-    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'foovideos': {
                 'name': 'Videos from Foo',
@@ -2395,8 +2469,8 @@ def test_catalog_list_installed_packages(tmpdir, testdatadir, mocker):
     path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.join('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -2462,8 +2536,8 @@ def test_catalog_list_upgradable_packages(tmpdir, testdatadir, mocker):
     path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.join('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
@@ -2490,8 +2564,8 @@ def test_catalog_list_upgradable_packages(tmpdir, testdatadir, mocker):
     path = tmpdir.join('source').join('wikipedia_tum_all_nopic_2015-09.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.join('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-09',
@@ -2545,8 +2619,8 @@ def test_catalog_list_upgradable_packages(tmpdir, testdatadir, mocker):
 def test_catalog_list_upgradable_with_bad_packages(tmpdir, testdatadir):
     from ideascube.serveradmin.catalog import Catalog
 
-    remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.mkdir('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'missing-metadata': {
                 'size': '200KB'
@@ -2590,8 +2664,8 @@ def test_catalog_list_nothandled_packages(tmpdir, testdatadir, mocker):
     path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zim')
     zippedzim.copy(path)
 
-    remote_catalog_file = tmpdir.join('source').join('catalog.yml')
-    remote_catalog_file.write(yaml.safe_dump({
+    remote_catalog_file = tmpdir.join('source').join('catalog.json')
+    remote_catalog_file.write(json.dumps({
         'all': {
             'wikipedia.tum': {
                 'version': '2015-08',
