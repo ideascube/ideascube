@@ -1,6 +1,7 @@
 """KoomBook conf"""
 from .kb import *  # pragma: no flakes
 
+LANGUAGE_CODE = 'fr'
 CUSTOM_CARDS = [
     {
         'category': 'info',
