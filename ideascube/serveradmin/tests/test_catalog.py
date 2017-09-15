@@ -66,8 +66,8 @@ def input_file(tmpdir, input_type, input_content):
 
 @pytest.fixture
 def zippedzim_path(testdatadir, tmpdir):
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = tmpdir.mkdir('packages').join('wikipedia.tum-2015-08')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = tmpdir.mkdir('packages').join('wikipedia.tum-2015-08.zip')
     zippedzim.copy(path)
 
     return path
@@ -245,7 +245,7 @@ def test_install_zippedzim(zippedzim_path, install_dir):
     from ideascube.serveradmin.catalog import ZippedZim
 
     p = ZippedZim('wikipedia.tum', {
-        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zip'})
     p.install(zippedzim_path.strpath, install_dir.strpath)
 
     data = install_dir.join('data')
@@ -272,7 +272,7 @@ def test_install_invalid_zippedzim(tmpdir, testdatadir, install_dir):
     src.copy(path)
 
     p = ZippedZim('wikipedia.tum', {
-        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zip'})
 
     with pytest.raises(InvalidFile) as exc:
         p.install(path.strpath, install_dir.strpath)
@@ -284,7 +284,7 @@ def test_remove_zippedzim(zippedzim_path, install_dir):
     from ideascube.serveradmin.catalog import ZippedZim
 
     p = ZippedZim('wikipedia.tum', {
-        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zip'})
     p.install(zippedzim_path.strpath, install_dir.strpath)
 
     p.remove(install_dir.strpath)
@@ -401,7 +401,7 @@ def test_kiwix_installs_zippedzim(settings, zippedzim_path):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
 
     p = ZippedZim('wikipedia.tum', {
-        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zip'})
     h = Kiwix()
     h.install(p, zippedzim_path.strpath)
 
@@ -427,7 +427,7 @@ def test_kiwix_does_not_fail_if_files_already_exist(settings, zippedzim_path):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
 
     p = ZippedZim('wikipedia.tum', {
-        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zip'})
     h = Kiwix()
     h.install(p, zippedzim_path.strpath)
     h.install(p, zippedzim_path.strpath)
@@ -442,7 +442,7 @@ def test_kiwix_removes_zippedzim(settings, zippedzim_path):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
 
     p = ZippedZim('wikipedia.tum', {
-        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zip'})
     h = Kiwix()
     h.install(p, zippedzim_path.strpath)
 
@@ -472,7 +472,7 @@ def test_kiwix_commits_after_install(settings, zippedzim_path, mocker):
     manager = mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
     p = ZippedZim('wikipedia.tum', {
-        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zip'})
     h = Kiwix()
     h.install(p, zippedzim_path.strpath)
     h.commit()
@@ -500,7 +500,7 @@ def test_kiwix_commits_after_remove(settings, zippedzim_path, mocker):
     manager().get_service.side_effect = NoSuchUnit
 
     p = ZippedZim('wikipedia.tum', {
-        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zip'})
     h = Kiwix()
     h.install(p, zippedzim_path.strpath)
     h.commit()
@@ -1073,8 +1073,8 @@ def test_catalog_install_package(tmpdir, settings, testdatadir, mocker):
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1117,8 +1117,8 @@ def test_catalog_install_package_glob(tmpdir, settings, testdatadir, mocker):
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1160,8 +1160,8 @@ def test_catalog_install_package_twice(tmpdir, settings, testdatadir, mocker):
 
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1195,7 +1195,7 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, testdatadir, mocker):
 
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
@@ -1250,7 +1250,7 @@ def test_install_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
@@ -1303,8 +1303,8 @@ def test_catalog_install_package_already_downloaded(
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(packagesdir.join('wikipedia.tum-2015-08'))
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1349,8 +1349,8 @@ def test_catalog_install_package_already_in_additional_cache(
     sourcedir = tmpdir.mkdir('source')
     additionaldir = tmpdir.mkdir('this-could-be-a-usb-stick')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(additionaldir.join('wikipedia.tum-2015-08'))
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1397,8 +1397,8 @@ def test_catalog_install_package_partially_downloaded(
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     # Partially download the package
@@ -1448,8 +1448,8 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     # Partially download the package
@@ -1494,8 +1494,8 @@ def test_catalog_install_package_does_not_exist(tmpdir, testdatadir):
 
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1527,8 +1527,8 @@ def test_catalog_install_package_with_missing_type(tmpdir, testdatadir):
 
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1559,8 +1559,8 @@ def test_catalog_install_package_with_unknown_type(tmpdir, testdatadir):
 
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1594,8 +1594,8 @@ def test_catalog_reinstall_package(tmpdir, settings, testdatadir, mocker):
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1651,7 +1651,7 @@ def test_reinstall_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
@@ -1696,8 +1696,8 @@ def test_catalog_remove_package(tmpdir, settings, testdatadir, mocker):
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1737,8 +1737,8 @@ def test_catalog_remove_package_glob(tmpdir, settings, testdatadir, mocker):
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1792,8 +1792,8 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1829,8 +1829,8 @@ def test_catalog_update_package(tmpdir, settings, testdatadir, mocker):
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
         assert 'date="2015-08-10"' in libdata
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1868,8 +1868,8 @@ def test_update_all_installed_packages(tmpdir, settings, testdatadir, mocker):
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1913,8 +1913,8 @@ def test_update_all_installed_packages(tmpdir, settings, testdatadir, mocker):
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
         assert 'date="2015-08-10"' in libdata
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -1964,8 +1964,8 @@ def test_catalog_update_uninstalled_package(
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -2031,8 +2031,8 @@ def test_catalog_update_installed_but_unavailable_package(
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -2068,8 +2068,8 @@ def test_catalog_update_installed_but_unavailable_package(
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
         assert 'date="2015-08-10"' in libdata
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -2102,8 +2102,8 @@ def test_update_all_with_unavailable_package(
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -2151,8 +2151,8 @@ def test_update_all_with_unavailable_package(
         assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' in libdata
         assert 'date="2015-08-10"' in libdata
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -2199,8 +2199,8 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -2236,8 +2236,8 @@ def test_catalog_update_package_glob(tmpdir, settings, testdatadir, mocker):
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
         assert 'date="2015-08-10"' in libdata
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -2276,8 +2276,8 @@ def test_catalog_update_package_already_latest(
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -2327,8 +2327,8 @@ def test_update_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
     sourcedir = tmpdir.mkdir('source')
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -2356,8 +2356,8 @@ def test_update_and_keep_the_download(tmpdir, settings, testdatadir, mocker):
     c.install_packages(['wikipedia.tum'])
     assert not (package_cache / 'wikipedia.tum-2015-08').exists()
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
-    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09.zip')
+    path = sourcedir.join('wikipedia_tum_all_nopic_2015-09.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
@@ -2465,8 +2465,8 @@ def test_catalog_list_available_packages(tmpdir):
 def test_catalog_list_installed_packages(tmpdir, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog, ZippedZim
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
@@ -2532,8 +2532,8 @@ def test_catalog_list_installed_packages(tmpdir, testdatadir, mocker):
 def test_catalog_list_upgradable_packages(tmpdir, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog, ZippedZim
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
@@ -2560,8 +2560,8 @@ def test_catalog_list_upgradable_packages(tmpdir, testdatadir, mocker):
     c.install_packages(['wikipedia.tum'])
     assert c.list_upgradable(['*']) == []
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09')
-    path = tmpdir.join('source').join('wikipedia_tum_all_nopic_2015-09.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-09.zip')
+    path = tmpdir.join('source').join('wikipedia_tum_all_nopic_2015-09.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
@@ -2660,8 +2660,8 @@ def test_catalog_list_upgradable_with_bad_packages(tmpdir, testdatadir):
 def test_catalog_list_nothandled_packages(tmpdir, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
-    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
-    path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zim')
+    zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08.zip')
+    path = tmpdir.mkdir('source').join('wikipedia_tum_all_nopic_2015-08.zip')
     zippedzim.copy(path)
 
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
