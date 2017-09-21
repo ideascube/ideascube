@@ -19,7 +19,7 @@ from ideascube.mixins import FilterableViewMixin, OrderableViewMixin
 from ideascube.serveradmin import catalog as catalog_mod
 
 from .models import Document
-from .forms import DocumentForm
+from .forms import CreateDocumentForm, DocumentForm
 
 
 class NoHiddenDocumentMixin:
@@ -100,7 +100,7 @@ document_update = staff_member_required(DocumentUpdate.as_view())
 
 class DocumentCreate(CreateView):
     model = Document
-    form_class = DocumentForm
+    form_class = CreateDocumentForm
     initial = {
         'lang': get_language(),
     }

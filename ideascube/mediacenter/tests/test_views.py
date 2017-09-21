@@ -449,6 +449,8 @@ def test_can_create_document(staffapp):
     form['original'] = Upload('image.jpg', b'xxxxxx', 'image/jpeg')
     form.submit().follow()
     assert Document.objects.count() == 1
+    doc = Document.objects.first()
+    assert doc.kind == Document.IMAGE
 
 
 def test_package_id_should_not_be_editable_when_creating(staffapp):
@@ -470,11 +472,12 @@ def test_can_create_app_document(staffapp):
     form['title'] = 'my document title'
     form['summary'] = 'my document summary'
     form['credits'] = 'my document credits'
-    form['kind'] = Document.APP
     form['original'] = Upload('soft.exe', b'xxxxxx',
                               'application/x-msdos-program')
     form.submit().follow()
     assert Document.objects.count() == 1
+    doc = Document.objects.first()
+    assert doc.kind == Document.APP
 
 
 def test_can_create_document_without_lang(staffapp):
