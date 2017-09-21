@@ -36,7 +36,7 @@
         <tr>
             <td><span class="{{ entry.module }} module">{{ entry.module }}</span></td>
             <td>{{ entry.user }}</td>
-            <td>{% blocktrans  with time=entry.created_at|timesince %}{{ time }} ago{% endblocktrans%}</td>
+            <td>{{ entry.created_at }}</td>
             {% for field in MONITORING_ENTRY_EXPORT_FIELDS %}
                 <td>{{ entry.user|field_value_display:field|default:'—' }}</td>
             {% endfor %}
