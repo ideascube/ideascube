@@ -25,8 +25,10 @@ from ideascube.utils import (
     MetaRegistry, classproperty, get_file_sha256, printerr, rm, urlretrieve,
 )
 
-from .systemd import Manager as SystemManager, NoSuchUnit
-
+try:
+    from .systemd import Manager as SystemManager, NoSuchUnit
+except:
+    SystemManager = None
 
 def load_from_file(path):
     with open(path, 'r', encoding='utf-8') as f:
