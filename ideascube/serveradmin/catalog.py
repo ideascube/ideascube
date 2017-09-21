@@ -27,7 +27,7 @@ from ideascube.utils import (
 
 try:
     from .systemd import Manager as SystemManager, NoSuchUnit
-except:
+except ImportError:
     SystemManager = None
 
 def load_from_file(path):
@@ -874,9 +874,9 @@ class Catalog:
         self._available_value = {}
 
         for remote in self._remotes.values():
-            # TODO: Get resumable.urlretrieve to accept a file-like object?
-            with tempfile.NamedTemporaryFile() as fd:
-                tmppath = fd.name
+            # Do not use NamedTemporaryFile as urlretrieve also opens the file (windows compat)
+            with tempfile.TemporaryDirectory() as temp_dir:
+                tmppath = os.path.join(temp_dir, 'remote_file')
 
                 def _progress(*args):
                     self._progress(remote.name, *args)
