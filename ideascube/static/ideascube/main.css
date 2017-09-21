@@ -530,6 +530,11 @@ html[dir='rtl'] .i18n_switch input[type='submit'] {
 /* ************************************************* */
 /* ******************** TOOLS ********************** */
 /* ************************************************* */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  }
 .card-container {
     margin: 0 -10px;
 }
