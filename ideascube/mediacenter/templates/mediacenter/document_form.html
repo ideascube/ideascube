@@ -20,11 +20,11 @@
 
 {% block sidebar %}
     <h3>{% trans 'Metadatas' %}</h3>
-    {% form_field form.credits %}
     {% form_field form.lang %}
     {% form_field form.kind %}
     {% form_field form.tags %}
     {% form_field form.preview %}
+    {% form_field form.credits %}
 {% endblock sidebar %}
 
 {% block cancel_url %}

@@ -25,20 +25,21 @@ def test_should_import_medias():
     metadata = ('kind,title,summary,credits,path\n'
                 'video,my video,my video summary,BSF,a-video.mp4\n'
                 'pdf,my doc,my doc summary,BSF,a-pdf.pdf\n'
-                'image,my image,my image summary,BSF,an-image.jpg\n')
+                'image,my image,my image summary,BSF,an-image.jpg\n'
+                'image,no summary,,BSF,an-image.jpg\n'
+                'image,no credits,my summary,,an-image.jpg\n')
     write_metadata(metadata)
     call_command('import_medias', CSV_PATH)
-    assert Document.objects.count() == 3
+    assert Document.objects.count() == 5
     video = Document.objects.get(title='my video')
     assert video.summary == 'my video summary'
     assert video.kind == Document.VIDEO
-    assert Document.objects.search('summary').count() == 3
+    assert Document.objects.search('summary').count() == 5
+    assert Document.objects.search('BSF').count() == 4
 
 
 @pytest.mark.parametrize('row', [
     'image,,my summary,BSF,an-image.jpg',
-    'image,my title,,BSF,an-image.jpg',
-    'image,my title,my summary,,an-image.jpg',
     'image,my title,my summary,BSF,',
     'image,my title,my summary,BSF,unknownpath.mp4',
 ])

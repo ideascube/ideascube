@@ -53,7 +53,8 @@ class Document(SearchMixin, TimeStampedModel):
     KIND_DICT = dict(KIND_CHOICES)
 
     title = models.CharField(verbose_name=_('title'), max_length=100)
-    summary = models.TextField(verbose_name=_('summary'))
+    summary = models.TextField(verbose_name=_('summary'),
+                               blank=True)
     lang = LanguageField(verbose_name=_('Language'), max_length=10, blank=True)
     original = models.FileField(verbose_name=_('Source file'),
                                 upload_to='mediacenter/document',
@@ -63,7 +64,9 @@ class Document(SearchMixin, TimeStampedModel):
                                 upload_to='mediacenter/preview',
                                 max_length=10240,
                                 blank=True)
-    credits = models.CharField(verbose_name=_('Authorship'), max_length=300)
+    credits = models.CharField(verbose_name=_('Authorship'),
+                               max_length=300,
+                               blank=True)
     kind = models.CharField(verbose_name=_('type'),
                             max_length=5,
                             choices=KIND_CHOICES,
