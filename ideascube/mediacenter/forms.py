@@ -56,6 +56,12 @@ class DocumentForm(forms.ModelForm):
         return document
 
 
+class CreateDocumentForm(DocumentForm):
+
+    class Meta(DocumentForm.Meta):
+        widgets = dict(kind=forms.HiddenInput, **DocumentForm.Meta.widgets)
+
+
 class PackagedDocumentForm(forms.ModelForm):
 
     class Meta:
