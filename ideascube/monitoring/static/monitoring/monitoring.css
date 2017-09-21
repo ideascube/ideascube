@@ -67,3 +67,9 @@ table.stock tr.stockitem .actions,
 table.stock .actions {
     text-align: right;
 }
+
+.shorten{
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
