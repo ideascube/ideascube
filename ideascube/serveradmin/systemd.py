@@ -1,7 +1,8 @@
 import subprocess
-
-import dbus
-
+try:
+    import dbus
+except ImportError:
+    ...
 
 class Manager(object):
     def __init__(self):

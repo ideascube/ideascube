@@ -59,7 +59,7 @@
     <div class="card tinted admin">
         <h4>{% trans 'Inventories' %}</h4>
         {% for inventory in inventory_list  %}
-            <p><a href="{% url 'monitoring:inventory' pk=inventory.pk %}">{{ inventory.made_at }}</a></p>
+            <p class="truncate" ><a href="{% url 'monitoring:inventory' pk=inventory.pk %}">{{ inventory.made_at }}  ({{  inventory.comments }})</a></p>
         {% empty %}
             <p>{% trans 'No inventory yet.' %} <a href="{% url 'monitoring:inventory_create' %}">{% trans "Start one now" %}.</a></p>
         {% endfor %}
