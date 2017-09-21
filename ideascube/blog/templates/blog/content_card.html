@@ -1,23 +1,21 @@
 {% load ideascube_tags %}
 
-<div class="card blog">
-    <a href="{% url 'blog:content_detail' pk=content.pk %}">
+<a href="{% url 'blog:content_detail' pk=content.pk %}">
+    <div class="card blog">
         <h3>{{ content }}</h3>
-    </a>
-    <h5>
-        {% if content.status == content.DRAFT %}draft ⚫ {% endif %}
-        {{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.author }}
-    </h5>
-    <div>
-        {% if content.image %}
-            <a href="{% url 'blog:content_detail' pk=content.pk %}">
-                <img src="{% media content 'image' %}">
-            </a>
+        <h5>
+            {% if content.status == content.DRAFT %}draft ⚫ {% endif %}
+            {{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.author }}
+        </h5>
+        <div>
+            {% if content.image %}
+            <img src="{% media content 'image' %}">
+            {% endif %}
+        {% if content.summary %}
+              {{ content.summary|safe }}
+        {% else %}
+          {{ content.text|truncatechars_html:300|safe }}
         {% endif %}
-	{% if content.summary %}
-          {{ content.summary|safe }}
-	{% else %}
-	  {{ content.text|truncatechars_html:300|safe }}
-	{% endif %}
+        </div>
     </div>
-</div>
+</a>
