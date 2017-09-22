@@ -105,6 +105,8 @@ class LangSelect(widgets.Select):
                     choices.append(option)
 
                 elif option['selected']:
+                    # in case the language selected when the post was written
+                    # has been removed from the allowed languages list
                     choices.append(option)
 
             result.append((group_name, choices, group_index))
