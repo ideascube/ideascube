@@ -1444,7 +1444,7 @@ def test_catalog_install_package_does_not_exist(tmpdir, sample_zip):
 
 
 def test_catalog_install_package_with_missing_type(tmpdir, sample_zip):
-    from ideascube.serveradmin.catalog import Catalog, InvalidPackageMetadata
+    from ideascube.serveradmin.catalog import Catalog, MissingPackageMetadata
 
     sourcedir = tmpdir.ensure('source', dir=True)
 
@@ -1463,7 +1463,7 @@ def test_catalog_install_package_with_missing_type(tmpdir, sample_zip):
         'file://{}'.format(remote_catalog_file.strpath))
     c.update_cache()
 
-    with pytest.raises(InvalidPackageMetadata):
+    with pytest.raises(MissingPackageMetadata):
         c.install_packages(['wikipedia.tum'])
 
 
@@ -2310,7 +2310,7 @@ def test_catalog_list_upgradable_with_bad_packages(tmpdir, testdatadir):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_list_nothandled_packages(tmpdir, sample_zip, mocker):
+def test_catalog_list_problem_packages(tmpdir, sample_zip, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
@@ -2337,7 +2337,7 @@ def test_catalog_list_nothandled_packages(tmpdir, sample_zip, mocker):
 
     pkgs = c.list_available(['*'])
     assert len(pkgs) == 1
-    pkgs = c.list_nothandled(['*'])
+    pkgs = c.list_problems(['*'])
     assert len(pkgs) == 1
     pkgs = c.list_installed(['*'])
     assert len(pkgs) == 0
@@ -2346,7 +2346,7 @@ def test_catalog_list_nothandled_packages(tmpdir, sample_zip, mocker):
 
     pkgs = c.list_available(['*'])
     assert len(pkgs) == 1
-    pkgs = c.list_nothandled(['*'])
+    pkgs = c.list_problems(['*'])
     assert len(pkgs) == 1
     pkgs = c.list_installed(['*'])
     assert len(pkgs) == 1

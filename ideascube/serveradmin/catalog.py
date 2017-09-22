@@ -76,12 +76,22 @@ class InvalidFile(Exception):
     pass
 
 
-class InvalidPackageMetadata(Exception):
-    pass
+class MissingPackageMetadata(Exception):
+    def __init__(self, pkgid, missing_attribute):
+        self.pkgid = pkgid
+        self.missing_attribute = missing_attribute
+
+    def __str__(self):
+        return "{self.pkgid} is missing a {self.missing_attribute}".format(self=self)
 
 
 class InvalidPackageType(Exception):
-    pass
+    def __init__(self, pkgid, type):
+        self.pkgid = pkgid
+        self.type = type
+
+    def __str__(self):
+        return "{self.pkgid} has an invalid type: {self.type}".format(self=self)
 
 
 class NoSuchPackage(Exception):
@@ -494,13 +504,13 @@ class Catalog:
             type = metadata['type']
 
         except KeyError:
-            raise InvalidPackageMetadata('Packages must have a type')
+            raise MissingPackageMetadata(id, 'type')
 
         try:
             return Package.registered_types[type](id, metadata)
 
         except KeyError:
-            raise InvalidPackageType(type)
+            raise InvalidPackageType(id, type)
 
     def _expand_package_ids(self, id_patterns, source):
         for id_pattern in id_patterns:
@@ -560,7 +570,7 @@ class Catalog:
             try:
                 pkgs.append(self._get_package(pkg_id, self._installed))
 
-            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+            except (MissingPackageMetadata, InvalidPackageType, NoSuchPackage):
                 continue
 
         return sorted(pkgs, key=attrgetter('id'))
@@ -573,7 +583,7 @@ class Catalog:
             try:
                 pkgs.append(self._get_package(pkg_id, self._available))
 
-            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+            except (MissingPackageMetadata, InvalidPackageType, NoSuchPackage):
                 continue
 
         return sorted(pkgs, key=attrgetter('id'))
@@ -586,13 +596,13 @@ class Catalog:
             try:
                 ipkg = self._get_package(pkg_id, self._installed)
 
-            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+            except (MissingPackageMetadata, InvalidPackageType, NoSuchPackage):
                 continue
 
             try:
                 upkg = self._get_package(ipkg.id, self._available)
 
-            except (InvalidPackageMetadata, InvalidPackageType, NoSuchPackage):
+            except (MissingPackageMetadata, InvalidPackageType, NoSuchPackage):
                 continue
 
             if ipkg != upkg:
@@ -600,17 +610,18 @@ class Catalog:
 
         return sorted(pkgs, key=attrgetter('id'))
 
-    def list_nothandled(self, ids):
-        pkgs = []
+    def list_problems(self, ids):
+        errors = []
         source = dict(self._available)
         source.update(self._installed)
         for pkgid, metadata in source.items():
             try:
                 self._get_package(pkgid, source)
-            except InvalidPackageType:
-                pkgs.append(Package(pkgid, metadata))
 
-        return sorted(pkgs, key=attrgetter('id'))
+            except (InvalidPackageType, MissingPackageMetadata) as e:
+                errors.append(e)
+
+        return sorted(errors, key=attrgetter('pkgid'))
 
     @staticmethod
     def _update_displayed_packages_on_home(*, to_remove_ids=None, to_add_ids=None):
