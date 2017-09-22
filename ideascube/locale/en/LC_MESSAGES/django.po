@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-07 10:22+0000\n"
+"POT-Creation-Date: 2017-09-22 09:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,7 +66,6 @@ msgid "Language"
 msgstr ""
 
 #: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:73
-#: ideascube/templates/ideascube/includes/tag_cloud.html:4
 msgid "Topics"
 msgstr ""
 
@@ -1661,7 +1660,7 @@ msgid "by kind"
 msgstr ""
 
 #: ideascube/search/templates/search/filter_by_lang.html:4
-msgid "by lang"
+msgid "by language"
 msgstr ""
 
 #: ideascube/search/templates/search/filter_cloud.html:5
@@ -2056,6 +2055,10 @@ msgstr ""
 
 #: ideascube/templates/ideascube/includes/header.html:16
 msgid "log in"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/tag_cloud.html:4
+msgid "by topic"
 msgstr ""
 
 #: ideascube/templates/ideascube/pagination.html:5

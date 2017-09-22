@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # mansur tayfuri <tayfuri.mansur@bibliosansfrontieres.org>, 2017
 # Mathieu Bridon <bochecha@daitauha.fr>, 2017
@@ -10,14 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-07 10:22+0000\n"
+"POT-Creation-Date: 2017-09-22 09:25+0000\n"
 "PO-Revision-Date: 2017-09-07 10:24+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
-"Language-Team: Kurdish (http://www.transifex.com/ideascube/ideascube/language/ku/)\n"
+"Language-Team: Kurdish (http://www.transifex.com/ideascube/ideascube/"
+"language/ku/)\n"
+"Language: ku\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ku\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ideascube/blog/models.py:45
@@ -69,7 +70,6 @@ msgid "Language"
 msgstr "زمان"
 
 #: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:73
-#: ideascube/templates/ideascube/includes/tag_cloud.html:4
 msgid "Topics"
 msgstr "مژارەکان"
 
@@ -351,9 +351,12 @@ msgstr "وشەی نهێنی"
 #: ideascube/forms.py:38
 msgid ""
 "To create a strong password, forget about passwords, and think rather about "
-"a passphrase. For instance: \"The boat is flowing on the water\" is a strong"
-" and easy to remember passphrase. Now choose your own passphrase!"
-msgstr "بۆ دروستکردنی وشەنهێنییەکی بەهێز، لە باتی وشەی نهێنی زیاتر هەوڵ بدەن رستەیەکی نهێنیی بنووسن. بۆ نموونە :\" گەمیەکە بە سەر ئاودا دەڕوات\" رستەیەکی نهێنیی بەهێزە کە لە بیریش ناچێتەوە. ئێستە رستەنهێنییەکەی خۆتان هەڵبژێرن!"
+"a passphrase. For instance: \"The boat is flowing on the water\" is a strong "
+"and easy to remember passphrase. Now choose your own passphrase!"
+msgstr ""
+"بۆ دروستکردنی وشەنهێنییەکی بەهێز، لە باتی وشەی نهێنی زیاتر هەوڵ بدەن "
+"رستەیەکی نهێنیی بنووسن. بۆ نموونە :\" گەمیەکە بە سەر ئاودا دەڕوات\" رستەیەکی "
+"نهێنیی بەهێزە کە لە بیریش ناچێتەوە. ئێستە رستەنهێنییەکەی خۆتان هەڵبژێرن!"
 
 #: ideascube/forms.py:46
 msgid "Confirm password"
@@ -395,7 +398,9 @@ msgstr "ستوونی ونبوو \"{}\" لەسەر هێڵی {}"
 
 #: ideascube/library/forms.py:91
 msgid "Could not import line {}: no book with ISBN \"{}\""
-msgstr "ناتوانیت هێڵی {} بهێنیت: هیچ کتێبێک بە ژمارەی تۆماری نێودەوڵەتیی \"{}\" ەوە نەدۆزرایەوە"
+msgstr ""
+"ناتوانیت هێڵی {} بهێنیت: هیچ کتێبێک بە ژمارەی تۆماری نێودەوڵەتیی \"{}\" ەوە "
+"نەدۆزرایەوە"
 
 #: ideascube/library/forms.py:101
 msgid "Could not import line {}: no \"{}\" book"
@@ -537,7 +542,8 @@ msgstr "فایلی دیجیتال"
 #, python-format
 msgid ""
 "\n"
-"         Are you sure you want to delete book \"%(book)s\" and all its specimens?\n"
+"         Are you sure you want to delete book \"%(book)s\" and all its "
+"specimens?\n"
 "    "
 msgstr ""
 
@@ -1534,7 +1540,8 @@ msgstr "گەڕاندنەوە"
 #, python-format
 msgid ""
 "\n"
-"        Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s\"?\n"
+"        Are you sure you want to delete the specimen \"%(specimen)s\" of "
+"\"%(item)s\"?\n"
 "    "
 msgstr ""
 
@@ -1662,7 +1669,9 @@ msgid "by kind"
 msgstr "بە پێی چەشن"
 
 #: ideascube/search/templates/search/filter_by_lang.html:4
-msgid "by lang"
+#, fuzzy
+#| msgid "by lang"
+msgid "by language"
 msgstr "بە پێی زمان"
 
 #: ideascube/search/templates/search/filter_cloud.html:5
@@ -1770,9 +1779,12 @@ msgstr "بارکردن"
 #: ideascube/serveradmin/templates/serveradmin/backup.html:31
 #, python-brace-format
 msgid ""
-"File must be a zip, and file name must be in the form "
-"{source}-{version}-{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
-msgstr " فایلەکە پێویستە لە جۆری زیپ بێت، ناوی فایلەکە پێویستە لە فۆرمی\n {source}-{version}-{date}. zip; eg.:   musasa-0.1.0-201501231405.zip\nدا بێت"
+"File must be a zip, and file name must be in the form {source}-{version}-"
+"{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
+msgstr ""
+" فایلەکە پێویستە لە جۆری زیپ بێت، ناوی فایلەکە پێویستە لە فۆرمی\n"
+" {source}-{version}-{date}. zip; eg.:   musasa-0.1.0-201501231405.zip\n"
+"دا بێت"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:32
 msgid "Upload backup file"
@@ -2059,6 +2071,10 @@ msgstr "چونە دەر لە %(user)s"
 msgid "log in"
 msgstr "چوونەژوور"
 
+#: ideascube/templates/ideascube/includes/tag_cloud.html:4
+msgid "by topic"
+msgstr ""
+
 #: ideascube/templates/ideascube/pagination.html:5
 msgid "previous"
 msgstr "بینینی پێش کۆتایی"
@@ -2137,7 +2153,10 @@ msgid ""
 "To enjoy this digital library, you must first create a username and a "
 "password. These will allow you to administrate the server. Make sure to "
 "remember both the username AND password!"
-msgstr "بۆ کەڵک وەرگرتن لەم کتێبخانە دیجیتاڵەم پێویستە ناوی بەکارهێنەر و وشەیەکی نهێنی هەڵبژێریت. ئەمە وادەکات بتوانیت سێرڤێرەکە بەڕێوەببەیت. دڵنیا ببەوە ناوی بەکارهێنەر و وشەی نهێنیت بیر نەچێتەوە."
+msgstr ""
+"بۆ کەڵک وەرگرتن لەم کتێبخانە دیجیتاڵەم پێویستە ناوی بەکارهێنەر و وشەیەکی "
+"نهێنی هەڵبژێریت. ئەمە وادەکات بتوانیت سێرڤێرەکە بەڕێوەببەیت. دڵنیا ببەوە "
+"ناوی بەکارهێنەر و وشەی نهێنیت بیر نەچێتەوە."
 
 #: ideascube/templates/registration/login.html:14
 msgid "Log in"
