@@ -2493,7 +2493,7 @@ def test_catalog_list_upgradable_with_bad_packages(tmpdir, testdatadir):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_list_nothandled_packages(tmpdir, testdatadir, mocker):
+def test_catalog_list_problems_packages(tmpdir, testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     zippedzim = testdatadir.join('catalog', 'wikipedia.tum-2015-08')
@@ -2528,7 +2528,7 @@ def test_catalog_list_nothandled_packages(tmpdir, testdatadir, mocker):
 
     pkgs = c.list_available(['*'])
     assert len(pkgs) == 1
-    pkgs = c.list_nothandled(['*'])
+    pkgs = c.list_problems(['*'])
     assert len(pkgs) == 1
     pkgs = c.list_installed(['*'])
     assert len(pkgs) == 0
@@ -2537,7 +2537,7 @@ def test_catalog_list_nothandled_packages(tmpdir, testdatadir, mocker):
 
     pkgs = c.list_available(['*'])
     assert len(pkgs) == 1
-    pkgs = c.list_nothandled(['*'])
+    pkgs = c.list_problems(['*'])
     assert len(pkgs) == 1
     pkgs = c.list_installed(['*'])
     assert len(pkgs) == 1

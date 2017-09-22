@@ -524,12 +524,16 @@ def test_list_upgradable_removed_from_remote(tmpdir, capsys, settings):
     assert err.strip() == ''
 
 
-def test_list_with_unknown_package_must_no_fail(tmpdir, capsys):
+def test_list_problematic_packages(tmpdir, capsys):
     remote_catalog_file = tmpdir.mkdir('source').join('catalog.yml')
     remote_catalog_file.write('''all:
   foovideos:
     name: Videos from Foo
     type: UNKNOWNTYPE
+    version: 0
+    filesize: 0kb
+  barvideos:
+    name: Videos from Bar
     version: 0
     filesize: 0kb''')
 
@@ -541,15 +545,15 @@ def test_list_with_unknown_package_must_no_fail(tmpdir, capsys):
     call_command('catalog', 'list')
     out, err = capsys.readouterr()
     assert err.strip() == ''
-    assert out.strip() == ("Warning: Ignoring 1 unsupported package(s)\n"
-                           "Use '--unhandled' for details.")
+    assert out.strip() == ("Warning: Ignoring 2 unsupported package(s)\n"
+                           "Use '--problems' for details.")
 
-    call_command('catalog', 'list', '--unhandled')
+    call_command('catalog', 'list', '--problems')
     out, err = capsys.readouterr()
-    assert err.strip() == ''
-    assert out.strip() == ('Not handled packages\n'
-                           ' foovideos             0             '
-                           '0kb      UNKNOWNTYPE     Videos from Foo')
+    assert out.strip() == ''
+    assert err.strip() == ('Problematic packages\n'
+                           'barvideos is missing a type\n'
+                           'foovideos has an invalid type: UNKNOWNTYPE')
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
