@@ -4,7 +4,7 @@ from django.conf import settings
 from ideascube.widgets import LangSelect, RichTextEntry
 
 from .models import Document
-from .utils import guess_kind_from_content_type, guess_kind_from_filename
+from . import utils
 
 import os
 
@@ -34,11 +34,13 @@ class DocumentForm(forms.ModelForm):
             return cleaned_data
 
         try:
-            new_kind = guess_kind_from_content_type(original.content_type)
+            new_kind = utils.guess_kind_from_content_type(original.content_type)
+            if not new_kind:
+                new_kind = utils.guess_kind_from_extension(original.name)
 
         except AttributeError:
             # The document was edited without changing its 'original'
-            new_kind = guess_kind_from_filename(original.name)
+            new_kind = utils.guess_kind_from_filename(original.name)
 
         cleaned_data['kind'] = new_kind or kind
 
@@ -52,6 +54,12 @@ class DocumentForm(forms.ModelForm):
             document.save()
 
         return document
+
+
+class CreateDocumentForm(DocumentForm):
+
+    class Meta(DocumentForm.Meta):
+        widgets = dict(kind=forms.HiddenInput, **DocumentForm.Meta.widgets)
 
 
 class PackagedDocumentForm(forms.ModelForm):
