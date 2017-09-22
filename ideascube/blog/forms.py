@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import get_language
 
 from ideascube.widgets import LangSelect, RichTextEntry
 
@@ -20,6 +21,10 @@ class ContentForm(forms.ModelForm):
             "text": RichTextEntry(with_media=True)
         }
         fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.initial['lang'] = get_language()
 
     def save(self, commit=True):
         content = super().save()
