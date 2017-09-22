@@ -62,8 +62,7 @@ class Content(SearchMixin, TimeStampedModel, models.Model):
     status = models.PositiveSmallIntegerField(verbose_name=_('Status'),
                                               choices=STATUSES,
                                               default=DRAFT)
-    lang = LanguageField(verbose_name=_('Language'), max_length=10,
-                         default=settings.LANGUAGE_CODE)
+    lang = LanguageField(verbose_name=_('Content language'), max_length=10)
 
     objects = ContentQuerySet.as_manager()
     tags = TaggableManager(
