@@ -1,7 +1,7 @@
 {% load i18n ideascube_tags %}
 {% spaceless %}
 <div class="card tinted">
-    <h4><span class="theme discover">{% trans "browse" %}</span> {% trans "Topics" %}</h4>
+    <h4><span class="theme discover">{% trans "browse" %}</span> {% trans "by topics" %}</h4>
     {% for tag in tags %}
         {% if tag.slug %}
             {% is_in_qs 'tags' tag.slug as in_qs %}
