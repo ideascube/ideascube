@@ -13,7 +13,7 @@ chardet==3.0.4
 click==6.7                # via mkdocs, pip-tools
 coverage==4.4.1           # via pytest-cov
 cssselect==1.0.1          # via pyquery
-dbus-python==1.2.4
+#dbus-python==1.2.4
 django-countries==4.6.1
 django-multiselectfield==0.1.7
 django-taggit==0.22.1

@@ -1,6 +1,6 @@
 import subprocess
 
-import dbus
+#import dbus
 
 
 class Manager(object):
