@@ -449,6 +449,8 @@ def test_can_create_document(staffapp):
     form['original'] = Upload('image.jpg', b'xxxxxx', 'image/jpeg')
     form.submit().follow()
     assert Document.objects.count() == 1
+    doc = Document.objects.first()
+    assert doc.kind == Document.IMAGE
 
 
 def test_package_id_should_not_be_editable_when_creating(staffapp):
@@ -475,6 +477,8 @@ def test_can_create_app_document(staffapp):
                               'application/x-msdos-program')
     form.submit().follow()
     assert Document.objects.count() == 1
+    doc = Document.objects.first()
+    assert doc.kind == Document.APP
 
 
 def test_can_create_document_without_lang(staffapp):
@@ -507,6 +511,34 @@ def test_content_type_should_have_priority_over_extension(staffapp):
     form['original'] = Upload('audio.mp3', b'xxxxxx', 'image/jpeg')
     form.submit().follow()
     assert Document.objects.first().kind == Document.IMAGE
+
+
+@pytest.mark.parametrize('filename,content_type,expected', [
+    ['app.exe', 'application/x-executable', Document.APP],
+    ['audio.mp3', 'audio/mp3', Document.AUDIO],
+    ['book.epub', 'application/epub+zip', Document.EPUB],
+    ['book.epub', 'application/octet-stream', Document.EPUB],
+    ['book.mobi', 'application/octet-stream', Document.MOBI],
+    ['book.txt', 'text/txt', Document.TEXT],
+    ['book.pdf', 'application/pdf', Document.PDF],
+    ['image.png', 'image/png', Document.IMAGE],
+    ['image.jpeg', 'image/jpeg', Document.IMAGE],
+    ['video.mp4', 'video/mpeg', Document.VIDEO],
+    ['video.avi', 'video/avi', Document.VIDEO],
+    ['other.oth', 'application/octet-stream', Document.OTHER],
+])
+def test_guess_kind_when_creating(staffapp, filename, content_type, expected):
+    assert not Document.objects.count()
+    url = reverse('mediacenter:document_create')
+    form = staffapp.get(url).forms['model_form']
+    form['title'] = 'my document title'
+    form['summary'] = 'my document summary'
+    form['credits'] = 'my document credits'
+    form['original'] = Upload(filename, b'xxxxxx', content_type)
+    form['lang'] = ''
+    form.submit().follow()
+    assert Document.objects.count() == 1
+    assert Document.objects.first().kind == expected
 
 
 def test_guess_kind_when_editing_without_changing_original(staffapp):
