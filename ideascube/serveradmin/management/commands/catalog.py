@@ -6,6 +6,7 @@ from ideascube.management.base import BaseCommandWithSubcommands
 from ideascube.serveradmin.catalog import (Catalog,
                                            NoSuchPackage,
                                            ExistingRemoteError)
+from ideascube.utils import printerr
 
 
 class Command(BaseCommandWithSubcommands):
@@ -53,9 +54,8 @@ class Command(BaseCommandWithSubcommands):
             '--all', action='store_const', dest='filter', const='all',
             help='List available and installed packages (default)')
         group.add_argument(
-            '--unhandled', action='store_const', dest='filter',
-            const='unhandled',
-            help='List unhandled packages.')
+            '--problems', action='store_const', dest='filter',
+            const='problems', help='List problematic packages.')
         list.set_defaults(filter='all', func=self.list_packages)
 
         install = self.subs.add_parser(
@@ -135,17 +135,17 @@ class Command(BaseCommandWithSubcommands):
         fmt = (' {0.id:20}  {0.version!s:12}  {0.filesize:8}'
                ' {0.type:15} {0.name}')
 
-        unhandled_pkgs = self.catalog.list_nothandled('*')
-        if unhandled_pkgs:
-            if options['filter'] == 'unhandled':
-                print('Not handled packages')
+        problems = self.catalog.list_problems('*')
+        if problems:
+            if options['filter'] == 'problems':
+                printerr('Problematic packages')
 
-                for pkg in unhandled_pkgs:
-                    print(fmt.format(pkg))
+                for error in problems:
+                    printerr(error)
             else:
                 print(("Warning: Ignoring {} unsupported package(s)\n"
-                       "Use '--unhandled' for details.\n\n"
-                      ).format(len(unhandled_pkgs)))
+                       "Use '--problems' for details.\n\n"
+                      ).format(len(problems)))
 
         if options['filter'] in ('all', 'installed'):
             pkgs = self.catalog.list_installed(options['ids'])
