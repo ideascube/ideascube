@@ -12,6 +12,9 @@ from ..utils import guess_kind_from_filename, guess_kind_from_content_type
     ['pouet.mp3', 'audio'],
     ['pouet.ogg', 'audio'],
     ['pouet.pdf', 'pdf'],
+    ['pouet.epub', 'epub'],
+    ['pouet.exe', 'app'],
+    ['pouet.mobi', 'mobi'],
     ['pouet', None],
     ['pouet.xxx', None],
 ])
