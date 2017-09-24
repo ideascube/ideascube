@@ -7,13 +7,14 @@ from pathlib import Path
 import shutil
 import tempfile
 import zipfile
+import yaml
+import json
 
 from django.conf import settings
 from django.template.defaultfilters import filesizeformat
 from lxml import etree
 from progressist import ProgressBar
 from requests import ConnectionError
-import yaml
 
 from ideascube.configuration import get_config, set_config
 from ideascube.mediacenter.forms import PackagedDocumentForm
@@ -28,7 +29,35 @@ from ideascube.utils import (
 from .systemd import Manager as SystemManager, NoSuchUnit
 
 
-def load_from_file(path):
+def load_from_basepath(basepath):
+    json_path = basepath + '.json'
+    try:
+        return load_from_json_file(json_path)
+    except FileNotFoundError:
+        # Json file doesn't exists, let's try with the yml file.
+        pass
+
+    yml_path = basepath + '.yml'
+    try:
+        data = load_from_yml_file(yml_path)
+    except FileNotFoundError:
+        raise
+
+    persist_to_file(basepath, data)
+    os.remove(yml_path)
+
+    return data
+
+
+def load_from_json_file(path):
+    with open(path, 'r', encoding='utf-8') as f:
+        content = f.read()
+        if not content:
+            return None
+        return json.loads(content)
+
+
+def load_from_yml_file(path):
     with open(path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f.read())
 
@@ -38,8 +67,9 @@ def persist_to_file(path, data):
 
     Note: The function assumes that the data is serializable.
     """
-    with open(path, 'w', encoding='utf-8') as f:
-        f.write(yaml.safe_dump(data, default_flow_style=False))
+    json_path = path + '.json'
+    with open(json_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2)
 
 
 class InvalidFile(Exception):
@@ -84,8 +114,8 @@ class Remote:
         self.url = url
 
     @classmethod
-    def from_file(cls, path):
-        d = load_from_file(path)
+    def from_basepath(cls, path):
+        d = load_from_basepath(path)
 
         try:
             return cls(d['id'], d['name'], d['url'])
@@ -429,15 +459,15 @@ class Catalog:
         self._cache_root = settings.CATALOG_CACHE_ROOT
         os.makedirs(self._cache_root, exist_ok=True)
 
-        self._catalog_cache = os.path.join(self._cache_root, 'catalog.yml')
+        self._catalog_cache_basepath = os.path.join(self._cache_root, 'catalog')
         self._local_package_cache = os.path.join(self._cache_root, 'packages')
         os.makedirs(self._local_package_cache, exist_ok=True)
 
         self._storage_root = settings.CATALOG_STORAGE_ROOT
         os.makedirs(self._storage_root, exist_ok=True)
 
-        self._installed_storage = os.path.join(
-            self._storage_root, 'installed.yml')
+        self._installed_storage_basepath = os.path.join(
+            self._storage_root, 'installed')
         self._remote_storage = os.path.join(self._storage_root, 'remotes')
         os.makedirs(self._remote_storage, exist_ok=True)
 
@@ -779,14 +809,14 @@ class Catalog:
         if self._available_value is None:
             self._available_value = {}
             try:
-                catalog = load_from_file(self._catalog_cache)
+                catalog = load_from_basepath(self._catalog_cache_basepath)
 
             except FileNotFoundError:
                 # That's ok.
                 pass
 
             else:
-                # load_from_file returns None for empty files
+                # load_from_basepath returns None for empty files
                 if catalog is not None:
                     if 'available' in catalog and 'installed' in catalog:
                         # The cache on file is in the old format
@@ -804,18 +834,18 @@ class Catalog:
             self._installed_value = {}
 
             try:
-                installed = load_from_file(self._installed_storage)
+                installed = load_from_basepath(self._installed_storage_basepath)
 
             except FileNotFoundError:
                 # Try compatible old format
                 try:
-                    catalog = load_from_file(self._catalog_cache)
+                    catalog = load_from_basepath(self._catalog_cache_basepath)
                 except FileNotFoundError:
                     # That's ok
                     pass
 
                 else:
-                    # load_from_file returns None for empty files
+                    # load_from_basepath returns None for empty files
                     if catalog is not None:
                         if 'available' in catalog and 'installed' in catalog:
                             # The cache on file is in the old format
@@ -827,15 +857,15 @@ class Catalog:
                             self._available_value = catalog
 
             else:
-                # load_from_file returns None for empty files
+                # load_from_basepath returns None for empty files
                 if installed is not None:
                     self._installed_value = installed
 
         return self._installed_value
 
     def _persist_catalog(self):
-        persist_to_file(self._catalog_cache, self._available)
-        persist_to_file(self._installed_storage, self._installed)
+        persist_to_file(self._catalog_cache_basepath, self._available)
+        persist_to_file(self._installed_storage_basepath, self._installed)
 
     def _update_installed_metadata(self):
         # These are the keys we must only ever update with an actual package
@@ -889,7 +919,7 @@ class Catalog:
                           "Continuing without it.".format(remote=remote))
                     continue
 
-                catalog = load_from_file(tmppath)
+                catalog = load_from_yml_file(tmppath)
 
                 # TODO: Handle content which was removed from the remote source
                 self._available.update(catalog['all'])
@@ -919,8 +949,11 @@ class Catalog:
     def _load_remotes(self):
         self._remotes_value = {}
 
-        for path in glob(os.path.join(self._remote_storage, '*.yml')):
-            r = Remote.from_file(path)
+        paths = glob(os.path.join(self._remote_storage, '*.json'))
+        paths += glob(os.path.join(self._remote_storage, '*.yml'))
+        basepaths = {os.path.splitext(path)[0] for path in paths}
+        for basepath in basepaths:
+            r = Remote.from_basepath(basepath)
             self._remotes_value[r.id] = r
 
         if self._remotes_value:
@@ -929,9 +962,12 @@ class Catalog:
         # We might have remotes in the old location
         old_remote_cache = os.path.join(self._cache_root, 'remotes')
 
-        for path in glob(os.path.join(old_remote_cache, '*.yml')):
-            r = Remote.from_file(path)
-            self.add_remote(r.id, r.name, r.url)
+        paths = glob(os.path.join(old_remote_cache, '*.yml'))
+        basepaths = {os.path.splitext(path)[0] for path in paths}
+        for basepath in basepaths:
+            r = Remote.from_basepath(basepath)
+            r.to_file(os.path.join(self._remote_storage, r.id))
+            self._remotes_value[r.id] = r
 
         if self._remotes_value:
             # So we did have old remotes after all...
@@ -953,8 +989,7 @@ class Catalog:
                 raise ExistingRemoteError(remote, 'url')
 
         remote = Remote(id, name, url)
-        remote.to_file(os.path.join(self._remote_storage,
-                       '{}.yml'.format(id)))
+        remote.to_file(os.path.join(self._remote_storage, id))
         self._remotes[id] = remote
 
     def remove_remote(self, id):
@@ -963,3 +998,4 @@ class Catalog:
 
         del(self._remotes[id])
         rm(os.path.join(self._remote_storage, '{}.yml'.format(id)))
+        rm(os.path.join(self._remote_storage, '{}.json'.format(id)))
