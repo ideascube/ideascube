@@ -5,7 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 IDEASCUBE_NAME = u"Bokolmanyo"
 COUNTRIES_FIRST = ['SO', 'ET']
 TIME_ZONE = 'Africa/Addis_Ababa'
-LANGUAGE_CODE = 'en'
 MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'refugee_id', 'birth_year',
                                   'gender']
 USER_FORM_FIELDS = (
