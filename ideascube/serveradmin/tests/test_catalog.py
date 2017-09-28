@@ -14,38 +14,30 @@ def input_type(request):
     return request.param
 
 
-@pytest.fixture(
-    params=[
-        {
-            'id': 'foo',
-            'name': 'Content provided by Foo',
-            'url': 'http://foo.fr/catalog.yml',
-        },
-        {
-            'id': 'bibliothèque',
-            'name': 'Le contenu de la bibliothèque',
-            'url': 'http://foo.fr/catalog.yml',
-        },
-        {
-            'name': 'Content provided by Foo',
-            'url': 'http://foo.fr/catalog.yml',
-        },
-        {
-            'id': 'foo',
-            'url': 'http://foo.fr/catalog.yml',
-        },
-        {
-            'id': 'foo',
-            'name': 'Content provided by Foo',
-        },
-    ],
-    ids=[
-        'foo',
-        'utf8',
-        'missing-id',
-        'missing-name',
-        'missing-url',
-    ])
+@pytest.fixture(params=[
+    pytest.param({
+        'id': 'foo',
+        'name': 'Content provided by Foo',
+        'url': 'http://foo.fr/catalog.yml',
+    }, id='foo'),
+    pytest.param({
+        'id': 'bibliothèque',
+        'name': 'Le contenu de la bibliothèque',
+        'url': 'http://foo.fr/catalog.yml',
+    }, id='utf8'),
+    pytest.param({
+        'name': 'Content provided by Foo',
+        'url': 'http://foo.fr/catalog.yml',
+    }, id='missing-id'),
+    pytest.param({
+        'id': 'foo',
+        'url': 'http://foo.fr/catalog.yml',
+    }, id='missing-name'),
+    pytest.param({
+        'id': 'foo',
+        'name': 'Content provided by Foo',
+    }, id='missing-url'),
+])
 def input_content(request):
     return request.param
 

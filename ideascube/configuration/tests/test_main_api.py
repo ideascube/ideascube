@@ -16,14 +16,12 @@ from ideascube.configuration.models import Configuration
 pytestmark = pytest.mark.django_db
 
 
-@pytest.mark.parametrize(
-    'value',
-    [
-        True, 42, 'A string', ['A', 'list'],
-    ],
-    ids=[
-        'boolean', 'int', 'string', 'list',
-    ])
+@pytest.mark.parametrize('value', [
+    pytest.param(True, id='boolean'),
+    pytest.param(42, id='int'),
+    pytest.param('A string', id='string'),
+    pytest.param(['A', 'list'], id='list'),
+])
 def test_get_configuration(monkeypatch, value, user):
     monkeypatch.setattr(
         'ideascube.configuration.registry.REGISTRY',
@@ -131,17 +129,12 @@ def test_reset_configuration_invalid_type(capsys, monkeypatch, user):
         "instead of <class 'int'>. This should never have happened."]
 
 
-@pytest.mark.parametrize(
-    'value1, value2',
-    [
-        (True, False),
-        (42, 43),
-        ('A string', 'Another string'),
-        (['A', 'list'], ['Another', 'list']),
-    ],
-    ids=[
-        'boolean', 'int', 'string', 'list',
-    ])
+@pytest.mark.parametrize('value1, value2', [
+    pytest.param((True, False), id='boolean'),
+    pytest.param((42, 43), id='int'),
+    pytest.param(('A string', 'Another string'), id='string'),
+    pytest.param((['A', 'list'], ['Another', 'list']), id='list'),
+])
 def test_set_configuration(monkeypatch, value1, value2, user):
     monkeypatch.setattr(
         'ideascube.configuration.registry.REGISTRY',

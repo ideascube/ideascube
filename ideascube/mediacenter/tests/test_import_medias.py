@@ -39,9 +39,10 @@ def test_should_import_medias():
 
 
 @pytest.mark.parametrize('row', [
-    'image,,my summary,BSF,an-image.jpg',
-    'image,my title,my summary,BSF,',
-    'image,my title,my summary,BSF,unknownpath.mp4',
+    pytest.param('image,,my summary,BSF,an-image.jpg', id='missing-title'),
+    pytest.param('image,my title,my summary,BSF,', id='missing-path'),
+    pytest.param(
+        'image,my title,my summary,BSF,unknownpath.mp4', id='invalid-path'),
 ])
 def test_should_skip_if_missing_required_metadata(row):
     assert not Document.objects.count()
