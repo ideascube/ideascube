@@ -5,7 +5,6 @@ import mimetypes
 import os
 import sys
 
-from django.conf import settings
 from django.core.files import File
 from django.core.management.base import BaseCommand
 from progressist import ProgressBar
@@ -23,8 +22,8 @@ class Bar(ProgressBar):
 
 class Command(BaseCommand):
     help = ('Batch import medias from CSV metadata. CSV file must contain '
-            'columns "title", "summary", "path", "credits". Optional columns '
-            'are "lang", "preview", "kind", "tags".')
+            'columns "title", "summary", "path", "credits", "lang". Optional '
+            'columns are , "preview", "kind", "tags".')
 
     def add_arguments(self, parser):
         parser.add_argument('path', help='Path to CSV metadata.')
@@ -73,11 +72,11 @@ class Command(BaseCommand):
             return
         title = smart_truncate(title)
         metadata['title'] = title
+        metadata['lang'] = metadata.get('lang', '').strip().lower()
 
-        lang = metadata.get('lang', '').strip().lower()
-
-        if not lang:
-            metadata['lang'] = settings.LANGUAGE_CODE
+        if not metadata['lang']:
+            self.report.error('Missing lang', metadata)
+            return
 
         original = metadata.get('path')
         if not original:
