@@ -593,7 +593,7 @@ def test_by_tag_page_is_paginated(app, monkeypatch):
 def test_changing_filter_reset_page_parameter(app, monkeypatch):
     monkeypatch.setattr(Index, 'paginate_by', 2)
     DocumentFactory.create_batch(size=4, tags=['plane', 'car'],
-                                 kind=Document.PDF)
+                                 kind=Document.PDF, lang='en')
     DocumentFactory.create_batch(size=4, tags=['plane'], kind=Document.IMAGE)
     DocumentFactory.create_batch(size=2)
     url = reverse('mediacenter:index')
