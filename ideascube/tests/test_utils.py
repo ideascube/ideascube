@@ -6,16 +6,12 @@ from ideascube.utils import to_unicode, get_file_sha256, tag_splitter, MetaRegis
 from hashlib import sha256
 
 
-@pytest.mark.parametrize(
-    'input, expected, encoding',
-    [
-        ('abcd\néfgh', ['abcd\n', 'éfgh'], 'latin-1'),
-        ('abcd\néfgh', ['abcd\n', 'éfgh'], 'utf-8'),
-        ('abcd\r\néfgh', ['abcd\n', 'éfgh'], 'latin-1'),
-        ('abcd\r\néfgh', ['abcd\n', 'éfgh'], 'utf-8'),
-    ],
-    ids=['latin1', 'utf8', 'windows-latin1', 'windows-utf8'],
-)
+@pytest.mark.parametrize('input, expected, encoding', [
+    pytest.param('abcd\néfgh', ['abcd\n', 'éfgh'], 'latin-1', id='latin1'),
+    pytest.param('abcd\néfgh', ['abcd\n', 'éfgh'], 'utf-8', id='utf8'),
+    pytest.param('abcd\r\néfgh', ['abcd\n', 'éfgh'], 'latin-1', id='windows-latin1'),
+    pytest.param('abcd\r\néfgh', ['abcd\n', 'éfgh'], 'utf-8', id='windows-utf8'),
+])
 def test_textio_wrapper(input, expected, encoding):
     from ideascube.utils import TextIOWrapper
 
