@@ -160,9 +160,9 @@ class Handler:
         return getattr(settings, setting, default)
 
     @classmethod
-    def install(cls, package, download_path):
+    def install(cls, package, download_path, keep_downloads=False):
         os.makedirs(cls._install_dir, exist_ok=True)
-        package.install(download_path, cls._install_dir)
+        package.install(download_path, cls._install_dir, keep_downloads)
 
     @classmethod
     def remove(cls, package):
@@ -250,7 +250,7 @@ class Package(metaclass=MetaRegistry):
         except ValueError:
             return self.size
 
-    def install(self, download_path, install_dir):
+    def install(self, download_path, install_dir, keep_downloads=False):
         raise NotImplementedError('Subclasses must implement this method')
 
     def remove(self, install_dir):
@@ -290,7 +290,7 @@ class Zim(Package, typename='zim'):
             return 'ted'
         return base_name
 
-    def install(self, download_path, install_dir):
+    def install(self, download_path, install_dir, keep_download=False):
         zim_name = '{self.id}.zim'.format(self=self)
         dest_name = os.path.join(install_dir, zim_name)
         info = {
@@ -298,7 +298,16 @@ class Zim(Package, typename='zim'):
             'path': zim_name,
         }
 
-        shutil.copyfile(download_path, dest_name)
+        if keep_download:
+            shutil.copyfile(download_path, dest_name)
+        else:
+            # os.rename do not handle move across different filesystems
+            # (shutil.move will automatically use copy+remove in this case)
+            # but shutil.move need a directory as dest
+            # (so cannot rename the file)
+            shutil.move(download_path, install_dir)
+            orig_basename = os.path.basename(download_path)
+            os.rename(os.path.join(install_dir, orig_basename), dest_name)
         persist_to_file(dest_name, info)
 
     def remove(self, install_dir):
@@ -308,7 +317,7 @@ class Zim(Package, typename='zim'):
 
 
 class ZippedZim(Zim, typename='zipped-zim'):
-    def install(self, download_path, install_dir):
+    def install(self, download_path, install_dir, keep_download=False):
         self.assert_is_zipfile(download_path)
 
         with zipfile.ZipFile(download_path, "r") as z:
@@ -366,7 +375,7 @@ class SimpleZipPackage(Package, no_register=True):
     def get_root_dir(self, install_dir):
         return os.path.join(install_dir, self.id)
 
-    def install(self, download_path, install_dir):
+    def install(self, download_path, install_dir, keep_download=False):
         self.assert_is_zipfile(download_path)
 
         with zipfile.ZipFile(download_path, "r") as z:
@@ -411,7 +420,7 @@ class ZippedMedias(SimpleZipPackage, typename='zipped-medias'):
         Document.objects.filter(package_id=self.id).delete()
         super().remove(install_dir)
 
-    def install(self, download_path, install_dir):
+    def install(self, download_path, install_dir, keep_download=False):
         super().install(download_path, install_dir)
         print('Adding medias to mediacenter database.')
         root = self.get_root_dir(install_dir)
@@ -693,7 +702,7 @@ class Catalog:
 
             try:
                 print('Installing {pkg}'.format(pkg=pkg))
-                handler.install(pkg, download_path)
+                handler.install(pkg, download_path, keep_downloads)
                 used_handlers.add(handler)
 
             except Exception as e:
@@ -821,7 +830,7 @@ class Catalog:
 
             try:
                 print('Installing {upkg}'.format(upkg=upkg))
-                uhandler.install(upkg, download_path)
+                uhandler.install(upkg, download_path, keep_downloads)
                 used_handlers.add(uhandler)
 
             except Exception as e:
