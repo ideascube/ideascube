@@ -3,7 +3,6 @@ from hashlib import sha256
 import zipfile
 
 from py.path import local as Path
-from collections import namedtuple
 import pytest
 import yaml
 import json
@@ -65,8 +64,22 @@ def input_file(tmpdir, input_type, input_content):
     return {'path': path.strpath, 'input': input_content}
 
 
-ZimfileInfo = namedtuple('ZimfileInfo',
-    'version basename source_path sha256 zim_sha256')
+class ZimfileInfo:
+    def __init__(self, version, basename, source_path, sha256, zim_sha256):
+        self.version = version
+        self.basename = basename
+        self.source_path = source_path
+        self.sha256 = sha256
+        self.zim_sha256 = zim_sha256
+
+    def catalog_entry_dict(self):
+        return {
+            'version': self.version,
+            'size': '200KB',
+            'url': 'file://{}'.format(self.source_path),
+            'sha256sum': self.sha256,
+            'type': 'zipped-zim'
+        }
 
 
 @pytest.fixture
@@ -1107,13 +1120,7 @@ def test_catalog_install_package(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all':{
-            'wikipedia.tum':{
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1146,13 +1153,7 @@ def test_catalog_install_package_glob(tmpdir, sample_zip, settings,  mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1184,13 +1185,7 @@ def test_catalog_install_package_twice(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1214,20 +1209,8 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, sample_zip, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            },
-            'wikipedia.fr': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict(),
+            'wikipedia.fr': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1263,20 +1246,9 @@ def test_install_and_keep_the_download(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim',
-            },
-            'wikipedia.fr': {
-                'version': '2015-09',
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict(),
+            'wikipedia.fr': dict(sample_zip.catalog_entry_dict(),
+                                 version='2015-09'),
         }
     }))
 
@@ -1313,13 +1285,7 @@ def test_catalog_install_package_already_downloaded(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
          }
     }))
 
@@ -1357,13 +1323,7 @@ def test_catalog_install_package_already_in_additional_cache(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1404,13 +1364,7 @@ def test_catalog_install_package_partially_downloaded(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1450,13 +1404,7 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1487,13 +1435,7 @@ def test_catalog_install_package_does_not_exist(tmpdir, sample_zip):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1513,14 +1455,11 @@ def test_catalog_install_package_with_missing_type(tmpdir, sample_zip):
     sourcedir = tmpdir.ensure('source', dir=True)
 
     remote_catalog_file = sourcedir.join('catalog.json')
+    entry_dict = sample_zip.catalog_entry_dict()
+    entry_dict.pop('type')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256
-            }
+            'wikipedia.tum': entry_dict
         }
     }))
 
@@ -1542,13 +1481,8 @@ def test_catalog_install_package_with_unknown_type(tmpdir, sample_zip):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'something-not-supported'
-            }
+            'wikipedia.tum': dict(sample_zip.catalog_entry_dict(),
+                                  type='something-not-supported')
         }
     }))
 
@@ -1572,13 +1506,7 @@ def test_catalog_reinstall_package(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1624,13 +1552,7 @@ def test_reinstall_and_keep_the_download(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1664,13 +1586,7 @@ def test_catalog_remove_package(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1700,13 +1616,7 @@ def test_catalog_remove_package_glob(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1750,13 +1660,7 @@ def test_catalog_update_package(tmpdir, sample_zip, sample_zip_09, settings, moc
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1782,13 +1686,7 @@ def test_catalog_update_package(tmpdir, sample_zip, sample_zip_09, settings, moc
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip_09.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip_09.source_path),
-                'sha256sum': sample_zip_09.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip_09.catalog_entry_dict()
         }
     }))
 
@@ -1816,20 +1714,8 @@ def test_update_all_installed_packages(tmpdir, sample_zip, sample_zip_09, settin
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            },
-            'wikipedia.tumtudum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict(),
+            'wikipedia.tumtudum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1855,20 +1741,8 @@ def test_update_all_installed_packages(tmpdir, sample_zip, sample_zip_09, settin
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip_09.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip_09.source_path),
-                'sha256sum': sample_zip_09.sha256,
-                'type': 'zipped-zim'
-            },
-            'wikipedia.tumtudum': {
-                'version': sample_zip_09.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip_09.source_path),
-                'sha256sum': sample_zip_09.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip_09.catalog_entry_dict(),
+            'wikipedia.tumtudum': sample_zip_09.catalog_entry_dict()
         }
     }))
 
@@ -1900,13 +1774,7 @@ def test_catalog_update_uninstalled_package(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -1962,13 +1830,7 @@ def test_catalog_update_installed_but_unavailable_package(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -2024,20 +1886,8 @@ def test_update_all_with_unavailable_package(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            },
-            'wikipedia.tumtudum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict(),
+            'wikipedia.tumtudum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -2067,13 +1917,7 @@ def test_update_all_with_unavailable_package(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip_09.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip_09.source_path),
-                'sha256sum': sample_zip_09.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip_09.catalog_entry_dict()
         }
     }))
 
@@ -2110,13 +1954,7 @@ def test_catalog_update_package_glob(tmpdir, sample_zip, sample_zip_09, settings
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -2142,13 +1980,7 @@ def test_catalog_update_package_glob(tmpdir, sample_zip, sample_zip_09, settings
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip_09.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip_09.source_path),
-                'sha256sum': sample_zip_09.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip_09.catalog_entry_dict()
         }
     }))
 
@@ -2177,13 +2009,7 @@ def test_catalog_update_package_already_latest(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -2223,13 +2049,7 @@ def test_update_and_keep_the_download(tmpdir, sample_zip, sample_zip_09, setting
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -2247,13 +2067,7 @@ def test_update_and_keep_the_download(tmpdir, sample_zip, sample_zip_09, setting
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip_09.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip_09.source_path),
-                'sha256sum': sample_zip_09.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip_09.catalog_entry_dict()
         }
     }))
 
@@ -2267,13 +2081,9 @@ def test_update_and_keep_the_download(tmpdir, sample_zip, sample_zip_09, setting
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': '2015-10',
-                'size': '200KB',
-                'url': 'file://{}'.format(path),
-                'sha256sum': sample_zip_09.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': dict(sample_zip_09.catalog_entry_dict(),
+                                  version='2015-10',
+                                  url='file://{}'.format(path))
         }
     }))
 
@@ -2350,13 +2160,7 @@ def test_catalog_list_installed_packages(tmpdir, sample_zip, mocker):
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -2412,13 +2216,7 @@ def test_catalog_list_upgradable_packages(tmpdir, sample_zip, sample_zip_09, moc
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip.catalog_entry_dict()
         }
     }))
 
@@ -2435,13 +2233,7 @@ def test_catalog_list_upgradable_packages(tmpdir, sample_zip, sample_zip_09, moc
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip_09.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip_09.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            }
+            'wikipedia.tum': sample_zip_09.catalog_entry_dict()
         }
     }))
 
@@ -2530,15 +2322,9 @@ def test_catalog_list_nothandled_packages(tmpdir, sample_zip, mocker):
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': {
-                'version': sample_zip.version,
-                'size': '200KB',
-                'url': 'file://{}'.format(sample_zip.source_path),
-                'sha256sum': sample_zip.sha256,
-                'type': 'zipped-zim'
-            },
+            'wikipedia.tum': sample_zip.catalog_entry_dict(),
             'nothandled': {
-                'version': sample_zip.version,
+                'version': '2015-08',
                 'size': '0KB',
                 'url': 'file://fakeurl',
                 'sha256sum': '0',
