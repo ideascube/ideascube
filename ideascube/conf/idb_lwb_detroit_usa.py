@@ -10,7 +10,6 @@ IDEASCUBE_NAME = u"Library Whitout Border Detroit"
 IDEASCUBE_PLACE_NAME = _("city")
 COUNTRIES_FIRST = ['US']
 TIME_ZONE = get_localzone().zone
-LANGUAGE_CODE = 'en'
 LOAN_DURATION = 14
 MONITORING_ENTRY_EXPORT_FIELDS = ['serial', 'user_id', 'birth_year', 'gender']
 USER_FORM_FIELDS = (
