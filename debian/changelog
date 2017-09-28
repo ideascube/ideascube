@@ -1,3 +1,17 @@
+ideascube (0.33.0) unstable; urgency=low
+
+  * [mediacenter] Simplify upload form (@pcosquer) :
+      - Authorship has been moved at the bottom;
+      - Authorship and summary can be left empty.
+      - Better guessing of the content type (base on the extension file)
+      - Hide the `kind` field when a new document is uploaded.
+  * Fix some wording in filters views and blog home (@Lucas-C)
+  * Write internal cache using json instead of yaml (performance) (@mgautierfr)
+  * Allow `127.0.0.1` as allowed host for developers (@Lucas-C)
+  * [blog] Make the whole card clickable (@Lucas-C)
+  * Add configuration for kb_tgo_telemaquesow (@fheslouin) and
+    kb_usa_legallibrary (@letompouce)
+
 ideascube (0.32.0) unstable; urgency=low
 
   * Made the StockItem.physical property a model field stored in the database;
