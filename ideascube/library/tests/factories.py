@@ -1,5 +1,3 @@
-from django.conf import settings
-
 import factory
 from factory.fuzzy import FuzzyText
 
@@ -10,7 +8,7 @@ class BookFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: "Test book {0}".format(n))
     description = "This is a test description"
     section = 'digital'
-    lang = settings.LANGUAGE_CODE
+    lang = 'en'
     cover = factory.django.ImageField()
 
     @factory.post_generation
