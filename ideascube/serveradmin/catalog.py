@@ -281,7 +281,7 @@ class Package(metaclass=MetaRegistry):
             raise InvalidFile('{} is not a zip file'.format(path))
 
 
-class ZippedZim(Package, typename='zipped-zim'):
+class Zim(Package, typename='zim'):
     handler = Kiwix
     template_id = "kiwix"
 
@@ -309,6 +309,23 @@ class ZippedZim(Package, typename='zipped-zim'):
             return 'ted'
         return base_name
 
+    def install(self, download_path, install_dir):
+        dest_name = os.path.join(install_dir, '{self.id}.zim'.format(self=self))
+        info = {
+            'id': self.id,
+            'path': dest_name,
+        }
+
+        shutil.copyfile(download_path, dest_name)
+        persist_to_file(dest_name, info)
+
+    def remove(self, install_dir):
+        zimname = '{self.id}.zim*'.format(self=self)
+        for path in glob(os.path.join(install_dir, zimname)):
+            rm(path)
+
+
+class ZippedZim(Zim, typename='zipped-zim'):
     def install(self, download_path, install_dir):
         self.assert_is_zipfile(download_path)
 
@@ -352,11 +369,10 @@ class ZippedZim(Package, typename='zipped-zim'):
 
 
     def remove(self, install_dir):
-        zimname = '{0.id}.zim*'.format(self)
-        for path in glob(os.path.join(install_dir, zimname)):
-            rm(path)
-        
+        super().remove(install_dir)
+
         # Keep removing old data installed using old way of doing
+        zimname = '{0.id}.zim*'.format(self)
         datadir = os.path.join(install_dir, 'data')
         for path in glob(os.path.join(datadir, '*', zimname)):
             rm(path)

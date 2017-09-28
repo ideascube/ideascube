@@ -108,6 +108,14 @@ def sample_zip_09(testdatadir, tmpdir):
 
 
 @pytest.fixture
+def zim_path(testdatadir, tmpdir):
+    zim = testdatadir.join('catalog', 'wikipedia_tum_all_nopic_2015-09.zim')
+    path = tmpdir.mkdir('packages').join('wikipedia_tum_all_nopic_2015-09.zim')
+    zim.copy(path)
+
+    return path
+
+@pytest.fixture
 def zippedzim_path(testdatadir, tmpdir):
     zippedzim = testdatadir.join('catalog', 'wikipedia_tum_all_nopic_2015-08.zip')
     path = tmpdir.mkdir('packages').join('wikipedia_tum_all_nopic_2015-08.zip')
@@ -398,6 +406,15 @@ def test_filesize_should_render_str_size_as_is():
     p = Package('wikipedia.fr', {'name': 'Wikipédia', 'size': '1.7 GB'})
     assert p.filesize == '1.7 GB'
 
+def test_install_zim(zim_path, install_dir):
+    from ideascube.serveradmin.catalog import Zim
+
+    p = Zim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    p.install(zim_path.strpath, install_dir.strpath)
+
+    zim_file = install_dir.join('{}.zim'.format(p.id))
+    assert zim_file.check(file=True)
 
 def test_install_zippedzim(zippedzim_path, install_dir):
     from ideascube.serveradmin.catalog import ZippedZim
@@ -425,6 +442,19 @@ def test_install_invalid_zippedzim(tmpdir, testdatadir, install_dir):
         p.install(path.strpath, install_dir.strpath)
 
     assert 'not a zip file' in exc.exconly()
+
+
+def test_remove_zim(zim_path, install_dir):
+    from ideascube.serveradmin.catalog import Zim
+
+    p = Zim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    p.install(zim_path.strpath, install_dir.strpath)
+
+    p.remove(install_dir.strpath)
+
+    zim_file = install_dir.join('{}.zim'.format(p.id))
+    assert zim_file.check(exists=False)
 
 
 def test_remove_zippedzim(zippedzim_path, install_dir):
@@ -533,6 +563,20 @@ def test_handler(settings):
     assert h._install_dir == settings.CATALOG_HANDLER_INSTALL_DIR
 
 
+def test_kiwix_installs_zim(settings, zim_path):
+    from ideascube.serveradmin.catalog import Kiwix, Zim
+
+    p = Zim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    h = Kiwix()
+    h.install(p, zim_path.strpath)
+
+    install_root = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+
+    zim_file = install_root.join('{}.zim'.format(p.id))
+    assert zim_file.check(file=True)
+
+
 def test_kiwix_installs_zippedzim(settings, zippedzim_path):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
 
@@ -561,6 +605,21 @@ def test_kiwix_does_not_fail_if_files_already_exist(settings, zippedzim_path):
 
     data = install_root.join('data')
     assert data.check(dir=True)
+
+
+def test_kiwix_removes_zim(settings, zim_path):
+    from ideascube.serveradmin.catalog import Kiwix, Zim
+
+    p = Zim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    h = Kiwix()
+    h.install(p, zim_path.strpath)
+
+    h.remove(p)
+
+    install_root = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+
+    assert install_root.join('{}.zim'.format(p.id)).check(exists=False)
 
 
 def test_kiwix_removes_zippedzim(settings, zippedzim_path):
