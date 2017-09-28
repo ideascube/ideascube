@@ -26,7 +26,10 @@ The timezone of the server. One of [this list](https://en.wikipedia.org/wiki/Lis
 
 #### LANGUAGE_CODE = *iso code*
 
-The default language of the server. One of this [identifiers list](http://www.i18nguy.com/unicode/language-identifiers.html).
+The default language of the UI as displayed to a user, before they select a
+different one.
+
+This must be one of these [identifiers](http://www.i18nguy.com/unicode/language-identifiers.html).
 
 #### COUNTRIES_FIRST = *list of iso codes*
 
