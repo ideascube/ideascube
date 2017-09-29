@@ -585,7 +585,7 @@ class Catalog:
             try:
                 pkgs.append(self._get_package(pkg_id, self._installed))
 
-            except (MissingPackageMetadata, InvalidPackageType, NoSuchPackage):
+            except (InvalidPackageType, MissingPackageMetadata, NoSuchPackage):
                 continue
 
         return sorted(pkgs, key=attrgetter('id'))
@@ -598,7 +598,7 @@ class Catalog:
             try:
                 pkgs.append(self._get_package(pkg_id, self._available))
 
-            except (MissingPackageMetadata, InvalidPackageType, NoSuchPackage):
+            except (InvalidPackageType, MissingPackageMetadata, NoSuchPackage):
                 continue
 
         return sorted(pkgs, key=attrgetter('id'))
@@ -611,13 +611,13 @@ class Catalog:
             try:
                 ipkg = self._get_package(pkg_id, self._installed)
 
-            except (MissingPackageMetadata, InvalidPackageType, NoSuchPackage):
+            except (InvalidPackageType, MissingPackageMetadata, NoSuchPackage):
                 continue
 
             try:
                 upkg = self._get_package(ipkg.id, self._available)
 
-            except (MissingPackageMetadata, InvalidPackageType, NoSuchPackage):
+            except (InvalidPackageType, MissingPackageMetadata, NoSuchPackage):
                 continue
 
             if ipkg != upkg:
