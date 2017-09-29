@@ -27,8 +27,6 @@ RUN \
     python3-wheel \
     virtualenv \
     zlib1g-dev; \
-
-  # Make some space
   apt-get clean -y; \
   rm -fr \
     /usr/share/doc/* \
@@ -51,8 +49,6 @@ RUN \
   ~/.local/bin/pew new -d -p python3 venv; \
   ~/.local/bin/pew in venv pip install --upgrade pip setuptools; \
   ~/.local/bin/pew in venv make develop; \
-
-  # Make some space
   rm -fr \
     ~/.cache \
     ~/.local/share/virtualenvs/venv/src \
