@@ -944,7 +944,7 @@ class Catalog:
 
     def clear_metadata_cache(self):
         self._available_value = {}
-        self._persist_catalog()
+        persist_to_file(self._catalog_cache_basepath, self._available)
 
     def clear_package_cache(self):
         rm(self._local_package_cache)
