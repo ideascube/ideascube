@@ -41,6 +41,14 @@ def load_from_basepath(basepath):
     except FileNotFoundError:
         # Json file doesn't exists, let's try with the yml file.
         pass
+    except json.JSONDecodeError:
+        # Something went wrong will decoding.
+        # This could happen if we've parsed the yml wrongly and cannot
+        # create a correct json.
+        # Remove the json file and try to parse the yml again,
+        # hopping that yml parsing has been fixed.
+        os.remove(json_path)
+        pass
 
     yml_path = basepath + '.yml'
     try:
