@@ -157,14 +157,14 @@ def test_migration_from_yml(tmpdir):
     data['a']['vsize'] = '1024'
     data['b']['vint'] = '5'
 
-    ret_data = load_from_basepath(tmpdir.join('foo'))
+    ret_data = load_from_basepath(str(tmpdir.join('foo')))
 
     assert ret_data == data
     assert yml_file.check(exists=False)
     assert tmpdir.join('foo.json').check(exists=True)
 
     # Be sure that we can read it again
-    ret_data2 = load_from_basepath(tmpdir.join('foo'))
+    ret_data2 = load_from_basepath(str(tmpdir.join('foo')))
     assert ret_data2 == data
 
 
@@ -182,14 +182,49 @@ def test_migration_from_yml_wrong_date(tmpdir):
         "  vdate: 2015-11-30\n"
     )
 
-    ret_data = load_from_basepath(tmpdir.join('foo'))
+    ret_data = load_from_basepath(str(tmpdir.join('foo')))
 
     assert ret_data == data
     assert yml_file.check(exists=False)
     assert tmpdir.join('foo.json').check(exists=True)
 
     # Be sure that we can read it again
-    ret_data2 = load_from_basepath(tmpdir.join('foo'))
+    ret_data2 = load_from_basepath(str(tmpdir.join('foo')))
+    assert ret_data2 == data
+
+
+def test_migration_from_yml_broken_json(tmpdir):
+    from ideascube.serveradmin.catalog import load_from_basepath
+    data = {'a': {'vdate': '2014-11-30'},
+            'b': {'vdate': '2015-11-30'}
+    }
+
+    yml_file = tmpdir.join('foo.yml')
+    yml_file.write(
+        "a:\n"
+        "  vdate: '2014-11-30'\n"
+        "b:\n"
+        "  vdate: 2015-11-30\n"
+    )
+
+    json_file = tmpdir.join('foo.json')
+    json_file.write(
+        "{\n'"
+        "  'a': {\n"
+        "    'vdate': '2014-11-30'\n"
+        "  }\n"
+        "  'b': {\n"
+        "    'vdate':"
+    )
+
+    ret_data = load_from_basepath(str(tmpdir.join('foo')))
+
+    assert ret_data == data
+    assert yml_file.check(exists=False)
+    assert tmpdir.join('foo.json').check(exists=True)
+
+    # Be sure that we can read it again
+    ret_data2 = load_from_basepath(str(tmpdir.join('foo')))
     assert ret_data2 == data
 
 
