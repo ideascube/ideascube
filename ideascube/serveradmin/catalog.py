@@ -10,6 +10,11 @@ import zipfile
 import yaml
 import json
 
+try:
+    from yaml import CBaseLoader as BaseYAMLLoader
+except ImportError:
+    from yaml import BaseLoader as BaseYAMLLoader
+
 from django.conf import settings
 from django.template.defaultfilters import filesizeformat
 from lxml import etree
@@ -59,7 +64,7 @@ def load_from_json_file(path):
 
 def load_from_yml_file(path):
     with open(path, 'r', encoding='utf-8') as f:
-        return yaml.safe_load(f.read())
+        return yaml.load(f.read(), Loader=BaseYAMLLoader)
 
 
 def persist_to_file(path, data):
@@ -378,7 +383,7 @@ class ZippedMedias(SimpleZipPackage, typename='zipped-medias'):
 
         try:
             with manifestfile.open('r') as m:
-                manifest = yaml.safe_load(m.read())
+                manifest = yaml.load(m.read(), Loader=BaseYAMLLoader)
 
         except FileNotFoundError:
             raise InvalidPackageContent('Missing manifest file in {}'.format(
