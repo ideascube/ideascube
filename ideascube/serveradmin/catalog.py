@@ -10,6 +10,11 @@ import zipfile
 import yaml
 import json
 
+try:
+    from yaml import CBaseLoader as BaseYAMLLoader
+except ImportError:
+    from yaml import BaseLoader as BaseYAMLLoader
+
 from django.conf import settings
 from django.template.defaultfilters import filesizeformat
 from lxml import etree
@@ -31,16 +36,27 @@ from .systemd import Manager as SystemManager, NoSuchUnit
 
 def load_from_basepath(basepath):
     json_path = basepath + '.json'
+    json_parsing_error = None
     try:
         return load_from_json_file(json_path)
     except FileNotFoundError:
         # Json file doesn't exists, let's try with the yml file.
+        pass
+    except ValueError as e:
+        # Something went wrong will decoding.
+        # This could happen if we've parsed the yml wrongly and cannot
+        # create a correct json.
+        # Remove the json file and try to parse the yml again,
+        # hopping that yml parsing has been fixed.
+        json_parsing_error = e
         pass
 
     yml_path = basepath + '.yml'
     try:
         data = load_from_yml_file(yml_path)
     except FileNotFoundError:
+        if json_parsing_error is not None:
+            raise json_parsing_error
         raise
 
     persist_to_file(basepath, data)
@@ -59,7 +75,7 @@ def load_from_json_file(path):
 
 def load_from_yml_file(path):
     with open(path, 'r', encoding='utf-8') as f:
-        return yaml.safe_load(f.read())
+        return yaml.load(f.read(), Loader=BaseYAMLLoader)
 
 
 def persist_to_file(path, data):
@@ -378,7 +394,7 @@ class ZippedMedias(SimpleZipPackage, typename='zipped-medias'):
 
         try:
             with manifestfile.open('r') as m:
-                manifest = yaml.safe_load(m.read())
+                manifest = yaml.load(m.read(), Loader=BaseYAMLLoader)
 
         except FileNotFoundError:
             raise InvalidPackageContent('Missing manifest file in {}'.format(
