@@ -8,17 +8,12 @@ from ideascube.configuration.models import Configuration
 
 
 @pytest.mark.usefixtures('db')
-@pytest.mark.parametrize(
-    'value, expected, default',
-    [
-        (True, 'True', False),
-        (42, '42', 0),
-        ('A string', "'A string'", 'default'),
-        (['A', 'list'], "['A', 'list']", []),
-    ],
-    ids=[
-        'boolean', 'int', 'string', 'list',
-    ])
+@pytest.mark.parametrize('value, expected, default', [
+    pytest.param(True, 'True', False, id='boolean'),
+    pytest.param(42, '42', 0, id='int'),
+    pytest.param('A string', "'A string'", 'default', id='string'),
+    pytest.param(['A', 'list'], "['A', 'list']", [], id='list'),
+])
 def test_get_config(capsys, monkeypatch, user, value, expected, default):
     monkeypatch.setattr(
         'ideascube.configuration.registry.REGISTRY',
@@ -297,19 +292,14 @@ def test_reset_invalid_config(capsys, monkeypatch, user):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-@pytest.mark.parametrize(
-    'value, expected, type, default',
-    [
-        ("True", True, bool, False),
-        ("true", True, bool, False),
-        ("42", 42, int, 0),
-        ("'A string'", 'A string', str, 'default'),
-        ("unquoted-string", 'unquoted-string', str, 'default'),
-        ("['A', 'list']", ['A', 'list'], list, []),
-    ],
-    ids=[
-        'boolean', 'boolean-2', 'int', 'string', 'string-2', 'list',
-    ])
+@pytest.mark.parametrize('value, expected, type, default', [
+    pytest.param("True", True, bool, False, id='boolean'),
+    pytest.param("true", True, bool, False, id='boolean-2'),
+    pytest.param("42", 42, int, 0, id='int'),
+    pytest.param("'A string'", 'A string', str, 'default', id='string'),
+    pytest.param("unquoted-string", 'unquoted-string', str, 'default', id='string-2'),
+    pytest.param("['A', 'list']", ['A', 'list'], list, [], id='list'),
+])
 def test_set_config(capsys, monkeypatch, value, expected, type, default):
     monkeypatch.setattr(
         'ideascube.configuration.registry.REGISTRY',

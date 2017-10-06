@@ -14,38 +14,30 @@ def input_type(request):
     return request.param
 
 
-@pytest.fixture(
-    params=[
-        {
-            'id': 'foo',
-            'name': 'Content provided by Foo',
-            'url': 'http://foo.fr/catalog.yml',
-        },
-        {
-            'id': 'bibliothèque',
-            'name': 'Le contenu de la bibliothèque',
-            'url': 'http://foo.fr/catalog.yml',
-        },
-        {
-            'name': 'Content provided by Foo',
-            'url': 'http://foo.fr/catalog.yml',
-        },
-        {
-            'id': 'foo',
-            'url': 'http://foo.fr/catalog.yml',
-        },
-        {
-            'id': 'foo',
-            'name': 'Content provided by Foo',
-        },
-    ],
-    ids=[
-        'foo',
-        'utf8',
-        'missing-id',
-        'missing-name',
-        'missing-url',
-    ])
+@pytest.fixture(params=[
+    pytest.param({
+        'id': 'foo',
+        'name': 'Content provided by Foo',
+        'url': 'http://foo.fr/catalog.yml',
+    }, id='foo'),
+    pytest.param({
+        'id': 'bibliothèque',
+        'name': 'Le contenu de la bibliothèque',
+        'url': 'http://foo.fr/catalog.yml',
+    }, id='utf8'),
+    pytest.param({
+        'name': 'Content provided by Foo',
+        'url': 'http://foo.fr/catalog.yml',
+    }, id='missing-id'),
+    pytest.param({
+        'id': 'foo',
+        'url': 'http://foo.fr/catalog.yml',
+    }, id='missing-name'),
+    pytest.param({
+        'id': 'foo',
+        'name': 'Content provided by Foo',
+    }, id='missing-url'),
+])
 def input_content(request):
     return request.param
 
@@ -730,6 +722,7 @@ def test_mediacenter_installs_zippedmedia(settings, zippedmedia_path):
     video = Document.objects.get(title='my video')
     assert video.summary == 'my video summary'
     assert video.kind == Document.VIDEO
+    assert video.lang == 'en'
     assert Document.objects.search('summary').count() == 3
 
     documents_tag1 = Document.objects.search(tags=['tag1'])

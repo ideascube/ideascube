@@ -10,14 +10,13 @@ from ideascube.configuration.models import Configuration
 pytestmark = pytest.mark.django_db
 
 
-@pytest.mark.parametrize(
-    'value',
-    [
-        True, 42, None, 'A string', [1, '2'],
-    ],
-    ids=[
-        'boolean', 'int', 'none', 'string', 'list',
-    ])
+@pytest.mark.parametrize('value', [
+    pytest.param(True, id='boolean'),
+    pytest.param(42, id='int'),
+    pytest.param(None, id='none'),
+    pytest.param('A string', id='string'),
+    pytest.param([1, '2'], id='list'),
+])
 def test_configuration(value, user):
     fakenow = datetime.now(tz=timezone.utc)
     assert Configuration.objects.count() == 0
