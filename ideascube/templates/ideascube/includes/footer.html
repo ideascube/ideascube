@@ -4,6 +4,7 @@
 <footer>
     <div class="row">
         <div class="col third i18n_switch">
+          {% if LANGUAGES|length > 1 %}
             <form action="{% url 'set_language' %}" method="post">
                 {% csrf_token %}
                 {# Next should not contain the i18n prefix, otherwise it will change again lang to current one after redirect. #}
@@ -18,6 +19,7 @@
                 </select>
                 <input type="submit" value="{% trans 'Change' %}" />
             </form>
+	  {% endif %}
         </div>
         <div class="col half">
             <img src="{% static "ideascube/img/logoBSF.png" %}" />
