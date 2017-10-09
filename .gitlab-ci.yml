@@ -55,7 +55,7 @@ Missing Migrations:
   - pew in venv make check-missing-migrations
 
 
-Master Debian Package:
+Master-Debian-package:
   stage: deploy
   image: ideascube/ideascube-ci:jessie-deb-builder
   script:
@@ -67,5 +67,3 @@ Master Debian Package:
     expire_in: "2 weeks"
     paths:
     - ideascube_*.deb
-  only:
-  - master
