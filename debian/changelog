@@ -1,3 +1,26 @@
+ideascube (0.34.0) unstable; urgency=low
+
+  * Made loading catalog YAML files more robust (@mgautier)
+  * Fixed incomplete migrations of the internal catalog cache to JSON
+    (@mgautier)
+  * Fixed displaying long titles in the mediacenter (@mbridon)
+  * Made the language selector hidden if only one language is configured on
+    the box (@mbridon)
+  * Stopped overwriting the installed cache of the catalog when clearing the
+    available cache (@mbridon)
+  * Made the `lang` mandatory when importing medias, either with the legacy
+    command or when installing a zipped-medias package (@mbridon)
+  * Stopped abusing the `LANGUAGE_CODE` setting for unrelated things
+    (@mbridon)
+  * Improved the catalog tests, preparing for future code changes
+    (@mgautierfr)
+  * Fixed the Docker images we use for the CI (@mbridon)
+  * Enabled branch coverage for the tests (@mbridon)
+  * Renamed the configuration file of a box (@fheslouin)
+  * Upgraded our dependencies to the latest and greatest (@mbridon)
+
+ -- Mathieu Bridon <bochecha@daitauha.fr>  Tue, 10 Oct 2017 11:10:00 +0200
+
 ideascube (0.33.0) unstable; urgency=low
 
   * [mediacenter] Simplify upload form (@pcosquer) :
