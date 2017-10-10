@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-07 10:22+0000\n"
-"PO-Revision-Date: 2017-09-23 14:51+0000\n"
+"POT-Creation-Date: 2017-09-29 13:19+0000\n"
+"PO-Revision-Date: 2017-09-29 13:19+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
 "Language-Team: Persian (Iran) (http://www.transifex.com/ideascube/ideascube/language/fa_IR/)\n"
 "MIME-Version: 1.0\n"
@@ -64,12 +64,11 @@ msgstr "موقعیت"
 
 #: ideascube/blog/models.py:65 ideascube/library/models.py:59
 #: ideascube/library/templates/library/book_detail.html:23
-#: ideascube/mediacenter/models.py:57
+#: ideascube/mediacenter/models.py:58
 msgid "Language"
 msgstr "زبان"
 
-#: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:73
-#: ideascube/templates/ideascube/includes/tag_cloud.html:4
+#: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:76
 msgid "Topics"
 msgstr "موضوعها"
 
@@ -547,7 +546,7 @@ msgstr "دیدن تمام کتابها"
 
 #: ideascube/library/templates/library/book_detail.html:15
 #: ideascube/library/templates/library/index.html:9
-#: ideascube/serveradmin/catalog.py:283
+#: ideascube/serveradmin/catalog.py:313
 #: ideascube/templates/ideascube/includes/cards/library.html:4
 msgid "read"
 msgstr "خواندن"
@@ -789,31 +788,31 @@ msgstr "موبی"
 msgid "app"
 msgstr "آپلیکیشن "
 
-#: ideascube/mediacenter/models.py:58
+#: ideascube/mediacenter/models.py:59
 msgid "Source file"
 msgstr "فایل منبع"
 
-#: ideascube/mediacenter/models.py:61
+#: ideascube/mediacenter/models.py:62
 msgid "Maximum size : 500 Mo."
 msgstr "حداکثر حجم :500 Mo"
 
-#: ideascube/mediacenter/models.py:62
+#: ideascube/mediacenter/models.py:63
 msgid "Preview picture"
 msgstr "پیش‌نمایش تصویر"
 
-#: ideascube/mediacenter/models.py:66
+#: ideascube/mediacenter/models.py:67
 msgid "Authorship"
 msgstr "حق تالیف"
 
-#: ideascube/mediacenter/models.py:67
+#: ideascube/mediacenter/models.py:70
 msgid "type"
 msgstr "نوع"
 
-#: ideascube/mediacenter/models.py:77
+#: ideascube/mediacenter/models.py:80
 msgid "package"
 msgstr "بستە"
 
-#: ideascube/mediacenter/models.py:79
+#: ideascube/mediacenter/models.py:82
 msgid "hidden"
 msgstr ""
 
@@ -879,7 +878,7 @@ msgid "No documents yet."
 msgstr "هنوز سندی موجود نیست"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
-#: ideascube/serveradmin/catalog.py:281 ideascube/serveradmin/catalog.py:323
+#: ideascube/serveradmin/catalog.py:311 ideascube/serveradmin/catalog.py:353
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "discover"
@@ -1662,8 +1661,8 @@ msgid "by kind"
 msgstr "بر حسب نوع"
 
 #: ideascube/search/templates/search/filter_by_lang.html:4
-msgid "by lang"
-msgstr "بر حسب زبان"
+msgid "by language"
+msgstr ""
 
 #: ideascube/search/templates/search/filter_cloud.html:5
 msgid "Filters"
@@ -1703,7 +1702,7 @@ msgstr "فرمت {}برای ایجاد، پشتیبانی نشدە است"
 msgid "Not a {} file"
 msgstr "یک{} فایل نیست"
 
-#: ideascube/serveradmin/catalog.py:284
+#: ideascube/serveradmin/catalog.py:314
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:4
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:4
 #: ideascube/templates/ideascube/includes/cards/kolibri.html:4
@@ -1711,7 +1710,7 @@ msgstr "یک{} فایل نیست"
 msgid "learn"
 msgstr "‌آموختن"
 
-#: ideascube/serveradmin/catalog.py:324
+#: ideascube/serveradmin/catalog.py:354
 msgid "info"
 msgstr "اطلاعات"
 
@@ -2058,6 +2057,10 @@ msgstr "خارج شدن از %(user)s"
 #: ideascube/templates/ideascube/includes/header.html:16
 msgid "log in"
 msgstr "واردشدن"
+
+#: ideascube/templates/ideascube/includes/tag_cloud.html:4
+msgid "by topic"
+msgstr ""
 
 #: ideascube/templates/ideascube/pagination.html:5
 msgid "previous"

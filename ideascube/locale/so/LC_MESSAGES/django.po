@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-07 10:22+0000\n"
-"PO-Revision-Date: 2017-09-22 18:30+0000\n"
+"POT-Creation-Date: 2017-09-29 13:19+0000\n"
+"PO-Revision-Date: 2017-09-29 13:19+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
 "Language-Team: Somali (http://www.transifex.com/ideascube/ideascube/language/so/)\n"
 "MIME-Version: 1.0\n"
@@ -62,12 +62,11 @@ msgstr ""
 
 #: ideascube/blog/models.py:65 ideascube/library/models.py:59
 #: ideascube/library/templates/library/book_detail.html:23
-#: ideascube/mediacenter/models.py:57
+#: ideascube/mediacenter/models.py:58
 msgid "Language"
 msgstr ""
 
-#: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:73
-#: ideascube/templates/ideascube/includes/tag_cloud.html:4
+#: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:76
 msgid "Topics"
 msgstr ""
 
@@ -545,7 +544,7 @@ msgstr ""
 
 #: ideascube/library/templates/library/book_detail.html:15
 #: ideascube/library/templates/library/index.html:9
-#: ideascube/serveradmin/catalog.py:283
+#: ideascube/serveradmin/catalog.py:313
 #: ideascube/templates/ideascube/includes/cards/library.html:4
 msgid "read"
 msgstr ""
@@ -787,31 +786,31 @@ msgstr ""
 msgid "app"
 msgstr ""
 
-#: ideascube/mediacenter/models.py:58
+#: ideascube/mediacenter/models.py:59
 msgid "Source file"
 msgstr ""
 
-#: ideascube/mediacenter/models.py:61
+#: ideascube/mediacenter/models.py:62
 msgid "Maximum size : 500 Mo."
 msgstr ""
 
-#: ideascube/mediacenter/models.py:62
+#: ideascube/mediacenter/models.py:63
 msgid "Preview picture"
 msgstr ""
 
-#: ideascube/mediacenter/models.py:66
+#: ideascube/mediacenter/models.py:67
 msgid "Authorship"
 msgstr ""
 
-#: ideascube/mediacenter/models.py:67
+#: ideascube/mediacenter/models.py:70
 msgid "type"
 msgstr ""
 
-#: ideascube/mediacenter/models.py:77
+#: ideascube/mediacenter/models.py:80
 msgid "package"
 msgstr ""
 
-#: ideascube/mediacenter/models.py:79
+#: ideascube/mediacenter/models.py:82
 msgid "hidden"
 msgstr ""
 
@@ -877,7 +876,7 @@ msgid "No documents yet."
 msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
-#: ideascube/serveradmin/catalog.py:281 ideascube/serveradmin/catalog.py:323
+#: ideascube/serveradmin/catalog.py:311 ideascube/serveradmin/catalog.py:353
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "discover"
@@ -1660,7 +1659,7 @@ msgid "by kind"
 msgstr ""
 
 #: ideascube/search/templates/search/filter_by_lang.html:4
-msgid "by lang"
+msgid "by language"
 msgstr ""
 
 #: ideascube/search/templates/search/filter_cloud.html:5
@@ -1701,7 +1700,7 @@ msgstr ""
 msgid "Not a {} file"
 msgstr ""
 
-#: ideascube/serveradmin/catalog.py:284
+#: ideascube/serveradmin/catalog.py:314
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:4
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:4
 #: ideascube/templates/ideascube/includes/cards/kolibri.html:4
@@ -1709,7 +1708,7 @@ msgstr ""
 msgid "learn"
 msgstr ""
 
-#: ideascube/serveradmin/catalog.py:324
+#: ideascube/serveradmin/catalog.py:354
 msgid "info"
 msgstr ""
 
@@ -2055,6 +2054,10 @@ msgstr ""
 
 #: ideascube/templates/ideascube/includes/header.html:16
 msgid "log in"
+msgstr ""
+
+#: ideascube/templates/ideascube/includes/tag_cloud.html:4
+msgid "by topic"
 msgstr ""
 
 #: ideascube/templates/ideascube/pagination.html:5
