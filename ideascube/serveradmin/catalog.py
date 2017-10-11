@@ -212,6 +212,15 @@ class Kiwix(Handler):
 
                 library.append(book)
 
+        for zim_path in glob(os.path.join(cls._install_dir, '*.zim')):
+            zim_basename = os.path.basename(zim_path)
+
+            book = etree.Element('book')
+            book.set('id', zim_basename[:-4])
+            book.set('path', zim_basename)
+
+            library.append(book)
+
         with open(os.path.join(cls._install_dir, 'library.xml'), 'wb') as f:
             f.write(etree.tostring(
                 library, xml_declaration=True, encoding='utf-8'))
@@ -270,7 +279,7 @@ class Package(metaclass=MetaRegistry):
             raise InvalidFile('{} is not a zip file'.format(path))
 
 
-class ZippedZim(Package, typename='zipped-zim'):
+class BaseZim(Package, no_register=True):
     handler = Kiwix
     template_id = "kiwix"
 
@@ -298,6 +307,8 @@ class ZippedZim(Package, typename='zipped-zim'):
             return 'ted'
         return base_name
 
+
+class ZippedZim(BaseZim, typename='zipped-zim'):
     def install(self, download_path, install_dir):
         self.assert_is_zipfile(download_path)
 
@@ -335,6 +346,18 @@ class ZippedZim(Package, typename='zipped-zim'):
 
         for path in glob(os.path.join(datadir, '*', zimname)):
             rm(path)
+
+
+class Zim(BaseZim, typename='zim'):
+    def install(self, download_path, install_dir):
+        zim_name = '{self.id}.zim'.format(self=self)
+        dest_name = os.path.join(install_dir, zim_name)
+
+        shutil.copyfile(download_path, dest_name)
+
+    def remove(self, install_dir):
+        zimname = '{self.id}.zim'.format(self=self)
+        rm(os.path.join(install_dir, zimname))
 
 
 class SimpleZipPackage(Package, no_register=True):
