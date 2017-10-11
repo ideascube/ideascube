@@ -57,11 +57,12 @@ def input_file(tmpdir, input_type, input_content):
 
 
 class ZimfileInfo:
-    def __init__(self, version, basename, source_path, sha256):
+    def __init__(self, version, basename, source_path, sha256, zim_sha256):
         self.version = version
         self.basename = basename
         self.source_path = source_path
         self.sha256 = sha256
+        self.zim_sha256 = zim_sha256
 
     def catalog_entry_dict(self):
         return {
@@ -78,9 +79,11 @@ def sample_zip(testdatadir, tmpdir):
     basename = 'wikipedia_tum_all_nopic_2015-08.zip'
     orig_path = testdatadir.join('catalog', basename)
     sha256 = orig_path.computehash('sha256')
+    zim_sha256 = \
+        '8deddb6268c161ffad1f83e099fa5efd085f76eb80bc6aee7ad4eb8f12e0eb6c'
     source_path = tmpdir.ensure('source', dir=True).join(basename)
     orig_path.copy(source_path)
-    return ZimfileInfo('2015-08', basename, source_path, sha256)
+    return ZimfileInfo('2015-08', basename, source_path, sha256, zim_sha256)
 
 
 @pytest.fixture
@@ -88,9 +91,11 @@ def sample_zip_09(testdatadir, tmpdir):
     basename = 'wikipedia_tum_all_nopic_2015-09.zip'
     orig_path = testdatadir.join('catalog', basename)
     sha256 = orig_path.computehash('sha256')
+    zim_sha256 = \
+        'd3d65b0c59c02966979b79743e844c053bb5e0b0a9e3edb2f9693d24321c22ae'
     source_path = tmpdir.ensure('source', dir=True).join(basename)
     orig_path.copy(source_path)
-    return ZimfileInfo('2015-09', basename, source_path, sha256)
+    return ZimfileInfo('2015-09', basename, source_path, sha256, zim_sha256)
 
 
 
@@ -1783,7 +1788,9 @@ def test_catalog_update_package(tmpdir, sample_zip, sample_zip_09, settings, moc
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+
+    zim_file = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    assert zim_file.computehash('sha256') == sample_zip.zim_sha256
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
@@ -1803,7 +1810,8 @@ def test_catalog_update_package(tmpdir, sample_zip, sample_zip_09, settings, moc
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-09-10"' in libdata
+
+    assert zim_file.computehash('sha256') == sample_zip_09.zim_sha256
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1838,7 +1846,9 @@ def test_update_all_installed_packages(tmpdir, sample_zip, sample_zip_09, settin
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+
+    zim_file = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    assert zim_file.computehash('sha256') == sample_zip.zim_sha256
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
@@ -1859,11 +1869,12 @@ def test_update_all_installed_packages(tmpdir, sample_zip, sample_zip_09, settin
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-09-10"' in libdata
 
         assert 'path="data/content/wikipedia.tumtudum.zim"' not in libdata
         assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' not in libdata
 
+    zim_file = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    assert zim_file.computehash('sha256') == sample_zip_09.zim_sha256
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_uninstalled_package(
@@ -1953,7 +1964,6 @@ def test_catalog_update_installed_but_unavailable_package(
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({'all': {}}))
@@ -1969,7 +1979,6 @@ def test_catalog_update_installed_but_unavailable_package(
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
 
     _, err = capsys.readouterr()
     assert (
@@ -2010,11 +2019,9 @@ def test_update_all_with_unavailable_package(
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
 
         assert 'path="data/content/wikipedia.tumtudum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
@@ -2034,11 +2041,9 @@ def test_update_all_with_unavailable_package(
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-09-10"' in libdata
 
         assert 'path="data/content/wikipedia.tumtudum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
 
     _, err = capsys.readouterr()
     assert (
@@ -2077,7 +2082,9 @@ def test_catalog_update_package_glob(tmpdir, sample_zip, sample_zip_09, settings
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+
+    zim_file = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    assert zim_file.computehash('sha256') == sample_zip.zim_sha256
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
@@ -2097,7 +2104,8 @@ def test_catalog_update_package_glob(tmpdir, sample_zip, sample_zip_09, settings
 
         assert 'path="data/content/wikipedia.tum.zim"' in libdata
         assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-09-10"' in libdata
+
+    assert zim_file.computehash('sha256') == sample_zip_09.zim_sha256
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
