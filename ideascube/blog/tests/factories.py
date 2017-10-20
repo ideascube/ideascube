@@ -11,6 +11,7 @@ class ContentFactory(factory.django.DjangoModelFactory):
     title = factory.Sequence(lambda n: "Test content %03d" % n)
     summary = "This is a test summary"
     text = "This is a test subtitle"
+    lang = 'en'
     author = factory.SubFactory(UserFactory)
     published_at = factory.LazyAttribute(
         lambda o: datetime.now(timezone.utc) - timedelta(hours=1))
