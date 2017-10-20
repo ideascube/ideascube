@@ -222,6 +222,15 @@ class Kiwix(Handler):
 
                 library.append(book)
 
+        for zim_path in glob(os.path.join(cls._install_dir, '*.zim')):
+            zim_basename = os.path.basename(zim_path)
+
+            book = etree.Element('book')
+            book.set('id', zim_basename[:-4])
+            book.set('path', zim_basename)
+
+            library.append(book)
+
         with open(os.path.join(cls._install_dir, 'library.xml'), 'wb') as f:
             f.write(etree.tostring(
                 library, xml_declaration=True, encoding='utf-8'))
@@ -280,10 +289,36 @@ class Package(metaclass=MetaRegistry):
             raise InvalidFile('{} is not a zip file'.format(path))
 
 
-class ZippedZim(Package, typename='zipped-zim'):
+class BaseZim(Package, no_register=True):
     handler = Kiwix
     template_id = "kiwix"
 
+    # [FIXME] Thoses two properties look like hacks.
+    # We may want to find a way to find those information in the package or
+    # catalog metadata.
+    # For now, use special cases.
+    @property
+    def theme(self):
+        # Strings "discover", "read" and "learn" must be marked as translatable.
+        # For this we use a dummy function who do nothing.
+        # As the function is named _, gettext will mark the strings.
+        _ = lambda t: t
+        base_name, extension = self.id.rsplit('.', 1)
+        if base_name in ("wikipedia", "wikivoyage", "vikidia"):
+            return _("discover")
+        if base_name in ("gutemberg", "icd10", "wikisource", "wikibooks", "bouquineux"):
+            return _("read")
+        return _("learn")
+
+    @property
+    def css_class(self):
+        base_name, _ = self.id.rsplit('.', 1)
+        if base_name.startswith('ted'):
+            return 'ted'
+        return base_name
+
+
+class ZippedZim(BaseZim, typename='zipped-zim'):
     def install(self, download_path, install_dir):
         self.assert_is_zipfile(download_path)
 
@@ -322,29 +357,17 @@ class ZippedZim(Package, typename='zipped-zim'):
         for path in glob(os.path.join(datadir, '*', zimname)):
             rm(path)
 
-    # [FIXME] Thoses two properties look like hacks.
-    # We may want to find a way to find those information in the package or
-    # catalog metadata.
-    # For now, use special cases.
-    @property
-    def theme(self):
-        # Strings "discover", "read" and "learn" must be marked as translatable.
-        # For this we use a dummy function who do nothing.
-        # As the function is named _, gettext will mark the strings.
-        _ = lambda t: t
-        base_name, extension = self.id.rsplit('.', 1)
-        if base_name in ("wikipedia", "wikivoyage", "vikidia"):
-            return _("discover")
-        if base_name in ("gutemberg", "icd10", "wikisource", "wikibooks", "bouquineux"):
-            return _("read")
-        return _("learn")
 
-    @property
-    def css_class(self):
-        base_name, _ = self.id.rsplit('.', 1)
-        if base_name.startswith('ted'):
-            return 'ted'
-        return base_name
+class Zim(BaseZim, typename='zim'):
+    def install(self, download_path, install_dir):
+        zim_name = '{self.id}.zim'.format(self=self)
+        dest_name = os.path.join(install_dir, zim_name)
+
+        shutil.copyfile(download_path, dest_name)
+
+    def remove(self, install_dir):
+        zimname = '{self.id}.zim'.format(self=self)
+        rm(os.path.join(install_dir, zimname))
 
 
 class SimpleZipPackage(Package, no_register=True):

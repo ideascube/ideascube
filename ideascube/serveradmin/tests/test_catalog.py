@@ -57,11 +57,13 @@ def input_file(tmpdir, input_type, input_content):
 
 
 class ZimfileInfo:
-    def __init__(self, version, basename, source_path, sha256):
+    def __init__(self, type_, version, basename, source_path, sha256, zim_sha256):
+        self.type_ = type_
         self.version = version
         self.basename = basename
         self.source_path = source_path
         self.sha256 = sha256
+        self.zim_sha256 = zim_sha256
 
     def catalog_entry_dict(self):
         return {
@@ -69,29 +71,61 @@ class ZimfileInfo:
             'size': '200KB',
             'url': 'file://{}'.format(self.source_path),
             'sha256sum': self.sha256,
-            'type': 'zipped-zim'
+            'type': self.type_
         }
 
 
-@pytest.fixture
-def sample_zip(testdatadir, tmpdir):
-    basename = 'wikipedia_tum_all_nopic_2015-08.zip'
+@pytest.fixture(
+    params = [
+        ('wikipedia_tum_all_nopic_2015-08.zip', 'zipped-zim',
+            '8deddb6268c161ffad1f83e099fa5efd085f76eb80bc6aee7ad4eb8f12e0eb6c'),
+        ('wikipedia_tum_all_nopic_2015-08.zim', 'zim')
+    ],
+    ids = ['zipped-zim', 'zim'])
+def sample_zim_package(request, testdatadir, tmpdir):
+    basename = request.param[0]
+    type_ = request.param[1]
     orig_path = testdatadir.join('catalog', basename)
     sha256 = orig_path.computehash('sha256')
+    if type_ == 'zipped-zim':
+        zim_sha256 = request.param[2]
+    else:
+        zim_sha256 = sha256
     source_path = tmpdir.ensure('source', dir=True).join(basename)
     orig_path.copy(source_path)
-    return ZimfileInfo('2015-08', basename, source_path, sha256)
+    return ZimfileInfo(
+        type_, '2015-08', basename, source_path, sha256, zim_sha256)
+
+
+@pytest.fixture(
+    params = [
+        ('wikipedia_tum_all_nopic_2015-09.zip', 'zipped-zim',
+            'd3d65b0c59c02966979b79743e844c053bb5e0b0a9e3edb2f9693d24321c22ae'),
+        ('wikipedia_tum_all_nopic_2015-09.zim', 'zim')
+    ],
+    ids = ['zipped-zim', 'zim'])
+def sample_zim_package_09(request, testdatadir, tmpdir):
+    basename = request.param[0]
+    type_ = request.param[1]
+    orig_path = testdatadir.join('catalog', basename)
+    sha256 = orig_path.computehash('sha256')
+    if type_ == 'zipped-zim':
+        zim_sha256 = request.param[2]
+    else:
+        zim_sha256 = sha256
+    source_path = tmpdir.ensure('source', dir=True).join(basename)
+    orig_path.copy(source_path)
+    return ZimfileInfo(
+        type_, '2015-09', basename, source_path, sha256, zim_sha256)
 
 
 @pytest.fixture
-def sample_zip_09(testdatadir, tmpdir):
-    basename = 'wikipedia_tum_all_nopic_2015-09.zip'
-    orig_path = testdatadir.join('catalog', basename)
-    sha256 = orig_path.computehash('sha256')
-    source_path = tmpdir.ensure('source', dir=True).join(basename)
-    orig_path.copy(source_path)
-    return ZimfileInfo('2015-09', basename, source_path, sha256)
+def zim_path(testdatadir, tmpdir):
+    zim = testdatadir.join('catalog', 'wikipedia_tum_all_nopic_2015-09.zim')
+    path = tmpdir.mkdir('packages').join('wikipedia_tum_all_nopic_2015-09.zim')
+    zim.copy(path)
 
+    return path
 
 
 @pytest.fixture
@@ -386,6 +420,17 @@ def test_filesize_should_render_str_size_as_is():
     assert p.filesize == '1.7 GB'
 
 
+def test_install_zim(zim_path, install_dir):
+    from ideascube.serveradmin.catalog import Zim
+
+    p = Zim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    p.install(zim_path.strpath, install_dir.strpath)
+
+    zim_file = install_dir.join('{}.zim'.format(p.id))
+    assert zim_file.check(file=True)
+
+
 def test_install_zippedzim(zippedzim_path, install_dir):
     from ideascube.serveradmin.catalog import ZippedZim
 
@@ -423,6 +468,19 @@ def test_install_invalid_zippedzim(tmpdir, testdatadir, install_dir):
         p.install(path.strpath, install_dir.strpath)
 
     assert 'not a zip file' in exc.exconly()
+
+
+def test_remove_zim(zim_path, install_dir):
+    from ideascube.serveradmin.catalog import Zim
+
+    p = Zim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    p.install(zim_path.strpath, install_dir.strpath)
+
+    p.remove(install_dir.strpath)
+
+    zim_file = install_dir.join('{}.zim'.format(p.id))
+    assert zim_file.check(exists=False)
 
 
 def test_remove_zippedzim(zippedzim_path, install_dir):
@@ -542,6 +600,20 @@ def test_handler(settings):
     assert h._install_dir == settings.CATALOG_HANDLER_INSTALL_DIR
 
 
+def test_kiwix_installs_zim(settings, zim_path):
+    from ideascube.serveradmin.catalog import Kiwix, Zim
+
+    p = Zim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    h = Kiwix()
+    h.install(p, zim_path.strpath)
+
+    install_root = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+
+    zim_file = install_root.join('{}.zim'.format(p.id))
+    assert zim_file.check(file=True)
+
+
 def test_kiwix_installs_zippedzim(settings, zippedzim_path):
     from ideascube.serveradmin.catalog import Kiwix, ZippedZim
 
@@ -581,6 +653,21 @@ def test_kiwix_does_not_fail_if_files_already_exist(settings, zippedzim_path):
 
     data = install_root.join('data')
     assert data.check(dir=True)
+
+
+def test_kiwix_removes_zim(settings, zim_path):
+    from ideascube.serveradmin.catalog import Kiwix, Zim
+
+    p = Zim('wikipedia.tum', {
+        'url': 'https://foo.fr/wikipedia_tum_all_nopic_2015-08.zim'})
+    h = Kiwix()
+    h.install(p, zim_path.strpath)
+
+    h.remove(p)
+
+    install_root = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
+
+    assert install_root.join('{}.zim'.format(p.id)).check(exists=False)
 
 
 def test_kiwix_removes_zippedzim(settings, zippedzim_path):
@@ -1213,7 +1300,7 @@ def test_catalog_clear_cache(tmpdir):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_install_package(tmpdir, sample_zip, settings, mocker):
+def test_catalog_install_package(tmpdir, sample_zim_package, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -1222,7 +1309,7 @@ def test_catalog_install_package(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all':{
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1241,12 +1328,17 @@ def test_catalog_install_package(tmpdir, sample_zip, settings, mocker):
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_install_package_glob(tmpdir, sample_zip, settings,  mocker):
+def test_catalog_install_package_glob(
+        tmpdir, sample_zim_package, settings,  mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -1255,7 +1347,7 @@ def test_catalog_install_package_glob(tmpdir, sample_zip, settings,  mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1274,12 +1366,17 @@ def test_catalog_install_package_glob(tmpdir, sample_zip, settings,  mocker):
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_install_package_twice(tmpdir, sample_zip, settings, mocker):
+def test_catalog_install_package_twice(
+        tmpdir, sample_zim_package, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     sourcedir = tmpdir.ensure('source', dir=True)
@@ -1287,7 +1384,7 @@ def test_catalog_install_package_twice(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1303,7 +1400,8 @@ def test_catalog_install_package_twice(tmpdir, sample_zip, settings, mocker):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_install_does_not_stop_on_failure(tmpdir, sample_zip, mocker):
+def test_catalog_install_does_not_stop_on_failure(
+        tmpdir, sample_zim_package, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     sourcedir = tmpdir.ensure('source', dir=True)
@@ -1311,8 +1409,8 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, sample_zip, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict(),
-            'wikipedia.fr': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict(),
+            'wikipedia.fr': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1339,7 +1437,8 @@ def test_catalog_install_does_not_stop_on_failure(tmpdir, sample_zip, mocker):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_install_and_keep_the_download(tmpdir, sample_zip, settings, mocker):
+def test_install_and_keep_the_download(
+        tmpdir, sample_zim_package, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
@@ -1348,8 +1447,8 @@ def test_install_and_keep_the_download(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict(),
-            'wikipedia.fr': dict(sample_zip.catalog_entry_dict(),
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict(),
+            'wikipedia.fr': dict(sample_zim_package.catalog_entry_dict(),
                                  version='2015-09'),
         }
     }))
@@ -1373,7 +1472,7 @@ def test_install_and_keep_the_download(tmpdir, sample_zip, settings, mocker):
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_already_downloaded(
-        tmpdir, sample_zip, settings, mocker):
+        tmpdir, sample_zim_package, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     cachedir = Path(settings.CATALOG_CACHE_ROOT)
@@ -1381,13 +1480,14 @@ def test_catalog_install_package_already_downloaded(
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.ensure('source', dir=True)
 
-    sample_zip.source_path.copy(packagesdir.join('wikipedia.tum-2015-08'))
-    sample_zip.source_path.remove()
+    sample_zim_package.source_path.copy(
+        packagesdir.join('wikipedia.tum-2015-08'))
+    sample_zim_package.source_path.remove()
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
          }
     }))
 
@@ -1406,26 +1506,31 @@ def test_catalog_install_package_already_downloaded(
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_already_in_additional_cache(
-        tmpdir, sample_zip, settings,  mocker):
+        tmpdir, sample_zim_package, settings,  mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
     sourcedir = tmpdir.ensure('source', dir=True)
     additionaldir = tmpdir.mkdir('this-could-be-a-usb-stick')
 
-    sample_zip.source_path.copy(additionaldir.join('wikipedia.tum-2015-08'))
-    sample_zip.source_path.remove()
+    sample_zim_package.source_path.copy(
+        additionaldir.join('wikipedia.tum-2015-08'))
+    sample_zim_package.source_path.remove()
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1445,13 +1550,17 @@ def test_catalog_install_package_already_in_additional_cache(
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_partially_downloaded(
-        tmpdir, sample_zip, settings, mocker):
+        tmpdir, sample_zim_package, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     cachedir = Path(settings.CATALOG_CACHE_ROOT)
@@ -1461,12 +1570,12 @@ def test_catalog_install_package_partially_downloaded(
 
     # Partially download the package
     packagesdir.join('wikipedia.tum-2015-08').write_binary(
-        sample_zip.source_path.read_binary()[:100])
+        sample_zim_package.source_path.read_binary()[:100])
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1485,13 +1594,17 @@ def test_catalog_install_package_partially_downloaded(
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_install_package_partially_downloaded_but_corrupted(
-        tmpdir, sample_zip, settings,  mocker):
+        tmpdir, sample_zim_package, settings,  mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     cachedir = Path(settings.CATALOG_CACHE_ROOT)
@@ -1506,7 +1619,7 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1525,11 +1638,15 @@ def test_catalog_install_package_partially_downloaded_but_corrupted(
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
 
-def test_catalog_install_package_does_not_exist(tmpdir, sample_zip):
+def test_catalog_install_package_does_not_exist(tmpdir, sample_zim_package):
     from ideascube.serveradmin.catalog import Catalog, NoSuchPackage
 
     sourcedir = tmpdir.ensure('source', dir=True)
@@ -1537,7 +1654,7 @@ def test_catalog_install_package_does_not_exist(tmpdir, sample_zip):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1551,13 +1668,13 @@ def test_catalog_install_package_does_not_exist(tmpdir, sample_zip):
         c.install_packages(['nosuchpackage'])
 
 
-def test_catalog_install_package_with_missing_type(tmpdir, sample_zip):
+def test_catalog_install_package_with_missing_type(tmpdir, sample_zim_package):
     from ideascube.serveradmin.catalog import Catalog, MissingPackageMetadata
 
     sourcedir = tmpdir.ensure('source', dir=True)
 
     remote_catalog_file = sourcedir.join('catalog.json')
-    entry_dict = sample_zip.catalog_entry_dict()
+    entry_dict = sample_zim_package.catalog_entry_dict()
     del(entry_dict['type'])
     remote_catalog_file.write(json.dumps({
         'all': {
@@ -1575,7 +1692,7 @@ def test_catalog_install_package_with_missing_type(tmpdir, sample_zip):
         c.install_packages(['wikipedia.tum'])
 
 
-def test_catalog_install_package_with_unknown_type(tmpdir, sample_zip):
+def test_catalog_install_package_with_unknown_type(tmpdir, sample_zim_package):
     from ideascube.serveradmin.catalog import Catalog, InvalidPackageType
 
     sourcedir = tmpdir.ensure('source', dir=True)
@@ -1583,7 +1700,7 @@ def test_catalog_install_package_with_unknown_type(tmpdir, sample_zip):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': dict(sample_zip.catalog_entry_dict(),
+            'wikipedia.tum': dict(sample_zim_package.catalog_entry_dict(),
                                   type='something-not-supported')
         }
     }))
@@ -1599,7 +1716,8 @@ def test_catalog_install_package_with_unknown_type(tmpdir, sample_zip):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_reinstall_package(tmpdir, sample_zip, settings, mocker):
+def test_catalog_reinstall_package(
+        tmpdir, sample_zim_package, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -1608,7 +1726,7 @@ def test_catalog_reinstall_package(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1624,14 +1742,21 @@ def test_catalog_reinstall_package(tmpdir, sample_zip, settings, mocker):
     library = installdir.join('library.xml')
     assert library.check(exists=True)
 
-    zim = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    if sample_zim_package.type_ == 'zipped-zim':
+        zim = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    else:
+        zim = installdir.join('wikipedia.tum.zim')
     assert zim.check(file=True)
 
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
     # Now let's pretend a hacker modified the file
     good_hash = sha256(zim.read_binary())
@@ -1645,7 +1770,8 @@ def test_catalog_reinstall_package(tmpdir, sample_zip, settings, mocker):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_reinstall_and_keep_the_download(tmpdir, sample_zip, settings, mocker):
+def test_reinstall_and_keep_the_download(
+        tmpdir, sample_zim_package, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
@@ -1654,7 +1780,7 @@ def test_reinstall_and_keep_the_download(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1679,7 +1805,7 @@ def test_reinstall_and_keep_the_download(tmpdir, sample_zip, settings, mocker):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_remove_package(tmpdir, sample_zip, settings, mocker):
+def test_catalog_remove_package(tmpdir, sample_zim_package, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -1688,7 +1814,7 @@ def test_catalog_remove_package(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1709,7 +1835,8 @@ def test_catalog_remove_package(tmpdir, sample_zip, settings, mocker):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_remove_package_glob(tmpdir, sample_zip, settings, mocker):
+def test_catalog_remove_package_glob(
+        tmpdir, sample_zim_package, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -1718,7 +1845,7 @@ def test_catalog_remove_package_glob(tmpdir, sample_zip, settings, mocker):
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1753,7 +1880,8 @@ def test_catalog_remove_uninstalled_package(capsys):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_update_package(tmpdir, sample_zip, sample_zip_09, settings, mocker):
+def test_catalog_update_package(
+        tmpdir, sample_zim_package, sample_zim_package_09, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -1762,7 +1890,7 @@ def test_catalog_update_package(tmpdir, sample_zip, sample_zip_09, settings, moc
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1781,14 +1909,23 @@ def test_catalog_update_package(tmpdir, sample_zip, sample_zip_09, settings, moc
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
+
+    if sample_zim_package.type_ == 'zipped-zim':
+        zim_file = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    else:
+        zim_file =  installdir.join('wikipedia.tum.zim')
+    assert zim_file.computehash('sha256') == sample_zim_package.zim_sha256
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip_09.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package_09.catalog_entry_dict()
         }
     }))
 
@@ -1801,13 +1938,24 @@ def test_catalog_update_package(tmpdir, sample_zip, sample_zip_09, settings, moc
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-09-10"' in libdata
+        if sample_zim_package_09.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
+
+    if sample_zim_package_09.type_ == 'zipped-zim':
+        zim_file = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    else:
+        zim_file =  installdir.join('wikipedia.tum.zim')
+    assert zim_file.computehash('sha256') == sample_zim_package_09.zim_sha256
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_update_all_installed_packages(tmpdir, sample_zip, sample_zip_09, settings, testdatadir, mocker):
+def test_update_all_installed_packages(
+        tmpdir, sample_zim_package, sample_zim_package_09, settings,
+        testdatadir, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -1816,8 +1964,8 @@ def test_update_all_installed_packages(tmpdir, sample_zip, sample_zip_09, settin
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict(),
-            'wikipedia.tumtudum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict(),
+            'wikipedia.tumtudum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1836,15 +1984,24 @@ def test_update_all_installed_packages(tmpdir, sample_zip, sample_zip_09, settin
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
+
+    if sample_zim_package.type_ == 'zipped-zim':
+        zim_file = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    else:
+        zim_file = installdir.join('wikipedia.tum.zim')
+    assert zim_file.computehash('sha256') == sample_zim_package.zim_sha256
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip_09.catalog_entry_dict(),
-            'wikipedia.tumtudum': sample_zip_09.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package_09.catalog_entry_dict(),
+            'wikipedia.tumtudum': sample_zim_package_09.catalog_entry_dict()
         }
     }))
 
@@ -1857,17 +2014,29 @@ def test_update_all_installed_packages(tmpdir, sample_zip, sample_zip_09, settin
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-09-10"' in libdata
+        if sample_zim_package_09.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
-        assert 'path="data/content/wikipedia.tumtudum.zim"' not in libdata
-        assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' not in libdata
+        if sample_zim_package_09.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tumtudum.zim"' not in libdata
+            assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' not in libdata
+        else:
+            assert 'path="wikipedia.tumtudum.zim"' not in libdata
+            assert 'indexPath="wikipedia.tumtudum.zim.idx"' not in libdata
 
+    if sample_zim_package_09.type_ == 'zipped-zim':
+        zim_file = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    else:
+        zim_file = installdir.join('wikipedia.tum.zim')
+    assert zim_file.computehash('sha256') == sample_zim_package_09.zim_sha256
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_uninstalled_package(
-        tmpdir, sample_zip, settings, mocker):
+        tmpdir, sample_zim_package, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -1876,7 +2045,7 @@ def test_catalog_update_uninstalled_package(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1896,8 +2065,12 @@ def test_catalog_update_uninstalled_package(
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -1923,7 +2096,8 @@ def test_update_uninstalled_and_unavailable_package(tmpdir):
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_installed_but_unavailable_package(
-        tmpdir, sample_zip, sample_zip_09, capsys, settings, mocker):
+        tmpdir, sample_zim_package, sample_zim_package_09, capsys, settings,
+        mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -1932,7 +2106,7 @@ def test_catalog_update_installed_but_unavailable_package(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -1951,9 +2125,12 @@ def test_catalog_update_installed_but_unavailable_package(
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({'all': {}}))
@@ -1967,9 +2144,12 @@ def test_catalog_update_installed_but_unavailable_package(
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
     _, err = capsys.readouterr()
     assert (
@@ -1979,7 +2159,8 @@ def test_catalog_update_installed_but_unavailable_package(
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_update_all_with_unavailable_package(
-        tmpdir, sample_zip, sample_zip_09, capsys, settings,  mocker):
+        tmpdir, sample_zim_package, sample_zim_package_09, capsys, settings,
+        mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -1988,8 +2169,8 @@ def test_update_all_with_unavailable_package(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict(),
-            'wikipedia.tumtudum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict(),
+            'wikipedia.tumtudum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -2008,18 +2189,24 @@ def test_update_all_with_unavailable_package(
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
-        assert 'path="data/content/wikipedia.tumtudum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tumtudum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tumtudum.zim"' in libdata
+            assert 'indexPath=' not in libdata
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip_09.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package_09.catalog_entry_dict()
         }
     }))
 
@@ -2032,13 +2219,19 @@ def test_update_all_with_unavailable_package(
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-09-10"' in libdata
+        if sample_zim_package_09.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath="wikipedia.tum.zim"' not in libdata
 
-        assert 'path="data/content/wikipedia.tumtudum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tumtudum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tumtudum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tumtudum.zim"' in libdata
+            assert 'indexPath="wikipedia.tumtudum.zim"' not in libdata
 
     _, err = capsys.readouterr()
     assert (
@@ -2047,7 +2240,8 @@ def test_update_all_with_unavailable_package(
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_update_package_glob(tmpdir, sample_zip, sample_zip_09, settings, mocker):
+def test_catalog_update_package_glob(
+        tmpdir, sample_zim_package, sample_zim_package_09, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -2056,7 +2250,7 @@ def test_catalog_update_package_glob(tmpdir, sample_zip, sample_zip_09, settings
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -2075,14 +2269,23 @@ def test_catalog_update_package_glob(tmpdir, sample_zip, sample_zip_09, settings
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-08-10"' in libdata
+        if sample_zim_package.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
+
+    if sample_zim_package.type_ == 'zipped-zim':
+        zim_file = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    else:
+        zim_file = installdir.join('wikipedia.tum.zim')
+    assert zim_file.computehash('sha256') == sample_zim_package.zim_sha256
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip_09.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package_09.catalog_entry_dict()
         }
     }))
 
@@ -2095,14 +2298,23 @@ def test_catalog_update_package_glob(tmpdir, sample_zip, sample_zip_09, settings
     with library.open(mode='r') as f:
         libdata = f.read()
 
-        assert 'path="data/content/wikipedia.tum.zim"' in libdata
-        assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
-        assert 'date="2015-09-10"' in libdata
+        if sample_zim_package_09.type_ == 'zipped-zim':
+            assert 'path="data/content/wikipedia.tum.zim"' in libdata
+            assert 'indexPath="data/index/wikipedia.tum.zim.idx"' in libdata
+        else:
+            assert 'path="wikipedia.tum.zim"' in libdata
+            assert 'indexPath=' not in libdata
+
+    if sample_zim_package_09.type_ == 'zipped-zim':
+       zim_file = installdir.join('data', 'content', 'wikipedia.tum.zim')
+    else:
+       zim_file = installdir.join('wikipedia.tum.zim')
+    assert zim_file.computehash('sha256') == sample_zim_package_09.zim_sha256
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
 def test_catalog_update_package_already_latest(
-        tmpdir, sample_zip, settings,mocker, capsys):
+        tmpdir, sample_zim_package, settings,mocker, capsys):
     from ideascube.serveradmin.catalog import Catalog
 
     installdir = Path(settings.CATALOG_KIWIX_INSTALL_DIR)
@@ -2111,7 +2323,7 @@ def test_catalog_update_package_already_latest(
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -2142,7 +2354,8 @@ def test_catalog_update_package_already_latest(
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_update_and_keep_the_download(tmpdir, sample_zip, sample_zip_09, settings, mocker):
+def test_update_and_keep_the_download(
+        tmpdir, sample_zim_package, sample_zim_package_09, settings, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     package_cache = Path(settings.CATALOG_CACHE_ROOT) / 'packages'
@@ -2151,7 +2364,7 @@ def test_update_and_keep_the_download(tmpdir, sample_zip, sample_zip_09, setting
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
@@ -2169,7 +2382,7 @@ def test_update_and_keep_the_download(tmpdir, sample_zip, sample_zip_09, setting
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip_09.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package_09.catalog_entry_dict()
         }
     }))
 
@@ -2178,12 +2391,12 @@ def test_update_and_keep_the_download(tmpdir, sample_zip, sample_zip_09, setting
     assert not (package_cache / 'wikipedia.tum-2015-09').exists()
 
     path = sourcedir.join('wikipedia_tum_all_nopic_2015-10.zim')
-    sample_zip_09.source_path.copy(path)
+    sample_zim_package_09.source_path.copy(path)
 
     remote_catalog_file = sourcedir.join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': dict(sample_zip_09.catalog_entry_dict(),
+            'wikipedia.tum': dict(sample_zim_package_09.catalog_entry_dict(),
                                   version='2015-10',
                                   url='file://{}'.format(path))
         }
@@ -2256,17 +2469,22 @@ def test_catalog_list_available_packages(tmpdir):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_list_installed_packages(tmpdir, sample_zip, mocker):
-    from ideascube.serveradmin.catalog import Catalog, ZippedZim
+def test_catalog_list_installed_packages(tmpdir, sample_zim_package, mocker):
+    from ideascube.serveradmin.catalog import Catalog, ZippedZim, Zim
 
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    if sample_zim_package.type_ == 'zipped-zim':
+        package_type = ZippedZim
+    else:
+        package_type = Zim
 
     c = Catalog()
     c.add_remote(
@@ -2282,47 +2500,53 @@ def test_catalog_list_installed_packages(tmpdir, sample_zip, mocker):
     assert len(pkgs) == 1
     pkg = pkgs[0]
     assert pkg.id == 'wikipedia.tum'
-    assert pkg.version == sample_zip.version
+    assert pkg.version == sample_zim_package.version
     assert pkg.size == '200KB'
-    assert isinstance(pkg, ZippedZim)
+    assert isinstance(pkg, package_type)
 
     pkgs = c.list_installed(['wikipedia.*'])
     assert len(pkgs) == 1
     pkg = pkgs[0]
     assert pkg.id == 'wikipedia.tum'
-    assert pkg.version == sample_zip.version
+    assert pkg.version == sample_zim_package.version
     assert pkg.size == '200KB'
-    assert isinstance(pkg, ZippedZim)
+    assert isinstance(pkg, package_type)
 
     pkgs = c.list_installed(['*.tum'])
     assert len(pkgs) == 1
     pkg = pkgs[0]
     assert pkg.id == 'wikipedia.tum'
-    assert pkg.version == sample_zip.version
+    assert pkg.version == sample_zim_package.version
     assert pkg.size == '200KB'
-    assert isinstance(pkg, ZippedZim)
+    assert isinstance(pkg, package_type)
 
     pkgs = c.list_installed(['*'])
     assert len(pkgs) == 1
     pkg = pkgs[0]
     assert pkg.id == 'wikipedia.tum'
-    assert pkg.version == sample_zip.version
+    assert pkg.version == sample_zim_package.version
     assert pkg.size == '200KB'
-    assert isinstance(pkg, ZippedZim)
+    assert isinstance(pkg, package_type)
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_list_upgradable_packages(tmpdir, sample_zip, sample_zip_09, mocker):
-    from ideascube.serveradmin.catalog import Catalog, ZippedZim
+def test_catalog_list_upgradable_packages(
+        tmpdir, sample_zim_package, sample_zim_package_09, mocker):
+    from ideascube.serveradmin.catalog import Catalog, ZippedZim, Zim
 
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict()
         }
     }))
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
+
+    if sample_zim_package_09.type_ == 'zipped-zim':
+        package_type = ZippedZim
+    else:
+        package_type = Zim
 
     c = Catalog()
     c.add_remote(
@@ -2335,7 +2559,7 @@ def test_catalog_list_upgradable_packages(tmpdir, sample_zip, sample_zip_09, moc
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip_09.catalog_entry_dict()
+            'wikipedia.tum': sample_zim_package_09.catalog_entry_dict()
         }
     }))
 
@@ -2347,33 +2571,33 @@ def test_catalog_list_upgradable_packages(tmpdir, sample_zip, sample_zip_09, moc
     assert len(pkgs) == 1
     pkg = pkgs[0]
     assert pkg.id == 'wikipedia.tum'
-    assert pkg.version == sample_zip_09.version
+    assert pkg.version == sample_zim_package_09.version
     assert pkg.size == '200KB'
-    assert isinstance(pkg, ZippedZim)
+    assert isinstance(pkg, package_type)
 
     pkgs = c.list_upgradable(['wikipedia.*'])
     assert len(pkgs) == 1
     pkg = pkgs[0]
     assert pkg.id == 'wikipedia.tum'
-    assert pkg.version == sample_zip_09.version
+    assert pkg.version == sample_zim_package_09.version
     assert pkg.size == '200KB'
-    assert isinstance(pkg, ZippedZim)
+    assert isinstance(pkg, package_type)
 
     pkgs = c.list_upgradable(['*.tum'])
     assert len(pkgs) == 1
     pkg = pkgs[0]
     assert pkg.id == 'wikipedia.tum'
-    assert pkg.version == sample_zip_09.version
+    assert pkg.version == sample_zim_package_09.version
     assert pkg.size == '200KB'
-    assert isinstance(pkg, ZippedZim)
+    assert isinstance(pkg, package_type)
 
     pkgs = c.list_upgradable(['*'])
     assert len(pkgs) == 1
     pkg = pkgs[0]
     assert pkg.id == 'wikipedia.tum'
-    assert pkg.version == sample_zip_09.version
+    assert pkg.version == sample_zim_package_09.version
     assert pkg.size == '200KB'
-    assert isinstance(pkg, ZippedZim)
+    assert isinstance(pkg, package_type)
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
@@ -2418,13 +2642,13 @@ def test_catalog_list_upgradable_with_bad_packages(tmpdir, testdatadir):
 
 
 @pytest.mark.usefixtures('db', 'systemuser')
-def test_catalog_list_problem_packages(tmpdir, sample_zip, mocker):
+def test_catalog_list_problem_packages(tmpdir, sample_zim_package, mocker):
     from ideascube.serveradmin.catalog import Catalog
 
     remote_catalog_file = tmpdir.join('source').join('catalog.json')
     remote_catalog_file.write(json.dumps({
         'all': {
-            'wikipedia.tum': sample_zip.catalog_entry_dict(),
+            'wikipedia.tum': sample_zim_package.catalog_entry_dict(),
             'nothandled': {
                 'version': '2015-08',
                 'size': '0KB',
