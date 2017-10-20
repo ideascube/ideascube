@@ -318,6 +318,38 @@ def test_can_create_content_with_tags(staffapp):
     assert content.tags.first().name == 'tag1'
 
 
+def test_create_content_with_default_language(staffapp):
+    translation.activate('fr')
+
+    url = reverse('blog:content_create')
+    form = staffapp.get(url).forms['model_form']
+    form['title'] = 'my content title'
+    form['text'] = 'my content text'
+    assert form['lang'].value == 'fr'
+    form.submit().follow()
+
+    content = Content.objects.last()
+    assert content.lang == 'fr'
+
+    translation.deactivate()
+
+
+def test_create_content_language_is_respected(staffapp):
+    translation.activate('fr')
+
+    url = reverse('blog:content_create')
+    form = staffapp.get(url).forms['model_form']
+    form['title'] = 'my content title'
+    form['text'] = 'my content text'
+    form['lang'] = 'es'
+    form.submit().follow()
+
+    content = Content.objects.last()
+    assert content.lang == 'es'
+
+    translation.deactivate()
+
+
 def test_can_update_content_tags(staffapp, published):
     assert published.tags.count() == 0
     url = reverse('blog:content_update', kwargs={'pk': published.pk})
