@@ -1,6 +1,6 @@
 from django.views.generic import (ListView, DetailView, UpdateView, CreateView)
 from django.db.models import F
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 
 from ideascube.mixins import FilterableViewMixin, OrderableViewMixin
 from ideascube.decorators import staff_member_required
@@ -66,5 +66,7 @@ class ContentCreate(CreateView):
     def get_initial(self):
         initial = super().get_initial()
         initial['author'] = self.request.user
+        initial['lang'] = get_language()
+
         return initial
 content_create = staff_member_required(ContentCreate.as_view())
