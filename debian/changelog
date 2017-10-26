@@ -1,3 +1,13 @@
+ideascube (0.35.0) unstable; urgency=low
+
+  * Rename kb_jor_croixrouge to kb_jor_tdhazraqejc (@letompouce)
+  * Better catch problem with packages (@mbridon)
+  * Be able to install simple zim file (@mgautierfr)
+  * Create article using the user langage by default (@mbridon)
+  * Display the inventory comments in the inventory list. (@oboudou)
+
+ -- Matthieu Gautier <mgautier@kymeria.fr>  Thu, 26 Oct 2017 14:19:00 +0200
+
 ideascube (0.34.0) unstable; urgency=low
 
   * Made loading catalog YAML files more robust (@mgautier)
