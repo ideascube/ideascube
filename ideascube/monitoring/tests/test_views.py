@@ -8,7 +8,7 @@ from django.utils import translation
 from webtest import Upload
 
 from ideascube.tests.factories import UserFactory
-from ideascube.library.tests.factories import BookFactory
+from ideascube.library.tests.factories import BookSpecimenFactory
 
 from ..models import (Entry, Inventory, InventorySpecimen, Loan, Specimen,
                       StockItem)
@@ -81,7 +81,11 @@ def test_export_entry_should_return_csv_with_entries(staffapp, settings):
 
 
 def test_export_stock(staffapp):
-    StockItemFactory(module=StockItem.DIGITAL)
+    item = StockItemFactory(
+        module=StockItem.DIGITAL, name='an item', description='blah blah')
+    SpecimenFactory(item=item, comments='blah', count=2, serial='123456')
+    SpecimenFactory(item=item, comments='bleh', count=1, barcode='234567')
+
     url = reverse('monitoring:stock_export')
     response = staffapp.get(url)
 
@@ -89,14 +93,17 @@ def test_export_stock(staffapp):
     assert response.content_disposition.startswith(
         'attachment; filename="stock_')
     lines = response.unicode_body.strip().split('\r\n')
-    assert len(lines) == 2
-    assert lines[0] == 'module,name,description'
-    assert lines[1].startswith('digital,Stock item ')
+    assert len(lines) == 3
+    assert lines[0] == 'module,name,description,serial,barcode,count'
+    assert lines[1].startswith('digital,an item,blah blah,123456,')
+    assert lines[2] == 'digital,an item,blah blah,,234567,1'
 
 
 def test_books_are_not_exported(staffapp):
-    StockItemFactory(module=StockItem.DIGITAL)
-    BookFactory()
+    item = StockItemFactory(
+        module=StockItem.DIGITAL, name='an item', description='blah blah')
+    SpecimenFactory(item=item, comments='blah', count=2, barcode='123456')
+    BookSpecimenFactory()
     url = reverse('monitoring:stock_export')
     response = staffapp.get(url)
 
@@ -105,8 +112,8 @@ def test_books_are_not_exported(staffapp):
         'attachment; filename="stock_')
     lines = response.unicode_body.strip().split('\r\n')
     assert len(lines) == 2
-    assert lines[0] == 'module,name,description'
-    assert lines[1].startswith('digital,Stock item ')
+    assert lines[0] == 'module,name,description,serial,barcode,count'
+    assert lines[1] == 'digital,an item,blah blah,,123456,2'
 
 
 def test_import_stock(staffapp, tmpdir):
