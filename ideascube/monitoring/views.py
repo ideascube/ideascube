@@ -219,22 +219,29 @@ stockitem_delete = staff_member_required(StockItemDelete.as_view())
 
 
 class StockExport(CSVExportMixin, View):
-    model = StockItem
+    model = Specimen
     prefix = 'stock'
 
     def get_headers(self):
-        return ['module', 'name', 'description']
+        return ['module', 'name', 'description', 'serial', 'barcode', 'count']
 
     def get_items(self):
         qs = super().get_items()
-        qs = qs.filter(book__isnull=True)
+        qs = qs.select_related()  # Eagerly JOIN with the StockItem table
+        qs = qs.filter(item__book__isnull=True)
 
         return qs
 
     def get_row(self, item):
+        # This really is a specimen, not a stock item.
+        # Renaming the variable to avoid a few confusing `item.item.XXX` below.
+        specimen = item
+
         return {
-            'module': item.module, 'name': item.name,
-            'description': item.description,
+            'module': specimen.item.module, 'name': specimen.item.name,
+            'description': specimen.item.description,
+            'serial': specimen.serial or '', 'barcode': specimen.barcode or '',
+            'count': specimen.count,
         }
 stock_export = staff_member_required(StockExport.as_view())
 
