@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-10 08:38+0000\n"
+"POT-Creation-Date: 2017-11-30 13:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,7 +65,7 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:76
+#: ideascube/blog/models.py:69 ideascube/mediacenter/models.py:76
 msgid "Topics"
 msgstr ""
 
@@ -544,7 +544,7 @@ msgstr ""
 
 #: ideascube/library/templates/library/book_detail.html:15
 #: ideascube/library/templates/library/index.html:9
-#: ideascube/serveradmin/catalog.py:329
+#: ideascube/serveradmin/catalog.py:310
 #: ideascube/templates/ideascube/includes/cards/library.html:4
 msgid "read"
 msgstr ""
@@ -758,7 +758,7 @@ msgstr ""
 msgid "You need to provide a file."
 msgstr ""
 
-#: ideascube/library/views.py:258 ideascube/monitoring/views.py:253
+#: ideascube/library/views.py:258 ideascube/monitoring/views.py:256
 msgid "Successfully imported {} items"
 msgstr ""
 
@@ -876,7 +876,7 @@ msgid "No documents yet."
 msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
-#: ideascube/serveradmin/catalog.py:327 ideascube/serveradmin/catalog.py:369
+#: ideascube/serveradmin/catalog.py:308 ideascube/serveradmin/catalog.py:402
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "discover"
@@ -1570,11 +1570,11 @@ msgstr ""
 msgid "Inventories"
 msgstr ""
 
-#: ideascube/monitoring/templates/monitoring/stock.html:64
+#: ideascube/monitoring/templates/monitoring/stock.html:68
 msgid "No inventory yet."
 msgstr ""
 
-#: ideascube/monitoring/templates/monitoring/stock.html:64
+#: ideascube/monitoring/templates/monitoring/stock.html:68
 msgid "Start one now"
 msgstr ""
 
@@ -1616,31 +1616,31 @@ msgstr ""
 msgid "Error while processing entries export"
 msgstr ""
 
-#: ideascube/monitoring/views.py:311
+#: ideascube/monitoring/views.py:314
 #, python-brace-format
 msgid "Specimen {specimen} has been added to {inventory} inventory"
 msgstr ""
 
-#: ideascube/monitoring/views.py:318
+#: ideascube/monitoring/views.py:321
 #, python-brace-format
 msgid "Specimen {specimen} not found or already done."
 msgstr ""
 
-#: ideascube/monitoring/views.py:396
+#: ideascube/monitoring/views.py:399
 #, python-brace-format
 msgid "Item {item} has been loaned to {user}"
 msgstr ""
 
-#: ideascube/monitoring/views.py:407
+#: ideascube/monitoring/views.py:410
 #, python-brace-format
 msgid "Item {item} has been returned"
 msgstr ""
 
-#: ideascube/monitoring/views.py:411
+#: ideascube/monitoring/views.py:414
 msgid "Item not found"
 msgstr ""
 
-#: ideascube/monitoring/views.py:428
+#: ideascube/monitoring/views.py:431
 msgid "Error while processing loans export"
 msgstr ""
 
@@ -1701,7 +1701,7 @@ msgstr ""
 msgid "Not a {} file"
 msgstr ""
 
-#: ideascube/serveradmin/catalog.py:330
+#: ideascube/serveradmin/catalog.py:311
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:4
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:4
 #: ideascube/templates/ideascube/includes/cards/kolibri.html:4
@@ -1709,7 +1709,7 @@ msgstr ""
 msgid "learn"
 msgstr ""
 
-#: ideascube/serveradmin/catalog.py:370
+#: ideascube/serveradmin/catalog.py:403
 msgid "info"
 msgstr ""
 
