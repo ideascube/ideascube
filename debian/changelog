@@ -1,3 +1,12 @@
+ideascube (0.36.0) unstable; urgency=low
+
+  * Made it possible to include custom branding CSS; (@mgautierfr)
+  * Added some details about specimens when exporting the stock; (@mbridon)
+  * Improved the design of the shutdown/reboot page, hopefully making it less
+    confusing; (@mbridon)
+
+ -- Mathieu Bridon <bochecha@daitauha.fr>  Thu, 30 Nov 2017 15:30:00 +0100
+
 ideascube (0.35.0) unstable; urgency=low
 
   * Rename kb_jor_croixrouge to kb_jor_tdhazraqejc (@letompouce)
