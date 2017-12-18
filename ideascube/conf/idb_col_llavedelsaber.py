@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 LANGUAGE_CODE = 'es'
 DOMAIN = 'bibliotecamovil.lan'
-ALLOWED_HOSTS = ['.bibliotecamovil.lan', 'localhost']
+ALLOWED_HOSTS = ['.bibliotecamovil.lan']
 
 USER_FORM_FIELDS = USER_FORM_FIELDS + (  # pragma: no flakes
         (_('Personal informations'), ['disabilities']),
