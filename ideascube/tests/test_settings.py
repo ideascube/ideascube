@@ -56,3 +56,15 @@ def test_setting_overrides(capsys):
     ]
 
     _avoid_side_effects()
+
+    # Now let's pretend we are a custom app
+    os.environ['IDEASCUBE_SETTINGS_PACKAGE'] = 'customapp'
+    import ideascube.settings
+    out, err = capsys.readouterr()
+    assert out.strip().split('\n') == [
+        '\x1b[36mIDEASCUBE_ID=tests\x1b[0m',
+        '\x1b[36mCould not import settings from customapp.conf.tests\x1b[0m',
+        '\x1b[36mImporting settings from ideascube.conf.base\x1b[0m',
+    ]
+
+    _avoid_side_effects()
