@@ -29,9 +29,7 @@ except ImportError:
     # No specific config for this box
     from .conf import base as sub
 
-# Make it available as a settings, to be able to display it in the admin.
-SETTINGS_MODULE = sub.__name__
-log('Importing settings from %s\n' % SETTINGS_MODULE)
+log('Importing settings from %s\n' % sub.__name__)
 ldict = locals()
 for k in sub.__dict__:
     if k.isupper() and not k.startswith('__') or not k.endswith('__'):
