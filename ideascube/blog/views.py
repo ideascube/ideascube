@@ -34,6 +34,11 @@ class Index(FilterableViewMixin, OrderableViewMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        if not self.request.user.is_staff:
+            # This tells the search system to only look at published articles
+            context['public'] = True
+
         self._set_available_langs(context)
         self._set_available_tags(context)
         return context
