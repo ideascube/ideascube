@@ -23,6 +23,9 @@ def _avoid_side_effects():
         if module_name.startswith('ideascube.conf.'):
             del sys.modules[module_name]
 
+        if module_name == 'ideascube.settings':
+            del sys.modules[module_name]
+
 
 def test_setting_file(setting_module):
     from ideascube.forms import UserImportForm
