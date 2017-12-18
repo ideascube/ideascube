@@ -10,12 +10,8 @@ from django.utils import translation
 
 from ideascube.views import validate_url
 
-from ideascube.blog.tests.factories import ContentFactory
-from ideascube.blog.models import Content
-from ideascube.library.tests.factories import BookSpecimenFactory
-
 from .factories import UserFactory
-from ..views import ByTag, UserList
+from ..views import UserList
 
 pytestmark = pytest.mark.django_db
 user_model = get_user_model()
@@ -457,36 +453,6 @@ def test_POST_raises():
 def test_unkown_domain_raises():
     with pytest.raises(AssertionError):
         validate_url(build_request("http://xlkjdkjsdlkjfd.com"))
-
-
-def test_by_tag_page_should_be_filtered_by_tag(app):
-    plane = ContentFactory(status=Content.PUBLISHED, tags=['plane'])
-    boat = ContentFactory(status=Content.PUBLISHED, tags=['boat'])
-    plane2 = BookSpecimenFactory(item__tags=['plane'])
-    boat2 = BookSpecimenFactory(item__tags=['boat'])
-    response = app.get(reverse('by_tag'), params={'tags': 'plane'})
-    assert plane.title in response.text
-    assert plane2.item.name in response.text
-    assert boat.title not in response.text
-    assert boat2.item.name not in response.text
-
-
-def test_by_tag_page_is_paginated(app, monkeypatch):
-    monkeypatch.setattr(ByTag, 'paginate_by', 2)
-    ContentFactory.create_batch(size=2, status=Content.PUBLISHED,
-                                tags=['plane'])
-    BookSpecimenFactory.create_batch(size=2, item__tags=['plane'])
-    url = reverse('by_tag')
-    url = url+"?tags=plane"
-    response = app.get(url, status=200)
-    assert response.pyquery.find('.pagination')
-    assert response.pyquery.find('.next')
-    assert not response.pyquery.find('.previous')
-    response = app.get(url, params={'page': 2}, status=200)
-    assert response.pyquery.find('.pagination')
-    assert not response.pyquery.find('.next')
-    assert response.pyquery.find('.previous')
-    response = app.get(url, params={'page': 3}, status=404)
 
 
 @pytest.mark.usefixtures('staffuser')

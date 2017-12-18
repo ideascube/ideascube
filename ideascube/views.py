@@ -13,7 +13,6 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
                                   ListView, UpdateView, View)
-from taggit.models import TaggedItem
 
 from ideascube.configuration import get_config
 from ideascube.blog.models import Content
@@ -76,22 +75,6 @@ def welcome_staff(request):
     else:
         form = CreateStaffForm()
     return render(request, 'ideascube/welcome_staff.html', {'form': form})
-
-
-class ByTag(ListView):
-    template_name = 'ideascube/by_tag.html'
-    paginate_by = 20
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tags'] = self.request.GET.getlist('tags')
-        return context
-
-    def get_queryset(self):
-        tags = self.request.GET.getlist('tags')
-        return TaggedItem.objects.filter(tag__slug__in=tags).distinct()
-
-by_tag = ByTag.as_view()
 
 
 class UserList(ListView):

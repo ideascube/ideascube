@@ -16,7 +16,6 @@ urlpatterns = i18n_patterns(
     url(r'^monitoring/', include('ideascube.monitoring.urls')),
     url(r'^$', views.index, name='index'),
     url(r'^welcome_staff/$', views.welcome_staff, name='welcome_staff'),
-    url(r'^tag/$', views.by_tag, name='by_tag'),
     url(r'^server/', include('ideascube.serveradmin.urls')),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, kwargs={"next_page": "/"},
