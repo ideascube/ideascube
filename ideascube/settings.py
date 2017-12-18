@@ -22,15 +22,16 @@ log('IDEASCUBE_ID={}'.format(IDEASCUBE_ID))
 # we manage this with per box settings, but we want those specific settings
 # to be versionned, for two reasons: easier to debug when there is no hidden
 # local config, and easier to manage code upgrade.
+_SETTINGS_PACKAGE = os.environ.get('IDEASCUBE_SETTINGS_PACKAGE', 'ideascube')
 _SETTINGS_MODULE = '.conf.' + IDEASCUBE_ID
 
 try:
-    sub = importlib.import_module(_SETTINGS_MODULE, package="ideascube")
+    sub = importlib.import_module(_SETTINGS_MODULE, package=_SETTINGS_PACKAGE)
 
-except ImportError:
+except ImportError, SystemError:
     # No specific config for this box
     log('Could not import settings from %s%s'
-        % ('ideascube', _SETTINGS_MODULE))
+        % (_SETTINGS_PACKAGE, _SETTINGS_MODULE))
 
     from .conf import base as sub
 
