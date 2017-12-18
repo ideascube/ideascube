@@ -17,6 +17,13 @@ def setting_module(request):
     return '.conf.%s' % module
 
 
+def _avoid_side_effects():
+    # Avoid side-effects between configuration file tests
+    for module_name in list(sys.modules):
+        if module_name.startswith('ideascube.conf.'):
+            del sys.modules[module_name]
+
+
 def test_setting_file(setting_module):
     from ideascube.forms import UserImportForm
 
@@ -28,7 +35,4 @@ def test_setting_file(setting_module):
         assert hasattr(UserImportForm, '_get_{}_mapping'.format(name))
         assert hasattr(UserImportForm, '_get_{}_reader'.format(name))
 
-    # Avoid side-effects between configuration files
-    for module_name in list(sys.modules):
-        if module_name.startswith('ideascube.conf.'):
-            del sys.modules[module_name]
+    _avoid_side_effects()
