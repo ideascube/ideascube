@@ -29,7 +29,7 @@ except ImportError:
     # No specific config for this box
     from .conf import base as sub
 
-log('Importing settings from %s\n' % sub.__name__)
+log('Importing settings from %s' % sub.__name__)
 ldict = locals()
 for k in sub.__dict__:
     if k.isupper() and not k.startswith('__') or not k.endswith('__'):
