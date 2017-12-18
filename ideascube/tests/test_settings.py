@@ -39,3 +39,20 @@ def test_setting_file(setting_module):
         assert hasattr(UserImportForm, '_get_{}_reader'.format(name))
 
     _avoid_side_effects()
+
+
+def test_setting_overrides(capsys):
+    _avoid_side_effects()
+
+    # This is just to control the standard output
+    os.environ['IDEASCUBE_ID'] = 'tests'
+
+    import ideascube.settings
+    out, err = capsys.readouterr()
+    assert out.strip().split('\n') == [
+        '\x1b[36mIDEASCUBE_ID=tests\x1b[0m',
+        '\x1b[36mCould not import settings from ideascube.conf.tests\x1b[0m',
+        '\x1b[36mImporting settings from ideascube.conf.base\x1b[0m',
+    ]
+
+    _avoid_side_effects()
