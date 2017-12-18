@@ -23,7 +23,9 @@ log('IDEASCUBE_ID={}'.format(IDEASCUBE_ID))
 # to be versionned, for two reasons: easier to debug when there is no hidden
 # local config, and easier to manage code upgrade.
 try:
-    sub = importlib.import_module(".conf." + IDEASCUBE_ID, package="ideascube")
+    _IDEASCUBE_PACKAGE = os.environ.get('_IDEASCUBE_PACKAGE', 'ideascube')
+    sub = importlib.import_module(
+        ".conf." + IDEASCUBE_ID, package=_IDEASCUBE_PACKAGE)
 
 except ImportError:
     # No specific config for this box
