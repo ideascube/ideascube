@@ -58,6 +58,10 @@ class Index(NoHiddenDocumentMixin, FilterableViewMixin, OrderableViewMixin, List
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # This tells the search system to not look at hidden documents
+        context['public'] = True
+
         self._set_available_kinds(context)
         self._set_available_langs(context)
         self._set_available_tags(context)
