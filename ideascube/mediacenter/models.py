@@ -107,6 +107,10 @@ class Document(SearchMixin, TimeStampedModel):
         return self.kind
 
     @property
+    def index_public(self):
+        return not self.hidden
+
+    @property
     def index_source(self):
         return self.package_id
 
