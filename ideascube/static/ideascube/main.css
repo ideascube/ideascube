@@ -569,6 +569,7 @@ a.card {
 .card i.fa {
     position: absolute;
     right: 10px;
+    top: calc(50% - 23px);
 }
 html[dir='rtl'] .card i.fa {
     right: auto;
