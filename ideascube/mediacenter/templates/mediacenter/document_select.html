@@ -35,5 +35,5 @@
     {% include 'search/order_by.html' %}
     {% include 'search/filter_by_kind.html' %}
     {% include 'search/filter_by_lang.html' %}
-    {% tag_cloud url='mediacenter:document_select' model=view.model limit=100 tags=available_tags %}
+    {% include 'ideascube/includes/tag_cloud.html' with url='mediacenter:document_select' limit=100 tags=available_tags %}
 {% endblock third %}

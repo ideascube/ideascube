@@ -52,5 +52,5 @@
         {% endfor %}
     </ul>
     {% endif %}
-    {% tag_cloud url="library:index" model=view.model tags=book.tags.all %}
+    {% include 'ideascube/includes/tag_cloud.html' with url="library:index" tags=book.tags.all %}
 {% endblock third %}

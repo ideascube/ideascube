@@ -1,14 +1,13 @@
 import re
 
 from django import template
-from django.db.models import Count
 from django.db.models.fields import FieldDoesNotExist
 from django.utils.safestring import mark_safe
 from django.utils.translation.trans_real import language_code_prefix_re
 from django.utils.datastructures import MultiValueDict
 from django.http import QueryDict
 
-from taggit.models import Tag, ContentType
+from taggit.models import Tag
 
 register = template.Library()
 
@@ -55,19 +54,6 @@ def fa(fa_id, extra_class=''):
     if extra_class:
         extra_class = ' ' + extra_class
     return mark_safe(tpl.format(id=fa_id, extra=extra_class))
-
-
-@register.inclusion_tag('ideascube/includes/tag_cloud.html',
-                        takes_context=True)
-def tag_cloud(context, url, model=None, limit=20, tags=None):
-    if not tags:
-        qs = Tag.objects.all()
-        if model:
-            content_type = ContentType.objects.get_for_model(model)
-            qs = qs.filter(taggit_taggeditem_items__content_type=content_type)
-        qs = qs.annotate(count=Count('taggit_taggeditem_items__id'))
-        tags = qs.order_by('-count', 'slug')[:limit]
-    return {'tags': tags, 'url': url, 'request': context.request}
 
 
 @register.filter()
