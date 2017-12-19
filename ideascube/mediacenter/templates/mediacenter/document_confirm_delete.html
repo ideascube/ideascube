@@ -1,11 +1,12 @@
-{% extends 'one-row.html' %}
+{% extends 'form-confirm-delete.html' %}
 {% load i18n %}
 
-{% block row %}
-    <h2>{% blocktrans %}Are you sure you want to delete document "{{ document }}"?{% endblocktrans %}</h2>
-    <form method="POST" action=".">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" name="confirm" value="{% trans 'yes' %}" />
-    </form>
-{% endblock row %}
+{% block confirm_message %}
+    {% blocktrans %}
+         Are you sure you want to delete document "{{ document }}"?
+    {% endblocktrans %}
+{% endblock %}
+
+{% block cancel_url %}
+    {{ document.get_absolute_url }}
+{% endblock cancel_url %}
