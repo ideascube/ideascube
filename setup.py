@@ -41,6 +41,5 @@ setup(
     ],
     keywords='ideasbox, koombook, offline content, humanitarian',
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
-    install_requires=['Django>=1.8'],
     include_package_data=True,  # Means all files reference in MANIFEST.in.
 )
