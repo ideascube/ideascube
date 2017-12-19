@@ -22,5 +22,5 @@
     {% include 'search/box.html' with action=index %}
     {% include 'search/order_by.html' %}
     {% include 'search/filter_by_lang.html' %}
-    {% tag_cloud url="blog:index" model=view.model tags=available_tags %}
+    {% include 'ideascube/includes/tag_cloud.html' with url="blog:index" tags=available_tags %}
 {% endblock third %}

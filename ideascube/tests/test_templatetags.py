@@ -3,14 +3,12 @@ import pytest
 
 from django.http import QueryDict
 
-from ideascube.blog.models import Content
 from ideascube.blog.tests.factories import ContentFactory
-from ideascube.library.models import Book
 from ideascube.library.tests.factories import BookFactory
 from ideascube.mediacenter.models import Document
 from ideascube.mediacenter.tests.factories import DocumentFactory
 
-from ..templatetags.ideascube_tags import (do_min, fa, remove_i18n, tag_cloud,
+from ..templatetags.ideascube_tags import (do_min, fa, remove_i18n,
                                            smart_truncate, theme_slug,
                                            _is_in_qs,  _add_qs, _replace_qs,
                                            _remove_qs)
@@ -52,25 +50,6 @@ def test_fa_without_extra():
 
 def test_fa_with_extra():
     assert fa('pencil', 'fa-fw') == '<span class="fa fa-pencil fa-fw"></span>'
-
-
-def test_tag_cloud_should_return_most_common_tags(mocker):
-    ContentFactory(tags=['plane', 'boat'])
-    ContentFactory(tags=['plane', 'bike'])
-    ContentFactory(tags=['plane', 'boat'])
-    context = tag_cloud(mocker.Mock(), 'xxxx', limit=2)
-    tags = [t.name for t in context['tags']]
-    assert tags[0] == 'plane'
-    assert tags[1] == 'boat'
-
-
-def test_tag_cloud_should_be_filtered_by_model_if_given(mocker):
-    ContentFactory(tags=['plane', 'boat'])
-    BookFactory(tags=['bike', 'boat'])
-    context = tag_cloud(mocker.Mock(), 'xxxx', limit=2, model=Content)
-    assert [t.name for t in context['tags']] == ['boat', 'plane']
-    context = tag_cloud(mocker.Mock(), 'xxxx', limit=2, model=Book)
-    assert [t.name for t in context['tags']] == ['bike', 'boat']
 
 
 @pytest.mark.parametrize('left,right,expected', [
