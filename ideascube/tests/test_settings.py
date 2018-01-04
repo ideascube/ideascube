@@ -17,6 +17,16 @@ def setting_module(request):
     return '.conf.%s' % module
 
 
+def _avoid_side_effects():
+    # Avoid side-effects between configuration file tests
+    for module_name in list(sys.modules):
+        if module_name.startswith('ideascube.conf.'):
+            del sys.modules[module_name]
+
+        if module_name == 'ideascube.settings':
+            del sys.modules[module_name]
+
+
 def test_setting_file(setting_module):
     from ideascube.forms import UserImportForm
 
@@ -28,7 +38,21 @@ def test_setting_file(setting_module):
         assert hasattr(UserImportForm, '_get_{}_mapping'.format(name))
         assert hasattr(UserImportForm, '_get_{}_reader'.format(name))
 
-    # Avoid side-effects between configuration files
-    for module_name in list(sys.modules):
-        if module_name.startswith('ideascube.conf.'):
-            del sys.modules[module_name]
+    _avoid_side_effects()
+
+
+def test_setting_overrides(capsys):
+    _avoid_side_effects()
+
+    # This is just to control the standard output
+    os.environ['IDEASCUBE_ID'] = 'tests'
+
+    import ideascube.settings  # pragma: no flakes
+    out, err = capsys.readouterr()
+    assert out.strip().split('\n') == [
+        '\x1b[36mIDEASCUBE_ID=tests\x1b[0m',
+        '\x1b[36mCould not import settings from ideascube.conf.tests\x1b[0m',
+        '\x1b[36mImporting settings from ideascube.conf.base\x1b[0m',
+    ]
+
+    _avoid_side_effects()
