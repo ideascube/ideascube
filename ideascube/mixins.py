@@ -55,6 +55,8 @@ class FilterableViewMixin:
             search['source'] = context['source']
         if context.get('tags'):
             search['tags__match'] = context['tags']
+        if context.get('public') is not None:
+            search['public'] = context['public']
         return Search.objects.filter(**search).values_list(attr, flat=True).distinct()
 
     def _set_available_langs(self, context):

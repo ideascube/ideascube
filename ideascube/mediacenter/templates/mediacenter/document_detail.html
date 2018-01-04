@@ -52,5 +52,5 @@
             </ul>
         {% endif %}
     {% endif %}
-    {% tag_cloud url="mediacenter:index" model=view.model tags=document.tags.all %}
+    {% include 'ideascube/includes/tag_cloud.html' with url="mediacenter:index" tags=document.tags.all %}
 {% endblock third %}
