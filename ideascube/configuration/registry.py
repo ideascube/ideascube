@@ -9,7 +9,7 @@ from .exceptions import (
 
 
 # Please try and keep this stored in alphabetical order
-REGISTRY = {
+_BUILTIN_REGISTRY = {
     # 'namespace': {
     #     'key': {
     #         'summary': 'Help text for the management command',
@@ -46,6 +46,16 @@ REGISTRY = {
         },
     },
 }
+
+
+def _get_registry():
+    registry = _BUILTIN_REGISTRY.copy()
+    registry.update(settings.IDEASCUBE_CONFIGURATION_EXTRA_REGISTRY)
+
+    return registry
+
+
+REGISTRY = _get_registry()
 
 
 def get_all_namespaces():
