@@ -135,6 +135,12 @@ LANG_INFO.update({
         'code': 'fa-ir',
         'name_local': 'فارسی',
     },
+    'kg': {
+        'bidi': False,
+        'name': 'Kongo',
+        'code': 'kg',
+        'name_local': 'Kikongo',
+    },
     'ku': {
         'bidi': False,
         'name': 'Kurdish',
@@ -146,6 +152,12 @@ LANG_INFO.update({
         'name': 'Lingala',
         'code': 'ln',
         'name_local': 'Lingála'
+    },
+    'lua': {
+        'bidi': False,
+        'name': 'Luba-Lulua',
+        'code': 'lua',
+        'name_local': 'Tshiluba',
     },
     'ps': {
         'bidi': True,
