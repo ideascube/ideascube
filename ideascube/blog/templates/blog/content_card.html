@@ -1,9 +1,10 @@
-{% load ideascube_tags %}
+{% load i18n ideascube_tags %}
 
 <a class="card blog" href="{% url 'blog:content_detail' pk=content.pk %}">
     <h3>{{ content }}</h3>
     <h5>
-        {% if content.status == content.DRAFT %}draft ⚫ {% endif %}
+        {% trans "draft" as draft %}
+        {% if content.status == content.DRAFT %}{{ draft }} ⚫ {% endif %}
         {{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.author }}
     </h5>
     <div>
