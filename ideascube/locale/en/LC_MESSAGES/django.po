@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-30 13:51+0000\n"
+"POT-Creation-Date: 2018-01-18 16:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ideascube/blog/models.py:45
+#: ideascube/blog/templates/blog/content_card.html:6
 msgid "draft"
 msgstr ""
 
@@ -111,52 +112,52 @@ msgstr ""
 msgid "Suitable for all languages"
 msgstr ""
 
-#: ideascube/conf/base.py:226
+#: ideascube/conf/base.py:238
 msgid "the camp"
 msgstr ""
 
-#: ideascube/conf/base.py:241
+#: ideascube/conf/base.py:253
 msgid "Basic informations"
 msgstr ""
 
-#: ideascube/conf/base.py:252 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:264 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr ""
 
-#: ideascube/conf/base.py:253
+#: ideascube/conf/base.py:265
 msgid "Create, remove or modify users."
 msgstr ""
 
-#: ideascube/conf/base.py:260
+#: ideascube/conf/base.py:272
 msgid "Entries"
 msgstr ""
 
-#: ideascube/conf/base.py:261
+#: ideascube/conf/base.py:273
 msgid "Manage user entries."
 msgstr ""
 
-#: ideascube/conf/base.py:268
+#: ideascube/conf/base.py:280
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
 msgstr ""
 
-#: ideascube/conf/base.py:269
+#: ideascube/conf/base.py:281
 msgid "Manage stock."
 msgstr ""
 
-#: ideascube/conf/base.py:276
+#: ideascube/conf/base.py:288
 msgid "Loans"
 msgstr ""
 
-#: ideascube/conf/base.py:277
+#: ideascube/conf/base.py:289
 msgid "Manage loans."
 msgstr ""
 
-#: ideascube/conf/base.py:284
+#: ideascube/conf/base.py:296
 msgid "Settings"
 msgstr ""
 
-#: ideascube/conf/base.py:285
+#: ideascube/conf/base.py:297
 msgid "Configure the server"
 msgstr ""
 
@@ -816,12 +817,10 @@ msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5
 #, python-format
-msgid "Are you sure you want to delete document \"%(document)s\"?"
-msgstr ""
-
-#: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:9
-#: ideascube/templates/form-confirm-delete.html:19
-msgid "yes"
+msgid ""
+"\n"
+"         Are you sure you want to delete document \"%(document)s\"?\n"
+"    "
 msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:10
@@ -1995,6 +1994,10 @@ msgstr ""
 msgid "no"
 msgstr ""
 
+#: ideascube/templates/form-confirm-delete.html:19
+msgid "yes"
+msgstr ""
+
 #: ideascube/templates/form-fullpage.html:25
 msgid "cancel"
 msgstr ""
@@ -2002,16 +2005,6 @@ msgstr ""
 #: ideascube/templates/form-fullpage.html:28
 #: ideascube/templates/ideascube/welcome_staff.html:17
 msgid "submit"
-msgstr ""
-
-#: ideascube/templates/ideascube/by_tag.html:7
-#, python-format
-msgid "Browse topic \"%(topic)s\""
-msgstr ""
-
-#: ideascube/templates/ideascube/by_tag.html:9
-#, python-format
-msgid "Browse topics \"%(topics)s\""
 msgstr ""
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:4
@@ -2145,16 +2138,16 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: ideascube/views.py:72
+#: ideascube/views.py:71
 msgid "Welcome to {}, {}!"
 msgstr ""
 
-#: ideascube/views.py:187
+#: ideascube/views.py:170
 #, python-brace-format
 msgid "Password has been set for {user}"
 msgstr ""
 
-#: ideascube/views.py:232
+#: ideascube/views.py:215
 #, python-brace-format
 msgid "Successfully processed {count} users."
 msgstr ""
