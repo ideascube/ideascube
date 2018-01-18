@@ -4,7 +4,9 @@
     <h3>{{ content }}</h3>
     <h5>
         {% trans "draft" as draft %}
-        {% if content.status == content.DRAFT %}{{ draft }} ⚫ {% endif %}
+        {% if content.status == content.DRAFT %}
+            <span class="draft">{% fa 'edit' 'fa-fw' %}{{ draft }}</span>
+        {% endif %}
         {{ content.published_at|date:"SHORT_DATE_FORMAT" }} ⚫ {{ content.author }}
     </h5>
     <div>
