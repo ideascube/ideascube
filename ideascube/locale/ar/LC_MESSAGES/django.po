@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-29 13:19+0000\n"
-"PO-Revision-Date: 2017-09-29 13:19+0000\n"
+"POT-Creation-Date: 2018-01-18 16:45+0000\n"
+"PO-Revision-Date: 2018-01-18 16:51+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
 "Language-Team: Arabic (http://www.transifex.com/ideascube/ideascube/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,7 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: ideascube/blog/models.py:45
+#: ideascube/blog/templates/blog/content_card.html:6
 msgid "draft"
 msgstr "مسودة"
 
@@ -71,7 +72,7 @@ msgstr "الحالة"
 msgid "Language"
 msgstr "اللغة"
 
-#: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:76
+#: ideascube/blog/models.py:69 ideascube/mediacenter/models.py:76
 msgid "Topics"
 msgstr "المواضيع"
 
@@ -117,52 +118,52 @@ msgstr "أحدث المنشورات"
 msgid "Suitable for all languages"
 msgstr ""
 
-#: ideascube/conf/base.py:226
+#: ideascube/conf/base.py:238
 msgid "the camp"
 msgstr "المخيّم"
 
-#: ideascube/conf/base.py:241
+#: ideascube/conf/base.py:253
 msgid "Basic informations"
 msgstr "معلومات أساسية"
 
-#: ideascube/conf/base.py:252 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:264 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr "المستخدمين"
 
-#: ideascube/conf/base.py:253
+#: ideascube/conf/base.py:265
 msgid "Create, remove or modify users."
 msgstr "إنشاء / حذف / تعديل المستخدم"
 
-#: ideascube/conf/base.py:260
+#: ideascube/conf/base.py:272
 msgid "Entries"
 msgstr "المستخدمين"
 
-#: ideascube/conf/base.py:261
+#: ideascube/conf/base.py:273
 msgid "Manage user entries."
 msgstr "إدارة دخول المستخدمين"
 
-#: ideascube/conf/base.py:268
+#: ideascube/conf/base.py:280
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
 msgstr "المخزون"
 
-#: ideascube/conf/base.py:269
+#: ideascube/conf/base.py:281
 msgid "Manage stock."
 msgstr "إدارة المخزون ( الجرد )"
 
-#: ideascube/conf/base.py:276
+#: ideascube/conf/base.py:288
 msgid "Loans"
 msgstr "الاستعارة"
 
-#: ideascube/conf/base.py:277
+#: ideascube/conf/base.py:289
 msgid "Manage loans."
 msgstr "ادارة الاستعارة"
 
-#: ideascube/conf/base.py:284
+#: ideascube/conf/base.py:296
 msgid "Settings"
 msgstr ""
 
-#: ideascube/conf/base.py:285
+#: ideascube/conf/base.py:297
 msgid "Configure the server"
 msgstr ""
 
@@ -170,53 +171,53 @@ msgstr ""
 msgid "the community"
 msgstr "المجتمع"
 
-#: ideascube/conf/idb_aus_queensland.py:14 ideascube/conf/idb_aus_slwa.py:13
+#: ideascube/conf/idb_aus_queensland.py:13 ideascube/conf/idb_aus_slwa.py:12
 #: ideascube/conf/idb_bdi.py:7 ideascube/conf/idb_col_llavedelsaber.py:10
 #: ideascube/conf/idb_deu_dusseldorf.py:17
-#: ideascube/conf/idb_eth_bokolmanyo.py:13 ideascube/conf/idb_fra.py:16
-#: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_grc_eleonas.py:12
+#: ideascube/conf/idb_eth_bokolmanyo.py:12 ideascube/conf/idb_fra.py:16
+#: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_grc_eleonas.py:11
 #: ideascube/conf/idb_irq_bardarash.py:8 ideascube/conf/idb_jor_alhashmi.py:7
-#: ideascube/conf/idb_jor_azraq.py:12 ideascube/conf/idb_lwb_detroit_usa.py:18
+#: ideascube/conf/idb_jor_azraq.py:12 ideascube/conf/idb_lwb_detroit_usa.py:17
 #: ideascube/conf/idb_sen_fap.py:18
 msgid "Personal informations"
 msgstr "المعلومات الشخصيّة"
 
-#: ideascube/conf/idb_aus_queensland.py:15 ideascube/conf/idb_aus_slwa.py:14
+#: ideascube/conf/idb_aus_queensland.py:14 ideascube/conf/idb_aus_slwa.py:13
 #: ideascube/conf/idb_bdi.py:8 ideascube/conf/idb_deu_dusseldorf.py:18
-#: ideascube/conf/idb_eth_bokolmanyo.py:14 ideascube/conf/idb_fra.py:17
+#: ideascube/conf/idb_eth_bokolmanyo.py:13 ideascube/conf/idb_fra.py:17
 #: ideascube/conf/idb_irq_bardarash.py:9 ideascube/conf/idb_jor_alhashmi.py:8
-#: ideascube/conf/idb_jor_azraq.py:13 ideascube/conf/idb_lwb_detroit_usa.py:19
+#: ideascube/conf/idb_jor_azraq.py:13 ideascube/conf/idb_lwb_detroit_usa.py:18
 #: ideascube/conf/idb_sen_fap.py:19
 msgid "Family"
 msgstr "العائلة"
 
-#: ideascube/conf/idb_aus_queensland.py:16 ideascube/conf/idb_aus_slwa.py:15
+#: ideascube/conf/idb_aus_queensland.py:15 ideascube/conf/idb_aus_slwa.py:14
 #: ideascube/conf/idb_deu_dusseldorf.py:19 ideascube/conf/idb_fra.py:18
-#: ideascube/conf/idb_grc_eleonas.py:13
-#: ideascube/conf/idb_lwb_detroit_usa.py:20 ideascube/conf/idb_sen_fap.py:20
+#: ideascube/conf/idb_grc_eleonas.py:12
+#: ideascube/conf/idb_lwb_detroit_usa.py:19 ideascube/conf/idb_sen_fap.py:20
 msgid "In the town"
 msgstr "في المدينة"
 
-#: ideascube/conf/idb_aus_queensland.py:17 ideascube/conf/idb_aus_slwa.py:16
+#: ideascube/conf/idb_aus_queensland.py:16 ideascube/conf/idb_aus_slwa.py:15
 #: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_deu_dusseldorf.py:20
-#: ideascube/conf/idb_eth_bokolmanyo.py:17 ideascube/conf/idb_fra.py:19
-#: ideascube/conf/idb_grc_eleonas.py:14 ideascube/conf/idb_irq_bardarash.py:11
+#: ideascube/conf/idb_eth_bokolmanyo.py:16 ideascube/conf/idb_fra.py:19
+#: ideascube/conf/idb_grc_eleonas.py:13 ideascube/conf/idb_irq_bardarash.py:11
 #: ideascube/conf/idb_jor_alhashmi.py:10 ideascube/conf/idb_jor_azraq.py:16
-#: ideascube/conf/idb_lwb_detroit_usa.py:21 ideascube/conf/idb_sen_fap.py:21
+#: ideascube/conf/idb_lwb_detroit_usa.py:20 ideascube/conf/idb_sen_fap.py:21
 msgid "Language skills"
 msgstr "المهارات اللغويّة"
 
-#: ideascube/conf/idb_bdi.py:9 ideascube/conf/idb_eth_bokolmanyo.py:15
+#: ideascube/conf/idb_bdi.py:9 ideascube/conf/idb_eth_bokolmanyo.py:14
 #: ideascube/conf/idb_irq_bardarash.py:10 ideascube/conf/idb_jor_azraq.py:14
 msgid "In the camp"
 msgstr "في المخيّم"
 
-#: ideascube/conf/idb_bdi.py:10 ideascube/conf/idb_eth_bokolmanyo.py:16
+#: ideascube/conf/idb_bdi.py:10 ideascube/conf/idb_eth_bokolmanyo.py:15
 #: ideascube/conf/idb_jor_alhashmi.py:9 ideascube/conf/idb_jor_azraq.py:15
 msgid "Origin"
 msgstr "الأصل"
 
-#: ideascube/conf/idb_bdi.py:12 ideascube/conf/idb_eth_bokolmanyo.py:18
+#: ideascube/conf/idb_bdi.py:12 ideascube/conf/idb_eth_bokolmanyo.py:17
 #: ideascube/conf/idb_jor_alhashmi.py:11 ideascube/conf/idb_jor_azraq.py:17
 msgid "National residents"
 msgstr "من سكّن البلد"
@@ -549,7 +550,7 @@ msgstr "عرض جميع الكتب"
 
 #: ideascube/library/templates/library/book_detail.html:15
 #: ideascube/library/templates/library/index.html:9
-#: ideascube/serveradmin/catalog.py:313
+#: ideascube/serveradmin/catalog.py:310
 #: ideascube/templates/ideascube/includes/cards/library.html:4
 msgid "read"
 msgstr "اقرأ"
@@ -763,7 +764,7 @@ msgstr "لا يوجد خصائص للمعالجة"
 msgid "You need to provide a file."
 msgstr "عليك أضافة ملف"
 
-#: ideascube/library/views.py:258 ideascube/monitoring/views.py:253
+#: ideascube/library/views.py:258 ideascube/monitoring/views.py:256
 msgid "Successfully imported {} items"
 msgstr "تم استيراد الماده بنجاح {}"
 
@@ -821,13 +822,11 @@ msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5
 #, python-format
-msgid "Are you sure you want to delete document \"%(document)s\"?"
-msgstr "هل أنت متاكد أنك تريد حذف المستند \"%(document)s\"?"
-
-#: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:9
-#: ideascube/templates/form-confirm-delete.html:19
-msgid "yes"
-msgstr "نعم"
+msgid ""
+"\n"
+"         Are you sure you want to delete document \"%(document)s\"?\n"
+"    "
+msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:10
 msgid "View all medias"
@@ -881,7 +880,7 @@ msgid "No documents yet."
 msgstr "لا يوجد مجلدات"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
-#: ideascube/serveradmin/catalog.py:311 ideascube/serveradmin/catalog.py:353
+#: ideascube/serveradmin/catalog.py:308 ideascube/serveradmin/catalog.py:402
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "discover"
@@ -1574,11 +1573,11 @@ msgstr "البدء بعملية الجرد"
 msgid "Inventories"
 msgstr "الموجودات"
 
-#: ideascube/monitoring/templates/monitoring/stock.html:64
+#: ideascube/monitoring/templates/monitoring/stock.html:68
 msgid "No inventory yet."
 msgstr "لا يوجد موجودات حتى الأن"
 
-#: ideascube/monitoring/templates/monitoring/stock.html:64
+#: ideascube/monitoring/templates/monitoring/stock.html:68
 msgid "Start one now"
 msgstr "البدء الأن"
 
@@ -1620,31 +1619,31 @@ msgstr "لا يوجد إدخالات"
 msgid "Error while processing entries export"
 msgstr "حدوث خطأ خلال عملية الأستيراد"
 
-#: ideascube/monitoring/views.py:311
+#: ideascube/monitoring/views.py:314
 #, python-brace-format
 msgid "Specimen {specimen} has been added to {inventory} inventory"
 msgstr "المتعلقات {specimen} لقد تم إدخالها الى {inventory} قائمة الموجودات "
 
-#: ideascube/monitoring/views.py:318
+#: ideascube/monitoring/views.py:321
 #, python-brace-format
 msgid "Specimen {specimen} not found or already done."
 msgstr "التفاصيل {specimen} لم يتم ايجادها أو لم يتم أنشائها "
 
-#: ideascube/monitoring/views.py:396
+#: ideascube/monitoring/views.py:399
 #, python-brace-format
 msgid "Item {item} has been loaned to {user}"
 msgstr "القطعة  {item} تم إعارتها للمستخدم {user}"
 
-#: ideascube/monitoring/views.py:407
+#: ideascube/monitoring/views.py:410
 #, python-brace-format
 msgid "Item {item} has been returned"
 msgstr "القطعه  {item} تم إسترجاعها"
 
-#: ideascube/monitoring/views.py:411
+#: ideascube/monitoring/views.py:414
 msgid "Item not found"
 msgstr "القطعة غير موجوده"
 
-#: ideascube/monitoring/views.py:428
+#: ideascube/monitoring/views.py:431
 msgid "Error while processing loans export"
 msgstr "خطأ خلال عملية استيراد ملف المستعارات"
 
@@ -1705,7 +1704,7 @@ msgstr "صيغة الملف {} غير مدعومه خلال الأنشاء"
 msgid "Not a {} file"
 msgstr "ليس  {} ملف"
 
-#: ideascube/serveradmin/catalog.py:314
+#: ideascube/serveradmin/catalog.py:311
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:4
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:4
 #: ideascube/templates/ideascube/includes/cards/kolibri.html:4
@@ -1713,7 +1712,7 @@ msgstr "ليس  {} ملف"
 msgid "learn"
 msgstr "تعلم"
 
-#: ideascube/serveradmin/catalog.py:354
+#: ideascube/serveradmin/catalog.py:403
 msgid "info"
 msgstr "المعلومات"
 
@@ -1999,6 +1998,10 @@ msgstr "يوجد أكثر من جهاز واي فاي , هذا غير مدعوم
 msgid "no"
 msgstr ""
 
+#: ideascube/templates/form-confirm-delete.html:19
+msgid "yes"
+msgstr "نعم"
+
 #: ideascube/templates/form-fullpage.html:25
 msgid "cancel"
 msgstr "إلغاء"
@@ -2007,16 +2010,6 @@ msgstr "إلغاء"
 #: ideascube/templates/ideascube/welcome_staff.html:17
 msgid "submit"
 msgstr "حفظ"
-
-#: ideascube/templates/ideascube/by_tag.html:7
-#, python-format
-msgid "Browse topic \"%(topic)s\""
-msgstr "تصفح المواضيع \"%(topic)s\""
-
-#: ideascube/templates/ideascube/by_tag.html:9
-#, python-format
-msgid "Browse topics \"%(topics)s\""
-msgstr "تصفح المواضيع \"%(topics)s\""
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:4
 #: ideascube/templates/ideascube/includes/cards/blog.html:4
@@ -2048,7 +2041,7 @@ msgstr "مركز الوسائط المتعددة"
 msgid "Browse videos, sounds, images, pdf…"
 msgstr "تتصفح الفيديوهات , الاغاني, الصور , ملفات ال pdf ...."
 
-#: ideascube/templates/ideascube/includes/footer.html:19
+#: ideascube/templates/ideascube/includes/footer.html:20
 msgid "Change"
 msgstr "تغيير"
 
@@ -2149,16 +2142,16 @@ msgstr "للتمتع بهذه المكتبه الرقميه , يجب عليك إ
 msgid "Log in"
 msgstr "تسجيل الدخول"
 
-#: ideascube/views.py:72
+#: ideascube/views.py:71
 msgid "Welcome to {}, {}!"
 msgstr "مرحبا بك في {}, {}!"
 
-#: ideascube/views.py:187
+#: ideascube/views.py:170
 #, python-brace-format
 msgid "Password has been set for {user}"
 msgstr "تم تعيين كلمة السر لـ {user}"
 
-#: ideascube/views.py:232
+#: ideascube/views.py:215
 #, python-brace-format
 msgid "Successfully processed {count} users."
 msgstr " تم معالجتها بنجاح {count} من المستخدمين."

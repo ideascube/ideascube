@@ -7,7 +7,7 @@
 # Grégoire <gregoire.pouget@bibliosansfrontieres.org>, 2017
 # Grégoire <gregoire.pouget@bibliosansfrontieres.org>, 2016
 # Quentin Drouet <kent1@arscenic.info>, 2015
-# Mathieu Bridon <bochecha@daitauha.fr>, 2017
+# Mathieu Bridon <bochecha@daitauha.fr>, 2017-2018
 # Romain Berthier <romain.berthier@bibliosansfrontieres.org>, 2016
 # Yoann Vincent <yovincent.21@gmail.com>, 2014
 # yohanboniface <yohanboniface@free.fr>, 2014-2016
@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-29 13:19+0000\n"
-"PO-Revision-Date: 2017-09-29 13:19+0000\n"
+"POT-Creation-Date: 2018-01-18 16:45+0000\n"
+"PO-Revision-Date: 2018-01-18 17:00+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
 "Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -26,6 +26,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ideascube/blog/models.py:45
+#: ideascube/blog/templates/blog/content_card.html:6
 msgid "draft"
 msgstr "brouillon"
 
@@ -73,7 +74,7 @@ msgstr "statut"
 msgid "Language"
 msgstr "Langue"
 
-#: ideascube/blog/models.py:70 ideascube/mediacenter/models.py:76
+#: ideascube/blog/models.py:69 ideascube/mediacenter/models.py:76
 msgid "Topics"
 msgstr "Thèmes"
 
@@ -117,108 +118,108 @@ msgstr "Dernier publié"
 
 #: ideascube/conf/base.py:112
 msgid "Suitable for all languages"
-msgstr ""
+msgstr "Convient pour toutes les langues"
 
-#: ideascube/conf/base.py:226
+#: ideascube/conf/base.py:238
 msgid "the camp"
 msgstr "le camp"
 
-#: ideascube/conf/base.py:241
+#: ideascube/conf/base.py:253
 msgid "Basic informations"
 msgstr "Infos de base"
 
-#: ideascube/conf/base.py:252 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:264 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: ideascube/conf/base.py:253
+#: ideascube/conf/base.py:265
 msgid "Create, remove or modify users."
 msgstr "Créer, supprimer et modifier les utilisateurs."
 
-#: ideascube/conf/base.py:260
+#: ideascube/conf/base.py:272
 msgid "Entries"
 msgstr "Entrées"
 
-#: ideascube/conf/base.py:261
+#: ideascube/conf/base.py:273
 msgid "Manage user entries."
 msgstr "Gérer les entrées"
 
-#: ideascube/conf/base.py:268
+#: ideascube/conf/base.py:280
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
 msgstr "Stock"
 
-#: ideascube/conf/base.py:269
+#: ideascube/conf/base.py:281
 msgid "Manage stock."
 msgstr "Gérer le stock"
 
-#: ideascube/conf/base.py:276
+#: ideascube/conf/base.py:288
 msgid "Loans"
 msgstr "Prêts"
 
-#: ideascube/conf/base.py:277
+#: ideascube/conf/base.py:289
 msgid "Manage loans."
 msgstr "Gérer les prêts"
 
-#: ideascube/conf/base.py:284
+#: ideascube/conf/base.py:296
 msgid "Settings"
-msgstr ""
+msgstr "Préférences"
 
-#: ideascube/conf/base.py:285
+#: ideascube/conf/base.py:297
 msgid "Configure the server"
-msgstr ""
+msgstr "Configurer le serveur"
 
 #: ideascube/conf/idb_aus_queensland.py:6 ideascube/conf/idb_aus_slwa.py:5
 msgid "the community"
 msgstr "la communauté"
 
-#: ideascube/conf/idb_aus_queensland.py:14 ideascube/conf/idb_aus_slwa.py:13
+#: ideascube/conf/idb_aus_queensland.py:13 ideascube/conf/idb_aus_slwa.py:12
 #: ideascube/conf/idb_bdi.py:7 ideascube/conf/idb_col_llavedelsaber.py:10
 #: ideascube/conf/idb_deu_dusseldorf.py:17
-#: ideascube/conf/idb_eth_bokolmanyo.py:13 ideascube/conf/idb_fra.py:16
-#: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_grc_eleonas.py:12
+#: ideascube/conf/idb_eth_bokolmanyo.py:12 ideascube/conf/idb_fra.py:16
+#: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_grc_eleonas.py:11
 #: ideascube/conf/idb_irq_bardarash.py:8 ideascube/conf/idb_jor_alhashmi.py:7
-#: ideascube/conf/idb_jor_azraq.py:12 ideascube/conf/idb_lwb_detroit_usa.py:18
+#: ideascube/conf/idb_jor_azraq.py:12 ideascube/conf/idb_lwb_detroit_usa.py:17
 #: ideascube/conf/idb_sen_fap.py:18
 msgid "Personal informations"
 msgstr "Informations personnelles"
 
-#: ideascube/conf/idb_aus_queensland.py:15 ideascube/conf/idb_aus_slwa.py:14
+#: ideascube/conf/idb_aus_queensland.py:14 ideascube/conf/idb_aus_slwa.py:13
 #: ideascube/conf/idb_bdi.py:8 ideascube/conf/idb_deu_dusseldorf.py:18
-#: ideascube/conf/idb_eth_bokolmanyo.py:14 ideascube/conf/idb_fra.py:17
+#: ideascube/conf/idb_eth_bokolmanyo.py:13 ideascube/conf/idb_fra.py:17
 #: ideascube/conf/idb_irq_bardarash.py:9 ideascube/conf/idb_jor_alhashmi.py:8
-#: ideascube/conf/idb_jor_azraq.py:13 ideascube/conf/idb_lwb_detroit_usa.py:19
+#: ideascube/conf/idb_jor_azraq.py:13 ideascube/conf/idb_lwb_detroit_usa.py:18
 #: ideascube/conf/idb_sen_fap.py:19
 msgid "Family"
 msgstr "Famille"
 
-#: ideascube/conf/idb_aus_queensland.py:16 ideascube/conf/idb_aus_slwa.py:15
+#: ideascube/conf/idb_aus_queensland.py:15 ideascube/conf/idb_aus_slwa.py:14
 #: ideascube/conf/idb_deu_dusseldorf.py:19 ideascube/conf/idb_fra.py:18
-#: ideascube/conf/idb_grc_eleonas.py:13
-#: ideascube/conf/idb_lwb_detroit_usa.py:20 ideascube/conf/idb_sen_fap.py:20
+#: ideascube/conf/idb_grc_eleonas.py:12
+#: ideascube/conf/idb_lwb_detroit_usa.py:19 ideascube/conf/idb_sen_fap.py:20
 msgid "In the town"
 msgstr "Dans la ville"
 
-#: ideascube/conf/idb_aus_queensland.py:17 ideascube/conf/idb_aus_slwa.py:16
+#: ideascube/conf/idb_aus_queensland.py:16 ideascube/conf/idb_aus_slwa.py:15
 #: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_deu_dusseldorf.py:20
-#: ideascube/conf/idb_eth_bokolmanyo.py:17 ideascube/conf/idb_fra.py:19
-#: ideascube/conf/idb_grc_eleonas.py:14 ideascube/conf/idb_irq_bardarash.py:11
+#: ideascube/conf/idb_eth_bokolmanyo.py:16 ideascube/conf/idb_fra.py:19
+#: ideascube/conf/idb_grc_eleonas.py:13 ideascube/conf/idb_irq_bardarash.py:11
 #: ideascube/conf/idb_jor_alhashmi.py:10 ideascube/conf/idb_jor_azraq.py:16
-#: ideascube/conf/idb_lwb_detroit_usa.py:21 ideascube/conf/idb_sen_fap.py:21
+#: ideascube/conf/idb_lwb_detroit_usa.py:20 ideascube/conf/idb_sen_fap.py:21
 msgid "Language skills"
 msgstr "Langues"
 
-#: ideascube/conf/idb_bdi.py:9 ideascube/conf/idb_eth_bokolmanyo.py:15
+#: ideascube/conf/idb_bdi.py:9 ideascube/conf/idb_eth_bokolmanyo.py:14
 #: ideascube/conf/idb_irq_bardarash.py:10 ideascube/conf/idb_jor_azraq.py:14
 msgid "In the camp"
 msgstr "Dans le camp"
 
-#: ideascube/conf/idb_bdi.py:10 ideascube/conf/idb_eth_bokolmanyo.py:16
+#: ideascube/conf/idb_bdi.py:10 ideascube/conf/idb_eth_bokolmanyo.py:15
 #: ideascube/conf/idb_jor_alhashmi.py:9 ideascube/conf/idb_jor_azraq.py:15
 msgid "Origin"
 msgstr "Origine"
 
-#: ideascube/conf/idb_bdi.py:12 ideascube/conf/idb_eth_bokolmanyo.py:18
+#: ideascube/conf/idb_bdi.py:12 ideascube/conf/idb_eth_bokolmanyo.py:17
 #: ideascube/conf/idb_jor_alhashmi.py:11 ideascube/conf/idb_jor_azraq.py:17
 msgid "National residents"
 msgstr "Résidents"
@@ -543,7 +544,7 @@ msgid ""
 "\n"
 "         Are you sure you want to delete book \"%(book)s\" and all its specimens?\n"
 "    "
-msgstr ""
+msgstr "\n         Êtes-vous sûr de vouloir supprimer le livre \"%(book)s\" et tous ses exemplaires ?\n    "
 
 #: ideascube/library/templates/library/book_detail.html:11
 msgid "View all books"
@@ -551,7 +552,7 @@ msgstr "Voir tous les livres"
 
 #: ideascube/library/templates/library/book_detail.html:15
 #: ideascube/library/templates/library/index.html:9
-#: ideascube/serveradmin/catalog.py:313
+#: ideascube/serveradmin/catalog.py:310
 #: ideascube/templates/ideascube/includes/cards/library.html:4
 msgid "read"
 msgstr "lire"
@@ -686,7 +687,7 @@ msgid ""
 "\n"
 "        Are you sure you want to delete \"%(name)s\"?\n"
 "    "
-msgstr ""
+msgstr "\n        Êtes-vous sûr de vouloir supprimer \"%(name)s\" ?\n    "
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:11
 #, python-format
@@ -694,17 +695,17 @@ msgid ""
 "\n"
 "        This will not delete book \"%(name)s\"\n"
 "    "
-msgstr ""
+msgstr "\n        Le livre \"%(name)s\" ne sera pas supprimé\n    "
 
 #: ideascube/library/templates/library/specimen_form.html:7
 #, python-format
 msgid "Edit book specimen %(specimen)s"
-msgstr ""
+msgstr "Modifier l'exemplaire %(specimen)s"
 
 #: ideascube/library/templates/library/specimen_form.html:9
 #, python-format
 msgid "New book specimen for %(book)s"
-msgstr ""
+msgstr "Nouvel exemplaire pour %(book)s"
 
 #: ideascube/library/templates/library/specimen_form.html:11
 msgid "New book specimen"
@@ -765,7 +766,7 @@ msgstr "Aucune notice importée"
 msgid "You need to provide a file."
 msgstr "Vous devez fournir un fichier."
 
-#: ideascube/library/views.py:258 ideascube/monitoring/views.py:253
+#: ideascube/library/views.py:258 ideascube/monitoring/views.py:256
 msgid "Successfully imported {} items"
 msgstr "{} items ont été importés avec succès"
 
@@ -823,13 +824,11 @@ msgstr ""
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5
 #, python-format
-msgid "Are you sure you want to delete document \"%(document)s\"?"
-msgstr "Êtes-vous sûr de vouloir supprimer le document \"%(document)s\" ?"
-
-#: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:9
-#: ideascube/templates/form-confirm-delete.html:19
-msgid "yes"
-msgstr "oui"
+msgid ""
+"\n"
+"         Are you sure you want to delete document \"%(document)s\"?\n"
+"    "
+msgstr "\n         Êtes-vous sûr de vouloir supprimer le  document \"%(document)s\" ?\n    "
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:10
 msgid "View all medias"
@@ -838,7 +837,7 @@ msgstr "Voir tous les medias."
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:21
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:26
 msgid "Your web browser doesn't support this media type."
-msgstr ""
+msgstr "Votre navigateur ne supporte pas ce type de média."
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:34
 #, python-format
@@ -883,7 +882,7 @@ msgid "No documents yet."
 msgstr "Aucun document pour le moment."
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
-#: ideascube/serveradmin/catalog.py:311 ideascube/serveradmin/catalog.py:353
+#: ideascube/serveradmin/catalog.py:308 ideascube/serveradmin/catalog.py:402
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "discover"
@@ -1483,7 +1482,7 @@ msgid ""
 "\n"
 "        Are you sure you want to delete the inventory of %(date)s?\n"
 "    "
-msgstr ""
+msgstr "\n        Êtes-vous sur de vouloir supprimer l'inventaire du %(date)s ?\n    "
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:7
 #, python-format
@@ -1540,7 +1539,7 @@ msgid ""
 "\n"
 "        Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s\"?\n"
 "    "
-msgstr ""
+msgstr "\n        Êtes-vous sûr de vouloir supprimer l'exemplaire \"%(specimen)s\" de \"%(item)s\" ?\n    "
 
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:7
 #, python-format
@@ -1576,11 +1575,11 @@ msgstr "Commencer un inventaire"
 msgid "Inventories"
 msgstr "Inventaires"
 
-#: ideascube/monitoring/templates/monitoring/stock.html:64
+#: ideascube/monitoring/templates/monitoring/stock.html:68
 msgid "No inventory yet."
 msgstr "Aucun inventaire pour le moment."
 
-#: ideascube/monitoring/templates/monitoring/stock.html:64
+#: ideascube/monitoring/templates/monitoring/stock.html:68
 msgid "Start one now"
 msgstr "En commencer un maintenant"
 
@@ -1594,7 +1593,7 @@ msgid ""
 "\n"
 "         Are you sure you want to delete the stockitem \"%(item)s\"?\n"
 "    "
-msgstr ""
+msgstr "\n         Êtes-vous sûr de vouloir supprimer l'élément \"%(item)s\" du stock ?\n    "
 
 #: ideascube/monitoring/templates/monitoring/stockitem_form.html:7
 msgid "Edit item"
@@ -1622,31 +1621,31 @@ msgstr "Aucune entrée créée."
 msgid "Error while processing entries export"
 msgstr "Erreur durant l'export des entrées"
 
-#: ideascube/monitoring/views.py:311
+#: ideascube/monitoring/views.py:314
 #, python-brace-format
 msgid "Specimen {specimen} has been added to {inventory} inventory"
 msgstr "L'exemplaire {specimen} a été ajouté à l'inventaire {inventory}"
 
-#: ideascube/monitoring/views.py:318
+#: ideascube/monitoring/views.py:321
 #, python-brace-format
 msgid "Specimen {specimen} not found or already done."
 msgstr "Exemplaire {specimen} non trouvé ou déjà enregistré."
 
-#: ideascube/monitoring/views.py:396
+#: ideascube/monitoring/views.py:399
 #, python-brace-format
 msgid "Item {item} has been loaned to {user}"
 msgstr "L'élément {item} a été prêté à {user}"
 
-#: ideascube/monitoring/views.py:407
+#: ideascube/monitoring/views.py:410
 #, python-brace-format
 msgid "Item {item} has been returned"
 msgstr "L'élément {item} a été rendu"
 
-#: ideascube/monitoring/views.py:411
+#: ideascube/monitoring/views.py:414
 msgid "Item not found"
 msgstr "Élément non trouvé"
 
-#: ideascube/monitoring/views.py:428
+#: ideascube/monitoring/views.py:431
 msgid "Error while processing loans export"
 msgstr "Erreur lors de du traitement de l'export des prêts"
 
@@ -1667,7 +1666,7 @@ msgstr "par genre"
 
 #: ideascube/search/templates/search/filter_by_lang.html:4
 msgid "by language"
-msgstr ""
+msgstr "par langue"
 
 #: ideascube/search/templates/search/filter_cloud.html:5
 msgid "Filters"
@@ -1707,7 +1706,7 @@ msgstr "Le format {} n'est pas pris en charge"
 msgid "Not a {} file"
 msgstr "Ceci n'est pas un fichier de type {}"
 
-#: ideascube/serveradmin/catalog.py:314
+#: ideascube/serveradmin/catalog.py:311
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:4
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:4
 #: ideascube/templates/ideascube/includes/cards/kolibri.html:4
@@ -1715,7 +1714,7 @@ msgstr "Ceci n'est pas un fichier de type {}"
 msgid "learn"
 msgstr "apprendre"
 
-#: ideascube/serveradmin/catalog.py:354
+#: ideascube/serveradmin/catalog.py:403
 msgid "info"
 msgstr "info"
 
@@ -1805,7 +1804,7 @@ msgstr "Affiché"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:13
 msgid "Server Info"
-msgstr ""
+msgstr "Informations du serveur"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:14
 msgid "Languages"
@@ -1999,7 +1998,11 @@ msgstr "Plus d'une carte wifi trouvée, ce n'est pas supporté"
 
 #: ideascube/templates/form-confirm-delete.html:18
 msgid "no"
-msgstr ""
+msgstr "non"
+
+#: ideascube/templates/form-confirm-delete.html:19
+msgid "yes"
+msgstr "oui"
 
 #: ideascube/templates/form-fullpage.html:25
 msgid "cancel"
@@ -2009,16 +2012,6 @@ msgstr "annuler"
 #: ideascube/templates/ideascube/welcome_staff.html:17
 msgid "submit"
 msgstr "envoyer"
-
-#: ideascube/templates/ideascube/by_tag.html:7
-#, python-format
-msgid "Browse topic \"%(topic)s\""
-msgstr "Thème \"%(topic)s\""
-
-#: ideascube/templates/ideascube/by_tag.html:9
-#, python-format
-msgid "Browse topics \"%(topics)s\""
-msgstr "Thèmes \"%(topics)s\""
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:4
 #: ideascube/templates/ideascube/includes/cards/blog.html:4
@@ -2050,7 +2043,7 @@ msgstr "Medias center"
 msgid "Browse videos, sounds, images, pdf…"
 msgstr "Parcourir les vidéos, sons, images, pdf..."
 
-#: ideascube/templates/ideascube/includes/footer.html:19
+#: ideascube/templates/ideascube/includes/footer.html:20
 msgid "Change"
 msgstr "Changer"
 
@@ -2065,7 +2058,7 @@ msgstr "Connexion"
 
 #: ideascube/templates/ideascube/includes/tag_cloud.html:4
 msgid "by topic"
-msgstr ""
+msgstr "par thème"
 
 #: ideascube/templates/ideascube/pagination.html:5
 msgid "previous"
@@ -2091,7 +2084,7 @@ msgid ""
 "\n"
 "        Are you sure you want to delete user \"%(user_obj)s\"?\n"
 "    "
-msgstr ""
+msgstr "\n        Êtes-vous sûr de vouloir effacer l'utilisateur \"%(user_obj)s\" ?\n    "
 
 #: ideascube/templates/ideascube/user_detail.html:5
 msgid "View all users"
@@ -2151,16 +2144,16 @@ msgstr "Pour profiter de cette bibliothèque numérique, vous devez d'abord cré
 msgid "Log in"
 msgstr "Connexion"
 
-#: ideascube/views.py:72
+#: ideascube/views.py:71
 msgid "Welcome to {}, {}!"
 msgstr "Bienvenue à {}, {} !"
 
-#: ideascube/views.py:187
+#: ideascube/views.py:170
 #, python-brace-format
 msgid "Password has been set for {user}"
 msgstr "Le mot de passe a été modifié pour {user}"
 
-#: ideascube/views.py:232
+#: ideascube/views.py:215
 #, python-brace-format
 msgid "Successfully processed {count} users."
 msgstr "{count} utilisateurs ont été importés avec succès"
