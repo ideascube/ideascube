@@ -20,7 +20,7 @@ class RichTextEntry(widgets.Widget):
         self.with_media = with_media
 
         self.authorized_tags = [
-            'p', 'a', 'ul', 'ol', 'li',
+            'p', 'a', 'ul', 'ol', 'li', 'blockquote',
             'h1', 'h2', 'h3', 'h4', 'h5',
             'strong', 'em',
             'br',
