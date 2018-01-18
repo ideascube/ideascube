@@ -3,9 +3,9 @@ Section: python
 Priority: optional
 Maintainer: Yohan Boniface <hi@yohanboniface.me>
 Uploaders:
-  Mathieu Bridon <bochecha@daitauha.fr>
-  Matthieu Gautier <mgautier@kymeria.fr>
-  ToM <thomas.faucher@bibliosansfrontieres.org>
+  Mathieu Bridon <bochecha@daitauha.fr>,
+  Matthieu Gautier <mgautier@kymeria.fr>,
+  ToM <thomas.faucher@bibliosansfrontieres.org>,
   Yohan Boniface <hi@yohanboniface.me>
 Build-Depends:
   debhelper (>= 9),
