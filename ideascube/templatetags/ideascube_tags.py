@@ -2,12 +2,16 @@ import re
 
 from django import template
 from django.db.models.fields import FieldDoesNotExist
+from django.template.defaultfilters import truncatechars_html
 from django.utils.safestring import mark_safe
 from django.utils.translation.trans_real import language_code_prefix_re
 from django.utils.datastructures import MultiValueDict
 from django.http import QueryDict
 
 from taggit.models import Tag
+
+from ideascube.utils import clean_html
+
 
 register = template.Library()
 
@@ -190,3 +194,10 @@ def media(instance, attribute):
     qs = 'mtime={0.modified_at:%Y-%m-%dT%H:%M:%S%Z}'.format(instance)
 
     return '%s?%s' % (url, qs)
+
+
+@register.filter
+def summarize_html(text, length):
+    filtered = clean_html(text, with_media=False)
+
+    return truncatechars_html(filtered, length)

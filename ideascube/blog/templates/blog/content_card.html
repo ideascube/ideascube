@@ -16,7 +16,7 @@
 	{% if content.summary %}
           {{ content.summary|safe }}
 	{% else %}
-	  {{ content.text|truncatechars_html:300|safe }}
+	  {{ content.text|summarize_html:300|safe }}
 	{% endif %}
     </div>
 </a>
