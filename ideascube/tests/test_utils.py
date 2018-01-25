@@ -283,3 +283,20 @@ def test_urlretrieve_unknown_scheme():
         urlretrieve('ftp://nope', 'whatever')
 
     excinfo.match('Unsupported URL scheme')
+
+
+@pytest.mark.parametrize('html, expected_without_media, expected_with_media', [
+    pytest.param(
+        '<p>A paragraph</p>', '<p>A paragraph</p>', '<p>A paragraph</p>',
+        id='simple'),
+    pytest.param(
+        '<p>A paragraph</p><img alt="An image" src="url"><p>A paragraph</p>',
+        '<p>A paragraph</p><p>A paragraph</p>',
+        '<p>A paragraph</p><img alt="An image" src="url"><p>A paragraph</p>',
+        id='image'),
+])
+def test_clean_html(html, expected_without_media, expected_with_media):
+    from ideascube.utils import clean_html
+
+    assert clean_html(html) == expected_without_media
+    assert clean_html(html, with_media=True) == expected_with_media
