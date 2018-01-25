@@ -78,7 +78,8 @@ class RichTextEntry(widgets.Widget):
         filtered_html = bleach.clean(
             raw_html_input,
             self.authorized_tags,
-            self.authorized_attributes)
+            self.authorized_attributes,
+            strip=True)
         return filtered_html
 
 

@@ -673,7 +673,7 @@ def test_content_summary_is_cleaned_from_unwanted_html_tags(staffapp):
     form['original'] = Upload('image.jpg', b'xxxxxx', 'image/jpeg')
     form.submit().follow()
     document = Document.objects.first()
-    assert document.summary == ('my content summary &lt;img src="foo"&gt;')
+    assert document.summary == ('my content summary')
 
 
 def test_index_should_not_show_hidden_content_to_user(app):
