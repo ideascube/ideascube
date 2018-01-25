@@ -5,6 +5,8 @@ import shutil
 import sys
 import urllib.error, urllib.parse
 
+import bleach
+
 from django.conf import locale
 from hashlib import sha256
 from resumable import (
@@ -180,3 +182,28 @@ def sanitize_tag_name(tag_name):
 def tag_splitter(tag_string):
     tags = set(sanitize_tag_name(t) for t in re.split(r'[;,]+', tag_string))
     return list(tag for tag in tags if tag)
+
+
+def clean_html(html, with_media=False):
+    authorized_tags = [
+        'p', 'a', 'ul', 'ol', 'li', 'blockquote',
+        'h1', 'h2', 'h3', 'h4', 'h5',
+        'strong', 'em',
+        'br',
+    ]
+    authorized_attributes = {
+        'a': ['href', 'title'],
+        'img': ['src', 'width', 'height', 'alt'],
+        'iframe': ['src', 'width', 'height', 'allowfullscreen'],
+        'video': [
+            'controls', 'width', 'height', 'allowfullscreen', 'preload',
+            'poster'],
+        'audio': ['controls', 'preload'],
+        'source': ['src']
+    }
+
+    if with_media:
+        authorized_tags += ['img', 'iframe', 'video', 'audio', 'source']
+
+    return bleach.clean(
+        html, authorized_tags, authorized_attributes, strip=True)
