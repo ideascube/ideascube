@@ -263,10 +263,8 @@ def test_content_text_is_cleaned_from_unwanted_html_tags(staffapp):
     form['published_at'] = '2014-12-10'
     form.submit().follow()
     content = Content.objects.first()
-    assert content.text == ('&lt;script type="text/javascript"&gt;'
-                            'alert("boo");&lt;/script&gt;&lt;div&gt;<p>'
-                            '<a href="exemple.com">A link</a></p>'
-                            '&lt;&lt;/div&gt;')
+    assert content.text == ('alert("boo");'
+                            '<p><a href="exemple.com">A link</a></p>&lt;')
 
 
 def test_content_summary_is_cleaned_from_unwanted_html_tags(staffapp):
@@ -277,7 +275,7 @@ def test_content_summary_is_cleaned_from_unwanted_html_tags(staffapp):
     form['published_at'] = '2014-12-10'
     form.submit().follow()
     content = Content.objects.first()
-    assert content.summary == ('my content summary &lt;img src="foo"&gt;')
+    assert content.summary == ('my content summary')
 
 
 def test_by_tag_page_should_be_filtered_by_tag(app):
