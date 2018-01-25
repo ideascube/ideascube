@@ -30,7 +30,7 @@
     {% endif %}
     <div class="text">{{ document.summary|safe }}</div>
     <div>
-        <a class="button" href="{% media document 'original' %}"><span class="fa fa-download fa-fw"></span>
+        <a class="button" href="{% media document 'original' %}" download><span class="fa fa-download fa-fw"></span>
             {% blocktrans with kind=document.KIND_DICT|getitem:document.kind %}
                 Download {{ kind }}
             {% endblocktrans %}</a>
