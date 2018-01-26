@@ -65,14 +65,14 @@ class FilterableViewMixin:
             (lang, LANG_INFO.get(lang, {}).get('name_local', lang))
             for lang in available_langs]
 
-    def _set_available_tags(self, context):
+    def _set_available_tags(self, context, limit=20):
         all_ = Counter()
         for slugs in self._search_for_attr_from_context('tags', context):
             for slug in slugs.strip('|').split('|'):
                 if not slug:
                     continue
                 all_[slug] += 1
-        common = [slug for slug, count in all_.most_common(20)]
+        common = [slug for slug, count in all_.most_common(limit)]
         context['available_tags'] = Tag.objects.filter(slug__in=common)
 
     def get_context_data(self, **kwargs):
