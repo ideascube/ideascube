@@ -889,6 +889,10 @@ html[dir='rtl'] .search input[type='submit'] {
         float: left;
     }
 
+    .float-clear-form {
+        clear: both;
+    }
+
 /* We reduce the size of the main-part only if there is a side-part. */
     .side-part-form + .main-part-form {
         width: 66%;
