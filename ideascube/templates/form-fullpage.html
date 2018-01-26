@@ -11,9 +11,9 @@
         <div class="row">
             {% block heading %}{% endblock heading %}
         </div>
-        <div class="row no-margin">
+        <div class="no-margin two-part-form-container">
             {% block _form_content %}
-            <div class="col two-third">
+            <div class="main-part-form layout-element">
                 {% csrf_token %}
                 {% block form %}
                     {% for field in form %}
@@ -22,6 +22,7 @@
                 {% endblock form %}
             </div>
             <div>
+            <div class="button-part-form layout-element">
                 <div class="row right-align">
                     {% block form_foot %}
                         <a class="spaced button neutral" href="{% block cancel_url %}{% endblock %}">{% trans 'cancel' %}</a>
