@@ -879,4 +879,55 @@ html[dir='rtl'] .search input[type='submit'] {
     .u-md-order-2 {
         order: 2;
     }
+
+/* On wide screen, we want the side-part to be on the side of the screen.
+ * We use the float attribute for that.
+ * (The side-part has to be the first element to allow elements after
+ * to be "pushed" on the right. */
+    .side-part-form {
+        width: 33%;
+        float: left;
+    }
+
+/* We reduce the size of the main-part only if there is a side-part. */
+    .side-part-form + .main-part-form {
+        width: 66%;
+
+/* This is needed to create a new block formatting context and avoid
+ * elements of the main part to move around the side-part.
+ * https://www.alsacreations.com/astuce/lire/1543-le-contexte-de-formatage-block-en-css.html (fr)
+ */
+        display: inline-block;
+    }
+
+/* Ideally we should also reduce the size of the button block only if
+ * there is a side-part but it is complicated with css selector.
+ * Always reduce the size is not a problem as we are mouving the
+ * block on the right with the margin-left. */
+    .button-part-form {
+        width: 66%;
+        margin-left: 33%;
+    }
+}
+
+@media screen and (max-width: 48em) {
+/* On small screen, we want to have all part in the same column.
+ * But we want the change the order to have the side-part between the
+ * main-part and the buttons.
+ * Only a flex box allow this, so we have to use it
+ */
+    .two-part-form-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main-part-form {
+        order: 0;
+    }
+    .side-part-form {
+        order: 1;
+    }
+    .button-part-form {
+        order: 2;
+    }
 }
