@@ -64,7 +64,7 @@ class Index(NoHiddenDocumentMixin, FilterableViewMixin, OrderableViewMixin, List
 
         self._set_available_kinds(context)
         self._set_available_langs(context)
-        self._set_available_tags(context)
+        self._set_available_tags(context, limit=100)
         # We assume that if there is a source, it is a package_id.
         package_id = context.get('source')
         if package_id:
