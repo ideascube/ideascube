@@ -181,3 +181,23 @@ def test_remove_qs_to_several():
     assert dict(orig) == {'foo': ['val1', 'val2']}
     params = _remove_qs(orig, foo='val2')
     assert dict(params) == {'foo': ['val1']}
+
+
+@pytest.mark.parametrize('html, length, expected', [
+    pytest.param(
+        '<p>A paragraph</p>', 200, '<p>A paragraph</p>',
+        id='simple'),
+    pytest.param(
+        '<p>A paragraph</p>', 5, '<p>A ...</p>',
+        id='shortened'),
+    pytest.param(
+        '<p>A paragraph</p><img alt="An image" src="url"><p>A paragraph</p>',
+        200, '<p>A paragraph</p><p>A paragraph</p>', id='image'),
+    pytest.param(
+        '<p>A paragraph</p><img alt="An image" src="url"><p>A paragraph</p>',
+        15, '<p>A paragraph</p><p>A...</p>', id='image-shorten'),
+])
+def test_summarize_html(html, length, expected):
+    from ideascube.templatetags.ideascube_tags import summarize_html
+
+    assert summarize_html(html, length) == expected

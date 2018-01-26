@@ -6,7 +6,7 @@ from django.utils.encoding import force_text
 from django.forms.utils import flatatt
 from django.utils.translation import get_language
 
-import bleach
+from .utils import clean_html
 
 
 _ideascube_to_tinyMCE_language_map = {
@@ -18,26 +18,6 @@ class RichTextEntry(widgets.Widget):
     def __init__(self, *, with_media=False, attrs=None):
         super().__init__(attrs=attrs)
         self.with_media = with_media
-
-        self.authorized_tags = [
-            'p', 'a', 'ul', 'ol', 'li', 'blockquote',
-            'h1', 'h2', 'h3', 'h4', 'h5',
-            'strong', 'em',
-            'br',
-        ]
-        self.authorized_attributes = {
-            'a': ['href', 'title'],
-            'img': ['src', 'width', 'height', 'alt'],
-            'iframe': ['src', 'width', 'height', 'allowfullscreen'],
-            'video': [
-                'controls', 'width', 'height', 'allowfullscreen', 'preload',
-                'poster'],
-            'audio': ['controls', 'preload'],
-            'source': ['src']
-        }
-        if with_media:
-            self.authorized_tags += [
-                'img', 'iframe', 'video', 'audio', 'source']
 
     def get_language(self):
         ideascube_language = get_language()
@@ -75,10 +55,8 @@ class RichTextEntry(widgets.Widget):
 
     def value_from_datadict(self, data, files, name):
         raw_html_input = super().value_from_datadict(data, files, name)
-        filtered_html = bleach.clean(
-            raw_html_input,
-            self.authorized_tags,
-            self.authorized_attributes)
+        filtered_html = clean_html(raw_html_input, with_media=self.with_media)
+
         return filtered_html
 
 
