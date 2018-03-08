@@ -25,7 +25,8 @@ SECRET_KEY = '16exrv_@=2(za=oj$tj+l_^v#sbt83!=t#wz$s+1udfa04#vz!'
 
 DEBUG = bool(os.environ.get('DEBUG', False))
 
-ALLOWED_HOSTS = ['.ideascube.lan', 'localhost']
+DOMAIN = os.environ.get('DOMAIN', 'ideascube.lan')
+ALLOWED_HOSTS = ['.{}'.format(DOMAIN), 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -238,8 +239,6 @@ AUTH_USER_MODEL = 'ideascube.User'
 IDEASCUBE_PLACE_NAME = _('the camp')
 
 LOAN_DURATION = 0  # In days.
-
-DOMAIN = 'ideascube.lan'
 
 # Fields to be used in the entry export. This export is supposed to be
 # anonymized, so no personal data like name.
