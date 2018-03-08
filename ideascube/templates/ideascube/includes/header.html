@@ -1,12 +1,14 @@
 {% load i18n static %}
 {% spaceless %}
 <header>
-    <section>
+    <section class="logo">
       <a href="{% url 'index' %}">
-        <h1>
+        <span>
           <img src="{% static 'branding/header-logo.png' %}"></img>
-        </h1>
+        </span>
       </a>
+    </section>
+    <section class="menu">
       <span class="boxid">{{ server_name }}</span>
     </section>
     <section class="menu">
