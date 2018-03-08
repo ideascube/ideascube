@@ -484,19 +484,24 @@ header h1 a {
 .boxid {
     font-family: 'fira_sansbold';
     font-weight: normal;
-    color: #F89406;
-    font-size: 15px;
+    color: black;
     padding: 3px 5px;
-    position: relative;
+    position: initial;
     text-align: center;
-    text-transform: uppercase;
+    font-size: 40px;
     top: 25px;
-    left: -50px;
+    left: 0px;
     float: right;
+    text-transform: none;
 }
 html[dir='rtl'] .boxid {
     float: left;
     right: -81px;
+}
+.logo {
+    padding-top: 5px;
+    width: 250px;
+    height: 80px
 }
 footer .half {
     margin-left: 50%;
@@ -827,6 +832,9 @@ html[dir='rtl'] .search input[type='submit'] {
     header .menu {
         margin-right: 0px;
     }
+    .boxid {
+        font-size: 40px;
+    }
     .col + .col {
         padding-left: 5px;
     }
@@ -847,6 +855,9 @@ html[dir='rtl'] .search input[type='submit'] {
     .twide {
         width: 100%;
     }
+    .boxid {
+        font-size: 30px;
+    }
     .thalf {
         width: 50%;
     }
@@ -858,6 +869,9 @@ html[dir='rtl'] .search input[type='submit'] {
     .mhalf {
         width: 50%;
     }
+    .boxid {
+        font-size: 25px;
+    }
     header {
         margin-top: 20px;
         flex-direction : column;
@@ -867,7 +881,7 @@ html[dir='rtl'] .search input[type='submit'] {
 }
 @media screen and (max-width: 600px) {
     .boxid {
-        display: none;
+        font-size: 20px;
     }
 }
 
