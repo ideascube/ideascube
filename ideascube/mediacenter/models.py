@@ -121,3 +121,15 @@ class Document(SearchMixin, TimeStampedModel):
     @property
     def slug(self):
         return self.get_kind_display()
+
+    @property
+    def size(self):
+        _size = self.original.size
+        unities = [(_("Go"), 1024**3),
+                   (_("Mo"), 1024**2),
+                   (_("Ko"), 1024**1),
+                   (_("o"), 1)]
+        for unity, divider in unities:
+            if _size > divider:
+                return "{} {}".format(_size//divider, unity)
+        return "{} {}".format(_size, _("o"))
