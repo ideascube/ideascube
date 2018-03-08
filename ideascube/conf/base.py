@@ -264,6 +264,7 @@ STAFF_HOME_CARDS = [
         'title': _('Users'),
         'description': _('Create, remove or modify users.'),
         'fa': 'users',
+        'class': 'application',
     },
     {
         'is_staff': True,
@@ -272,6 +273,7 @@ STAFF_HOME_CARDS = [
         'title': _('Entries'),
         'description': _('Manage user entries.'),
         'fa': 'sign-in',
+        'class': 'application',
     },
     {
         'is_staff': True,
@@ -280,6 +282,7 @@ STAFF_HOME_CARDS = [
         'title': _('Stock'),
         'description': _('Manage stock.'),
         'fa': 'barcode',
+        'class': 'application',
     },
     {
         'is_staff': True,
@@ -288,6 +291,7 @@ STAFF_HOME_CARDS = [
         'title': _('Loans'),
         'description': _('Manage loans.'),
         'fa': 'exchange',
+        'class': 'application',
     },
     {
         'is_staff': True,
@@ -296,6 +300,7 @@ STAFF_HOME_CARDS = [
         'title': _('Settings'),
         'description': _('Configure the server'),
         'fa': 'cog',
+        'class': 'application',
     },
 ]
 

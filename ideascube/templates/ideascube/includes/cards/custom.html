@@ -5,7 +5,7 @@
   {{ card.url }}
 {% else %}
   {% url card.url %}
-{% endif %}" class="card tinted">
+{% endif %}" class="card tinted {{ card.class }}">
   {% if card.fa %}<i class="fa fa-{{ card.fa }} fa-3x"></i>{% endif %}
   <h4>
     <span class="theme {{ card.category }}">{% trans card.category %}</span>

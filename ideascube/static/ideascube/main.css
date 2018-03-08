@@ -594,6 +594,10 @@ html[dir='rtl'] .card i.fa {
     background-repeat: no-repeat;
     background-position: center right 5px;
 }
+.card.tinted.application {
+    border: 2px solid #b9b9b9;
+    background-color: #eee;
+}
 html[dir='rtl'] .tinted {
     background-position: center left 5px;
 }
