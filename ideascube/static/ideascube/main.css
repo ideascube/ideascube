@@ -420,7 +420,7 @@ header .boxname {
 }
 header .menu a {
     color: #333;
-    line-height: 100px;
+    line-height: 60px;
     text-transform: uppercase;
     font-family: 'fira_sansbold';
     font-weight: normal;
