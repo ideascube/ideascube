@@ -390,6 +390,7 @@ header {
     color: #333;
     border-bottom: 1px solid #eee;
     margin-bottom: 40px;
+    margin-top: 10px;
 }
 header section {
     align-self: center;
