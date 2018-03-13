@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-18 16:45+0000\n"
+"POT-Creation-Date: 2018-03-13 13:44+0000\n"
 "PO-Revision-Date: 2018-01-18 16:51+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
 "Language-Team: Arabic (http://www.transifex.com/ideascube/ideascube/language/ar/)\n"
@@ -80,11 +80,14 @@ msgstr "المواضيع"
 msgid "View all posts"
 msgstr "إظهار جميع المنشورات"
 
-#: ideascube/blog/templates/blog/content_detail.html:7
-#: ideascube/blog/templates/blog/index.html:6
-#: ideascube/templates/ideascube/includes/cards/blog.html:5
-msgid "Blog"
-msgstr "المدونة"
+#: ideascube/blog/templates/blog/content_detail.html:14
+#: ideascube/mediacenter/templates/mediacenter/document_detail.html:50
+#: ideascube/monitoring/templates/monitoring/inventory.html:54
+#: ideascube/monitoring/templates/monitoring/stock.html:25
+#: ideascube/monitoring/templates/monitoring/stockitem_detail.html:10
+#: ideascube/templates/ideascube/user_detail.html:14
+msgid "Edit"
+msgstr "تعديل"
 
 #: ideascube/blog/templates/blog/content_form.html:7
 msgid "Edit post"
@@ -106,6 +109,11 @@ msgstr "المحتوى"
 msgid "Metadatas"
 msgstr "الملخص "
 
+#: ideascube/blog/templates/blog/index.html:6
+#: ideascube/templates/ideascube/includes/cards/blog.html:5
+msgid "Blog"
+msgstr "المدونة"
+
 #: ideascube/blog/templates/blog/index.html:17
 msgid "Add content"
 msgstr "إضافة محتوى"
@@ -114,56 +122,56 @@ msgstr "إضافة محتوى"
 msgid "Last published"
 msgstr "أحدث المنشورات"
 
-#: ideascube/conf/base.py:112
+#: ideascube/conf/base.py:113
 msgid "Suitable for all languages"
 msgstr ""
 
-#: ideascube/conf/base.py:238
+#: ideascube/conf/base.py:239
 msgid "the camp"
 msgstr "المخيّم"
 
-#: ideascube/conf/base.py:253
+#: ideascube/conf/base.py:252
 msgid "Basic informations"
 msgstr "معلومات أساسية"
 
-#: ideascube/conf/base.py:264 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:263 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr "المستخدمين"
 
-#: ideascube/conf/base.py:265
+#: ideascube/conf/base.py:264
 msgid "Create, remove or modify users."
 msgstr "إنشاء / حذف / تعديل المستخدم"
 
-#: ideascube/conf/base.py:272
+#: ideascube/conf/base.py:271
 msgid "Entries"
 msgstr "المستخدمين"
 
-#: ideascube/conf/base.py:273
+#: ideascube/conf/base.py:272
 msgid "Manage user entries."
 msgstr "إدارة دخول المستخدمين"
 
-#: ideascube/conf/base.py:280
+#: ideascube/conf/base.py:279
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
 msgstr "المخزون"
 
-#: ideascube/conf/base.py:281
+#: ideascube/conf/base.py:280
 msgid "Manage stock."
 msgstr "إدارة المخزون ( الجرد )"
 
-#: ideascube/conf/base.py:288
+#: ideascube/conf/base.py:287
 msgid "Loans"
 msgstr "الاستعارة"
 
-#: ideascube/conf/base.py:289
+#: ideascube/conf/base.py:288
 msgid "Manage loans."
 msgstr "ادارة الاستعارة"
 
-#: ideascube/conf/base.py:296
+#: ideascube/conf/base.py:295
 msgid "Settings"
 msgstr ""
 
-#: ideascube/conf/base.py:297
+#: ideascube/conf/base.py:296
 msgid "Configure the server"
 msgstr ""
 
@@ -172,7 +180,7 @@ msgid "the community"
 msgstr "المجتمع"
 
 #: ideascube/conf/idb_aus_queensland.py:13 ideascube/conf/idb_aus_slwa.py:12
-#: ideascube/conf/idb_bdi.py:7 ideascube/conf/idb_col_llavedelsaber.py:10
+#: ideascube/conf/idb_bdi.py:7 ideascube/conf/idb_col_llavedelsaber.py:8
 #: ideascube/conf/idb_deu_dusseldorf.py:17
 #: ideascube/conf/idb_eth_bokolmanyo.py:12 ideascube/conf/idb_fra.py:16
 #: ideascube/conf/idb_fra_cultura.py:7 ideascube/conf/idb_grc_eleonas.py:11
@@ -853,13 +861,6 @@ msgid ""
 "                   It is installed by the \"%(package_id)s\" package.\n"
 "               "
 msgstr "\nلا يمكن حذف أو تعديل هذا الملف\n\nتم تحميله من خلال \"%(package_id)s\""
-
-#: ideascube/mediacenter/templates/mediacenter/document_detail.html:50
-#: ideascube/monitoring/templates/monitoring/inventory.html:54
-#: ideascube/monitoring/templates/monitoring/stock.html:25
-#: ideascube/templates/ideascube/user_detail.html:14
-msgid "Edit"
-msgstr "تعديل"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:51
 #: ideascube/templates/ideascube/user_detail.html:15
@@ -1558,6 +1559,7 @@ msgid "Actions"
 msgstr "العمليات"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:28
+#: ideascube/monitoring/templates/monitoring/stockitem_detail.html:11
 msgid "Add new specimen of this item"
 msgstr "أضافة متعلقات جديده حول هذا الموضوع"
 
@@ -2002,11 +2004,11 @@ msgstr ""
 msgid "yes"
 msgstr "نعم"
 
-#: ideascube/templates/form-fullpage.html:25
+#: ideascube/templates/form-fullpage.html:27
 msgid "cancel"
 msgstr "إلغاء"
 
-#: ideascube/templates/form-fullpage.html:28
+#: ideascube/templates/form-fullpage.html:30
 #: ideascube/templates/ideascube/welcome_staff.html:17
 msgid "submit"
 msgstr "حفظ"
