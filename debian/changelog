@@ -1,3 +1,23 @@
+ideascube (0.37.0) unstable; urgency=low
+
+  * Add some more languages (Kibongo, Tshiluba) (@mbridon)
+  * Fix some css and translations (@mbridon)
+  * Do not allow search on hidden document (@mbridon)
+  * Fix wrong filter and tags on search (@mbridon)
+  * Allow custom settings from a custom app (@mbridon)
+  * Allow blockquote tag in the blob (@mbridon)
+  * Force download of media for the mediacenter's "download" button
+    (@mgautierfr)
+  * Make the form css responsive (@mgautiefr)
+  * Better summary of the blog articles (@mbridon)
+  * Display up to 100 tags in the mediacenter index view (@mgautierfr)
+  * Update configuration files (@fheslouin)
+  * Make the DOMAIN and ALLOWED_HOSTS configurable through a environment
+    variable (@mbridon)
+  * Small fixes (@mbridon)
+
+ -- Matthieu Gautier <mgautier@kymeria.fr>  Tue, 13 Mar 2018 14:43:00 +0100
+
 ideascube (0.36.0) unstable; urgency=low
 
   * Made it possible to include custom branding CSS; (@mgautierfr)
