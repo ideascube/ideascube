@@ -11,7 +11,7 @@
 {% block third %}
     {% if user.is_staff %}
         <div class="card tinted admin">
-            {% fa 'pencil' 'fa-fw' %}<a href="{% url 'blog:content_update' pk=content.pk %}">Edit</a>
+            {% fa 'pencil' 'fa-fw' %}<a href="{% url 'blog:content_update' pk=content.pk %}">{% trans 'Edit' %}</a>
         </div>
     {% endif %}
     {% include 'ideascube/includes/tag_cloud.html' with url="blog:index" tags=content.tags.all %}
