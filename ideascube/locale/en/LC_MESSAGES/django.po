@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 13:18+0000\n"
+"POT-Creation-Date: 2018-03-13 13:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,6 +72,15 @@ msgstr ""
 
 #: ideascube/blog/templates/blog/content_detail.html:6
 msgid "View all posts"
+msgstr ""
+
+#: ideascube/blog/templates/blog/content_detail.html:14
+#: ideascube/mediacenter/templates/mediacenter/document_detail.html:50
+#: ideascube/monitoring/templates/monitoring/inventory.html:54
+#: ideascube/monitoring/templates/monitoring/stock.html:25
+#: ideascube/monitoring/templates/monitoring/stockitem_detail.html:10
+#: ideascube/templates/ideascube/user_detail.html:14
+msgid "Edit"
 msgstr ""
 
 #: ideascube/blog/templates/blog/content_form.html:7
@@ -848,13 +857,6 @@ msgid ""
 "               "
 msgstr ""
 
-#: ideascube/mediacenter/templates/mediacenter/document_detail.html:50
-#: ideascube/monitoring/templates/monitoring/inventory.html:54
-#: ideascube/monitoring/templates/monitoring/stock.html:25
-#: ideascube/templates/ideascube/user_detail.html:14
-msgid "Edit"
-msgstr ""
-
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:51
 #: ideascube/templates/ideascube/user_detail.html:15
 msgid "Delete"
@@ -1553,6 +1555,7 @@ msgid "Actions"
 msgstr ""
 
 #: ideascube/monitoring/templates/monitoring/stock.html:28
+#: ideascube/monitoring/templates/monitoring/stockitem_detail.html:11
 msgid "Add new specimen of this item"
 msgstr ""
 
