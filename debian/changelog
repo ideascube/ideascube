@@ -1,3 +1,9 @@
+ideascube (0.37.1) unstable; urgency=low
+
+  * Mark some strings to be translatable (@mbridon)
+
+ -- Matthieu Gautier <mgautier@kymeria.fr>  Tue, 13 Mar 2018 15:00:00 +0100
+
 ideascube (0.37.0) unstable; urgency=low
 
   * Add some more languages (Kibongo, Tshiluba) (@mbridon)

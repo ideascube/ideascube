@@ -4,6 +4,6 @@ if sys.version_info.major != 3:
     sys.exit('ERROR: Ideascube only works with Python 3')
 
 
-VERSION = (0, 37, 0)
+VERSION = (0, 37, 1)
 
 __version__ = ".".join(map(str, VERSION))
