@@ -1416,7 +1416,7 @@ def test_catalog_install_does_not_stop_on_failure(
 
     mocker.patch('ideascube.serveradmin.catalog.SystemManager')
 
-    def fake_install(package, download_path):
+    def fake_install(package, download_path, keep_downloads=False):
         if package.id == 'wikipedia.tum':
             raise OSError
 
