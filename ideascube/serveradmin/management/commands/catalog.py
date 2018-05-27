@@ -35,6 +35,10 @@ class Command(BaseCommandWithSubcommands):
             '--keep-downloads', action='store_true',
             help='Keep the downloaded packages in the local cache after the '
                  'operation (the default is to discard them)')
+        package_cache.add_argument(
+            '--skip-sha256', action='store_true',
+            help='Dont check the SHA256 sum of packages when (re)installing/'
+                 'upgrading (assuming download/file integrity is correct)')
 
         # -- Manage content ---------------------------------------------------
         list = self.subs.add_parser(
@@ -181,7 +185,8 @@ class Command(BaseCommandWithSubcommands):
 
         try:
             self.catalog.install_packages(
-                options['ids'], keep_downloads=options['keep_downloads'])
+                options['ids'], keep_downloads=options['keep_downloads'],
+                skip_sha256=options['skip_sha256'])
 
         except NoSuchPackage as e:
             raise CommandError('No such package: {}'.format(e))
@@ -192,7 +197,8 @@ class Command(BaseCommandWithSubcommands):
     def reinstall_packages(self, options):
         try:
             self.catalog.reinstall_packages(
-                options['ids'], keep_downloads=options['keep_downloads'])
+                options['ids'], keep_downloads=options['keep_downloads'],
+                skip_sha256=options['skip_sha256'])
 
         except NoSuchPackage as e:
             raise CommandError('No such package: {}'.format(e))
@@ -204,7 +210,8 @@ class Command(BaseCommandWithSubcommands):
 
         try:
             self.catalog.upgrade_packages(
-                options['ids'], keep_downloads=options['keep_downloads'])
+                options['ids'], keep_downloads=options['keep_downloads'],
+                skip_sha256=options['skip_sha256'])
 
         except NoSuchPackage as e:
             raise CommandError('No such package: {}'.format(e))

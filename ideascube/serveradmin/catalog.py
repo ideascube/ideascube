@@ -571,7 +571,7 @@ class Catalog:
         sha = get_file_sha256(path)
         return sha == sha256sum
 
-    def _fetch_package(self, package):
+    def _fetch_package(self, package, skip_sha256=False):
         def _progress(*args):
             self._progress(package.id, *args)
 
@@ -581,7 +581,7 @@ class Catalog:
             path = os.path.join(cache, filename)
 
             if os.path.isfile(path):
-                if self._verify_sha256(path, package.sha256sum):
+                if skip_sha256 or self._verify_sha256(path, package.sha256sum):
                     return path
 
                 # This might be an incomplete download, try finishing it
@@ -671,7 +671,7 @@ class Catalog:
         set_config('home-page', 'displayed-package-ids',
                    displayed_packages, User.objects.get_system_user())
 
-    def install_packages(self, ids, keep_downloads=False):
+    def install_packages(self, ids, keep_downloads=False, skip_sha256=False):
         ids = self._expand_package_ids(ids, self._available)
         used_handlers = set()
         installs = []
@@ -686,7 +686,7 @@ class Catalog:
             pkg = self._get_package(pkg_id, self._available)
 
             try:
-                download_path = self._fetch_package(pkg)
+                download_path = self._fetch_package(pkg, skip_sha256)
 
             except Exception as e:
                 printerr(e)
@@ -760,11 +760,13 @@ class Catalog:
         for handler in used_handlers:
             handler.commit()
 
-    def reinstall_packages(self, ids, keep_downloads=False):
+    def reinstall_packages(self, ids, keep_downloads=False, skip_sha256=False):
         self.remove_packages(ids, commit=False)
-        self.install_packages(ids, keep_downloads=keep_downloads)
+        self.install_packages(ids,
+                              keep_downloads=keep_downloads,
+                              skip_sha256=skip_sha256)
 
-    def upgrade_packages(self, ids, keep_downloads=False):
+    def upgrade_packages(self, ids, keep_downloads=False, skip_sha256=False):
         ids = self._expand_package_ids(ids, self._installed)
         used_handlers = set()
         updates = []
@@ -798,7 +800,7 @@ class Catalog:
                 continue
 
             try:
-                download_path = self._fetch_package(upkg)
+                download_path = self._fetch_package(upkg, skip_sha256)
 
             except Exception as e:
                 printerr(e)
