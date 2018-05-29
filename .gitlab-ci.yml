@@ -54,8 +54,7 @@ Missing Migrations:
   script:
   - pew in venv make check-missing-migrations
 
-
-Master Debian Package:
+.deb: &deb_definition
   stage: deploy
   image: ideascube/ideascube-ci:jessie-deb-builder
   script:
@@ -69,3 +68,10 @@ Master Debian Package:
     - ideascube_*.deb
   only:
   - master
+
+"Master Debian Package: Jessie/Python-3.4":
+  <<: *deb_definition
+
+"Master Debian Package: Stretch/Python-3.5":
+  <<: *deb_definition
+  image: ideascube/ideascube-ci:stretch-deb-builder
