@@ -18,6 +18,7 @@ case "$1" in
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/$DPKG_MAINTSCRIPT_PACKAGE/main
         chown $DPKG_MAINTSCRIPT_PACKAGE:$DPKG_MAINTSCRIPT_PACKAGE /var/cache/$DPKG_MAINTSCRIPT_PACKAGE
+        sed -i.bak s/python3.4/$(readlink $(which python3))/g /etc/uwsgi/apps-available/ideascube.ini
         ;;
 esac
 
