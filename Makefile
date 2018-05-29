@@ -39,6 +39,9 @@ ci-images:
 	docker build --no-cache --file dockerfiles/ci-jessie-deb-builder --tag ideascube/ideascube-ci:jessie-deb-builder .
 	docker push ideascube/ideascube-ci:jessie-deb-builder
 
+	docker build --no-cache --file dockerfiles/ci-stretch-deb-builder --tag ideascube/ideascube-ci:stretch-deb-builder .
+	docker push ideascube/ideascube-ci:stretch-deb-builder
+
 
 # -- Translations -------------------------------------------------------------
 collect_translations:
