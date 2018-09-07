@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Florian HESLOUIN <splite@zimdeo.fr>, 2015
 # Grégoire <gregoire.pouget@bibliosansfrontieres.org>, 2017
@@ -15,14 +15,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 13:44+0000\n"
+"POT-Creation-Date: 2018-09-07 15:09+0000\n"
 "PO-Revision-Date: 2018-01-18 17:00+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
-"Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/fr/)\n"
+"Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/"
+"fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ideascube/blog/models.py:45
@@ -364,9 +365,12 @@ msgstr "Mot de passe"
 #: ideascube/forms.py:38
 msgid ""
 "To create a strong password, forget about passwords, and think rather about "
-"a passphrase. For instance: \"The boat is flowing on the water\" is a strong"
-" and easy to remember passphrase. Now choose your own passphrase!"
-msgstr "Pour créer un bon mot de passe, oubliez les mots de passe, et cherchez plutôt des phrases. par exemple: \"Le bateau flotte sur la rivière\" est un bon mot de passe facile à retenir. Maintenant choisissez une phrase de passe!"
+"a passphrase. For instance: \"The boat is flowing on the water\" is a strong "
+"and easy to remember passphrase. Now choose your own passphrase!"
+msgstr ""
+"Pour créer un bon mot de passe, oubliez les mots de passe, et cherchez "
+"plutôt des phrases. par exemple: \"Le bateau flotte sur la rivière\" est un "
+"bon mot de passe facile à retenir. Maintenant choisissez une phrase de passe!"
 
 #: ideascube/forms.py:46
 msgid "Confirm password"
@@ -384,7 +388,8 @@ msgstr ""
 
 #: ideascube/library/forms.py:24
 msgid "You can't have both a file and a barcode"
-msgstr "Un exemplaire ne peut pas avoir à la fois un fichier et un code-barres."
+msgstr ""
+"Un exemplaire ne peut pas avoir à la fois un fichier et un code-barres."
 
 #: ideascube/library/forms.py:26
 msgid "You must add a file or a barcode"
@@ -550,9 +555,14 @@ msgstr "Exemplaire numérique"
 #, python-format
 msgid ""
 "\n"
-"         Are you sure you want to delete book \"%(book)s\" and all its specimens?\n"
+"         Are you sure you want to delete book \"%(book)s\" and all its "
+"specimens?\n"
 "    "
-msgstr "\n         Êtes-vous sûr de vouloir supprimer le livre \"%(book)s\" et tous ses exemplaires ?\n    "
+msgstr ""
+"\n"
+"         Êtes-vous sûr de vouloir supprimer le livre \"%(book)s\" et tous "
+"ses exemplaires ?\n"
+"    "
 
 #: ideascube/library/templates/library/book_detail.html:11
 msgid "View all books"
@@ -695,7 +705,10 @@ msgid ""
 "\n"
 "        Are you sure you want to delete \"%(name)s\"?\n"
 "    "
-msgstr "\n        Êtes-vous sûr de vouloir supprimer \"%(name)s\" ?\n    "
+msgstr ""
+"\n"
+"        Êtes-vous sûr de vouloir supprimer \"%(name)s\" ?\n"
+"    "
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:11
 #, python-format
@@ -703,7 +716,10 @@ msgid ""
 "\n"
 "        This will not delete book \"%(name)s\"\n"
 "    "
-msgstr "\n        Le livre \"%(name)s\" ne sera pas supprimé\n    "
+msgstr ""
+"\n"
+"        Le livre \"%(name)s\" ne sera pas supprimé\n"
+"    "
 
 #: ideascube/library/templates/library/specimen_form.html:7
 #, python-format
@@ -755,7 +771,9 @@ msgstr "Titre"
 
 #: ideascube/library/views.py:80
 msgid "Please add a specimen, or the book won't be available for the users"
-msgstr "Vous devez créer un exemplaire de ce livre sinon il ne sera pas visible pour les utilisateurs"
+msgstr ""
+"Vous devez créer un exemplaire de ce livre sinon il ne sera pas visible pour "
+"les utilisateurs"
 
 #: ideascube/library/views.py:122
 msgid "Unable to process notices: {}"
@@ -836,7 +854,10 @@ msgid ""
 "\n"
 "         Are you sure you want to delete document \"%(document)s\"?\n"
 "    "
-msgstr "\n         Êtes-vous sûr de vouloir supprimer le  document \"%(document)s\" ?\n    "
+msgstr ""
+"\n"
+"         Êtes-vous sûr de vouloir supprimer le  document \"%(document)s\" ?\n"
+"    "
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:10
 msgid "View all medias"
@@ -853,7 +874,9 @@ msgid ""
 "\n"
 "                Download %(kind)s\n"
 "            "
-msgstr "\nTélécharger le document %(kind)s"
+msgstr ""
+"\n"
+"Télécharger le document %(kind)s"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:43
 #, python-format
@@ -862,7 +885,10 @@ msgid ""
 "                   Cannot edit or delete this document.\n"
 "                   It is installed by the \"%(package_id)s\" package.\n"
 "               "
-msgstr "\nL'édition ou la suppression ne sont pas possibles. Ce document fait partie du package %(package_id)s."
+msgstr ""
+"\n"
+"L'édition ou la suppression ne sont pas possibles. Ce document fait partie "
+"du package %(package_id)s."
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:51
 #: ideascube/templates/ideascube/user_detail.html:15
@@ -943,7 +969,9 @@ msgstr "membre de l'équipe"
 
 #: ideascube/models.py:95
 msgid "Designates whether the user can log into this admin site."
-msgstr "Permet de définir si l'utilisateur pour accéder aux fonctions d'administration"
+msgstr ""
+"Permet de définir si l'utilisateur pour accéder aux fonctions "
+"d'administration"
 
 #: ideascube/models.py:132
 msgid "User with this identifier already exists."
@@ -1203,7 +1231,8 @@ msgstr "Handicap"
 
 #: ideascube/models.py:309
 msgid "Phone number (use comma to register more than one)"
-msgstr "Numéro de téléphone (utiliser des virgules pour en enregistrer plusieurs)"
+msgstr ""
+"Numéro de téléphone (utiliser des virgules pour en enregistrer plusieurs)"
 
 #: ideascube/models.py:311
 msgid "Email address (optional)"
@@ -1483,7 +1512,10 @@ msgid ""
 "\n"
 "        Are you sure you want to delete the inventory of %(date)s?\n"
 "    "
-msgstr "\n        Êtes-vous sur de vouloir supprimer l'inventaire du %(date)s ?\n    "
+msgstr ""
+"\n"
+"        Êtes-vous sur de vouloir supprimer l'inventaire du %(date)s ?\n"
+"    "
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:7
 #, python-format
@@ -1538,9 +1570,14 @@ msgstr "Retour"
 #, python-format
 msgid ""
 "\n"
-"        Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s\"?\n"
+"        Are you sure you want to delete the specimen \"%(specimen)s\" of "
+"\"%(item)s\"?\n"
 "    "
-msgstr "\n        Êtes-vous sûr de vouloir supprimer l'exemplaire \"%(specimen)s\" de \"%(item)s\" ?\n    "
+msgstr ""
+"\n"
+"        Êtes-vous sûr de vouloir supprimer l'exemplaire \"%(specimen)s\" de "
+"\"%(item)s\" ?\n"
+"    "
 
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:7
 #, python-format
@@ -1595,7 +1632,11 @@ msgid ""
 "\n"
 "         Are you sure you want to delete the stockitem \"%(item)s\"?\n"
 "    "
-msgstr "\n         Êtes-vous sûr de vouloir supprimer l'élément \"%(item)s\" du stock ?\n    "
+msgstr ""
+"\n"
+"         Êtes-vous sûr de vouloir supprimer l'élément \"%(item)s\" du "
+"stock ?\n"
+"    "
 
 #: ideascube/monitoring/templates/monitoring/stockitem_form.html:7
 msgid "Edit item"
@@ -1775,9 +1816,11 @@ msgstr "Mettre en ligne"
 #: ideascube/serveradmin/templates/serveradmin/backup.html:31
 #, python-brace-format
 msgid ""
-"File must be a zip, and file name must be in the form "
-"{source}-{version}-{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
-msgstr "Le fichier doit être un zip, et son nom doit être de la forme {source}-{version}-{date}.zip; par exemple : musasa-0.1.0-201501231405.zip"
+"File must be a zip, and file name must be in the form {source}-{version}-"
+"{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
+msgstr ""
+"Le fichier doit être un zip, et son nom doit être de la forme {source}-"
+"{version}-{date}.zip; par exemple : musasa-0.1.0-201501231405.zip"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:32
 msgid "Upload backup file"
@@ -1832,7 +1875,8 @@ msgstr "Choisir les langues"
 #: ideascube/serveradmin/templates/serveradmin/languages.html:8
 msgid ""
 "Select here the languages which will be available when uploading content"
-msgstr "Sélectionner les langues qui seront disponibles pour ajouter des contenus"
+msgstr ""
+"Sélectionner les langues qui seront disponibles pour ajouter des contenus"
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:23
 msgid "Save"
@@ -2086,7 +2130,10 @@ msgid ""
 "\n"
 "        Are you sure you want to delete user \"%(user_obj)s\"?\n"
 "    "
-msgstr "\n        Êtes-vous sûr de vouloir effacer l'utilisateur \"%(user_obj)s\" ?\n    "
+msgstr ""
+"\n"
+"        Êtes-vous sûr de vouloir effacer l'utilisateur \"%(user_obj)s\" ?\n"
+"    "
 
 #: ideascube/templates/ideascube/user_detail.html:5
 msgid "View all users"
@@ -2140,7 +2187,10 @@ msgid ""
 "To enjoy this digital library, you must first create a username and a "
 "password. These will allow you to administrate the server. Make sure to "
 "remember both the username AND password!"
-msgstr "Pour profiter de cette bibliothèque numérique, vous devez d'abord créer un nom d'utilisateur et un mot de passe. Assurez-vous de vous rappeler à la fois du nom d'utilisateur ET du mot de passe !"
+msgstr ""
+"Pour profiter de cette bibliothèque numérique, vous devez d'abord créer un "
+"nom d'utilisateur et un mot de passe. Assurez-vous de vous rappeler à la "
+"fois du nom d'utilisateur ET du mot de passe !"
 
 #: ideascube/templates/registration/login.html:14
 msgid "Log in"

@@ -3,24 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Alexander Cardenas <acardenas@bibliotecanacional.gov.co>, 2016
-# Diana Puyo <diana.puyo@bibliosansfrontieres.org>, 2016
-# Lina Cruz <lcruz@bibliotecanacional.gov.co>, 2016
-# Mathieu Bridon <bochecha@daitauha.fr>, 2017
-# mauricio ortiz <yortiz@bibliotecanacional.gov.co>, 2016
-# ToM <tom@leloop.org>, 2018
-# yohanboniface <yohanboniface@free.fr>, 2016
-# yohanboniface <yohanboniface@free.fr>, 2016
+# Florian HESLOUIN <splite@zimdeo.fr>, 2018
+# Olga Moukouli <olga.moukouli@bibliosansfrontieres.org>, 2018
+# Stephane Moutier <stephane.moutier@bibliosansfrontieres.org>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-07 15:09+0000\n"
-"PO-Revision-Date: 2018-04-09 16:03+0000\n"
-"Last-Translator: ToM <tom@leloop.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/ideascube/ideascube/"
-"language/es/)\n"
-"Language: es\n"
+"PO-Revision-Date: 2018-09-07 14:12+0000\n"
+"Last-Translator: Florian HESLOUIN <splite@zimdeo.fr>\n"
+"Language-Team: Greek (http://www.transifex.com/ideascube/ideascube/language/"
+"el/)\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,59 +24,59 @@ msgstr ""
 #: ideascube/blog/models.py:45
 #: ideascube/blog/templates/blog/content_card.html:6
 msgid "draft"
-msgstr "Borrador"
+msgstr "προσχέδιο"
 
 #: ideascube/blog/models.py:46
 msgid "published"
-msgstr "Publicado"
+msgstr "δημοσιευμένο"
 
 #: ideascube/blog/models.py:47
 msgid "deleted"
-msgstr "Borrado"
+msgstr "διαγραμμένο"
 
 #: ideascube/blog/models.py:50 ideascube/library/forms.py:149
 #: ideascube/mediacenter/models.py:55
 msgid "title"
-msgstr "Título"
+msgstr "τίτλος"
 
 #: ideascube/blog/models.py:53
 msgid "author"
-msgstr "autor"
+msgstr "συγγραφέας"
 
 #: ideascube/blog/models.py:55 ideascube/mediacenter/models.py:56
 msgid "summary"
-msgstr "Resumen"
+msgstr "σύνοψη"
 
 #: ideascube/blog/models.py:56 ideascube/mediacenter/models.py:42
 msgid "image"
-msgstr "Imagen"
+msgstr "εικόνα"
 
 #: ideascube/blog/models.py:59 ideascube/mediacenter/models.py:46
 msgid "text"
-msgstr "Texto"
+msgstr "κείμενο"
 
 #: ideascube/blog/models.py:60
 msgid "publication date"
-msgstr "Fecha de publicación"
+msgstr "ημερομηνία έκδοσης"
 
 #: ideascube/blog/models.py:62
 #: ideascube/serveradmin/templates/serveradmin/battery.html:11
 msgid "Status"
-msgstr "Estatus"
+msgstr "Κατάσταση"
 
 #: ideascube/blog/models.py:65 ideascube/library/models.py:59
 #: ideascube/library/templates/library/book_detail.html:23
 #: ideascube/mediacenter/models.py:58
 msgid "Language"
-msgstr "Idioma"
+msgstr "Γλώσσα"
 
 #: ideascube/blog/models.py:69 ideascube/mediacenter/models.py:76
 msgid "Topics"
-msgstr "Temas"
+msgstr "Θέματα"
 
 #: ideascube/blog/templates/blog/content_detail.html:6
 msgid "View all posts"
-msgstr "Ver todas las entradas"
+msgstr "Δες όλες τις αναρτήσεις"
 
 #: ideascube/blog/templates/blog/content_detail.html:14
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:50
@@ -90,97 +85,97 @@ msgstr "Ver todas las entradas"
 #: ideascube/monitoring/templates/monitoring/stockitem_detail.html:10
 #: ideascube/templates/ideascube/user_detail.html:14
 msgid "Edit"
-msgstr "Editar"
+msgstr "Επεξεργασία"
 
 #: ideascube/blog/templates/blog/content_form.html:7
 msgid "Edit post"
-msgstr "Editar entrada"
+msgstr "Επεξεργασία ανάρτησης"
 
 #: ideascube/blog/templates/blog/content_form.html:9
 msgid "New post"
-msgstr "Nueva entrada"
+msgstr "Νέα ανάρτηση"
 
 #: ideascube/blog/templates/blog/content_form.html:15
 #: ideascube/library/templates/library/book_form.html:19
 #: ideascube/mediacenter/templates/mediacenter/document_form.html:15
 msgid "Content"
-msgstr "Contenidos"
+msgstr "Περιεχόμενο"
 
 #: ideascube/blog/templates/blog/content_form.html:22
 #: ideascube/library/templates/library/book_form.html:28
 #: ideascube/mediacenter/templates/mediacenter/document_form.html:22
 msgid "Metadatas"
-msgstr "Metadatos"
+msgstr "Μεταδεδομένα"
 
 #: ideascube/blog/templates/blog/index.html:6
 #: ideascube/templates/ideascube/includes/cards/blog.html:5
 msgid "Blog"
-msgstr "Blog"
+msgstr "Ιστολόγιο"
 
 #: ideascube/blog/templates/blog/index.html:17
 msgid "Add content"
-msgstr "Añadir contenido"
+msgstr "Προσθήκη περιεχομένου"
 
 #: ideascube/blog/views.py:17
 msgid "Last published"
-msgstr "AMANI Campaign"
+msgstr "Δημοσιεύθηκαν τελευταία"
 
 #: ideascube/conf/base.py:113
 msgid "Suitable for all languages"
-msgstr ""
+msgstr "Κατάλληλο για όλες τις γλώσσες"
 
 #: ideascube/conf/base.py:239
 msgid "the camp"
-msgstr "El campo"
+msgstr "κέντρο υποδοχής "
 
 #: ideascube/conf/base.py:252
 msgid "Basic informations"
-msgstr "Informaciones básicas"
+msgstr "Βασικές πληροφορίες"
 
 #: ideascube/conf/base.py:263 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
-msgstr "Usuarios"
+msgstr "Χρήστες"
 
 #: ideascube/conf/base.py:264
 msgid "Create, remove or modify users."
-msgstr "Crear, borrar o modificar usuarios"
+msgstr "Δημιουργία, κατάργηση ή τροποποποίηση χρηστών."
 
 #: ideascube/conf/base.py:271
 msgid "Entries"
-msgstr "Entradas"
+msgstr "Είσοδοι"
 
 #: ideascube/conf/base.py:272
 msgid "Manage user entries."
-msgstr "Manejar las entradas de los usuarios"
+msgstr "Διαχείριση χρηστών εισόδου."
 
 #: ideascube/conf/base.py:279
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
-msgstr "Inventario"
+msgstr "Απόθεμα"
 
 #: ideascube/conf/base.py:280
 msgid "Manage stock."
-msgstr "Administración de inventario"
+msgstr "Διαχείριση αποθέματος."
 
 #: ideascube/conf/base.py:287
 msgid "Loans"
-msgstr "Préstamos"
+msgstr "Δάνεια"
 
 #: ideascube/conf/base.py:288
 msgid "Manage loans."
-msgstr "Manejar los préstamos"
+msgstr "Διαχείριση δανείων."
 
 #: ideascube/conf/base.py:295
 msgid "Settings"
-msgstr "Configuraciones"
+msgstr "Ρυθμίσεις"
 
 #: ideascube/conf/base.py:296
 msgid "Configure the server"
-msgstr ""
+msgstr "Διαμορφώνω το διακομιστή"
 
 #: ideascube/conf/idb_aus_queensland.py:6 ideascube/conf/idb_aus_slwa.py:5
 msgid "the community"
-msgstr "La comunidad"
+msgstr "η κοινότητα"
 
 #: ideascube/conf/idb_aus_queensland.py:13 ideascube/conf/idb_aus_slwa.py:12
 #: ideascube/conf/idb_bdi.py:7 ideascube/conf/idb_col_llavedelsaber.py:8
@@ -191,7 +186,7 @@ msgstr "La comunidad"
 #: ideascube/conf/idb_jor_azraq.py:12 ideascube/conf/idb_lwb_detroit_usa.py:17
 #: ideascube/conf/idb_sen_fap.py:18
 msgid "Personal informations"
-msgstr "Información personal"
+msgstr "Προσωπικές πληροφορίες"
 
 #: ideascube/conf/idb_aus_queensland.py:14 ideascube/conf/idb_aus_slwa.py:13
 #: ideascube/conf/idb_bdi.py:8 ideascube/conf/idb_deu_dusseldorf.py:18
@@ -200,14 +195,14 @@ msgstr "Información personal"
 #: ideascube/conf/idb_jor_azraq.py:13 ideascube/conf/idb_lwb_detroit_usa.py:18
 #: ideascube/conf/idb_sen_fap.py:19
 msgid "Family"
-msgstr "Familia"
+msgstr "Οικογένεια"
 
 #: ideascube/conf/idb_aus_queensland.py:15 ideascube/conf/idb_aus_slwa.py:14
 #: ideascube/conf/idb_deu_dusseldorf.py:19 ideascube/conf/idb_fra.py:18
 #: ideascube/conf/idb_grc_eleonas.py:12
 #: ideascube/conf/idb_lwb_detroit_usa.py:19 ideascube/conf/idb_sen_fap.py:20
 msgid "In the town"
-msgstr "En el pueblo"
+msgstr "Στην πόλη"
 
 #: ideascube/conf/idb_aus_queensland.py:16 ideascube/conf/idb_aus_slwa.py:15
 #: ideascube/conf/idb_bdi.py:11 ideascube/conf/idb_deu_dusseldorf.py:20
@@ -216,63 +211,63 @@ msgstr "En el pueblo"
 #: ideascube/conf/idb_jor_alhashmi.py:10 ideascube/conf/idb_jor_azraq.py:16
 #: ideascube/conf/idb_lwb_detroit_usa.py:20 ideascube/conf/idb_sen_fap.py:21
 msgid "Language skills"
-msgstr "Habilidades lingüisticas"
+msgstr "Γλωσσικές δεξιότητες"
 
 #: ideascube/conf/idb_bdi.py:9 ideascube/conf/idb_eth_bokolmanyo.py:14
 #: ideascube/conf/idb_irq_bardarash.py:10 ideascube/conf/idb_jor_azraq.py:14
 msgid "In the camp"
-msgstr "En campo"
+msgstr "Στο κέντρο υποδοχής"
 
 #: ideascube/conf/idb_bdi.py:10 ideascube/conf/idb_eth_bokolmanyo.py:15
 #: ideascube/conf/idb_jor_alhashmi.py:9 ideascube/conf/idb_jor_azraq.py:15
 msgid "Origin"
-msgstr "Origen"
+msgstr "Καταγωγή"
 
 #: ideascube/conf/idb_bdi.py:12 ideascube/conf/idb_eth_bokolmanyo.py:17
 #: ideascube/conf/idb_jor_alhashmi.py:11 ideascube/conf/idb_jor_azraq.py:17
 msgid "National residents"
-msgstr "Residentes nacionales"
+msgstr "Κάτοικοι εσωτερικού"
 
 #: ideascube/conf/idb_deu_dusseldorf.py:9 ideascube/conf/idb_fra.py:8
 #: ideascube/conf/idb_lwb_detroit_usa.py:10 ideascube/conf/idb_sen_fap.py:10
 msgid "city"
-msgstr "Ciudad"
+msgstr "πόλη"
 
 #: ideascube/conf/idb_grc_eleonas.py:6
 msgid "camp"
-msgstr "Campo"
+msgstr "κέντρο υποδοχής"
 
 #: ideascube/conf/idb_jor_azraq.py:21
 msgid "16 Days of Activism"
-msgstr "16 Days of Activism"
+msgstr "16 ημέρες Ακτιβισμού"
 
 #: ideascube/conf/idb_jor_azraq.py:22
 msgid "AMANI Campaign"
-msgstr "AMANI Campaign"
+msgstr "εκστρατεία ΑΜΑΝΙ"
 
 #: ideascube/conf/idb_jor_azraq.py:23
 msgid "Anger Management Training"
-msgstr "Anger Management Training"
+msgstr "Mαθήματα διαχείρισης θυμού"
 
 #: ideascube/conf/idb_jor_azraq.py:24
 msgid "Basic Computer Training"
-msgstr "Basic Computer Training"
+msgstr "Βασική εκπαίδευση υπολογιστών"
 
 #: ideascube/conf/idb_jor_azraq.py:25
 msgid "Beauty Training"
-msgstr "Beauty Training"
+msgstr "Σχολή αισθητικής"
 
 #: ideascube/conf/idb_jor_azraq.py:26
 msgid "Book Club"
-msgstr "Book Club"
+msgstr "Λέσχη βιβλίου"
 
 #: ideascube/conf/idb_jor_azraq.py:27
 msgid "Conflict Resolution Training"
-msgstr "Conflict Resolution Training"
+msgstr "Εκπαίδευση στην εναλλακτική επίλυση διαφορών"
 
 #: ideascube/conf/idb_jor_azraq.py:28
 msgid "Coping Skills and Mechanisms Training"
-msgstr "Coping Skills and Mechanisms Training"
+msgstr "Δεξιότητες και μηχανισμοί άμυνας"
 
 #: ideascube/conf/idb_jor_azraq.py:29
 msgid "EDRAAK"
@@ -280,55 +275,56 @@ msgstr "EDRAAK"
 
 #: ideascube/conf/idb_jor_azraq.py:30
 msgid "Emotional intelligence Training"
-msgstr "Emotional intelligence Training"
+msgstr "Εκπαίδευση στη συναισθηματική νοημοσύνη"
 
 #: ideascube/conf/idb_jor_azraq.py:31
 msgid "Handicrafts"
-msgstr "Artesanías"
+msgstr "Βιοτεχνίες"
 
 #: ideascube/conf/idb_jor_azraq.py:32
 msgid "How to be a Psychosocial Counselor Training"
-msgstr "How to be a Psychosocial Counselor Training"
+msgstr "Εκπαίδευση στη συμβουλευτική ψυχοκοινωνιολογία"
 
 #: ideascube/conf/idb_jor_azraq.py:33
 msgid "I am Woman"
-msgstr "I am Woman"
+msgstr "Είμαι γυναίκα"
 
 #: ideascube/conf/idb_jor_azraq.py:34
 msgid "International Children Day"
-msgstr "International Children Day"
+msgstr "Παγκόσμια Ημέρα Παιδιού"
 
 #: ideascube/conf/idb_jor_azraq.py:35
 msgid "International Refugee Day"
-msgstr "International Refugee Day"
+msgstr "Παγκόσμια Ημέρα Προσφύγων"
 
 #: ideascube/conf/idb_jor_azraq.py:36
 msgid "Marathon"
-msgstr "Marathon"
+msgstr "Μαραθώνιος"
 
 #: ideascube/conf/idb_jor_azraq.py:37
 msgid "Mother's day celebration"
-msgstr "Día de la madre"
+msgstr "Γιορτή για την Ημέρα της Μητέρας"
 
 #: ideascube/conf/idb_jor_azraq.py:38
 msgid "Parenting Skills Training"
-msgstr "Parenting Skills Training"
+msgstr "Σχολή γονέων"
 
 #: ideascube/conf/idb_jor_azraq.py:39
 msgid "Peer Support Group"
-msgstr "Peer Support Group"
+msgstr "Ομάδα συμβουλευτικής"
 
 #: ideascube/conf/idb_jor_azraq.py:40
 msgid "Psychosocial ART Interventions Training"
-msgstr "Psychosocial ART Interventions Training"
+msgstr ""
+"Εκπαίδευση στην ψυχοκοινωνική παρέμβαση μέσω καλλιτεχνικών δραστηριοτήτων"
 
 #: ideascube/conf/idb_jor_azraq.py:41
 msgid "Puppets and Theatre"
-msgstr "Puppets and Theatre"
+msgstr "Κουκλοθέατρο"
 
 #: ideascube/conf/idb_jor_azraq.py:42
 msgid "Sewing and stitching"
-msgstr "Sewing and stitching"
+msgstr "Ραπτική και τρύπωμα"
 
 #: ideascube/conf/idb_jor_azraq.py:43
 msgid "SIMSIM Club"
@@ -336,31 +332,31 @@ msgstr "SIMSIM Club"
 
 #: ideascube/conf/idb_jor_azraq.py:44
 msgid "Social Work Training"
-msgstr "Social Work Training"
+msgstr "Εκπαίδευση στην κοινωνική εργασία"
 
 #: ideascube/conf/idb_jor_azraq.py:45
 msgid "Stress Management Training"
-msgstr "Stress Management Training"
+msgstr "Εκπαίδευση στη διαχείριση άγχους "
 
 #: ideascube/conf/idb_jor_azraq.py:46
 msgid "Training of Trainers"
-msgstr "Training of Trainers"
+msgstr "Εκπαίδευση εκπαιδευτών"
 
 #: ideascube/conf/idb_jor_azraq.py:47
 msgid "World Mental Health Day"
-msgstr "World Mental Health Day"
+msgstr "Παγκόσμια Ημέρα Ψυχικής Υγείας"
 
 #: ideascube/forms.py:27
 msgid "Additional data"
-msgstr ""
+msgstr "Επιπρόσθετα δεδομένα"
 
 #: ideascube/forms.py:35
 msgid "Username"
-msgstr "Usuario"
+msgstr "Όνομα χρήστη"
 
 #: ideascube/forms.py:37
 msgid "Password"
-msgstr "Clave"
+msgstr "Κωδικός Πρόσβασης"
 
 #: ideascube/forms.py:38
 msgid ""
@@ -368,151 +364,156 @@ msgid ""
 "a passphrase. For instance: \"The boat is flowing on the water\" is a strong "
 "and easy to remember passphrase. Now choose your own passphrase!"
 msgstr ""
-"Para crear una contraseña segura, olvídese de las contraseñas, y piense más "
-"bien en una frase clave. Por ejemplo: \"El barco está fluyendo en el agua\" "
-"es una frase sólida y fácil de recordar. Ahora elija su propia contraseña!"
+"Για να δημιουργήσεις ένα ισχυρό κωδικό πρόσβασης, ξέχνα όλες τις "
+"συνθηματικές λέξεις και σκέψου καλύτερα μια συνθηματική πρόταση.Για "
+"παράδειγμα: «Η βάρκα κυλάει στο νερό» είναι μια ισχυρή και εύκολη να τη "
+"θυμάσαι, συνθηματική φράση. Τώρα, επίλεξε τη δική σου συνθηματική φράση!"
 
 #: ideascube/forms.py:46
 msgid "Confirm password"
-msgstr "Confirme su contraseña"
+msgstr "Επιβεβαίωση κωδικού πρόσβασης"
 
 #: ideascube/forms.py:116
 #, python-brace-format
 msgid "Invalid row at line {id}: {field} missing"
-msgstr ""
+msgstr "Λανθασμένη γραμμή στη σειρά {id}: το {field} λείπει"
 
 #: ideascube/forms.py:131
 #, python-brace-format
 msgid "Invalid row at line {id}: {reason}"
-msgstr ""
+msgstr "Λανθασμένη γραμμή στη σειρά {id}: {reason}"
 
 #: ideascube/library/forms.py:24
 msgid "You can't have both a file and a barcode"
-msgstr "No se puede tener un archivo y un código de barras al mismo tiempo"
+msgstr "Δεν είναι δυνατό να έχεις και το αρχείο και τον γραμμοκώδικα. "
 
 #: ideascube/library/forms.py:26
 msgid "You must add a file or a barcode"
-msgstr "Debe añadir un archivo o un código de barras"
+msgstr "Χρειάζεται να προσθέσεις ένα αρχείο ή ένα γραμμοκώδικα."
 
 #: ideascube/library/forms.py:36 ideascube/monitoring/forms.py:174
 msgid "CSV File"
-msgstr ""
+msgstr "αρχείο CSV"
 
 #: ideascube/library/forms.py:40
 msgid "Uploaded file is not a Zip archive"
-msgstr ""
+msgstr "Το ανεβασμένο αρχείο δεν είναι αρχείο zip"
 
 #: ideascube/library/forms.py:49
 msgid "Archive does not contain a CSV"
-msgstr ""
+msgstr "To αρχείο δεν περιλαμβάνει CSV"
 
 #: ideascube/library/forms.py:77 ideascube/monitoring/forms.py:189
 msgid "Missing column \"{}\" on line {}"
-msgstr ""
+msgstr "Λείπει στήλη \"{}\" στη γραμμή {}"
 
 #: ideascube/library/forms.py:91
 msgid "Could not import line {}: no book with ISBN \"{}\""
 msgstr ""
+"Δεν κατέστη δυνατή η εισαγωγή γραμμής {}:δεν υπάρχει βιβλίο με ISBN \"{}\""
 
 #: ideascube/library/forms.py:101
 msgid "Could not import line {}: no \"{}\" book"
-msgstr ""
+msgstr "Δεν κατέστη δυνατή η εισαγωγή γραμμής {}: δεν υπάρχει \"{}\" βιβλίο "
 
 #: ideascube/library/forms.py:107
 msgid "Could not import line {}: found multiple \"{}\" books"
 msgstr ""
+"Δεν κατέστη δυνατή η εισαγωγή γραμμής {}: βρέθηκαν πολλαπλά \"{}\" βιβλία"
 
 #: ideascube/library/forms.py:122
 msgid "Could not import line {}: file {} is missing from the archive"
 msgstr ""
+"Δεν κατέστη δυνατή η εισαγωγή γραμμής {}: το αρχείο {} λείπει από την "
+"αρχειοθήκη"
 
 #: ideascube/library/forms.py:137 ideascube/monitoring/forms.py:203
 msgid "Could not import line {}: {}"
-msgstr ""
+msgstr "Δεν κατέστη δυνατή η εισαγωγή γραμμής {}:  {}"
 
 #: ideascube/library/forms.py:180
 msgid "CSV from \"MoCCam-en-ligne\""
-msgstr "CSV de \"MoCCam-en-ligne\""
+msgstr "CSV από \"MoCCam-en-ligne\""
 
 #: ideascube/library/forms.py:182
 msgid "Ideascube ZIP"
-msgstr "Ideascube ZIP"
+msgstr "Κουτί ιδεών ZIP"
 
 #: ideascube/library/forms.py:200
 msgid "Unknown file format"
-msgstr "Formato de archivo desconocido"
+msgstr "Άγνωστη μορφή αρχείου"
 
 #: ideascube/library/models.py:24
 msgid "digital"
-msgstr "Digital"
+msgstr "ψηφιακό"
 
 #: ideascube/library/models.py:25
 msgid "children - cartoons"
-msgstr "niños - albumes"
+msgstr "παιδιά- κινούμενα σχέδια"
 
 #: ideascube/library/models.py:26
 msgid "children - novels"
-msgstr "Niños - novela"
+msgstr "παιδιά- μυθιστορήματα"
 
 #: ideascube/library/models.py:27
 msgid "children - poetry"
-msgstr "Niños - Poesía"
+msgstr "παιδιά-ποίηση "
 
 #: ideascube/library/models.py:28
 msgid "children - theatre"
-msgstr "Niños - Teatro"
+msgstr "παιδιά- θέατρο"
 
 #: ideascube/library/models.py:29
 msgid "children - documentary"
-msgstr "Niños - Colección general"
+msgstr "παιδιά-ντοκιμαντέρ"
 
 #: ideascube/library/models.py:30
 msgid "children - comics"
-msgstr "Niños - Tiras cómicas e historietas"
+msgstr "παιδιά - κόμικς"
 
 #: ideascube/library/models.py:31
 msgid "children - tales"
-msgstr ""
+msgstr "παιδιά- ιστορίες"
 
 #: ideascube/library/models.py:32
 msgid "chirdren - myths and legends"
-msgstr ""
+msgstr "παιδιά- μύθοι και θρύλοι"
 
 #: ideascube/library/models.py:33
 msgid "adults - novels"
-msgstr "Adultos - Novela"
+msgstr "ενήλικες - μυθιστορήματα"
 
 #: ideascube/library/models.py:34
 msgid "adults - poetry"
-msgstr "Adultos - Poesía"
+msgstr "ενήλικες - ποίηση"
 
 #: ideascube/library/models.py:35
 msgid "adults - theatre"
-msgstr "Adultos - Teatro"
+msgstr "ενήλικες - θέατρο"
 
 #: ideascube/library/models.py:36
 msgid "adults - documentary"
-msgstr "Adultos - Colección general"
+msgstr "ενήλικες - ντοκιμαντέρ"
 
 #: ideascube/library/models.py:37
 msgid "adults - comics"
-msgstr "Adultos - Tiras cómicas e historietas"
+msgstr "ενήλικες - κόμικς"
 
 #: ideascube/library/models.py:38
 msgid "adults - tales"
-msgstr ""
+msgstr "ενήλικες - ιστορίες"
 
 #: ideascube/library/models.py:39
 msgid "adults - myths and legends"
-msgstr ""
+msgstr "ενήλικες - μύθοι και θρύλοι"
 
 #: ideascube/library/models.py:40
 msgid "game"
-msgstr "Juego"
+msgstr "παιχνίδι"
 
 #: ideascube/library/models.py:41 ideascube/mediacenter/models.py:50
 msgid "other"
-msgstr "Otros"
+msgstr "άλλο"
 
 #: ideascube/library/models.py:47
 msgid "isbn"
@@ -520,35 +521,35 @@ msgstr "isbn"
 
 #: ideascube/library/models.py:49
 msgid "authors"
-msgstr "Autores"
+msgstr "συγγραφείς"
 
 #: ideascube/library/models.py:51
 msgid "serie"
-msgstr "Serie"
+msgstr "σειρά"
 
 #: ideascube/library/models.py:53
 msgid "subtitle"
-msgstr "Subtítulos"
+msgstr "υπότιτλος"
 
 #: ideascube/library/models.py:55
 msgid "publisher"
-msgstr "Editor"
+msgstr "εκδότης"
 
 #: ideascube/library/models.py:57
 msgid "section"
-msgstr "Sección"
+msgstr "τμήμα"
 
 #: ideascube/library/models.py:60
 msgid "cover"
-msgstr "Portada"
+msgstr "εξώφυλλο"
 
 #: ideascube/library/models.py:106
 msgid "location"
-msgstr "Ubicación"
+msgstr "τοποθεσία"
 
 #: ideascube/library/models.py:108
 msgid "digital file"
-msgstr "Archivo digital"
+msgstr "ψηφιακό αρχείο"
 
 #: ideascube/library/templates/library/book_confirm_delete.html:5
 #, python-format
@@ -558,30 +559,33 @@ msgid ""
 "specimens?\n"
 "    "
 msgstr ""
+"\n"
+"Είναι σίγουρο ότι θέλεις να διαγράψεις το βιβλίο \"%(book)s\" και όλα τα "
+"δείγματα; "
 
 #: ideascube/library/templates/library/book_detail.html:11
 msgid "View all books"
-msgstr "Vista de todos los libros"
+msgstr "Δες όλα τα βιβλία"
 
 #: ideascube/library/templates/library/book_detail.html:15
 #: ideascube/library/templates/library/index.html:9
 #: ideascube/serveradmin/catalog.py:310
 #: ideascube/templates/ideascube/includes/cards/library.html:4
 msgid "read"
-msgstr "leer"
+msgstr "διαβάζω"
 
 #: ideascube/library/templates/library/book_detail.html:19
 #: ideascube/library/views.py:40
 msgid "Author"
-msgstr "Autor"
+msgstr "Συγγραφέας"
 
 #: ideascube/library/templates/library/book_detail.html:20
 msgid "Publisher"
-msgstr "Editorial"
+msgstr "Εκδότης"
 
 #: ideascube/library/templates/library/book_detail.html:21
 msgid "Serie"
-msgstr "Serie"
+msgstr "Σειρά"
 
 #: ideascube/library/templates/library/book_detail.html:24
 msgid "ISBN"
@@ -589,110 +593,110 @@ msgstr "ISBN"
 
 #: ideascube/library/templates/library/book_detail.html:26
 msgid "Section"
-msgstr "Sección"
+msgstr "Τμήμα"
 
 #: ideascube/library/templates/library/book_detail.html:34
 msgid "Add a specimen"
-msgstr "Añadir un ejemplar"
+msgstr "Προσθήκη δείγματος"
 
 #: ideascube/library/templates/library/book_detail.html:35
 msgid "Delete this book"
-msgstr "Eliminar este libro"
+msgstr "Διαγραφή αυτού του βιβλίου"
 
 #: ideascube/library/templates/library/book_detail.html:36
 msgid "Edit this book"
-msgstr "Editar este libro"
+msgstr "Επιμέλεια αυτού του βιβλίου"
 
 #: ideascube/library/templates/library/book_detail.html:39
 msgid "Specimens"
-msgstr "Ejemplares"
+msgstr "Δείγματα"
 
 #: ideascube/library/templates/library/book_detail.html:41
 msgid "Edit specimen"
-msgstr "Editar ejemplar"
+msgstr "Επεξεργάσου τα δείγματα"
 
 #: ideascube/library/templates/library/book_detail.html:43
 msgid "No specimen for this book."
-msgstr "No hay ejemplares para este libro"
+msgstr "Δεν υπάρχει κανένα δείγμα γι'αυτό το βιβλίο."
 
 #: ideascube/library/templates/library/book_detail.html:49
 msgid "Digital specimens"
-msgstr "Ejemplares digitales"
+msgstr "Ψηφιακά δείγματα"
 
 #: ideascube/library/templates/library/book_detail.html:51
 msgid "Download specimen"
-msgstr "Descargar ejemplares"
+msgstr "Γίνεται λήψη του δείγματος"
 
 #: ideascube/library/templates/library/book_detail.html:51
 #, python-format
 msgid "Download %(extension)s"
-msgstr "Descargue %(extension)s"
+msgstr "Λήψη %(extension)s"
 
 #: ideascube/library/templates/library/book_form.html:11
 msgid "Edit book"
-msgstr "Editar libro"
+msgstr "Επιμέλεια βιβλίου"
 
 #: ideascube/library/templates/library/book_form.html:13
 msgid "New book"
-msgstr "Libro nuevo"
+msgstr "Νέο βιβλίο"
 
 #: ideascube/library/templates/library/import.html:10
 msgid "Import books notices"
-msgstr "Importar reseñas de libros"
+msgstr "Εισαγωγή παρατηρήσεων βιβλίου"
 
 #: ideascube/library/templates/library/import.html:19
 msgid "From files"
-msgstr "Desde los archivos"
+msgstr "Από τα αρχεία"
 
 #: ideascube/library/templates/library/import.html:22
 msgid "Load notices from files"
-msgstr "Cargar reseñas desde los archivos"
+msgstr "Φόρτωση παρατηρήσεων από τα αρχεία"
 
 #: ideascube/library/templates/library/import.html:25
 msgid "From ISBN"
-msgstr "Desde el ISBN"
+msgstr "Από το ISBN"
 
 #: ideascube/library/templates/library/import.html:26
 msgid "An Internet connection is needed."
-msgstr "Se requiere una conexión a internet"
+msgstr "Απαραίτητη σύνδεση διαδικτύου."
 
 #: ideascube/library/templates/library/import.html:28
 msgid "Load notices from ISBN"
-msgstr "Cargar reseñas desde el ISBN"
+msgstr "Φόρτωση παρατηρήσεων από το ISBN"
 
 #: ideascube/library/templates/library/index.html:9
 #: ideascube/monitoring/models.py:18 ideascube/monitoring/models.py:66
 #: ideascube/templates/ideascube/includes/cards/library.html:5
 msgid "Library"
-msgstr "Biblioteca"
+msgstr "Βιβλιοθήκη"
 
 #: ideascube/library/templates/library/index.html:17
 msgid "No books yet."
-msgstr "No hay libros todavía"
+msgstr "Δεν υπάρχουν βιβλία ακόμα."
 
 #: ideascube/library/templates/library/index.html:26
 msgid "Add a book"
-msgstr "Añadir un libro"
+msgstr "Προσθήκη βιβλίου"
 
 #: ideascube/library/templates/library/index.html:27
 msgid "Import notices"
-msgstr "Importar reseñas"
+msgstr "Εισαγωγή σημειώσεων"
 
 #: ideascube/library/templates/library/index.html:28
 msgid "Export notices"
-msgstr "Exportar reseñas"
+msgstr "Εξαγωγή σημειώσεων"
 
 #: ideascube/library/templates/library/index.html:29
 msgid "Import specimens"
-msgstr ""
+msgstr "Εισαγωγή δειγμάτων"
 
 #: ideascube/library/templates/library/index.html:30
 msgid "Export specimens"
-msgstr ""
+msgstr "Εξαγωγή δειγμάτων"
 
 #: ideascube/library/templates/library/index.html:38
 msgid "by section"
-msgstr ""
+msgstr "ανά τμήμα"
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:5
 #, python-format
@@ -701,6 +705,8 @@ msgid ""
 "        Are you sure you want to delete \"%(name)s\"?\n"
 "    "
 msgstr ""
+"\n"
+"Είσαι σίγουρος ότι θέλεις να διαγράψεις \"%(name)s\"?"
 
 #: ideascube/library/templates/library/specimen_confirm_delete.html:11
 #, python-format
@@ -709,91 +715,95 @@ msgid ""
 "        This will not delete book \"%(name)s\"\n"
 "    "
 msgstr ""
+"\n"
+"Αυτό δεν θα διαγράψει το βιβλίο \"%(name)s\""
 
 #: ideascube/library/templates/library/specimen_form.html:7
 #, python-format
 msgid "Edit book specimen %(specimen)s"
-msgstr ""
+msgstr "Τροποποίηση δείγματος βιβλίου %(specimen)s"
 
 #: ideascube/library/templates/library/specimen_form.html:9
 #, python-format
 msgid "New book specimen for %(book)s"
-msgstr ""
+msgstr "Νέο δείγμα βιβλίου %(book)s"
 
 #: ideascube/library/templates/library/specimen_form.html:11
 msgid "New book specimen"
-msgstr "Un nuevo ejemplar del libro"
+msgstr "Νέο δείγμα βιβλίου"
 
 #: ideascube/library/templates/library/specimen_form.html:39
 msgid "Delete specimen"
-msgstr "Eliminar un ejemplar"
+msgstr "Διαγραφή δείγματος"
 
 #: ideascube/library/templates/library/specimen_import.html:8
 msgid "Import Book Specimens"
-msgstr ""
+msgstr "Εισαγωγή Δειγμάτων βιβλίου"
 
 #: ideascube/library/templates/library/specimen_import.html:19
 #: ideascube/monitoring/templates/monitoring/stock.html:56
 #: ideascube/monitoring/templates/monitoring/stock_import.html:16
 msgid "Import"
-msgstr "Importar"
+msgstr "Εισαγωγή"
 
 #: ideascube/library/utils.py:87
 msgid "Badly formatted file"
-msgstr "Archivo con formato incorrecto"
+msgstr "Κακή μορφοποίηση αρχείου"
 
 #: ideascube/library/utils.py:134
 msgid "Not a zip file"
-msgstr "No es un archivo zip"
+msgstr "Δεν είναι zip αρχείο"
 
 #: ideascube/library/utils.py:141
 msgid "Missing CSV file in zip"
-msgstr "Falta el archivo CSV en zip"
+msgstr "Λείπει το CSV αρχείο σε zip μορφή"
 
 #: ideascube/library/views.py:28
 msgid "Last added"
-msgstr "Último añadido"
+msgstr "Τελευταία προσθήκη"
 
 #: ideascube/library/views.py:34 ideascube/mediacenter/views.py:43
 msgid "Title"
-msgstr "Título"
+msgstr "Τίτλος"
 
 #: ideascube/library/views.py:80
 msgid "Please add a specimen, or the book won't be available for the users"
 msgstr ""
+"Παρακαλώ προσθέστε δείγμα, ειδάλλως το βιβλίο δεν θα είναι διαθέσιμο στους "
+"χρήστες"
 
 #: ideascube/library/views.py:122
 msgid "Unable to process notices: {}"
-msgstr "No se pueden procesar las reseñas: {}"
+msgstr "Αδύνατη η επεξεργασία παρατηρήσεων: {}"
 
 #: ideascube/library/views.py:126
 #, python-brace-format
 msgid "Successfully processed {count} notices."
-msgstr "{count} reseñas procesadas exitosamente"
+msgstr "Επιτυχώς επεξεργασμένες {count} παρατηρήσεις."
 
 #: ideascube/library/views.py:132
 msgid "No notice processed"
-msgstr "No se procesaron reseñas"
+msgstr "Καμία επεξεργασμένη παρατήρηση"
 
 #: ideascube/library/views.py:135
 msgid "You need to provide a file."
-msgstr "Es necesario proporcionar un archivo"
+msgstr "Χρειάζεται η παροχή αρχείου."
 
 #: ideascube/library/views.py:258 ideascube/monitoring/views.py:256
 msgid "Successfully imported {} items"
-msgstr ""
+msgstr "Επιτυχής εισαγωγή {} αντικειμένων"
 
 #: ideascube/mediacenter/models.py:43
 msgid "sound"
-msgstr "Sonido"
+msgstr "ήχος"
 
 #: ideascube/mediacenter/models.py:44
 msgid "video"
-msgstr "Video"
+msgstr "βίντεο"
 
 #: ideascube/mediacenter/models.py:45
 msgid "pdf"
-msgstr "Pdf"
+msgstr "pdf φορητή μορφή αρχείου"
 
 #: ideascube/mediacenter/models.py:47
 msgid "epub"
@@ -801,39 +811,39 @@ msgstr "epub"
 
 #: ideascube/mediacenter/models.py:48
 msgid "mobi"
-msgstr ""
+msgstr "mobi"
 
 #: ideascube/mediacenter/models.py:49
 msgid "app"
-msgstr "Aplicación"
+msgstr "εφαρμογή"
 
 #: ideascube/mediacenter/models.py:59
 msgid "Source file"
-msgstr ""
+msgstr "πηγή αρχείου"
 
 #: ideascube/mediacenter/models.py:62
 msgid "Maximum size : 500 Mo."
-msgstr ""
+msgstr "Μέγιστο μέγεθος: 500 Mo."
 
 #: ideascube/mediacenter/models.py:63
 msgid "Preview picture"
-msgstr ""
+msgstr "Προεπισκόπηση εικόνας"
 
 #: ideascube/mediacenter/models.py:67
 msgid "Authorship"
-msgstr ""
+msgstr "Συγγραφική ιδιότητα"
 
 #: ideascube/mediacenter/models.py:70
 msgid "type"
-msgstr "Tipo"
+msgstr "είδος"
 
 #: ideascube/mediacenter/models.py:80
 msgid "package"
-msgstr "Paquete"
+msgstr "πακέτο"
 
 #: ideascube/mediacenter/models.py:82
 msgid "hidden"
-msgstr ""
+msgstr "κρυμμένο"
 
 #: ideascube/mediacenter/templates/mediacenter/document_confirm_delete.html:5
 #, python-format
@@ -842,15 +852,18 @@ msgid ""
 "         Are you sure you want to delete document \"%(document)s\"?\n"
 "    "
 msgstr ""
+"\n"
+"Είσαι σίγουρος ότι θέλεις να διαγράψεις αυτό το έγγραφο \"%(document)s\";"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:10
 msgid "View all medias"
-msgstr "Ver todos los recursos digitales"
+msgstr "Δες όλα τα μέσα"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:21
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:26
 msgid "Your web browser doesn't support this media type."
 msgstr ""
+"Ο περιηγητής ιστού που διαθέτεις δεν υποστηρίζει αυτό τον τύπο αρχείου."
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:34
 #, python-format
@@ -860,7 +873,7 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"Descargar %(kind)s"
+"Λήψη %(kind)s"
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:43
 #, python-format
@@ -871,578 +884,579 @@ msgid ""
 "               "
 msgstr ""
 "\n"
-"No se puede editar o eliminar este documento\n"
-"Se encuentra instalado por el \"%(package_id)s\" paquete"
+"Δεν είναι δυνατή η μορφοποίηση ή διαγραφή αυτού του εγγράφου. Έχει "
+"εγκατασταθεί από το πακέτο %(package_id)s\"."
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:51
 #: ideascube/templates/ideascube/user_detail.html:15
 msgid "Delete"
-msgstr "Borrar"
+msgstr "Διαγραφή"
 
 #: ideascube/mediacenter/templates/mediacenter/document_form.html:7
 msgid "Edit document"
-msgstr "Editar documento"
+msgstr "Μορφοποίηση εγγράφου"
 
 #: ideascube/mediacenter/templates/mediacenter/document_form.html:9
 msgid "New document"
-msgstr "Nuevo documento"
+msgstr "Νέο έγγραφο"
 
 #: ideascube/mediacenter/templates/mediacenter/document_select.html:25
 #: ideascube/mediacenter/templates/mediacenter/index.html:19
 msgid "No documents yet."
-msgstr "No hay documentos aún"
+msgstr "Δεν υπάρχουν αρχεία."
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
 #: ideascube/serveradmin/catalog.py:308 ideascube/serveradmin/catalog.py:402
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "discover"
-msgstr "Descubrir"
+msgstr "ανακάλυψε"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
 msgid "Medias Center"
-msgstr "Recursos digitales"
+msgstr "Κέντρο Mέσων "
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:28
 msgid "Add a document"
-msgstr "Adicionar un documento"
+msgstr "Προσθήκη εγγράφου"
 
 #: ideascube/mediacenter/views.py:37
 msgid "Last modification"
-msgstr "Última modificación"
+msgstr "Τελευταία μορφοποίηση"
 
 #: ideascube/models.py:29
 msgid "creation date"
-msgstr "Fecha de creación"
+msgstr "ημερομηνία δημιουργίας"
 
 #: ideascube/models.py:31
 msgid "modification date"
-msgstr "Fecha de modificación"
+msgstr "ημερομηνία μορφοποίησης"
 
 #: ideascube/models.py:79
 msgid "Understood"
-msgstr "Entendido"
+msgstr "Κατανοητό"
 
 #: ideascube/models.py:80
 msgid "Written"
-msgstr "Escrito"
+msgstr "Γραμμένο"
 
 #: ideascube/models.py:81
 msgid "Spoken"
-msgstr "Hablado"
+msgstr "Ειπωμένο"
 
 #: ideascube/models.py:82
 msgid "Read"
-msgstr "Leer"
+msgstr "Διαβασμένο"
 
 #: ideascube/models.py:87
 msgid "identifier"
-msgstr "Identificador"
+msgstr "αναγνωριστικό"
 
 #: ideascube/models.py:89
 msgid "usual name"
-msgstr "Nombre común"
+msgstr "συνηθισμένο όνομα"
 
 #: ideascube/models.py:91
 msgid "full name"
-msgstr "Nombre completo"
+msgstr "όλο το όνομα Επίθετο και Όνομα"
 
 #: ideascube/models.py:93
 msgid "staff status"
-msgstr "Estatus del personal"
+msgstr "κατάσταση προσωπικού"
 
 #: ideascube/models.py:95
 msgid "Designates whether the user can log into this admin site."
 msgstr ""
-"Indique si el usuario puede iniciar sesión en este sitio de administración"
+"Καθορίζει αν ο χρήστης μπορεί να συνδεθεί στην ιστοσελίδα του διαχειριστή."
 
 #: ideascube/models.py:132
 msgid "User with this identifier already exists."
-msgstr "El usuario con este identificador ya existe"
+msgstr "Υπάρχει ήδη χρήστης με αυτό το αναγνωριστικό."
 
 #: ideascube/models.py:180
 msgid "Student"
-msgstr "Estudiante"
+msgstr "μαθητής"
 
 #: ideascube/models.py:181
 msgid "Teacher"
-msgstr "Profesor"
+msgstr "Δάσκαλος"
 
 #: ideascube/models.py:182
 msgid "Without profession"
-msgstr "Sin profesión"
+msgstr "Χωρίς επάγγελμα"
 
 #: ideascube/models.py:183
 msgid "Profit profession"
-msgstr "Profesión de lucro"
+msgstr "Επικερδές επάγγελμα"
 
 #: ideascube/models.py:184 ideascube/models.py:207
 msgid "Volunteering"
-msgstr "Voluntariado"
+msgstr "εθελοντικά"
 
 #: ideascube/models.py:185
 msgid "Homemaker"
-msgstr ""
+msgstr "νοικοκυρά"
 
 #: ideascube/models.py:186
 msgid "Retired"
-msgstr ""
+msgstr "συνταξιούχος"
 
 #: ideascube/models.py:187 ideascube/models.py:219
 #: ideascube/monitoring/models.py:69
 msgid "Other"
-msgstr "Otro"
+msgstr "Άλλο"
 
 #: ideascube/models.py:191
 #, python-brace-format
 msgid "Lives with family in {place}"
-msgstr "Vive con su familia en {place}"
+msgstr "Μένει μαζί με την οικογένεια στο {place}"
 
 #: ideascube/models.py:193
 #, python-brace-format
 msgid "Lives without family in {place}"
-msgstr "Vive sin familia en {place}"
+msgstr "Μένει χωρίς οικογένεια στο {place}"
 
 #: ideascube/models.py:195
 #, python-brace-format
 msgid "Has family in {place} but lives without"
-msgstr "Tiene familia en {place} pero vive en "
+msgstr "Έχει οικογένεια στο {place} αλλά ζει χωρίς αυτήν"
 
 #: ideascube/models.py:200
 msgid "Comitees, representation groups"
-msgstr "Comités, grupo de representación"
+msgstr "Επιτροπές, ομάδες αντιπροσώπων"
 
 #: ideascube/models.py:201
 msgid "Music, dance, singing"
-msgstr "Música, danza, canto"
+msgstr "Μουσική, χορός, τραγούδι"
 
 #: ideascube/models.py:202
 msgid "Other cultural activities"
-msgstr "Otras actividades culturales"
+msgstr "Άλλες πολιτιστικές δραστηριότητες"
 
 #: ideascube/models.py:203
 msgid "Informatic workshops"
-msgstr "Taller de informática"
+msgstr "ενημερωτικά εργαστήρια"
 
 #: ideascube/models.py:204
 msgid "Literacy working group"
-msgstr "Grupo de alfabetización"
+msgstr "Oμάδα εργασίας για τον αλφαβητισμό"
 
 #: ideascube/models.py:205
 msgid "Talking group"
-msgstr "Grupo de conversación"
+msgstr "Ομάδα ομιλίας"
 
 #: ideascube/models.py:206
 msgid "Recreational"
-msgstr "Recreativo"
+msgstr "Ψυχαγωγικός"
 
 #: ideascube/models.py:208
 msgid "Psycosocial"
-msgstr "Psicosocial"
+msgstr "Ψυχοκοινωνικός"
 
 #: ideascube/models.py:209
 msgid "Educational"
-msgstr "Educativo"
+msgstr "Εκπαιδευτικός"
 
 #: ideascube/models.py:210
 msgid "Sport"
-msgstr "Deporte"
+msgstr "Άθλημα"
 
 #: ideascube/models.py:214
 msgid "Seen the Box"
-msgstr "He visto la Biblioteca Móvil Pública"
+msgstr "Έχουν ήδη δει το Κουτί"
 
 #: ideascube/models.py:215
 msgid "Has been informed by partner organization"
-msgstr "Ha sido informado por la organización asociada"
+msgstr "Έχει ενημερωθεί από συνεργαζόμενο οργανισμό"
 
 #: ideascube/models.py:216
 msgid "Has been informed by other organization"
-msgstr "Ha sido informado por la organización asociada"
+msgstr "Έχει ενημερωθεί από άλλο οργανισμό"
 
 #: ideascube/models.py:217
 msgid "Word of mouth"
-msgstr "Voz a voz"
+msgstr "Από στόμα σε στόμα"
 
 #: ideascube/models.py:218
 msgid "Poster campaign"
-msgstr "Campaña de afiche"
+msgstr "Αφίσα εκστρατείας"
 
 #: ideascube/models.py:223
 msgid "Primary"
-msgstr "Primaria"
+msgstr "Δημοτικό"
 
 #: ideascube/models.py:224
 msgid "Secondary"
-msgstr "Secundaria"
+msgstr "Γυμνάσιο"
 
 #: ideascube/models.py:225
 msgid "Professional"
-msgstr "Profesional"
+msgstr "Επαγγελματικός"
 
 #: ideascube/models.py:226
 msgid "Higher education"
-msgstr "Educación superior"
+msgstr "Υψηλότερη βαθμίδα εκπαίδευσης"
 
 #: ideascube/models.py:230
 msgid "Couple"
-msgstr "Pareja"
+msgstr "Ζευγάρι"
 
 #: ideascube/models.py:231
 msgid "Single"
-msgstr "Soltero/a"
+msgstr "Εργένης"
 
 #: ideascube/models.py:232
 msgid "Widowed"
-msgstr "Viudo/a "
+msgstr "Xήρος"
 
 #: ideascube/models.py:236
 msgid "Undefined"
-msgstr "Indefinido"
+msgstr "Απροσδιόριστος"
 
 #: ideascube/models.py:237
 msgid "Male"
-msgstr "Hombre"
+msgstr "Άνδρας"
 
 #: ideascube/models.py:238
 msgid "Female"
-msgstr "Mujer"
+msgstr "Γυναίκα"
 
 #: ideascube/models.py:242
 msgid "Visual"
-msgstr ""
+msgstr "Οπτικός"
 
 #: ideascube/models.py:243
 msgid "Auditive"
-msgstr ""
+msgstr "Ακουστικός"
 
 #: ideascube/models.py:244
 msgid "Physical"
-msgstr ""
+msgstr "Σωματικός"
 
 #: ideascube/models.py:245
 msgid "Cognitive"
-msgstr ""
+msgstr "Διανοητικός"
 
 #: ideascube/models.py:246
 msgid "Mental"
-msgstr ""
+msgstr "ψυχικός"
 
 #: ideascube/models.py:249
 msgid "Latin written name"
-msgstr "Nombre escrito en latin"
+msgstr "Όνομα γραμμένο με λατινικούς χαρακτήρες"
 
 #: ideascube/models.py:252
 msgid "Birth year"
-msgstr "Año de nacimiento"
+msgstr "Χρονιά γέννησης"
 
 #: ideascube/models.py:255
 msgid "Gender"
-msgstr "Género"
+msgstr "Φύλο"
 
 #: ideascube/models.py:258
 msgid "Country of origin"
-msgstr "País de origen"
+msgstr "Χώρα καταγωγής"
 
 #: ideascube/models.py:260
 msgid "City of origin"
-msgstr "Cuidad de origen"
+msgstr "Πόλη καταγωγής"
 
 #: ideascube/models.py:262
 msgid "ID card number"
-msgstr "Número de identificación"
+msgstr "Αριθμός ταυτότητας"
 
 #: ideascube/models.py:266
 msgid "Number of children under 12"
-msgstr "Numero de niños por debajo de 12 años"
+msgstr "Αριθμός παιδιών κάτω των 12 ετών"
 
 #: ideascube/models.py:268
 msgid "Number of children under 18"
-msgstr "Numero de niños por debajo de 18 años"
+msgstr "Αριθμός παιδιών κάτω των 18 ετών"
 
 #: ideascube/models.py:270
 msgid "Number of children above 18"
-msgstr "Numero de niños por encima de 18 años"
+msgstr "Αριθμός παιδιών άνω των 18 ετών"
 
 #: ideascube/models.py:272
 msgid "School level"
-msgstr "Nivel de escolaridad"
+msgstr "Σχολικό επίπεδο"
 
 #: ideascube/models.py:275
 msgid "Marital situation"
-msgstr "Situación conyugal"
+msgstr "Οικογενειακή κατάσταση"
 
 #: ideascube/models.py:278
 msgid "Ideas Box awareness"
-msgstr "Conocimiento de la biblioteca"
+msgstr "Ενημέρωση για το Κουτί Ιδεών"
 
 #: ideascube/models.py:280
 msgid "Refugee ID"
-msgstr "Identificación refugiado"
+msgstr "Ταυτότητα πρόσφυγα"
 
 #: ideascube/models.py:282
 msgid "Camp entry date"
-msgstr "Fecha de entrada al campo"
+msgstr "Ημερομηνία εισαγωγής στο κέντρο υποδοχής"
 
 #: ideascube/models.py:286
 msgid "Current occupation"
-msgstr "Ocupacion actual"
+msgstr "Τρέχουσα απασχόληση"
 
 #: ideascube/models.py:289
 msgid "Occupation in the place of origin"
-msgstr "Ocupacion en el lugar de origen"
+msgstr "Απασχόληση στον τόπο καταγωγής"
 
 #: ideascube/models.py:293
 msgid "Family status"
-msgstr "Estado Familiar"
+msgstr "Οικογενειακή κατάσταση"
 
 #: ideascube/models.py:296
 msgid "Sent to school in the country of origin (if under 18)"
-msgstr ""
-"Enviar a la escuela en el pais de origen (si esta por debajo de 18 años)"
+msgstr "Έχει σταλεί σε σχολείο στην χώρα καταγωγής (αν είναι κάτω των 18)"
 
 #: ideascube/models.py:299
 msgid "Activities in the camp"
-msgstr "Actividades en campo"
+msgstr "Δραστηριότητες στο κέντρο υποδοχής"
 
 #: ideascube/models.py:303
 msgid "Address in the camp"
-msgstr "Dirección en campo"
+msgstr "Διεύθυνση στο κέντρο υποδοχής"
 
 #: ideascube/models.py:306
 msgid "Disabilities"
-msgstr ""
+msgstr "Αναπηρίες"
 
 #: ideascube/models.py:309
 msgid "Phone number (use comma to register more than one)"
-msgstr "Número de teléfono (use coma para registrar mas de uno) "
+msgstr ""
+"Tηλεφωνικός αριθμός (χρησιμοποιήστε το κόμμα για την εγγραφή περισσότερων "
+"του ενός)"
 
 #: ideascube/models.py:311
 msgid "Email address (optional)"
-msgstr "Correo Electrónico (opcional) "
+msgstr "Διεύθυνση ηλεκτρονικού ταχυδρομείου (προαιρετικά)"
 
 #: ideascube/models.py:315
 msgid "English knowledge"
-msgstr "Conocimientos en Ingles "
+msgstr "Γνώση αγγλικών"
 
 #: ideascube/models.py:318
 msgid "Arabic knowledge"
-msgstr "Conocimientos en Arabe"
+msgstr "Γνώση αραβικών"
 
 #: ideascube/models.py:321
 msgid "Persian knowledge"
-msgstr "Conocimientos en Persa"
+msgstr "Γνώση περσικών"
 
 #: ideascube/models.py:324
 msgid "Kirundi knowledge"
-msgstr "Conocimiento en Kirundi"
+msgstr "Γνώση κιρουντι"
 
 #: ideascube/models.py:327
 msgid "French knowledge"
-msgstr "Conocimientos en Frances"
+msgstr "Γνώση γαλλικών"
 
 #: ideascube/models.py:330
 msgid "Swahili knowledge"
-msgstr "Conocimiento en Swahili"
+msgstr "Γνώση σουαχίλι"
 
 #: ideascube/models.py:333
 msgid "Kurdish knowledge"
-msgstr "Conocimiento en Kurdish"
+msgstr "Γνώση κουρδικών"
 
 #: ideascube/models.py:336
 msgid "Shabak knowledge"
-msgstr "Conocimiento en Shabak"
+msgstr "Γνώση Σαμπάκ"
 
 #: ideascube/monitoring/forms.py:20
 msgid "Enter user identifiers"
-msgstr "Introducir identificadores de usuarios"
+msgstr "Εισαγωγή αναγνωριστικών χρήστη"
 
 #: ideascube/monitoring/forms.py:25
 msgid "Custom activity name"
-msgstr "Nombre actividad personalizada"
+msgstr "Όνομα δραστηριότητας κατά προτίμηση"
 
 #: ideascube/monitoring/forms.py:27
 msgid "Partner involved in activity"
-msgstr "Socio integrado en la actividad"
+msgstr "Εμπλεκόμενος συνεργάτης στη δραστηριότητα"
 
 #: ideascube/monitoring/forms.py:38
 msgid "Missing module name"
-msgstr "Nombre del módulo que falta"
+msgstr "Λείπει το όνομα της ενότητας"
 
 #: ideascube/monitoring/forms.py:47
 msgid "since"
-msgstr "desde"
+msgstr "έκτοτε"
 
 #: ideascube/monitoring/forms.py:70 ideascube/monitoring/forms.py:99
 #: ideascube/monitoring/forms.py:149 ideascube/monitoring/models.py:166
 msgid "specimen"
-msgstr "ejemplar"
+msgstr "δείγματα"
 
 #: ideascube/monitoring/forms.py:72
 msgid "Enter a barcode"
-msgstr "ingrese código de barras"
+msgstr "Εισαγωγή γραμμοκώδικα"
 
 #: ideascube/monitoring/forms.py:88
 #, python-brace-format
 msgid "Barcode {barcode} not found."
-msgstr ""
+msgstr "Γραμμοκώδικας {barcode} δεν υπάρχει."
 
 #: ideascube/monitoring/forms.py:101 ideascube/monitoring/forms.py:151
 msgid "Enter an item barcode"
-msgstr "introducir código de barras del elemento"
+msgstr "Εισαγωγή γραμμοκώδικα αντικειμένου"
 
 #: ideascube/monitoring/forms.py:102 ideascube/monitoring/models.py:28
 #: ideascube/monitoring/models.py:169
 msgid "user"
-msgstr "Usuario"
+msgstr "χρήστης"
 
 #: ideascube/monitoring/forms.py:104
 msgid "Enter a user identifier"
-msgstr "ingrese identificación de usuario"
+msgstr "Εισαγωγή αναγνωριστικού χρήστη"
 
 #: ideascube/monitoring/forms.py:105
 msgid "due date"
-msgstr "fecha de vencimiento"
+msgstr "ημερομηνία λήξης"
 
 #: ideascube/monitoring/forms.py:114
 #, python-brace-format
 msgid "Item with barcode {barcode} is already loaned."
-msgstr "El elemento con el código de barras {barcode} está prestado."
+msgstr "Το αντικείμενο με γραμμοκώδικα {barcode} έχει ήδη ενοικιασθεί."
 
 #: ideascube/monitoring/forms.py:129
 #, python-brace-format
 msgid "Barcode {barcode} not found"
-msgstr "Código de barras {barcode} no encontrado "
+msgstr "Γραμμοκώδικας {barcode} δεν υπάρχει"
 
 #: ideascube/monitoring/forms.py:139
 #, python-brace-format
 msgid "Identifier {serial} not found"
-msgstr "Identificación {serial} no encontrada"
+msgstr "Αναγνωριστικό {serial} δεν υπάρχει"
 
 #: ideascube/monitoring/forms.py:159
 #, python-brace-format
 msgid "Item with barcode {barcode} is not loaned."
-msgstr "El elemento con el código de barra {barcode} no ha sido prestado."
+msgstr "Το αντικείμενο με τον γραμμοκώδικα {barcode} δεν έχει δανεισθεί."
 
 #: ideascube/monitoring/models.py:17 ideascube/monitoring/models.py:65
 msgid "Cinema"
-msgstr "Cinema"
+msgstr "Κινηματογράφος"
 
 #: ideascube/monitoring/models.py:19 ideascube/monitoring/models.py:67
 msgid "Multimedia"
-msgstr "Multimedia"
+msgstr "Πολυμέσα"
 
 #: ideascube/monitoring/models.py:21 ideascube/monitoring/models.py:71
 msgid "module"
-msgstr "Modulo"
+msgstr "ενότητα"
 
 #: ideascube/monitoring/models.py:23
 msgid "activity"
-msgstr "actividad"
+msgstr "δραστηριότητα"
 
 #: ideascube/monitoring/models.py:25
 msgid "partner"
-msgstr "socio"
+msgstr "συνεταίρος"
 
 #: ideascube/monitoring/models.py:31
 msgid "entry"
-msgstr "Entrar"
+msgstr "είσοδος"
 
 #: ideascube/monitoring/models.py:32
 msgid "entries"
-msgstr "entradas"
+msgstr "είσοδοι"
 
 #: ideascube/monitoring/models.py:44
 msgid "date"
-msgstr "Fecha"
+msgstr "ημερομηνία"
 
 #: ideascube/monitoring/models.py:45 ideascube/monitoring/models.py:120
 msgid "comments"
-msgstr "Comentarios"
+msgstr "σχόλια"
 
 #: ideascube/monitoring/models.py:68
 msgid "Administration"
-msgstr "Administracion"
+msgstr "Διοίκηση"
 
 #: ideascube/monitoring/models.py:73
 msgid "name"
-msgstr "Nombre"
+msgstr "όνομα"
 
 #: ideascube/monitoring/models.py:74
 msgid "description"
-msgstr "descripción"
+msgstr "περιγραφή"
 
 #: ideascube/monitoring/models.py:111
 msgid "ideascube bar code"
-msgstr "código de barras ideascube"
+msgstr "γραμμοκώδικας Κουτί Ιδεών"
 
 #: ideascube/monitoring/models.py:115
 #: ideascube/monitoring/templates/monitoring/loan.html:25
 msgid "Serial number"
-msgstr "Serial"
+msgstr "Σειριακός αριθμός"
 
 #: ideascube/monitoring/models.py:118
 msgid "item"
-msgstr "elemento"
+msgstr "αντικείμενο"
 
 #: ideascube/monitoring/models.py:119
 msgid "quantity"
-msgstr "Cantidad"
+msgstr "ποσότητα"
 
 #: ideascube/monitoring/models.py:172
 msgid "by"
-msgstr "por"
+msgstr "από"
 
 #: ideascube/monitoring/models.py:173
 #: ideascube/monitoring/templates/monitoring/loan.html:27
 msgid "Due date"
-msgstr "Fecha de vencimiento"
+msgstr "Ημερομηνία λήξης"
 
 #: ideascube/monitoring/models.py:174
 msgid "Return time"
-msgstr "Tiempo de retorno"
+msgstr "Ημερομηνία επιστροφής"
 
 #: ideascube/monitoring/models.py:177
 #: ideascube/monitoring/templates/monitoring/loan.html:28
 msgid "Comments"
-msgstr "Comentarios"
+msgstr "Σχόλια"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:15
 msgid "Specific activity (optional)"
-msgstr "Especifique actividad (opcional)"
+msgstr "Συγκεκριμένη δραστηριότητα (προαιρετικά)"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:18
 msgid "Partner (optional)"
-msgstr "Socio (opcional)"
+msgstr "Συνεταίρος (προαιρετικά)"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:21
 msgid "To the cinema module"
-msgstr "ir a Módulo de Cine"
+msgstr "Στην ενότητα κινηματογράφος"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:22
 msgid "To the library module"
-msgstr "Ir al modulo biblioteca"
+msgstr "Στην ενότητα βιβλιοθήκη"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:23
 msgid "To the digital module"
-msgstr "Ir al modulo digital"
+msgstr "Στην ενότητα με τα ψηφιακά μέσα"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:28
 msgid "Module"
-msgstr "Modulo"
+msgstr "Ενότητα"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:29
 msgid "Member"
-msgstr "Miembro"
+msgstr "Μέλος"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:30
 msgid "When"
-msgstr "Cuando"
+msgstr "Όταν"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:39
 #, python-format
 msgid "%(time)s ago"
-msgstr "Hace %(time)s"
+msgstr "%(time)s πριν"
 
 #: ideascube/monitoring/templates/monitoring/entry.html:49
 #: ideascube/monitoring/templates/monitoring/entry.html:52
@@ -1450,44 +1464,44 @@ msgstr "Hace %(time)s"
 #: ideascube/monitoring/templates/monitoring/loan.html:60
 #: ideascube/monitoring/templates/monitoring/stock.html:55
 msgid "Export"
-msgstr "Exportar"
+msgstr "Εξαγωγή"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:22
 #: ideascube/monitoring/templates/monitoring/stock.html:15
 msgid "count"
-msgstr "Contar"
+msgstr "μέτρημα"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:23
 #: ideascube/monitoring/templates/monitoring/stock.html:16
 msgid "barcode"
-msgstr "Codigo de barras"
+msgstr "γραμμοκώδικας"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:24
 #: ideascube/monitoring/templates/monitoring/stock.html:17
 msgid "serial number"
-msgstr ""
+msgstr "σειριακός αριθμός"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:25
 msgid "status"
-msgstr "Estado"
+msgstr "κατάσταση"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:29
 #: ideascube/monitoring/templates/monitoring/stock.html:22
 msgid "Total:"
-msgstr "Total"
+msgstr "Σύνολο:"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:46
 #: ideascube/monitoring/templates/monitoring/stock.html:46
 msgid "Stock is empty for this module."
-msgstr "Inventario vacio para este módulo "
+msgstr "Τα αποθέματα έχουν τελειώσει γι'αυτή την ενότητα."
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:55
 msgid "Export in CSV"
-msgstr "Exportar a archivo CSV"
+msgstr "Εξαγωγή σε CSV"
 
 #: ideascube/monitoring/templates/monitoring/inventory.html:56
 msgid "Manage stock"
-msgstr "Gestión de inventario"
+msgstr "Διαχείριση αποθεμάτων"
 
 #: ideascube/monitoring/templates/monitoring/inventory_confirm_delete.html:5
 #, python-format
@@ -1496,55 +1510,57 @@ msgid ""
 "        Are you sure you want to delete the inventory of %(date)s?\n"
 "    "
 msgstr ""
+"\n"
+"Είσαι σίγουρος ότι θέλεις να διαγράψεις τον κατάλογο απογραφής των %(date)s?"
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:7
 #, python-format
 msgid "Edit inventory from %(date)s"
-msgstr "Editar inventario del %(date)s"
+msgstr "Μορφοποίηση καταλόγου απογραφής από %(date)s"
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:9
 msgid "Start new inventory"
-msgstr "Empezar nuevo inventario"
+msgstr "Έναρξη καινούριου καταλόγου απογραφής"
 
 #: ideascube/monitoring/templates/monitoring/inventory_form.html:24
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:24
 #: ideascube/monitoring/templates/monitoring/stockitem_form.html:24
 msgid "delete"
-msgstr "borrar"
+msgstr "διαγραφή"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:11
 msgid "Loan"
-msgstr "Prestamo "
+msgstr "Δάνειο"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:17
 #: ideascube/monitoring/templates/monitoring/loan.html:51
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:17
 msgid "Validate"
-msgstr "Validar"
+msgstr "Επικυρώνω"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:20
 msgid "Ongoing loans"
-msgstr "Préstamos en curso"
+msgstr "Τρέχοντα δάνεια"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:23
 msgid "Item"
-msgstr "elemento"
+msgstr "Αντικείμενο"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:24
 msgid "Barcode"
-msgstr ""
+msgstr "Γραμμοκώδικας"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:26
 msgid "User"
-msgstr "Usuario"
+msgstr "Χρήστης"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:29
 msgid "By"
-msgstr "Por"
+msgstr "Από"
 
 #: ideascube/monitoring/templates/monitoring/loan.html:45
 msgid "Return"
-msgstr "Retorno"
+msgstr "Επιστροφή"
 
 #: ideascube/monitoring/templates/monitoring/specimen_confirm_delete.html:5
 #, python-format
@@ -1554,53 +1570,56 @@ msgid ""
 "\"%(item)s\"?\n"
 "    "
 msgstr ""
+"\n"
+"Είσαι σίγουρος ότι θέλεις να διαγράψεις τα δείγματα %(specimen)s\" of "
+"\"%(item)s\";"
 
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:7
 #, python-format
 msgid "Edit specimen of %(item)s"
-msgstr "Editar ejemplar %(item)s"
+msgstr "Μορφοποίηση δειγμάτων από %(item)s"
 
 #: ideascube/monitoring/templates/monitoring/specimen_form.html:9
 msgid "Add new specimen"
-msgstr "Adicione nuevo ejemplar"
+msgstr "Προσθήκη νέων δειγμάτων"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:13
 #: ideascube/monitoring/templates/monitoring/stock.html:54
 msgid "Add stock item"
-msgstr "Añadir elemento al inventario"
+msgstr "Προσθήκη αντικειμένου στον απόθεμα"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:18
 msgid "Actions"
-msgstr "Acciones"
+msgstr "Δράσεις"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:28
 #: ideascube/monitoring/templates/monitoring/stockitem_detail.html:11
 msgid "Add new specimen of this item"
-msgstr "Adicione un nuevo objeto para este elemento"
+msgstr "Προσθήκη νέου δείγματος αυτού του αντικειμένου"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:39
 msgid "Edit this specimen"
-msgstr "Editar este ejemplar"
+msgstr "Μορφοποίηση αυτού το δείγματος"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:57
 msgid "Start inventory"
-msgstr "Empezar inventario"
+msgstr "Έναρξη καταλόγου απογραφής"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:60
 msgid "Inventories"
-msgstr "Inventarios"
+msgstr "Κατάλογοι απογραφής"
 
 #: ideascube/monitoring/templates/monitoring/stock.html:68
 msgid "No inventory yet."
-msgstr "No inventariar en este momento"
+msgstr "Δεν υπάρχει κατάλογος απογραφής ακόμα."
 
 #: ideascube/monitoring/templates/monitoring/stock.html:68
 msgid "Start one now"
-msgstr "Empezar uno nuevo"
+msgstr "Ξεκίνα έναν τώρα"
 
 #: ideascube/monitoring/templates/monitoring/stock_import.html:8
 msgid "Import Stock"
-msgstr ""
+msgstr "Εισαγωγή αποθέματος"
 
 #: ideascube/monitoring/templates/monitoring/stockitem_confirm_delete.html:5
 #, python-format
@@ -1609,119 +1628,121 @@ msgid ""
 "         Are you sure you want to delete the stockitem \"%(item)s\"?\n"
 "    "
 msgstr ""
+"\n"
+"Είσαι σίγουρος ότι θέλεις να διαγράψεις αυτό το αντικείμενο από το απόθεμα "
+"%(item)s\";"
 
 #: ideascube/monitoring/templates/monitoring/stockitem_form.html:7
 msgid "Edit item"
-msgstr "Editar elemento"
+msgstr "Μορφοποίηση αντικειμένου"
 
 #: ideascube/monitoring/templates/monitoring/stockitem_form.html:9
 msgid "Add new item"
-msgstr "Ingresar nuevo elemento"
+msgstr "Προσθήκη νέου αντικειμένου"
 
 #: ideascube/monitoring/views.py:43
 #, python-brace-format
 msgid "No user found with serial {serial}"
-msgstr "Ningún usuario encontrado con este serial {serial}"
+msgstr "Δεν βρέθηκε χρήστης με σειριακό {serial}"
 
 #: ideascube/monitoring/views.py:51
 #, python-brace-format
 msgid "Created {count} entries"
-msgstr "Entrada {count} creada"
+msgstr "Δημιουργημένες {count} είσοδοι"
 
 #: ideascube/monitoring/views.py:55
 msgid "No entry created."
-msgstr "Entrada no creada"
+msgstr "Δεν έχει δημιουργηθεί είσοδος."
 
 #: ideascube/monitoring/views.py:77
 msgid "Error while processing entries export"
-msgstr "error al procesar entradas desde la exportación"
+msgstr "Σφάλμα κατά τη διάρκεια της διαδικασίας εξαγωγής εισόδων"
 
 #: ideascube/monitoring/views.py:314
 #, python-brace-format
 msgid "Specimen {specimen} has been added to {inventory} inventory"
-msgstr "El objeto {specimen} ha sido adicionado al {inventory} inventario"
+msgstr ""
+"Τα δείγματα {specimen} έχουν προστεθεί στον κατάλογο απογραφής {inventory}"
 
 #: ideascube/monitoring/views.py:321
 #, python-brace-format
 msgid "Specimen {specimen} not found or already done."
-msgstr "Objeto {specimen} no encontrado o ya integrado."
+msgstr "Δεν βρέθηκαν δείγματα {specimen} ή είναι ήδη ολοκληρωμένα."
 
 #: ideascube/monitoring/views.py:399
 #, python-brace-format
 msgid "Item {item} has been loaned to {user}"
-msgstr "El elemento {item} ha sido prestado a {user}"
+msgstr "Το αντικείμενο {item} έχει ήδη ενοικιασθεί στο {user}."
 
 #: ideascube/monitoring/views.py:410
 #, python-brace-format
 msgid "Item {item} has been returned"
-msgstr "El elemento {item} ha sido devuelto"
+msgstr "Το αντικείμενο {item} έχει επιστραφεί"
 
 #: ideascube/monitoring/views.py:414
 msgid "Item not found"
-msgstr "Elemento no encontrado"
+msgstr "Δεν έχει βρεθεί αντικείμενο"
 
 #: ideascube/monitoring/views.py:431
 msgid "Error while processing loans export"
-msgstr "Error durante el proceso de exportación de los préstamos"
+msgstr "Σφάλμα κατά την επεξεργασία εξαγωγής δανείων"
 
 #: ideascube/search/templates/search/box.html:6
 #: ideascube/search/templates/search/box.html:10
 msgid "search"
-msgstr "buscar"
+msgstr "αναζήτηση"
 
 #: ideascube/search/templates/search/filter_by_kind.html:4
 #: ideascube/search/templates/search/filter_by_lang.html:4
 #: ideascube/templates/ideascube/includes/tag_cloud.html:4
 msgid "browse"
-msgstr "ventana"
+msgstr "περιήγηση"
 
 #: ideascube/search/templates/search/filter_by_kind.html:4
 msgid "by kind"
-msgstr "por tipo"
+msgstr "ανά είδος"
 
 #: ideascube/search/templates/search/filter_by_lang.html:4
 msgid "by language"
-msgstr "por idioma"
+msgstr "ανά γλώσσα"
 
 #: ideascube/search/templates/search/filter_cloud.html:5
 msgid "Filters"
-msgstr "Filtros"
+msgstr "Φίλτρα"
 
 #: ideascube/search/templates/search/order_by.html:4
 msgid "Order by"
-msgstr "Organice por"
+msgstr "Παραγγελία ανά"
 
 #: ideascube/search/templates/search/search.html:9
 msgid "Search in the box"
-msgstr "Buscar en el sistema"
+msgstr "Αναζήτηση στο κουτί"
 
 #: ideascube/search/templates/search/search.html:16
 #, python-format
 msgid "No result for \"%(query)s\"."
-msgstr "No hay resultados para \"%(query)s\"."
+msgstr "Κανένα αποτέλεσμα %(query)s\"."
 
 #: ideascube/serveradmin/backup.py:36
 #, python-brace-format
 msgid "backup name must end with one of {extensions}"
-msgstr ""
-"El nombre de la copia de respaldo debe terminar con una de {extensions}"
+msgstr "Το αντίγραφο ονόματος πρέπει να τελειώνει με μία από τις {extensions}"
 
 #: ideascube/serveradmin/backup.py:78
 msgid "Zip is no more supported to create backup"
-msgstr ""
-"Ya no se puede utilizar el formato Zip para crear una copia de respaldo"
+msgstr "Δεν υποστηρίζεται πλέον zip για τη δημιουργία αντιγράφων ασφαλείας"
 
 #: ideascube/serveradmin/backup.py:121
 msgid "Unkown format for file {}"
-msgstr "Formato desconocido para el archivo {}"
+msgstr "Άγνωστη μορφή αρχείου {}"
 
 #: ideascube/serveradmin/backup.py:134
 msgid "Format {} is not supported at creation"
-msgstr "Formato {} no está soportado a la creación"
+msgstr "Η μορφοποίηση αρχείου {} δεν υποστηρίζεται κατά τη δημιουργία"
 
 #: ideascube/serveradmin/backup.py:176
 msgid "Not a {} file"
-msgstr "No es un archivo {}"
+msgstr "Όχι {} αρχείο"
 
 #: ideascube/serveradmin/catalog.py:311
 #: ideascube/templates/ideascube/includes/cards/bsfcampus.html:4
@@ -1729,63 +1750,63 @@ msgstr "No es un archivo {}"
 #: ideascube/templates/ideascube/includes/cards/kolibri.html:4
 #: ideascube/templates/ideascube/includes/cards/koombookedu.html:4
 msgid "learn"
-msgstr "Aprender"
+msgstr "μαθαίνω"
 
 #: ideascube/serveradmin/catalog.py:403
 msgid "info"
-msgstr "información"
+msgstr "πληροφορίες"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:5
 msgid "Manage server backups"
-msgstr "Manejar las copias de respaldo del servidor"
+msgstr "Διαχείριση αντιγράφων ασφαλείας του server"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:8
 msgid "Backup"
-msgstr "Copia de respaldo"
+msgstr "Αντίγραφο ασφαλείας"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:9
 msgid "Backup now"
-msgstr "Haga una copia de respaldo ahora"
+msgstr "Φτιάξε αντίγραφα ασφαλείας τώρα"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:11
 msgid "Restore"
-msgstr "Restaurar"
+msgstr "Αποκατάσταστη"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Source"
-msgstr "Fuente"
+msgstr "Πηγή"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Version"
-msgstr "Versión"
+msgstr "Έκδοση"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Date"
-msgstr "Fecha"
+msgstr "Ημερομηνία"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Size"
-msgstr "Tamaño"
+msgstr "Μέγεθος"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:13
 msgid "Format"
-msgstr "Formato"
+msgstr "Μορφή"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:25
 msgid "Download selected"
-msgstr "Descargar seleccionado"
+msgstr "Έχει επιλεγεί λήψη"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:26
 msgid "Restore selected"
-msgstr "Restaurar la selección"
+msgstr "Έχει επιλεγεί αποκατάσταση"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:27
 msgid "Delete selected"
-msgstr "Eliminar la selección"
+msgstr "Έχει επιλεγεί διαγραφή"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:29
 msgid "Upload"
-msgstr "Cargar"
+msgstr "Ανέβασμα"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:31
 #, python-brace-format
@@ -1793,310 +1814,313 @@ msgid ""
 "File must be a zip, and file name must be in the form {source}-{version}-"
 "{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
 msgstr ""
-"El archivo debe ser un zip, y su nombre debe estar escrito en la forma "
-"siguiente {source}-{version}-{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
+"Το αρχείο πρέπει να είναι zip και το όνομα αρχείου πρέπει να είναι στη φόρμα "
+"{source}-{version}-{date}.zip; eg: musasa-0.1.0-201501231405.zip"
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:32
 msgid "Upload backup file"
-msgstr "Cargar el archivo de copia de respaldo"
+msgstr "Ανέβασμα αντιγράφου ασφαλείας αρχείου"
 
 #: ideascube/serveradmin/templates/serveradmin/battery.html:5
 msgid "Battery monitoring"
-msgstr "Monitoreo de la batería"
+msgstr "Παρακολούθηση μπαταρίας"
 
 #: ideascube/serveradmin/templates/serveradmin/battery.html:12
 msgid "Capacity"
-msgstr "Capacidad"
+msgstr "Χωρητικότητα"
 
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:5
 #: ideascube/serveradmin/templates/serveradmin/index.html:18
 msgid "Manage home page"
-msgstr "Administrar la página principal"
+msgstr "Διαχείριση αρχικής σελίδας"
 
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:9
 msgid "Card name"
-msgstr "Nombre de tarjeta"
+msgstr "Όνομα κάρτας"
 
 #: ideascube/serveradmin/templates/serveradmin/home_page.html:9
 msgid "Displayed"
-msgstr "Desplegado"
+msgstr "Στημένο"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:13
 msgid "Server Info"
-msgstr " Información del servidor"
+msgstr "Πληροφορίες για τον server"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:14
 msgid "Languages"
-msgstr "Idiomas"
+msgstr "Γλώσσες"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:15
 msgid "Restart server"
-msgstr "Reiniciar el servidor"
+msgstr "Επανέναρξη server"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:16
 msgid "Monitor battery"
-msgstr "Monitorear la batería"
+msgstr "Παρακολουθώ τη μπαταρία"
 
 #: ideascube/serveradmin/templates/serveradmin/index.html:17
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:5
 msgid "Manage Wi-Fi"
-msgstr "Administrar Wi-Fi"
+msgstr "Ρύθμιση Wi-Fi "
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:6
 msgid "Select Languages"
-msgstr "Seleccione idiomas"
+msgstr "Επιλογή Γλωσσών"
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:8
 msgid ""
 "Select here the languages which will be available when uploading content"
 msgstr ""
-"Seleccione los idiomas que estarán disponibles cuando se cargue el contenido"
+"Επίλεξε εδώ τις γλώσσες που θα είναι διαθέσιμες κατά το uploading του "
+"περιεχομένου"
 
 #: ideascube/serveradmin/templates/serveradmin/languages.html:23
 msgid "Save"
-msgstr "Guardar"
+msgstr "Αποθήκευση"
 
 #: ideascube/serveradmin/templates/serveradmin/power.html:5
 msgid "Stop or restart the server"
-msgstr "Apagar o reiniciar el servidor"
+msgstr "Διακοπή ή επανέναρξη του server"
 
 #: ideascube/serveradmin/templates/serveradmin/power.html:8
 #: ideascube/serveradmin/templates/serveradmin/service_form.html:13
 msgid "Stop"
-msgstr "Apagar"
+msgstr "Διακοπή"
 
 #: ideascube/serveradmin/templates/serveradmin/power.html:9
 #: ideascube/serveradmin/templates/serveradmin/service_form.html:12
 msgid "Restart"
-msgstr "Reiniciar"
+msgstr "Επανέναρξη"
 
 #: ideascube/serveradmin/templates/serveradmin/service_form.html:15
 msgid "Start"
-msgstr "Iniciar"
+msgstr "Έναρξη"
 
 #: ideascube/serveradmin/templates/serveradmin/settings.html:6
 msgid "Server info"
-msgstr "Información del servidor"
+msgstr "Πληροφορίες Server"
 
 #: ideascube/serveradmin/templates/serveradmin/settings.html:9
 #, python-format
 msgid "Version: %(version)s"
-msgstr "Versión: %(version)s"
+msgstr "Εκδοχή:%(version)s"
 
 #: ideascube/serveradmin/templates/serveradmin/settings.html:10
 #, python-format
 msgid "ID: %(id)s"
-msgstr "Identificación: %(id)s"
+msgstr "ID:%(id)s"
 
 #: ideascube/serveradmin/templates/serveradmin/settings.html:11
 #, python-format
 msgid "Hostname: %(name)s"
-msgstr "Hostname: %(name)s"
+msgstr "Όνομα εξυπηρετητή: %(name)s"
 
 #: ideascube/serveradmin/templates/serveradmin/settings.html:16
 msgid "Change Server Name"
-msgstr "Cambiar el nombre del servidor"
+msgstr "Αλλαγή ονόματος Server"
 
 #: ideascube/serveradmin/templates/serveradmin/settings.html:21
 msgid "Submit"
-msgstr "Enviar"
+msgstr "Υποβολή"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:22
 msgid "History"
-msgstr "Historia"
+msgstr "Ιστορικό"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:25
 msgid "No Wi-Fi available"
-msgstr "No existen redes Wi-Fi disponibles"
+msgstr "Δεν υπάρχει διαθέσιμο Wi-Fi "
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:30
 msgid "Authentication required"
-msgstr "Se requiere autenticacion"
+msgstr "Υποχρεωτική επαλήθευση"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:33
 msgid "An encryption key is required to access this network."
-msgstr "Se necesita una clave encriptada para acceder a esta red"
+msgstr ""
+"Για την πρόσβαση στο διαδίκτυο είναι απαραίτητο κρυπτογραφημένο κλειδί."
 
 #: ideascube/serveradmin/templates/serveradmin/wifi.html:37
 msgid "Connect"
-msgstr "Conecte"
+msgstr "Συνδέσου"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi_history.html:5
 msgid "Wi-Fi History"
-msgstr "Historia Wi-Fi"
+msgstr "ιστορικό Wi-Fi "
 
 #: ideascube/serveradmin/templates/serveradmin/wifi_history.html:21
 msgid "Forget Selected"
-msgstr "Olvidar selección"
+msgstr "Ξέχνα ότι έχει επιλεχθεί"
 
 #: ideascube/serveradmin/templates/serveradmin/wifi_history.html:25
 msgid "No known Wi-Fi networks"
-msgstr "No hay redes Wi-Fi conocidas"
+msgstr "Άγνωστα Wi-Fi δίκτυα"
 
 #: ideascube/serveradmin/views.py:39
 msgid "Please select at least one language"
-msgstr "Seleccione al menos un idioma"
+msgstr "Παρακαλώ επιλέξτε τουλάχιστον μία γλώσσα"
 
 #: ideascube/serveradmin/views.py:65
 #, python-brace-format
 msgid "Succesfully created backup {filename}"
-msgstr "Copia de respaldo {filename} creada con éxito"
+msgstr "Επιτυχής δημιουργία backup {filename}"
 
 #: ideascube/serveradmin/views.py:75
 msgid "Unable to load file:"
-msgstr "No es posible cargar el archivo: "
+msgstr "Αδυναμία φόρτωσης αρχείου:"
 
 #: ideascube/serveradmin/views.py:79
 #, python-brace-format
 msgid "File {name} has been loaded."
-msgstr "El archivo {name} ha sido cargado."
+msgstr "Το αρχείο {name} έχει φορτωθεί."
 
 #: ideascube/serveradmin/views.py:84
 msgid "No file found to upload."
-msgstr "No se ha encontrado un archivo para cargar"
+msgstr "Δεν βρέθηκε αρχείο για ανέβασμα."
 
 #: ideascube/serveradmin/views.py:90
 #, python-brace-format
 msgid "Succesfully deleted backup {filename}"
-msgstr "Copia de respaldo {filename} borrada con éxito"
+msgstr "Επιτυχώς διαγραμμένο backup {filename}"
 
 #: ideascube/serveradmin/views.py:95
 #, python-brace-format
 msgid "Succesfully restored backup {filename}"
-msgstr "Copia de respaldo {filename} restaurada con éxito"
+msgstr "Επιτυχώς ανακτημένο backup  {filename}"
 
 #: ideascube/serveradmin/views.py:133
 #, python-brace-format
 msgid "Connected to {ssid}"
-msgstr "Conectado a {ssid}"
+msgstr "Συνδεδεμένο με {ssid}"
 
 #: ideascube/serveradmin/views.py:137
 #, python-brace-format
 msgid "No such network: {ssid}"
-msgstr "No existe la red: {ssid}"
+msgstr "Δεν υπάρχει τέτοιο δίκτυο:{ssid}"
 
 #: ideascube/serveradmin/views.py:177
 msgid "Home cards updated successfully"
-msgstr "Tarjetas de inicio actualizadas con éxito"
+msgstr "Οι home cards έχουν ενημερωθεί επιτυχώς"
 
 #: ideascube/serveradmin/views.py:195
 msgid "Server name changed successfully"
-msgstr "Nombre del servidor cambiado con éxito"
+msgstr "Το όνομα server τροποποιήθηκε με επιτυχία"
 
 #: ideascube/serveradmin/views.py:198
 msgid "Server name cannot be empty"
-msgstr "El nombre del servidor no puede estar vacío"
+msgstr "Το πεδίο server πρέπει να συμπληρωθεί"
 
 #: ideascube/serveradmin/wifi.py:95
 msgid "A key is required to connect to this network"
-msgstr "La conexion a esta red necesita contraseña"
+msgstr ""
+"Είναι απαραίτητο κρυπτογραφημένο κλειδί για τη σύνδεση σε αυτό το δίκτυο"
 
 #: ideascube/serveradmin/wifi.py:114
 msgid "Invalid Wi-Fi key"
-msgstr "Llave Wi-Fi inválida"
+msgstr "Λανθασμένο κλειδί Wi-Fi "
 
 #: ideascube/serveradmin/wifi.py:141
 #, python-format
 msgid "Failed to connect to %s"
-msgstr "No es posible conectar a %s"
+msgstr "Αποτυχία σύνδεσης %s"
 
 #: ideascube/serveradmin/wifi.py:221
 msgid "Wi-Fi hardware is disabled"
-msgstr "Tarjeta Wi-fi se encuentra deshabilitada"
+msgstr "ο εξοπλισμός Wi-Fi είναι απενεργοποιημένος"
 
 #: ideascube/serveradmin/wifi.py:230
 msgid "Wi-Fi is disabled"
-msgstr "El Wi-Fi está desactivado"
+msgstr "το Wi-Fi είναι απενεργοποιημένο"
 
 #: ideascube/serveradmin/wifi.py:241
 msgid "No Wi-Fi device was found"
-msgstr "No se ha encontrado un dispositivo Wi-Fi"
+msgstr "Δεν βρέθηκε Wi-Fi συσκευή "
 
 #: ideascube/serveradmin/wifi.py:245
 msgid "Found more than one Wi-Fi device, this is not supported"
-msgstr "Más de un dispositivo Wi-Fi ha sido encontrado, esto no es soportado"
+msgstr "Έχουν βρεθεί παραπάνω από μία Wi-Fi συσκευές, αυτό δεν υποστηρίζεται"
 
 #: ideascube/templates/form-confirm-delete.html:18
 msgid "no"
-msgstr ""
+msgstr "όχι"
 
 #: ideascube/templates/form-confirm-delete.html:19
 msgid "yes"
-msgstr "Si"
+msgstr "ναι"
 
 #: ideascube/templates/form-fullpage.html:27
 msgid "cancel"
-msgstr "Cancelar"
+msgstr "ακύρωσε"
 
 #: ideascube/templates/form-fullpage.html:30
 #: ideascube/templates/ideascube/welcome_staff.html:17
 msgid "submit"
-msgstr "Someta"
+msgstr "υπόβαλε"
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:4
 #: ideascube/templates/ideascube/includes/cards/blog.html:4
 msgid "create"
-msgstr "crear"
+msgstr "δημιούργησε"
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:7
 msgid "Create your own apps for Android."
-msgstr "Crear sus propias aplicaciones para Android"
+msgstr "Δημιούργησε τις δικές σου εφαρμογές για Android."
 
 #: ideascube/templates/ideascube/includes/cards/blog.html:7
 msgid "Browse blog posts."
-msgstr "Buscar publicaciones en el blog"
+msgstr "Αναζήτησε αναρτήσεις σε ιστολόγια."
 
 #: ideascube/templates/ideascube/includes/cards/khanacademy.html:7
 #: ideascube/templates/ideascube/includes/cards/kolibri.html:7
 msgid "Learn with videos and exercises."
-msgstr "Aprenda con videos y ejercicios"
+msgstr "Μάθηση με τη χρήση βίντεο και ασκήσεων."
 
 #: ideascube/templates/ideascube/includes/cards/library.html:7
 msgid "Browse books."
-msgstr "Buscar libros"
+msgstr "Αναζήτησε βιβλία."
 
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:5
 msgid "Medias center"
-msgstr "Centro multimedia"
+msgstr "Κέντρο μέσων"
 
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:7
 msgid "Browse videos, sounds, images, pdf…"
-msgstr "Buscar videos, sonidos, imagenes, pdf..."
+msgstr "Αναζήτησε βίντεο, ήχους,εικόνες,pdf..."
 
 #: ideascube/templates/ideascube/includes/footer.html:20
 msgid "Change"
-msgstr "Cambiar"
+msgstr "Αλλαγή"
 
 #: ideascube/templates/ideascube/includes/header.html:14
 #, python-format
 msgid "log out from %(user)s"
-msgstr "Salir de %(user)s"
+msgstr "αποσύνδεση από %(user)s"
 
 #: ideascube/templates/ideascube/includes/header.html:16
 msgid "log in"
-msgstr "Ingresar"
+msgstr "εγγραφή"
 
 #: ideascube/templates/ideascube/includes/tag_cloud.html:4
 msgid "by topic"
-msgstr "por tema"
+msgstr "ανά θέμα"
 
 #: ideascube/templates/ideascube/pagination.html:5
 msgid "previous"
-msgstr "anterior"
+msgstr "προηγούμενο"
 
 #: ideascube/templates/ideascube/pagination.html:8
 #, python-format
 msgid "Page %(current)s of %(total)s."
-msgstr "Pagina %(current)s de %(total)s"
+msgstr "Σελίδα %(current)s of %(total)s."
 
 #: ideascube/templates/ideascube/pagination.html:11
 msgid "next"
-msgstr "Próximo"
+msgstr "επόμενο"
 
 #: ideascube/templates/ideascube/set_password.html:5
 #, python-format
 msgid "Set %(user)s password"
-msgstr "Establezca %(user)s contraseña"
+msgstr "Ορίστε κωδικό %(user)s"
 
 #: ideascube/templates/ideascube/user_confirm_delete.html:5
 #, python-format
@@ -2105,53 +2129,55 @@ msgid ""
 "        Are you sure you want to delete user \"%(user_obj)s\"?\n"
 "    "
 msgstr ""
+"\n"
+"Είσαι σίγουρος ότι θέλετε να διαγράψετε το χρήστη \"%(user_obj)s\";"
 
 #: ideascube/templates/ideascube/user_detail.html:5
 msgid "View all users"
-msgstr "Ver todos los usuarios"
+msgstr "Δείτε όλους τους χρήστες"
 
 #: ideascube/templates/ideascube/user_detail.html:16
 msgid "Set password"
-msgstr "Agregar contraseña"
+msgstr "Ορίστε κωδικό"
 
 #: ideascube/templates/ideascube/user_detail.html:17
 msgid "Remove staff status"
-msgstr "Remover estatus del personal"
+msgstr "Αφαίρεση  κατάστασης προσωπικού"
 
 #: ideascube/templates/ideascube/user_detail.html:17
 msgid "Add staff status"
-msgstr "Añadir estatus del personal"
+msgstr "Προσθήκη κατάστασης προσωπικού"
 
 #: ideascube/templates/ideascube/user_detail.html:18
 #: ideascube/templates/ideascube/user_list.html:27
 msgid "Add user"
-msgstr "Añadir usuario"
+msgstr "Προσθήκη χρήστη"
 
 #: ideascube/templates/ideascube/user_form.html:7
 msgid "Edit user"
-msgstr "Editar usuario"
+msgstr "Μορφοποίηση χρήστη"
 
 #: ideascube/templates/ideascube/user_form.html:9
 msgid "New User"
-msgstr "Nuevo usuario"
+msgstr "Νέος χρήστης"
 
 #: ideascube/templates/ideascube/user_import.html:6
 #: ideascube/templates/ideascube/user_list.html:29
 msgid "Import users"
-msgstr "Importar usuarios"
+msgstr "Εισαγωγή χρηστών"
 
 #: ideascube/templates/ideascube/user_list.html:8
 msgid "Name"
-msgstr "Nombre"
+msgstr "Όνομα"
 
 #: ideascube/templates/ideascube/user_list.html:28
 msgid "Export all users"
-msgstr "Exportar todos los usuarios"
+msgstr "Εξαγωγή όλων των χρηστών"
 
 #: ideascube/templates/ideascube/welcome_staff.html:5
 #, python-format
 msgid "Welcome to %(server_name)s"
-msgstr "Bienvenido a %(server_name)s"
+msgstr "Καλώς ήρθατε %(server_name)s"
 
 #: ideascube/templates/ideascube/welcome_staff.html:6
 msgid ""
@@ -2159,24 +2185,25 @@ msgid ""
 "password. These will allow you to administrate the server. Make sure to "
 "remember both the username AND password!"
 msgstr ""
-"Para disfrutar de la biblioteca digital, debe primero crear un usuario y una "
-"contraseña. Esto le dará acceso para administrar el servidor. Por favor "
-"recuerde su usuario y contraseña!"
+"Για να απολαύσετε τις υπηρεσίες αυτής της ψηφιακής βιβλιοθήκης, θα πρέπει "
+"πρώτα να δημιουργήσετε ένα όνομα χρήστη και έναν κωδικό, οι οποίοι θα σας "
+"επιτρέψουν να διαχειριστείτε το server. Επιβεβαιώστε ότι θα θυμάστε κάθε "
+"φορά, το όνομα χρήστη ΚΑΙ τον κωδικό!"
 
 #: ideascube/templates/registration/login.html:14
 msgid "Log in"
-msgstr "Ingresar"
+msgstr "Σύνδεση"
 
 #: ideascube/views.py:71
 msgid "Welcome to {}, {}!"
-msgstr "Bienvenido a {}, {}!"
+msgstr "Kαλώς ήρθατε στο {},{}!"
 
 #: ideascube/views.py:170
 #, python-brace-format
 msgid "Password has been set for {user}"
-msgstr "La contraseña ha sido asignada al usuario {user}"
+msgstr "Ο κωδικός έχει οριστεί για τον {user}"
 
 #: ideascube/views.py:215
 #, python-brace-format
 msgid "Successfully processed {count} users."
-msgstr ""
+msgstr "Επιτυχής επεξεργασία {count} χρηστών."
