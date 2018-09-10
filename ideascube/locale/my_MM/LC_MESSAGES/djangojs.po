@@ -3,141 +3,139 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Florian HESLOUIN <splite@zimdeo.fr>, 2018
-# Grégoire <gregoire.pouget@bibliosansfrontieres.org>, 2015
-# yohanboniface <yohanboniface@free.fr>, 2015
-# yohanboniface <yohanboniface@free.fr>, 2015
+# AUNG PAING SOE, 2018
+# Ei Ei Saing <eiei@translatorswithoutborders.org>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-07 15:09+0000\n"
-"PO-Revision-Date: 2018-03-08 15:02+0000\n"
-"Last-Translator: Florian HESLOUIN <splite@zimdeo.fr>\n"
-"Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/"
-"fr/)\n"
-"Language: fr\n"
+"PO-Revision-Date: 2018-08-21 10:23+0000\n"
+"Last-Translator: Ei Ei Saing <eiei@translatorswithoutborders.org>\n"
+"Language-Team: Burmese (Myanmar) (http://www.transifex.com/ideascube/"
+"ideascube/language/my_MM/)\n"
+"Language: my_MM\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ideascube/static/ideascube/js/ideascube.js:12
 msgid "Previous Month"
-msgstr "Mois précédent"
+msgstr "ယခင်လ"
 
 #: ideascube/static/ideascube/js/ideascube.js:13
 msgid "Next Month"
-msgstr "Mois suivant"
+msgstr "နောက်လ"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "January"
-msgstr "Janvier"
+msgstr "ဇန္နဝါရီလ"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "February"
-msgstr "Février"
+msgstr "ဖေဖော်ဝါရီ"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "March"
-msgstr "Mars"
+msgstr "မတ်"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "April"
-msgstr "Avril"
+msgstr "ဧပြီ"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "May"
-msgstr "Mai"
+msgstr "မေ"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "June"
-msgstr "Juin"
+msgstr "ဇွန်"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "July"
-msgstr "Juillet"
+msgstr "ဇူလိုင်"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "August"
-msgstr "Août"
+msgstr "သြဂုတ်"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "September"
-msgstr "Septembre"
+msgstr "စက်တင်ဘာ"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "October"
-msgstr "Octobre"
+msgstr "အောက်တိုဘာ"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "November"
-msgstr "Novembre"
+msgstr "နိုဝင်ဘာ"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "December"
-msgstr "Décembre"
+msgstr "ဒီဇင်ဘာ"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Sunday"
-msgstr "Dimanche"
+msgstr "တနင်္ဂနွေ"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Monday"
-msgstr "Lundi"
+msgstr "တနင်္လာ"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Tuesday"
-msgstr "Mardi"
+msgstr "အင်္ဂါ"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Wednesday"
-msgstr "Mercred"
+msgstr "ဗုဒ္ဓဟူး"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Thursday"
-msgstr "Jeudi"
+msgstr "ကြာသပတေး"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Friday"
-msgstr "Vendredi"
+msgstr "သောကြာ"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Saturday"
-msgstr "Samedi"
+msgstr "စနေ"
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Sun"
-msgstr "Dim."
+msgstr "နွေ"
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Mon"
-msgstr "Lun."
+msgstr "လာ"
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Tue"
-msgstr "Mar."
+msgstr "ဂါ"
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Wed"
-msgstr "Mer."
+msgstr "ဟူး"
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Thu"
-msgstr "Jeu."
+msgstr "တေး"
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Fri"
-msgstr "Ven."
+msgstr "ကြာ"
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Sat"
-msgstr "Sam."
+msgstr "နေ"
 
 #: ideascube/static/ideascube/js/ideascube.js:43
 msgid "Are you sure?"
-msgstr "Êtes-vous sûr ?"
+msgstr "သင် သေချာပါသလား။"
 
 #: ideascube/static/ideascube/js/ideascube.js:137
 msgid "Your web browser doesn't support this media type."
-msgstr "Votre navigateur ne supporte pas ce type de média."
+msgstr "ဤ မီဒီယာအမျိုးအစားကို သင့် ဝဘ်ဘရောက်ဇာ (web browser) မှ အထောက်အပံ့ မပြုလုပ်ပါ။"

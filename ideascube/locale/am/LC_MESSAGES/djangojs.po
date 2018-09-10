@@ -1,20 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 13:44+0000\n"
+"POT-Creation-Date: 2018-09-07 15:09+0000\n"
 "PO-Revision-Date: 2017-08-03 19:12+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
-"Language-Team: Amharic (http://www.transifex.com/ideascube/ideascube/language/am/)\n"
+"Language-Team: Amharic (http://www.transifex.com/ideascube/ideascube/"
+"language/am/)\n"
+"Language: am\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: am\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ideascube/static/ideascube/js/ideascube.js:12

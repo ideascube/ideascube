@@ -3,141 +3,138 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Florian HESLOUIN <splite@zimdeo.fr>, 2018
-# Grégoire <gregoire.pouget@bibliosansfrontieres.org>, 2015
-# yohanboniface <yohanboniface@free.fr>, 2015
-# yohanboniface <yohanboniface@free.fr>, 2015
+# Olga Moukouli <olga.moukouli@bibliosansfrontieres.org>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-07 15:09+0000\n"
-"PO-Revision-Date: 2018-03-08 15:02+0000\n"
-"Last-Translator: Florian HESLOUIN <splite@zimdeo.fr>\n"
-"Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/"
-"fr/)\n"
-"Language: fr\n"
+"PO-Revision-Date: 2018-08-27 11:42+0000\n"
+"Last-Translator: Olga Moukouli <olga.moukouli@bibliosansfrontieres.org>\n"
+"Language-Team: Greek (http://www.transifex.com/ideascube/ideascube/language/"
+"el/)\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ideascube/static/ideascube/js/ideascube.js:12
 msgid "Previous Month"
-msgstr "Mois précédent"
+msgstr "Τον Προηγούμενο Μήνα"
 
 #: ideascube/static/ideascube/js/ideascube.js:13
 msgid "Next Month"
-msgstr "Mois suivant"
+msgstr "Τον Επόμενο Μήνα"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "January"
-msgstr "Janvier"
+msgstr "Ιανουάριος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "February"
-msgstr "Février"
+msgstr "Φεβρουάριος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "March"
-msgstr "Mars"
+msgstr "Μάρτιος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "April"
-msgstr "Avril"
+msgstr "Απρίλιος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "May"
-msgstr "Mai"
+msgstr "Μάιος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "June"
-msgstr "Juin"
+msgstr "Ιούνιος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "July"
-msgstr "Juillet"
+msgstr "Ιούλιος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "August"
-msgstr "Août"
+msgstr "Αύγουστος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "September"
-msgstr "Septembre"
+msgstr "Σεπτέμβριος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "October"
-msgstr "Octobre"
+msgstr "Οκτώβριος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "November"
-msgstr "Novembre"
+msgstr "Νοέμβριος"
 
 #: ideascube/static/ideascube/js/ideascube.js:14
 msgid "December"
-msgstr "Décembre"
+msgstr "Δεκέμβριος"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Sunday"
-msgstr "Dimanche"
+msgstr "Κυριακή"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Monday"
-msgstr "Lundi"
+msgstr "Δευτέρα"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Tuesday"
-msgstr "Mardi"
+msgstr "Τρίτη"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Wednesday"
-msgstr "Mercred"
+msgstr "Τετάρτη"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Thursday"
-msgstr "Jeudi"
+msgstr "Πέμπτη"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Friday"
-msgstr "Vendredi"
+msgstr "Παρασκευή"
 
 #: ideascube/static/ideascube/js/ideascube.js:15
 msgid "Saturday"
-msgstr "Samedi"
+msgstr "Σάββατο"
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Sun"
-msgstr "Dim."
+msgstr "Κυρ."
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Mon"
-msgstr "Lun."
+msgstr "Δευτ."
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Tue"
-msgstr "Mar."
+msgstr "Τρ."
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Wed"
-msgstr "Mer."
+msgstr "Τετ."
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Thu"
-msgstr "Jeu."
+msgstr "Πέμπ."
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Fri"
-msgstr "Ven."
+msgstr "Παρ."
 
 #: ideascube/static/ideascube/js/ideascube.js:16
 msgid "Sat"
-msgstr "Sam."
+msgstr "Σάββ."
 
 #: ideascube/static/ideascube/js/ideascube.js:43
 msgid "Are you sure?"
-msgstr "Êtes-vous sûr ?"
+msgstr "Το λες με βεβαιότητα;"
 
 #: ideascube/static/ideascube/js/ideascube.js:137
 msgid "Your web browser doesn't support this media type."
-msgstr "Votre navigateur ne supporte pas ce type de média."
+msgstr "O περιηγητής ιστού δεν υποστηρίζει αυτό τον τύπο αρχείου."

@@ -1,20 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 13:44+0000\n"
+"POT-Creation-Date: 2018-09-07 15:09+0000\n"
 "PO-Revision-Date: 2018-01-18 16:51+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
-"Language-Team: Amharic (http://www.transifex.com/ideascube/ideascube/language/am/)\n"
+"Language-Team: Amharic (http://www.transifex.com/ideascube/ideascube/"
+"language/am/)\n"
+"Language: am\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: am\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ideascube/blog/models.py:45
@@ -356,8 +357,8 @@ msgstr ""
 #: ideascube/forms.py:38
 msgid ""
 "To create a strong password, forget about passwords, and think rather about "
-"a passphrase. For instance: \"The boat is flowing on the water\" is a strong"
-" and easy to remember passphrase. Now choose your own passphrase!"
+"a passphrase. For instance: \"The boat is flowing on the water\" is a strong "
+"and easy to remember passphrase. Now choose your own passphrase!"
 msgstr ""
 
 #: ideascube/forms.py:46
@@ -542,7 +543,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"         Are you sure you want to delete book \"%(book)s\" and all its specimens?\n"
+"         Are you sure you want to delete book \"%(book)s\" and all its "
+"specimens?\n"
 "    "
 msgstr ""
 
@@ -1530,7 +1532,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"        Are you sure you want to delete the specimen \"%(specimen)s\" of \"%(item)s\"?\n"
+"        Are you sure you want to delete the specimen \"%(specimen)s\" of "
+"\"%(item)s\"?\n"
 "    "
 msgstr ""
 
@@ -1767,8 +1770,8 @@ msgstr ""
 #: ideascube/serveradmin/templates/serveradmin/backup.html:31
 #, python-brace-format
 msgid ""
-"File must be a zip, and file name must be in the form "
-"{source}-{version}-{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
+"File must be a zip, and file name must be in the form {source}-{version}-"
+"{date}.zip; eg.: musasa-0.1.0-201501231405.zip"
 msgstr ""
 
 #: ideascube/serveradmin/templates/serveradmin/backup.html:32
