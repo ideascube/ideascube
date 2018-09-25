@@ -1,3 +1,9 @@
+iideascube (0.37.3) unstable; urgency=low
+
+  * Update Bengali, Burmese and Greek languages (@fheslouin)
+
+ -- Florian HESLOUIN <florian.heslouin@bibliosansfrontieres.org>  Mon, 25 Sept 2018 15:45:00 +0200
+
 ideascube (0.37.2) unstable; urgency=low
 
   * Add Bengali, Burmese and Greek languages (@mbridon)
