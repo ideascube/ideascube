@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 15:09+0000\n"
-"PO-Revision-Date: 2018-08-20 11:38+0000\n"
+"POT-Creation-Date: 2018-09-25 13:31+0000\n"
+"PO-Revision-Date: 2018-09-19 14:41+0000\n"
 "Last-Translator: Ei Ei Saing <eiei@translatorswithoutborders.org>\n"
 "Language-Team: Burmese (Myanmar) (http://www.transifex.com/ideascube/"
 "ideascube/language/my_MM/)\n"
@@ -123,52 +123,52 @@ msgstr "နောက်ဆုံးထုတ်ဝေခဲ့သည်။"
 msgid "Suitable for all languages"
 msgstr "ဘာသာစကားတိုင်းအတွက် သင့်လျော်သည်။"
 
-#: ideascube/conf/base.py:239
+#: ideascube/conf/base.py:248
 msgid "the camp"
 msgstr "စခန်းကမ့်ထဲတွင်"
 
-#: ideascube/conf/base.py:252
+#: ideascube/conf/base.py:261
 msgid "Basic informations"
 msgstr "အခြေခံသတင်းအချက်အလက်များ"
 
-#: ideascube/conf/base.py:263 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:272 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr "အသုံးပြုသူများ"
 
-#: ideascube/conf/base.py:264
+#: ideascube/conf/base.py:273
 msgid "Create, remove or modify users."
 msgstr "အသုံးပြုသူများ ဖန်တီး၊ ပြောင်းရွေ့ သို့မဟုတ် ပြုပြင်ခြင်း"
 
-#: ideascube/conf/base.py:271
+#: ideascube/conf/base.py:280
 msgid "Entries"
 msgstr "စာရင်းသွင်းခြင်း"
 
-#: ideascube/conf/base.py:272
+#: ideascube/conf/base.py:281
 msgid "Manage user entries."
 msgstr "အသုံးပြုသူစာရင်းသွင်းခြင်းကို စီမံခြင်း"
 
-#: ideascube/conf/base.py:279
+#: ideascube/conf/base.py:288
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
 msgstr "စတော့"
 
-#: ideascube/conf/base.py:280
+#: ideascube/conf/base.py:289
 msgid "Manage stock."
 msgstr "စတော့ကို စီမံခြင်း"
 
-#: ideascube/conf/base.py:287
+#: ideascube/conf/base.py:296
 msgid "Loans"
 msgstr "ငှားရမ်းခြင်း"
 
-#: ideascube/conf/base.py:288
+#: ideascube/conf/base.py:297
 msgid "Manage loans."
 msgstr "ငှားရမ်းမှုများကို စီမံခြင်း။"
 
-#: ideascube/conf/base.py:295
+#: ideascube/conf/base.py:304
 msgid "Settings"
 msgstr "ဆက်တင်များ"
 
-#: ideascube/conf/base.py:296
+#: ideascube/conf/base.py:305
 msgid "Configure the server"
 msgstr "ဆာဗာကို အဆင်သင့်ဖြစ်ရန်ပြင်ဆင်ခြင်း"
 
@@ -558,14 +558,14 @@ msgstr ""
 
 #: ideascube/library/templates/library/book_detail.html:11
 msgid "View all books"
-msgstr "စာအုပ်အားလုံးကိုပြပါ။"
+msgstr "စာအုပ်အားလုံးကို ကြည့်ပါ။"
 
 #: ideascube/library/templates/library/book_detail.html:15
 #: ideascube/library/templates/library/index.html:9
 #: ideascube/serveradmin/catalog.py:310
 #: ideascube/templates/ideascube/includes/cards/library.html:4
 msgid "read"
-msgstr "စာဖတ်ခြင်း"
+msgstr "စာဖတ်ပါ"
 
 #: ideascube/library/templates/library/book_detail.html:19
 #: ideascube/library/views.py:40
@@ -941,7 +941,7 @@ msgstr "အပြော"
 
 #: ideascube/models.py:82
 msgid "Read"
-msgstr "အဖတ်"
+msgstr "ဖတ်ပါ"
 
 #: ideascube/models.py:87
 msgid "identifier"
@@ -1682,7 +1682,7 @@ msgstr "အငှားတင်ပို့ခြင်း လုပ်ဆေ�
 #: ideascube/search/templates/search/box.html:6
 #: ideascube/search/templates/search/box.html:10
 msgid "search"
-msgstr "ရှာဖွေခြင်း"
+msgstr "ရှာဖွေပါ"
 
 #: ideascube/search/templates/search/filter_by_kind.html:4
 #: ideascube/search/templates/search/filter_by_lang.html:4
@@ -1742,7 +1742,7 @@ msgstr "ဖိုင် {} တစ်ခု မဟုတ်ပါ။"
 #: ideascube/templates/ideascube/includes/cards/kolibri.html:4
 #: ideascube/templates/ideascube/includes/cards/koombookedu.html:4
 msgid "learn"
-msgstr "သင်ယူခြင်း"
+msgstr "သင်ယူပါ"
 
 #: ideascube/serveradmin/catalog.py:403
 msgid "info"
@@ -2049,7 +2049,7 @@ msgstr "တင်သွင်းသည်။"
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:4
 #: ideascube/templates/ideascube/includes/cards/blog.html:4
 msgid "create"
-msgstr "ဖန်တီးသည်။"
+msgstr "ဖန်တီးပါ။"
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:7
 msgid "Create your own apps for Android."
@@ -2066,7 +2066,7 @@ msgstr "ဗီဒီယိုများ၊ လေ့ကျင့်ခန်�
 
 #: ideascube/templates/ideascube/includes/cards/library.html:7
 msgid "Browse books."
-msgstr "စာအုပ်ဖျားကို ရှာဖွေပါ။"
+msgstr "စာအုပ်များအားလုံးကို ရှာပါ။"
 
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:5
 msgid "Medias center"
