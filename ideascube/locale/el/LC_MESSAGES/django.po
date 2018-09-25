@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 15:09+0000\n"
-"PO-Revision-Date: 2018-09-07 14:12+0000\n"
-"Last-Translator: Florian HESLOUIN <splite@zimdeo.fr>\n"
+"POT-Creation-Date: 2018-09-25 13:31+0000\n"
+"PO-Revision-Date: 2018-09-13 07:09+0000\n"
+"Last-Translator: Olga Moukouli <olga.moukouli@bibliosansfrontieres.org>\n"
 "Language-Team: Greek (http://www.transifex.com/ideascube/ideascube/language/"
 "el/)\n"
 "Language: el\n"
@@ -124,52 +124,52 @@ msgstr "Δημοσιεύθηκαν τελευταία"
 msgid "Suitable for all languages"
 msgstr "Κατάλληλο για όλες τις γλώσσες"
 
-#: ideascube/conf/base.py:239
+#: ideascube/conf/base.py:248
 msgid "the camp"
 msgstr "κέντρο υποδοχής "
 
-#: ideascube/conf/base.py:252
+#: ideascube/conf/base.py:261
 msgid "Basic informations"
 msgstr "Βασικές πληροφορίες"
 
-#: ideascube/conf/base.py:263 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:272 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr "Χρήστες"
 
-#: ideascube/conf/base.py:264
+#: ideascube/conf/base.py:273
 msgid "Create, remove or modify users."
 msgstr "Δημιουργία, κατάργηση ή τροποποποίηση χρηστών."
 
-#: ideascube/conf/base.py:271
+#: ideascube/conf/base.py:280
 msgid "Entries"
 msgstr "Είσοδοι"
 
-#: ideascube/conf/base.py:272
+#: ideascube/conf/base.py:281
 msgid "Manage user entries."
 msgstr "Διαχείριση χρηστών εισόδου."
 
-#: ideascube/conf/base.py:279
+#: ideascube/conf/base.py:288
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
 msgstr "Απόθεμα"
 
-#: ideascube/conf/base.py:280
+#: ideascube/conf/base.py:289
 msgid "Manage stock."
 msgstr "Διαχείριση αποθέματος."
 
-#: ideascube/conf/base.py:287
+#: ideascube/conf/base.py:296
 msgid "Loans"
 msgstr "Δάνεια"
 
-#: ideascube/conf/base.py:288
+#: ideascube/conf/base.py:297
 msgid "Manage loans."
 msgstr "Διαχείριση δανείων."
 
-#: ideascube/conf/base.py:295
+#: ideascube/conf/base.py:304
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: ideascube/conf/base.py:296
+#: ideascube/conf/base.py:305
 msgid "Configure the server"
 msgstr "Διαμορφώνω το διακομιστή"
 
@@ -803,7 +803,7 @@ msgstr "βίντεο"
 
 #: ideascube/mediacenter/models.py:45
 msgid "pdf"
-msgstr "pdf φορητή μορφή αρχείου"
+msgstr "pdf"
 
 #: ideascube/mediacenter/models.py:47
 msgid "epub"
@@ -910,7 +910,7 @@ msgstr "Δεν υπάρχουν αρχεία."
 #: ideascube/templates/ideascube/includes/cards/media-package.html:4
 #: ideascube/templates/ideascube/includes/cards/mediacenter.html:4
 msgid "discover"
-msgstr "ανακάλυψε"
+msgstr "ανακαλύπτω"
 
 #: ideascube/mediacenter/templates/mediacenter/index.html:11
 msgid "Medias Center"
@@ -2060,7 +2060,7 @@ msgstr "υπόβαλε"
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:4
 #: ideascube/templates/ideascube/includes/cards/blog.html:4
 msgid "create"
-msgstr "δημιούργησε"
+msgstr "δημιουργώ"
 
 #: ideascube/templates/ideascube/includes/cards/appinventor.html:7
 msgid "Create your own apps for Android."

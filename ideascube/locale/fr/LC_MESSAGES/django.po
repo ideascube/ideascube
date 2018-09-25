@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 15:09+0000\n"
+"POT-Creation-Date: 2018-09-25 13:31+0000\n"
 "PO-Revision-Date: 2018-01-18 17:00+0000\n"
 "Last-Translator: Mathieu Bridon <bochecha@daitauha.fr>\n"
 "Language-Team: French (http://www.transifex.com/ideascube/ideascube/language/"
@@ -129,52 +129,52 @@ msgstr "Dernier publié"
 msgid "Suitable for all languages"
 msgstr "Convient pour toutes les langues"
 
-#: ideascube/conf/base.py:239
+#: ideascube/conf/base.py:248
 msgid "the camp"
 msgstr "le camp"
 
-#: ideascube/conf/base.py:252
+#: ideascube/conf/base.py:261
 msgid "Basic informations"
 msgstr "Infos de base"
 
-#: ideascube/conf/base.py:263 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:272 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: ideascube/conf/base.py:264
+#: ideascube/conf/base.py:273
 msgid "Create, remove or modify users."
 msgstr "Créer, supprimer et modifier les utilisateurs."
 
-#: ideascube/conf/base.py:271
+#: ideascube/conf/base.py:280
 msgid "Entries"
 msgstr "Entrées"
 
-#: ideascube/conf/base.py:272
+#: ideascube/conf/base.py:281
 msgid "Manage user entries."
 msgstr "Gérer les entrées"
 
-#: ideascube/conf/base.py:279
+#: ideascube/conf/base.py:288
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
 msgstr "Stock"
 
-#: ideascube/conf/base.py:280
+#: ideascube/conf/base.py:289
 msgid "Manage stock."
 msgstr "Gérer le stock"
 
-#: ideascube/conf/base.py:287
+#: ideascube/conf/base.py:296
 msgid "Loans"
 msgstr "Prêts"
 
-#: ideascube/conf/base.py:288
+#: ideascube/conf/base.py:297
 msgid "Manage loans."
 msgstr "Gérer les prêts"
 
-#: ideascube/conf/base.py:295
+#: ideascube/conf/base.py:304
 msgid "Settings"
 msgstr "Préférences"
 
-#: ideascube/conf/base.py:296
+#: ideascube/conf/base.py:305
 msgid "Configure the server"
 msgstr "Configurer le serveur"
 

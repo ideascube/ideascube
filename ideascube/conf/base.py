@@ -190,6 +190,12 @@ LANG_INFO.update({
         'code': 'wo',
         'name_local': 'wolof'
     },
+    'my-mm': {
+        'bidi': True,
+        'name': 'Burmese',
+        'code': 'my-mm',
+        'name_local': 'မြန်မာဘာသာ ',
+    },
 })
 
 # Languages that will be available as UI translations
@@ -204,6 +210,9 @@ _AVAILABLE_LANGUAGES = (
     'ku',
     'so',
     'sw',
+    'el',
+    'my-mm',
+    'bn'
 )
 LANGUAGES = []
 for code, lang_data in sorted(LANG_INFO.items()):

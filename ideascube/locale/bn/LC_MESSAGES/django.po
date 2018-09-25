@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ideascube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 15:09+0000\n"
-"PO-Revision-Date: 2018-09-07 14:14+0000\n"
-"Last-Translator: Florian HESLOUIN <splite@zimdeo.fr>\n"
+"POT-Creation-Date: 2018-09-25 13:31+0000\n"
+"PO-Revision-Date: 2018-09-18 10:41+0000\n"
+"Last-Translator: Apala Sengupta <apala@translatorswithoutborders.org>\n"
 "Language-Team: Bengali (http://www.transifex.com/ideascube/ideascube/"
 "language/bn/)\n"
 "Language: bn\n"
@@ -126,52 +126,52 @@ msgstr "শেষ প্রকাশিত"
 msgid "Suitable for all languages"
 msgstr "সব ভাষার জন্য উপযোগী"
 
-#: ideascube/conf/base.py:239
+#: ideascube/conf/base.py:248
 msgid "the camp"
 msgstr "ক্যাম্প"
 
-#: ideascube/conf/base.py:252
+#: ideascube/conf/base.py:261
 msgid "Basic informations"
 msgstr "সাধারণ তথ্য"
 
-#: ideascube/conf/base.py:263 ideascube/templates/ideascube/user_list.html:6
+#: ideascube/conf/base.py:272 ideascube/templates/ideascube/user_list.html:6
 msgid "Users"
 msgstr "ব্যবহারকারী"
 
-#: ideascube/conf/base.py:264
+#: ideascube/conf/base.py:273
 msgid "Create, remove or modify users."
 msgstr "ব্যবহারকারী তৈরি, অপসারণ বা পরিবর্তন করুন।"
 
-#: ideascube/conf/base.py:271
+#: ideascube/conf/base.py:280
 msgid "Entries"
 msgstr "এন্ট্রি"
 
-#: ideascube/conf/base.py:272
+#: ideascube/conf/base.py:281
 msgid "Manage user entries."
 msgstr "ব্যবহারকারীর এন্ট্রিগুলি পরিচালনা করুন।"
 
-#: ideascube/conf/base.py:279
+#: ideascube/conf/base.py:288
 #: ideascube/monitoring/templates/monitoring/stock.html:10
 msgid "Stock"
 msgstr "স্টক"
 
-#: ideascube/conf/base.py:280
+#: ideascube/conf/base.py:289
 msgid "Manage stock."
 msgstr "স্টক পরিচালনা করুন।"
 
-#: ideascube/conf/base.py:287
+#: ideascube/conf/base.py:296
 msgid "Loans"
 msgstr "ধার"
 
-#: ideascube/conf/base.py:288
+#: ideascube/conf/base.py:297
 msgid "Manage loans."
 msgstr "ধার পরিচালনা করুন।"
 
-#: ideascube/conf/base.py:295
+#: ideascube/conf/base.py:304
 msgid "Settings"
 msgstr "সেটিংস"
 
-#: ideascube/conf/base.py:296
+#: ideascube/conf/base.py:305
 msgid "Configure the server"
 msgstr "সার্ভার কনফিগার করুন"
 
@@ -869,7 +869,7 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"                 %(kind)sডাউনলোড করুন \n"
+"                 %(kind)s ডাউনলোড করুন \n"
 "            "
 
 #: ideascube/mediacenter/templates/mediacenter/document_detail.html:43
