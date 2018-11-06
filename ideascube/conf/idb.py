@@ -1,4 +1,4 @@
 from .base import *  # pragma: no flakes
 
 
-EXTRA_APP_CARDS = ['khanacademy']
+EXTRA_APP_CARDS = ['kolibri']
