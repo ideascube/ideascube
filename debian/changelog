@@ -1,3 +1,9 @@
+ideascube (0.37.6) unstable; urgency=low
+
+  * Build an other debian package (@fheslouin)
+
+ -- Florian HESLOUIN <florian.heslouin@bibliosansfrontieres.org>  Fri, 9 Nov 2018 16:16:00 +0200
+
 ideascube (0.37.5) unstable; urgency=low
 
   * Kolibri integration and default for all new devices. Created a configuration file for all other projects keeping khanacademy as default card.  (@steven)
