@@ -620,6 +620,9 @@ html[dir='rtl'] .card.book img {
     padding: 0 5px;
     text-decoration: none;
 }
+.share {
+    background-color: #3f6ae8;
+}
 .info {
     background-color: #E26A6A;
 }
