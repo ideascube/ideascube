@@ -1,0 +1,9 @@
+{% load i18n %}
+<a href="{% url 'mediacenter:index' %}?tags=dropcube" class="card tinted">
+  <i class="fa fa-dropbox fa-3x"></i>
+  <h4>
+    <span class="theme share">{% trans "share" %}</span>
+    <span>DropCube</span>
+  </h4>
+  <p>{% trans "Add dropcube tag to your uploads to share your files" %}</p>
+</a>
