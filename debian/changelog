@@ -1,3 +1,10 @@
+ideascube (0.37.7) unstable; urgency=low
+
+  * Add a dropcube card (@fheslouin)
+  * Add kb_bdg_local.py and kb_bdg_rohingya.py configuration file (@fheslouin)
+
+ -- Florian HESLOUIN <florian.heslouin@bibliosansfrontieres.org>  Thu, 27 Nov 2018 11:11:00 +0200
+
 ideascube (0.37.6) unstable; urgency=low
 
   * Build an other debian package (@fheslouin)
