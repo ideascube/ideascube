@@ -16,8 +16,7 @@ django==1.11.5
 html5lib==0.999999999     # via bleach
 idna==2.6                 # via requests
 lxml==4.0.0
-olefile==0.44             # via pillow
-pillow==4.2.1
+pillow==6.2.0
 progressist==0.0.6
 pymarc==3.1.7
 python-networkmanager==1.2.1

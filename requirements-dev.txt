@@ -32,8 +32,7 @@ lxml==4.0.0
 markdown==2.6.9           # via mkdocs
 markupsafe==1.0           # via jinja2
 mkdocs==0.16.3
-olefile==0.44
-pillow==4.2.1
+pillow==6.2.0
 pip-tools==1.10.1
 progressist==0.0.6
 py==1.4.34                # via pytest
