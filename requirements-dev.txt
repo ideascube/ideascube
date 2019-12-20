@@ -59,7 +59,7 @@ typing==3.6.2
 tzlocal==1.4
 unidecode==0.4.21
 urllib3==1.22
-waitress==1.0.2           # via webtest
+waitress==1.4.0           # via webtest
 webencodings==0.5.1
 webob==1.7.3              # via webtest
 webtest==2.0.28           # via django-webtest
