@@ -5,7 +5,7 @@
 #    pip-compile --output-file requirements.txt requirements.in
 #
 batinfo==0.4.2
-bleach==2.0.0
+bleach==3.1.1
 certifi==2017.7.27.1      # via requests
 chardet==3.0.4            # via requests
 dbus-python==1.2.4
@@ -13,7 +13,6 @@ django-countries==4.6.2
 django-multiselectfield==0.1.8
 django-taggit==0.22.1
 django==1.11.5
-html5lib==0.999999999     # via bleach
 idna==2.6                 # via requests
 lxml==4.0.0
 olefile==0.44             # via pillow
@@ -25,9 +24,9 @@ pytz==2017.2              # via django, tzlocal
 pyyaml==3.12
 requests==2.18.4          # via resumable-urlretrieve
 resumable-urlretrieve==0.1.5
-six==1.11.0               # via bleach, html5lib, pymarc
+six==1.11.0               # via bleach, pymarc
 typing==3.6.2
 tzlocal==1.4
 unidecode==0.4.21
 urllib3==1.22             # via requests
-webencodings==0.5.1       # via html5lib
+webencodings==0.5.1       # via bleach
