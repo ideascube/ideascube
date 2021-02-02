@@ -5,29 +5,64 @@
 #    pip-compile --output-file requirements.txt requirements.in
 #
 batinfo==0.4.2
-bleach==2.0.0
-certifi==2017.7.27.1      # via requests
-chardet==3.0.4            # via requests
+    # via -r requirements.in
+bleach==3.3.0
+    # via -r requirements.in
+certifi==2017.7.27.1
+    # via requests
+chardet==3.0.4
+    # via requests
 dbus-python==1.2.4
+    # via -r requirements.in
 django-countries==4.6.2
+    # via -r requirements.in
 django-multiselectfield==0.1.8
+    # via -r requirements.in
 django-taggit==0.22.1
+    # via -r requirements.in
 django==1.11.5
-html5lib==0.999999999     # via bleach
-idna==2.6                 # via requests
+    # via
+    #   -r requirements.in
+    #   django-multiselectfield
+idna==2.6
+    # via requests
 lxml==4.0.0
-olefile==0.44             # via pillow
+    # via -r requirements.in
+olefile==0.44
+    # via pillow
+packaging==20.9
+    # via bleach
 pillow==4.2.1
+    # via -r requirements.in
 progressist==0.0.6
+    # via -r requirements.in
 pymarc==3.1.7
+    # via -r requirements.in
+pyparsing==2.4.7
+    # via packaging
 python-networkmanager==1.2.1
-pytz==2017.2              # via django, tzlocal
+    # via -r requirements.in
+pytz==2017.2
+    # via
+    #   django
+    #   tzlocal
 pyyaml==3.12
-requests==2.18.4          # via resumable-urlretrieve
+    # via -r requirements.in
+requests==2.18.4
+    # via resumable-urlretrieve
 resumable-urlretrieve==0.1.5
-six==1.11.0               # via bleach, html5lib, pymarc
+    # via -r requirements.in
+six==1.11.0
+    # via
+    #   bleach
+    #   pymarc
 typing==3.6.2
+    # via -r requirements.in
 tzlocal==1.4
+    # via -r requirements.in
 unidecode==0.4.21
-urllib3==1.22             # via requests
-webencodings==0.5.1       # via html5lib
+    # via -r requirements.in
+urllib3==1.22
+    # via requests
+webencodings==0.5.1
+    # via bleach
